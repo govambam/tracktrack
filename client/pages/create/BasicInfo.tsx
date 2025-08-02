@@ -30,7 +30,7 @@ export default function BasicInfo() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.tripName.trim()) {
-      newErrors.tripName = 'Trip name is required';
+      newErrors.tripName = 'Event name is required';
     }
 
     if (!formData.startDate) {
