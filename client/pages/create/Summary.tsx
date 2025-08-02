@@ -7,14 +7,14 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
-import { 
-  CheckCircle, 
-  FileText, 
-  Golf, 
-  Target, 
-  Users, 
-  Trophy, 
-  Plane, 
+import {
+  CheckCircle,
+  FileText,
+  MapPin as GolfIcon,
+  Target,
+  Users,
+  Trophy,
+  Plane,
   Palette,
   Calendar,
   MapPin,
