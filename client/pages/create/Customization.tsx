@@ -64,7 +64,7 @@ export default function Customization() {
                 Privacy Settings
               </CardTitle>
               <CardDescription className="text-green-600">
-                Control who can view your trip website
+                Control who can view your event website
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
