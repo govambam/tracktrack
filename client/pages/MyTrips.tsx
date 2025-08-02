@@ -103,7 +103,7 @@ export default function MyTrips() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-900">{trips.length}</div>
-            <p className="text-xs text-green-600">Active trips</p>
+            <p className="text-xs text-green-600">Active events</p>
           </CardContent>
         </Card>
 
