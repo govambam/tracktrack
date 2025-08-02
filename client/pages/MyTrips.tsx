@@ -1,34 +1,69 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Calendar, MapPin, Users, Plus, Trophy } from "lucide-react";
 
+interface Trip {
+  id: string;
+  tripName: string;
+  description?: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  players: any[];
+  rounds: any[];
+  status: string;
+  createdAt: string;
+}
+
 export default function MyTrips() {
-  const trips = [
-    {
-      id: 1,
-      title: "Pebble Beach Weekend",
-      description: "Annual company golf retreat at the iconic Pebble Beach Golf Links",
-      dates: "March 15-17, 2024",
-      location: "Pebble Beach, CA",
-      participants: 12,
-      status: "upcoming",
-      course: "Pebble Beach Golf Links",
-      image: "🏌️‍♂️"
-    },
-    {
-      id: 2,
-      title: "Augusta Masters Experience",
-      description: "VIP Masters Tournament experience with practice rounds",
-      dates: "April 8-12, 2024",
-      location: "Augusta, GA",
-      participants: 8,
-      status: "planning",
-      course: "Augusta National Golf Club",
-      image: "🏆"
+  const [trips, setTrips] = useState<Trip[]>([]);
+
+  useEffect(() => {
+    // Load trips from localStorage
+    const userTrips = JSON.parse(localStorage.getItem('userTrips') || '[]');
+
+    // Add some default trips if none exist
+    if (userTrips.length === 0) {
+      const defaultTrips = [
+        {
+          id: 'default-1',
+          tripName: "Pebble Beach Weekend",
+          description: "Annual company golf retreat at the iconic Pebble Beach Golf Links",
+          startDate: "2024-03-15",
+          endDate: "2024-03-17",
+          location: "Pebble Beach, CA",
+          players: Array.from({length: 12}, (_, i) => ({ id: i, name: `Player ${i+1}` })),
+          rounds: [{ courseName: "Pebble Beach Golf Links" }],
+          status: "upcoming",
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'default-2',
+          tripName: "Augusta Masters Experience",
+          description: "VIP Masters Tournament experience with practice rounds",
+          startDate: "2024-04-08",
+          endDate: "2024-04-12",
+          location: "Augusta, GA",
+          players: Array.from({length: 8}, (_, i) => ({ id: i, name: `Player ${i+1}` })),
+          rounds: [{ courseName: "Augusta National Golf Club" }],
+          status: "planning",
+          createdAt: new Date().toISOString()
+        }
+      ];
+      setTrips(defaultTrips);
+    } else {
+      setTrips(userTrips);
     }
-  ];
+  }, []);
+
+  const formatDateRange = (startDate: string, endDate: string) => {
+    const start = new Date(startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const end = new Date(endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return `${start} - ${end}`;
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
