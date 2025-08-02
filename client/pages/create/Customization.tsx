@@ -77,7 +77,7 @@ export default function Customization() {
                   )}
                   <div>
                     <h3 className="font-medium text-green-900">
-                      {customization.isPrivate ? 'Private Trip' : 'Public Trip'}
+                      {customization.isPrivate ? 'Private Event' : 'Public Event'}
                     </h3>
                     <p className="text-sm text-green-600 mt-1">
                       {customization.isPrivate 
