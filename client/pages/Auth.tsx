@@ -84,8 +84,8 @@ export default function Auth() {
               {isLogin ? "Welcome Back" : "Create Account"}
             </CardTitle>
             <CardDescription className="text-green-600">
-              {isLogin 
-                ? "Sign in to manage your golf trips" 
+              {isLogin
+                ? "Sign in to manage your golf events"
                 : "Join us to start creating amazing golf experiences"
               }
             </CardDescription>
