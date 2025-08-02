@@ -195,7 +195,7 @@ export default function MyTrips() {
           <Button asChild className="bg-emerald-600 hover:bg-emerald-700">
             <Link to="/app/create">
               <Plus className="h-4 w-4 mr-2" />
-              Create Your First Trip
+              Create Your First Event
             </Link>
           </Button>
         </div>
