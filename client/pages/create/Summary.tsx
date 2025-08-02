@@ -307,9 +307,9 @@ export default function Summary() {
         <CheckCircle className="h-4 w-4 text-emerald-600" />
         <AlertDescription className="text-emerald-700">
           <div className="space-y-2">
-            <div className="font-semibold">Ready to create your golf trip!</div>
+            <div className="font-semibold">Ready to create your golf event!</div>
             <div>
-              Your trip "{tripData.tripName}" will be created with {tripData.rounds.length} rounds 
+              Your event "{tripData.tripName}" will be created with {tripData.rounds.length} rounds
               and {tripData.players.length} players. You can edit all details after creation.
             </div>
           </div>
