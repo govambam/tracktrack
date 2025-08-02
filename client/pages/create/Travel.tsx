@@ -193,8 +193,8 @@ SUNDAY, MARCH 17
           <Alert className="border-blue-200 bg-blue-50">
             <Info className="h-4 w-4 mr-2 text-blue-600" />
             <AlertDescription className="text-blue-700">
-              <strong>Planning tip:</strong> The more details you provide, the smoother your trip will run. 
-              Participants appreciate having all the information in one place, especially for multi-day trips.
+              <strong>Planning tip:</strong> The more details you provide, the smoother your event will run.
+              Participants appreciate having all the information in one place, especially for multi-day events.
             </AlertDescription>
           </Alert>
 
