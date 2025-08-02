@@ -214,7 +214,7 @@ export default function BasicInfo() {
           <CardHeader>
             <CardTitle className="text-lg text-green-900">Preview</CardTitle>
             <CardDescription className="text-green-600">
-              How your trip will appear on the dashboard
+              How your event will appear on the dashboard
             </CardDescription>
           </CardHeader>
           <CardContent>
