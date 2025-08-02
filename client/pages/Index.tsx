@@ -58,9 +58,9 @@ export default function Index() {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 text-white rounded-full mb-6">
                 <Calendar className="h-8 w-8" />
               </div>
-              <h3 className="text-xl font-semibold text-green-900 mb-4">Build Custom Golf Trip Websites</h3>
+              <h3 className="text-xl font-semibold text-green-900 mb-4">Build Custom Golf Event Websites</h3>
               <p className="text-green-600">
-                Create beautiful, personalized websites for your golf trips with custom branding, 
+                Create beautiful, personalized websites for your golf events with custom branding,
                 itineraries, and participant information.
               </p>
             </div>
