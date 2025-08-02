@@ -168,7 +168,7 @@ export default function Customization() {
                 Custom URL
               </CardTitle>
               <CardDescription className="text-green-600">
-                Create a memorable web address for your trip
+                Create a memorable web address for your event
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
