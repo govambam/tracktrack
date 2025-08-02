@@ -82,10 +82,10 @@ export default function BasicInfo() {
         <CardHeader>
           <CardTitle className="text-xl text-green-900 flex items-center">
             <FileText className="h-5 w-5 mr-2 text-emerald-600" />
-            Trip Details
+            Event Details
           </CardTitle>
           <CardDescription className="text-green-600">
-            Enter the basic information for your golf trip
+            Enter the basic information for your golf event
           </CardDescription>
         </CardHeader>
         
