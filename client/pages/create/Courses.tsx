@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { Round } from "@/contexts/TripCreationContext";
-import { Golf, Plus, Trash2, Calendar, Clock, Trophy } from "lucide-react";
+import { MapPin, Plus, Trash2, Calendar, Clock, Trophy } from "lucide-react";
 
 export default function Courses() {
   const navigate = useNavigate();
