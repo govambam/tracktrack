@@ -51,7 +51,7 @@ export default function Customization() {
             Customization & Branding
           </CardTitle>
           <CardDescription className="text-green-600">
-            Personalize your trip website with custom branding and privacy settings
+            Personalize your event website with custom branding and privacy settings
           </CardDescription>
         </CardHeader>
         
