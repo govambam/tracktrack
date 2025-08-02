@@ -93,13 +93,13 @@ export default function BasicInfo() {
           {/* Trip Name */}
           <div className="space-y-2">
             <Label htmlFor="tripName" className="text-green-800 font-medium">
-              Trip Name *
+              Event Name *
             </Label>
             <Input
               id="tripName"
               value={formData.tripName}
               onChange={(e) => handleInputChange('tripName', e.target.value)}
-              placeholder="e.g., Pebble Beach Weekend"
+              placeholder="e.g., Pebble Beach Golf Weekend"
               className={`border-green-200 focus:border-emerald-500 ${errors.tripName ? 'border-red-300' : ''}`}
             />
             {errors.tripName && (
