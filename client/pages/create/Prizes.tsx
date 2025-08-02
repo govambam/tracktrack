@@ -310,8 +310,8 @@ export default function Prizes() {
           {/* Helper Text */}
           <Alert className="border-green-200 bg-green-50">
             <AlertDescription className="text-green-700">
-              <strong>All optional:</strong> You can run a great tournament without any money involved. 
-              Prizes add excitement but aren't required for a successful golf trip.
+              <strong>All optional:</strong> You can run a great tournament without any money involved.
+              Prizes add excitement but aren't required for a successful golf event.
             </AlertDescription>
           </Alert>
         </CardContent>
