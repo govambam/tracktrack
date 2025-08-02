@@ -34,8 +34,8 @@ export default function AppShell() {
   };
 
   const navigationItems = [
-    { path: "/app", label: "My Trips", icon: Calendar },
-    { path: "/app/create", label: "Create Trip", icon: Plus },
+    { path: "/app", label: "My Events", icon: Calendar },
+    { path: "/app/create", label: "Create Event", icon: Plus },
     { path: "/app/settings", label: "Settings", icon: Settings },
   ];
 
