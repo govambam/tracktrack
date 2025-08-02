@@ -222,7 +222,7 @@ export default function BasicInfo() {
               <div className="text-3xl">🏌️‍♂️</div>
               <div>
                 <h3 className="font-semibold text-green-900">
-                  {formData.tripName || 'Your Trip Name'}
+                  {formData.tripName || 'Your Event Name'}
                 </h3>
                 <p className="text-green-600 text-sm">
                   {formData.location || 'Location'} 
