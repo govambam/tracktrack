@@ -140,7 +140,7 @@ export default function Courses() {
       <Card className="border-green-100">
         <CardHeader>
           <CardTitle className="text-xl text-green-900 flex items-center">
-            <Golf className="h-5 w-5 mr-2 text-emerald-600" />
+            <MapPin className="h-5 w-5 mr-2 text-emerald-600" />
             Golf Rounds
           </CardTitle>
           <CardDescription className="text-green-600">
