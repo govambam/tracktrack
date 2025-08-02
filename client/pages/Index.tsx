@@ -101,7 +101,7 @@ export default function Index() {
           </p>
           <Button asChild size="lg" className="bg-white text-emerald-600 hover:bg-gray-50 px-8 py-3 text-lg font-semibold">
             <Link to="/signup">
-              Start Your First Trip <ArrowRight className="ml-2 h-5 w-5" />
+              Start Your First Event <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>
