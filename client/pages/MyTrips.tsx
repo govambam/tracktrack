@@ -190,8 +190,8 @@ export default function MyTrips() {
       {trips.length === 0 && (
         <div className="text-center py-12">
           <Calendar className="mx-auto h-12 w-12 text-green-400 mb-4" />
-          <h3 className="text-xl font-medium text-green-900 mb-2">No trips yet</h3>
-          <p className="text-green-600 mb-6">Create your first golf trip to get started</p>
+          <h3 className="text-xl font-medium text-green-900 mb-2">No events yet</h3>
+          <p className="text-green-600 mb-6">Create your first golf event to get started</p>
           <Button asChild className="bg-emerald-600 hover:bg-emerald-700">
             <Link to="/app/create">
               <Plus className="h-4 w-4 mr-2" />
