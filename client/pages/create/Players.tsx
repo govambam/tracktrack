@@ -128,7 +128,7 @@ export default function Players() {
             Players
           </CardTitle>
           <CardDescription className="text-green-600">
-            Add all participants for your golf trip
+            Add all participants for your golf event
           </CardDescription>
         </CardHeader>
         
