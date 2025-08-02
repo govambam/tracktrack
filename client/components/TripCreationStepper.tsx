@@ -97,7 +97,7 @@ export function TripCreationStepper({
             className="flex items-center text-green-600 hover:text-green-700 transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Create Trip
+            Back to Create Event
           </Link>
           <div className="text-sm text-green-600">
             Step {currentStepIndex + 1} of {steps.length}
