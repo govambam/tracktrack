@@ -53,7 +53,7 @@ export default function Travel() {
             Travel & Logistics
           </CardTitle>
           <CardDescription className="text-green-600">
-            Share travel details and daily schedules with participants (all optional)
+            Share travel details and daily schedules for your event (all optional)
           </CardDescription>
         </CardHeader>
         
