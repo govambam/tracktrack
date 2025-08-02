@@ -165,18 +165,18 @@ export default function BasicInfo() {
           {/* Description (Optional) */}
           <div className="space-y-2">
             <Label htmlFor="description" className="text-green-800 font-medium">
-              Trip Description (Optional)
+              Event Description (Optional)
             </Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => handleInputChange('description', e.target.value)}
-              placeholder="Describe your golf trip, what makes it special, activities planned..."
+              placeholder="Describe your golf event, what makes it special, activities planned..."
               rows={4}
               className="border-green-200 focus:border-emerald-500"
             />
             <p className="text-sm text-green-600">
-              Help participants know what to expect on this trip
+              Help participants know what to expect at this event
             </p>
           </div>
 
