@@ -83,7 +83,7 @@ export default function MyTrips() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-green-900">My Golf Events</h1>
+          <h1 className="text-3xl font-bold text-green-900">My Events</h1>
           <p className="text-green-600 mt-1">Manage and track your golf events and tournaments</p>
         </div>
         <Button asChild className="mt-4 sm:mt-0 bg-emerald-600 hover:bg-emerald-700">
