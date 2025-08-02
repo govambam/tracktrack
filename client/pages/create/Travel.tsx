@@ -200,8 +200,8 @@ SUNDAY, MARCH 17
 
           <Alert className="border-green-200 bg-green-50">
             <AlertDescription className="text-green-700">
-              <strong>All optional:</strong> You can skip this section and add travel details later. 
-              Some trips work better with less structure and more flexibility.
+              <strong>All optional:</strong> You can skip this section and add travel details later.
+              Some events work better with less structure and more flexibility.
             </AlertDescription>
           </Alert>
         </CardContent>
