@@ -112,10 +112,10 @@ export default function Customization() {
             <CardHeader>
               <CardTitle className="text-lg text-green-900 flex items-center">
                 <Upload className="h-5 w-5 mr-2 text-emerald-600" />
-                Trip Logo
+                Event Logo
               </CardTitle>
               <CardDescription className="text-green-600">
-                Add a custom logo to personalize your trip website
+                Add a custom logo to personalize your event website
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
