@@ -81,8 +81,8 @@ export default function Customization() {
                     </h3>
                     <p className="text-sm text-green-600 mt-1">
                       {customization.isPrivate 
-                        ? 'Only invited participants can view trip details'
-                        : 'Anyone with the link can view trip information'
+                        ? 'Only invited participants can view event details'
+                        : 'Anyone with the link can view event information'
                       }
                     </p>
                     <div className="mt-2">
