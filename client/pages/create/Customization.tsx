@@ -193,8 +193,8 @@ export default function Customization() {
               {customization.customDomain && (
                 <Alert className="border-blue-200 bg-blue-50">
                   <AlertDescription className="text-blue-700">
-                    Your trip will be available at: <Badge variant="secondary">
-                      golftrips.app/{customization.customDomain}
+                    Your event will be available at: <Badge variant="secondary">
+                      tracktrack.app/{customization.customDomain}
                     </Badge>
                   </AlertDescription>
                 </Alert>
