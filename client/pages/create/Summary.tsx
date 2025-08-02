@@ -132,7 +132,7 @@ export default function Summary() {
       <Card className="border-green-100">
         <CardHeader>
           <CardTitle className="text-lg text-green-900 flex items-center">
-            <Golf className="h-5 w-5 mr-2 text-emerald-600" />
+            <GolfIcon className="h-5 w-5 mr-2 text-emerald-600" />
             Golf Rounds ({tripData.rounds.length})
           </CardTitle>
         </CardHeader>
