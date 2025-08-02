@@ -15,7 +15,7 @@ const steps: Step[] = [
     id: "basic-info",
     title: "Basic Info",
     path: "/app/create/basic-info",
-    description: "Trip details and dates"
+    description: "Event details and dates"
   },
   {
     id: "courses",
