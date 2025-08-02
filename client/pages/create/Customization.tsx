@@ -224,8 +224,8 @@ export default function Customization() {
           {/* Helper Text */}
           <Alert className="border-green-200 bg-green-50">
             <AlertDescription className="text-green-700">
-              <strong>All optional:</strong> These settings help make your trip feel more professional and branded, 
-              but aren't required for a great golf trip experience.
+              <strong>All optional:</strong> These settings help make your event feel more professional and branded,
+              but aren't required for a great golf event experience.
             </AlertDescription>
           </Alert>
         </CardContent>
