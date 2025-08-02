@@ -177,7 +177,7 @@ export default function Customization() {
                   Custom URL Ending
                 </Label>
                 <div className="flex items-center space-x-2">
-                  <span className="text-green-600 text-sm">golftrips.app/</span>
+                  <span className="text-green-600 text-sm">tracktrack.app/</span>
                   <Input
                     value={customization.customDomain}
                     onChange={(e) => updateCustomizationField('customDomain', e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
