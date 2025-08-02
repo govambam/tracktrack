@@ -90,10 +90,10 @@ export default function Summary() {
         <CardHeader>
           <CardTitle className="text-xl text-emerald-900 flex items-center">
             <CheckCircle className="h-5 w-5 mr-2" />
-            Trip Summary
+            Event Summary
           </CardTitle>
           <CardDescription className="text-emerald-600">
-            Review all details before creating your golf trip
+            Review all details before creating your golf event
           </CardDescription>
         </CardHeader>
       </Card>
