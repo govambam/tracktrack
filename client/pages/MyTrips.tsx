@@ -116,7 +116,7 @@ export default function MyTrips() {
             <div className="text-2xl font-bold text-green-900">
               {trips.reduce((total, trip) => total + trip.players.length, 0)}
             </div>
-            <p className="text-xs text-green-600">Across all trips</p>
+            <p className="text-xs text-green-600">Across all events</p>
           </CardContent>
         </Card>
 
