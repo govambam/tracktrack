@@ -49,7 +49,7 @@ export default function Index() {
               Everything You Need for Golf Events
             </h2>
             <p className="text-xl text-green-600 max-w-2xl mx-auto">
-              Professional tools to create, manage, and showcase your golf trips and tournaments
+              Professional tools to create, manage, and showcase your golf events and tournaments
             </p>
           </div>
           
