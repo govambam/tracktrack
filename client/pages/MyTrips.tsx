@@ -141,10 +141,10 @@ export default function MyTrips() {
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="text-3xl">{trip.image}</div>
+                  <div className="text-3xl">🏌️‍♂️</div>
                   <div>
-                    <CardTitle className="text-xl text-green-900">{trip.title}</CardTitle>
-                    <CardDescription className="text-green-600">{trip.description}</CardDescription>
+                    <CardTitle className="text-xl text-green-900">{trip.tripName}</CardTitle>
+                    <CardDescription className="text-green-600">{trip.description || 'Golf trip'}</CardDescription>
                   </div>
                 </div>
                 <Badge className={getStatusColor(trip.status)}>
@@ -152,12 +152,12 @@ export default function MyTrips() {
                 </Badge>
               </div>
             </CardHeader>
-            
+
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center text-green-700">
                   <Calendar className="h-4 w-4 mr-2 text-emerald-600" />
-                  {trip.dates}
+                  {formatDateRange(trip.startDate, trip.endDate)}
                 </div>
                 <div className="flex items-center text-green-700">
                   <MapPin className="h-4 w-4 mr-2 text-emerald-600" />
@@ -165,14 +165,14 @@ export default function MyTrips() {
                 </div>
                 <div className="flex items-center text-green-700">
                   <Users className="h-4 w-4 mr-2 text-emerald-600" />
-                  {trip.participants} participants
+                  {trip.players.length} participants
                 </div>
                 <div className="flex items-center text-green-700">
                   <Trophy className="h-4 w-4 mr-2 text-emerald-600" />
-                  {trip.course}
+                  {trip.rounds.length} rounds
                 </div>
               </div>
-              
+
               <div className="flex space-x-2 pt-2">
                 <Button variant="outline" size="sm" className="border-green-200 text-green-700 hover:bg-green-50">
                   View Details
