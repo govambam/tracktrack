@@ -100,7 +100,7 @@ export default function Customization() {
 
               <Alert className="border-blue-200 bg-blue-50">
                 <AlertDescription className="text-blue-700">
-                  <strong>Recommendation:</strong> Most golf trips work well as private. 
+                  <strong>Recommendation:</strong> Most golf events work well as private.
                   You can always change this setting later and send invite links to participants.
                 </AlertDescription>
               </Alert>
