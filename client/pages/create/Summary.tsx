@@ -82,7 +82,7 @@ export default function Summary() {
       <TripCreationStepper
         onNext={handleConfirm}
         onPrevious={handlePrevious}
-        nextLabel="Create Trip"
+        nextLabel="Create Event"
         nextDisabled={false}
       />
 
