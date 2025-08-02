@@ -5,7 +5,7 @@ export default function CreateTrip() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Redirect to the first step of trip creation
+    // Redirect to the first step of event creation
     navigate('/app/create/basic-info');
   }, [navigate]);
 
