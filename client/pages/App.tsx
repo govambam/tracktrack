@@ -52,7 +52,7 @@ export default function AppShell() {
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/app" className="text-xl font-bold text-green-900">
-                GolfTrips
+                TrackTrack
               </Link>
             </div>
 
