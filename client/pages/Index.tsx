@@ -14,7 +14,7 @@ export default function Index() {
               <span className="text-emerald-600 block">Golf Experience</span>
             </h1>
             <p className="text-xl text-green-700 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Create stunning custom websites for golf trips and tournaments. 
+              Create stunning custom websites for golf events and tournaments.
               Track scores live, manage events, and bring your golf community together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
