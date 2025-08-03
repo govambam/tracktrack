@@ -93,7 +93,7 @@ export default function MyTrips() {
         .from('events')
         .select('id, name, description, start_date, end_date, location, logo_url, is_private, is_published, slug, created_at, updated_at')
         .eq('user_id', session.user.id)
-        .order('created_at', { ascending: false });
+        .order('start_date', { ascending: false });
 
       if (error) {
         console.error('Supabase error loading events:', {
