@@ -160,6 +160,7 @@ interface TripCreationContextType {
   setStep: (step: number) => void;
   resetTrip: () => void;
   loadEvent: (eventData: TripData) => void;
+  loadCompleteEvent: (eventId: string) => Promise<{ success: boolean; error?: string }>;
   saveEvent: (formData?: Partial<TripData>) => Promise<{ success: boolean; eventId?: string; error?: string }>;
   saveRounds: (roundsData?: Round[]) => Promise<{ success: boolean; error?: string }>;
   savePlayers: () => Promise<{ success: boolean; error?: string }>;
