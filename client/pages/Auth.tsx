@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
