@@ -108,7 +108,8 @@ export default function BasicInfo() {
     <div className="max-w-4xl mx-auto space-y-6">
       <TripCreationStepper
         onNext={handleNext}
-        nextDisabled={false}
+        nextDisabled={saving}
+        nextLabel={saving ? "Saving..." : "Next"}
       />
 
       <Card className="border-green-100">
