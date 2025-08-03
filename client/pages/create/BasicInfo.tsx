@@ -31,6 +31,7 @@ export default function BasicInfo() {
   const [slugStatus, setSlugStatus] = useState<'idle' | 'checking' | 'valid' | 'invalid'>('idle');
   const [slugError, setSlugError] = useState('');
   const [isSlugEdited, setIsSlugEdited] = useState(false);
+  const [isUserTyping, setIsUserTyping] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
 
