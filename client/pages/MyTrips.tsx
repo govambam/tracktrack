@@ -102,6 +102,7 @@ export default function MyTrips() {
       });
     } finally {
       setLoading(false);
+      setIsLoadingEvents(false);
     }
   };
 
