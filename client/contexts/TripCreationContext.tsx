@@ -384,6 +384,10 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
   const syncCoursesToEventCourses = async (eventId: string, rounds: Round[]) => {
     try {
+      console.log('=== SYNC COURSES FUNCTION CALLED ===');
+      console.log('Event ID:', eventId);
+      console.log('Rounds:', rounds.length);
+      console.log('Round course names:', rounds.map(r => r.courseName));
       console.log('Syncing courses to event_courses table for event:', eventId);
 
       // First check if event_courses table exists
