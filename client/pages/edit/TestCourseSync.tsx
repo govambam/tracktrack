@@ -95,19 +95,36 @@ export default function TestCourseSync() {
         skillsContests: []
       }));
 
-      // Get unique course names
+      // Get existing courses to avoid duplicates
+      const { data: existingCourses, error: existingError } = await supabase
+        .from('event_courses')
+        .select('name')
+        .eq('event_id', eventId);
+
+      if (existingError) {
+        throw new Error(`Failed to check existing courses: ${existingError.message}`);
+      }
+
+      const existingCourseNames = existingCourses?.map(c => c.name.toLowerCase()) || [];
+      console.log('Existing courses:', existingCourseNames);
+
+      // Get unique course names that don't already exist
       const uniqueCourses = rounds.reduce((acc, round, index) => {
         const courseName = round.courseName?.trim();
-        if (courseName && !acc.some(course => course.name === courseName)) {
-          acc.push({
-            name: courseName,
-            display_order: index + 1
-          });
+        if (courseName) {
+          const courseNameLower = courseName.toLowerCase();
+          if (!existingCourseNames.includes(courseNameLower) &&
+              !acc.some(course => course.name.toLowerCase() === courseNameLower)) {
+            acc.push({
+              name: courseName,
+              display_order: existingCourseNames.length + acc.length + 1
+            });
+          }
         }
         return acc;
       }, [] as { name: string; display_order: number }[]);
 
-      console.log('Unique courses to insert:', uniqueCourses);
+      console.log('New courses to insert:', uniqueCourses);
 
       if (uniqueCourses.length > 0) {
         const { data: insertData, error: insertError } = await supabase
