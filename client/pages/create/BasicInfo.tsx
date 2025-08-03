@@ -284,6 +284,7 @@ export default function BasicInfo() {
               id="tripName"
               value={formData.tripName}
               onChange={(e) => handleInputChange('tripName', e.target.value)}
+              onBlur={handleEventNameBlur}
               placeholder="e.g., Pebble Beach Golf Weekend"
               className={`border-green-200 focus:border-emerald-500 ${errors.tripName ? 'border-red-300' : ''}`}
             />
