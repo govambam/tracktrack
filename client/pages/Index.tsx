@@ -3,47 +3,6 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, Trophy, Users } from "lucide-react";
 
 export default function Index() {
-  const [testMessage, setTestMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
-
-  const handleTestSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!testMessage.trim()) return;
-
-    setIsLoading(true);
-    setStatus({ type: null, message: '' });
-
-    try {
-      const response = await fetch('/api/supabase-test', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: testMessage }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || `HTTP ${response.status}`);
-      }
-
-      setStatus({
-        type: 'success',
-        message: `Message saved successfully! ID: ${result.data?.id}`
-      });
-      setTestMessage("");
-    } catch (error) {
-      setStatus({
-        type: 'error',
-        message: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
       {/* Hero Section */}
