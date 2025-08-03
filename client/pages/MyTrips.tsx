@@ -252,7 +252,7 @@ export default function MyTrips() {
                     <div className="text-3xl">🏌��‍♂️</div>
                     <div>
                       <CardTitle className="text-xl text-green-900">{event.name}</CardTitle>
-                      <CardDescription className="text-green-600">
+                      <CardDescription className="text-green-600 line-clamp-2">
                         {event.description || 'Golf event'}
                       </CardDescription>
                     </div>
