@@ -194,14 +194,32 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       console.log('Save: Session found, access token length:', session.access_token?.length || 0);
 
       // Validate required fields before saving
-      if (!tripData.tripName || !tripData.startDate || !tripData.endDate || !tripData.location) {
-        return { success: false, error: 'Missing required fields: name, start date, end date, or location' };
+      if (!tripData.tripName || !tripData.tripName.trim()) {
+        return { success: false, error: 'Event name is required' };
+      }
+      if (!tripData.startDate || !tripData.startDate.trim()) {
+        return { success: false, error: 'Start date is required' };
+      }
+      if (!tripData.endDate || !tripData.endDate.trim()) {
+        return { success: false, error: 'End date is required' };
+      }
+      if (!tripData.location || !tripData.location.trim()) {
+        return { success: false, error: 'Location is required' };
+      }
+
+      // Validate date format (should be YYYY-MM-DD)
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRegex.test(tripData.startDate)) {
+        return { success: false, error: `Invalid start date format: "${tripData.startDate}". Expected YYYY-MM-DD` };
+      }
+      if (!dateRegex.test(tripData.endDate)) {
+        return { success: false, error: `Invalid end date format: "${tripData.endDate}". Expected YYYY-MM-DD` };
       }
 
       const eventData = {
         name: tripData.tripName.trim(),
-        start_date: tripData.startDate?.trim() || null, // Convert empty strings to null
-        end_date: tripData.endDate?.trim() || null,     // Convert empty strings to null
+        start_date: tripData.startDate.trim(),
+        end_date: tripData.endDate.trim(),
         location: tripData.location.trim(),
         description: tripData.description?.trim() || null,
         logo_url: tripData.bannerImage?.trim() || null,
