@@ -413,21 +413,27 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      const existingCourseNames = existingCourses?.map(c => c.name) || [];
+      const existingCourseNames = existingCourses?.map(c => c.name.toLowerCase()) || [];
+      console.log('Existing course names:', existingCourseNames);
 
       // Get unique course names from rounds that don't already exist
       const newCourses = rounds.reduce((acc, round, index) => {
         const courseName = round.courseName?.trim();
-        if (courseName &&
-            !existingCourseNames.includes(courseName) &&
-            !acc.some(course => course.name === courseName)) {
-          acc.push({
-            name: courseName,
-            display_order: (existingCourseNames.length + acc.length + 1)
-          });
+        if (courseName) {
+          const courseNameLower = courseName.toLowerCase();
+          // Check if course doesn't exist and isn't already in our new courses list
+          if (!existingCourseNames.includes(courseNameLower) &&
+              !acc.some(course => course.name.toLowerCase() === courseNameLower)) {
+            acc.push({
+              name: courseName,
+              display_order: (existingCourseNames.length + acc.length + 1)
+            });
+          }
         }
         return acc;
       }, [] as { name: string; display_order: number }[]);
+
+      console.log('New courses to add:', newCourses);
 
       if (newCourses.length > 0) {
         console.log('Inserting new courses:', newCourses);
