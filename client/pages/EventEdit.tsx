@@ -233,9 +233,25 @@ export default function EventEdit() {
     );
   }
 
-  const currentSection =
-    sidebarSections.find((s) => s.id === currentSectionId) ||
-    sidebarSections[0];
+  const currentSection = (() => {
+    // First check if it's a submenu item
+    for (const section of sidebarSections) {
+      if (section.submenu) {
+        const submenuItem = section.submenu.find((sub) => sub.id === currentSectionId);
+        if (submenuItem) return submenuItem;
+      }
+    }
+    // Then check if it's a main section
+    return sidebarSections.find((s) => s.id === currentSectionId) || sidebarSections[0];
+  })();
+
+  const toggleMenu = (sectionId: string) => {
+    setExpandedMenus((prev) =>
+      prev.includes(sectionId)
+        ? prev.filter((id) => id !== sectionId)
+        : [...prev, sectionId]
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
