@@ -217,14 +217,14 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       }
 
       // Update local state with the saved event ID if this was a new event
-      if (!tripData.id && result.event?.id) {
+      if (!tripData.id && result.data.event?.id) {
         dispatch({
           type: 'UPDATE_BASIC_INFO',
-          payload: { id: result.event.id }
+          payload: { id: result.data.event.id }
         });
       }
 
-      return { success: true, eventId: result.event?.id };
+      return { success: true, eventId: result.data.event?.id };
 
     } catch (error) {
       console.error('Error saving event:', error);
