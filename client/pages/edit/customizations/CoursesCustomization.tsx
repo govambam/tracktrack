@@ -214,7 +214,12 @@ export default function CoursesCustomization() {
         .eq('event_id', eventId);
 
       if (deleteError) {
-        console.error('Error deleting existing courses:', deleteError);
+        console.error('Error deleting existing courses:', {
+          message: deleteError.message,
+          details: deleteError.details,
+          hint: deleteError.hint,
+          code: deleteError.code
+        });
         toast({
           title: "Sync Failed",
           description: "Failed to clear existing course data",
