@@ -82,6 +82,7 @@ const App = () => (
                 <Route path="customizations/rules" element={<RulesCustomization />} />
                 <Route path="customizations/leaderboard" element={<LeaderboardCustomization />} />
                 <Route path="customizations/travel" element={<TravelCustomization />} />
+                <Route path="debug" element={<TestCourseSync />} />
                 <Route path="settings" element={<SettingsEdit />} />
                 <Route index element={<BasicInfoEdit />} /> {/* Default to basic info */}
               </Route>
