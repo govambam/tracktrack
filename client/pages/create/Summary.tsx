@@ -27,8 +27,19 @@ import {
 
 export default function Summary() {
   const navigate = useNavigate();
-  const { state, resetTrip } = useTripCreation();
+  const {
+    state,
+    resetTrip,
+    saveEvent,
+    saveRounds,
+    savePlayers,
+    savePrizes,
+    saveTravel,
+    saveCustomization
+  } = useTripCreation();
   const { tripData } = state;
+  const { toast } = useToast();
+  const [creating, setCreating] = useState(false);
 
   const handleConfirm = () => {
     // Save trip to localStorage (simulating backend save)
