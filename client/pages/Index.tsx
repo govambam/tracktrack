@@ -135,6 +135,60 @@ export default function Index() {
         </div>
       </div>
 
+      {/* Supabase Test Section */}
+      <div className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="border-blue-200 bg-white shadow-lg">
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl font-bold text-blue-900 flex items-center justify-center">
+                <Database className="h-6 w-6 mr-2" />
+                🚀 Supabase Connection Test
+              </CardTitle>
+              <CardDescription className="text-blue-600">
+                Test our database connection - try submitting a message!
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              <form onSubmit={handleTestSubmit} className="space-y-4">
+                <div>
+                  <Input
+                    value={testMessage}
+                    onChange={(e) => setTestMessage(e.target.value)}
+                    placeholder="Enter a test message to save to database..."
+                    className="border-blue-200 focus:border-blue-500"
+                    disabled={isLoading}
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isLoading || !testMessage.trim()}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  {isLoading ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      <Send className="h-4 w-4 mr-2" />
+                      Send to Supabase Database
+                    </>
+                  )}
+                </Button>
+              </form>
+
+              {status.type && (
+                <Alert className={`mt-4 ${status.type === 'success' ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}`}>
+                  <AlertDescription className={status.type === 'success' ? 'text-green-700' : 'text-red-700'}>
+                    {status.message}
+                  </AlertDescription>
+                </Alert>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
       {/* CTA Section */}
       <div className="py-20 bg-gradient-to-r from-emerald-600 to-green-600">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
@@ -151,8 +205,6 @@ export default function Index() {
           </Button>
         </div>
       </div>
-
-      {/* Supabase Test Section */}
       <div className="py-20 bg-white border-t border-green-100">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <Card className="border-blue-200 bg-blue-50">
