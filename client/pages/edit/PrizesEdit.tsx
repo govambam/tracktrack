@@ -168,6 +168,13 @@ export default function PrizesEdit() {
         }
       }
 
+      // Update context with saved data
+      updatePrizes({
+        buyIn: buyIn,
+        payoutStructure: enablePayout ? payoutStructure : undefined,
+        contestPrizes: enableContests ? contestPrizes : undefined
+      });
+
       toast({
         title: "Prizes Updated",
         description: "Prize structure has been saved successfully",
