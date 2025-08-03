@@ -378,6 +378,53 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const savePlayers = async (): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const { tripData } = state;
+      if (!tripData.id) {
+        return { success: false, error: 'Event must be saved first before adding players' };
+      }
+
+      console.log('Saving players for event:', tripData.id);
+
+      // Delete existing players first
+      const { error: deleteError } = await supabase
+        .from('event_players')
+        .delete()
+        .eq('event_id', tripData.id);
+
+      if (deleteError) {
+        console.error('Error deleting existing players:', deleteError);
+        return { success: false, error: deleteError.message };
+      }
+
+      // Insert new players
+      if (tripData.players && tripData.players.length > 0) {
+        const playersData = tripData.players.map(player => ({
+          event_id: tripData.id,
+          full_name: player.name,
+          handicap: player.handicap || null,
+          profile_image: player.image || null
+        }));
+
+        const { error: insertError } = await supabase
+          .from('event_players')
+          .insert(playersData);
+
+        if (insertError) {
+          console.error('Error inserting players:', insertError);
+          return { success: false, error: insertError.message };
+        }
+      }
+
+      console.log('Players saved successfully');
+      return { success: true };
+    } catch (error) {
+      console.error('Error saving players:', error);
+      return { success: false, error: 'Failed to save players' };
+    }
+  };
+
   const contextValue: TripCreationContextType = {
     state,
     updateBasicInfo: (data) => dispatch({ type: 'UPDATE_BASIC_INFO', payload: data }),
