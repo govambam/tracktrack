@@ -81,7 +81,7 @@ interface TripCreationState {
   currentStep: number;
 }
 
-type TripCreationAction = 
+type TripCreationAction =
   | { type: 'UPDATE_BASIC_INFO'; payload: Partial<TripData> }
   | { type: 'UPDATE_COURSES'; payload: { rounds: Round[] } }
   | { type: 'UPDATE_SCORING'; payload: Partial<TripData> }
@@ -90,7 +90,8 @@ type TripCreationAction =
   | { type: 'UPDATE_TRAVEL'; payload: Partial<TripData> }
   | { type: 'UPDATE_CUSTOMIZATION'; payload: Partial<TripData> }
   | { type: 'SET_STEP'; payload: number }
-  | { type: 'RESET_TRIP' };
+  | { type: 'RESET_TRIP' }
+  | { type: 'LOAD_EVENT'; payload: TripData };
 
 const initialState: TripCreationState = {
   tripData: {
