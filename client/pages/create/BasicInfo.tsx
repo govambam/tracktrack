@@ -419,10 +419,10 @@ export default function BasicInfo() {
           <CardHeader>
             <CardTitle className="text-lg text-green-900">Preview</CardTitle>
             <CardDescription className="text-green-600">
-              How your event will appear on the dashboard
+              How your event will appear
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <div className="flex items-start space-x-4">
               <div className="text-3xl">🏌️‍♂️</div>
               <div>
@@ -430,7 +430,7 @@ export default function BasicInfo() {
                   {formData.tripName || 'Your Event Name'}
                 </h3>
                 <p className="text-green-600 text-sm">
-                  {formData.location || 'Location'} 
+                  {formData.location || 'Location'}
                   {formData.startDate && formData.endDate && (
                     <> • {new Date(formData.startDate).toLocaleDateString()} - {new Date(formData.endDate).toLocaleDateString()}</>
                   )}
@@ -442,6 +442,18 @@ export default function BasicInfo() {
                 )}
               </div>
             </div>
+            {slug && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <div className="flex items-center text-sm">
+                  <Globe className="h-4 w-4 mr-2 text-blue-600" />
+                  <span className="text-blue-700 font-medium">Public Website: </span>
+                  <span className="text-blue-600 ml-1">tracktrack.com/events/{slug}</span>
+                  {slugStatus === 'valid' && (
+                    <Check className="h-3 w-3 ml-2 text-green-600" />
+                  )}
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
