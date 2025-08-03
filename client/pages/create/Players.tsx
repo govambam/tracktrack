@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
@@ -178,6 +178,7 @@ export default function Players() {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center space-x-3">
                     <Avatar className="h-12 w-12">
+                      {player.image && <AvatarImage src={player.image} alt={player.name} />}
                       <AvatarFallback className="bg-emerald-600 text-white">
                         {player.name ? getPlayerInitials(player.name) : <User className="h-5 w-5" />}
                       </AvatarFallback>
