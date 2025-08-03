@@ -329,13 +329,13 @@ export default function BasicInfo() {
                 </div>
               </div>
             </div>
-            {slugStatus === 'valid' && (
+            {slugStatus === 'valid' && !isUserTyping && (
               <p className="text-sm text-green-600 flex items-center">
                 <Check className="h-3 w-3 mr-1" />
                 Perfect! This URL is available
               </p>
             )}
-            {(errors.slug || slugError) && (
+            {(errors.slug || (slugError && !isUserTyping)) && (
               <p className="text-sm text-red-600">{errors.slug || slugError}</p>
             )}
             <p className="text-sm text-gray-600">
