@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link, useNavigate } from "react-router-dom";
-import { Calendar, MapPin, Users, Plus, Trophy, Edit, RefreshCw, ExternalLink, Globe } from "lucide-react";
+import { Calendar, MapPin, Users, Plus, Edit, ExternalLink, Globe, Eye } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
