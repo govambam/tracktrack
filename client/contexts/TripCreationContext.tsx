@@ -158,6 +158,8 @@ interface TripCreationContextType {
   updateCustomization: (data: Partial<TripData>) => void;
   setStep: (step: number) => void;
   resetTrip: () => void;
+  loadEvent: (eventData: TripData) => void;
+  saveEvent: () => Promise<{ success: boolean; eventId?: string; error?: string }>;
 }
 
 const TripCreationContext = createContext<TripCreationContextType | undefined>(undefined);
