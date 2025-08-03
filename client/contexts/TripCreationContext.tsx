@@ -203,6 +203,12 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify(eventData)
       });
 
+      // Check if response body is already consumed
+      if (response.bodyUsed) {
+        console.error('Response body already consumed in save event');
+        return { success: false, error: 'Request error - please try again' };
+      }
+
       // Read response body once and handle both success/error cases
       let result;
       try {
