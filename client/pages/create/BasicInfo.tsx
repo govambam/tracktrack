@@ -263,6 +263,55 @@ export default function BasicInfo() {
             )}
           </div>
 
+          {/* Website URL */}
+          <div className="space-y-2">
+            <Label htmlFor="slug" className="text-green-800 font-medium flex items-center">
+              <Globe className="h-4 w-4 mr-1 text-emerald-600" />
+              Website URL *
+            </Label>
+            <div className="flex items-center">
+              <span className="text-sm text-gray-600 bg-gray-50 border border-r-0 border-green-200 px-3 py-2 rounded-l-md">
+                tracktrack.com/events/
+              </span>
+              <div className="flex-1 relative">
+                <Input
+                  id="slug"
+                  value={slug}
+                  onChange={(e) => handleSlugChange(e.target.value)}
+                  placeholder="your-event-url"
+                  className={`border-green-200 focus:border-emerald-500 rounded-l-none pr-10 ${
+                    errors.slug ? 'border-red-300' :
+                    slugStatus === 'valid' ? 'border-green-300' :
+                    slugStatus === 'invalid' ? 'border-red-300' : ''
+                  }`}
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  {slugStatus === 'checking' && (
+                    <Loader2 className="h-4 w-4 text-gray-400 animate-spin" />
+                  )}
+                  {slugStatus === 'valid' && (
+                    <Check className="h-4 w-4 text-green-600" />
+                  )}
+                  {slugStatus === 'invalid' && (
+                    <X className="h-4 w-4 text-red-600" />
+                  )}
+                </div>
+              </div>
+            </div>
+            {slugStatus === 'valid' && (
+              <p className="text-sm text-green-600 flex items-center">
+                <Check className="h-3 w-3 mr-1" />
+                Perfect! This URL is available
+              </p>
+            )}
+            {(errors.slug || slugError) && (
+              <p className="text-sm text-red-600">{errors.slug || slugError}</p>
+            )}
+            <p className="text-sm text-gray-600">
+              This will be your event's public website address. Auto-generated from your event name, but you can customize it.
+            </p>
+          </div>
+
           {/* Dates */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
