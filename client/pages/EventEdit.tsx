@@ -331,20 +331,72 @@ export default function EventEdit() {
                   {sidebarSections.map((sectionItem) => {
                     const Icon = sectionItem.icon;
                     const isActive = currentSectionId === sectionItem.id;
+                    const isCustomizations = sectionItem.id === "customizations";
+                    const isExpanded = expandedMenus.includes(sectionItem.id);
+                    const hasActiveSubmenu = sectionItem.submenu?.some(sub => sub.id === currentSectionId);
 
                     return (
-                      <Link
-                        key={sectionItem.id}
-                        to={`/app/${eventId}/${sectionItem.id}`}
-                        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                          isActive
-                            ? "bg-emerald-50 text-emerald-700 border-l-2 border-emerald-600"
-                            : "text-green-700 hover:bg-green-50 hover:text-emerald-600"
-                        }`}
-                      >
-                        <Icon className="h-4 w-4 mr-3" />
-                        {sectionItem.label}
-                      </Link>
+                      <div key={sectionItem.id}>
+                        {sectionItem.submenu ? (
+                          // Expandable menu item
+                          <button
+                            onClick={() => toggleMenu(sectionItem.id)}
+                            className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                              hasActiveSubmenu
+                                ? "bg-emerald-50 text-emerald-700"
+                                : "text-green-700 hover:bg-green-50 hover:text-emerald-600"
+                            }`}
+                          >
+                            <div className="flex items-center">
+                              <Icon className="h-4 w-4 mr-3" />
+                              {sectionItem.label}
+                            </div>
+                            {isExpanded ? (
+                              <ChevronDown className="h-4 w-4" />
+                            ) : (
+                              <ChevronRight className="h-4 w-4" />
+                            )}
+                          </button>
+                        ) : (
+                          // Regular menu item
+                          <Link
+                            to={`/app/${eventId}/${sectionItem.id}`}
+                            className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                              isActive
+                                ? "bg-emerald-50 text-emerald-700 border-l-2 border-emerald-600"
+                                : "text-green-700 hover:bg-green-50 hover:text-emerald-600"
+                            }`}
+                          >
+                            <Icon className="h-4 w-4 mr-3" />
+                            {sectionItem.label}
+                          </Link>
+                        )}
+
+                        {/* Submenu items */}
+                        {sectionItem.submenu && isExpanded && (
+                          <div className="ml-4 mt-1 space-y-1">
+                            {sectionItem.submenu.map((subItem) => {
+                              const SubIcon = subItem.icon;
+                              const isSubActive = currentSectionId === subItem.id;
+
+                              return (
+                                <Link
+                                  key={subItem.id}
+                                  to={`/app/${eventId}/${subItem.id}`}
+                                  className={`flex items-center px-3 py-2 rounded-md text-sm transition-colors ${
+                                    isSubActive
+                                      ? "bg-emerald-100 text-emerald-700 border-l-2 border-emerald-600"
+                                      : "text-green-600 hover:bg-green-50 hover:text-emerald-600"
+                                  }`}
+                                >
+                                  <SubIcon className="h-3 w-3 mr-3" />
+                                  {subItem.label}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
                     );
                   })}
                 </nav>
