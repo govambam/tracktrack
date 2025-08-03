@@ -112,6 +112,11 @@ export default function MyTrips() {
       }
 
       console.log('Successfully loaded events, count:', data?.length || 0);
+      console.log('Events with publishing info:', data?.map(e => ({
+        name: e.name,
+        is_published: e.is_published,
+        slug: e.slug
+      })));
       setEvents(data || []);
     } catch (error) {
       console.error('Error loading events:', error);
