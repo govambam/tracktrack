@@ -154,8 +154,8 @@ export default function Summary() {
       <TripCreationStepper
         onNext={handleConfirm}
         onPrevious={handlePrevious}
-        nextLabel="Create Event"
-        nextDisabled={false}
+        nextLabel={creating ? "Creating Event..." : "Create Event"}
+        nextDisabled={creating}
       />
 
       <Card className="border-emerald-200 bg-emerald-50">
