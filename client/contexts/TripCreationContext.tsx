@@ -200,11 +200,13 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify(eventData)
       });
 
-      const result = await response.json();
-
       if (!response.ok) {
-        return { success: false, error: result.error || 'Failed to save event' };
+        const errorText = await response.text();
+        console.error('Save event error:', response.status, errorText);
+        return { success: false, error: `Failed to save event: ${response.status}` };
       }
+
+      const result = await response.json();
 
       // Update local state with the saved event ID if this was a new event
       if (!tripData.id && result.event?.id) {
