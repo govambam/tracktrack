@@ -127,31 +127,55 @@ export default function PublicEvent() {
 
       setEventData(event);
 
-      // Load courses
-      const { data: coursesData } = await supabase
-        .from('event_courses')
-        .select('*')
-        .eq('event_id', event.id)
-        .order('display_order', { ascending: true });
+      // Load courses (gracefully handle if table doesn't exist)
+      try {
+        const { data: coursesData, error: coursesError } = await supabase
+          .from('event_courses')
+          .select('*')
+          .eq('event_id', event.id)
+          .order('display_order', { ascending: true });
 
-      setCourses(coursesData || []);
+        if (coursesError && coursesError.code !== '42P01') {
+          console.error('Error loading courses:', coursesError);
+        } else {
+          setCourses(coursesData || []);
+        }
+      } catch (err) {
+        console.error('Courses table may not exist:', err);
+      }
 
-      // Load customization
-      const { data: customizationData } = await supabase
-        .from('event_customization')
-        .select('*')
-        .eq('event_id', event.id)
-        .single();
+      // Load customization (gracefully handle if table doesn't exist)
+      try {
+        const { data: customizationData, error: customizationError } = await supabase
+          .from('event_customization')
+          .select('*')
+          .eq('event_id', event.id)
+          .single();
 
-      setCustomization(customizationData || {});
+        if (customizationError && customizationError.code !== 'PGRST116' && customizationError.code !== '42P01') {
+          console.error('Error loading customization:', customizationError);
+        } else {
+          setCustomization(customizationData || {});
+        }
+      } catch (err) {
+        console.error('Customization table may not exist:', err);
+      }
 
-      // Load rules
-      const { data: rulesData } = await supabase
-        .from('event_rules')
-        .select('*')
-        .eq('event_id', event.id);
+      // Load rules (gracefully handle if table doesn't exist)
+      try {
+        const { data: rulesData, error: rulesError } = await supabase
+          .from('event_rules')
+          .select('*')
+          .eq('event_id', event.id);
 
-      setRules(rulesData || []);
+        if (rulesError && rulesError.code !== '42P01') {
+          console.error('Error loading rules:', rulesError);
+        } else {
+          setRules(rulesData || []);
+        }
+      } catch (err) {
+        console.error('Rules table may not exist:', err);
+      }
 
     } catch (err) {
       console.error('Error loading event:', err);
