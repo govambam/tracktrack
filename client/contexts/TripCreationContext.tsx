@@ -28,6 +28,7 @@ export interface TripData {
 
   // Basic Info
   tripName: string;
+  slug?: string;
   startDate: string;
   endDate: string;
   location: string;
