@@ -236,7 +236,8 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         location: tripData.location.trim(),
         description: tripData.description?.trim() || null,
         logo_url: tripData.bannerImage?.trim() || null,
-        is_private: tripData.customization?.isPrivate || false
+        is_private: tripData.customization?.isPrivate || false,
+        buy_in: tripData.buyIn || 0
       };
 
       console.log('Saving event with data:', eventData);
@@ -268,6 +269,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
             description: eventData.description,
             logo_url: eventData.logo_url,
             is_private: eventData.is_private,
+            buy_in: eventData.buy_in,
             updated_at: new Date().toISOString()
           })
           .eq('id', tripData.id)
@@ -290,7 +292,8 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
             location: eventData.location,
             description: eventData.description,
             logo_url: eventData.logo_url,
-            is_private: eventData.is_private
+            is_private: eventData.is_private,
+            buy_in: eventData.buy_in
           })
           .select()
           .single();
@@ -413,16 +416,38 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         return { success: false, error: customizationError.message };
       }
 
+      // Load skills contests data
+      const { data: skillsContestsData, error: skillsContestsError } = await supabase
+        .from('skills_contests')
+        .select('*')
+        .eq('event_id', eventId);
+
+      if (skillsContestsError) {
+        console.error('Error loading skills contests:', skillsContestsError);
+        return { success: false, error: skillsContestsError.message };
+      }
+
       // Convert database data to TripData format
-      const rounds: Round[] = roundsData.map(round => ({
-        id: round.id,
-        courseName: round.course_name,
-        date: round.round_date,
-        time: round.tee_time || '',
-        holes: round.holes,
-        yardage: '',
-        skillsContests: { enabled: false, holes: '' }
-      }));
+      const rounds: Round[] = roundsData.map(round => {
+        // Find skills contests for this round
+        const roundSkillsContests = skillsContestsData
+          ?.filter(contest => contest.round_id === round.id)
+          ?.map(contest => ({
+            id: contest.id,
+            hole: contest.hole,
+            type: contest.contest_type as 'longest_drive' | 'closest_to_pin'
+          })) || [];
+
+        return {
+          id: round.id,
+          courseName: round.course_name,
+          courseUrl: round.course_url,
+          date: round.round_date,
+          time: round.tee_time || '',
+          holes: round.holes,
+          skillsContests: roundSkillsContests
+        };
+      });
 
       const players: Player[] = playersData.map(player => ({
         id: player.id,
@@ -443,7 +468,6 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         closestToPin: 0,
         other: ''
       };
-      let buyIn: number | undefined = undefined;
 
       prizesData.forEach(prize => {
         switch (prize.category) {
@@ -463,11 +487,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
             contestPrizes.closestToPin = prize.amount;
             break;
           case 'custom':
-            if (prize.description === '__BUY_IN__') {
-              buyIn = prize.amount;
-            } else {
-              contestPrizes.other = prize.description;
-            }
+            contestPrizes.other = prize.description;
             break;
         }
       });
@@ -483,7 +503,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         rounds,
         scoringFormat: 'stroke-play', // Default, could be determined from rounds data
         players,
-        buyIn,
+        buyIn: eventData.buy_in || undefined,
         payoutStructure: payoutStructure.champion > 0 || payoutStructure.runnerUp > 0 || payoutStructure.third > 0 ? payoutStructure : undefined,
         contestPrizes: contestPrizes.longestDrive > 0 || contestPrizes.closestToPin > 0 || contestPrizes.other ? contestPrizes : undefined,
         travelInfo: travelData ? {
@@ -531,7 +551,17 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
       console.log('Saving rounds for event:', tripData.id);
 
-      // Delete existing rounds first
+      // Delete existing rounds and skills contests first
+      const { error: deleteSkillsError } = await supabase
+        .from('skills_contests')
+        .delete()
+        .eq('event_id', tripData.id);
+
+      if (deleteSkillsError) {
+        console.error('Error deleting existing skills contests:', deleteSkillsError);
+        return { success: false, error: deleteSkillsError.message };
+      }
+
       const { error: deleteError } = await supabase
         .from('event_rounds')
         .delete()
@@ -547,6 +577,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         const roundsDataForDB = rounds.map(round => ({
           event_id: tripData.id,
           course_name: round.courseName,
+          course_url: round.courseUrl || null,
           round_date: round.date,
           tee_time: round.time || null,
           holes: round.holes || 18,
@@ -555,17 +586,49 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
         console.log('Inserting rounds data:', roundsDataForDB);
 
-        const { error: insertError } = await supabase
+        const { data: insertedRounds, error: insertError } = await supabase
           .from('event_rounds')
-          .insert(roundsDataForDB);
+          .insert(roundsDataForDB)
+          .select();
 
         if (insertError) {
           console.error('Error inserting rounds:', insertError);
           return { success: false, error: insertError.message };
         }
+
+        // Now insert skills contests for each round
+        const skillsContestsData = [];
+        for (let i = 0; i < rounds.length; i++) {
+          const round = rounds[i];
+          const insertedRound = insertedRounds[i];
+
+          if (round.skillsContests && round.skillsContests.length > 0) {
+            for (const contest of round.skillsContests) {
+              skillsContestsData.push({
+                event_id: tripData.id,
+                round_id: insertedRound.id,
+                hole: contest.hole,
+                contest_type: contest.type
+              });
+            }
+          }
+        }
+
+        if (skillsContestsData.length > 0) {
+          console.log('Inserting skills contests data:', skillsContestsData);
+
+          const { error: skillsInsertError } = await supabase
+            .from('skills_contests')
+            .insert(skillsContestsData);
+
+          if (skillsInsertError) {
+            console.error('Error inserting skills contests:', skillsInsertError);
+            return { success: false, error: skillsInsertError.message };
+          }
+        }
       }
 
-      console.log('Rounds saved successfully');
+      console.log('Rounds and skills contests saved successfully');
       return { success: true };
     } catch (error) {
       console.error('Error saving rounds:', error);
@@ -700,15 +763,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // Save buy-in amount as a special entry (not a prize category)
-      if (tripData.buyIn && tripData.buyIn > 0) {
-        prizesData.push({
-          event_id: tripData.id,
-          category: 'custom',
-          amount: tripData.buyIn,
-          description: '__BUY_IN__' // Special marker to identify buy-in
-        });
-      }
+      // Note: buy-in is now stored in the events table directly, no need to store in prizes
 
       if (prizesData.length > 0) {
         const { error: insertError } = await supabase
