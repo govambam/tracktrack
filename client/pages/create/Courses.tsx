@@ -346,25 +346,14 @@ export default function Courses() {
 
                 {/* Skills Contests */}
                 <div className="space-y-4 border-t border-green-200 pt-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label className="text-green-800 font-medium flex items-center">
-                        <Trophy className="h-4 w-4 mr-1 text-emerald-600" />
-                        Skills Contests
-                      </Label>
-                      <p className="text-sm text-green-600">
-                        Add contests like longest drive or closest to pin
-                      </p>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => addSkillsContest(round.id)}
-                      className="border-green-200 text-green-700 hover:bg-green-50"
-                    >
-                      <Plus className="h-4 w-4 mr-1" />
-                      Add Contest
-                    </Button>
+                  <div>
+                    <Label className="text-green-800 font-medium flex items-center">
+                      <Trophy className="h-4 w-4 mr-1 text-emerald-600" />
+                      Skills Contests
+                    </Label>
+                    <p className="text-sm text-green-600">
+                      Add contests like longest drive or closest to pin
+                    </p>
                   </div>
 
                   {round.skillsContests && round.skillsContests.length > 0 && (
@@ -407,6 +396,16 @@ export default function Courses() {
                       ))}
                     </div>
                   )}
+
+                  {/* Add Contest Button */}
+                  <Button
+                    variant="outline"
+                    onClick={() => addSkillsContest(round.id)}
+                    className="w-full border-green-200 text-green-700 hover:bg-green-50 border-dashed"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Contest
+                  </Button>
                 </div>
               </CardContent>
             </Card>
