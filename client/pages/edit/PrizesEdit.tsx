@@ -37,7 +37,11 @@ export default function PrizesEdit() {
 
   useEffect(() => {
     // Update local state when context data changes
-    if (tripData.buyIn !== undefined) setBuyIn(tripData.buyIn);
+    console.log('PrizesEdit: tripData changed, buyIn:', tripData.buyIn);
+    if (tripData.buyIn !== undefined) {
+      console.log('PrizesEdit: Setting buyIn to:', tripData.buyIn);
+      setBuyIn(tripData.buyIn);
+    }
     if (tripData.payoutStructure) {
       setEnablePayout(true);
       setPayoutStructure(tripData.payoutStructure);
