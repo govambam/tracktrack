@@ -122,13 +122,19 @@ export default function Settings() {
         updated_at: new Date().toISOString()
       };
 
-      const { error } = await supabase
+      const upsertData = {
+        id: profile.id,
+        email: profile.email,
+        ...updates
+      };
+
+      console.log('Updating profile with data:', upsertData);
+
+      const { data, error } = await supabase
         .from('profiles')
-        .upsert({
-          id: profile.id,
-          email: profile.email,
-          ...updates
-        });
+        .upsert(upsertData);
+
+      console.log('Supabase upsert response:', { data, error });
 
       if (error) throw error;
 
