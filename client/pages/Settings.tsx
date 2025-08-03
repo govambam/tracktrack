@@ -8,6 +8,33 @@ import { User, Mail, Calendar, Bell, Shield, CreditCard } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function Settings() {
+  const [userEmail, setUserEmail] = useState("");
+  const [userDisplayName, setUserDisplayName] = useState("");
+  const [joinDate, setJoinDate] = useState("");
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (user) {
+        setUserEmail(user.email || "");
+        setUserDisplayName(user.email?.split('@')[0] || "User");
+        setJoinDate(new Date(user.created_at).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long'
+        }));
+      } else {
+        // Fallback to localStorage
+        const email = localStorage.getItem("userEmail") || "";
+        setUserEmail(email);
+        setUserDisplayName(email.split('@')[0] || "User");
+        setJoinDate("Recently joined");
+      }
+    };
+
+    getUserInfo();
+  }, []);
+
   return (
     <div className="space-y-8">
       {/* Header */}
