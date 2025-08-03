@@ -286,17 +286,94 @@ export default function CoursesEdit() {
                   </div>
                 </div>
 
-                {/* Course Details */}
+                {/* Course URL */}
                 <div className="space-y-2">
                   <Label className="text-green-800 font-medium">
-                    Course Yardage (Optional)
+                    Course Website (Optional)
                   </Label>
                   <Input
-                    value={round.yardage}
-                    onChange={(e) => updateRound(round.id, 'yardage', e.target.value)}
-                    placeholder="e.g., 6,800 yards"
+                    value={round.courseUrl || ''}
+                    onChange={(e) => updateRound(round.id, 'courseUrl', e.target.value)}
+                    placeholder="e.g., https://www.pebblebeach.com"
                     className="border-green-200 focus:border-emerald-500"
                   />
+                </div>
+
+                {/* Skills Contests */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-green-800 font-medium flex items-center">
+                      <Trophy className="h-4 w-4 mr-1 text-emerald-600" />
+                      Skills Contests
+                    </Label>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => addSkillsContest(round.id)}
+                      className="border-green-200 text-green-700 hover:bg-green-50"
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add Contest
+                    </Button>
+                  </div>
+
+                  {round.skillsContests && round.skillsContests.length > 0 ? (
+                    <div className="space-y-2">
+                      {round.skillsContests.map((contest) => (
+                        <div key={contest.id} className="flex items-center gap-2 p-2 border border-green-200 rounded bg-white">
+                          <div className="flex-1">
+                            <Label className="text-xs text-green-700">Hole</Label>
+                            <Select
+                              value={contest.hole.toString()}
+                              onValueChange={(value) => updateSkillsContest(round.id, contest.id, 'hole', parseInt(value))}
+                            >
+                              <SelectTrigger className="h-8 border-green-200">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {Array.from({ length: round.holes }, (_, i) => (
+                                  <SelectItem key={i + 1} value={(i + 1).toString()}>
+                                    Hole {i + 1}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div className="flex-1">
+                            <Label className="text-xs text-green-700">Contest Type</Label>
+                            <Select
+                              value={contest.type}
+                              onValueChange={(value) => updateSkillsContest(round.id, contest.id, 'type', value)}
+                            >
+                              <SelectTrigger className="h-8 border-green-200">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="longest_drive">Longest Drive</SelectItem>
+                                <SelectItem value="closest_to_pin">Closest to Pin</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeSkillsContest(round.id, contest.id)}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-green-600 italic">
+                      No skills contests added for this round
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>
