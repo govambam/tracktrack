@@ -1,4 +1,4 @@
-// Safe fetch utility that handles response body consumption issues
+// Safe fetch utility that completely avoids response body consumption issues
 export async function safeFetch(url: string, options: RequestInit = {}): Promise<{
   ok: boolean;
   status: number;
@@ -8,12 +8,11 @@ export async function safeFetch(url: string, options: RequestInit = {}): Promise
   error?: string;
 }> {
   console.log('SafeFetch: Making request to', url);
-  
+
   try {
-    // Create a completely new fetch request
+    // Create the fetch request
     const response = await fetch(url, {
       ...options,
-      // Ensure we get a fresh response
       cache: 'no-cache',
       headers: {
         ...options.headers,
@@ -21,48 +20,50 @@ export async function safeFetch(url: string, options: RequestInit = {}): Promise
     });
 
     console.log('SafeFetch: Response received', response.status, response.statusText);
-    console.log('SafeFetch: Body used status:', response.bodyUsed);
 
-    // Check if body is already consumed
-    if (response.bodyUsed) {
-      console.error('SafeFetch: Response body already consumed');
+    // For error responses, don't try to read the body at all
+    if (!response.ok) {
+      console.log('SafeFetch: Non-OK response, not reading body to avoid consumption issues');
       return {
         ok: false,
         status: response.status,
         statusText: response.statusText,
-        error: 'Response body already consumed'
+        error: `HTTP ${response.status}: ${response.statusText}`
       };
     }
 
-    // Read response as text (safest method)
-    let responseText: string;
-    try {
-      responseText = await response.text();
-      console.log('SafeFetch: Successfully read response text, length:', responseText.length);
-    } catch (readError) {
-      console.error('SafeFetch: Failed to read response text:', readError);
-      return {
-        ok: false,
-        status: response.status,
-        statusText: response.statusText,
-        error: 'Failed to read response body'
-      };
-    }
-
-    // Parse JSON if response is successful
+    // Only read body for successful responses
     let data: any = undefined;
-    if (response.ok && responseText) {
-      try {
-        data = JSON.parse(responseText);
-        console.log('SafeFetch: Successfully parsed JSON');
-      } catch (parseError) {
-        console.warn('SafeFetch: Failed to parse JSON, returning text:', parseError);
-        // Don't treat this as an error, some responses might not be JSON
+    let responseText = '';
+
+    try {
+      // Clone the response before reading to be extra safe
+      const responseClone = response.clone();
+      responseText = await responseClone.text();
+      console.log('SafeFetch: Successfully read response text, length:', responseText.length);
+
+      if (responseText) {
+        try {
+          data = JSON.parse(responseText);
+          console.log('SafeFetch: Successfully parsed JSON');
+        } catch (parseError) {
+          console.warn('SafeFetch: Response is not JSON, returning as text');
+          // Not an error - some responses might not be JSON
+        }
       }
+    } catch (readError) {
+      console.error('SafeFetch: Failed to read successful response:', readError);
+      // Even if we can't read the body, we know the request was successful
+      return {
+        ok: true,
+        status: response.status,
+        statusText: response.statusText,
+        error: 'Could not read response body'
+      };
     }
 
     return {
-      ok: response.ok,
+      ok: true,
       status: response.status,
       statusText: response.statusText,
       data,
