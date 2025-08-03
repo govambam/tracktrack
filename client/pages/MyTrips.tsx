@@ -70,10 +70,16 @@ export default function MyTrips() {
         .order('created_at', { ascending: false });
 
       if (error) {
-        console.error('Supabase error loading events:', error);
+        console.error('Supabase error loading events:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
+        console.error('Full error object:', JSON.stringify(error, null, 2));
         toast({
           title: "Error",
-          description: error.message || "Failed to load events",
+          description: error.message || error.details || "Failed to load events",
           variant: "destructive",
         });
         return;
