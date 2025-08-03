@@ -61,6 +61,30 @@ export default function MyTrips() {
       }
 
       console.log('Session found, loading events directly from Supabase');
+      console.log('User ID:', session.user.id);
+
+      // Test if events table exists by doing a simple count first
+      console.log('Testing events table access...');
+      const { count, error: countError } = await supabase
+        .from('events')
+        .select('*', { count: 'exact', head: true });
+
+      if (countError) {
+        console.error('Events table access test failed:', {
+          message: countError.message,
+          details: countError.details,
+          hint: countError.hint,
+          code: countError.code
+        });
+        toast({
+          title: "Database Error",
+          description: `Table access failed: ${countError.message}`,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log('Events table accessible, total count:', count);
 
       // Use direct Supabase calls instead of server routes
       const { data, error } = await supabase
