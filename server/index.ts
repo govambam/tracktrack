@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleSupabaseTest } from "./routes/supabase-test";
+import { handleAuthTest } from "./routes/auth-test";
 
 export function createServer() {
   const app = express();
