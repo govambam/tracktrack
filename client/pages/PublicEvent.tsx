@@ -5,17 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { supabase } from "@/lib/supabase";
-import { 
-  Calendar, 
-  MapPin, 
-  Users, 
-  Trophy, 
-  Target, 
-  Plane, 
+import {
+  Calendar,
+  MapPin,
+  Users,
+  Trophy,
+  Target,
+  Plane,
   Lock,
   AlertTriangle,
   Clock,
-  Golf,
   DollarSign
 } from "lucide-react";
 
