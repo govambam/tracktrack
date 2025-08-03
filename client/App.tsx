@@ -29,7 +29,7 @@ import ScoringEdit from "./pages/edit/ScoringEdit";
 import PlayersEdit from "./pages/edit/PlayersEdit";
 import PrizesEdit from "./pages/edit/PrizesEdit";
 import TravelEdit from "./pages/edit/TravelEdit";
-import CustomizationEdit from "./pages/edit/CustomizationEdit";
+import CustomizationsEdit from "./pages/edit/CustomizationsEdit";
 import SettingsEdit from "./pages/edit/SettingsEdit";
 import PublicEvent from "./pages/PublicEvent";
 import NotFound from "./pages/NotFound";
