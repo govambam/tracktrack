@@ -793,7 +793,10 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         }
 
         // Sync courses to event_courses table
+        console.log('About to sync courses for event:', tripData.id);
+        console.log('Rounds data for sync:', rounds.map(r => ({ courseName: r.courseName, id: r.id })));
         await syncCoursesToEventCourses(tripData.id, rounds);
+        console.log('Course sync completed');
       }
 
       console.log("Rounds and skills contests saved successfully");
