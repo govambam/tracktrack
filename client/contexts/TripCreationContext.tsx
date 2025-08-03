@@ -423,6 +423,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         }));
 
         console.log('Inserting courses data:', coursesData);
+        console.log('Event ID for courses:', eventId);
 
         const { error: insertError } = await supabase
           .from('event_courses')
