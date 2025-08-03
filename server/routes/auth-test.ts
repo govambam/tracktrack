@@ -23,6 +23,19 @@ export const handleAuthTest: RequestHandler = async (req, res) => {
       keyPrefix: supabaseAnonKey.substring(0, 20) + '...'
     });
 
+    // First test basic Supabase connection
+    try {
+      console.log('Testing basic Supabase connection...');
+      const { data: testData, error: testError } = await supabase
+        .from('test_messages')
+        .select('count')
+        .limit(1);
+
+      console.log('Supabase connection test:', { testData, testError });
+    } catch (connError) {
+      console.log('Supabase connection failed:', connError);
+    }
+
     // Test signup
     const { data, error } = await supabase.auth.signUp({
       email,
