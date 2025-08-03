@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
-import { Settings, Trash2, AlertTriangle, Copy, ExternalLink } from "lucide-react";
+import { Settings, Trash2, AlertTriangle, Copy, ExternalLink, Globe, Eye, EyeOff, Share } from "lucide-react";
 
 export default function SettingsEdit() {
   const { eventId } = useParams();
@@ -20,8 +21,146 @@ export default function SettingsEdit() {
 
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
   const [deleting, setDeleting] = useState(false);
+  const [eventInfo, setEventInfo] = useState<any>(null);
+  const [publishing, setPublishing] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const eventName = tripData?.tripName || 'this event';
+
+  useEffect(() => {
+    loadEventInfo();
+  }, [eventId]);
+
+  const loadEventInfo = async () => {
+    if (!eventId) return;
+
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('events')
+        .select('is_published, is_private, slug, created_at')
+        .eq('id', eventId)
+        .single();
+
+      if (error) {
+        console.error('Error loading event info:', error);
+        return;
+      }
+
+      setEventInfo(data);
+    } catch (error) {
+      console.error('Error loading event info:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePublish = async () => {
+    if (!eventId) return;
+
+    setPublishing(true);
+
+    try {
+      const { data, error } = await supabase
+        .from('events')
+        .update({
+          is_published: true,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', eventId)
+        .select('slug')
+        .single();
+
+      if (error) {
+        console.error('Error publishing event:', error);
+        toast({
+          title: "Publish Failed",
+          description: error.message || "Failed to publish event",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Reload event info to get the generated slug
+      await loadEventInfo();
+
+      toast({
+        title: "Event Published",
+        description: "Your event is now live and accessible to the public",
+      });
+
+    } catch (error) {
+      console.error('Error publishing event:', error);
+      toast({
+        title: "Publish Failed",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setPublishing(false);
+    }
+  };
+
+  const handleUnpublish = async () => {
+    if (!eventId) return;
+
+    setPublishing(true);
+
+    try {
+      const { error } = await supabase
+        .from('events')
+        .update({
+          is_published: false,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', eventId);
+
+      if (error) {
+        console.error('Error unpublishing event:', error);
+        toast({
+          title: "Unpublish Failed",
+          description: error.message || "Failed to unpublish event",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      await loadEventInfo();
+
+      toast({
+        title: "Event Unpublished",
+        description: "Your event is no longer publicly accessible",
+      });
+
+    } catch (error) {
+      console.error('Error unpublishing event:', error);
+      toast({
+        title: "Unpublish Failed",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setPublishing(false);
+    }
+  };
+
+  const copyPublicUrl = () => {
+    if (!eventInfo?.slug) return;
+
+    const url = `${window.location.origin}/events/${eventInfo.slug}`;
+    navigator.clipboard.writeText(url).then(() => {
+      toast({
+        title: "URL Copied",
+        description: "Public event URL has been copied to clipboard",
+      });
+    }).catch(() => {
+      toast({
+        title: "Copy Failed",
+        description: "Could not copy URL to clipboard",
+        variant: "destructive",
+      });
+    });
+  };
 
   const handleDeleteEvent = async () => {
     if (!eventId || deleteConfirmText !== eventName) return;
@@ -85,6 +224,125 @@ export default function SettingsEdit() {
 
   return (
     <div className="space-y-6">
+      {/* Publishing Controls */}
+      <Card className="border-blue-100">
+        <CardHeader>
+          <CardTitle className="text-lg text-blue-900 flex items-center">
+            <Globe className="h-5 w-5 mr-2 text-blue-600" />
+            Event Publishing
+          </CardTitle>
+          <CardDescription className="text-blue-600">
+            Make your event accessible to the public with a custom URL
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent className="space-y-4">
+          {loading ? (
+            <div className="text-center py-4">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center justify-between p-4 border border-blue-200 rounded-lg bg-blue-50">
+                <div className="flex items-center space-x-3">
+                  {eventInfo?.is_published ? (
+                    <>
+                      <Eye className="h-5 w-5 text-green-600" />
+                      <div>
+                        <div className="font-medium text-green-900">Event is Published</div>
+                        <div className="text-sm text-green-600">
+                          {eventInfo.is_private ? "Private event - requires invitation" : "Public event - anyone can view"}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <EyeOff className="h-5 w-5 text-gray-600" />
+                      <div>
+                        <div className="font-medium text-gray-900">Event is Not Published</div>
+                        <div className="text-sm text-gray-600">
+                          Only you can access this event through the editor
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Badge variant={eventInfo?.is_published ? "default" : "outline"}>
+                    {eventInfo?.is_published ? "Published" : "Draft"}
+                  </Badge>
+                  {eventInfo?.is_private && (
+                    <Badge variant="secondary">Private</Badge>
+                  )}
+                </div>
+              </div>
+
+              {eventInfo?.is_published && eventInfo?.slug && (
+                <div className="space-y-2">
+                  <Label className="text-blue-800 font-medium">Public Event URL</Label>
+                  <div className="flex items-center space-x-2">
+                    <Input
+                      value={`${window.location.origin}/events/${eventInfo.slug}`}
+                      readOnly
+                      className="bg-blue-50 border-blue-200"
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={copyPublicUrl}
+                      className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                    >
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => window.open(`/events/${eventInfo.slug}`, '_blank')}
+                      className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex items-center space-x-3">
+                {eventInfo?.is_published ? (
+                  <Button
+                    variant="outline"
+                    onClick={handleUnpublish}
+                    disabled={publishing}
+                    className="border-orange-200 text-orange-700 hover:bg-orange-50"
+                  >
+                    <EyeOff className="h-4 w-4 mr-2" />
+                    {publishing ? 'Unpublishing...' : 'Unpublish Event'}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handlePublish}
+                    disabled={publishing}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    <Share className="h-4 w-4 mr-2" />
+                    {publishing ? 'Publishing...' : 'Publish Event'}
+                  </Button>
+                )}
+              </div>
+
+              <Alert className="border-blue-200 bg-blue-50">
+                <Globe className="h-4 w-4 text-blue-600" />
+                <AlertDescription className="text-blue-700">
+                  <strong>About Publishing:</strong> When you publish your event, it becomes accessible
+                  at a public URL that you can share with participants. {eventInfo?.is_private
+                    ? "Since this is a private event, visitors will need an invitation to access it."
+                    : "Since this is a public event, anyone with the link can view the details."}
+                </AlertDescription>
+              </Alert>
+            </>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Event Information */}
       <Card className="border-green-100">
         <CardHeader>
