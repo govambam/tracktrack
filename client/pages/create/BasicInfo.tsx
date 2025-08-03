@@ -72,15 +72,19 @@ export default function BasicInfo() {
         endDateType: typeof formData.endDate
       });
 
-      // Update basic info in context first
+      // Update basic info in context
       updateBasicInfo(formData);
 
-      // Small delay to ensure context is updated
-      await new Promise(resolve => setTimeout(resolve, 10));
-
       try {
-        // Save to Supabase
-        const result = await saveEvent();
+        // Pass form data directly to saveEvent to avoid timing issues
+        const result = await saveEvent({
+          tripName: formData.tripName,
+          startDate: formData.startDate,
+          endDate: formData.endDate,
+          location: formData.location,
+          description: formData.description,
+          bannerImage: formData.bannerImage
+        });
 
         if (result.success) {
           toast({
