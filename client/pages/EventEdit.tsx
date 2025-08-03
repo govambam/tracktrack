@@ -147,7 +147,7 @@ export default function EventEdit() {
     );
   }
 
-  const currentSection = sidebarSections.find(s => s.id === section) || sidebarSections[0];
+  const currentSection = sidebarSections.find(s => s.id === currentSectionId) || sidebarSections[0];
 
   return (
     <div className="min-h-screen bg-gray-50">
