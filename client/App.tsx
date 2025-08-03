@@ -52,11 +52,24 @@ const App = () => (
                 <Route path="create/prizes" element={<Prizes />} />
                 <Route path="create/travel" element={<Travel />} />
                 <Route path="create/customization" element={<Customization />} />
-                <Route path="create/summary" element={<Summary />} />
-                <Route path="settings" element={<Settings />} />
+              <Route path="create/summary" element={<Summary />} />
+              <Route path="settings" element={<Settings />} />
+
+              {/* Event Editing Routes */}
+              <Route path=":eventId" element={<EventEdit />}>
+                <Route path="basic" element={<BasicInfoEdit />} />
+                <Route path="courses" element={<CoursesEdit />} />
+                <Route path="scoring" element={<div>Scoring Edit - Coming Soon</div>} />
+                <Route path="players" element={<div>Players Edit - Coming Soon</div>} />
+                <Route path="prizes" element={<div>Prizes Edit - Coming Soon</div>} />
+                <Route path="travel" element={<div>Travel Edit - Coming Soon</div>} />
+                <Route path="customization" element={<div>Customization Edit - Coming Soon</div>} />
+                <Route path="settings" element={<SettingsEdit />} />
+                <Route index element={<BasicInfoEdit />} /> {/* Default to basic info */}
               </Route>
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
+            </Route>
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </TripCreationProvider>
