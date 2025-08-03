@@ -49,26 +49,25 @@ export default function MyTrips() {
         }
       });
 
-      let result;
-      try {
-        if (!response.ok) {
-          // Try to read as text first for error messages
-          try {
-            const errorText = await response.text();
-            console.error('Error loading events:', response.status, errorText);
-          } catch (e) {
-            console.error('Error loading events:', response.status, 'Unable to read error details');
-          }
-          toast({
-            title: "Error",
-            description: `Failed to load events: ${response.status}`,
-            variant: "destructive",
-          });
-          return;
+      if (!response.ok) {
+        // Clone response to safely read error text
+        const errorResponse = response.clone();
+        try {
+          const errorText = await errorResponse.text();
+          console.error('Error loading events:', response.status, errorText);
+        } catch (e) {
+          console.error('Error loading events:', response.status, 'Unable to read error details');
         }
+        toast({
+          title: "Error",
+          description: `Failed to load events: ${response.status}`,
+          variant: "destructive",
+        });
+        return;
+      }
 
-        // Only read JSON if response is ok
-        result = await response.json();
+      try {
+        const result = await response.json();
         setEvents(result.events || []);
       } catch (error) {
         console.error('Error parsing response:', error);
