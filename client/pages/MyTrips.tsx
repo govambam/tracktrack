@@ -124,30 +124,35 @@ export default function MyTrips() {
     }
   };
 
-  const handleEditEvent = (event: Event) => {
-    // Convert event data to TripData format
-    const tripData = {
-      id: event.id,
-      tripName: event.name,
-      startDate: event.start_date,
-      endDate: event.end_date,
-      location: event.location,
-      description: event.description || '',
-      bannerImage: event.logo_url || '',
-      rounds: [],
-      scoringFormat: 'stroke-play' as const,
-      players: [],
-      customization: {
-        isPrivate: event.is_private,
-        logoUrl: event.logo_url
-      }
-    };
+  const handleEditEvent = async (event: Event) => {
+    try {
+      console.log('Editing event:', event.id);
 
-    // Load the event data into the context
-    loadEvent(tripData);
-    
-    // Navigate to the basic info page for editing
-    navigate('/app/create/basic-info');
+      // Load complete event data from database
+      const result = await loadCompleteEvent(event.id);
+
+      if (result.success) {
+        toast({
+          title: "Event Loaded",
+          description: "Event data loaded for editing",
+        });
+        // Navigate to the basic info page for editing
+        navigate('/app/create/basic-info');
+      } else {
+        toast({
+          title: "Load Failed",
+          description: result.error || "Failed to load event data",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error loading event for editing:', error);
+      toast({
+        title: "Load Failed",
+        description: "Failed to load event data",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleCreateNew = () => {
