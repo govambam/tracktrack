@@ -1,0 +1,241 @@
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useToast } from "@/hooks/use-toast";
+import { useTripCreation } from "@/contexts/TripCreationContext";
+import { supabase } from "@/lib/supabase";
+import { Plane, Building, Calendar, Info, Save } from "lucide-react";
+
+export default function TravelEdit() {
+  const { eventId } = useParams();
+  const { toast } = useToast();
+  const { state } = useTripCreation();
+  const { tripData } = state;
+
+  const [travelInfo, setTravelInfo] = useState({
+    flightTimes: tripData.travelInfo?.flightTimes || '',
+    accommodations: tripData.travelInfo?.accommodations || '',
+    dailySchedule: tripData.travelInfo?.dailySchedule || ''
+  });
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    // Update local state when context data changes
+    if (tripData.travelInfo) {
+      setTravelInfo({
+        flightTimes: tripData.travelInfo.flightTimes || '',
+        accommodations: tripData.travelInfo.accommodations || '',
+        dailySchedule: tripData.travelInfo.dailySchedule || ''
+      });
+    }
+  }, [tripData.travelInfo]);
+
+  const updateTravelInfo = (field: keyof typeof travelInfo, value: string) => {
+    setTravelInfo(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSave = async () => {
+    if (!eventId) return;
+
+    setSaving(true);
+
+    try {
+      // Check if travel data exists
+      const { data: existingTravel, error: fetchError } = await supabase
+        .from('event_travel')
+        .select('*')
+        .eq('event_id', eventId)
+        .single();
+
+      if (fetchError && fetchError.code !== 'PGRST116') {
+        console.error('Error fetching travel data:', fetchError);
+        toast({
+          title: "Save Failed",
+          description: fetchError.message || "Failed to check existing travel data",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const travelData = {
+        event_id: eventId,
+        flight_info: travelInfo.flightTimes.trim() || null,
+        accommodations: travelInfo.accommodations.trim() || null,
+        daily_schedule: travelInfo.dailySchedule.trim() || null,
+        updated_at: new Date().toISOString()
+      };
+
+      let error;
+
+      if (existingTravel) {
+        // Update existing travel data
+        const { error: updateError } = await supabase
+          .from('event_travel')
+          .update(travelData)
+          .eq('event_id', eventId);
+        error = updateError;
+      } else {
+        // Insert new travel data
+        const { error: insertError } = await supabase
+          .from('event_travel')
+          .insert(travelData);
+        error = insertError;
+      }
+
+      if (error) {
+        console.error('Error saving travel data:', error);
+        toast({
+          title: "Save Failed",
+          description: error.message || "Failed to save travel information",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Travel Information Updated",
+        description: "Travel details have been saved successfully",
+      });
+
+    } catch (error) {
+      console.error('Error saving travel information:', error);
+      toast({
+        title: "Save Failed",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const hasAnyContent = Object.values(travelInfo).some(value => value.trim());
+
+  return (
+    <div className="space-y-6">
+      <Card className="border-green-100">
+        <CardHeader>
+          <CardTitle className="text-lg text-green-900 flex items-center">
+            <Plane className="h-5 w-5 mr-2 text-emerald-600" />
+            Travel Information
+          </CardTitle>
+          <CardDescription className="text-green-600">
+            Add logistics and travel details for your golf event
+          </CardDescription>
+        </CardHeader>
+        
+        <CardContent className="space-y-6">
+          {/* Flight Information */}
+          <Card className="border-green-100 bg-green-50">
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <Plane className="h-4 w-4 text-emerald-600" />
+                  <Label className="text-green-800 font-medium">Flight Information</Label>
+                </div>
+                <Textarea
+                  value={travelInfo.flightTimes}
+                  onChange={(e) => updateTravelInfo('flightTimes', e.target.value)}
+                  placeholder="Include flight times, airlines, confirmation numbers, and any group booking details..."
+                  className="border-green-200 focus:border-emerald-500 bg-white resize-none h-24"
+                />
+                <p className="text-xs text-green-600">
+                  Add departure/arrival times, airport codes, and any group travel arrangements
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Accommodations */}
+          <Card className="border-green-100 bg-green-50">
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <Building className="h-4 w-4 text-emerald-600" />
+                  <Label className="text-green-800 font-medium">Accommodations</Label>
+                </div>
+                <Textarea
+                  value={travelInfo.accommodations}
+                  onChange={(e) => updateTravelInfo('accommodations', e.target.value)}
+                  placeholder="Hotel name, address, check-in/out times, room arrangements, amenities..."
+                  className="border-green-200 focus:border-emerald-500 bg-white resize-none h-24"
+                />
+                <p className="text-xs text-green-600">
+                  Include hotel details, room blocks, special rates, and nearby amenities
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Daily Schedule */}
+          <Card className="border-green-100 bg-green-50">
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <Calendar className="h-4 w-4 text-emerald-600" />
+                  <Label className="text-green-800 font-medium">Daily Schedule</Label>
+                </div>
+                <Textarea
+                  value={travelInfo.dailySchedule}
+                  onChange={(e) => updateTravelInfo('dailySchedule', e.target.value)}
+                  placeholder="Day-by-day itinerary, meal times, activities, meeting points, transportation..."
+                  className="border-green-200 focus:border-emerald-500 bg-white resize-none h-32"
+                />
+                <p className="text-xs text-green-600">
+                  Outline the schedule for each day including tee times, meals, and activities
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Save Button */}
+          <div className="flex justify-end pt-4 border-t">
+            <Button
+              onClick={handleSave}
+              disabled={saving}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+            >
+              <Save className="h-4 w-4 mr-2" />
+              {saving ? 'Saving...' : 'Save Travel Information'}
+            </Button>
+          </div>
+
+          {/* Info Alert */}
+          <Alert className="border-blue-200 bg-blue-50">
+            <Info className="h-4 w-4 text-blue-600" />
+            <AlertDescription className="text-blue-700">
+              <strong>Travel Tips:</strong> Keep all travel information updated and share confirmation 
+              numbers with participants. Consider creating a group chat for real-time coordination 
+              during travel days.
+            </AlertDescription>
+          </Alert>
+
+          {/* Summary */}
+          {hasAnyContent && (
+            <Alert className="border-emerald-200 bg-emerald-50">
+              <Calendar className="h-4 w-4 text-emerald-600" />
+              <AlertDescription className="text-emerald-700">
+                <div className="font-semibold">Travel Information Summary</div>
+                <div className="mt-1 space-y-1 text-sm">
+                  {travelInfo.flightTimes.trim() && (
+                    <div>✓ Flight details provided</div>
+                  )}
+                  {travelInfo.accommodations.trim() && (
+                    <div>✓ Accommodation details provided</div>
+                  )}
+                  {travelInfo.dailySchedule.trim() && (
+                    <div>✓ Daily schedule provided</div>
+                  )}
+                </div>
+              </AlertDescription>
+            </Alert>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
