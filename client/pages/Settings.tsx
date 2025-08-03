@@ -4,36 +4,170 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { User, Mail, Calendar, Bell, Shield, CreditCard } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { User, Mail, Calendar, Bell, Shield, CreditCard, Edit, Save, X } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
+interface ProfileData {
+  id: string;
+  email: string;
+  full_name: string | null;
+  handicap: number | null;
+  bio: string | null;
+  location: string | null;
+  avatar_url: string | null;
+  created_at: string;
+}
+
 export default function Settings() {
-  const [userEmail, setUserEmail] = useState("");
-  const [userDisplayName, setUserDisplayName] = useState("");
-  const [joinDate, setJoinDate] = useState("");
+  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const { toast } = useToast();
+  
+  // Edit form state
+  const [editForm, setEditForm] = useState({
+    full_name: '',
+    handicap: '',
+    bio: '',
+    location: ''
+  });
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (user) {
-        setUserEmail(user.email || "");
-        setUserDisplayName(user.email?.split('@')[0] || "User");
-        setJoinDate(new Date(user.created_at).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long'
-        }));
-      } else {
-        // Fallback to localStorage
-        const email = localStorage.getItem("userEmail") || "";
-        setUserEmail(email);
-        setUserDisplayName(email.split('@')[0] || "User");
-        setJoinDate("Recently joined");
-      }
-    };
-
-    getUserInfo();
+    loadProfile();
   }, []);
+
+  const loadProfile = async () => {
+    try {
+      setLoading(true);
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        throw new Error('No user found');
+      }
+
+      // Get profile from profiles table
+      const { data: profileData, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
+        throw error;
+      }
+
+      const profileInfo: ProfileData = {
+        id: user.id,
+        email: user.email!,
+        full_name: profileData?.full_name || null,
+        handicap: profileData?.handicap || null,
+        bio: profileData?.bio || null,
+        location: profileData?.location || null,
+        avatar_url: profileData?.avatar_url || null,
+        created_at: user.created_at
+      };
+
+      setProfile(profileInfo);
+      
+      // Set edit form with current values
+      setEditForm({
+        full_name: profileInfo.full_name || '',
+        handicap: profileInfo.handicap?.toString() || '',
+        bio: profileInfo.bio || '',
+        location: profileInfo.location || ''
+      });
+      
+    } catch (error) {
+      console.error('Error loading profile:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load profile data",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveProfile = async () => {
+    if (!profile) return;
+    
+    try {
+      setSaving(true);
+      
+      const updates = {
+        full_name: editForm.full_name || null,
+        handicap: editForm.handicap ? parseFloat(editForm.handicap) : null,
+        bio: editForm.bio || null,
+        location: editForm.location || null,
+        updated_at: new Date().toISOString()
+      };
+
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          id: profile.id,
+          email: profile.email,
+          ...updates
+        });
+
+      if (error) throw error;
+
+      // Update local state
+      setProfile({ ...profile, ...updates });
+      setEditDialogOpen(false);
+      
+      toast({
+        title: "Success",
+        description: "Profile updated successfully",
+      });
+      
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update profile",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const formatJoinDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long'
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold text-green-900">Settings</h1>
+          <p className="text-green-600 mt-1">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!profile) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold text-green-900">Settings</h1>
+          <p className="text-red-600 mt-1">Failed to load profile</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -60,12 +194,16 @@ export default function Settings() {
               <div className="flex items-center space-x-4">
                 <Avatar className="h-16 w-16">
                   <AvatarFallback className="bg-emerald-600 text-white text-xl">
-                    {userEmail ? userEmail.substring(0, 2).toUpperCase() : 'U'}
+                    {profile.full_name ? profile.full_name.substring(0, 2).toUpperCase() : profile.email.substring(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">
-                  <h3 className="text-lg font-semibold text-green-900">{userDisplayName}</h3>
-                  <p className="text-green-600">Golf Enthusiast & Event Organizer</p>
+                  <h3 className="text-lg font-semibold text-green-900">
+                    {profile.full_name || profile.email.split('@')[0]}
+                  </h3>
+                  <p className="text-green-600">
+                    {profile.bio || 'Golf Enthusiast & Event Organizer'}
+                  </p>
                   <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">
                     Member
                   </Badge>
@@ -80,23 +218,32 @@ export default function Settings() {
                     <Mail className="h-4 w-4 mr-3 text-emerald-600" />
                     <div>
                       <p className="text-sm text-green-600">Email</p>
-                      <p className="font-medium">{userEmail}</p>
+                      <p className="font-medium">{profile.email}</p>
                     </div>
                   </div>
                   <div className="flex items-center text-green-700">
                     <Calendar className="h-4 w-4 mr-3 text-emerald-600" />
                     <div>
                       <p className="text-sm text-green-600">Member Since</p>
-                      <p className="font-medium">{joinDate}</p>
+                      <p className="font-medium">{formatJoinDate(profile.created_at)}</p>
                     </div>
                   </div>
+                  {profile.location && (
+                    <div className="flex items-center text-green-700">
+                      <User className="h-4 w-4 mr-3 text-emerald-600" />
+                      <div>
+                        <p className="text-sm text-green-600">Location</p>
+                        <p className="font-medium">{profile.location}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center text-green-700">
                     <User className="h-4 w-4 mr-3 text-emerald-600" />
                     <div>
                       <p className="text-sm text-green-600">Handicap</p>
-                      <p className="font-medium">12.4</p>
+                      <p className="font-medium">{profile.handicap || 'Not set'}</p>
                     </div>
                   </div>
                   <div className="flex items-center text-green-700">
@@ -109,9 +256,84 @@ export default function Settings() {
                 </div>
               </div>
               
-              <Button variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
-                Edit Profile
-              </Button>
+              <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit Profile
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle className="text-green-900">Edit Profile</DialogTitle>
+                    <DialogDescription className="text-green-600">
+                      Update your profile information
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="full_name" className="text-green-700">Full Name</Label>
+                      <Input
+                        id="full_name"
+                        value={editForm.full_name}
+                        onChange={(e) => setEditForm({ ...editForm, full_name: e.target.value })}
+                        placeholder="Enter your full name"
+                        className="border-green-200 focus:border-green-500"
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="handicap" className="text-green-700">Golf Handicap</Label>
+                      <Input
+                        id="handicap"
+                        type="number"
+                        step="0.1"
+                        value={editForm.handicap}
+                        onChange={(e) => setEditForm({ ...editForm, handicap: e.target.value })}
+                        placeholder="e.g. 12.4"
+                        className="border-green-200 focus:border-green-500"
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="location" className="text-green-700">Location</Label>
+                      <Input
+                        id="location"
+                        value={editForm.location}
+                        onChange={(e) => setEditForm({ ...editForm, location: e.target.value })}
+                        placeholder="City, State"
+                        className="border-green-200 focus:border-green-500"
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="bio" className="text-green-700">Bio</Label>
+                      <Textarea
+                        id="bio"
+                        value={editForm.bio}
+                        onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
+                        placeholder="Tell us about yourself..."
+                        className="border-green-200 focus:border-green-500 min-h-[80px]"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end space-x-2">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setEditDialogOpen(false)}
+                      disabled={saving}
+                    >
+                      <X className="h-4 w-4 mr-2" />
+                      Cancel
+                    </Button>
+                    <Button 
+                      onClick={handleSaveProfile}
+                      disabled={saving}
+                      className="bg-green-600 hover:bg-green-700 text-white"
+                    >
+                      <Save className="h-4 w-4 mr-2" />
+                      {saving ? 'Saving...' : 'Save Changes'}
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </CardContent>
           </Card>
 
