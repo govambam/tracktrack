@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer, ReactNode } from 'react';
+import { supabase } from '@/lib/supabase';
 
 export interface Round {
   id: string;
