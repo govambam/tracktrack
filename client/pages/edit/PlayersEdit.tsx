@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { Player } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
-import { Users, Plus, Trash2, User, Save } from "lucide-react";
+import { Users, Plus, Trash2, User, Save, Mail, Camera } from "lucide-react";
 
 export default function PlayersEdit() {
   const { eventId } = useParams();
@@ -31,6 +31,7 @@ export default function PlayersEdit() {
       setPlayers([{
         id: generateId(),
         name: '',
+        email: '',
         handicap: undefined,
         image: ''
       }]);
@@ -43,6 +44,7 @@ export default function PlayersEdit() {
     const newPlayer: Player = {
       id: generateId(),
       name: '',
+      email: '',
       handicap: undefined,
       image: ''
     };
@@ -82,6 +84,10 @@ export default function PlayersEdit() {
 
       if (!player.name.trim()) {
         playerErrors.name = 'Player name is required';
+      }
+
+      if (player.email && !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(player.email)) {
+        playerErrors.email = 'Please enter a valid email address';
       }
 
       if (player.handicap !== undefined && (player.handicap < 0 || player.handicap > 54)) {
@@ -124,6 +130,7 @@ export default function PlayersEdit() {
         const playersData = players.map(player => ({
           event_id: eventId,
           full_name: player.name.trim(),
+          email: player.email?.trim() || null,
           handicap: player.handicap || null,
           profile_image: player.image || null
         }));
@@ -227,6 +234,25 @@ export default function PlayersEdit() {
                         )}
                       </div>
 
+                      {/* Email Address */}
+                      <div className="space-y-2">
+                        <Label className="text-green-800 font-medium">
+                          Email Address (Optional)
+                        </Label>
+                        <Input
+                          type="email"
+                          value={player.email || ''}
+                          onChange={(e) => updatePlayer(player.id, 'email', e.target.value)}
+                          placeholder="e.g., john@example.com"
+                          className={`border-green-200 focus:border-emerald-500 ${
+                            errors[player.id]?.email ? 'border-red-300' : ''
+                          }`}
+                        />
+                        {errors[player.id]?.email && (
+                          <p className="text-sm text-red-600">{errors[player.id].email}</p>
+                        )}
+                      </div>
+
                       {/* Handicap */}
                       <div className="space-y-2">
                         <Label className="text-green-800 font-medium">
@@ -247,6 +273,20 @@ export default function PlayersEdit() {
                         {errors[player.id]?.handicap && (
                           <p className="text-sm text-red-600">{errors[player.id].handicap}</p>
                         )}
+                      </div>
+
+                      {/* Profile Picture */}
+                      <div className="space-y-2">
+                        <Label className="text-green-800 font-medium">
+                          Profile Picture URL (Optional)
+                        </Label>
+                        <Input
+                          type="url"
+                          value={player.image || ''}
+                          onChange={(e) => updatePlayer(player.id, 'image', e.target.value)}
+                          placeholder="https://example.com/photo.jpg"
+                          className="border-green-200 focus:border-emerald-500"
+                        />
                       </div>
                     </div>
                   </div>
