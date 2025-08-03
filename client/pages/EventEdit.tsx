@@ -86,6 +86,38 @@ const sidebarSections = [
     label: "Customizations",
     icon: Palette,
     description: "Website content and appearance",
+    submenu: [
+      {
+        id: "customizations/home",
+        label: "Home",
+        icon: Home,
+        description: "Homepage content",
+      },
+      {
+        id: "customizations/courses",
+        label: "Courses",
+        icon: MapPin,
+        description: "Course details",
+      },
+      {
+        id: "customizations/rules",
+        label: "Rules",
+        icon: Target,
+        description: "Tournament rules",
+      },
+      {
+        id: "customizations/leaderboard",
+        label: "Leaderboard",
+        icon: Trophy,
+        description: "Leaderboard settings",
+      },
+      {
+        id: "customizations/travel",
+        label: "Travel",
+        icon: Plane,
+        description: "Travel information",
+      },
+    ],
   },
   {
     id: "settings",
