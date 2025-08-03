@@ -50,16 +50,54 @@ export default function MyTrips() {
         return;
       }
 
-      const response = await fetch('/api/events', {
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        }
-      });
+      console.log('Making fetch request to /api/events');
 
-      // Use arrayBuffer to read response once, then create new Response objects as needed
+      let response;
       try {
-        const responseBuffer = await response.arrayBuffer();
-        const responseText = new TextDecoder().decode(responseBuffer);
+        response = await fetch('/api/events', {
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`
+          }
+        });
+        console.log('Fetch completed, response:', response.status, response.statusText);
+        console.log('Response bodyUsed before reading:', response.bodyUsed);
+      } catch (fetchError) {
+        console.error('Fetch request failed:', fetchError);
+        toast({
+          title: "Error",
+          description: "Network request failed",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Try multiple approaches to read the response
+      let responseText = '';
+      try {
+        if (response.bodyUsed) {
+          console.error('Response body was already consumed before we could read it');
+          toast({
+            title: "Error",
+            description: "Response already consumed - please refresh and try again",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        // Try reading as text first
+        try {
+          responseText = await response.text();
+          console.log('Successfully read response as text, length:', responseText.length);
+        } catch (textError) {
+          console.error('Failed to read response as text:', textError);
+          // Fallback: try to get some basic info
+          toast({
+            title: "Error",
+            description: `Request failed: ${response.status}`,
+            variant: "destructive",
+          });
+          return;
+        }
 
         if (!response.ok) {
           console.error('Error loading events:', response.status, responseText);
@@ -71,15 +109,18 @@ export default function MyTrips() {
           return;
         }
 
-        // Parse JSON from decoded text
+        // Parse JSON from text
         const result = JSON.parse(responseText);
+        console.log('Successfully parsed JSON, events count:', result.events?.length || 0);
         setEvents(result.events || []);
 
       } catch (error) {
-        console.error('Error with events request:', error);
+        console.error('Error processing response:', error);
+        console.error('Error type:', error.constructor.name);
+        console.error('Error message:', error.message);
         toast({
           title: "Error",
-          description: "Failed to load events",
+          description: "Failed to process server response",
           variant: "destructive",
         });
       }
