@@ -21,6 +21,9 @@ export interface Player {
 }
 
 export interface TripData {
+  // Event ID for editing existing events
+  id?: string;
+
   // Basic Info
   tripName: string;
   startDate: string;
