@@ -587,6 +587,20 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       // Load into context
       dispatch({ type: "LOAD_EVENT", payload: completeEventData });
 
+      // Check if we need to sync courses to event_courses table
+      // This handles existing events that might not have event_courses entries yet
+      if (rounds.length > 0) {
+        const { data: existingCourses, error: coursesCheckError } = await supabase
+          .from('event_courses')
+          .select('id')
+          .eq('event_id', eventId);
+
+        if (!coursesCheckError && (!existingCourses || existingCourses.length === 0)) {
+          console.log('No courses found in event_courses, syncing from rounds...');
+          await syncCoursesToEventCourses(eventId, rounds);
+        }
+      }
+
       return { success: true };
     } catch (error) {
       console.error("Error loading complete event:", error);
