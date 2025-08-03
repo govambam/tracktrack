@@ -85,9 +85,22 @@ export default function Settings() {
       
     } catch (error) {
       console.error('Error loading profile:', error);
+
+      // Get detailed error message
+      let errorMessage = "Failed to load profile data";
+      if (error && typeof error === 'object') {
+        if ('message' in error) {
+          errorMessage = error.message;
+        } else if ('error' in error) {
+          errorMessage = error.error;
+        } else {
+          errorMessage = JSON.stringify(error);
+        }
+      }
+
       toast({
         title: "Error",
-        description: "Failed to load profile data",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
