@@ -259,6 +259,8 @@ export default function CoursesCustomization() {
         weather_note: null
       }));
 
+      console.log('Attempting to insert courses data:', coursesData);
+
       const { error: insertError } = await supabase
         .from('event_courses')
         .insert(coursesData);
