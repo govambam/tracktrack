@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, Trophy, Users, Send, Database } from "lucide-react";
-import { supabase } from "@/lib/supabase";
 
 export default function Index() {
   const [testMessage, setTestMessage] = useState("");
