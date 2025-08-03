@@ -62,7 +62,12 @@ export default function TravelCustomization() {
         .single();
 
       if (customizationError && customizationError.code !== 'PGRST116') {
-        console.error('Error loading customization data:', customizationError);
+        console.error('Error loading customization data:', {
+          message: customizationError.message,
+          details: customizationError.details,
+          hint: customizationError.hint,
+          code: customizationError.code
+        });
       } else if (customizationData) {
         setTravelEnabled(customizationData.travel_enabled ?? true);
       }
