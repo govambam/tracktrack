@@ -70,7 +70,7 @@ const App = () => (
                 <Route path="players" element={<PlayersEdit />} />
                 <Route path="prizes" element={<PrizesEdit />} />
                 <Route path="travel" element={<TravelEdit />} />
-                <Route path="customization" element={<CustomizationEdit />} />
+                <Route path="customizations" element={<CustomizationsEdit />} />
                 <Route path="settings" element={<SettingsEdit />} />
                 <Route index element={<BasicInfoEdit />} /> {/* Default to basic info */}
               </Route>
