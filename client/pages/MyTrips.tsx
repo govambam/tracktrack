@@ -34,8 +34,14 @@ export default function MyTrips() {
   }, []);
 
   const loadEvents = async () => {
+    if (isLoadingEvents) {
+      console.log('Already loading events, skipping...');
+      return;
+    }
+
     try {
       setLoading(true);
+      setIsLoadingEvents(true);
       
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
