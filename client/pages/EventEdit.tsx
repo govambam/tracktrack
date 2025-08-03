@@ -45,11 +45,14 @@ const sidebarSections = [
 ];
 
 export default function EventEdit() {
-  const { eventId, section = 'basic' } = useParams();
+  const { eventId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
   const { loadCompleteEvent } = useTripCreation();
+
+  // Extract current section from the pathname
+  const currentSectionId = location.pathname.split('/').pop() || 'basic';
   
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
