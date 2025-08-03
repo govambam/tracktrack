@@ -168,7 +168,12 @@ export default function CoursesCustomization() {
         .order('created_at');
 
       if (roundsError) {
-        console.error('Error loading rounds:', roundsError);
+        console.error('Error loading rounds:', {
+          message: roundsError.message,
+          details: roundsError.details,
+          hint: roundsError.hint,
+          code: roundsError.code
+        });
         toast({
           title: "Sync Failed",
           description: "Failed to load rounds data",
