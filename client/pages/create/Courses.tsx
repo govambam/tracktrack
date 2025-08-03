@@ -9,9 +9,9 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
-import { Round } from "@/contexts/TripCreationContext";
+import { Round, SkillsContest } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, Plus, Trash2, Calendar, Clock, Trophy } from "lucide-react";
+import { MapPin, Plus, Trash2, Calendar, Clock, Trophy, Globe } from "lucide-react";
 
 export default function Courses() {
   const navigate = useNavigate();
@@ -24,11 +24,11 @@ export default function Courses() {
     {
       id: '1',
       courseName: '',
+      courseUrl: '',
       date: '',
       time: '',
       holes: 18,
-      yardage: '',
-      skillsContests: { enabled: false, holes: '' }
+      skillsContests: []
     }
   ]);
 
@@ -48,11 +48,11 @@ export default function Courses() {
     const newRound: Round = {
       id: generateId(),
       courseName: '',
+      courseUrl: '',
       date: '',
       time: '',
       holes: 18,
-      yardage: '',
-      skillsContests: { enabled: false, holes: '' }
+      skillsContests: []
     };
     setRounds([...rounds, newRound]);
   };
@@ -83,15 +83,42 @@ export default function Courses() {
     }
   };
 
-  const updateSkillsContest = (id: string, field: 'enabled' | 'holes', value: boolean | string) => {
-    setRounds(rounds.map(round => 
-      round.id === id 
-        ? { 
-            ...round, 
-            skillsContests: { 
-              ...round.skillsContests,
-              [field]: value 
-            } 
+  const addSkillsContest = (roundId: string) => {
+    const newContest: SkillsContest = {
+      id: generateId(),
+      hole: 1,
+      type: 'longest_drive'
+    };
+
+    setRounds(rounds.map(round =>
+      round.id === roundId
+        ? {
+            ...round,
+            skillsContests: [...(round.skillsContests || []), newContest]
+          }
+        : round
+    ));
+  };
+
+  const updateSkillsContest = (roundId: string, contestId: string, field: 'hole' | 'type', value: number | string) => {
+    setRounds(rounds.map(round =>
+      round.id === roundId
+        ? {
+            ...round,
+            skillsContests: (round.skillsContests || []).map(contest =>
+              contest.id === contestId ? { ...contest, [field]: value } : contest
+            )
+          }
+        : round
+    ));
+  };
+
+  const removeSkillsContest = (roundId: string, contestId: string) => {
+    setRounds(rounds.map(round =>
+      round.id === roundId
+        ? {
+            ...round,
+            skillsContests: (round.skillsContests || []).filter(contest => contest.id !== contestId)
           }
         : round
     ));
