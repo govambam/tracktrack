@@ -45,6 +45,19 @@ export default function CoursesCustomization() {
     try {
       setLoading(true);
 
+      // Check if event_courses table exists
+      const coursesTableExists = await checkTableExists('event_courses');
+      if (!coursesTableExists) {
+        console.error('event_courses table does not exist');
+        toast({
+          title: "Database Setup Required",
+          description: "The event_courses table doesn't exist. Please run the event_courses_table_schema.sql script in Supabase SQL Editor.",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
+
       // Load courses from event_courses table
       const { data: coursesData, error: coursesError } = await supabase
         .from('event_courses')
