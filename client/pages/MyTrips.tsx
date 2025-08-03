@@ -248,7 +248,7 @@ export default function MyTrips() {
             <Card key={event.id} className="border-green-100 hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div className="flex items-start justify-between">
-                  <div className="flex items-center space-x-3">
+                  <div>
                     <div className="text-3xl">🏌��‍♂️</div>
                     <div>
                       <CardTitle className="text-xl text-green-900">{event.name}</CardTitle>
