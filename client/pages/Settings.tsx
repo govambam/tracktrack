@@ -130,9 +130,22 @@ export default function Settings() {
       
     } catch (error) {
       console.error('Error updating profile:', error);
+
+      // Get detailed error message
+      let errorMessage = "Failed to update profile";
+      if (error && typeof error === 'object') {
+        if ('message' in error) {
+          errorMessage = error.message;
+        } else if ('error' in error) {
+          errorMessage = error.error;
+        } else {
+          errorMessage = JSON.stringify(error);
+        }
+      }
+
       toast({
         title: "Error",
-        description: "Failed to update profile",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
