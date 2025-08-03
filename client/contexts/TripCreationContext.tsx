@@ -203,23 +203,18 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify(eventData)
       });
 
-      // Check if response body is already consumed
-      if (response.bodyUsed) {
-        console.error('Response body already consumed in save event');
-        return { success: false, error: 'Request error - please try again' };
-      }
-
-      // Read response body once and handle both success/error cases
+      // Use arrayBuffer to read response once, then decode as needed
       let result;
       try {
-        const responseText = await response.text();
+        const responseBuffer = await response.arrayBuffer();
+        const responseText = new TextDecoder().decode(responseBuffer);
 
         if (!response.ok) {
           console.error('Save event error:', response.status, responseText);
           return { success: false, error: `Failed to save event: ${response.status}` };
         }
 
-        // Parse JSON from text
+        // Parse JSON from decoded text
         result = JSON.parse(responseText);
 
       } catch (error) {
