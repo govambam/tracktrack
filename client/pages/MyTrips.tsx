@@ -49,18 +49,19 @@ export default function MyTrips() {
         }
       });
 
-      const result = await response.json();
-
-      if (response.ok) {
-        setEvents(result.events || []);
-      } else {
-        console.error('Error loading events:', result.error);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error loading events:', response.status, errorText);
         toast({
           title: "Error",
-          description: "Failed to load events",
+          description: `Failed to load events: ${response.status}`,
           variant: "destructive",
         });
+        return;
       }
+
+      const result = await response.json();
+      setEvents(result.events || []);
     } catch (error) {
       console.error('Error loading events:', error);
       toast({
