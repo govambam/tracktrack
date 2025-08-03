@@ -694,6 +694,16 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         }
       }
 
+      // Save buy-in amount as a special entry (not a prize category)
+      if (tripData.buyIn && tripData.buyIn > 0) {
+        prizesData.push({
+          event_id: tripData.id,
+          category: 'custom',
+          amount: tripData.buyIn,
+          description: '__BUY_IN__' // Special marker to identify buy-in
+        });
+      }
+
       if (prizesData.length > 0) {
         const { error: insertError } = await supabase
           .from('event_prizes')
