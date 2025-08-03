@@ -49,19 +49,35 @@ export default function MyTrips() {
         }
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error loading events:', response.status, errorText);
+      let result;
+      try {
+        if (!response.ok) {
+          // Try to read as text first for error messages
+          try {
+            const errorText = await response.text();
+            console.error('Error loading events:', response.status, errorText);
+          } catch (e) {
+            console.error('Error loading events:', response.status, 'Unable to read error details');
+          }
+          toast({
+            title: "Error",
+            description: `Failed to load events: ${response.status}`,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        // Only read JSON if response is ok
+        result = await response.json();
+        setEvents(result.events || []);
+      } catch (error) {
+        console.error('Error parsing response:', error);
         toast({
           title: "Error",
-          description: `Failed to load events: ${response.status}`,
+          description: "Failed to parse server response",
           variant: "destructive",
         });
-        return;
       }
-
-      const result = await response.json();
-      setEvents(result.events || []);
     } catch (error) {
       console.error('Error loading events:', error);
       toast({
