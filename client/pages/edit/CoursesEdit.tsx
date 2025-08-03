@@ -95,11 +95,11 @@ export default function CoursesEdit() {
   };
 
   const updateRound = (id: string, field: keyof Round, value: any) => {
-    setRounds(
-      rounds.map((round) =>
-        round.id === id ? { ...round, [field]: value } : round,
-      ),
+    const updatedRounds = rounds.map((round) =>
+      round.id === id ? { ...round, [field]: value } : round,
     );
+    setRounds(updatedRounds);
+    updateCourses(updatedRounds);
 
     // Clear error for this field
     if (errors[id]?.[field]) {
