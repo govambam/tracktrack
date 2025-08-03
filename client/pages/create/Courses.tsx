@@ -32,6 +32,14 @@ export default function Courses() {
     }
   ]);
 
+  // Update rounds when tripData changes (important for editing existing events)
+  useEffect(() => {
+    if (tripData.rounds.length > 0) {
+      console.log('Updating rounds from tripData:', tripData.rounds);
+      setRounds(tripData.rounds);
+    }
+  }, [tripData.rounds]);
+
   const [errors, setErrors] = useState<Record<string, Record<string, string>>>({});
 
   const generateId = () => Math.random().toString(36).substr(2, 9);
