@@ -7,6 +7,47 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, Trophy, Users, Bug } from "lucide-react";
 
 export default function Index() {
+  const [debugEmail, setDebugEmail] = useState("");
+  const [debugPassword, setDebugPassword] = useState("");
+  const [debugLoading, setDebugLoading] = useState(false);
+  const [debugResult, setDebugResult] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
+
+  const handleDebugAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!debugEmail.trim() || !debugPassword.trim()) return;
+
+    setDebugLoading(true);
+    setDebugResult({ type: null, message: '' });
+
+    try {
+      const response = await fetch('/api/auth-test', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: debugEmail, password: debugPassword }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.details || result.error || `HTTP ${response.status}`);
+      }
+
+      setDebugResult({
+        type: 'success',
+        message: `Auth test successful! User ID: ${result.user?.id}. Email confirmed: ${result.user?.email_confirmed_at ? 'Yes' : 'No'}`
+      });
+    } catch (error) {
+      setDebugResult({
+        type: 'error',
+        message: `Auth test failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      });
+    } finally {
+      setDebugLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
       {/* Hero Section */}
