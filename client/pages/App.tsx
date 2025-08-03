@@ -135,9 +135,11 @@ export default function AppShell() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <div className="flex flex-col space-y-1 p-2">
-                    <p className="text-sm font-medium leading-none">John Doe</p>
+                    <p className="text-sm font-medium leading-none">
+                      {userEmail.split('@')[0] || 'User'}
+                    </p>
                     <p className="text-xs leading-none text-muted-foreground">
-                      test@example.com
+                      {userEmail}
                     </p>
                   </div>
                   <DropdownMenuSeparator />
