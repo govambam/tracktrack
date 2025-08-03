@@ -174,10 +174,17 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       const { tripData } = state;
 
       // Get current session for auth token
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError) {
+        console.error('Session error in saveEvent:', sessionError);
+        return { success: false, error: 'Authentication error - please sign in again' };
+      }
+
       if (!session) {
         return { success: false, error: 'Not authenticated' };
       }
+
+      console.log('Save: Session found, access token length:', session.access_token?.length || 0);
 
       const eventData = {
         name: tripData.tripName,
