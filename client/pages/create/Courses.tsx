@@ -90,17 +90,21 @@ export default function Courses() {
   };
 
   const validateForm = () => {
+    console.log('Validating form with rounds:', rounds);
     const newErrors: Record<string, Record<string, string>> = {};
 
-    rounds.forEach(round => {
+    rounds.forEach((round, index) => {
+      console.log(`Validating round ${index}:`, round);
       const roundErrors: Record<string, string> = {};
 
       if (!round.courseName.trim()) {
         roundErrors.courseName = 'Course name is required';
+        console.log(`Round ${index}: Course name is empty`);
       }
 
       if (!round.date) {
         roundErrors.date = 'Date is required';
+        console.log(`Round ${index}: Date is empty`);
       }
 
       // Tee time is optional
@@ -110,15 +114,20 @@ export default function Courses() {
 
       if (round.holes <= 0 || round.holes > 18) {
         roundErrors.holes = 'Holes must be between 1 and 18';
+        console.log(`Round ${index}: Invalid holes count:`, round.holes);
       }
 
       if (Object.keys(roundErrors).length > 0) {
+        console.log(`Round ${index} has errors:`, roundErrors);
         newErrors[round.id] = roundErrors;
       }
     });
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    const isValid = Object.keys(newErrors).length === 0;
+    console.log('Form validation result:', isValid ? 'PASSED' : 'FAILED');
+    console.log('Errors:', newErrors);
+    return isValid;
   };
 
   const handleNext = async () => {
