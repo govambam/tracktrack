@@ -197,54 +197,23 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
       console.log('Making save request to:', url, 'Method:', method);
 
-      let response;
-      try {
-        response = await fetch(url, {
-          method,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`
-          },
-          body: JSON.stringify(eventData)
-        });
-        console.log('Save fetch completed, response:', response.status, response.statusText);
-        console.log('Response bodyUsed before reading:', response.bodyUsed);
-      } catch (fetchError) {
-        console.error('Save fetch request failed:', fetchError);
-        return { success: false, error: 'Network request failed' };
+      const result = await safeFetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
+        },
+        body: JSON.stringify(eventData)
+      });
+
+      if (!result.ok) {
+        console.error('Save event error:', result.status, result.error || result.text);
+        return { success: false, error: result.error || `Failed to save event: ${result.status}` };
       }
 
-      // Try to read the response safely
-      let result;
-      try {
-        if (response.bodyUsed) {
-          console.error('Save response body was already consumed');
-          return { success: false, error: 'Response already consumed - please try again' };
-        }
-
-        let responseText = '';
-        try {
-          responseText = await response.text();
-          console.log('Successfully read save response as text, length:', responseText.length);
-        } catch (textError) {
-          console.error('Failed to read save response as text:', textError);
-          return { success: false, error: `Request failed: ${response.status}` };
-        }
-
-        if (!response.ok) {
-          console.error('Save event error:', response.status, responseText);
-          return { success: false, error: `Failed to save event: ${response.status}` };
-        }
-
-        // Parse JSON from text
-        result = JSON.parse(responseText);
-        console.log('Successfully parsed save response JSON');
-
-      } catch (error) {
-        console.error('Error processing save response:', error);
-        console.error('Error type:', error.constructor.name);
-        console.error('Error message:', error.message);
-        return { success: false, error: 'Failed to process server response' };
+      if (!result.data) {
+        console.warn('No data in save response');
+        return { success: false, error: 'No response data' };
       }
 
       // Update local state with the saved event ID if this was a new event
