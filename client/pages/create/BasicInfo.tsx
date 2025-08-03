@@ -211,6 +211,11 @@ export default function BasicInfo() {
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
+
+    // Mark as typing if changing the trip name
+    if (field === 'tripName') {
+      setIsUserTyping(true);
+    }
   };
 
   const handleSlugChange = (value: string) => {
@@ -224,10 +229,29 @@ export default function BasicInfo() {
 
     setSlug(cleanSlug);
     setIsSlugEdited(true);
-    setSlugStatus(cleanSlug ? 'checking' : 'invalid');
+    setIsUserTyping(true); // User is actively editing the slug
+    setSlugStatus(cleanSlug ? 'idle' : 'invalid'); // Don't show checking immediately
 
     if (errors.slug) {
       setErrors(prev => ({ ...prev, slug: '' }));
+    }
+  };
+
+  const handleSlugBlur = () => {
+    // Trigger validation immediately when user leaves the field
+    setIsUserTyping(false);
+    if (slug && slugStatus !== 'checking') {
+      setSlugStatus('checking');
+      checkSlugUniqueness(slug);
+    }
+  };
+
+  const handleEventNameBlur = () => {
+    // Trigger validation when user leaves the event name field
+    setIsUserTyping(false);
+    if (slug && !isSlugEdited && slugStatus !== 'checking') {
+      setSlugStatus('checking');
+      checkSlugUniqueness(slug);
     }
   };
 
