@@ -1,30 +1,12 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
-import { useTripCreation } from "@/contexts/TripCreationContext";
-import { supabase } from "@/lib/supabase";
-import { 
-  Palette, 
-  Home, 
-  MapPin, 
-  Target, 
-  Trophy, 
-  Plane, 
-  Plus, 
-  Trash2, 
-  Save,
-  Upload,
-  Eye,
-  EyeOff,
+import {
+  Palette,
+  Home,
+  MapPin,
+  Target,
+  Trophy,
+  Plane,
   Info
 } from "lucide-react";
 
