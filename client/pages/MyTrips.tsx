@@ -44,12 +44,24 @@ export default function MyTrips() {
       setLoading(true);
       setIsLoadingEvents(true);
       
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError) {
+        console.error('Session error:', sessionError);
+        toast({
+          title: "Authentication Error",
+          description: "Please sign in again",
+          variant: "destructive",
+        });
+        return;
+      }
+
       if (!session) {
         console.log('No session found');
         setEvents([]);
         return;
       }
+
+      console.log('Session found, access token length:', session.access_token?.length || 0);
 
       const result = await safeFetch('/api/events', {
         headers: {
