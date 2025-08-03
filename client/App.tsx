@@ -25,7 +25,11 @@ import Settings from "./pages/Settings";
 import EventEdit from "./pages/EventEdit";
 import BasicInfoEdit from "./pages/edit/BasicInfoEdit";
 import CoursesEdit from "./pages/edit/CoursesEdit";
+import ScoringEdit from "./pages/edit/ScoringEdit";
 import PlayersEdit from "./pages/edit/PlayersEdit";
+import PrizesEdit from "./pages/edit/PrizesEdit";
+import TravelEdit from "./pages/edit/TravelEdit";
+import CustomizationEdit from "./pages/edit/CustomizationEdit";
 import SettingsEdit from "./pages/edit/SettingsEdit";
 import NotFound from "./pages/NotFound";
 
@@ -60,11 +64,11 @@ const App = () => (
               <Route path=":eventId" element={<EventEdit />}>
                 <Route path="basic" element={<BasicInfoEdit />} />
                 <Route path="courses" element={<CoursesEdit />} />
-                <Route path="scoring" element={<div>Scoring Edit - Coming Soon</div>} />
+                <Route path="scoring" element={<ScoringEdit />} />
                 <Route path="players" element={<PlayersEdit />} />
-                <Route path="prizes" element={<div>Prizes Edit - Coming Soon</div>} />
-                <Route path="travel" element={<div>Travel Edit - Coming Soon</div>} />
-                <Route path="customization" element={<div>Customization Edit - Coming Soon</div>} />
+                <Route path="prizes" element={<PrizesEdit />} />
+                <Route path="travel" element={<TravelEdit />} />
+                <Route path="customization" element={<CustomizationEdit />} />
                 <Route path="settings" element={<SettingsEdit />} />
                 <Route index element={<BasicInfoEdit />} /> {/* Default to basic info */}
               </Route>
