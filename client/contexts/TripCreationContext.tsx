@@ -375,7 +375,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
         const { error: insertError } = await supabase
           .from('event_rounds')
-          .insert(roundsData);
+          .insert(roundsDataForDB);
 
         if (insertError) {
           console.error('Error inserting rounds:', insertError);
