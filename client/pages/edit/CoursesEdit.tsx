@@ -109,59 +109,61 @@ export default function CoursesEdit() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const addSkillsContest = (roundId: string) => {
+    const newContest: SkillsContest = {
+      id: generateId(),
+      hole: 1,
+      type: 'longest_drive'
+    };
+
+    setRounds(rounds.map(round =>
+      round.id === roundId
+        ? { ...round, skillsContests: [...(round.skillsContests || []), newContest] }
+        : round
+    ));
+  };
+
+  const removeSkillsContest = (roundId: string, contestId: string) => {
+    setRounds(rounds.map(round =>
+      round.id === roundId
+        ? { ...round, skillsContests: round.skillsContests?.filter(c => c.id !== contestId) || [] }
+        : round
+    ));
+  };
+
+  const updateSkillsContest = (roundId: string, contestId: string, field: keyof SkillsContest, value: any) => {
+    setRounds(rounds.map(round =>
+      round.id === roundId
+        ? {
+            ...round,
+            skillsContests: round.skillsContests?.map(contest =>
+              contest.id === contestId ? { ...contest, [field]: value } : contest
+            ) || []
+          }
+        : round
+    ));
+  };
+
   const handleSave = async () => {
     if (!validateForm() || !eventId) return;
 
     setSaving(true);
 
     try {
-      // Delete existing rounds
-      const { error: deleteError } = await supabase
-        .from('event_rounds')
-        .delete()
-        .eq('event_id', eventId);
+      const result = await saveRounds(rounds);
 
-      if (deleteError) {
-        console.error('Error deleting existing rounds:', deleteError);
+      if (result.success) {
+        toast({
+          title: "Rounds Updated",
+          description: "Golf rounds and skills contests have been saved successfully",
+        });
+      } else {
         toast({
           title: "Save Failed",
-          description: deleteError.message || "Failed to update rounds",
+          description: result.error || "Failed to save rounds",
           variant: "destructive",
         });
-        return;
       }
-
-      // Insert new rounds
-      if (rounds.length > 0) {
-        const roundsData = rounds.map(round => ({
-          event_id: eventId,
-          course_name: round.courseName.trim(),
-          round_date: round.date,
-          tee_time: round.time || null,
-          holes: round.holes,
-          scoring_type: 'stroke_play' // Default for now
-        }));
-
-        const { error: insertError } = await supabase
-          .from('event_rounds')
-          .insert(roundsData);
-
-        if (insertError) {
-          console.error('Error inserting rounds:', insertError);
-          toast({
-            title: "Save Failed",
-            description: insertError.message || "Failed to save rounds",
-            variant: "destructive",
-          });
-          return;
-        }
-      }
-
-      toast({
-        title: "Rounds Updated",
-        description: "Golf rounds have been saved successfully",
-      });
-
     } catch (error) {
       console.error('Error saving rounds:', error);
       toast({
