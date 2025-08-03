@@ -169,7 +169,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(tripCreationReducer, initialState);
   const [isSaving, setIsSaving] = useState(false);
 
-  const saveEvent = async (): Promise<{ success: boolean; eventId?: string; error?: string }> => {
+  const saveEvent = async (formData?: Partial<TripData>): Promise<{ success: boolean; eventId?: string; error?: string }> => {
     // Prevent concurrent saves
     if (isSaving) {
       console.log('Save already in progress, skipping...');
@@ -178,7 +178,8 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
     try {
       setIsSaving(true);
-      const { tripData } = state;
+      // Use passed form data if provided, otherwise use context state
+      const tripData = formData ? { ...state.tripData, ...formData } : state.tripData;
 
       // Get current session for auth token
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
