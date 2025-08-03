@@ -76,6 +76,11 @@ const App = () => (
                 <Route path="prizes" element={<PrizesEdit />} />
                 <Route path="travel" element={<TravelEdit />} />
                 <Route path="customizations" element={<CustomizationsEdit />} />
+                <Route path="customizations/home" element={<HomeCustomization />} />
+                <Route path="customizations/courses" element={<CoursesCustomization />} />
+                <Route path="customizations/rules" element={<RulesCustomization />} />
+                <Route path="customizations/leaderboard" element={<LeaderboardCustomization />} />
+                <Route path="customizations/travel" element={<TravelCustomization />} />
                 <Route path="settings" element={<SettingsEdit />} />
                 <Route index element={<BasicInfoEdit />} /> {/* Default to basic info */}
               </Route>
