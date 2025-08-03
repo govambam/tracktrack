@@ -205,58 +205,6 @@ export default function Index() {
           </Button>
         </div>
       </div>
-      <div className="py-20 bg-white border-t border-green-100">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="border-blue-200 bg-blue-50">
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold text-blue-900 flex items-center justify-center">
-                <Database className="h-6 w-6 mr-2" />
-                Supabase Connection Test
-              </CardTitle>
-              <CardDescription className="text-blue-600">
-                Test the connection to our Supabase database
-              </CardDescription>
-            </CardHeader>
-
-            <CardContent>
-              <form onSubmit={handleTestSubmit} className="space-y-4">
-                <div>
-                  <Input
-                    value={testMessage}
-                    onChange={(e) => setTestMessage(e.target.value)}
-                    placeholder="Enter a test message..."
-                    className="border-blue-200 focus:border-blue-500"
-                    disabled={isLoading}
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={isLoading || !testMessage.trim()}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                >
-                  {isLoading ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4 mr-2" />
-                      Send to Supabase
-                    </>
-                  )}
-                </Button>
-              </form>
-
-              {status.type && (
-                <Alert className={`mt-4 ${status.type === 'success' ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}`}>
-                  <AlertDescription className={status.type === 'success' ? 'text-green-700' : 'text-red-700'}>
-                    {status.message}
-                  </AlertDescription>
-                </Alert>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </div>
     </div>
   );
 }
