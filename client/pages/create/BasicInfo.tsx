@@ -308,6 +308,7 @@ export default function BasicInfo() {
                   id="slug"
                   value={slug}
                   onChange={(e) => handleSlugChange(e.target.value)}
+                  onBlur={handleSlugBlur}
                   placeholder="your-event-url"
                   className={`border-green-200 focus:border-emerald-500 rounded-l-none pr-10 ${
                     errors.slug ? 'border-red-300' :
