@@ -139,6 +139,7 @@ export default function EventEdit() {
 
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [expandedMenus, setExpandedMenus] = useState<string[]>(["customizations"]);
 
   useEffect(() => {
     if (eventId) {
