@@ -1,9 +1,11 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { User, Mail, Calendar, Bell, Shield, CreditCard } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export default function Settings() {
   return (
