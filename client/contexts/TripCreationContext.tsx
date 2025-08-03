@@ -161,6 +161,11 @@ interface TripCreationContextType {
   resetTrip: () => void;
   loadEvent: (eventData: TripData) => void;
   saveEvent: (formData?: Partial<TripData>) => Promise<{ success: boolean; eventId?: string; error?: string }>;
+  saveRounds: () => Promise<{ success: boolean; error?: string }>;
+  savePlayers: () => Promise<{ success: boolean; error?: string }>;
+  savePrizes: () => Promise<{ success: boolean; error?: string }>;
+  saveTravel: () => Promise<{ success: boolean; error?: string }>;
+  saveCustomization: () => Promise<{ success: boolean; error?: string }>;
 }
 
 const TripCreationContext = createContext<TripCreationContextType | undefined>(undefined);
