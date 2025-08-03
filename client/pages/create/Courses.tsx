@@ -260,20 +260,36 @@ export default function Courses() {
               </CardHeader>
               
               <CardContent className="space-y-4">
-                {/* Course Name */}
-                <div className="space-y-2">
-                  <Label className="text-green-800 font-medium">
-                    Course Name *
-                  </Label>
-                  <Input
-                    value={round.courseName}
-                    onChange={(e) => updateRound(round.id, 'courseName', e.target.value)}
-                    placeholder="e.g., Pebble Beach Golf Links"
-                    className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.courseName ? 'border-red-300' : ''}`}
-                  />
-                  {errors[round.id]?.courseName && (
-                    <p className="text-sm text-red-600">{errors[round.id].courseName}</p>
-                  )}
+                {/* Course Name and URL */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-green-800 font-medium">
+                      Course Name *
+                    </Label>
+                    <Input
+                      value={round.courseName}
+                      onChange={(e) => updateRound(round.id, 'courseName', e.target.value)}
+                      placeholder="e.g., Pebble Beach Golf Links"
+                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.courseName ? 'border-red-300' : ''}`}
+                    />
+                    {errors[round.id]?.courseName && (
+                      <p className="text-sm text-red-600">{errors[round.id].courseName}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-green-800 font-medium flex items-center">
+                      <Globe className="h-4 w-4 mr-1 text-emerald-600" />
+                      Course URL (Optional)
+                    </Label>
+                    <Input
+                      type="url"
+                      value={round.courseUrl || ''}
+                      onChange={(e) => updateRound(round.id, 'courseUrl', e.target.value)}
+                      placeholder="https://example.com/course"
+                      className="border-green-200 focus:border-emerald-500 bg-white"
+                    />
+                  </div>
                 </div>
 
                 {/* Date and Time */}
