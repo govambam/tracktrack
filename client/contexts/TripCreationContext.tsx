@@ -249,6 +249,8 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error('Error saving event:', error);
       return { success: false, error: 'Network error' };
+    } finally {
+      setIsSaving(false);
     }
   };
 
