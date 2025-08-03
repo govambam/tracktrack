@@ -235,7 +235,12 @@ export default function CoursesCustomization() {
         .insert(coursesData);
 
       if (insertError) {
-        console.error('Error inserting courses:', insertError);
+        console.error('Error inserting courses:', {
+          message: insertError.message,
+          details: insertError.details,
+          hint: insertError.hint,
+          code: insertError.code
+        });
         toast({
           title: "Sync Failed",
           description: "Failed to create course entries",
