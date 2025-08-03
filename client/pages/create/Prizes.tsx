@@ -21,6 +21,32 @@ export default function Prizes() {
   const [enablePayout, setEnablePayout] = useState(!!tripData.payoutStructure);
   const [enableContests, setEnableContests] = useState(!!tripData.contestPrizes);
 
+  // Auto-enable payouts when buy-in is entered
+  useEffect(() => {
+    setEnablePayout(!!buyIn && buyIn > 0);
+  }, [buyIn]);
+
+  // Get skills contests from courses
+  const getSkillsContestsFromCourses = () => {
+    const contests: { hole: number; type: string; roundName: string }[] = [];
+    tripData.rounds.forEach(round => {
+      if (round.skillsContests) {
+        round.skillsContests.forEach(contest => {
+          contests.push({
+            hole: contest.hole,
+            type: contest.type === 'longest_drive' ? 'Longest Drive' : 'Closest to Pin',
+            roundName: round.courseName
+          });
+        });
+      }
+    });
+    return contests;
+  };
+
+  const skillsContestsFromCourses = getSkillsContestsFromCourses();
+  const longestDriveCount = skillsContestsFromCourses.filter(c => c.type === 'Longest Drive').length;
+  const closestToPinCount = skillsContestsFromCourses.filter(c => c.type === 'Closest to Pin').length;
+
   const [payoutStructure, setPayoutStructure] = useState({
     champion: tripData.payoutStructure?.champion || 0,
     runnerUp: tripData.payoutStructure?.runnerUp || 0,
@@ -34,7 +60,7 @@ export default function Prizes() {
   });
 
   const totalPayout = payoutStructure.champion + payoutStructure.runnerUp + payoutStructure.third;
-  const totalContestPrizes = contestPrizes.longestDrive + contestPrizes.closestToPin;
+  const totalContestPrizes = (contestPrizes.longestDrive * longestDriveCount) + (contestPrizes.closestToPin * closestToPinCount);
   const totalPrizes = totalPayout + totalContestPrizes;
   const playerCount = tripData.players.length || 1;
   const totalBuyIns = (buyIn || 0) * playerCount;
@@ -148,6 +174,7 @@ export default function Prizes() {
                 <Switch
                   checked={enablePayout}
                   onCheckedChange={setEnablePayout}
+                  disabled={!!buyIn && buyIn > 0} // Disable when buy-in is set
                 />
               </div>
             </CardHeader>
