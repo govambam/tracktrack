@@ -49,6 +49,17 @@ export default function MyTrips() {
         }
       });
 
+      // Check if response body is already consumed
+      if (response.bodyUsed) {
+        console.error('Response body already consumed');
+        toast({
+          title: "Error",
+          description: "Request error - please try again",
+          variant: "destructive",
+        });
+        return;
+      }
+
       // Read response body once and handle both success/error cases
       try {
         const responseText = await response.text();
