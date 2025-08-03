@@ -30,6 +30,8 @@ interface EventData {
   location: string;
   description?: string;
   is_private: boolean;
+  is_published: boolean;
+  slug?: string;
   created_at: string;
 }
 
@@ -180,6 +182,17 @@ export default function EventEdit() {
                     )}
                     {eventData.is_private ? 'Private' : 'Public'}
                   </div>
+                  {eventData.is_published && eventData.slug && (
+                    <div className="flex items-center">
+                      <button
+                        onClick={() => window.open(`/events/${eventData.slug}`, '_blank')}
+                        className="flex items-center text-blue-600 hover:text-blue-700 hover:underline"
+                      >
+                        <Globe className="h-4 w-4 mr-1" />
+                        tracktrack.com/events/{eventData.slug}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
