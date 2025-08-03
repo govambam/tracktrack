@@ -329,13 +329,17 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'LOAD_EVENT', payload: eventData });
   };
 
-  const saveRounds = async (): Promise<{ success: boolean; error?: string }> => {
+  const saveRounds = async (roundsData?: Round[]): Promise<{ success: boolean; error?: string }> => {
     try {
       const { tripData } = state;
-      console.log('SaveRounds called with tripData:', {
-        id: tripData.id,
-        rounds: tripData.rounds,
-        roundsCount: tripData.rounds?.length
+      const rounds = roundsData || tripData.rounds;
+
+      console.log('SaveRounds called with:', {
+        eventId: tripData.id,
+        passedRounds: roundsData,
+        contextRounds: tripData.rounds,
+        finalRounds: rounds,
+        roundsCount: rounds?.length
       });
 
       if (!tripData.id) {
@@ -357,8 +361,8 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       }
 
       // Insert new rounds
-      if (tripData.rounds && tripData.rounds.length > 0) {
-        const roundsData = tripData.rounds.map(round => ({
+      if (rounds && rounds.length > 0) {
+        const roundsDataForDB = rounds.map(round => ({
           event_id: tripData.id,
           course_name: round.courseName,
           round_date: round.date,
@@ -366,6 +370,8 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
           holes: round.holes || 18,
           scoring_type: tripData.scoringFormat === 'modified-stableford' ? 'stableford' : 'stroke_play'
         }));
+
+        console.log('Inserting rounds data:', roundsDataForDB);
 
         const { error: insertError } = await supabase
           .from('event_rounds')
