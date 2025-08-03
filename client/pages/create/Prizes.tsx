@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
+import { useToast } from "@/hooks/use-toast";
 import { Trophy, DollarSign, Gift, Target } from "lucide-react";
 
 export default function Prizes() {
