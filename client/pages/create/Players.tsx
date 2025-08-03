@@ -15,8 +15,10 @@ import { Users, Plus, Trash2, User, Camera } from "lucide-react";
 
 export default function Players() {
   const navigate = useNavigate();
-  const { state, updatePlayers } = useTripCreation();
+  const { state, updatePlayers, savePlayers } = useTripCreation();
   const { tripData } = state;
+  const { toast } = useToast();
+  const [saving, setSaving] = useState(false);
 
   const [players, setPlayers] = useState<Player[]>(
     tripData.players.length > 0 ? tripData.players : [
