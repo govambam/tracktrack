@@ -393,48 +393,48 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      // Delete existing event_courses for this event first
-      const { error: deleteError } = await supabase
+      // Get existing courses for this event
+      const { data: existingCourses, error: fetchError } = await supabase
         .from('event_courses')
-        .delete()
+        .select('name')
         .eq('event_id', eventId);
 
-      if (deleteError) {
-        console.error('Error deleting existing event_courses:', {
-          message: deleteError.message,
-          details: deleteError.details,
-          hint: deleteError.hint,
-          code: deleteError.code
+      if (fetchError) {
+        console.error('Error fetching existing courses:', {
+          message: fetchError.message,
+          details: fetchError.details,
+          hint: fetchError.hint,
+          code: fetchError.code
         });
         return;
       }
 
-      // Get unique course names from rounds
-      const uniqueCourses = rounds.reduce((acc, round, index) => {
-        const courseName = round.courseName.trim();
-        if (courseName && !acc.some(course => course.name === courseName)) {
+      const existingCourseNames = existingCourses?.map(c => c.name) || [];
+
+      // Get unique course names from rounds that don't already exist
+      const newCourses = rounds.reduce((acc, round, index) => {
+        const courseName = round.courseName?.trim();
+        if (courseName &&
+            !existingCourseNames.includes(courseName) &&
+            !acc.some(course => course.name === courseName)) {
           acc.push({
             name: courseName,
-            display_order: index + 1 // Use the order they appear in rounds
+            display_order: (existingCourseNames.length + acc.length + 1)
           });
         }
         return acc;
       }, [] as { name: string; display_order: number }[]);
 
-      if (uniqueCourses.length > 0) {
-        // Insert unique courses into event_courses table (only required fields)
-        const coursesData = uniqueCourses.map(course => ({
-          event_id: eventId,
-          name: course.name,
-          display_order: course.display_order
-        }));
-
-        console.log('Inserting courses data:', coursesData);
-        console.log('Event ID for courses:', eventId);
+      if (newCourses.length > 0) {
+        console.log('Inserting new courses:', newCourses);
 
         const { data: insertData, error: insertError } = await supabase
           .from('event_courses')
-          .insert(coursesData)
+          .insert(newCourses.map(course => ({
+            event_id: eventId,
+            name: course.name,
+            display_order: course.display_order
+          })))
           .select();
 
         if (insertError) {
@@ -445,8 +445,10 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
             code: insertError.code
           });
         } else {
-          console.log(`Successfully synced ${uniqueCourses.length} unique courses to event_courses`);
+          console.log('Successfully inserted new courses:', insertData);
         }
+      } else {
+        console.log('No new courses to insert');
       }
     } catch (error) {
       console.error('Error syncing courses to event_courses:', error);
