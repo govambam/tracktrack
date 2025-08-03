@@ -241,6 +241,8 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       };
 
       console.log('Saving event with data:', eventData);
+      console.log('Buy-in debug - tripData.buyIn:', tripData.buyIn);
+      console.log('Buy-in debug - eventData.buy_in:', eventData.buy_in);
       console.log('User ID:', session.user.id);
       console.log('Trip data ID:', tripData.id);
       console.log('Date validation:', {
