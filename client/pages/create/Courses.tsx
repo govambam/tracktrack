@@ -121,39 +121,53 @@ export default function Courses() {
   };
 
   const handleNext = async () => {
-    if (validateForm()) {
-      setSaving(true);
+    console.log('Courses handleNext called');
+    console.log('Current rounds data:', rounds);
+    console.log('Current tripData.id:', tripData.id);
 
-      // Update context first
-      updateCourses(rounds);
+    if (!validateForm()) {
+      console.log('Form validation failed');
+      return;
+    }
 
-      try {
-        // Save rounds to Supabase
-        const result = await saveRounds();
+    setSaving(true);
 
-        if (result.success) {
-          toast({
-            title: "Courses Saved",
-            description: "Golf rounds saved successfully",
-          });
-          navigate('/app/create/scoring');
-        } else {
-          toast({
-            title: "Save Failed",
-            description: result.error || "Failed to save courses",
-            variant: "destructive",
-          });
-        }
-      } catch (error) {
-        console.error('Error saving courses:', error);
+    // Update context first
+    updateCourses(rounds);
+    console.log('Updated context with rounds');
+
+    // Small delay to ensure context is updated
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    try {
+      // Save rounds to Supabase
+      console.log('Calling saveRounds...');
+      const result = await saveRounds();
+      console.log('SaveRounds result:', result);
+
+      if (result.success) {
+        toast({
+          title: "Courses Saved",
+          description: "Golf rounds saved successfully",
+        });
+        navigate('/app/create/scoring');
+      } else {
+        console.error('Save failed with error:', result.error);
         toast({
           title: "Save Failed",
-          description: "An unexpected error occurred",
+          description: result.error || "Failed to save courses",
           variant: "destructive",
         });
-      } finally {
-        setSaving(false);
       }
+    } catch (error) {
+      console.error('Error saving courses:', error);
+      toast({
+        title: "Save Failed",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
     }
   };
 
