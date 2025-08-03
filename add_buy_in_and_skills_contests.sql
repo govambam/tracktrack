@@ -2,8 +2,12 @@
 -- Run this in your Supabase SQL Editor
 
 -- Add buy_in column to events table if it doesn't exist
-ALTER TABLE events 
+ALTER TABLE events
 ADD COLUMN IF NOT EXISTS buy_in INTEGER DEFAULT 0;
+
+-- Add course_url column to event_rounds table if it doesn't exist
+ALTER TABLE event_rounds
+ADD COLUMN IF NOT EXISTS course_url TEXT;
 
 -- Create skills_contests table to store hole contests
 CREATE TABLE IF NOT EXISTS skills_contests (
