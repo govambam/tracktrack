@@ -227,6 +227,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
       const eventData = {
         name: tripData.tripName.trim(),
+        slug: tripData.slug?.trim() || null,
         start_date: tripData.startDate.trim(),
         end_date: tripData.endDate.trim(),
         location: tripData.location.trim(),
@@ -257,6 +258,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
           .from('events')
           .update({
             name: eventData.name,
+            slug: eventData.slug,
             start_date: eventData.start_date,
             end_date: eventData.end_date,
             location: eventData.location,
@@ -279,6 +281,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
           .insert({
             user_id: session.user.id,
             name: eventData.name,
+            slug: eventData.slug,
             start_date: eventData.start_date,
             end_date: eventData.end_date,
             location: eventData.location,
