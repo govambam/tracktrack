@@ -128,7 +128,7 @@ export default function AppShell() {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                       <AvatarFallback className="bg-emerald-600 text-white">
-                        JD
+                        {userEmail ? userEmail.substring(0, 2).toUpperCase() : 'U'}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
