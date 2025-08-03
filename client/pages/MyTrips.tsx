@@ -71,11 +71,20 @@ export default function MyTrips() {
 
       if (!result.ok) {
         console.error('Error loading events:', result.status, result.error || result.text);
-        toast({
-          title: "Error",
-          description: result.error || `Failed to load events: ${result.status}`,
-          variant: "destructive",
-        });
+
+        if (result.status === 401) {
+          toast({
+            title: "Authentication Error",
+            description: "Please sign in again",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: result.error || `Failed to load events: ${result.status}`,
+            variant: "destructive",
+          });
+        }
         return;
       }
 
