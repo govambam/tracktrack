@@ -420,6 +420,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       const players: Player[] = playersData.map(player => ({
         id: player.id,
         name: player.full_name,
+        email: player.email,
         handicap: player.handicap,
         image: player.profile_image
       }));
