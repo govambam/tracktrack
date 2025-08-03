@@ -77,15 +77,7 @@ export default function Travel() {
                 <Textarea
                   value={travelInfo.flightTimes}
                   onChange={(e) => updateTravelInfo('flightTimes', e.target.value)}
-                  placeholder={`Example:
-Departure: March 15, 2024 at 7:30 AM (LAX Terminal 6)
-Arrival: March 15, 2024 at 10:45 AM (SFO Terminal 1)
-
-Return: March 17, 2024 at 6:00 PM (SFO Terminal 1)
-Arrival: March 17, 2024 at 8:30 PM (LAX Terminal 6)
-
-Group rate available with United Airlines (Group Code: ABC123)
-Book by February 1st for best rates.`}
+                  placeholder="Enter flight times, airlines, confirmation numbers, and any group booking details..."
                   rows={8}
                   className="border-green-200 focus:border-emerald-500 bg-white"
                 />
@@ -115,19 +107,7 @@ Book by February 1st for best rates.`}
                 <Textarea
                   value={travelInfo.accommodations}
                   onChange={(e) => updateTravelInfo('accommodations', e.target.value)}
-                  placeholder={`Example:
-The Lodge at Pebble Beach
-1700 17-Mile Drive, Pebble Beach, CA 93953
-Phone: (831) 624-3811
-
-Check-in: March 15, 3:00 PM
-Check-out: March 17, 12:00 PM
-
-Group Rate: $450/night (mention "Smith Golf Trip")
-Includes breakfast and golf course shuttle service.
-
-Reservation deadline: February 15th
-Contact Sarah Johnson for group booking: sarah@lodge.com`}
+                  placeholder="Hotel name, address, check-in/out times, room arrangements, amenities..."
                   rows={8}
                   className="border-green-200 focus:border-emerald-500 bg-white"
                 />
@@ -157,28 +137,7 @@ Contact Sarah Johnson for group booking: sarah@lodge.com`}
                 <Textarea
                   value={travelInfo.dailySchedule}
                   onChange={(e) => updateTravelInfo('dailySchedule', e.target.value)}
-                  placeholder={`Example:
-FRIDAY, MARCH 15
-10:45 AM - Arrive at SFO
-12:00 PM - Shuttle to Pebble Beach (arranged transport)
-2:00 PM - Check-in at The Lodge
-3:30 PM - Welcome drinks at the clubhouse
-5:00 PM - Practice round at The Links (optional)
-7:30 PM - Group dinner at Stillwater Bar & Grill
-
-SATURDAY, MARCH 16
-7:00 AM - Breakfast at The Lodge
-8:30 AM - First tee time at Pebble Beach Golf Links
-1:00 PM - Lunch at Pebble Beach Pro Shop
-2:30 PM - Second round at Spyglass Hill
-6:00 PM - Cocktail hour and awards ceremony
-8:00 PM - Dinner at Pescadero Point
-
-SUNDAY, MARCH 17
-8:00 AM - Breakfast and checkout
-10:00 AM - Final round at Monterey Peninsula Country Club
-2:00 PM - Farewell lunch
-4:00 PM - Depart for airport`}
+                  placeholder="Day-by-day itinerary, meal times, activities, meeting points, transportation..."
                   rows={12}
                   className="border-green-200 focus:border-emerald-500 bg-white"
                 />
