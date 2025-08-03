@@ -256,9 +256,17 @@ export default function CoursesCustomization() {
           hint: insertError.hint,
           code: insertError.code
         });
+
+        let description = "Failed to create course entries";
+        if (insertError.code === '42P01') {
+          description = "The event_courses table doesn't exist. Please run the database schema script.";
+        } else if (insertError.message) {
+          description = insertError.message;
+        }
+
         toast({
           title: "Sync Failed",
-          description: "Failed to create course entries",
+          description: description,
           variant: "destructive",
         });
         return;
