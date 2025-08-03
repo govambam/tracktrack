@@ -56,20 +56,10 @@ export default function MyTrips() {
         }
       });
 
-      // Check if response body is already consumed
-      if (response.bodyUsed) {
-        console.error('Response body already consumed');
-        toast({
-          title: "Error",
-          description: "Request error - please try again",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Read response body once and handle both success/error cases
+      // Use arrayBuffer to read response once, then create new Response objects as needed
       try {
-        const responseText = await response.text();
+        const responseBuffer = await response.arrayBuffer();
+        const responseText = new TextDecoder().decode(responseBuffer);
 
         if (!response.ok) {
           console.error('Error loading events:', response.status, responseText);
@@ -81,7 +71,7 @@ export default function MyTrips() {
           return;
         }
 
-        // Parse JSON from text
+        // Parse JSON from decoded text
         const result = JSON.parse(responseText);
         setEvents(result.events || []);
 
