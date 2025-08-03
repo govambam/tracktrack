@@ -191,6 +191,9 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       const url = tripData.id ? `/api/events/${tripData.id}` : '/api/events';
       const method = tripData.id ? 'PUT' : 'POST';
 
+      console.log('Saving event with data:', eventData);
+      console.log('Using URL:', url, 'Method:', method);
+
       const response = await fetch(url, {
         method,
         headers: {
