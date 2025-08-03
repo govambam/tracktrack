@@ -422,25 +422,20 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       }, [] as { name: string; display_order: number }[]);
 
       if (uniqueCourses.length > 0) {
-        // Insert unique courses into event_courses table
+        // Insert unique courses into event_courses table (only required fields)
         const coursesData = uniqueCourses.map(course => ({
           event_id: eventId,
           name: course.name,
-          display_order: course.display_order,
-          // Initialize with empty values that can be customized later
-          par: null,
-          yardage: null,
-          description: null,
-          image_url: null,
-          weather_note: null
+          display_order: course.display_order
         }));
 
         console.log('Inserting courses data:', coursesData);
         console.log('Event ID for courses:', eventId);
 
-        const { error: insertError } = await supabase
+        const { data: insertData, error: insertError } = await supabase
           .from('event_courses')
-          .insert(coursesData);
+          .insert(coursesData)
+          .select();
 
         if (insertError) {
           console.error('Error inserting courses:', {
