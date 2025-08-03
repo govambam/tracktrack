@@ -257,7 +257,7 @@ export default function PublicEvent() {
                     </div>
                     <div className="space-y-1 text-sm text-gray-600">
                       <div className="flex items-center">
-                        <Golf className="h-4 w-4 mr-2" />
+                        <Target className="h-4 w-4 mr-2" />
                         {round.course_name}
                       </div>
                       <div className="flex items-center">
