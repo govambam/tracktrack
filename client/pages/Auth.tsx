@@ -72,23 +72,40 @@ export default function Auth() {
         }
       } else {
         // Sign up new user
+        console.log('Attempting to sign up user with email:', email);
+
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
         });
 
+        console.log('Signup response:', { data, error });
+
         if (error) {
-          setError(error.message);
+          console.error('Signup error:', error);
+          setError(`Signup failed: ${error.message}`);
           setLoading(false);
           return;
         }
 
         if (data.user) {
+          console.log('User created successfully:', data.user);
+
+          // Check if email confirmation is required
+          if (data.user.email_confirmed_at) {
+            console.log('User email is confirmed');
+          } else {
+            console.log('User email needs confirmation');
+          }
+
           // For now, since email verification is disabled, sign them in automatically
           localStorage.setItem("isAuthenticated", "true");
           localStorage.setItem("userEmail", data.user.email || "");
           localStorage.setItem("userId", data.user.id);
           navigate("/app");
+        } else {
+          console.log('No user returned from signup');
+          setError("Account creation failed - no user data returned");
         }
       }
     } catch (error) {
