@@ -215,6 +215,11 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
       if (!result.ok) {
         console.error('Save event error:', result.status, result.error || result.text);
+
+        if (result.status === 401) {
+          return { success: false, error: 'Authentication error - please sign in again' };
+        }
+
         return { success: false, error: result.error || `Failed to save event: ${result.status}` };
       }
 
