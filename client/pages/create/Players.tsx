@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { Player } from "@/contexts/TripCreationContext";
+import { useToast } from "@/hooks/use-toast";
 import { Users, Plus, Trash2, User, Camera } from "lucide-react";
 
 export default function Players() {
