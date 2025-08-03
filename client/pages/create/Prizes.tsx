@@ -225,10 +225,13 @@ export default function Prizes() {
                   </div>
                 </div>
 
-                {totalPayout > 0 && (
-                  <Alert className="border-blue-200 bg-blue-50">
-                    <AlertDescription className="text-blue-700">
-                      Total tournament payouts: <Badge variant="secondary">${totalPayout}</Badge>
+                {totalPayout > 0 && buyIn && (
+                  <Alert className={`${totalBuyIns - totalPayout >= 0 ? 'border-green-200 bg-green-50' : 'border-orange-200 bg-orange-50'}`}>
+                    <AlertDescription className={totalBuyIns - totalPayout >= 0 ? 'text-green-700' : 'text-orange-700'}>
+                      {totalBuyIns - totalPayout >= 0
+                        ? <>Remaining in pool: <Badge variant="secondary">${totalBuyIns - totalPayout}</Badge></>
+                        : <>⚠️ Exceeds pool by: <Badge variant="destructive">${totalPayout - totalBuyIns}</Badge></>
+                      }
                     </AlertDescription>
                   </Alert>
                 )}
@@ -320,10 +323,13 @@ export default function Prizes() {
                   </Alert>
                 )}
 
-                {totalContestPrizes > 0 && (
-                  <Alert className="border-blue-200 bg-blue-50">
-                    <AlertDescription className="text-blue-700">
-                      Total contest prizes: <Badge variant="secondary">${totalContestPrizes}</Badge>
+                {totalContestPrizes > 0 && buyIn && (
+                  <Alert className={`${totalBuyIns - totalPrizes >= 0 ? 'border-green-200 bg-green-50' : 'border-orange-200 bg-orange-50'}`}>
+                    <AlertDescription className={totalBuyIns - totalPrizes >= 0 ? 'text-green-700' : 'text-orange-700'}>
+                      {totalBuyIns - totalPrizes >= 0
+                        ? <>Remaining in pool: <Badge variant="secondary">${totalBuyIns - totalPrizes}</Badge></>
+                        : <>⚠️ Exceeds pool by: <Badge variant="destructive">${totalPrizes - totalBuyIns}</Badge></>
+                      }
                     </AlertDescription>
                   </Alert>
                 )}
