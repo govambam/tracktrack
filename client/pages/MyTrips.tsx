@@ -190,15 +190,7 @@ export default function MyTrips() {
           <h1 className="text-3xl font-bold text-green-900">My Events</h1>
           <p className="text-green-600 mt-1">Manage and track your golf trips and tournaments</p>
         </div>
-        <div className="flex space-x-2 mt-4 sm:mt-0">
-          <Button 
-            variant="outline" 
-            onClick={loadEvents}
-            className="border-green-200 text-green-700 hover:bg-green-50"
-          >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh
-          </Button>
+        <div className="mt-4 sm:mt-0">
           <Button onClick={handleCreateNew} className="bg-emerald-600 hover:bg-emerald-700">
             <Plus className="h-4 w-4 mr-2" />
             Create New Event
