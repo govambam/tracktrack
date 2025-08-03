@@ -171,7 +171,14 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
   const [isSaving, setIsSaving] = useState(false);
 
   const saveEvent = async (): Promise<{ success: boolean; eventId?: string; error?: string }> => {
+    // Prevent concurrent saves
+    if (isSaving) {
+      console.log('Save already in progress, skipping...');
+      return { success: false, error: 'Save already in progress' };
+    }
+
     try {
+      setIsSaving(true);
       const { tripData } = state;
 
       // Get current session for auth token
