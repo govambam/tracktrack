@@ -703,6 +703,9 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
             return { success: false, error: skillsInsertError.message };
           }
         }
+
+        // Sync courses to event_courses table
+        await syncCoursesToEventCourses(tripData.id, rounds);
       }
 
       console.log("Rounds and skills contests saved successfully");
