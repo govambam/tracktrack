@@ -91,7 +91,7 @@ export default function MyTrips() {
       // Use direct Supabase calls instead of server routes
       const { data, error } = await supabase
         .from('events')
-        .select('*')
+        .select('id, name, description, start_date, end_date, location, logo_url, is_private, is_published, slug, created_at, updated_at')
         .eq('user_id', session.user.id)
         .order('created_at', { ascending: false });
 
