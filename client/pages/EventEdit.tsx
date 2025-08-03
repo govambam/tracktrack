@@ -26,6 +26,9 @@ import {
   Calendar,
   Globe,
   Lock,
+  ChevronDown,
+  ChevronRight,
+  Home,
 } from "lucide-react";
 
 interface EventData {
