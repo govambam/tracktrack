@@ -229,7 +229,7 @@ export default function PublicEvent() {
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* MVP Notice */}
         <Alert className="border-blue-200 bg-blue-50 mb-8">
-          <Golf className="h-4 w-4 text-blue-600" />
+          <Target className="h-4 w-4 text-blue-600" />
           <AlertDescription className="text-blue-700">
             <strong>This is a placeholder for a future custom golf event website.</strong> 
             The event details are below. In the future, this will be a fully customizable event site 
