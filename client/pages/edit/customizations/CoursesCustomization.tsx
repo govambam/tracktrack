@@ -150,6 +150,120 @@ export default function CoursesCustomization() {
     }
   };
 
+  const syncCoursesFromRounds = async () => {
+    if (!eventId) return;
+
+    setSyncing(true);
+    try {
+      // Get rounds for this event
+      const { data: roundsData, error: roundsError } = await supabase
+        .from('event_rounds')
+        .select('course_name')
+        .eq('event_id', eventId)
+        .order('created_at');
+
+      if (roundsError) {
+        console.error('Error loading rounds:', roundsError);
+        toast({
+          title: "Sync Failed",
+          description: "Failed to load rounds data",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!roundsData || roundsData.length === 0) {
+        toast({
+          title: "No Rounds Found",
+          description: "Please add some rounds first in the Courses section",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Get unique course names from rounds
+      const uniqueCourses = roundsData.reduce((acc, round, index) => {
+        const courseName = round.course_name?.trim();
+        if (courseName && !acc.some(course => course.name === courseName)) {
+          acc.push({
+            name: courseName,
+            display_order: index + 1
+          });
+        }
+        return acc;
+      }, [] as { name: string; display_order: number }[]);
+
+      if (uniqueCourses.length === 0) {
+        toast({
+          title: "No Courses Found",
+          description: "No valid course names found in rounds",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Delete existing event_courses for this event first
+      const { error: deleteError } = await supabase
+        .from('event_courses')
+        .delete()
+        .eq('event_id', eventId);
+
+      if (deleteError) {
+        console.error('Error deleting existing courses:', deleteError);
+        toast({
+          title: "Sync Failed",
+          description: "Failed to clear existing course data",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Insert unique courses into event_courses table
+      const coursesData = uniqueCourses.map(course => ({
+        event_id: eventId,
+        name: course.name,
+        display_order: course.display_order,
+        par: null,
+        yardage: null,
+        description: null,
+        image_url: null,
+        weather_note: null
+      }));
+
+      const { error: insertError } = await supabase
+        .from('event_courses')
+        .insert(coursesData);
+
+      if (insertError) {
+        console.error('Error inserting courses:', insertError);
+        toast({
+          title: "Sync Failed",
+          description: "Failed to create course entries",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Courses Synced",
+        description: `Successfully synced ${uniqueCourses.length} unique course${uniqueCourses.length !== 1 ? 's' : ''} from your rounds`,
+      });
+
+      // Reload the courses data
+      loadCoursesData();
+
+    } catch (error) {
+      console.error('Error syncing courses:', error);
+      toast({
+        title: "Sync Failed",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
