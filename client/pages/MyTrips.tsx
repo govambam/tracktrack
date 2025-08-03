@@ -7,6 +7,7 @@ import { Calendar, MapPin, Users, Plus, Trophy, Edit, RefreshCw } from "lucide-r
 import { supabase } from "@/lib/supabase";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
+import { safeFetch } from "@/lib/safeFetch";
 
 interface Event {
   id: string;
