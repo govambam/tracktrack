@@ -135,7 +135,10 @@ export default function EventEdit() {
   const { loadCompleteEvent } = useTripCreation();
 
   // Extract current section from the pathname
-  const currentSectionId = location.pathname.split("/").pop() || "basic";
+  const pathParts = location.pathname.split("/");
+  const currentSectionId = pathParts.slice(-2).join("/").startsWith("customizations/")
+    ? pathParts.slice(-2).join("/")
+    : pathParts.pop() || "basic";
 
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
