@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer, ReactNode } from 'react';
 import { supabase } from '@/lib/supabase';
+import { safeFetch } from '@/lib/safeFetch';
 
 export interface Round {
   id: string;
