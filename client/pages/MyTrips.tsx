@@ -61,40 +61,27 @@ export default function MyTrips() {
         return;
       }
 
-      console.log('Session found, access token length:', session.access_token?.length || 0);
+      console.log('Session found, loading events directly from Supabase');
 
-      const result = await safeFetch('/api/events', {
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        }
-      });
+      // Use direct Supabase calls instead of server routes
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .eq('user_id', session.user.id)
+        .order('created_at', { ascending: false });
 
-      if (!result.ok) {
-        console.error('Error loading events:', result.status, result.error || result.text);
-
-        if (result.status === 401) {
-          toast({
-            title: "Authentication Error",
-            description: "Please sign in again",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Error",
-            description: result.error || `Failed to load events: ${result.status}`,
-            variant: "destructive",
-          });
-        }
+      if (error) {
+        console.error('Supabase error loading events:', error);
+        toast({
+          title: "Error",
+          description: error.message || "Failed to load events",
+          variant: "destructive",
+        });
         return;
       }
 
-      if (result.data) {
-        console.log('Successfully loaded events, count:', result.data.events?.length || 0);
-        setEvents(result.data.events || []);
-      } else {
-        console.warn('No data in response');
-        setEvents([]);
-      }
+      console.log('Successfully loaded events, count:', data?.length || 0);
+      setEvents(data || []);
     } catch (error) {
       console.error('Error loading events:', error);
       toast({
