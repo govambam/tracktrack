@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import { supabase } from "@/lib/supabase";
+import { checkTableExists } from "@/lib/initDatabase";
 
 export interface SkillsContest {
   id: string;
