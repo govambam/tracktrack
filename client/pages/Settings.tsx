@@ -80,14 +80,14 @@ export default function Settings() {
                     <Mail className="h-4 w-4 mr-3 text-emerald-600" />
                     <div>
                       <p className="text-sm text-green-600">Email</p>
-                      <p className="font-medium">test@example.com</p>
+                      <p className="font-medium">{userEmail}</p>
                     </div>
                   </div>
                   <div className="flex items-center text-green-700">
                     <Calendar className="h-4 w-4 mr-3 text-emerald-600" />
                     <div>
                       <p className="text-sm text-green-600">Member Since</p>
-                      <p className="font-medium">January 2024</p>
+                      <p className="font-medium">{joinDate}</p>
                     </div>
                   </div>
                 </div>
