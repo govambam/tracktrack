@@ -128,7 +128,7 @@ export default function Scoring() {
                       className="text-lg font-semibold text-green-900 cursor-pointer flex items-center"
                     >
                       <Target className="h-5 w-5 mr-2 text-emerald-600" />
-                      Modified Stableford (Points-Based)
+                      Stableford (Points-Based)
                     </Label>
                     <p className="text-green-600 mt-2">
                       Players earn points based on their performance on each hole relative to par. 
