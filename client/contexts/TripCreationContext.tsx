@@ -523,6 +523,74 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const saveTravel = async (): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const { tripData } = state;
+      if (!tripData.id) {
+        return { success: false, error: 'Event must be saved first before adding travel info' };
+      }
+
+      console.log('Saving travel info for event:', tripData.id);
+
+      const travelData = {
+        event_id: tripData.id,
+        flight_info: tripData.travelInfo?.flightTimes || null,
+        accommodations: tripData.travelInfo?.accommodations || null,
+        daily_schedule: tripData.travelInfo?.dailySchedule || null
+      };
+
+      // Use upsert to handle both insert and update
+      const { error } = await supabase
+        .from('event_travel')
+        .upsert(travelData, { onConflict: 'event_id' });
+
+      if (error) {
+        console.error('Error saving travel info:', error);
+        return { success: false, error: error.message };
+      }
+
+      console.log('Travel info saved successfully');
+      return { success: true };
+    } catch (error) {
+      console.error('Error saving travel info:', error);
+      return { success: false, error: 'Failed to save travel info' };
+    }
+  };
+
+  const saveCustomization = async (): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const { tripData } = state;
+      if (!tripData.id) {
+        return { success: false, error: 'Event must be saved first before adding customization' };
+      }
+
+      console.log('Saving customization for event:', tripData.id);
+
+      const customizationData = {
+        event_id: tripData.id,
+        logo_url: tripData.customization?.logoUrl || null,
+        custom_domain: tripData.customization?.customDomain || null,
+        is_private: tripData.customization?.isPrivate || false
+      };
+
+      // Use upsert to handle both insert and update
+      const { error } = await supabase
+        .from('event_customization')
+        .upsert(customizationData, { onConflict: 'event_id' });
+
+      if (error) {
+        console.error('Error saving customization:', error);
+        return { success: false, error: error.message };
+      }
+
+      console.log('Customization saved successfully');
+      return { success: true };
+    } catch (error) {
+      console.error('Error saving customization:', error);
+      return { success: false, error: 'Failed to save customization' };
+    }
+  };
+
   const contextValue: TripCreationContextType = {
     state,
     updateBasicInfo: (data) => dispatch({ type: 'UPDATE_BASIC_INFO', payload: data }),
