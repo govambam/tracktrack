@@ -77,7 +77,9 @@ export default function CoursesEdit() {
       holes: 18,
       skillsContests: [],
     };
-    setRounds([...rounds, newRound]);
+    const updatedRounds = [...rounds, newRound];
+    setRounds(updatedRounds);
+    updateCourses(updatedRounds);
   };
 
   const removeRound = (id: string) => {
