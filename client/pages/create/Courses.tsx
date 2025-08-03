@@ -344,55 +344,69 @@ export default function Courses() {
                   </div>
                 </div>
 
-                {/* Optional Fields */}
+                {/* Skills Contests */}
                 <div className="space-y-4 border-t border-green-200 pt-4">
-                  <div className="space-y-2">
-                    <Label className="text-green-800 font-medium">
-                      Course Yardage (Optional)
-                    </Label>
-                    <Input
-                      value={round.yardage || ''}
-                      onChange={(e) => updateRound(round.id, 'yardage', e.target.value)}
-                      placeholder="e.g., 6,828 yards"
-                      className="border-green-200 focus:border-emerald-500 bg-white"
-                    />
-                  </div>
-
-                  {/* Skills Contests */}
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label className="text-green-800 font-medium flex items-center">
-                          <Trophy className="h-4 w-4 mr-1 text-emerald-600" />
-                          Skills Contests
-                        </Label>
-                        <p className="text-sm text-green-600">
-                          Add contests like longest drive or closest to pin
-                        </p>
-                      </div>
-                      <Switch
-                        checked={round.skillsContests?.enabled || false}
-                        onCheckedChange={(checked) => updateSkillsContest(round.id, 'enabled', checked)}
-                      />
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label className="text-green-800 font-medium flex items-center">
+                        <Trophy className="h-4 w-4 mr-1 text-emerald-600" />
+                        Skills Contests
+                      </Label>
+                      <p className="text-sm text-green-600">
+                        Add contests like longest drive or closest to pin
+                      </p>
                     </div>
-
-                    {round.skillsContests?.enabled && (
-                      <div className="space-y-2">
-                        <Label className="text-green-800 font-medium">
-                          Contest Holes
-                        </Label>
-                        <Input
-                          value={round.skillsContests.holes || ''}
-                          onChange={(e) => updateSkillsContest(round.id, 'holes', e.target.value)}
-                          placeholder="e.g., 7 (longest drive), 15 (closest to pin)"
-                          className="border-green-200 focus:border-emerald-500 bg-white"
-                        />
-                        <p className="text-sm text-green-600">
-                          Specify which holes will have skills contests
-                        </p>
-                      </div>
-                    )}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => addSkillsContest(round.id)}
+                      className="border-green-200 text-green-700 hover:bg-green-50"
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add Contest
+                    </Button>
                   </div>
+
+                  {round.skillsContests && round.skillsContests.length > 0 && (
+                    <div className="space-y-3">
+                      {round.skillsContests.map((contest) => (
+                        <div key={contest.id} className="flex items-center space-x-3 p-3 bg-white border border-green-200 rounded-lg">
+                          <div className="flex-1 grid grid-cols-2 gap-3">
+                            <div className="space-y-1">
+                              <Label className="text-sm text-green-800">Hole Number</Label>
+                              <Input
+                                type="number"
+                                min="1"
+                                max={round.holes}
+                                value={contest.hole}
+                                onChange={(e) => updateSkillsContest(round.id, contest.id, 'hole', parseInt(e.target.value) || 1)}
+                                className="border-green-200 focus:border-emerald-500"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <Label className="text-sm text-green-800">Contest Type</Label>
+                              <select
+                                value={contest.type}
+                                onChange={(e) => updateSkillsContest(round.id, contest.id, 'type', e.target.value)}
+                                className="w-full px-3 py-2 border border-green-200 rounded-md focus:border-emerald-500 focus:outline-none bg-white"
+                              >
+                                <option value="longest_drive">Longest Drive</option>
+                                <option value="closest_to_pin">Closest to Pin</option>
+                              </select>
+                            </div>
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => removeSkillsContest(round.id, contest.id)}
+                            className="border-red-200 text-red-600 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
