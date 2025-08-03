@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -15,27 +21,31 @@ export default function Travel() {
   const { tripData } = state;
 
   const [travelInfo, setTravelInfo] = useState({
-    flightTimes: tripData.travelInfo?.flightTimes || '',
-    accommodations: tripData.travelInfo?.accommodations || '',
-    dailySchedule: tripData.travelInfo?.dailySchedule || ''
+    flightTimes: tripData.travelInfo?.flightTimes || "",
+    accommodations: tripData.travelInfo?.accommodations || "",
+    dailySchedule: tripData.travelInfo?.dailySchedule || "",
   });
 
   const handleNext = () => {
     updateTravel({
-      travelInfo: Object.values(travelInfo).some(val => val.trim()) ? travelInfo : undefined
+      travelInfo: Object.values(travelInfo).some((val) => val.trim())
+        ? travelInfo
+        : undefined,
     });
-    navigate('/app/create/customization');
+    navigate("/app/create/customization");
   };
 
   const handlePrevious = () => {
     updateTravel({
-      travelInfo: Object.values(travelInfo).some(val => val.trim()) ? travelInfo : undefined
+      travelInfo: Object.values(travelInfo).some((val) => val.trim())
+        ? travelInfo
+        : undefined,
     });
-    navigate('/app/create/prizes');
+    navigate("/app/create/prizes");
   };
 
   const updateTravelInfo = (field: keyof typeof travelInfo, value: string) => {
-    setTravelInfo(prev => ({ ...prev, [field]: value }));
+    setTravelInfo((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
@@ -53,10 +63,11 @@ export default function Travel() {
             Travel & Logistics
           </CardTitle>
           <CardDescription className="text-green-600">
-            Share travel details and daily schedules for your event (all optional)
+            Share travel details and daily schedules for your event (all
+            optional)
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {/* Flight Information */}
           <Card className="border-green-100 bg-green-50">
@@ -76,13 +87,16 @@ export default function Travel() {
                 </Label>
                 <Textarea
                   value={travelInfo.flightTimes}
-                  onChange={(e) => updateTravelInfo('flightTimes', e.target.value)}
+                  onChange={(e) =>
+                    updateTravelInfo("flightTimes", e.target.value)
+                  }
                   placeholder="Enter flight times, airlines, confirmation numbers, and any group booking details..."
                   rows={8}
                   className="border-green-200 focus:border-emerald-500 bg-white"
                 />
                 <p className="text-sm text-green-600">
-                  Include departure/arrival times, airports, airlines, group booking codes, or travel tips
+                  Include departure/arrival times, airports, airlines, group
+                  booking codes, or travel tips
                 </p>
               </div>
             </CardContent>
@@ -106,13 +120,16 @@ export default function Travel() {
                 </Label>
                 <Textarea
                   value={travelInfo.accommodations}
-                  onChange={(e) => updateTravelInfo('accommodations', e.target.value)}
+                  onChange={(e) =>
+                    updateTravelInfo("accommodations", e.target.value)
+                  }
                   placeholder="Hotel name, address, check-in/out times, room arrangements, amenities..."
                   rows={8}
                   className="border-green-200 focus:border-emerald-500 bg-white"
                 />
                 <p className="text-sm text-green-600">
-                  Include hotel names, addresses, phone numbers, group rates, and booking deadlines
+                  Include hotel names, addresses, phone numbers, group rates,
+                  and booking deadlines
                 </p>
               </div>
             </CardContent>
@@ -136,13 +153,16 @@ export default function Travel() {
                 </Label>
                 <Textarea
                   value={travelInfo.dailySchedule}
-                  onChange={(e) => updateTravelInfo('dailySchedule', e.target.value)}
+                  onChange={(e) =>
+                    updateTravelInfo("dailySchedule", e.target.value)
+                  }
                   placeholder="Day-by-day itinerary, meal times, activities, meeting points, transportation..."
                   rows={12}
                   className="border-green-200 focus:border-emerald-500 bg-white"
                 />
                 <p className="text-sm text-green-600">
-                  Include tee times, meals, activities, and any special events planned
+                  Include tee times, meals, activities, and any special events
+                  planned
                 </p>
               </div>
             </CardContent>
@@ -152,15 +172,17 @@ export default function Travel() {
           <Alert className="border-blue-200 bg-blue-50">
             <Info className="h-4 w-4 mr-2 text-blue-600" />
             <AlertDescription className="text-blue-700">
-              <strong>Planning tip:</strong> The more details you provide, the smoother your event will run.
-              Participants appreciate having all the information in one place, especially for multi-day events.
+              <strong>Planning tip:</strong> The more details you provide, the
+              smoother your event will run. Participants appreciate having all
+              the information in one place, especially for multi-day events.
             </AlertDescription>
           </Alert>
 
           <Alert className="border-green-200 bg-green-50">
             <AlertDescription className="text-green-700">
-              <strong>All optional:</strong> You can skip this section and add travel details later.
-              Some events work better with less structure and more flexibility.
+              <strong>All optional:</strong> You can skip this section and add
+              travel details later. Some events work better with less structure
+              and more flexibility.
             </AlertDescription>
           </Alert>
         </CardContent>

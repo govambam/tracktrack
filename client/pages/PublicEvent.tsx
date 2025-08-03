@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -15,7 +21,7 @@ import {
   Lock,
   AlertTriangle,
   Clock,
-  DollarSign
+  DollarSign,
 } from "lucide-react";
 
 interface EventData {
@@ -84,23 +90,23 @@ export default function PublicEvent() {
 
       // Load main event data
       const { data: eventData, error: eventError } = await supabase
-        .from('events')
-        .select('*')
-        .eq('slug', slug)
+        .from("events")
+        .select("*")
+        .eq("slug", slug)
         .single();
 
       if (eventError) {
-        if (eventError.code === 'PGRST116') {
-          setError('Event not found');
+        if (eventError.code === "PGRST116") {
+          setError("Event not found");
         } else {
-          setError('Failed to load event');
+          setError("Failed to load event");
         }
         return;
       }
 
       // Check if event is published
       if (!eventData.is_published) {
-        setError('Event not found');
+        setError("Event not found");
         return;
       }
 
@@ -108,36 +114,52 @@ export default function PublicEvent() {
 
       // Load related data in parallel
       const [roundsRes, playersRes, prizesRes, travelRes] = await Promise.all([
-        supabase.from('event_rounds').select('*').eq('event_id', eventData.id).order('round_date'),
-        supabase.from('event_players').select('*').eq('event_id', eventData.id).order('created_at'),
-        supabase.from('event_prizes').select('*').eq('event_id', eventData.id),
-        supabase.from('event_travel').select('*').eq('event_id', eventData.id).single()
+        supabase
+          .from("event_rounds")
+          .select("*")
+          .eq("event_id", eventData.id)
+          .order("round_date"),
+        supabase
+          .from("event_players")
+          .select("*")
+          .eq("event_id", eventData.id)
+          .order("created_at"),
+        supabase.from("event_prizes").select("*").eq("event_id", eventData.id),
+        supabase
+          .from("event_travel")
+          .select("*")
+          .eq("event_id", eventData.id)
+          .single(),
       ]);
 
       if (roundsRes.data) setRounds(roundsRes.data);
       if (playersRes.data) setPlayers(playersRes.data);
       if (prizesRes.data) setPrizes(prizesRes.data);
       if (travelRes.data) setTravel(travelRes.data);
-
     } catch (error) {
-      console.error('Error loading event:', error);
-      setError('Failed to load event');
+      console.error("Error loading event:", error);
+      setError("Failed to load event");
     } finally {
       setLoading(false);
     }
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
   const getPlayerInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
   };
 
   if (loading) {
@@ -156,11 +178,14 @@ export default function PublicEvent() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center max-w-md mx-auto p-6">
           <AlertTriangle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Event Not Found</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Event Not Found
+          </h1>
           <p className="text-gray-600 mb-6">
-            The event you're looking for doesn't exist or is no longer available.
+            The event you're looking for doesn't exist or is no longer
+            available.
           </p>
-          <Button onClick={() => window.location.href = '/'}>
+          <Button onClick={() => (window.location.href = "/")}>
             Return to Home
           </Button>
         </div>
@@ -174,15 +199,19 @@ export default function PublicEvent() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center max-w-md mx-auto p-6">
           <Lock className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Private Event</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Private Event
+          </h1>
           <p className="text-gray-600 mb-6">
-            This is a private golf event. You need an invitation from the event organizer to access it.
+            This is a private golf event. You need an invitation from the event
+            organizer to access it.
           </p>
           <Alert className="border-yellow-200 bg-yellow-50 text-left">
             <Lock className="h-4 w-4 text-yellow-600" />
             <AlertDescription className="text-yellow-700">
-              <strong>Event organizers:</strong> Full authentication and invitation system coming soon. 
-              For now, private events show this placeholder to non-invited visitors.
+              <strong>Event organizers:</strong> Full authentication and
+              invitation system coming soon. For now, private events show this
+              placeholder to non-invited visitors.
             </AlertDescription>
           </Alert>
         </div>
@@ -197,16 +226,20 @@ export default function PublicEvent() {
         <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="flex items-start space-x-6">
             {event.logo_url && (
-              <img 
-                src={event.logo_url} 
-                alt={event.name} 
+              <img
+                src={event.logo_url}
+                alt={event.name}
                 className="w-20 h-20 object-contain rounded-lg border border-gray-200"
               />
             )}
             <div className="flex-1">
               <div className="flex items-center space-x-3 mb-2">
-                <h1 className="text-3xl font-bold text-gray-900">{event.name}</h1>
-                <Badge variant="default" className="bg-green-600">Published</Badge>
+                <h1 className="text-3xl font-bold text-gray-900">
+                  {event.name}
+                </h1>
+                <Badge variant="default" className="bg-green-600">
+                  Published
+                </Badge>
               </div>
               <div className="flex items-center text-gray-600 space-x-6 mb-4">
                 <div className="flex items-center">
@@ -231,9 +264,12 @@ export default function PublicEvent() {
         <Alert className="border-blue-200 bg-blue-50 mb-8">
           <Target className="h-4 w-4 text-blue-600" />
           <AlertDescription className="text-blue-700">
-            <strong>This is a placeholder for a future custom golf event website.</strong> 
-            The event details are below. In the future, this will be a fully customizable event site 
-            with registration, leaderboards, and more interactive features.
+            <strong>
+              This is a placeholder for a future custom golf event website.
+            </strong>
+            The event details are below. In the future, this will be a fully
+            customizable event site with registration, leaderboards, and more
+            interactive features.
           </AlertDescription>
         </Alert>
 
@@ -246,11 +282,16 @@ export default function PublicEvent() {
                   <Target className="h-5 w-5 mr-2 text-emerald-600" />
                   Golf Rounds
                 </CardTitle>
-                <CardDescription>Tournament schedule and courses</CardDescription>
+                <CardDescription>
+                  Tournament schedule and courses
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {rounds.map((round, index) => (
-                  <div key={round.id} className="p-4 border border-gray-200 rounded-lg">
+                  <div
+                    key={round.id}
+                    className="p-4 border border-gray-200 rounded-lg"
+                  >
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="font-medium">Round {index + 1}</h4>
                       <Badge variant="outline">{round.holes} holes</Badge>
@@ -272,7 +313,9 @@ export default function PublicEvent() {
                       )}
                       <div className="flex items-center">
                         <Target className="h-4 w-4 mr-2" />
-                        {round.scoring_type === 'stableford' ? 'Modified Stableford' : 'Stroke Play'}
+                        {round.scoring_type === "stableford"
+                          ? "Modified Stableford"
+                          : "Stroke Play"}
                       </div>
                     </div>
                   </div>
@@ -294,18 +337,29 @@ export default function PublicEvent() {
               <CardContent>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {players.map((player) => (
-                    <div key={player.id} className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg">
+                    <div
+                      key={player.id}
+                      className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg"
+                    >
                       <div className="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
                         {player.profile_image ? (
-                          <img src={player.profile_image} alt={player.full_name} className="w-10 h-10 rounded-full object-cover" />
+                          <img
+                            src={player.profile_image}
+                            alt={player.full_name}
+                            className="w-10 h-10 rounded-full object-cover"
+                          />
                         ) : (
                           getPlayerInitials(player.full_name)
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium text-gray-900 truncate">{player.full_name}</div>
+                        <div className="font-medium text-gray-900 truncate">
+                          {player.full_name}
+                        </div>
                         {player.handicap !== undefined && (
-                          <div className="text-sm text-gray-600">HCP: {player.handicap}</div>
+                          <div className="text-sm text-gray-600">
+                            HCP: {player.handicap}
+                          </div>
                         )}
                       </div>
                     </div>
@@ -323,15 +377,22 @@ export default function PublicEvent() {
                   <Trophy className="h-5 w-5 mr-2 text-emerald-600" />
                   Prizes & Awards
                 </CardTitle>
-                <CardDescription>Tournament prizes and competitions</CardDescription>
+                <CardDescription>
+                  Tournament prizes and competitions
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 {prizes.map((prize) => (
-                  <div key={prize.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                  <div
+                    key={prize.id}
+                    className="flex items-center justify-between p-3 border border-gray-200 rounded-lg"
+                  >
                     <div>
-                      <div className="font-medium text-gray-900">{prize.description}</div>
+                      <div className="font-medium text-gray-900">
+                        {prize.description}
+                      </div>
                       <div className="text-sm text-gray-600 capitalize">
-                        {prize.category.replace('_', ' ')}
+                        {prize.category.replace("_", " ")}
                       </div>
                     </div>
                     {prize.amount && prize.amount > 0 && (
@@ -347,37 +408,54 @@ export default function PublicEvent() {
           )}
 
           {/* Travel Information */}
-          {travel && (travel.flight_info || travel.accommodations || travel.daily_schedule) && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Plane className="h-5 w-5 mr-2 text-emerald-600" />
-                  Travel Information
-                </CardTitle>
-                <CardDescription>Logistics and travel details</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {travel.flight_info && (
-                  <div>
-                    <h4 className="font-medium text-gray-900 mb-2">Flight Information</h4>
-                    <p className="text-gray-600 whitespace-pre-wrap">{travel.flight_info}</p>
-                  </div>
-                )}
-                {travel.accommodations && (
-                  <div>
-                    <h4 className="font-medium text-gray-900 mb-2">Accommodations</h4>
-                    <p className="text-gray-600 whitespace-pre-wrap">{travel.accommodations}</p>
-                  </div>
-                )}
-                {travel.daily_schedule && (
-                  <div>
-                    <h4 className="font-medium text-gray-900 mb-2">Daily Schedule</h4>
-                    <p className="text-gray-600 whitespace-pre-wrap">{travel.daily_schedule}</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          )}
+          {travel &&
+            (travel.flight_info ||
+              travel.accommodations ||
+              travel.daily_schedule) && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Plane className="h-5 w-5 mr-2 text-emerald-600" />
+                    Travel Information
+                  </CardTitle>
+                  <CardDescription>
+                    Logistics and travel details
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {travel.flight_info && (
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-2">
+                        Flight Information
+                      </h4>
+                      <p className="text-gray-600 whitespace-pre-wrap">
+                        {travel.flight_info}
+                      </p>
+                    </div>
+                  )}
+                  {travel.accommodations && (
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-2">
+                        Accommodations
+                      </h4>
+                      <p className="text-gray-600 whitespace-pre-wrap">
+                        {travel.accommodations}
+                      </p>
+                    </div>
+                  )}
+                  {travel.daily_schedule && (
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-2">
+                        Daily Schedule
+                      </h4>
+                      <p className="text-gray-600 whitespace-pre-wrap">
+                        {travel.daily_schedule}
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
         </div>
 
         {/* Footer */}

@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +17,15 @@ import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { Round, SkillsContest } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, Plus, Trash2, Calendar, Clock, Trophy, Globe } from "lucide-react";
+import {
+  MapPin,
+  Plus,
+  Trash2,
+  Calendar,
+  Clock,
+  Trophy,
+  Globe,
+} from "lucide-react";
 
 export default function Courses() {
   const navigate = useNavigate();
@@ -20,46 +34,52 @@ export default function Courses() {
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
 
-  const [rounds, setRounds] = useState<Round[]>(tripData.rounds.length > 0 ? tripData.rounds : [
-    {
-      id: '1',
-      courseName: '',
-      courseUrl: '',
-      date: '',
-      time: '',
-      holes: 18,
-      skillsContests: []
-    }
-  ]);
+  const [rounds, setRounds] = useState<Round[]>(
+    tripData.rounds.length > 0
+      ? tripData.rounds
+      : [
+          {
+            id: "1",
+            courseName: "",
+            courseUrl: "",
+            date: "",
+            time: "",
+            holes: 18,
+            skillsContests: [],
+          },
+        ],
+  );
 
   // Update rounds when tripData changes (important for editing existing events)
   useEffect(() => {
     if (tripData.rounds.length > 0) {
-      console.log('Updating rounds from tripData:', tripData.rounds);
+      console.log("Updating rounds from tripData:", tripData.rounds);
       setRounds(tripData.rounds);
     }
   }, [tripData.rounds]);
 
-  const [errors, setErrors] = useState<Record<string, Record<string, string>>>({});
+  const [errors, setErrors] = useState<Record<string, Record<string, string>>>(
+    {},
+  );
 
   const generateId = () => Math.random().toString(36).substr(2, 9);
 
   const addRound = () => {
     const newRound: Round = {
       id: generateId(),
-      courseName: '',
-      courseUrl: '',
-      date: '',
-      time: '',
+      courseName: "",
+      courseUrl: "",
+      date: "",
+      time: "",
       holes: 18,
-      skillsContests: []
+      skillsContests: [],
     };
     setRounds([...rounds, newRound]);
   };
 
   const removeRound = (id: string) => {
     if (rounds.length > 1) {
-      setRounds(rounds.filter(round => round.id !== id));
+      setRounds(rounds.filter((round) => round.id !== id));
       // Remove errors for deleted round
       const newErrors = { ...errors };
       delete newErrors[id];
@@ -68,17 +88,17 @@ export default function Courses() {
   };
 
   const updateRound = (id: string, field: keyof Round, value: any) => {
-    setRounds(rounds.map(round => 
-      round.id === id 
-        ? { ...round, [field]: value }
-        : round
-    ));
-    
+    setRounds(
+      rounds.map((round) =>
+        round.id === id ? { ...round, [field]: value } : round,
+      ),
+    );
+
     // Clear error for this field
     if (errors[id]?.[field]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [id]: { ...prev[id], [field]: '' }
+        [id]: { ...prev[id], [field]: "" },
       }));
     }
   };
@@ -87,45 +107,60 @@ export default function Courses() {
     const newContest: SkillsContest = {
       id: generateId(),
       hole: 1,
-      type: 'longest_drive'
+      type: "longest_drive",
     };
 
-    setRounds(rounds.map(round =>
-      round.id === roundId
-        ? {
-            ...round,
-            skillsContests: [...(round.skillsContests || []), newContest]
-          }
-        : round
-    ));
+    setRounds(
+      rounds.map((round) =>
+        round.id === roundId
+          ? {
+              ...round,
+              skillsContests: [...(round.skillsContests || []), newContest],
+            }
+          : round,
+      ),
+    );
   };
 
-  const updateSkillsContest = (roundId: string, contestId: string, field: 'hole' | 'type', value: number | string) => {
-    setRounds(rounds.map(round =>
-      round.id === roundId
-        ? {
-            ...round,
-            skillsContests: (round.skillsContests || []).map(contest =>
-              contest.id === contestId ? { ...contest, [field]: value } : contest
-            )
-          }
-        : round
-    ));
+  const updateSkillsContest = (
+    roundId: string,
+    contestId: string,
+    field: "hole" | "type",
+    value: number | string,
+  ) => {
+    setRounds(
+      rounds.map((round) =>
+        round.id === roundId
+          ? {
+              ...round,
+              skillsContests: (round.skillsContests || []).map((contest) =>
+                contest.id === contestId
+                  ? { ...contest, [field]: value }
+                  : contest,
+              ),
+            }
+          : round,
+      ),
+    );
   };
 
   const removeSkillsContest = (roundId: string, contestId: string) => {
-    setRounds(rounds.map(round =>
-      round.id === roundId
-        ? {
-            ...round,
-            skillsContests: (round.skillsContests || []).filter(contest => contest.id !== contestId)
-          }
-        : round
-    ));
+    setRounds(
+      rounds.map((round) =>
+        round.id === roundId
+          ? {
+              ...round,
+              skillsContests: (round.skillsContests || []).filter(
+                (contest) => contest.id !== contestId,
+              ),
+            }
+          : round,
+      ),
+    );
   };
 
   const validateForm = () => {
-    console.log('Validating form with rounds:', rounds);
+    console.log("Validating form with rounds:", rounds);
     const newErrors: Record<string, Record<string, string>> = {};
 
     rounds.forEach((round, index) => {
@@ -133,12 +168,12 @@ export default function Courses() {
       const roundErrors: Record<string, string> = {};
 
       if (!round.courseName.trim()) {
-        roundErrors.courseName = 'Course name is required';
+        roundErrors.courseName = "Course name is required";
         console.log(`Round ${index}: Course name is empty`);
       }
 
       if (!round.date) {
-        roundErrors.date = 'Date is required';
+        roundErrors.date = "Date is required";
         console.log(`Round ${index}: Date is empty`);
       }
 
@@ -148,7 +183,7 @@ export default function Courses() {
       // }
 
       if (round.holes <= 0 || round.holes > 18) {
-        roundErrors.holes = 'Holes must be between 1 and 18';
+        roundErrors.holes = "Holes must be between 1 and 18";
         console.log(`Round ${index}: Invalid holes count:`, round.holes);
       }
 
@@ -160,18 +195,18 @@ export default function Courses() {
 
     setErrors(newErrors);
     const isValid = Object.keys(newErrors).length === 0;
-    console.log('Form validation result:', isValid ? 'PASSED' : 'FAILED');
-    console.log('Errors:', newErrors);
+    console.log("Form validation result:", isValid ? "PASSED" : "FAILED");
+    console.log("Errors:", newErrors);
     return isValid;
   };
 
   const handleNext = async () => {
-    console.log('Courses handleNext called');
-    console.log('Current rounds data:', rounds);
-    console.log('Current tripData.id:', tripData.id);
+    console.log("Courses handleNext called");
+    console.log("Current rounds data:", rounds);
+    console.log("Current tripData.id:", tripData.id);
 
     if (!validateForm()) {
-      console.log('Form validation failed');
+      console.log("Form validation failed");
       return;
     }
 
@@ -179,22 +214,22 @@ export default function Courses() {
 
     // Update context first
     updateCourses(rounds);
-    console.log('Updated context with rounds');
+    console.log("Updated context with rounds");
 
     try {
       // Save rounds to Supabase - pass rounds data directly to avoid timing issues
-      console.log('Calling saveRounds with direct data...');
+      console.log("Calling saveRounds with direct data...");
       const result = await saveRounds(rounds);
-      console.log('SaveRounds result:', result);
+      console.log("SaveRounds result:", result);
 
       if (result.success) {
         toast({
           title: "Courses Saved",
           description: "Golf rounds saved successfully",
         });
-        navigate('/app/create/scoring');
+        navigate("/app/create/scoring");
       } else {
-        console.error('Save failed with error:', result.error);
+        console.error("Save failed with error:", result.error);
         toast({
           title: "Save Failed",
           description: result.error || "Failed to save courses",
@@ -202,7 +237,7 @@ export default function Courses() {
         });
       }
     } catch (error) {
-      console.error('Error saving courses:', error);
+      console.error("Error saving courses:", error);
       toast({
         title: "Save Failed",
         description: "An unexpected error occurred",
@@ -215,7 +250,7 @@ export default function Courses() {
 
   const handlePrevious = () => {
     updateCourses(rounds);
-    navigate('/app/create/basic-info');
+    navigate("/app/create/basic-info");
   };
 
   return (
@@ -237,7 +272,7 @@ export default function Courses() {
             Add the golf courses and rounds for your trip
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {rounds.map((round, index) => (
             <Card key={round.id} className="border-green-100 bg-green-50">
@@ -258,7 +293,7 @@ export default function Courses() {
                   )}
                 </div>
               </CardHeader>
-              
+
               <CardContent className="space-y-4">
                 {/* Course Name and URL */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -268,12 +303,16 @@ export default function Courses() {
                     </Label>
                     <Input
                       value={round.courseName}
-                      onChange={(e) => updateRound(round.id, 'courseName', e.target.value)}
+                      onChange={(e) =>
+                        updateRound(round.id, "courseName", e.target.value)
+                      }
                       placeholder="e.g., Pebble Beach Golf Links"
-                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.courseName ? 'border-red-300' : ''}`}
+                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.courseName ? "border-red-300" : ""}`}
                     />
                     {errors[round.id]?.courseName && (
-                      <p className="text-sm text-red-600">{errors[round.id].courseName}</p>
+                      <p className="text-sm text-red-600">
+                        {errors[round.id].courseName}
+                      </p>
                     )}
                   </div>
 
@@ -284,8 +323,10 @@ export default function Courses() {
                     </Label>
                     <Input
                       type="url"
-                      value={round.courseUrl || ''}
-                      onChange={(e) => updateRound(round.id, 'courseUrl', e.target.value)}
+                      value={round.courseUrl || ""}
+                      onChange={(e) =>
+                        updateRound(round.id, "courseUrl", e.target.value)
+                      }
                       placeholder="https://example.com/course"
                       className="border-green-200 focus:border-emerald-500 bg-white"
                     />
@@ -302,11 +343,15 @@ export default function Courses() {
                     <Input
                       type="date"
                       value={round.date}
-                      onChange={(e) => updateRound(round.id, 'date', e.target.value)}
-                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.date ? 'border-red-300' : ''}`}
+                      onChange={(e) =>
+                        updateRound(round.id, "date", e.target.value)
+                      }
+                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.date ? "border-red-300" : ""}`}
                     />
                     {errors[round.id]?.date && (
-                      <p className="text-sm text-red-600">{errors[round.id].date}</p>
+                      <p className="text-sm text-red-600">
+                        {errors[round.id].date}
+                      </p>
                     )}
                   </div>
 
@@ -318,11 +363,15 @@ export default function Courses() {
                     <Input
                       type="time"
                       value={round.time}
-                      onChange={(e) => updateRound(round.id, 'time', e.target.value)}
-                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.time ? 'border-red-300' : ''}`}
+                      onChange={(e) =>
+                        updateRound(round.id, "time", e.target.value)
+                      }
+                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.time ? "border-red-300" : ""}`}
                     />
                     {errors[round.id]?.time && (
-                      <p className="text-sm text-red-600">{errors[round.id].time}</p>
+                      <p className="text-sm text-red-600">
+                        {errors[round.id].time}
+                      </p>
                     )}
                   </div>
 
@@ -335,11 +384,19 @@ export default function Courses() {
                       min="1"
                       max="18"
                       value={round.holes}
-                      onChange={(e) => updateRound(round.id, 'holes', parseInt(e.target.value) || 18)}
-                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.holes ? 'border-red-300' : ''}`}
+                      onChange={(e) =>
+                        updateRound(
+                          round.id,
+                          "holes",
+                          parseInt(e.target.value) || 18,
+                        )
+                      }
+                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.holes ? "border-red-300" : ""}`}
                     />
                     {errors[round.id]?.holes && (
-                      <p className="text-sm text-red-600">{errors[round.id].holes}</p>
+                      <p className="text-sm text-red-600">
+                        {errors[round.id].holes}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -359,35 +416,62 @@ export default function Courses() {
                   {round.skillsContests && round.skillsContests.length > 0 && (
                     <div className="space-y-3">
                       {round.skillsContests.map((contest) => (
-                        <div key={contest.id} className="flex items-center space-x-3 p-3 bg-white border border-green-200 rounded-lg">
+                        <div
+                          key={contest.id}
+                          className="flex items-center space-x-3 p-3 bg-white border border-green-200 rounded-lg"
+                        >
                           <div className="flex-1 grid grid-cols-2 gap-3">
                             <div className="space-y-1">
-                              <Label className="text-sm text-green-800">Hole Number</Label>
+                              <Label className="text-sm text-green-800">
+                                Hole Number
+                              </Label>
                               <Input
                                 type="number"
                                 min="1"
                                 max={round.holes}
                                 value={contest.hole}
-                                onChange={(e) => updateSkillsContest(round.id, contest.id, 'hole', parseInt(e.target.value) || 1)}
+                                onChange={(e) =>
+                                  updateSkillsContest(
+                                    round.id,
+                                    contest.id,
+                                    "hole",
+                                    parseInt(e.target.value) || 1,
+                                  )
+                                }
                                 className="border-green-200 focus:border-emerald-500"
                               />
                             </div>
                             <div className="space-y-1">
-                              <Label className="text-sm text-green-800">Contest Type</Label>
+                              <Label className="text-sm text-green-800">
+                                Contest Type
+                              </Label>
                               <select
                                 value={contest.type}
-                                onChange={(e) => updateSkillsContest(round.id, contest.id, 'type', e.target.value)}
+                                onChange={(e) =>
+                                  updateSkillsContest(
+                                    round.id,
+                                    contest.id,
+                                    "type",
+                                    e.target.value,
+                                  )
+                                }
                                 className="w-full px-3 py-2 border border-green-200 rounded-md focus:border-emerald-500 focus:outline-none bg-white"
                               >
-                                <option value="longest_drive">Longest Drive</option>
-                                <option value="closest_to_pin">Closest to Pin</option>
+                                <option value="longest_drive">
+                                  Longest Drive
+                                </option>
+                                <option value="closest_to_pin">
+                                  Closest to Pin
+                                </option>
                               </select>
                             </div>
                           </div>
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => removeSkillsContest(round.id, contest.id)}
+                            onClick={() =>
+                              removeSkillsContest(round.id, contest.id)
+                            }
                             className="border-red-200 text-red-600 hover:bg-red-50"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -425,11 +509,15 @@ export default function Courses() {
           {rounds.length > 0 && (
             <Alert className="border-blue-200 bg-blue-50">
               <AlertDescription className="text-blue-700">
-                Total rounds: <Badge variant="secondary" className="ml-1">{rounds.length}</Badge>
-                {rounds.some(r => r.skillsContests?.enabled) && (
+                Total rounds:{" "}
+                <Badge variant="secondary" className="ml-1">
+                  {rounds.length}
+                </Badge>
+                {rounds.some((r) => r.skillsContests?.enabled) && (
                   <span className="ml-4">
-                    Skills contests: <Badge variant="secondary" className="ml-1">
-                      {rounds.filter(r => r.skillsContests?.enabled).length}
+                    Skills contests:{" "}
+                    <Badge variant="secondary" className="ml-1">
+                      {rounds.filter((r) => r.skillsContests?.enabled).length}
                     </Badge>
                   </span>
                 )}

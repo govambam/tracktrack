@@ -1,16 +1,42 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
-import { Settings, Trash2, AlertTriangle, Copy, ExternalLink, Globe, Eye, EyeOff, Share } from "lucide-react";
+import {
+  Settings,
+  Trash2,
+  AlertTriangle,
+  Copy,
+  ExternalLink,
+  Globe,
+  Eye,
+  EyeOff,
+  Share,
+} from "lucide-react";
 
 export default function SettingsEdit() {
   const { eventId } = useParams();
@@ -19,13 +45,13 @@ export default function SettingsEdit() {
   const { state } = useTripCreation();
   const { tripData } = state;
 
-  const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  const [deleteConfirmText, setDeleteConfirmText] = useState("");
   const [deleting, setDeleting] = useState(false);
   const [eventInfo, setEventInfo] = useState<any>(null);
   const [publishing, setPublishing] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const eventName = tripData?.tripName || 'this event';
+  const eventName = tripData?.tripName || "this event";
 
   useEffect(() => {
     loadEventInfo();
@@ -37,19 +63,19 @@ export default function SettingsEdit() {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('events')
-        .select('is_published, is_private, slug, created_at')
-        .eq('id', eventId)
+        .from("events")
+        .select("is_published, is_private, slug, created_at")
+        .eq("id", eventId)
         .single();
 
       if (error) {
-        console.error('Error loading event info:', error);
+        console.error("Error loading event info:", error);
         return;
       }
 
       setEventInfo(data);
     } catch (error) {
-      console.error('Error loading event info:', error);
+      console.error("Error loading event info:", error);
     } finally {
       setLoading(false);
     }
@@ -62,17 +88,17 @@ export default function SettingsEdit() {
 
     try {
       const { data, error } = await supabase
-        .from('events')
+        .from("events")
         .update({
           is_published: true,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
-        .eq('id', eventId)
-        .select('slug')
+        .eq("id", eventId)
+        .select("slug")
         .single();
 
       if (error) {
-        console.error('Error publishing event:', error);
+        console.error("Error publishing event:", error);
         toast({
           title: "Publish Failed",
           description: error.message || "Failed to publish event",
@@ -88,9 +114,8 @@ export default function SettingsEdit() {
         title: "Event Published",
         description: "Your event is now live and accessible to the public",
       });
-
     } catch (error) {
-      console.error('Error publishing event:', error);
+      console.error("Error publishing event:", error);
       toast({
         title: "Publish Failed",
         description: "An unexpected error occurred",
@@ -108,15 +133,15 @@ export default function SettingsEdit() {
 
     try {
       const { error } = await supabase
-        .from('events')
+        .from("events")
         .update({
           is_published: false,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
-        .eq('id', eventId);
+        .eq("id", eventId);
 
       if (error) {
-        console.error('Error unpublishing event:', error);
+        console.error("Error unpublishing event:", error);
         toast({
           title: "Unpublish Failed",
           description: error.message || "Failed to unpublish event",
@@ -131,9 +156,8 @@ export default function SettingsEdit() {
         title: "Event Unpublished",
         description: "Your event is no longer publicly accessible",
       });
-
     } catch (error) {
-      console.error('Error unpublishing event:', error);
+      console.error("Error unpublishing event:", error);
       toast({
         title: "Unpublish Failed",
         description: "An unexpected error occurred",
@@ -148,18 +172,21 @@ export default function SettingsEdit() {
     if (!eventInfo?.slug) return;
 
     const url = `${window.location.origin}/events/${eventInfo.slug}`;
-    navigator.clipboard.writeText(url).then(() => {
-      toast({
-        title: "URL Copied",
-        description: "Public event URL has been copied to clipboard",
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        toast({
+          title: "URL Copied",
+          description: "Public event URL has been copied to clipboard",
+        });
+      })
+      .catch(() => {
+        toast({
+          title: "Copy Failed",
+          description: "Could not copy URL to clipboard",
+          variant: "destructive",
+        });
       });
-    }).catch(() => {
-      toast({
-        title: "Copy Failed",
-        description: "Could not copy URL to clipboard",
-        variant: "destructive",
-      });
-    });
   };
 
   const generateSlug = async () => {
@@ -171,11 +198,11 @@ export default function SettingsEdit() {
       // Generate slug from event name
       let baseSlug = tripData.tripName
         .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/^-+|-+$/g, '');
+        .replace(/[^a-z0-9\s]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/^-+|-+$/g, "");
 
-      if (!baseSlug) baseSlug = 'golf-event';
+      if (!baseSlug) baseSlug = "golf-event";
 
       // Check for uniqueness and append counter if needed
       let finalSlug = baseSlug;
@@ -183,13 +210,13 @@ export default function SettingsEdit() {
 
       while (true) {
         const { data: existingEvent, error } = await supabase
-          .from('events')
-          .select('id')
-          .eq('slug', finalSlug)
-          .neq('id', eventId)
+          .from("events")
+          .select("id")
+          .eq("slug", finalSlug)
+          .neq("id", eventId)
           .single();
 
-        if (error && error.code === 'PGRST116') {
+        if (error && error.code === "PGRST116") {
           // No existing event with this slug, we can use it
           break;
         } else if (error) {
@@ -203,12 +230,12 @@ export default function SettingsEdit() {
 
       // Update the event with the new slug
       const { error: updateError } = await supabase
-        .from('events')
+        .from("events")
         .update({
           slug: finalSlug,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
-        .eq('id', eventId);
+        .eq("id", eventId);
 
       if (updateError) {
         throw updateError;
@@ -221,9 +248,8 @@ export default function SettingsEdit() {
         title: "Slug Generated",
         description: `Event URL slug has been set to: ${finalSlug}`,
       });
-
     } catch (error) {
-      console.error('Error generating slug:', error);
+      console.error("Error generating slug:", error);
       toast({
         title: "Generation Failed",
         description: "Failed to generate event slug",
@@ -242,12 +268,12 @@ export default function SettingsEdit() {
     try {
       // Delete the main event - cascade deletes will handle related data
       const { error } = await supabase
-        .from('events')
+        .from("events")
         .delete()
-        .eq('id', eventId);
+        .eq("id", eventId);
 
       if (error) {
-        console.error('Error deleting event:', error);
+        console.error("Error deleting event:", error);
         toast({
           title: "Delete Failed",
           description: error.message || "Failed to delete event",
@@ -258,14 +284,14 @@ export default function SettingsEdit() {
 
       toast({
         title: "Event Deleted",
-        description: "The event and all related data have been permanently deleted",
+        description:
+          "The event and all related data have been permanently deleted",
       });
 
       // Navigate back to events list
-      navigate('/app');
-
+      navigate("/app");
     } catch (error) {
-      console.error('Error deleting event:', error);
+      console.error("Error deleting event:", error);
       toast({
         title: "Delete Failed",
         description: "An unexpected error occurred",
@@ -278,18 +304,21 @@ export default function SettingsEdit() {
 
   const copyEventUrl = () => {
     const url = `${window.location.origin}/app/${eventId}/basic`;
-    navigator.clipboard.writeText(url).then(() => {
-      toast({
-        title: "URL Copied",
-        description: "Event URL has been copied to clipboard",
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        toast({
+          title: "URL Copied",
+          description: "Event URL has been copied to clipboard",
+        });
+      })
+      .catch(() => {
+        toast({
+          title: "Copy Failed",
+          description: "Could not copy URL to clipboard",
+          variant: "destructive",
+        });
       });
-    }).catch(() => {
-      toast({
-        title: "Copy Failed",
-        description: "Could not copy URL to clipboard",
-        variant: "destructive",
-      });
-    });
   };
 
   const isDeleteValid = deleteConfirmText === eventName;
@@ -321,9 +350,13 @@ export default function SettingsEdit() {
                     <>
                       <Eye className="h-5 w-5 text-green-600" />
                       <div>
-                        <div className="font-medium text-green-900">Event is Published</div>
+                        <div className="font-medium text-green-900">
+                          Event is Published
+                        </div>
                         <div className="text-sm text-green-600">
-                          {eventInfo.is_private ? "Private event - requires invitation" : "Public event - anyone can view"}
+                          {eventInfo.is_private
+                            ? "Private event - requires invitation"
+                            : "Public event - anyone can view"}
                         </div>
                       </div>
                     </>
@@ -331,7 +364,9 @@ export default function SettingsEdit() {
                     <>
                       <EyeOff className="h-5 w-5 text-gray-600" />
                       <div>
-                        <div className="font-medium text-gray-900">Event is Not Published</div>
+                        <div className="font-medium text-gray-900">
+                          Event is Not Published
+                        </div>
                         <div className="text-sm text-gray-600">
                           Only you can access this event through the editor
                         </div>
@@ -340,7 +375,9 @@ export default function SettingsEdit() {
                   )}
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Badge variant={eventInfo?.is_published ? "default" : "outline"}>
+                  <Badge
+                    variant={eventInfo?.is_published ? "default" : "outline"}
+                  >
                     {eventInfo?.is_published ? "Published" : "Draft"}
                   </Badge>
                   {eventInfo?.is_private && (
@@ -351,7 +388,9 @@ export default function SettingsEdit() {
 
               {eventInfo?.is_published && eventInfo?.slug && (
                 <div className="space-y-2">
-                  <Label className="text-blue-800 font-medium">Public Event URL</Label>
+                  <Label className="text-blue-800 font-medium">
+                    Public Event URL
+                  </Label>
                   <div className="flex items-center space-x-2">
                     <Input
                       value={`${window.location.origin}/events/${eventInfo.slug}`}
@@ -369,7 +408,9 @@ export default function SettingsEdit() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => window.open(`/events/${eventInfo.slug}`, '_blank')}
+                      onClick={() =>
+                        window.open(`/events/${eventInfo.slug}`, "_blank")
+                      }
                       className="border-blue-200 text-blue-700 hover:bg-blue-50"
                     >
                       <ExternalLink className="h-4 w-4" />
@@ -384,7 +425,8 @@ export default function SettingsEdit() {
                   <AlertDescription className="text-yellow-700">
                     <div className="flex items-center justify-between">
                       <div>
-                        <strong>Missing URL Slug:</strong> This event is published but doesn't have a public URL yet.
+                        <strong>Missing URL Slug:</strong> This event is
+                        published but doesn't have a public URL yet.
                       </div>
                       <Button
                         variant="outline"
@@ -393,7 +435,7 @@ export default function SettingsEdit() {
                         disabled={publishing}
                         className="border-yellow-300 text-yellow-700 hover:bg-yellow-100 ml-3"
                       >
-                        {publishing ? 'Generating...' : 'Generate URL'}
+                        {publishing ? "Generating..." : "Generate URL"}
                       </Button>
                     </div>
                   </AlertDescription>
@@ -404,7 +446,9 @@ export default function SettingsEdit() {
                 {eventInfo?.is_published && eventInfo?.slug && (
                   <Button
                     variant="outline"
-                    onClick={() => window.open(`/events/${eventInfo.slug}`, '_blank')}
+                    onClick={() =>
+                      window.open(`/events/${eventInfo.slug}`, "_blank")
+                    }
                     className="border-blue-200 text-blue-700 hover:bg-blue-50"
                   >
                     <ExternalLink className="h-4 w-4 mr-2" />
@@ -419,7 +463,7 @@ export default function SettingsEdit() {
                     className="border-orange-200 text-orange-700 hover:bg-orange-50"
                   >
                     <EyeOff className="h-4 w-4 mr-2" />
-                    {publishing ? 'Unpublishing...' : 'Unpublish Event'}
+                    {publishing ? "Unpublishing..." : "Unpublish Event"}
                   </Button>
                 ) : (
                   <Button
@@ -428,7 +472,7 @@ export default function SettingsEdit() {
                     className="bg-blue-600 hover:bg-blue-700 text-white"
                   >
                     <Share className="h-4 w-4 mr-2" />
-                    {publishing ? 'Publishing...' : 'Publish Event'}
+                    {publishing ? "Publishing..." : "Publish Event"}
                   </Button>
                 )}
               </div>
@@ -436,8 +480,10 @@ export default function SettingsEdit() {
               <Alert className="border-blue-200 bg-blue-50">
                 <Globe className="h-4 w-4 text-blue-600" />
                 <AlertDescription className="text-blue-700">
-                  <strong>About Publishing:</strong> When you publish your event, it becomes accessible
-                  at a public URL that you can share with participants. {eventInfo?.is_private
+                  <strong>About Publishing:</strong> When you publish your
+                  event, it becomes accessible at a public URL that you can
+                  share with participants.{" "}
+                  {eventInfo?.is_private
                     ? "Since this is a private event, visitors will need an invitation to access it."
                     : "Since this is a public event, anyone with the link can view the details."}
                 </AlertDescription>
@@ -458,14 +504,14 @@ export default function SettingsEdit() {
             General information about this event
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label className="text-green-800 font-medium">Event ID</Label>
               <div className="flex items-center space-x-2 mt-1">
                 <Input
-                  value={eventId || ''}
+                  value={eventId || ""}
                   readOnly
                   className="bg-gray-50 border-gray-200"
                 />
@@ -473,8 +519,11 @@ export default function SettingsEdit() {
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    navigator.clipboard.writeText(eventId || '');
-                    toast({ title: "Copied", description: "Event ID copied to clipboard" });
+                    navigator.clipboard.writeText(eventId || "");
+                    toast({
+                      title: "Copied",
+                      description: "Event ID copied to clipboard",
+                    });
                   }}
                 >
                   <Copy className="h-4 w-4" />
@@ -490,11 +539,7 @@ export default function SettingsEdit() {
                   readOnly
                   className="bg-gray-50 border-gray-200"
                 />
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={copyEventUrl}
-                >
+                <Button variant="outline" size="sm" onClick={copyEventUrl}>
                   <Copy className="h-4 w-4" />
                 </Button>
               </div>
@@ -504,12 +549,14 @@ export default function SettingsEdit() {
           <div>
             <Label className="text-green-800 font-medium">Created</Label>
             <p className="text-green-600 mt-1">
-              {tripData?.id ? new Date().toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              }) : 'Loading...'}
+              {tripData?.id
+                ? new Date().toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                : "Loading..."}
             </p>
           </div>
 
@@ -518,8 +565,9 @@ export default function SettingsEdit() {
             <AlertDescription className="text-blue-700">
               <div className="font-semibold">Event Access</div>
               <div className="mt-1">
-                This event can be accessed at the URL above. You can share this link with participants
-                or use it to bookmark your event for easy access.
+                This event can be accessed at the URL above. You can share this
+                link with participants or use it to bookmark your event for easy
+                access.
               </div>
             </AlertDescription>
           </Alert>
@@ -537,14 +585,15 @@ export default function SettingsEdit() {
             Irreversible and destructive actions
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-4">
           <Alert className="border-red-200 bg-red-50">
             <AlertTriangle className="h-4 w-4 text-red-600" />
             <AlertDescription className="text-red-700">
               <div className="font-semibold">Delete Event</div>
               <div className="mt-1">
-                Once you delete an event, there is no going back. This action will permanently delete:
+                Once you delete an event, there is no going back. This action
+                will permanently delete:
               </div>
               <ul className="mt-2 list-disc list-inside space-y-1">
                 <li>Event details and configuration</li>
@@ -571,14 +620,19 @@ export default function SettingsEdit() {
                 </AlertDialogTitle>
                 <AlertDialogDescription className="space-y-3">
                   <p>
-                    This action cannot be undone. This will permanently delete the event
+                    This action cannot be undone. This will permanently delete
+                    the event
                     <span className="font-semibold"> "{eventName}" </span>
                     and remove all associated data from our servers.
                   </p>
-                  
+
                   <div className="space-y-2">
-                    <Label htmlFor="deleteConfirm" className="text-sm font-medium">
-                      Please type <span className="font-bold">{eventName}</span> to confirm:
+                    <Label
+                      htmlFor="deleteConfirm"
+                      className="text-sm font-medium"
+                    >
+                      Please type <span className="font-bold">{eventName}</span>{" "}
+                      to confirm:
                     </Label>
                     <Input
                       id="deleteConfirm"
@@ -591,7 +645,7 @@ export default function SettingsEdit() {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel onClick={() => setDeleteConfirmText('')}>
+                <AlertDialogCancel onClick={() => setDeleteConfirmText("")}>
                   Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction
@@ -599,7 +653,7 @@ export default function SettingsEdit() {
                   disabled={!isDeleteValid || deleting}
                   className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
                 >
-                  {deleting ? 'Deleting...' : 'Delete Event'}
+                  {deleting ? "Deleting..." : "Delete Event"}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

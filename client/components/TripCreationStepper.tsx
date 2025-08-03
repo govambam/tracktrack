@@ -15,50 +15,50 @@ const steps: Step[] = [
     id: "basic-info",
     title: "Basic Info",
     path: "/app/create/basic-info",
-    description: "Event details and dates"
+    description: "Event details and dates",
   },
   {
     id: "courses",
     title: "Courses",
     path: "/app/create/courses",
-    description: "Golf rounds and venues"
+    description: "Golf rounds and venues",
   },
   {
     id: "scoring",
     title: "Scoring",
     path: "/app/create/scoring",
-    description: "Tournament format"
+    description: "Tournament format",
   },
   {
     id: "players",
     title: "Players",
     path: "/app/create/players",
-    description: "Participants and handicaps"
+    description: "Participants and handicaps",
   },
   {
     id: "prizes",
     title: "Prizes",
     path: "/app/create/prizes",
-    description: "Buy-ins and payouts"
+    description: "Buy-ins and payouts",
   },
   {
     id: "travel",
     title: "Travel",
     path: "/app/create/travel",
-    description: "Logistics and schedule"
+    description: "Logistics and schedule",
   },
   {
     id: "customization",
     title: "Customization",
     path: "/app/create/customization",
-    description: "Branding and privacy"
+    description: "Branding and privacy",
   },
   {
     id: "summary",
     title: "Summary",
     path: "/app/create/summary",
-    description: "Review and confirm"
-  }
+    description: "Review and confirm",
+  },
 ];
 
 interface TripCreationStepperProps {
@@ -69,16 +69,16 @@ interface TripCreationStepperProps {
   showNavigation?: boolean;
 }
 
-export function TripCreationStepper({ 
-  onNext, 
-  onPrevious, 
-  nextDisabled = false, 
+export function TripCreationStepper({
+  onNext,
+  onPrevious,
+  nextDisabled = false,
   nextLabel = "Next",
-  showNavigation = true 
+  showNavigation = true,
 }: TripCreationStepperProps) {
   const location = useLocation();
   const currentPath = location.pathname;
-  const currentStepIndex = steps.findIndex(step => step.path === currentPath);
+  const currentStepIndex = steps.findIndex((step) => step.path === currentPath);
   const currentStep = steps[currentStepIndex];
 
   const getStepStatus = (stepIndex: number) => {
@@ -119,7 +119,8 @@ export function TripCreationStepper({
           <div className="flex items-center justify-between">
             {steps.map((step, index) => {
               const status = getStepStatus(index);
-              const isClickable = status === "completed" || status === "current";
+              const isClickable =
+                status === "completed" || status === "current";
 
               const stepContent = (
                 <>
@@ -127,8 +128,9 @@ export function TripCreationStepper({
                     className={cn(
                       "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors",
                       status === "completed" && "bg-emerald-600 text-white",
-                      status === "current" && "bg-emerald-600 text-white ring-4 ring-emerald-100",
-                      status === "upcoming" && "bg-gray-200 text-gray-500"
+                      status === "current" &&
+                        "bg-emerald-600 text-white ring-4 ring-emerald-100",
+                      status === "upcoming" && "bg-gray-200 text-gray-500",
                     )}
                   >
                     {status === "completed" ? (
@@ -144,7 +146,7 @@ export function TripCreationStepper({
                         status === "current" && "text-emerald-600",
                         status === "completed" && "text-green-700",
                         status === "upcoming" && "text-gray-500",
-                        isClickable && "group-hover:text-emerald-700"
+                        isClickable && "group-hover:text-emerald-700",
                       )}
                     >
                       {step.title}
@@ -158,7 +160,7 @@ export function TripCreationStepper({
                   key={step.id}
                   to={step.path}
                   className={cn(
-                    "flex flex-col items-center relative z-10 cursor-pointer group"
+                    "flex flex-col items-center relative z-10 cursor-pointer group",
                   )}
                 >
                   {stepContent}
@@ -166,22 +168,20 @@ export function TripCreationStepper({
               ) : (
                 <div
                   key={step.id}
-                  className={cn(
-                    "flex flex-col items-center relative z-10"
-                  )}
+                  className={cn("flex flex-col items-center relative z-10")}
                 >
                   {stepContent}
                 </div>
               );
             })}
           </div>
-          
+
           {/* Progress Line */}
           <div className="absolute top-4 left-4 right-4 h-0.5 bg-gray-200 -z-10">
             <div
               className="h-full bg-emerald-600 transition-all duration-500"
               style={{
-                width: `${(currentStepIndex / (steps.length - 1)) * 100}%`
+                width: `${(currentStepIndex / (steps.length - 1)) * 100}%`,
               }}
             />
           </div>
@@ -200,7 +200,7 @@ export function TripCreationStepper({
             <ArrowLeft className="h-4 w-4 mr-2" />
             Previous
           </Button>
-          
+
           <Button
             onClick={onNext}
             disabled={nextDisabled}

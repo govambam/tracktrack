@@ -10,7 +10,7 @@ export default function CreateTrip() {
     // Reset the trip context for a fresh start
     resetTrip();
     // Redirect to the first step of event creation
-    navigate('/app/create/basic-info');
+    navigate("/app/create/basic-info");
   }, [navigate, resetTrip]);
 
   return null;

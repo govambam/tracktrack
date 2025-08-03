@@ -1,17 +1,37 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { Round, SkillsContest } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
-import { MapPin, Plus, Trash2, Calendar, Clock, Trophy, Save } from "lucide-react";
+import {
+  MapPin,
+  Plus,
+  Trash2,
+  Calendar,
+  Clock,
+  Trophy,
+  Save,
+} from "lucide-react";
 
 export default function CoursesEdit() {
   const { eventId } = useParams();
@@ -21,7 +41,9 @@ export default function CoursesEdit() {
 
   const [rounds, setRounds] = useState<Round[]>([]);
   const [saving, setSaving] = useState(false);
-  const [errors, setErrors] = useState<Record<string, Record<string, string>>>({});
+  const [errors, setErrors] = useState<Record<string, Record<string, string>>>(
+    {},
+  );
 
   useEffect(() => {
     // Initialize rounds with context data
@@ -29,15 +51,17 @@ export default function CoursesEdit() {
       setRounds(tripData.rounds);
     } else {
       // Initialize with one empty round
-      setRounds([{
-        id: generateId(),
-        courseName: '',
-        courseUrl: '',
-        date: '',
-        time: '',
-        holes: 18,
-        skillsContests: []
-      }]);
+      setRounds([
+        {
+          id: generateId(),
+          courseName: "",
+          courseUrl: "",
+          date: "",
+          time: "",
+          holes: 18,
+          skillsContests: [],
+        },
+      ]);
     }
   }, [tripData?.rounds]);
 
@@ -46,19 +70,19 @@ export default function CoursesEdit() {
   const addRound = () => {
     const newRound: Round = {
       id: generateId(),
-      courseName: '',
-      courseUrl: '',
-      date: '',
-      time: '',
+      courseName: "",
+      courseUrl: "",
+      date: "",
+      time: "",
       holes: 18,
-      skillsContests: []
+      skillsContests: [],
     };
     setRounds([...rounds, newRound]);
   };
 
   const removeRound = (id: string) => {
     if (rounds.length > 1) {
-      setRounds(rounds.filter(round => round.id !== id));
+      setRounds(rounds.filter((round) => round.id !== id));
       // Clear errors for removed round
       const newErrors = { ...errors };
       delete newErrors[id];
@@ -67,10 +91,12 @@ export default function CoursesEdit() {
   };
 
   const updateRound = (id: string, field: keyof Round, value: any) => {
-    setRounds(rounds.map(round => 
-      round.id === id ? { ...round, [field]: value } : round
-    ));
-    
+    setRounds(
+      rounds.map((round) =>
+        round.id === id ? { ...round, [field]: value } : round,
+      ),
+    );
+
     // Clear error for this field
     if (errors[id]?.[field]) {
       const newErrors = { ...errors };
@@ -89,15 +115,15 @@ export default function CoursesEdit() {
       const roundErrors: Record<string, string> = {};
 
       if (!round.courseName.trim()) {
-        roundErrors.courseName = 'Course name is required';
+        roundErrors.courseName = "Course name is required";
       }
 
       if (!round.date) {
-        roundErrors.date = 'Date is required';
+        roundErrors.date = "Date is required";
       }
 
       if (round.holes <= 0 || round.holes > 18) {
-        roundErrors.holes = 'Holes must be between 1 and 18';
+        roundErrors.holes = "Holes must be between 1 and 18";
       }
 
       if (Object.keys(roundErrors).length > 0) {
@@ -113,35 +139,56 @@ export default function CoursesEdit() {
     const newContest: SkillsContest = {
       id: generateId(),
       hole: 1,
-      type: 'longest_drive'
+      type: "longest_drive",
     };
 
-    setRounds(rounds.map(round =>
-      round.id === roundId
-        ? { ...round, skillsContests: [...(round.skillsContests || []), newContest] }
-        : round
-    ));
+    setRounds(
+      rounds.map((round) =>
+        round.id === roundId
+          ? {
+              ...round,
+              skillsContests: [...(round.skillsContests || []), newContest],
+            }
+          : round,
+      ),
+    );
   };
 
   const removeSkillsContest = (roundId: string, contestId: string) => {
-    setRounds(rounds.map(round =>
-      round.id === roundId
-        ? { ...round, skillsContests: round.skillsContests?.filter(c => c.id !== contestId) || [] }
-        : round
-    ));
+    setRounds(
+      rounds.map((round) =>
+        round.id === roundId
+          ? {
+              ...round,
+              skillsContests:
+                round.skillsContests?.filter((c) => c.id !== contestId) || [],
+            }
+          : round,
+      ),
+    );
   };
 
-  const updateSkillsContest = (roundId: string, contestId: string, field: keyof SkillsContest, value: any) => {
-    setRounds(rounds.map(round =>
-      round.id === roundId
-        ? {
-            ...round,
-            skillsContests: round.skillsContests?.map(contest =>
-              contest.id === contestId ? { ...contest, [field]: value } : contest
-            ) || []
-          }
-        : round
-    ));
+  const updateSkillsContest = (
+    roundId: string,
+    contestId: string,
+    field: keyof SkillsContest,
+    value: any,
+  ) => {
+    setRounds(
+      rounds.map((round) =>
+        round.id === roundId
+          ? {
+              ...round,
+              skillsContests:
+                round.skillsContests?.map((contest) =>
+                  contest.id === contestId
+                    ? { ...contest, [field]: value }
+                    : contest,
+                ) || [],
+            }
+          : round,
+      ),
+    );
   };
 
   const handleSave = async () => {
@@ -155,7 +202,8 @@ export default function CoursesEdit() {
       if (result.success) {
         toast({
           title: "Rounds Updated",
-          description: "Golf rounds and skills contests have been saved successfully",
+          description:
+            "Golf rounds and skills contests have been saved successfully",
         });
       } else {
         toast({
@@ -165,7 +213,7 @@ export default function CoursesEdit() {
         });
       }
     } catch (error) {
-      console.error('Error saving rounds:', error);
+      console.error("Error saving rounds:", error);
       toast({
         title: "Save Failed",
         description: "An unexpected error occurred",
@@ -188,7 +236,7 @@ export default function CoursesEdit() {
             Manage the golf courses and rounds for your event
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {rounds.map((round, index) => (
             <Card key={round.id} className="border-green-100 bg-green-50">
@@ -209,7 +257,7 @@ export default function CoursesEdit() {
                   )}
                 </div>
               </CardHeader>
-              
+
               <CardContent className="space-y-4">
                 {/* Course Name */}
                 <div className="space-y-2">
@@ -218,14 +266,18 @@ export default function CoursesEdit() {
                   </Label>
                   <Input
                     value={round.courseName}
-                    onChange={(e) => updateRound(round.id, 'courseName', e.target.value)}
+                    onChange={(e) =>
+                      updateRound(round.id, "courseName", e.target.value)
+                    }
                     placeholder="e.g., Pebble Beach Golf Links"
                     className={`border-green-200 focus:border-emerald-500 ${
-                      errors[round.id]?.courseName ? 'border-red-300' : ''
+                      errors[round.id]?.courseName ? "border-red-300" : ""
                     }`}
                   />
                   {errors[round.id]?.courseName && (
-                    <p className="text-sm text-red-600">{errors[round.id].courseName}</p>
+                    <p className="text-sm text-red-600">
+                      {errors[round.id].courseName}
+                    </p>
                   )}
                 </div>
 
@@ -239,13 +291,17 @@ export default function CoursesEdit() {
                     <Input
                       type="date"
                       value={round.date}
-                      onChange={(e) => updateRound(round.id, 'date', e.target.value)}
+                      onChange={(e) =>
+                        updateRound(round.id, "date", e.target.value)
+                      }
                       className={`border-green-200 focus:border-emerald-500 ${
-                        errors[round.id]?.date ? 'border-red-300' : ''
+                        errors[round.id]?.date ? "border-red-300" : ""
                       }`}
                     />
                     {errors[round.id]?.date && (
-                      <p className="text-sm text-red-600">{errors[round.id].date}</p>
+                      <p className="text-sm text-red-600">
+                        {errors[round.id].date}
+                      </p>
                     )}
                   </div>
 
@@ -258,7 +314,9 @@ export default function CoursesEdit() {
                     <Input
                       type="time"
                       value={round.time}
-                      onChange={(e) => updateRound(round.id, 'time', e.target.value)}
+                      onChange={(e) =>
+                        updateRound(round.id, "time", e.target.value)
+                      }
                       className="border-green-200 focus:border-emerald-500"
                     />
                   </div>
@@ -270,7 +328,9 @@ export default function CoursesEdit() {
                     </Label>
                     <Select
                       value={round.holes.toString()}
-                      onValueChange={(value) => updateRound(round.id, 'holes', parseInt(value))}
+                      onValueChange={(value) =>
+                        updateRound(round.id, "holes", parseInt(value))
+                      }
                     >
                       <SelectTrigger className="border-green-200 focus:border-emerald-500">
                         <SelectValue />
@@ -281,7 +341,9 @@ export default function CoursesEdit() {
                       </SelectContent>
                     </Select>
                     {errors[round.id]?.holes && (
-                      <p className="text-sm text-red-600">{errors[round.id].holes}</p>
+                      <p className="text-sm text-red-600">
+                        {errors[round.id].holes}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -292,8 +354,10 @@ export default function CoursesEdit() {
                     Course Website (Optional)
                   </Label>
                   <Input
-                    value={round.courseUrl || ''}
-                    onChange={(e) => updateRound(round.id, 'courseUrl', e.target.value)}
+                    value={round.courseUrl || ""}
+                    onChange={(e) =>
+                      updateRound(round.id, "courseUrl", e.target.value)
+                    }
                     placeholder="e.g., https://www.pebblebeach.com"
                     className="border-green-200 focus:border-emerald-500"
                   />
@@ -321,19 +385,34 @@ export default function CoursesEdit() {
                   {round.skillsContests && round.skillsContests.length > 0 ? (
                     <div className="space-y-2">
                       {round.skillsContests.map((contest) => (
-                        <div key={contest.id} className="flex items-center gap-2 p-2 border border-green-200 rounded bg-white">
+                        <div
+                          key={contest.id}
+                          className="flex items-center gap-2 p-2 border border-green-200 rounded bg-white"
+                        >
                           <div className="flex-1">
-                            <Label className="text-xs text-green-700">Hole</Label>
+                            <Label className="text-xs text-green-700">
+                              Hole
+                            </Label>
                             <Select
                               value={contest.hole.toString()}
-                              onValueChange={(value) => updateSkillsContest(round.id, contest.id, 'hole', parseInt(value))}
+                              onValueChange={(value) =>
+                                updateSkillsContest(
+                                  round.id,
+                                  contest.id,
+                                  "hole",
+                                  parseInt(value),
+                                )
+                              }
                             >
                               <SelectTrigger className="h-8 border-green-200">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
                                 {Array.from({ length: round.holes }, (_, i) => (
-                                  <SelectItem key={i + 1} value={(i + 1).toString()}>
+                                  <SelectItem
+                                    key={i + 1}
+                                    value={(i + 1).toString()}
+                                  >
                                     Hole {i + 1}
                                   </SelectItem>
                                 ))}
@@ -342,17 +421,30 @@ export default function CoursesEdit() {
                           </div>
 
                           <div className="flex-1">
-                            <Label className="text-xs text-green-700">Contest Type</Label>
+                            <Label className="text-xs text-green-700">
+                              Contest Type
+                            </Label>
                             <Select
                               value={contest.type}
-                              onValueChange={(value) => updateSkillsContest(round.id, contest.id, 'type', value)}
+                              onValueChange={(value) =>
+                                updateSkillsContest(
+                                  round.id,
+                                  contest.id,
+                                  "type",
+                                  value,
+                                )
+                              }
                             >
                               <SelectTrigger className="h-8 border-green-200">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="longest_drive">Longest Drive</SelectItem>
-                                <SelectItem value="closest_to_pin">Closest to Pin</SelectItem>
+                                <SelectItem value="longest_drive">
+                                  Longest Drive
+                                </SelectItem>
+                                <SelectItem value="closest_to_pin">
+                                  Closest to Pin
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
@@ -361,7 +453,9 @@ export default function CoursesEdit() {
                             type="button"
                             variant="ghost"
                             size="sm"
-                            onClick={() => removeSkillsContest(round.id, contest.id)}
+                            onClick={() =>
+                              removeSkillsContest(round.id, contest.id)
+                            }
                             className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0"
                           >
                             <Trash2 className="h-3 w-3" />
@@ -399,7 +493,7 @@ export default function CoursesEdit() {
               className="bg-emerald-600 hover:bg-emerald-700 text-white"
             >
               <Save className="h-4 w-4 mr-2" />
-              {saving ? 'Saving...' : 'Save Rounds'}
+              {saving ? "Saving..." : "Save Rounds"}
             </Button>
           </div>
 
@@ -410,8 +504,10 @@ export default function CoursesEdit() {
               <AlertDescription className="text-emerald-700">
                 <div className="font-semibold">Round Summary</div>
                 <div className="mt-1">
-                  {rounds.length} round{rounds.length !== 1 ? 's' : ''} planned with a total of{' '}
-                  {rounds.reduce((total, round) => total + round.holes, 0)} holes
+                  {rounds.length} round{rounds.length !== 1 ? "s" : ""} planned
+                  with a total of{" "}
+                  {rounds.reduce((total, round) => total + round.holes, 0)}{" "}
+                  holes
                 </div>
               </AlertDescription>
             </Alert>

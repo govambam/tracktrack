@@ -1,9 +1,24 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link, useNavigate } from "react-router-dom";
-import { Calendar, MapPin, Users, Plus, Edit, ExternalLink, Globe, Eye } from "lucide-react";
+import {
+  Calendar,
+  MapPin,
+  Users,
+  Plus,
+  Edit,
+  ExternalLink,
+  Globe,
+  Eye,
+} from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
@@ -37,17 +52,20 @@ export default function MyTrips() {
 
   const loadEvents = async () => {
     if (isLoadingEvents) {
-      console.log('Already loading events, skipping...');
+      console.log("Already loading events, skipping...");
       return;
     }
 
     try {
       setLoading(true);
       setIsLoadingEvents(true);
-      
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
       if (sessionError) {
-        console.error('Session error:', sessionError);
+        console.error("Session error:", sessionError);
         toast({
           title: "Authentication Error",
           description: "Please sign in again",
@@ -57,26 +75,26 @@ export default function MyTrips() {
       }
 
       if (!session) {
-        console.log('No session found');
+        console.log("No session found");
         setEvents([]);
         return;
       }
 
-      console.log('Session found, loading events directly from Supabase');
-      console.log('User ID:', session.user.id);
+      console.log("Session found, loading events directly from Supabase");
+      console.log("User ID:", session.user.id);
 
       // Test if events table exists by doing a simple count first
-      console.log('Testing events table access...');
+      console.log("Testing events table access...");
       const { count, error: countError } = await supabase
-        .from('events')
-        .select('*', { count: 'exact', head: true });
+        .from("events")
+        .select("*", { count: "exact", head: true });
 
       if (countError) {
-        console.error('Events table access test failed:', {
+        console.error("Events table access test failed:", {
           message: countError.message,
           details: countError.details,
           hint: countError.hint,
-          code: countError.code
+          code: countError.code,
         });
         toast({
           title: "Database Error",
@@ -86,35 +104,38 @@ export default function MyTrips() {
         return;
       }
 
-      console.log('Events table accessible, total count:', count);
+      console.log("Events table accessible, total count:", count);
 
       // Use direct Supabase calls instead of server routes
       const { data, error } = await supabase
-        .from('events')
-        .select('id, name, description, start_date, end_date, location, logo_url, is_private, is_published, slug, created_at, updated_at')
-        .eq('user_id', session.user.id)
-        .order('start_date', { ascending: false });
+        .from("events")
+        .select(
+          "id, name, description, start_date, end_date, location, logo_url, is_private, is_published, slug, created_at, updated_at",
+        )
+        .eq("user_id", session.user.id)
+        .order("start_date", { ascending: false });
 
       if (error) {
-        console.error('Supabase error loading events:', {
+        console.error("Supabase error loading events:", {
           message: error.message,
           details: error.details,
           hint: error.hint,
-          code: error.code
+          code: error.code,
         });
-        console.error('Full error object:', JSON.stringify(error, null, 2));
+        console.error("Full error object:", JSON.stringify(error, null, 2));
         toast({
           title: "Error",
-          description: error.message || error.details || "Failed to load events",
+          description:
+            error.message || error.details || "Failed to load events",
           variant: "destructive",
         });
         return;
       }
 
-      console.log('Successfully loaded events, count:', data?.length || 0);
+      console.log("Successfully loaded events, count:", data?.length || 0);
       setEvents(data || []);
     } catch (error) {
-      console.error('Error loading events:', error);
+      console.error("Error loading events:", error);
       toast({
         title: "Error",
         description: "Failed to load events",
@@ -134,12 +155,19 @@ export default function MyTrips() {
   const handleCreateNew = () => {
     // Reset the trip creation context for a new event
     resetTrip();
-    navigate('/app/create');
+    navigate("/app/create");
   };
 
   const formatDateRange = (startDate: string, endDate: string) => {
-    const start = new Date(startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    const end = new Date(endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const start = new Date(startDate).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
+    const end = new Date(endDate).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
     return `${start} - ${end}`;
   };
 
@@ -147,10 +175,10 @@ export default function MyTrips() {
     const now = new Date();
     const start = new Date(startDate);
     const end = new Date(endDate);
-    
-    if (now > end) return 'completed';
-    if (now >= start && now <= end) return 'active';
-    return 'upcoming';
+
+    if (now > end) return "completed";
+    if (now >= start && now <= end) return "active";
+    return "upcoming";
   };
 
   const getStatusColor = (status: string) => {
@@ -188,10 +216,15 @@ export default function MyTrips() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold text-green-900">My Events</h1>
-          <p className="text-green-600 mt-1">Manage and track your golf trips and tournaments</p>
+          <p className="text-green-600 mt-1">
+            Manage and track your golf trips and tournaments
+          </p>
         </div>
         <div className="mt-4 sm:mt-0">
-          <Button onClick={handleCreateNew} className="bg-emerald-600 hover:bg-emerald-700">
+          <Button
+            onClick={handleCreateNew}
+            className="bg-emerald-600 hover:bg-emerald-700"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Create New Event
           </Button>
@@ -202,21 +235,33 @@ export default function MyTrips() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="border-green-100">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-green-700">Total Events</CardTitle>
+            <CardTitle className="text-sm font-medium text-green-700">
+              Total Events
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-900">{events.length}</div>
+            <div className="text-2xl font-bold text-green-900">
+              {events.length}
+            </div>
             <p className="text-xs text-green-600">Created events</p>
           </CardContent>
         </Card>
 
         <Card className="border-green-100">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-green-700">Upcoming Events</CardTitle>
+            <CardTitle className="text-sm font-medium text-green-700">
+              Upcoming Events
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-900">
-              {events.filter(event => getStatusFromDates(event.start_date, event.end_date) === 'upcoming').length}
+              {
+                events.filter(
+                  (event) =>
+                    getStatusFromDates(event.start_date, event.end_date) ===
+                    "upcoming",
+                ).length
+              }
             </div>
             <p className="text-xs text-green-600">Events planned</p>
           </CardContent>
@@ -224,15 +269,22 @@ export default function MyTrips() {
 
         <Card className="border-green-100">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-green-700">This Month</CardTitle>
+            <CardTitle className="text-sm font-medium text-green-700">
+              This Month
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-900">
-              {events.filter(event => {
-                const start = new Date(event.start_date);
-                const now = new Date();
-                return start.getMonth() === now.getMonth() && start.getFullYear() === now.getFullYear();
-              }).length}
+              {
+                events.filter((event) => {
+                  const start = new Date(event.start_date);
+                  const now = new Date();
+                  return (
+                    start.getMonth() === now.getMonth() &&
+                    start.getFullYear() === now.getFullYear()
+                  );
+                }).length
+              }
             </div>
             <p className="text-xs text-green-600">Events this month</p>
           </CardContent>
@@ -243,20 +295,23 @@ export default function MyTrips() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {events.map((event) => {
           const status = getStatusFromDates(event.start_date, event.end_date);
-          
+
           return (
-            <Card key={event.id} className="border-green-100 hover:shadow-lg transition-shadow">
+            <Card
+              key={event.id}
+              className="border-green-100 hover:shadow-lg transition-shadow"
+            >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <CardTitle className="text-xl text-green-900">{event.name}</CardTitle>
+                    <CardTitle className="text-xl text-green-900">
+                      {event.name}
+                    </CardTitle>
                     <CardDescription className="text-green-600 line-clamp-2">
-                      {event.description || 'Golf event'}
+                      {event.description || "Golf event"}
                     </CardDescription>
                   </div>
-                  <Badge className={getStatusColor(status)}>
-                    {status}
-                  </Badge>
+                  <Badge className={getStatusColor(status)}>{status}</Badge>
                 </div>
               </CardHeader>
 
@@ -272,9 +327,12 @@ export default function MyTrips() {
                   </div>
                   <div className="flex items-center text-green-700">
                     <Eye className="h-4 w-4 mr-2 text-emerald-600" />
-                    {event.is_private ? 'Private' : 'Public'}
+                    {event.is_private ? "Private" : "Public"}
                     {event.is_published && (
-                      <Globe className="h-3 w-3 ml-1 text-blue-600" title="Published" />
+                      <Globe
+                        className="h-3 w-3 ml-1 text-blue-600"
+                        title="Published"
+                      />
                     )}
                   </div>
                   <div className="flex items-center text-green-700 text-xs">
@@ -287,7 +345,9 @@ export default function MyTrips() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => window.open(`/events/${event.slug}`, '_blank')}
+                      onClick={() =>
+                        window.open(`/events/${event.slug}`, "_blank")
+                      }
                       className="border-blue-200 text-blue-700 hover:bg-blue-50"
                     >
                       <ExternalLink className="h-4 w-4 mr-1" />
@@ -314,9 +374,16 @@ export default function MyTrips() {
       {events.length === 0 && (
         <div className="text-center py-12">
           <Calendar className="mx-auto h-12 w-12 text-green-400 mb-4" />
-          <h3 className="text-xl font-medium text-green-900 mb-2">No events yet</h3>
-          <p className="text-green-600 mb-6">Create your first golf event to get started</p>
-          <Button onClick={handleCreateNew} className="bg-emerald-600 hover:bg-emerald-700">
+          <h3 className="text-xl font-medium text-green-900 mb-2">
+            No events yet
+          </h3>
+          <p className="text-green-600 mb-6">
+            Create your first golf event to get started
+          </p>
+          <Button
+            onClick={handleCreateNew}
+            className="bg-emerald-600 hover:bg-emerald-700"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Create Your First Event
           </Button>

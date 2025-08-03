@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,22 +24,25 @@ export default function Customization() {
 
   const [customization, setCustomization] = useState({
     isPrivate: tripData.customization?.isPrivate ?? false,
-    logoUrl: tripData.customization?.logoUrl || '',
-    customDomain: tripData.customization?.customDomain || ''
+    logoUrl: tripData.customization?.logoUrl || "",
+    customDomain: tripData.customization?.customDomain || "",
   });
 
   const handleNext = () => {
     updateCustomization({ customization });
-    navigate('/app/create/summary');
+    navigate("/app/create/summary");
   };
 
   const handlePrevious = () => {
     updateCustomization({ customization });
-    navigate('/app/create/travel');
+    navigate("/app/create/travel");
   };
 
-  const updateCustomizationField = (field: keyof typeof customization, value: boolean | string) => {
-    setCustomization(prev => ({ ...prev, [field]: value }));
+  const updateCustomizationField = (
+    field: keyof typeof customization,
+    value: boolean | string,
+  ) => {
+    setCustomization((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
@@ -51,10 +60,11 @@ export default function Customization() {
             Customization & Branding
           </CardTitle>
           <CardDescription className="text-green-600">
-            Personalize your event website with custom branding and privacy settings
+            Personalize your event website with custom branding and privacy
+            settings
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {/* Privacy Settings */}
           <Card className="border-green-100 bg-green-50">
@@ -77,31 +87,41 @@ export default function Customization() {
                   )}
                   <div>
                     <h3 className="font-medium text-green-900">
-                      {customization.isPrivate ? 'Private Event' : 'Public Event'}
+                      {customization.isPrivate
+                        ? "Private Event"
+                        : "Public Event"}
                     </h3>
                     <p className="text-sm text-green-600 mt-1">
-                      {customization.isPrivate 
-                        ? 'Only invited participants can view event details'
-                        : 'Anyone with the link can view event information'
-                      }
+                      {customization.isPrivate
+                        ? "Only invited participants can view event details"
+                        : "Anyone with the link can view event information"}
                     </p>
                     <div className="mt-2">
-                      <Badge variant={customization.isPrivate ? "secondary" : "outline"}>
-                        {customization.isPrivate ? 'Invitation Only' : 'Public Access'}
+                      <Badge
+                        variant={
+                          customization.isPrivate ? "secondary" : "outline"
+                        }
+                      >
+                        {customization.isPrivate
+                          ? "Invitation Only"
+                          : "Public Access"}
                       </Badge>
                     </div>
                   </div>
                 </div>
                 <Switch
                   checked={customization.isPrivate}
-                  onCheckedChange={(checked) => updateCustomizationField('isPrivate', checked)}
+                  onCheckedChange={(checked) =>
+                    updateCustomizationField("isPrivate", checked)
+                  }
                 />
               </div>
 
               <Alert className="border-blue-200 bg-blue-50">
                 <AlertDescription className="text-blue-700">
-                  <strong>Recommendation:</strong> Most golf events work well as private.
-                  You can always change this setting later and send invite links to participants.
+                  <strong>Recommendation:</strong> Most golf events work well as
+                  private. You can always change this setting later and send
+                  invite links to participants.
                 </AlertDescription>
               </Alert>
             </CardContent>
@@ -126,25 +146,30 @@ export default function Customization() {
                 <Input
                   type="url"
                   value={customization.logoUrl}
-                  onChange={(e) => updateCustomizationField('logoUrl', e.target.value)}
+                  onChange={(e) =>
+                    updateCustomizationField("logoUrl", e.target.value)
+                  }
                   placeholder="https://example.com/your-logo.png"
                   className="border-green-200 focus:border-emerald-500 bg-white"
                 />
                 <p className="text-sm text-green-600">
-                  Upload your logo to a service like Imgur, Dropbox, or your website and paste the URL here
+                  Upload your logo to a service like Imgur, Dropbox, or your
+                  website and paste the URL here
                 </p>
               </div>
 
               {customization.logoUrl && (
                 <div className="space-y-2">
-                  <Label className="text-green-800 font-medium">Logo Preview</Label>
+                  <Label className="text-green-800 font-medium">
+                    Logo Preview
+                  </Label>
                   <div className="p-4 bg-white rounded-lg border border-green-200">
-                    <img 
-                      src={customization.logoUrl} 
-                      alt="Trip logo preview" 
+                    <img
+                      src={customization.logoUrl}
+                      alt="Trip logo preview"
                       className="max-h-20 max-w-full object-contain"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = 'none';
+                        (e.target as HTMLImageElement).style.display = "none";
                       }}
                     />
                   </div>
@@ -153,23 +178,39 @@ export default function Customization() {
 
               <Alert className="border-green-200 bg-green-50">
                 <AlertDescription className="text-green-700">
-                  <strong>Logo tips:</strong> Use a PNG or JPG file. Square logos work best. 
-                  Keep file size under 1MB for fast loading.
+                  <strong>Logo tips:</strong> Use a PNG or JPG file. Square
+                  logos work best. Keep file size under 1MB for fast loading.
                 </AlertDescription>
               </Alert>
             </CardContent>
           </Card>
 
-
-
           {/* Customization Summary */}
           <Alert className="border-emerald-200 bg-emerald-50">
             <AlertDescription className="text-emerald-700">
               <div className="space-y-1">
-                <div className="font-semibold">Your Customization Settings:</div>
-                <div>Privacy: <Badge variant="secondary">{customization.isPrivate ? 'Private' : 'Public'}</Badge></div>
-                {customization.logoUrl && <div>Custom logo: <Badge variant="secondary">✓ Added</Badge></div>}
-                {customization.customDomain && <div>Custom URL: <Badge variant="secondary">/{customization.customDomain}</Badge></div>}
+                <div className="font-semibold">
+                  Your Customization Settings:
+                </div>
+                <div>
+                  Privacy:{" "}
+                  <Badge variant="secondary">
+                    {customization.isPrivate ? "Private" : "Public"}
+                  </Badge>
+                </div>
+                {customization.logoUrl && (
+                  <div>
+                    Custom logo: <Badge variant="secondary">✓ Added</Badge>
+                  </div>
+                )}
+                {customization.customDomain && (
+                  <div>
+                    Custom URL:{" "}
+                    <Badge variant="secondary">
+                      /{customization.customDomain}
+                    </Badge>
+                  </div>
+                )}
               </div>
             </AlertDescription>
           </Alert>
@@ -177,8 +218,9 @@ export default function Customization() {
           {/* Helper Text */}
           <Alert className="border-green-200 bg-green-50">
             <AlertDescription className="text-green-700">
-              <strong>All optional:</strong> These settings help make your event feel more professional and branded,
-              but aren't required for a great golf event experience.
+              <strong>All optional:</strong> These settings help make your event
+              feel more professional and branded, but aren't required for a
+              great golf event experience.
             </AlertDescription>
           </Alert>
         </CardContent>

@@ -1,6 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,7 +16,17 @@ import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
-import { Calendar, MapPin, FileText, Image, Save, Globe, Check, X, Loader2 } from "lucide-react";
+import {
+  Calendar,
+  MapPin,
+  FileText,
+  Image,
+  Save,
+  Globe,
+  Check,
+  X,
+  Loader2,
+} from "lucide-react";
 
 export default function BasicInfo() {
   const navigate = useNavigate();
@@ -19,17 +35,19 @@ export default function BasicInfo() {
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
-    tripName: tripData.tripName || '',
-    startDate: tripData.startDate || '',
-    endDate: tripData.endDate || '',
-    location: tripData.location || '',
-    description: tripData.description || '',
-    bannerImage: tripData.bannerImage || ''
+    tripName: tripData.tripName || "",
+    startDate: tripData.startDate || "",
+    endDate: tripData.endDate || "",
+    location: tripData.location || "",
+    description: tripData.description || "",
+    bannerImage: tripData.bannerImage || "",
   });
 
-  const [slug, setSlug] = useState('');
-  const [slugStatus, setSlugStatus] = useState<'idle' | 'checking' | 'valid' | 'invalid'>('idle');
-  const [slugError, setSlugError] = useState('');
+  const [slug, setSlug] = useState("");
+  const [slugStatus, setSlugStatus] = useState<
+    "idle" | "checking" | "valid" | "invalid"
+  >("idle");
+  const [slugError, setSlugError] = useState("");
   const [isSlugEdited, setIsSlugEdited] = useState(false);
   const [isUserTyping, setIsUserTyping] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -37,55 +55,54 @@ export default function BasicInfo() {
 
   // Generate slug from text
   const generateSlugFromText = (text: string): string => {
-    return text
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/^-+|-+$/g, '')
-      .slice(0, 50) // Limit length
-      || 'golf-event';
+    return (
+      text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 50) || // Limit length
+      "golf-event"
+    );
   };
 
   // Check slug uniqueness with debouncing
-  const checkSlugUniqueness = useCallback(
-    async (slugToCheck: string) => {
-      if (!slugToCheck.trim()) {
-        setSlugStatus('invalid');
-        setSlugError('URL slug cannot be empty');
-        return;
+  const checkSlugUniqueness = useCallback(async (slugToCheck: string) => {
+    if (!slugToCheck.trim()) {
+      setSlugStatus("invalid");
+      setSlugError("URL slug cannot be empty");
+      return;
+    }
+
+    setSlugStatus("checking");
+    setSlugError("");
+
+    try {
+      const { data, error } = await supabase
+        .from("events")
+        .select("id")
+        .eq("slug", slugToCheck)
+        .single();
+
+      if (error && error.code === "PGRST116") {
+        // No existing event with this slug - it's available
+        setSlugStatus("valid");
+        setSlugError("");
+      } else if (error) {
+        console.error("Error checking slug uniqueness:", error);
+        setSlugStatus("invalid");
+        setSlugError("Unable to verify URL uniqueness");
+      } else {
+        // Slug already exists
+        setSlugStatus("invalid");
+        setSlugError("This URL is already taken, please choose another");
       }
-
-      setSlugStatus('checking');
-      setSlugError('');
-
-      try {
-        const { data, error } = await supabase
-          .from('events')
-          .select('id')
-          .eq('slug', slugToCheck)
-          .single();
-
-        if (error && error.code === 'PGRST116') {
-          // No existing event with this slug - it's available
-          setSlugStatus('valid');
-          setSlugError('');
-        } else if (error) {
-          console.error('Error checking slug uniqueness:', error);
-          setSlugStatus('invalid');
-          setSlugError('Unable to verify URL uniqueness');
-        } else {
-          // Slug already exists
-          setSlugStatus('invalid');
-          setSlugError('This URL is already taken, please choose another');
-        }
-      } catch (error) {
-        console.error('Error checking slug:', error);
-        setSlugStatus('invalid');
-        setSlugError('Unable to verify URL uniqueness');
-      }
-    },
-    []
-  );
+    } catch (error) {
+      console.error("Error checking slug:", error);
+      setSlugStatus("invalid");
+      setSlugError("Unable to verify URL uniqueness");
+    }
+  }, []);
 
   // Debounced slug checking - only show checking state and validate when user stops typing
   useEffect(() => {
@@ -94,8 +111,8 @@ export default function BasicInfo() {
     const timeoutId = setTimeout(() => {
       // Only proceed if user has stopped typing for 1 second
       setIsUserTyping(false);
-      if (slugStatus !== 'checking') {
-        setSlugStatus('checking');
+      if (slugStatus !== "checking") {
+        setSlugStatus("checking");
       }
       checkSlugUniqueness(slug);
     }, 1000); // 1 second debounce for better UX
@@ -108,7 +125,7 @@ export default function BasicInfo() {
     if (!isSlugEdited && formData.tripName) {
       const autoSlug = generateSlugFromText(formData.tripName);
       setSlug(autoSlug);
-      setSlugStatus('idle');
+      setSlugStatus("idle");
       setIsUserTyping(true); // User is actively changing the event name
     }
   }, [formData.tripName, isSlugEdited]);
@@ -117,36 +134,36 @@ export default function BasicInfo() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.tripName.trim()) {
-      newErrors.tripName = 'Event name is required';
+      newErrors.tripName = "Event name is required";
     }
 
     if (!formData.startDate) {
-      newErrors.startDate = 'Start date is required';
+      newErrors.startDate = "Start date is required";
     }
 
     if (!formData.endDate) {
-      newErrors.endDate = 'End date is required';
+      newErrors.endDate = "End date is required";
     }
 
     if (!formData.location.trim()) {
-      newErrors.location = 'Location is required';
+      newErrors.location = "Location is required";
     }
 
     if (formData.startDate && formData.endDate) {
       const start = new Date(formData.startDate);
       const end = new Date(formData.endDate);
       if (end < start) {
-        newErrors.endDate = 'End date must be after start date';
+        newErrors.endDate = "End date must be after start date";
       }
     }
 
     // Validate slug
     if (!slug.trim()) {
-      newErrors.slug = 'Website URL is required';
-    } else if (slugStatus === 'invalid') {
-      newErrors.slug = slugError || 'Please choose a unique URL';
-    } else if (slugStatus === 'checking') {
-      newErrors.slug = 'Please wait while we verify URL availability';
+      newErrors.slug = "Website URL is required";
+    } else if (slugStatus === "invalid") {
+      newErrors.slug = slugError || "Please choose a unique URL";
+    } else if (slugStatus === "checking") {
+      newErrors.slug = "Please wait while we verify URL availability";
     }
 
     setErrors(newErrors);
@@ -157,12 +174,12 @@ export default function BasicInfo() {
     if (validateForm()) {
       setSaving(true);
 
-      console.log('Form data before save:', formData);
-      console.log('Date values:', {
+      console.log("Form data before save:", formData);
+      console.log("Date values:", {
         startDate: formData.startDate,
         endDate: formData.endDate,
         startDateType: typeof formData.startDate,
-        endDateType: typeof formData.endDate
+        endDateType: typeof formData.endDate,
       });
 
       // Update basic info in context
@@ -177,15 +194,17 @@ export default function BasicInfo() {
           location: formData.location,
           description: formData.description,
           bannerImage: formData.bannerImage,
-          slug: slug.trim()
+          slug: slug.trim(),
         });
 
         if (result.success) {
           toast({
             title: "Event Saved",
-            description: tripData.id ? "Event updated successfully" : "Event created successfully",
+            description: tripData.id
+              ? "Event updated successfully"
+              : "Event created successfully",
           });
-          navigate('/app/create/courses');
+          navigate("/app/create/courses");
         } else {
           toast({
             title: "Save Failed",
@@ -194,7 +213,7 @@ export default function BasicInfo() {
           });
         }
       } catch (error) {
-        console.error('Error saving event:', error);
+        console.error("Error saving event:", error);
         toast({
           title: "Save Failed",
           description: "An unexpected error occurred",
@@ -207,13 +226,13 @@ export default function BasicInfo() {
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
     }
 
     // Mark as typing if changing the trip name
-    if (field === 'tripName') {
+    if (field === "tripName") {
       setIsUserTyping(true);
     }
   };
@@ -222,26 +241,26 @@ export default function BasicInfo() {
     // Clean the slug input
     const cleanSlug = value
       .toLowerCase()
-      .replace(/[^a-z0-9-]/g, '')
-      .replace(/--+/g, '-')
-      .replace(/^-+|-+$/g, '')
+      .replace(/[^a-z0-9-]/g, "")
+      .replace(/--+/g, "-")
+      .replace(/^-+|-+$/g, "")
       .slice(0, 50);
 
     setSlug(cleanSlug);
     setIsSlugEdited(true);
     setIsUserTyping(true); // User is actively editing the slug
-    setSlugStatus(cleanSlug ? 'idle' : 'invalid'); // Don't show checking immediately
+    setSlugStatus(cleanSlug ? "idle" : "invalid"); // Don't show checking immediately
 
     if (errors.slug) {
-      setErrors(prev => ({ ...prev, slug: '' }));
+      setErrors((prev) => ({ ...prev, slug: "" }));
     }
   };
 
   const handleSlugBlur = () => {
     // Trigger validation immediately when user leaves the field
     setIsUserTyping(false);
-    if (slug && slugStatus !== 'checking') {
-      setSlugStatus('checking');
+    if (slug && slugStatus !== "checking") {
+      setSlugStatus("checking");
       checkSlugUniqueness(slug);
     }
   };
@@ -249,8 +268,8 @@ export default function BasicInfo() {
   const handleEventNameBlur = () => {
     // Trigger validation when user leaves the event name field
     setIsUserTyping(false);
-    if (slug && !isSlugEdited && slugStatus !== 'checking') {
-      setSlugStatus('checking');
+    if (slug && !isSlugEdited && slugStatus !== "checking") {
+      setSlugStatus("checking");
       checkSlugUniqueness(slug);
     }
   };
@@ -273,7 +292,7 @@ export default function BasicInfo() {
             Enter the basic information for your golf event
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {/* Trip Name */}
           <div className="space-y-2">
@@ -283,10 +302,10 @@ export default function BasicInfo() {
             <Input
               id="tripName"
               value={formData.tripName}
-              onChange={(e) => handleInputChange('tripName', e.target.value)}
+              onChange={(e) => handleInputChange("tripName", e.target.value)}
               onBlur={handleEventNameBlur}
               placeholder="e.g., Pebble Beach Golf Weekend"
-              className={`border-green-200 focus:border-emerald-500 ${errors.tripName ? 'border-red-300' : ''}`}
+              className={`border-green-200 focus:border-emerald-500 ${errors.tripName ? "border-red-300" : ""}`}
             />
             {errors.tripName && (
               <p className="text-sm text-red-600">{errors.tripName}</p>
@@ -295,7 +314,10 @@ export default function BasicInfo() {
 
           {/* Website URL */}
           <div className="space-y-2">
-            <Label htmlFor="slug" className="text-green-800 font-medium flex items-center">
+            <Label
+              htmlFor="slug"
+              className="text-green-800 font-medium flex items-center"
+            >
               <Globe className="h-4 w-4 mr-1 text-emerald-600" />
               Website URL *
             </Label>
@@ -311,25 +333,29 @@ export default function BasicInfo() {
                   onBlur={handleSlugBlur}
                   placeholder="your-event-url"
                   className={`border-green-200 focus:border-emerald-500 rounded-l-none pr-10 ${
-                    errors.slug ? 'border-red-300' :
-                    slugStatus === 'valid' ? 'border-green-300' :
-                    slugStatus === 'invalid' ? 'border-red-300' : ''
+                    errors.slug
+                      ? "border-red-300"
+                      : slugStatus === "valid"
+                        ? "border-green-300"
+                        : slugStatus === "invalid"
+                          ? "border-red-300"
+                          : ""
                   }`}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                  {slugStatus === 'checking' && !isUserTyping && (
+                  {slugStatus === "checking" && !isUserTyping && (
                     <Loader2 className="h-4 w-4 text-gray-400 animate-spin" />
                   )}
-                  {slugStatus === 'valid' && !isUserTyping && (
+                  {slugStatus === "valid" && !isUserTyping && (
                     <Check className="h-4 w-4 text-green-600" />
                   )}
-                  {slugStatus === 'invalid' && !isUserTyping && (
+                  {slugStatus === "invalid" && !isUserTyping && (
                     <X className="h-4 w-4 text-red-600" />
                   )}
                 </div>
               </div>
             </div>
-            {slugStatus === 'valid' && !isUserTyping && (
+            {slugStatus === "valid" && !isUserTyping && (
               <p className="text-sm text-green-600 flex items-center">
                 <Check className="h-3 w-3 mr-1" />
                 Perfect! This URL is available
@@ -339,14 +365,18 @@ export default function BasicInfo() {
               <p className="text-sm text-red-600">{errors.slug || slugError}</p>
             )}
             <p className="text-sm text-gray-600">
-              This will be your event's public website address. Auto-generated from your event name, but you can customize it.
+              This will be your event's public website address. Auto-generated
+              from your event name, but you can customize it.
             </p>
           </div>
 
           {/* Dates */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="startDate" className="text-green-800 font-medium flex items-center">
+              <Label
+                htmlFor="startDate"
+                className="text-green-800 font-medium flex items-center"
+              >
                 <Calendar className="h-4 w-4 mr-1 text-emerald-600" />
                 Start Date *
               </Label>
@@ -354,8 +384,8 @@ export default function BasicInfo() {
                 id="startDate"
                 type="date"
                 value={formData.startDate}
-                onChange={(e) => handleInputChange('startDate', e.target.value)}
-                className={`border-green-200 focus:border-emerald-500 ${errors.startDate ? 'border-red-300' : ''}`}
+                onChange={(e) => handleInputChange("startDate", e.target.value)}
+                className={`border-green-200 focus:border-emerald-500 ${errors.startDate ? "border-red-300" : ""}`}
               />
               {errors.startDate && (
                 <p className="text-sm text-red-600">{errors.startDate}</p>
@@ -363,7 +393,10 @@ export default function BasicInfo() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="endDate" className="text-green-800 font-medium flex items-center">
+              <Label
+                htmlFor="endDate"
+                className="text-green-800 font-medium flex items-center"
+              >
                 <Calendar className="h-4 w-4 mr-1 text-emerald-600" />
                 End Date *
               </Label>
@@ -371,8 +404,8 @@ export default function BasicInfo() {
                 id="endDate"
                 type="date"
                 value={formData.endDate}
-                onChange={(e) => handleInputChange('endDate', e.target.value)}
-                className={`border-green-200 focus:border-emerald-500 ${errors.endDate ? 'border-red-300' : ''}`}
+                onChange={(e) => handleInputChange("endDate", e.target.value)}
+                className={`border-green-200 focus:border-emerald-500 ${errors.endDate ? "border-red-300" : ""}`}
               />
               {errors.endDate && (
                 <p className="text-sm text-red-600">{errors.endDate}</p>
@@ -382,16 +415,19 @@ export default function BasicInfo() {
 
           {/* Location */}
           <div className="space-y-2">
-            <Label htmlFor="location" className="text-green-800 font-medium flex items-center">
+            <Label
+              htmlFor="location"
+              className="text-green-800 font-medium flex items-center"
+            >
               <MapPin className="h-4 w-4 mr-1 text-emerald-600" />
               Location (City, State) *
             </Label>
             <Input
               id="location"
               value={formData.location}
-              onChange={(e) => handleInputChange('location', e.target.value)}
+              onChange={(e) => handleInputChange("location", e.target.value)}
               placeholder="e.g., Pebble Beach, CA"
-              className={`border-green-200 focus:border-emerald-500 ${errors.location ? 'border-red-300' : ''}`}
+              className={`border-green-200 focus:border-emerald-500 ${errors.location ? "border-red-300" : ""}`}
             />
             {errors.location && (
               <p className="text-sm text-red-600">{errors.location}</p>
@@ -406,7 +442,7 @@ export default function BasicInfo() {
             <Textarea
               id="description"
               value={formData.description}
-              onChange={(e) => handleInputChange('description', e.target.value)}
+              onChange={(e) => handleInputChange("description", e.target.value)}
               placeholder="Describe your golf event, what makes it special, activities planned..."
               rows={4}
               className="border-green-200 focus:border-emerald-500"
@@ -418,7 +454,10 @@ export default function BasicInfo() {
 
           {/* Banner Image (Optional) */}
           <div className="space-y-2">
-            <Label htmlFor="bannerImage" className="text-green-800 font-medium flex items-center">
+            <Label
+              htmlFor="bannerImage"
+              className="text-green-800 font-medium flex items-center"
+            >
               <Image className="h-4 w-4 mr-1 text-emerald-600" />
               Banner Image URL (Optional)
             </Label>
@@ -426,7 +465,7 @@ export default function BasicInfo() {
               id="bannerImage"
               type="url"
               value={formData.bannerImage}
-              onChange={(e) => handleInputChange('bannerImage', e.target.value)}
+              onChange={(e) => handleInputChange("bannerImage", e.target.value)}
               placeholder="https://example.com/your-banner-image.jpg"
               className="border-green-200 focus:border-emerald-500"
             />
@@ -438,7 +477,8 @@ export default function BasicInfo() {
           {/* Required Fields Notice */}
           <Alert className="border-blue-200 bg-blue-50">
             <AlertDescription className="text-blue-700">
-              Fields marked with * are required. You can always edit these details later.
+              Fields marked with * are required. You can always edit these
+              details later.
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -458,12 +498,18 @@ export default function BasicInfo() {
               <div className="text-3xl">🏌️‍♂️</div>
               <div>
                 <h3 className="font-semibold text-green-900">
-                  {formData.tripName || 'Your Event Name'}
+                  {formData.tripName || "Your Event Name"}
                 </h3>
                 <p className="text-green-600 text-sm">
-                  {formData.location || 'Location'}
+                  {formData.location || "Location"}
                   {formData.startDate && formData.endDate && (
-                    <> • {new Date(formData.startDate).toLocaleDateString()} - {new Date(formData.endDate).toLocaleDateString()}</>
+                    <>
+                      {" "}
+                      • {new Date(
+                        formData.startDate,
+                      ).toLocaleDateString()} -{" "}
+                      {new Date(formData.endDate).toLocaleDateString()}
+                    </>
                   )}
                 </p>
                 {formData.description && (
@@ -477,9 +523,13 @@ export default function BasicInfo() {
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                 <div className="flex items-center text-sm">
                   <Globe className="h-4 w-4 mr-2 text-blue-600" />
-                  <span className="text-blue-700 font-medium">Public Website: </span>
-                  <span className="text-blue-600 ml-1">tracktrack.com/events/{slug}</span>
-                  {slugStatus === 'valid' && (
+                  <span className="text-blue-700 font-medium">
+                    Public Website:{" "}
+                  </span>
+                  <span className="text-blue-600 ml-1">
+                    tracktrack.com/events/{slug}
+                  </span>
+                  {slugStatus === "valid" && (
                     <Check className="h-3 w-3 ml-2 text-green-600" />
                   )}
                 </div>
