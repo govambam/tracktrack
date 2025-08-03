@@ -13,8 +13,9 @@ import { Calendar, MapPin, FileText, Image, Save } from "lucide-react";
 
 export default function BasicInfo() {
   const navigate = useNavigate();
-  const { state, updateBasicInfo } = useTripCreation();
+  const { state, updateBasicInfo, saveEvent } = useTripCreation();
   const { tripData } = state;
+  const { toast } = useToast();
 
   const [formData, setFormData] = useState({
     tripName: tripData.tripName || '',
@@ -26,6 +27,7 @@ export default function BasicInfo() {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [saving, setSaving] = useState(false);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
