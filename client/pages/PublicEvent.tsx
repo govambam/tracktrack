@@ -434,27 +434,46 @@ function HomeTab({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {courses.map((course) => (
-                <div key={course.id} className="border border-gray-200 rounded-lg p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {courses.slice(0, 4).map((course) => (
+                <div key={course.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
                   {course.image_url && (
-                    <img 
-                      src={course.image_url} 
+                    <img
+                      src={course.image_url}
                       alt={course.name}
-                      className="w-full h-32 object-cover rounded-lg mb-3"
+                      className="w-full h-48 object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
                     />
                   )}
-                  <h3 className="font-medium text-gray-900 mb-1">{course.name}</h3>
-                  {course.description && (
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">{course.description}</p>
-                  )}
-                  <div className="flex items-center space-x-4 text-sm text-gray-500">
-                    {course.par && <span>Par {course.par}</span>}
-                    {course.yardage && <span>{course.yardage} yards</span>}
+                  <div className="p-4">
+                    <h3 className="font-semibold text-gray-900 mb-2">{course.name}</h3>
+                    {course.description && (
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{course.description}</p>
+                    )}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4 text-sm text-gray-500">
+                        {course.par && <span>Par {course.par}</span>}
+                        {course.yardage && <span>{course.yardage.toLocaleString()} yards</span>}
+                      </div>
+                      {course.weather_note && (
+                        <Badge variant="secondary" className="text-xs">
+                          Weather Note
+                        </Badge>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
+            {courses.length > 4 && (
+              <div className="text-center mt-4">
+                <p className="text-gray-500">
+                  And {courses.length - 4} more course{courses.length - 4 !== 1 ? 's' : ''}...
+                </p>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
