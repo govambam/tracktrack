@@ -103,9 +103,10 @@ export default function Courses() {
         roundErrors.date = 'Date is required';
       }
 
-      if (!round.time) {
-        roundErrors.time = 'Tee time is required';
-      }
+      // Tee time is optional
+      // if (!round.time) {
+      //   roundErrors.time = 'Tee time is required';
+      // }
 
       if (round.holes <= 0 || round.holes > 18) {
         roundErrors.holes = 'Holes must be between 1 and 18';
