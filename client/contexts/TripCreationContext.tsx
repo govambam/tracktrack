@@ -200,8 +200,8 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
       const eventData = {
         name: tripData.tripName.trim(),
-        start_date: tripData.startDate, // These should already be in YYYY-MM-DD format from date inputs
-        end_date: tripData.endDate,
+        start_date: tripData.startDate?.trim() || null, // Convert empty strings to null
+        end_date: tripData.endDate?.trim() || null,     // Convert empty strings to null
         location: tripData.location.trim(),
         description: tripData.description?.trim() || null,
         logo_url: tripData.bannerImage?.trim() || null,
