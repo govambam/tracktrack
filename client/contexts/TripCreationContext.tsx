@@ -332,7 +332,14 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
   const saveRounds = async (): Promise<{ success: boolean; error?: string }> => {
     try {
       const { tripData } = state;
+      console.log('SaveRounds called with tripData:', {
+        id: tripData.id,
+        rounds: tripData.rounds,
+        roundsCount: tripData.rounds?.length
+      });
+
       if (!tripData.id) {
+        console.error('No event ID found - event must be saved first');
         return { success: false, error: 'Event must be saved first before adding rounds' };
       }
 
