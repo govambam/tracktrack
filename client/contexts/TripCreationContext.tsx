@@ -429,7 +429,12 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
           .insert(coursesData);
 
         if (insertError) {
-          console.error('Error inserting courses:', insertError);
+          console.error('Error inserting courses:', {
+            message: insertError.message,
+            details: insertError.details,
+            hint: insertError.hint,
+            code: insertError.code
+          });
         } else {
           console.log(`Successfully synced ${uniqueCourses.length} unique courses to event_courses`);
         }
