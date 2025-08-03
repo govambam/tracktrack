@@ -193,13 +193,18 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
       console.log('Save: Session found, access token length:', session.access_token?.length || 0);
 
+      // Validate required fields before saving
+      if (!tripData.tripName || !tripData.startDate || !tripData.endDate || !tripData.location) {
+        return { success: false, error: 'Missing required fields: name, start date, end date, or location' };
+      }
+
       const eventData = {
-        name: tripData.tripName,
-        start_date: tripData.startDate,
+        name: tripData.tripName.trim(),
+        start_date: tripData.startDate, // These should already be in YYYY-MM-DD format from date inputs
         end_date: tripData.endDate,
-        location: tripData.location,
-        description: tripData.description || null,
-        logo_url: tripData.bannerImage || null,
+        location: tripData.location.trim(),
+        description: tripData.description?.trim() || null,
+        logo_url: tripData.bannerImage?.trim() || null,
         is_private: tripData.customization?.isPrivate || false
       };
 
