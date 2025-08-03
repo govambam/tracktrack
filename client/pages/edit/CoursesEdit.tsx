@@ -36,7 +36,7 @@ import {
 export default function CoursesEdit() {
   const { eventId } = useParams();
   const { toast } = useToast();
-  const { state, saveRounds } = useTripCreation();
+  const { state, saveRounds, updateCourses } = useTripCreation();
   const { tripData } = state;
 
   const [rounds, setRounds] = useState<Round[]>([]);
