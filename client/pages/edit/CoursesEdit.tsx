@@ -84,7 +84,9 @@ export default function CoursesEdit() {
 
   const removeRound = (id: string) => {
     if (rounds.length > 1) {
-      setRounds(rounds.filter((round) => round.id !== id));
+      const updatedRounds = rounds.filter((round) => round.id !== id);
+      setRounds(updatedRounds);
+      updateCourses(updatedRounds);
       // Clear errors for removed round
       const newErrors = { ...errors };
       delete newErrors[id];
