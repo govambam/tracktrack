@@ -330,6 +330,172 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'LOAD_EVENT', payload: eventData });
   };
 
+  const loadCompleteEvent = async (eventId: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      console.log('Loading complete event data for:', eventId);
+
+      // Load main event data
+      const { data: eventData, error: eventError } = await supabase
+        .from('events')
+        .select('*')
+        .eq('id', eventId)
+        .single();
+
+      if (eventError) {
+        console.error('Error loading event:', eventError);
+        return { success: false, error: eventError.message };
+      }
+
+      // Load rounds data
+      const { data: roundsData, error: roundsError } = await supabase
+        .from('event_rounds')
+        .select('*')
+        .eq('event_id', eventId)
+        .order('round_date');
+
+      if (roundsError) {
+        console.error('Error loading rounds:', roundsError);
+        return { success: false, error: roundsError.message };
+      }
+
+      // Load players data
+      const { data: playersData, error: playersError } = await supabase
+        .from('event_players')
+        .select('*')
+        .eq('event_id', eventId)
+        .order('created_at');
+
+      if (playersError) {
+        console.error('Error loading players:', playersError);
+        return { success: false, error: playersError.message };
+      }
+
+      // Load prizes data
+      const { data: prizesData, error: prizesError } = await supabase
+        .from('event_prizes')
+        .select('*')
+        .eq('event_id', eventId);
+
+      if (prizesError) {
+        console.error('Error loading prizes:', prizesError);
+        return { success: false, error: prizesError.message };
+      }
+
+      // Load travel data
+      const { data: travelData, error: travelError } = await supabase
+        .from('event_travel')
+        .select('*')
+        .eq('event_id', eventId)
+        .single();
+
+      if (travelError && travelError.code !== 'PGRST116') { // PGRST116 = no rows returned
+        console.error('Error loading travel:', travelError);
+        return { success: false, error: travelError.message };
+      }
+
+      // Load customization data
+      const { data: customizationData, error: customizationError } = await supabase
+        .from('event_customization')
+        .select('*')
+        .eq('event_id', eventId)
+        .single();
+
+      if (customizationError && customizationError.code !== 'PGRST116') {
+        console.error('Error loading customization:', customizationError);
+        return { success: false, error: customizationError.message };
+      }
+
+      // Convert database data to TripData format
+      const rounds: Round[] = roundsData.map(round => ({
+        id: round.id,
+        courseName: round.course_name,
+        date: round.round_date,
+        time: round.tee_time || '',
+        holes: round.holes,
+        yardage: '',
+        skillsContests: { enabled: false, holes: '' }
+      }));
+
+      const players: Player[] = playersData.map(player => ({
+        id: player.id,
+        name: player.full_name,
+        handicap: player.handicap,
+        image: player.profile_image
+      }));
+
+      // Convert prizes data back to TripData format
+      const payoutStructure = {
+        champion: 0,
+        runnerUp: 0,
+        third: 0
+      };
+      const contestPrizes = {
+        longestDrive: 0,
+        closestToPin: 0,
+        other: ''
+      };
+
+      prizesData.forEach(prize => {
+        switch (prize.category) {
+          case 'overall_champion':
+            payoutStructure.champion = prize.amount;
+            break;
+          case 'runner_up':
+            payoutStructure.runnerUp = prize.amount;
+            break;
+          case 'third_place':
+            payoutStructure.third = prize.amount;
+            break;
+          case 'longest_drive':
+            contestPrizes.longestDrive = prize.amount;
+            break;
+          case 'closest_to_pin':
+            contestPrizes.closestToPin = prize.amount;
+            break;
+          case 'custom':
+            contestPrizes.other = prize.description;
+            break;
+        }
+      });
+
+      const completeEventData: TripData = {
+        id: eventData.id,
+        tripName: eventData.name,
+        startDate: eventData.start_date,
+        endDate: eventData.end_date,
+        location: eventData.location,
+        description: eventData.description || '',
+        bannerImage: eventData.logo_url || '',
+        rounds,
+        scoringFormat: 'stroke-play', // Default, could be determined from rounds data
+        players,
+        payoutStructure: payoutStructure.champion > 0 || payoutStructure.runnerUp > 0 || payoutStructure.third > 0 ? payoutStructure : undefined,
+        contestPrizes: contestPrizes.longestDrive > 0 || contestPrizes.closestToPin > 0 || contestPrizes.other ? contestPrizes : undefined,
+        travelInfo: travelData ? {
+          flightTimes: travelData.flight_info || '',
+          accommodations: travelData.accommodations || '',
+          dailySchedule: travelData.daily_schedule || ''
+        } : undefined,
+        customization: {
+          isPrivate: customizationData?.is_private || eventData.is_private,
+          logoUrl: customizationData?.logo_url || eventData.logo_url,
+          customDomain: customizationData?.custom_domain
+        }
+      };
+
+      console.log('Loaded complete event data:', completeEventData);
+
+      // Load into context
+      dispatch({ type: 'LOAD_EVENT', payload: completeEventData });
+
+      return { success: true };
+
+    } catch (error) {
+      console.error('Error loading complete event:', error);
+      return { success: false, error: 'Failed to load event data' };
+    }
+  };
+
   const saveRounds = async (roundsData?: Round[]): Promise<{ success: boolean; error?: string }> => {
     try {
       const { tripData } = state;
