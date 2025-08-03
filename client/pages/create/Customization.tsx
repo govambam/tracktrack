@@ -160,54 +160,7 @@ export default function Customization() {
             </CardContent>
           </Card>
 
-          {/* Custom Domain */}
-          <Card className="border-green-100 bg-green-50">
-            <CardHeader>
-              <CardTitle className="text-lg text-green-900 flex items-center">
-                <Globe className="h-5 w-5 mr-2 text-emerald-600" />
-                Custom URL
-              </CardTitle>
-              <CardDescription className="text-green-600">
-                Create a memorable web address for your event
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label className="text-green-800 font-medium">
-                  Custom URL Ending
-                </Label>
-                <div className="flex items-center space-x-2">
-                  <span className="text-green-600 text-sm">tracktrack.app/</span>
-                  <Input
-                    value={customization.customDomain}
-                    onChange={(e) => updateCustomizationField('customDomain', e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
-                    placeholder="pebble-beach-2024"
-                    className="border-green-200 focus:border-emerald-500 bg-white flex-1"
-                  />
-                </div>
-                <p className="text-sm text-green-600">
-                  Only letters, numbers, and hyphens allowed. Must be unique.
-                </p>
-              </div>
 
-              {customization.customDomain && (
-                <Alert className="border-blue-200 bg-blue-50">
-                  <AlertDescription className="text-blue-700">
-                    Your event will be available at: <Badge variant="secondary">
-                      tracktrack.app/{customization.customDomain}
-                    </Badge>
-                  </AlertDescription>
-                </Alert>
-              )}
-
-              <Alert className="border-yellow-200 bg-yellow-50">
-                <AlertDescription className="text-yellow-700">
-                  <strong>Coming soon:</strong> Custom domains are not yet active but your preference will be saved.
-                  For now, trips will use auto-generated URLs.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
 
           {/* Customization Summary */}
           <Alert className="border-emerald-200 bg-emerald-50">
