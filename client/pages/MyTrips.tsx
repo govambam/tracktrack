@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link, useNavigate } from "react-router-dom";
-import { Calendar, MapPin, Users, Plus, Trophy, Edit, RefreshCw } from "lucide-react";
+import { Calendar, MapPin, Users, Plus, Trophy, Edit, RefreshCw, ExternalLink, Globe } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
@@ -17,6 +17,8 @@ interface Event {
   location: string;
   logo_url?: string;
   is_private: boolean;
+  is_published: boolean;
+  slug?: string;
   created_at: string;
   updated_at: string;
 }
@@ -285,6 +287,9 @@ export default function MyTrips() {
                   <div className="flex items-center text-green-700">
                     <Trophy className="h-4 w-4 mr-2 text-emerald-600" />
                     {event.is_private ? 'Private' : 'Public'}
+                    {event.is_published && (
+                      <Globe className="h-3 w-3 ml-1 text-blue-600" title="Published" />
+                    )}
                   </div>
                   <div className="flex items-center text-green-700 text-xs">
                     Created: {new Date(event.created_at).toLocaleDateString()}
@@ -292,17 +297,25 @@ export default function MyTrips() {
                 </div>
 
                 <div className="flex space-x-2 pt-2">
-                  <Button variant="outline" size="sm" className="border-green-200 text-green-700 hover:bg-green-50">
-                    View Details
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  {event.is_published && event.slug ? (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => window.open(`/events/${event.slug}`, '_blank')}
+                      className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                    >
+                      <ExternalLink className="h-4 w-4 mr-1" />
+                      View Site
+                    </Button>
+                  ) : null}
+                  <Button
+                    variant="outline"
+                    size="sm"
                     onClick={() => handleEditEvent(event)}
                     className="border-green-200 text-green-700 hover:bg-green-50"
                   >
                     <Edit className="h-4 w-4 mr-1" />
-                    Edit Event
+                    Edit Details
                   </Button>
                 </div>
               </CardContent>
