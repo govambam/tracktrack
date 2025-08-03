@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Link } from "react-router-dom";
-import { ArrowRight, Calendar, Trophy, Users } from "lucide-react";
+import { ArrowRight, Calendar, Trophy, Users, Bug } from "lucide-react";
 
 export default function Index() {
   return (
