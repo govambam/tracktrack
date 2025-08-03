@@ -494,6 +494,9 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         }
       });
 
+      console.log('Buy-in loading debug - eventData.buy_in:', eventData.buy_in);
+      console.log('Buy-in loading debug - will set buyIn to:', eventData.buy_in || undefined);
+
       const completeEventData: TripData = {
         id: eventData.id,
         tripName: eventData.name,
