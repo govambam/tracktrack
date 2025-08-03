@@ -49,31 +49,29 @@ export default function MyTrips() {
         }
       });
 
-      if (!response.ok) {
-        // Clone response to safely read error text
-        const errorResponse = response.clone();
-        try {
-          const errorText = await errorResponse.text();
-          console.error('Error loading events:', response.status, errorText);
-        } catch (e) {
-          console.error('Error loading events:', response.status, 'Unable to read error details');
-        }
-        toast({
-          title: "Error",
-          description: `Failed to load events: ${response.status}`,
-          variant: "destructive",
-        });
-        return;
-      }
-
+      // Read response body once and handle both success/error cases
       try {
-        const result = await response.json();
+        const responseText = await response.text();
+
+        if (!response.ok) {
+          console.error('Error loading events:', response.status, responseText);
+          toast({
+            title: "Error",
+            description: `Failed to load events: ${response.status}`,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        // Parse JSON from text
+        const result = JSON.parse(responseText);
         setEvents(result.events || []);
+
       } catch (error) {
-        console.error('Error parsing response:', error);
+        console.error('Error with events request:', error);
         toast({
           title: "Error",
-          description: "Failed to parse server response",
+          description: "Failed to load events",
           variant: "destructive",
         });
       }
@@ -244,7 +242,7 @@ export default function MyTrips() {
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="text-3xl">🏌️‍♂️</div>
+                    <div className="text-3xl">🏌��‍♂️</div>
                     <div>
                       <CardTitle className="text-xl text-green-900">{event.name}</CardTitle>
                       <CardDescription className="text-green-600">
