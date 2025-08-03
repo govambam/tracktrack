@@ -15,7 +15,7 @@ import { Trophy, DollarSign, Gift, Target, Save } from "lucide-react";
 export default function PrizesEdit() {
   const { eventId } = useParams();
   const { toast } = useToast();
-  const { state } = useTripCreation();
+  const { state, updatePrizes } = useTripCreation();
   const { tripData } = state;
 
   const [buyIn, setBuyIn] = useState<number | undefined>(tripData.buyIn);
