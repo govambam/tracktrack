@@ -329,6 +329,55 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'LOAD_EVENT', payload: eventData });
   };
 
+  const saveRounds = async (): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const { tripData } = state;
+      if (!tripData.id) {
+        return { success: false, error: 'Event must be saved first before adding rounds' };
+      }
+
+      console.log('Saving rounds for event:', tripData.id);
+
+      // Delete existing rounds first
+      const { error: deleteError } = await supabase
+        .from('event_rounds')
+        .delete()
+        .eq('event_id', tripData.id);
+
+      if (deleteError) {
+        console.error('Error deleting existing rounds:', deleteError);
+        return { success: false, error: deleteError.message };
+      }
+
+      // Insert new rounds
+      if (tripData.rounds && tripData.rounds.length > 0) {
+        const roundsData = tripData.rounds.map(round => ({
+          event_id: tripData.id,
+          course_name: round.courseName,
+          round_date: round.date,
+          tee_time: round.time || null,
+          holes: round.holes || 18,
+          scoring_type: tripData.scoringFormat === 'modified-stableford' ? 'stableford' : 'stroke_play'
+        }));
+
+        const { error: insertError } = await supabase
+          .from('event_rounds')
+          .insert(roundsData);
+
+        if (insertError) {
+          console.error('Error inserting rounds:', insertError);
+          return { success: false, error: insertError.message };
+        }
+      }
+
+      console.log('Rounds saved successfully');
+      return { success: true };
+    } catch (error) {
+      console.error('Error saving rounds:', error);
+      return { success: false, error: 'Failed to save rounds' };
+    }
+  };
+
   const contextValue: TripCreationContextType = {
     state,
     updateBasicInfo: (data) => dispatch({ type: 'UPDATE_BASIC_INFO', payload: data }),
