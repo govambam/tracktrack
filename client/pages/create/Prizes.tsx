@@ -258,50 +258,67 @@ export default function Prizes() {
             
             {enableContests && (
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label className="text-green-800 font-medium">
-                      Longest Drive ($)
-                    </Label>
-                    <Input
-                      type="number"
-                      min="0"
-                      value={contestPrizes.longestDrive || ''}
-                      onChange={(e) => updateContestPrizes('longestDrive', parseInt(e.target.value) || 0)}
-                      placeholder="0"
-                      className="border-green-200 focus:border-emerald-500 bg-white"
-                    />
-                  </div>
+                {skillsContestsFromCourses.length > 0 ? (
+                  <>
+                    <Alert className="border-blue-200 bg-blue-50">
+                      <AlertDescription className="text-blue-700">
+                        <div className="font-medium mb-2">Skills Contests from Courses:</div>
+                        <div className="space-y-1 text-sm">
+                          {skillsContestsFromCourses.map((contest, index) => (
+                            <div key={index}>
+                              • {contest.roundName} - Hole {contest.hole}: {contest.type}
+                            </div>
+                          ))}
+                        </div>
+                      </AlertDescription>
+                    </Alert>
 
-                  <div className="space-y-2">
-                    <Label className="text-green-800 font-medium">
-                      Closest to Pin ($)
-                    </Label>
-                    <Input
-                      type="number"
-                      min="0"
-                      value={contestPrizes.closestToPin || ''}
-                      onChange={(e) => updateContestPrizes('closestToPin', parseInt(e.target.value) || 0)}
-                      placeholder="0"
-                      className="border-green-200 focus:border-emerald-500 bg-white"
-                    />
-                  </div>
-                </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label className="text-green-800 font-medium">
+                          Longest Drive Prize ($) {longestDriveCount > 0 && `× ${longestDriveCount} contests`}
+                        </Label>
+                        <Input
+                          type="number"
+                          min="0"
+                          value={contestPrizes.longestDrive || ''}
+                          onChange={(e) => updateContestPrizes('longestDrive', parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                          className="border-green-200 focus:border-emerald-500 bg-white"
+                          disabled={longestDriveCount === 0}
+                        />
+                        {longestDriveCount === 0 && (
+                          <p className="text-sm text-gray-500">No longest drive contests set up in courses</p>
+                        )}
+                      </div>
 
-                <div className="space-y-2">
-                  <Label className="text-green-800 font-medium">
-                    Other Contests
-                  </Label>
-                  <Input
-                    value={contestPrizes.other || ''}
-                    onChange={(e) => updateContestPrizes('other', e.target.value)}
-                    placeholder="e.g., Hole-in-one prize, Putting contest"
-                    className="border-green-200 focus:border-emerald-500 bg-white"
-                  />
-                  <p className="text-sm text-green-600">
-                    Describe any additional contests or prizes
-                  </p>
-                </div>
+                      <div className="space-y-2">
+                        <Label className="text-green-800 font-medium">
+                          Closest to Pin Prize ($) {closestToPinCount > 0 && `× ${closestToPinCount} contests`}
+                        </Label>
+                        <Input
+                          type="number"
+                          min="0"
+                          value={contestPrizes.closestToPin || ''}
+                          onChange={(e) => updateContestPrizes('closestToPin', parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                          className="border-green-200 focus:border-emerald-500 bg-white"
+                          disabled={closestToPinCount === 0}
+                        />
+                        {closestToPinCount === 0 && (
+                          <p className="text-sm text-gray-500">No closest to pin contests set up in courses</p>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <Alert className="border-yellow-200 bg-yellow-50">
+                    <AlertDescription className="text-yellow-700">
+                      No skills contests have been set up in the Courses section yet.
+                      Go back to add some contests to configure prizes here.
+                    </AlertDescription>
+                  </Alert>
+                )}
 
                 {totalContestPrizes > 0 && (
                   <Alert className="border-blue-200 bg-blue-50">
