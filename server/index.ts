@@ -21,6 +21,7 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
   app.post("/api/supabase-test", handleSupabaseTest);
+  app.post("/api/auth-test", handleAuthTest);
 
   return app;
 }
