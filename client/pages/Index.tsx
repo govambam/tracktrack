@@ -135,6 +135,64 @@ export default function Index() {
         </div>
       </div>
 
+      {/* Debug Auth Section */}
+      <div className="py-16 bg-gradient-to-br from-orange-50 to-red-100">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="border-orange-200 bg-white shadow-lg">
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl font-bold text-orange-900 flex items-center justify-center">
+                <Bug className="h-6 w-6 mr-2" />
+                🔧 Auth Debug Test
+              </CardTitle>
+              <CardDescription className="text-orange-600">
+                Debug the authentication signup issue
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              <form onSubmit={handleDebugAuth} className="space-y-4">
+                <div>
+                  <Input
+                    type="email"
+                    value={debugEmail}
+                    onChange={(e) => setDebugEmail(e.target.value)}
+                    placeholder="Enter test email..."
+                    className="border-orange-200 focus:border-orange-500"
+                    disabled={debugLoading}
+                  />
+                </div>
+                <div>
+                  <Input
+                    type="password"
+                    value={debugPassword}
+                    onChange={(e) => setDebugPassword(e.target.value)}
+                    placeholder="Enter test password..."
+                    className="border-orange-200 focus:border-orange-500"
+                    disabled={debugLoading}
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={debugLoading || !debugEmail.trim() || !debugPassword.trim()}
+                  className="w-full bg-orange-600 hover:bg-orange-700 text-white"
+                >
+                  {debugLoading ? "Testing..." : "Test Auth Signup"}
+                </Button>
+              </form>
+
+              {debugResult.type && (
+                <Alert className={`mt-4 ${debugResult.type === 'success' ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}`}>
+                  <AlertDescription className={debugResult.type === 'success' ? 'text-green-700' : 'text-red-700'}>
+                    {debugResult.message}
+                  </AlertDescription>
+                </Alert>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
       {/* CTA Section */}
       <div className="py-20 bg-gradient-to-r from-emerald-600 to-green-600">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
