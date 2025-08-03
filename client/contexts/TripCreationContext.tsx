@@ -381,6 +381,64 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     dispatch({ type: "LOAD_EVENT", payload: eventData });
   };
 
+  const syncCoursesToEventCourses = async (eventId: string, rounds: Round[]) => {
+    try {
+      console.log('Syncing courses to event_courses table for event:', eventId);
+
+      // Delete existing event_courses for this event first
+      const { error: deleteError } = await supabase
+        .from('event_courses')
+        .delete()
+        .eq('event_id', eventId);
+
+      if (deleteError) {
+        console.error('Error deleting existing event_courses:', deleteError);
+        return;
+      }
+
+      // Get unique course names from rounds
+      const uniqueCourses = rounds.reduce((acc, round, index) => {
+        const courseName = round.courseName.trim();
+        if (courseName && !acc.some(course => course.name === courseName)) {
+          acc.push({
+            name: courseName,
+            display_order: index + 1 // Use the order they appear in rounds
+          });
+        }
+        return acc;
+      }, [] as { name: string; display_order: number }[]);
+
+      if (uniqueCourses.length > 0) {
+        // Insert unique courses into event_courses table
+        const coursesData = uniqueCourses.map(course => ({
+          event_id: eventId,
+          name: course.name,
+          display_order: course.display_order,
+          // Initialize with empty values that can be customized later
+          par: null,
+          yardage: null,
+          description: null,
+          image_url: null,
+          weather_note: null
+        }));
+
+        console.log('Inserting courses data:', coursesData);
+
+        const { error: insertError } = await supabase
+          .from('event_courses')
+          .insert(coursesData);
+
+        if (insertError) {
+          console.error('Error inserting courses:', insertError);
+        } else {
+          console.log(`Successfully synced ${uniqueCourses.length} unique courses to event_courses`);
+        }
+      }
+    } catch (error) {
+      console.error('Error syncing courses to event_courses:', error);
+    }
+  };
+
   const loadCompleteEvent = async (
     eventId: string,
   ): Promise<{ success: boolean; error?: string }> => {
