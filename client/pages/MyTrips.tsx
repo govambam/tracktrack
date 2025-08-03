@@ -323,6 +323,12 @@ export default function MyTrips() {
                     Edit Details
                   </Button>
                 </div>
+                {/* Debug info - remove this later */}
+                {process.env.NODE_ENV === 'development' && (
+                  <div className="text-xs text-gray-500 mt-1">
+                    [Debug: is_published={String(event.is_published)} slug={event.slug || 'none'}]
+                  </div>
+                )}
               </CardContent>
             </Card>
           );
