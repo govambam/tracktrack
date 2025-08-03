@@ -52,7 +52,21 @@ export default function CoursesCustomization() {
         .order('display_order', { ascending: true });
 
       if (coursesError) {
-        console.error('Error loading courses:', coursesError);
+        console.error('Error loading courses:', {
+          message: coursesError.message,
+          details: coursesError.details,
+          hint: coursesError.hint,
+          code: coursesError.code
+        });
+
+        if (coursesError.code === '42P01') {
+          // Table doesn't exist - show helpful message
+          toast({
+            title: "Database Setup Required",
+            description: "The event_courses table doesn't exist. Please run the database schema script.",
+            variant: "destructive",
+          });
+        }
       } else {
         setCourses(coursesData || []);
       }
