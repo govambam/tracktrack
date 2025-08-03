@@ -44,7 +44,12 @@ export default function TravelCustomization() {
         .single();
 
       if (eventError) {
-        console.error('Error loading event data:', eventError);
+        console.error('Error loading event data:', {
+          message: eventError.message,
+          details: eventError.details,
+          hint: eventError.hint,
+          code: eventError.code
+        });
       } else {
         setTravelInfo({
           travel_lodging: eventData.travel_lodging || '',
