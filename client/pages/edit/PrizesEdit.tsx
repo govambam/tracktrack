@@ -60,6 +60,22 @@ export default function PrizesEdit() {
     setSaving(true);
 
     try {
+      // Update buy-in in events table
+      const { error: eventUpdateError } = await supabase
+        .from('events')
+        .update({ buy_in: buyIn || 0 })
+        .eq('id', eventId);
+
+      if (eventUpdateError) {
+        console.error('Error updating event buy-in:', eventUpdateError);
+        toast({
+          title: "Save Failed",
+          description: eventUpdateError.message || "Failed to update buy-in",
+          variant: "destructive",
+        });
+        return;
+      }
+
       // Delete existing prizes
       const { error: deleteError } = await supabase
         .from('event_prizes')
