@@ -278,19 +278,15 @@ export default function CoursesCustomization() {
       const coursesData = uniqueCourses.map(course => ({
         event_id: eventId,
         name: course.name,
-        display_order: course.display_order,
-        par: null,
-        yardage: null,
-        description: null,
-        image_url: null,
-        weather_note: null
+        display_order: course.display_order
       }));
 
       console.log('Attempting to insert courses data:', coursesData);
 
-      const { error: insertError } = await supabase
+      const { data: insertData, error: insertError } = await supabase
         .from('event_courses')
-        .insert(coursesData);
+        .insert(coursesData)
+        .select();
 
       if (insertError) {
         console.error('Error inserting courses:', {
