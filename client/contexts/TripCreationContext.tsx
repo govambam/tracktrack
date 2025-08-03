@@ -211,6 +211,14 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       console.log('Saving event with data:', eventData);
       console.log('User ID:', session.user.id);
       console.log('Trip data ID:', tripData.id);
+      console.log('Date validation:', {
+        startDate: tripData.startDate,
+        endDate: tripData.endDate,
+        startDateType: typeof tripData.startDate,
+        endDateType: typeof tripData.endDate,
+        startDateLength: tripData.startDate?.length,
+        endDateLength: tripData.endDate?.length
+      });
 
       // Use direct Supabase calls instead of server routes to avoid auth issues
       let data, error;
