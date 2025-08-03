@@ -203,13 +203,25 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify(eventData)
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Save event error:', response.status, errorText);
-        return { success: false, error: `Failed to save event: ${response.status}` };
-      }
+      let result;
+      try {
+        if (!response.ok) {
+          // Try to read error details safely
+          try {
+            const errorText = await response.text();
+            console.error('Save event error:', response.status, errorText);
+          } catch (e) {
+            console.error('Save event error:', response.status, 'Unable to read error details');
+          }
+          return { success: false, error: `Failed to save event: ${response.status}` };
+        }
 
-      const result = await response.json();
+        // Only read JSON if response is ok
+        result = await response.json();
+      } catch (error) {
+        console.error('Error parsing save response:', error);
+        return { success: false, error: 'Failed to parse server response' };
+      }
 
       // Update local state with the saved event ID if this was a new event
       if (!tripData.id && result.event?.id) {
