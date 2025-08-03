@@ -307,6 +307,16 @@ export default function SettingsEdit() {
               )}
 
               <div className="flex items-center space-x-3">
+                {eventInfo?.is_published && eventInfo?.slug && (
+                  <Button
+                    variant="outline"
+                    onClick={() => window.open(`/events/${eventInfo.slug}`, '_blank')}
+                    className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    View Published Site
+                  </Button>
+                )}
                 {eventInfo?.is_published ? (
                   <Button
                     variant="outline"
