@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar, MapPin, FileText, Image, Save } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { Calendar, MapPin, FileText, Image, Save, Globe, Check, X, Loader2 } from "lucide-react";
 
 export default function BasicInfo() {
   const navigate = useNavigate();
@@ -26,8 +27,86 @@ export default function BasicInfo() {
     bannerImage: tripData.bannerImage || ''
   });
 
+  const [slug, setSlug] = useState('');
+  const [slugStatus, setSlugStatus] = useState<'idle' | 'checking' | 'valid' | 'invalid'>('idle');
+  const [slugError, setSlugError] = useState('');
+  const [isSlugEdited, setIsSlugEdited] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
+
+  // Generate slug from text
+  const generateSlugFromText = (text: string): string => {
+    return text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 50) // Limit length
+      || 'golf-event';
+  };
+
+  // Check slug uniqueness with debouncing
+  const checkSlugUniqueness = useCallback(
+    async (slugToCheck: string) => {
+      if (!slugToCheck.trim()) {
+        setSlugStatus('invalid');
+        setSlugError('URL slug cannot be empty');
+        return;
+      }
+
+      setSlugStatus('checking');
+      setSlugError('');
+
+      try {
+        const { data, error } = await supabase
+          .from('events')
+          .select('id')
+          .eq('slug', slugToCheck)
+          .single();
+
+        if (error && error.code === 'PGRST116') {
+          // No existing event with this slug - it's available
+          setSlugStatus('valid');
+          setSlugError('');
+        } else if (error) {
+          console.error('Error checking slug uniqueness:', error);
+          setSlugStatus('invalid');
+          setSlugError('Unable to verify URL uniqueness');
+        } else {
+          // Slug already exists
+          setSlugStatus('invalid');
+          setSlugError('This URL is already taken, please choose another');
+        }
+      } catch (error) {
+        console.error('Error checking slug:', error);
+        setSlugStatus('invalid');
+        setSlugError('Unable to verify URL uniqueness');
+      }
+    },
+    []
+  );
+
+  // Debounced slug checking
+  useEffect(() => {
+    if (!slug || slugStatus === 'idle') return;
+
+    const timeoutId = setTimeout(() => {
+      checkSlugUniqueness(slug);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timeoutId);
+  }, [slug, checkSlugUniqueness, slugStatus]);
+
+  // Auto-generate slug when trip name changes (only if user hasn't manually edited it)
+  useEffect(() => {
+    if (!isSlugEdited && formData.tripName) {
+      const autoSlug = generateSlugFromText(formData.tripName);
+      setSlug(autoSlug);
+      setSlugStatus('idle');
+      // Trigger check after a moment
+      setTimeout(() => setSlugStatus('checking'), 100);
+    }
+  }, [formData.tripName, isSlugEdited]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -54,6 +133,15 @@ export default function BasicInfo() {
       if (end < start) {
         newErrors.endDate = 'End date must be after start date';
       }
+    }
+
+    // Validate slug
+    if (!slug.trim()) {
+      newErrors.slug = 'Website URL is required';
+    } else if (slugStatus === 'invalid') {
+      newErrors.slug = slugError || 'Please choose a unique URL';
+    } else if (slugStatus === 'checking') {
+      newErrors.slug = 'Please wait while we verify URL availability';
     }
 
     setErrors(newErrors);
@@ -83,7 +171,8 @@ export default function BasicInfo() {
           endDate: formData.endDate,
           location: formData.location,
           description: formData.description,
-          bannerImage: formData.bannerImage
+          bannerImage: formData.bannerImage,
+          slug: slug.trim()
         });
 
         if (result.success) {
@@ -116,6 +205,24 @@ export default function BasicInfo() {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const handleSlugChange = (value: string) => {
+    // Clean the slug input
+    const cleanSlug = value
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, '')
+      .replace(/--+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 50);
+
+    setSlug(cleanSlug);
+    setIsSlugEdited(true);
+    setSlugStatus(cleanSlug ? 'checking' : 'invalid');
+
+    if (errors.slug) {
+      setErrors(prev => ({ ...prev, slug: '' }));
     }
   };
 
