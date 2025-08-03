@@ -31,6 +31,12 @@ export default function Auth() {
     setError("");
     setLoading(true);
 
+    if (!email || !password) {
+      setError("Email and password are required");
+      setLoading(false);
+      return;
+    }
+
     if (!isLogin) {
       if (password !== confirmPassword) {
         setError("Passwords don't match");
@@ -44,28 +50,52 @@ export default function Auth() {
       }
     }
 
-    // Simulate loading
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      if (isLogin) {
+        // Sign in existing user
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-    if (isLogin) {
-      // Hardcoded login credentials
-      if (email === "test@example.com" && password === "password") {
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("userEmail", email);
-        navigate("/app");
+        if (error) {
+          setError(error.message);
+          setLoading(false);
+          return;
+        }
+
+        if (data.user) {
+          localStorage.setItem("isAuthenticated", "true");
+          localStorage.setItem("userEmail", data.user.email || "");
+          localStorage.setItem("userId", data.user.id);
+          navigate("/app");
+        }
       } else {
-        setError("Invalid email or password");
-      }
-    } else {
-      // For signup, just redirect to login
-      setError("");
-      setIsLogin(true);
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-    }
+        // Sign up new user
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+        });
 
-    setLoading(false);
+        if (error) {
+          setError(error.message);
+          setLoading(false);
+          return;
+        }
+
+        if (data.user) {
+          // For now, since email verification is disabled, sign them in automatically
+          localStorage.setItem("isAuthenticated", "true");
+          localStorage.setItem("userEmail", data.user.email || "");
+          localStorage.setItem("userId", data.user.id);
+          navigate("/app");
+        }
+      }
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
