@@ -36,7 +36,10 @@ export const handleAuthTest: RequestHandler = async (req, res) => {
       console.log('Supabase connection failed:', connError);
     }
 
-    // Test signup
+    // Test multiple approaches
+    console.log('Attempting Supabase auth signup...');
+
+    // Approach 1: Basic signup
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -45,6 +48,32 @@ export const handleAuthTest: RequestHandler = async (req, res) => {
     console.log('Auth test result:');
     console.log('- Data:', JSON.stringify(data, null, 2));
     console.log('- Error:', JSON.stringify(error, null, 2));
+
+    // If that fails, let's try with additional options
+    if (error && !data.user) {
+      console.log('Trying signup with additional options...');
+      const { data: data2, error: error2 } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: undefined,
+          data: {}
+        }
+      });
+
+      console.log('Second attempt result:');
+      console.log('- Data2:', JSON.stringify(data2, null, 2));
+      console.log('- Error2:', JSON.stringify(error2, null, 2));
+
+      if (error2) {
+        return res.status(400).json({
+          error: 'Both auth attempts failed',
+          firstAttempt: { error: error.message },
+          secondAttempt: { error: error2.message },
+          details: `First: ${error.message}, Second: ${error2.message}`
+        });
+      }
+    }
 
     if (error) {
       console.error('Supabase auth error:', error);
