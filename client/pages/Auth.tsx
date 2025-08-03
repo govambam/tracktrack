@@ -185,7 +185,7 @@ export default function Auth() {
               {isLogin && (
                 <Alert className="border-blue-200 bg-blue-50">
                   <AlertDescription className="text-blue-600 text-sm">
-                    Demo credentials: test@example.com / password
+                    Sign in with your account credentials
                   </AlertDescription>
                 </Alert>
               )}
