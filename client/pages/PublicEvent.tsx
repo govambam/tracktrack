@@ -6,15 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-import { 
-  Home, 
-  MapPin, 
-  Target, 
-  Trophy, 
-  Plane, 
-  Calendar, 
-  Clock, 
-  Users,
+import {
+  Home,
+  MapPin,
+  Target,
+  Trophy,
+  Plane,
+  Calendar,
+  Clock,
   Globe,
   Loader2
 } from "lucide-react";
