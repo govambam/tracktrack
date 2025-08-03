@@ -317,13 +317,13 @@ export default function BasicInfo() {
                   }`}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                  {slugStatus === 'checking' && (
+                  {slugStatus === 'checking' && !isUserTyping && (
                     <Loader2 className="h-4 w-4 text-gray-400 animate-spin" />
                   )}
-                  {slugStatus === 'valid' && (
+                  {slugStatus === 'valid' && !isUserTyping && (
                     <Check className="h-4 w-4 text-green-600" />
                   )}
-                  {slugStatus === 'invalid' && (
+                  {slugStatus === 'invalid' && !isUserTyping && (
                     <X className="h-4 w-4 text-red-600" />
                   )}
                 </div>
