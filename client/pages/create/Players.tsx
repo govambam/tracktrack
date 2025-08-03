@@ -11,7 +11,7 @@ import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { Player } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Plus, Trash2, User, Camera } from "lucide-react";
+import { Users, Plus, Trash2, User, Camera, Mail } from "lucide-react";
 
 export default function Players() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Players() {
 
   const [players, setPlayers] = useState<Player[]>(
     tripData.players.length > 0 ? tripData.players : [
-      { id: '1', name: '', handicap: undefined, image: '' }
+      { id: '1', name: '', email: '', handicap: undefined, image: '' }
     ]
   );
 
@@ -34,6 +34,7 @@ export default function Players() {
     const newPlayer: Player = {
       id: generateId(),
       name: '',
+      email: '',
       handicap: undefined,
       image: ''
     };
@@ -74,6 +75,10 @@ export default function Players() {
 
       if (!player.name.trim()) {
         playerErrors.name = 'Player name is required';
+      }
+
+      if (player.email && !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(player.email)) {
+        playerErrors.email = 'Please enter a valid email address';
       }
 
       if (player.handicap !== undefined && (player.handicap < 0 || player.handicap > 54)) {
@@ -198,7 +203,7 @@ export default function Players() {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {/* Player Name */}
                   <div className="space-y-2">
                     <Label className="text-green-800 font-medium">
@@ -212,6 +217,24 @@ export default function Players() {
                     />
                     {errors[player.id]?.name && (
                       <p className="text-sm text-red-600">{errors[player.id].name}</p>
+                    )}
+                  </div>
+
+                  {/* Email Address */}
+                  <div className="space-y-2">
+                    <Label className="text-green-800 font-medium flex items-center">
+                      <Mail className="h-4 w-4 mr-1 text-emerald-600" />
+                      Email (Optional)
+                    </Label>
+                    <Input
+                      type="email"
+                      value={player.email || ''}
+                      onChange={(e) => updatePlayer(player.id, 'email', e.target.value)}
+                      placeholder="john@example.com"
+                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[player.id]?.email ? 'border-red-300' : ''}`}
+                    />
+                    {errors[player.id]?.email && (
+                      <p className="text-sm text-red-600">{errors[player.id].email}</p>
                     )}
                   </div>
 
