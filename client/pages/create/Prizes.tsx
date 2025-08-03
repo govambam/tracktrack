@@ -87,14 +87,25 @@ export default function Prizes() {
     navigate('/app/create/travel');
   };
 
-  const handlePrevious = () => {
+  const handlePrevious = async () => {
     const prizesData = {
       buyIn: buyIn || undefined,
       payoutStructure: enablePayout ? payoutStructure : undefined,
       contestPrizes: enableContests ? contestPrizes : undefined
     };
-    
+
+    // Update context first
     updatePrizes(prizesData);
+
+    // Save buy-in to database immediately
+    if (buyIn !== tripData.buyIn) {
+      console.log('Saving buy-in to database:', buyIn);
+      const result = await saveEvent({ buyIn: buyIn });
+      if (!result.success) {
+        console.error('Failed to save buy-in:', result.error);
+      }
+    }
+
     navigate('/app/create/players');
   };
 
