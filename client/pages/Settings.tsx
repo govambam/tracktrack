@@ -60,14 +60,14 @@ export default function Settings() {
               <div className="flex items-center space-x-4">
                 <Avatar className="h-16 w-16">
                   <AvatarFallback className="bg-emerald-600 text-white text-xl">
-                    JD
+                    {userEmail ? userEmail.substring(0, 2).toUpperCase() : 'U'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">
-                  <h3 className="text-lg font-semibold text-green-900">John Doe</h3>
-                  <p className="text-green-600">Golf Enthusiast & Trip Organizer</p>
+                  <h3 className="text-lg font-semibold text-green-900">{userDisplayName}</h3>
+                  <p className="text-green-600">Golf Enthusiast & Event Organizer</p>
                   <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">
-                    Pro Member
+                    Member
                   </Badge>
                 </div>
               </div>
