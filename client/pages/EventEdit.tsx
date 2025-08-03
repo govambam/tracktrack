@@ -53,7 +53,7 @@ const sidebarSections = [
   },
   {
     id: "courses",
-    label: "Courses",
+    label: "Rounds",
     icon: MapPin,
     description: "Golf rounds and venues",
   },
