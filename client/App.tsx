@@ -31,6 +31,7 @@ import PrizesEdit from "./pages/edit/PrizesEdit";
 import TravelEdit from "./pages/edit/TravelEdit";
 import CustomizationEdit from "./pages/edit/CustomizationEdit";
 import SettingsEdit from "./pages/edit/SettingsEdit";
+import PublicEvent from "./pages/PublicEvent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +48,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Auth />} />
               <Route path="/signup" element={<Auth />} />
+              <Route path="/events/:slug" element={<PublicEvent />} />
               <Route path="/app" element={<AppShell />}>
                 <Route index element={<MyTrips />} />
                 <Route path="create" element={<CreateTrip />} />
