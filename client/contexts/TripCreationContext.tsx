@@ -443,6 +443,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         closestToPin: 0,
         other: ''
       };
+      let buyIn: number | undefined = undefined;
 
       prizesData.forEach(prize => {
         switch (prize.category) {
@@ -462,7 +463,11 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
             contestPrizes.closestToPin = prize.amount;
             break;
           case 'custom':
-            contestPrizes.other = prize.description;
+            if (prize.description === '__BUY_IN__') {
+              buyIn = prize.amount;
+            } else {
+              contestPrizes.other = prize.description;
+            }
             break;
         }
       });
