@@ -151,7 +151,8 @@ export default function Players() {
       <TripCreationStepper
         onNext={handleNext}
         onPrevious={handlePrevious}
-        nextDisabled={false}
+        nextDisabled={saving}
+        nextLabel={saving ? "Saving..." : "Next"}
       />
 
       <Card className="border-green-100">
