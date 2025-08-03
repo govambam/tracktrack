@@ -9,14 +9,14 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useTripCreation } from "@/contexts/TripCreationContext";
-import { Round } from "@/contexts/TripCreationContext";
+import { Round, SkillsContest } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
 import { MapPin, Plus, Trash2, Calendar, Clock, Trophy, Save } from "lucide-react";
 
 export default function CoursesEdit() {
   const { eventId } = useParams();
   const { toast } = useToast();
-  const { state } = useTripCreation();
+  const { state, saveRounds } = useTripCreation();
   const { tripData } = state;
 
   const [rounds, setRounds] = useState<Round[]>([]);
@@ -32,11 +32,11 @@ export default function CoursesEdit() {
       setRounds([{
         id: generateId(),
         courseName: '',
+        courseUrl: '',
         date: '',
         time: '',
         holes: 18,
-        yardage: '',
-        skillsContests: { enabled: false, holes: '' }
+        skillsContests: []
       }]);
     }
   }, [tripData?.rounds]);
@@ -47,11 +47,11 @@ export default function CoursesEdit() {
     const newRound: Round = {
       id: generateId(),
       courseName: '',
+      courseUrl: '',
       date: '',
       time: '',
       holes: 18,
-      yardage: '',
-      skillsContests: { enabled: false, holes: '' }
+      skillsContests: []
     };
     setRounds([...rounds, newRound]);
   };
