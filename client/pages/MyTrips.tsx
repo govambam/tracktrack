@@ -24,6 +24,7 @@ interface Event {
 export default function MyTrips() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isLoadingEvents, setIsLoadingEvents] = useState(false);
   const { loadEvent, resetTrip } = useTripCreation();
   const { toast } = useToast();
   const navigate = useNavigate();
