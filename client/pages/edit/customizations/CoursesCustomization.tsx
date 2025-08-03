@@ -30,6 +30,7 @@ export default function CoursesCustomization() {
   const [courses, setCourses] = useState<EventCourse[]>([]);
   const [coursesEnabled, setCoursesEnabled] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
 
   useEffect(() => {
     if (eventId) {
