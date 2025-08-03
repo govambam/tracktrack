@@ -17,6 +17,7 @@ export interface Round {
 export interface Player {
   id: string;
   name: string;
+  email?: string;
   handicap?: number;
   image?: string;
 }
