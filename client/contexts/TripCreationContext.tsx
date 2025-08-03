@@ -604,6 +604,11 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     resetTrip: () => dispatch({ type: 'RESET_TRIP' }),
     loadEvent,
     saveEvent,
+    saveRounds,
+    savePlayers,
+    savePrizes,
+    saveTravel,
+    saveCustomization,
   };
 
   return (
