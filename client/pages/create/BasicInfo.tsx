@@ -64,8 +64,19 @@ export default function BasicInfo() {
     if (validateForm()) {
       setSaving(true);
 
+      console.log('Form data before save:', formData);
+      console.log('Date values:', {
+        startDate: formData.startDate,
+        endDate: formData.endDate,
+        startDateType: typeof formData.startDate,
+        endDateType: typeof formData.endDate
+      });
+
       // Update basic info in context first
       updateBasicInfo(formData);
+
+      // Small delay to ensure context is updated
+      await new Promise(resolve => setTimeout(resolve, 10));
 
       try {
         // Save to Supabase
