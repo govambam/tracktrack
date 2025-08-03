@@ -25,6 +25,7 @@ import Settings from "./pages/Settings";
 import EventEdit from "./pages/EventEdit";
 import BasicInfoEdit from "./pages/edit/BasicInfoEdit";
 import CoursesEdit from "./pages/edit/CoursesEdit";
+import PlayersEdit from "./pages/edit/PlayersEdit";
 import SettingsEdit from "./pages/edit/SettingsEdit";
 import NotFound from "./pages/NotFound";
 
