@@ -79,6 +79,26 @@ export default function PublicEvent() {
     }
   }, [slug]);
 
+  // Update page title when event data loads
+  useEffect(() => {
+    if (eventData) {
+      document.title = `${eventData.name} | TrackTrack Golf`;
+
+      // Add meta description
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute('content',
+          eventData.description || `Golf tournament: ${eventData.name}`
+        );
+      } else {
+        const meta = document.createElement('meta');
+        meta.name = 'description';
+        meta.content = eventData.description || `Golf tournament: ${eventData.name}`;
+        document.head.appendChild(meta);
+      }
+    }
+  }, [eventData]);
+
   const loadEventData = async () => {
     try {
       setLoading(true);
