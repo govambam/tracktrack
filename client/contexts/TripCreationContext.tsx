@@ -168,6 +168,64 @@ const TripCreationContext = createContext<TripCreationContextType | undefined>(u
 export function TripCreationProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(tripCreationReducer, initialState);
 
+  const saveEvent = async (): Promise<{ success: boolean; eventId?: string; error?: string }> => {
+    try {
+      const { tripData } = state;
+
+      // Get current session for auth token
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        return { success: false, error: 'Not authenticated' };
+      }
+
+      const eventData = {
+        name: tripData.tripName,
+        start_date: tripData.startDate,
+        end_date: tripData.endDate,
+        location: tripData.location,
+        description: tripData.description || null,
+        logo_url: tripData.bannerImage || null,
+        is_private: tripData.customization?.isPrivate || false
+      };
+
+      const url = tripData.id ? `/api/events/${tripData.id}` : '/api/events';
+      const method = tripData.id ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
+        },
+        body: JSON.stringify(eventData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        return { success: false, error: result.error || 'Failed to save event' };
+      }
+
+      // Update local state with the saved event ID if this was a new event
+      if (!tripData.id && result.event?.id) {
+        dispatch({
+          type: 'UPDATE_BASIC_INFO',
+          payload: { id: result.event.id }
+        });
+      }
+
+      return { success: true, eventId: result.event?.id };
+
+    } catch (error) {
+      console.error('Error saving event:', error);
+      return { success: false, error: 'Network error' };
+    }
+  };
+
+  const loadEvent = (eventData: TripData) => {
+    dispatch({ type: 'LOAD_EVENT', payload: eventData });
+  };
+
   const contextValue: TripCreationContextType = {
     state,
     updateBasicInfo: (data) => dispatch({ type: 'UPDATE_BASIC_INFO', payload: data }),
@@ -179,6 +237,8 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     updateCustomization: (data) => dispatch({ type: 'UPDATE_CUSTOMIZATION', payload: data }),
     setStep: (step) => dispatch({ type: 'SET_STEP', payload: step }),
     resetTrip: () => dispatch({ type: 'RESET_TRIP' }),
+    loadEvent,
+    saveEvent,
   };
 
   return (
