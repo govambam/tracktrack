@@ -61,7 +61,7 @@ const App = () => (
                 <Route path="basic" element={<BasicInfoEdit />} />
                 <Route path="courses" element={<CoursesEdit />} />
                 <Route path="scoring" element={<div>Scoring Edit - Coming Soon</div>} />
-                <Route path="players" element={<div>Players Edit - Coming Soon</div>} />
+                <Route path="players" element={<PlayersEdit />} />
                 <Route path="prizes" element={<div>Prizes Edit - Coming Soon</div>} />
                 <Route path="travel" element={<div>Travel Edit - Coming Soon</div>} />
                 <Route path="customization" element={<div>Customization Edit - Coming Soon</div>} />
