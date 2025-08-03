@@ -385,6 +385,25 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     try {
       console.log('Syncing courses to event_courses table for event:', eventId);
 
+      // First check if event_courses table exists by doing a simple query
+      const { data: tableCheck, error: tableCheckError } = await supabase
+        .from('event_courses')
+        .select('*', { count: 'exact', head: true });
+
+      if (tableCheckError) {
+        console.error('event_courses table check failed:', {
+          message: tableCheckError.message,
+          details: tableCheckError.details,
+          hint: tableCheckError.hint,
+          code: tableCheckError.code
+        });
+
+        if (tableCheckError.code === '42P01') {
+          console.error('event_courses table does not exist. Please run the database schema script.');
+        }
+        return;
+      }
+
       // Delete existing event_courses for this event first
       const { error: deleteError } = await supabase
         .from('event_courses')
@@ -392,7 +411,12 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         .eq('event_id', eventId);
 
       if (deleteError) {
-        console.error('Error deleting existing event_courses:', deleteError);
+        console.error('Error deleting existing event_courses:', {
+          message: deleteError.message,
+          details: deleteError.details,
+          hint: deleteError.hint,
+          code: deleteError.code
+        });
         return;
       }
 
