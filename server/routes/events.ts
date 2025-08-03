@@ -16,17 +16,19 @@ router.post('/events', async (req, res) => {
       is_private 
     } = req.body;
 
-    // Get user from auth header (you might need to implement auth middleware)
+    // Get user from auth header
     const authHeader = req.headers.authorization;
     if (!authHeader) {
+      console.log('No authorization header provided');
       return res.status(401).json({ error: 'No authorization header' });
     }
 
     const token = authHeader.replace('Bearer ', '');
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
-    
+
     if (authError || !user) {
-      return res.status(401).json({ error: 'Invalid token' });
+      console.log('Auth error:', authError);
+      return res.status(401).json({ error: 'Invalid token', details: authError?.message });
     }
 
     // Validate required fields
