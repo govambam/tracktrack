@@ -29,32 +29,34 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <TripCreationProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Auth />} />
-            <Route path="/signup" element={<Auth />} />
-            <Route path="/app" element={<AppShell />}>
-              <Route index element={<MyTrips />} />
-              <Route path="create" element={<CreateTrip />} />
-              <Route path="create/basic-info" element={<BasicInfo />} />
-              <Route path="create/courses" element={<Courses />} />
-              <Route path="create/scoring" element={<Scoring />} />
-              <Route path="create/players" element={<Players />} />
-              <Route path="create/prizes" element={<Prizes />} />
-              <Route path="create/travel" element={<Travel />} />
-              <Route path="create/customization" element={<Customization />} />
-              <Route path="create/summary" element={<Summary />} />
-              <Route path="settings" element={<Settings />} />
-            </Route>
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TripCreationProvider>
+      <ErrorBoundary>
+        <TripCreationProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Auth />} />
+              <Route path="/signup" element={<Auth />} />
+              <Route path="/app" element={<AppShell />}>
+                <Route index element={<MyTrips />} />
+                <Route path="create" element={<CreateTrip />} />
+                <Route path="create/basic-info" element={<BasicInfo />} />
+                <Route path="create/courses" element={<Courses />} />
+                <Route path="create/scoring" element={<Scoring />} />
+                <Route path="create/players" element={<Players />} />
+                <Route path="create/prizes" element={<Prizes />} />
+                <Route path="create/travel" element={<Travel />} />
+                <Route path="create/customization" element={<Customization />} />
+                <Route path="create/summary" element={<Summary />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TripCreationProvider>
+      </ErrorBoundary>
     </TooltipProvider>
   </QueryClientProvider>
 );
