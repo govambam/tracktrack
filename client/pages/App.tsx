@@ -15,23 +15,64 @@ import { supabase } from "@/lib/supabase";
 
 export default function AppShell() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const authStatus = localStorage.getItem("isAuthenticated");
-    if (!authStatus) {
-      navigate("/login");
-    } else {
-      setIsAuthenticated(true);
-    }
+    // Check for existing session
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (session?.user) {
+        setIsAuthenticated(true);
+        setUserEmail(session.user.email || "");
+        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("userEmail", session.user.email || "");
+        localStorage.setItem("userId", session.user.id);
+      } else {
+        // Check localStorage as fallback
+        const authStatus = localStorage.getItem("isAuthenticated");
+        const email = localStorage.getItem("userEmail");
+
+        if (!authStatus) {
+          navigate("/login");
+        } else {
+          setIsAuthenticated(true);
+          setUserEmail(email || "");
+        }
+      }
+    };
+
+    checkAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === 'SIGNED_OUT' || !session) {
+          setIsAuthenticated(false);
+          setUserEmail("");
+          localStorage.removeItem("isAuthenticated");
+          localStorage.removeItem("userEmail");
+          localStorage.removeItem("userId");
+          navigate("/");
+        } else if (session?.user) {
+          setIsAuthenticated(true);
+          setUserEmail(session.user.email || "");
+          localStorage.setItem("isAuthenticated", "true");
+          localStorage.setItem("userEmail", session.user.email || "");
+          localStorage.setItem("userId", session.user.id);
+        }
+      }
+    );
+
+    return () => subscription.unsubscribe();
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("userEmail");
-    navigate("/");
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    // The auth state change listener will handle the cleanup
   };
 
   const navigationItems = [
