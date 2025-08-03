@@ -120,10 +120,40 @@ export default function Courses() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (validateForm()) {
+      setSaving(true);
+
+      // Update context first
       updateCourses(rounds);
-      navigate('/app/create/scoring');
+
+      try {
+        // Save rounds to Supabase
+        const result = await saveRounds();
+
+        if (result.success) {
+          toast({
+            title: "Courses Saved",
+            description: "Golf rounds saved successfully",
+          });
+          navigate('/app/create/scoring');
+        } else {
+          toast({
+            title: "Save Failed",
+            description: result.error || "Failed to save courses",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error('Error saving courses:', error);
+        toast({
+          title: "Save Failed",
+          description: "An unexpected error occurred",
+          variant: "destructive",
+        });
+      } finally {
+        setSaving(false);
+      }
     }
   };
 
