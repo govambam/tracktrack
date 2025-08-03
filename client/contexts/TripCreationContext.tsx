@@ -584,6 +584,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         const playersData = tripData.players.map(player => ({
           event_id: tripData.id,
           full_name: player.name,
+          email: player.email || null,
           handicap: player.handicap || null,
           profile_image: player.image || null
         }));
