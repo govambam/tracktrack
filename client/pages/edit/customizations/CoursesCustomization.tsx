@@ -308,9 +308,27 @@ export default function CoursesCustomization() {
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <MapPin className="h-12 w-12 text-green-400 mb-4" />
                 <h3 className="text-lg font-medium text-green-900 mb-2">No courses found</h3>
-                <p className="text-green-600 text-center">
+                <p className="text-green-600 text-center mb-4">
                   Courses will appear here once you add them to your event in the Courses section.
                 </p>
+                <Button
+                  onClick={syncCoursesFromRounds}
+                  disabled={syncing || !coursesEnabled}
+                  variant="outline"
+                  className="border-green-200 text-green-700 hover:bg-green-100"
+                >
+                  {syncing ? (
+                    <>
+                      <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                      Syncing...
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="h-4 w-4 mr-2" />
+                      Sync Courses from Rounds
+                    </>
+                  )}
+                </Button>
               </CardContent>
             </Card>
           ) : (
