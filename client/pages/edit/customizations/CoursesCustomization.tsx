@@ -85,6 +85,19 @@ export default function CoursesCustomization() {
         setCourses(coursesData || []);
       }
 
+      // Check if event_customization table exists
+      const customizationTableExists = await checkTableExists('event_customization');
+      if (!customizationTableExists) {
+        console.error('event_customization table does not exist');
+        toast({
+          title: "Database Setup Required",
+          description: "The event_customization table doesn't exist. Please run the database schema scripts in Supabase SQL Editor.",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
+
       // Load courses enabled setting from event_customization
       const { data: customizationData, error: customizationError } = await supabase
         .from('event_customization')
