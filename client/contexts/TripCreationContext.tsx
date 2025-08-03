@@ -168,6 +168,7 @@ const TripCreationContext = createContext<TripCreationContextType | undefined>(u
 
 export function TripCreationProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(tripCreationReducer, initialState);
+  const [isSaving, setIsSaving] = useState(false);
 
   const saveEvent = async (): Promise<{ success: boolean; eventId?: string; error?: string }> => {
     try {
