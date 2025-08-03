@@ -341,6 +341,35 @@ export default function PrizesEdit() {
                 />
               </div>
 
+              {/* Contest Holes Display */}
+              {skillsContestsFromRounds.length > 0 && (
+                <div className="mb-4 p-3 bg-white border border-green-200 rounded-lg">
+                  <Label className="text-green-800 font-medium text-sm">Skills Contests from Courses:</Label>
+                  <div className="mt-2 space-y-1">
+                    {skillsContestsFromRounds.map((contest, index) => (
+                      <div key={index} className="flex items-center justify-between text-sm">
+                        <span className="text-green-700">
+                          {contest.roundName} - Hole {contest.hole}
+                        </span>
+                        <Badge variant="secondary" className="text-xs">
+                          {contest.type}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                  {longestDriveCount > 0 && (
+                    <div className="mt-2 text-xs text-green-600">
+                      • {longestDriveCount} Longest Drive contest{longestDriveCount !== 1 ? 's' : ''}
+                    </div>
+                  )}
+                  {closestToPinCount > 0 && (
+                    <div className="text-xs text-green-600">
+                      • {closestToPinCount} Closest to Pin contest{closestToPinCount !== 1 ? 's' : ''}
+                    </div>
+                  )}
+                </div>
+              )}
+
               {enableContests && (
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
