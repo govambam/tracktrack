@@ -41,23 +41,82 @@ export default function Summary() {
   const { toast } = useToast();
   const [creating, setCreating] = useState(false);
 
-  const handleConfirm = () => {
-    // Save trip to localStorage (simulating backend save)
-    const existingTrips = JSON.parse(localStorage.getItem('userTrips') || '[]');
-    const newTrip = {
-      id: Date.now().toString(),
-      ...tripData,
-      createdAt: new Date().toISOString(),
-      status: 'upcoming'
-    };
-    
-    localStorage.setItem('userTrips', JSON.stringify([...existingTrips, newTrip]));
-    
-    // Reset the trip creation state
-    resetTrip();
-    
-    // Navigate back to dashboard
-    navigate('/app');
+  const handleConfirm = async () => {
+    setCreating(true);
+
+    try {
+      console.log('Starting complete event creation...');
+
+      // Step 1: Ensure main event is saved (might already be saved from BasicInfo)
+      if (!tripData.id) {
+        console.log('Saving main event first...');
+        const eventResult = await saveEvent();
+        if (!eventResult.success) {
+          throw new Error(eventResult.error || 'Failed to save event');
+        }
+      }
+
+      // Step 2: Save all related data
+      const saveOperations = [];
+
+      if (tripData.rounds && tripData.rounds.length > 0) {
+        console.log('Saving rounds...');
+        saveOperations.push(saveRounds());
+      }
+
+      if (tripData.players && tripData.players.length > 0) {
+        console.log('Saving players...');
+        saveOperations.push(savePlayers());
+      }
+
+      if (tripData.buyIn || tripData.payoutStructure || tripData.contestPrizes) {
+        console.log('Saving prizes...');
+        saveOperations.push(savePrizes());
+      }
+
+      if (tripData.travelInfo) {
+        console.log('Saving travel info...');
+        saveOperations.push(saveTravel());
+      }
+
+      if (tripData.customization) {
+        console.log('Saving customization...');
+        saveOperations.push(saveCustomization());
+      }
+
+      // Execute all save operations
+      const results = await Promise.all(saveOperations);
+
+      // Check if any failed
+      const failedOperations = results.filter(result => !result.success);
+      if (failedOperations.length > 0) {
+        console.error('Some save operations failed:', failedOperations);
+        toast({
+          title: "Partial Save",
+          description: `Event created but some details failed to save: ${failedOperations.map(f => f.error).join(', ')}`,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Event Created!",
+          description: "Your golf event has been successfully created with all details",
+        });
+      }
+
+      // Reset the trip creation state and navigate
+      resetTrip();
+      navigate('/app');
+
+    } catch (error) {
+      console.error('Error creating event:', error);
+      toast({
+        title: "Creation Failed",
+        description: error instanceof Error ? error.message : "Failed to create event",
+        variant: "destructive",
+      });
+    } finally {
+      setCreating(false);
+    }
   };
 
   const handlePrevious = () => {
