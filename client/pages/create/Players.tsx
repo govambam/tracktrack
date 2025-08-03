@@ -301,11 +301,6 @@ export default function Players() {
                       Average handicap: <Badge variant="secondary" className="ml-1">{getAverageHandicap()}</Badge>
                     </span>
                   )}
-                  <span>
-                    Players with handicaps: <Badge variant="secondary" className="ml-1">
-                      {players.filter(p => p.handicap !== undefined).length}
-                    </Badge>
-                  </span>
                 </div>
               </AlertDescription>
             </Alert>
