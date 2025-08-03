@@ -137,6 +137,11 @@ function tripCreationReducer(state: TripCreationState, action: TripCreationActio
       };
     case 'RESET_TRIP':
       return initialState;
+    case 'LOAD_EVENT':
+      return {
+        ...state,
+        tripData: action.payload,
+      };
     default:
       return state;
   }
