@@ -204,47 +204,74 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         is_private: tripData.customization?.isPrivate || false
       };
 
-      const url = tripData.id ? `/api/events/${tripData.id}` : '/api/events';
-      const method = tripData.id ? 'PUT' : 'POST';
-
       console.log('Saving event with data:', eventData);
-      console.log('Using URL:', url, 'Method:', method);
 
-      console.log('Making save request to:', url, 'Method:', method);
+      // Use direct Supabase calls instead of server routes to avoid auth issues
+      let data, error;
 
-      const result = await safeFetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`
-        },
-        body: JSON.stringify(eventData)
-      });
+      if (tripData.id) {
+        // Update existing event
+        console.log('Updating existing event:', tripData.id);
+        const updateResult = await supabase
+          .from('events')
+          .update({
+            name: eventData.name,
+            start_date: eventData.start_date,
+            end_date: eventData.end_date,
+            location: eventData.location,
+            description: eventData.description,
+            logo_url: eventData.logo_url,
+            is_private: eventData.is_private,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', tripData.id)
+          .select()
+          .single();
 
-      if (!result.ok) {
-        console.error('Save event error:', result.status, result.error || result.text);
+        data = updateResult.data;
+        error = updateResult.error;
+      } else {
+        // Create new event
+        console.log('Creating new event');
+        const insertResult = await supabase
+          .from('events')
+          .insert({
+            user_id: session.user.id,
+            name: eventData.name,
+            start_date: eventData.start_date,
+            end_date: eventData.end_date,
+            location: eventData.location,
+            description: eventData.description,
+            logo_url: eventData.logo_url,
+            is_private: eventData.is_private
+          })
+          .select()
+          .single();
 
-        if (result.status === 401) {
-          return { success: false, error: 'Authentication error - please sign in again' };
-        }
-
-        return { success: false, error: result.error || `Failed to save event: ${result.status}` };
+        data = insertResult.data;
+        error = insertResult.error;
       }
 
-      if (!result.data) {
-        console.warn('No data in save response');
-        return { success: false, error: 'No response data' };
+      if (error) {
+        console.error('Supabase error:', error);
+        return { success: false, error: error.message || 'Database error' };
       }
+
+      if (!data) {
+        return { success: false, error: 'No data returned from database' };
+      }
+
+      console.log('Event saved successfully:', data.id);
 
       // Update local state with the saved event ID if this was a new event
-      if (!tripData.id && result.data.event?.id) {
+      if (!tripData.id && data.id) {
         dispatch({
           type: 'UPDATE_BASIC_INFO',
-          payload: { id: result.data.event.id }
+          payload: { id: data.id }
         });
       }
 
-      return { success: true, eventId: result.data.event?.id };
+      return { success: true, eventId: data.id };
 
     } catch (error) {
       console.error('Error saving event:', error);
