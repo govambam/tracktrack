@@ -378,6 +378,28 @@ export default function SettingsEdit() {
                 </div>
               )}
 
+              {eventInfo?.is_published && !eventInfo?.slug && (
+                <Alert className="border-yellow-200 bg-yellow-50">
+                  <AlertTriangle className="h-4 w-4 text-yellow-600" />
+                  <AlertDescription className="text-yellow-700">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <strong>Missing URL Slug:</strong> This event is published but doesn't have a public URL yet.
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={generateSlug}
+                        disabled={publishing}
+                        className="border-yellow-300 text-yellow-700 hover:bg-yellow-100 ml-3"
+                      >
+                        {publishing ? 'Generating...' : 'Generate URL'}
+                      </Button>
+                    </div>
+                  </AlertDescription>
+                </Alert>
+              )}
+
               <div className="flex items-center space-x-3">
                 {eventInfo?.is_published && eventInfo?.slug && (
                   <Button
