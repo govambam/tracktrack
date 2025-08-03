@@ -176,7 +176,7 @@ export default function MyTrips() {
           </div>
         </div>
         <div className="flex justify-center py-12">
-          <div className="h-8 w-8 text-green-600 animate-spin border-4 border-green-600 border-t-transparent rounded-full" />
+          <RefreshCw className="h-8 w-8 text-green-600 animate-spin" />
         </div>
       </div>
     );
@@ -249,10 +249,13 @@ export default function MyTrips() {
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <CardTitle className="text-xl text-green-900">{event.name}</CardTitle>
-                    <CardDescription className="text-green-600 line-clamp-2">
-                      {event.description || 'Golf event'}
-                    </CardDescription>
+                    <div className="text-3xl">🏌��‍♂️</div>
+                    <div>
+                      <CardTitle className="text-xl text-green-900">{event.name}</CardTitle>
+                      <CardDescription className="text-green-600 line-clamp-2">
+                        {event.description || 'Golf event'}
+                      </CardDescription>
+                    </div>
                   </div>
                   <Badge className={getStatusColor(status)}>
                     {status}
@@ -271,7 +274,7 @@ export default function MyTrips() {
                     {event.location}
                   </div>
                   <div className="flex items-center text-green-700">
-                    <Eye className="h-4 w-4 mr-2 text-emerald-600" />
+                    <Trophy className="h-4 w-4 mr-2 text-emerald-600" />
                     {event.is_private ? 'Private' : 'Public'}
                     {event.is_published && (
                       <Globe className="h-3 w-3 ml-1 text-blue-600" title="Published" />
@@ -304,6 +307,12 @@ export default function MyTrips() {
                     Edit Details
                   </Button>
                 </div>
+                {/* Debug info - remove this later */}
+                {process.env.NODE_ENV === 'development' && (
+                  <div className="text-xs text-gray-500 mt-1">
+                    [Debug: is_published={String(event.is_published)} slug={event.slug || 'none'}]
+                  </div>
+                )}
               </CardContent>
             </Card>
           );
