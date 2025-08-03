@@ -89,10 +89,40 @@ export default function Players() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (validateForm()) {
+      setSaving(true);
+
+      // Update context first
       updatePlayers(players);
-      navigate('/app/create/prizes');
+
+      try {
+        // Save players to Supabase
+        const result = await savePlayers();
+
+        if (result.success) {
+          toast({
+            title: "Players Saved",
+            description: "Player list saved successfully",
+          });
+          navigate('/app/create/prizes');
+        } else {
+          toast({
+            title: "Save Failed",
+            description: result.error || "Failed to save players",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error('Error saving players:', error);
+        toast({
+          title: "Save Failed",
+          description: "An unexpected error occurred",
+          variant: "destructive",
+        });
+      } finally {
+        setSaving(false);
+      }
     }
   };
 
