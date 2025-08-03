@@ -16,7 +16,12 @@ export const handleAuthTest: RequestHandler = async (req, res) => {
       });
     }
 
-    console.log('Testing auth with:', { email });
+    console.log('Testing auth with:', {
+      email,
+      supabaseUrl: supabaseUrl,
+      keyLength: supabaseAnonKey.length,
+      keyPrefix: supabaseAnonKey.substring(0, 20) + '...'
+    });
 
     // Test signup
     const { data, error } = await supabase.auth.signUp({
@@ -24,7 +29,9 @@ export const handleAuthTest: RequestHandler = async (req, res) => {
       password,
     });
 
-    console.log('Auth test result:', { data, error });
+    console.log('Auth test result:');
+    console.log('- Data:', JSON.stringify(data, null, 2));
+    console.log('- Error:', JSON.stringify(error, null, 2));
 
     if (error) {
       console.error('Supabase auth error:', error);
