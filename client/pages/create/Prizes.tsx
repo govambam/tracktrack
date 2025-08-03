@@ -14,7 +14,7 @@ import { Trophy, DollarSign, Gift, Target } from "lucide-react";
 
 export default function Prizes() {
   const navigate = useNavigate();
-  const { state, updatePrizes } = useTripCreation();
+  const { state, updatePrizes, saveEvent } = useTripCreation();
   const { tripData } = state;
 
   const [buyIn, setBuyIn] = useState<number | undefined>(tripData.buyIn);
