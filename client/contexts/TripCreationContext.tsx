@@ -425,6 +425,104 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const savePrizes = async (): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const { tripData } = state;
+      if (!tripData.id) {
+        return { success: false, error: 'Event must be saved first before adding prizes' };
+      }
+
+      console.log('Saving prizes for event:', tripData.id);
+
+      // Delete existing prizes first
+      const { error: deleteError } = await supabase
+        .from('event_prizes')
+        .delete()
+        .eq('event_id', tripData.id);
+
+      if (deleteError) {
+        console.error('Error deleting existing prizes:', deleteError);
+        return { success: false, error: deleteError.message };
+      }
+
+      // Insert new prizes based on tripData structure
+      const prizesData = [];
+
+      // Add payout structure prizes
+      if (tripData.payoutStructure) {
+        if (tripData.payoutStructure.champion) {
+          prizesData.push({
+            event_id: tripData.id,
+            category: 'overall_champion',
+            amount: tripData.payoutStructure.champion,
+            description: 'Overall Champion'
+          });
+        }
+        if (tripData.payoutStructure.runnerUp) {
+          prizesData.push({
+            event_id: tripData.id,
+            category: 'runner_up',
+            amount: tripData.payoutStructure.runnerUp,
+            description: 'Runner Up'
+          });
+        }
+        if (tripData.payoutStructure.third) {
+          prizesData.push({
+            event_id: tripData.id,
+            category: 'third_place',
+            amount: tripData.payoutStructure.third,
+            description: 'Third Place'
+          });
+        }
+      }
+
+      // Add contest prizes
+      if (tripData.contestPrizes) {
+        if (tripData.contestPrizes.longestDrive) {
+          prizesData.push({
+            event_id: tripData.id,
+            category: 'longest_drive',
+            amount: tripData.contestPrizes.longestDrive,
+            description: 'Longest Drive'
+          });
+        }
+        if (tripData.contestPrizes.closestToPin) {
+          prizesData.push({
+            event_id: tripData.id,
+            category: 'closest_to_pin',
+            amount: tripData.contestPrizes.closestToPin,
+            description: 'Closest to Pin'
+          });
+        }
+        if (tripData.contestPrizes.other) {
+          prizesData.push({
+            event_id: tripData.id,
+            category: 'custom',
+            amount: 0,
+            description: tripData.contestPrizes.other
+          });
+        }
+      }
+
+      if (prizesData.length > 0) {
+        const { error: insertError } = await supabase
+          .from('event_prizes')
+          .insert(prizesData);
+
+        if (insertError) {
+          console.error('Error inserting prizes:', insertError);
+          return { success: false, error: insertError.message };
+        }
+      }
+
+      console.log('Prizes saved successfully');
+      return { success: true };
+    } catch (error) {
+      console.error('Error saving prizes:', error);
+      return { success: false, error: 'Failed to save prizes' };
+    }
+  };
+
   const contextValue: TripCreationContextType = {
     state,
     updateBasicInfo: (data) => dispatch({ type: 'UPDATE_BASIC_INFO', payload: data }),
