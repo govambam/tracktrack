@@ -87,16 +87,21 @@ export default function BasicInfo() {
     []
   );
 
-  // Debounced slug checking
+  // Debounced slug checking - only show checking state and validate when user stops typing
   useEffect(() => {
-    if (!slug || slugStatus === 'idle') return;
+    if (!slug) return;
 
     const timeoutId = setTimeout(() => {
+      // Only proceed if user has stopped typing for 1 second
+      setIsUserTyping(false);
+      if (slugStatus !== 'checking') {
+        setSlugStatus('checking');
+      }
       checkSlugUniqueness(slug);
-    }, 500); // 500ms debounce
+    }, 1000); // 1 second debounce for better UX
 
     return () => clearTimeout(timeoutId);
-  }, [slug, checkSlugUniqueness, slugStatus]);
+  }, [slug, checkSlugUniqueness]);
 
   // Auto-generate slug when trip name changes (only if user hasn't manually edited it)
   useEffect(() => {
@@ -104,8 +109,7 @@ export default function BasicInfo() {
       const autoSlug = generateSlugFromText(formData.tripName);
       setSlug(autoSlug);
       setSlugStatus('idle');
-      // Trigger check after a moment
-      setTimeout(() => setSlugStatus('checking'), 100);
+      setIsUserTyping(true); // User is actively changing the event name
     }
   }, [formData.tripName, isSlugEdited]);
 
