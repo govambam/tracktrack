@@ -162,6 +162,78 @@ export default function SettingsEdit() {
     });
   };
 
+  const generateSlug = async () => {
+    if (!eventId || !tripData?.tripName) return;
+
+    setPublishing(true);
+
+    try {
+      // Generate slug from event name
+      let baseSlug = tripData.tripName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+      if (!baseSlug) baseSlug = 'golf-event';
+
+      // Check for uniqueness and append counter if needed
+      let finalSlug = baseSlug;
+      let counter = 0;
+
+      while (true) {
+        const { data: existingEvent, error } = await supabase
+          .from('events')
+          .select('id')
+          .eq('slug', finalSlug)
+          .neq('id', eventId)
+          .single();
+
+        if (error && error.code === 'PGRST116') {
+          // No existing event with this slug, we can use it
+          break;
+        } else if (error) {
+          throw error;
+        } else {
+          // Slug exists, try with counter
+          counter++;
+          finalSlug = `${baseSlug}-${counter}`;
+        }
+      }
+
+      // Update the event with the new slug
+      const { error: updateError } = await supabase
+        .from('events')
+        .update({
+          slug: finalSlug,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', eventId);
+
+      if (updateError) {
+        throw updateError;
+      }
+
+      // Reload event info to show the new slug
+      await loadEventInfo();
+
+      toast({
+        title: "Slug Generated",
+        description: `Event URL slug has been set to: ${finalSlug}`,
+      });
+
+    } catch (error) {
+      console.error('Error generating slug:', error);
+      toast({
+        title: "Generation Failed",
+        description: "Failed to generate event slug",
+        variant: "destructive",
+      });
+    } finally {
+      setPublishing(false);
+    }
+  };
+
   const handleDeleteEvent = async () => {
     if (!eventId || deleteConfirmText !== eventName) return;
 
