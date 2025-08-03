@@ -27,10 +27,16 @@ export const handleAuthTest: RequestHandler = async (req, res) => {
     console.log('Auth test result:', { data, error });
 
     if (error) {
-      return res.status(400).json({ 
-        error: 'Auth test failed', 
+      console.error('Supabase auth error:', error);
+      return res.status(400).json({
+        error: 'Auth test failed',
         details: error.message,
-        code: error.status || 'unknown'
+        code: error.status || 'unknown',
+        supabaseError: {
+          message: error.message,
+          status: error.status,
+          statusCode: error.statusCode
+        }
       });
     }
 
