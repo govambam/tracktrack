@@ -508,7 +508,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         rounds,
         scoringFormat: 'stroke-play', // Default, could be determined from rounds data
         players,
-        buyIn: eventData.buy_in || undefined,
+        buyIn: eventData.buy_in > 0 ? eventData.buy_in : undefined,
         payoutStructure: payoutStructure.champion > 0 || payoutStructure.runnerUp > 0 || payoutStructure.third > 0 ? payoutStructure : undefined,
         contestPrizes: contestPrizes.longestDrive > 0 || contestPrizes.closestToPin > 0 || contestPrizes.other ? contestPrizes : undefined,
         travelInfo: travelData ? {
