@@ -228,9 +228,9 @@ export default function Prizes() {
                 {totalPayout > 0 && buyIn && (
                   <Alert className={`${totalBuyIns - totalPayout >= 0 ? 'border-green-200 bg-green-50' : 'border-orange-200 bg-orange-50'}`}>
                     <AlertDescription className={totalBuyIns - totalPayout >= 0 ? 'text-green-700' : 'text-orange-700'}>
-                      {totalBuyIns - totalPayout >= 0
-                        ? <>Remaining in pool: <Badge variant="secondary">${totalBuyIns - totalPayout}</Badge></>
-                        : <>⚠️ Exceeds pool by: <Badge variant="destructive">${totalPayout - totalBuyIns}</Badge></>
+                      {totalBuyIns - totalPrizes >= 0
+                        ? <>Remaining in pool: <Badge variant="secondary">${totalBuyIns - totalPrizes}</Badge></>
+                        : <>⚠️ Exceeds pool by: <Badge variant="destructive">${totalPrizes - totalBuyIns}</Badge></>
                       }
                     </AlertDescription>
                   </Alert>
