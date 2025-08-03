@@ -15,8 +15,10 @@ import { MapPin, Plus, Trash2, Calendar, Clock, Trophy } from "lucide-react";
 
 export default function Courses() {
   const navigate = useNavigate();
-  const { state, updateCourses } = useTripCreation();
+  const { state, updateCourses, saveRounds } = useTripCreation();
   const { tripData } = state;
+  const { toast } = useToast();
+  const [saving, setSaving] = useState(false);
 
   const [rounds, setRounds] = useState<Round[]>(tripData.rounds.length > 0 ? tripData.rounds : [
     {
