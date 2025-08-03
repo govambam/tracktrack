@@ -55,7 +55,12 @@ export default function RulesCustomization() {
         .single();
 
       if (customizationError && customizationError.code !== 'PGRST116') {
-        console.error('Error loading customization data:', customizationError);
+        console.error('Error loading customization data:', {
+          message: customizationError.message,
+          details: customizationError.details,
+          hint: customizationError.hint,
+          code: customizationError.code
+        });
       } else if (customizationData) {
         setRulesEnabled(customizationData.rules_enabled ?? true);
       }
