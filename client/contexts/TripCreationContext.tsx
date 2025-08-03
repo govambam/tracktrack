@@ -783,6 +783,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     setStep: (step) => dispatch({ type: 'SET_STEP', payload: step }),
     resetTrip: () => dispatch({ type: 'RESET_TRIP' }),
     loadEvent,
+    loadCompleteEvent,
     saveEvent,
     saveRounds,
     savePlayers,
