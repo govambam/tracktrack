@@ -205,7 +205,7 @@ export default function EventEdit() {
                 <nav className="p-2">
                   {sidebarSections.map((sectionItem) => {
                     const Icon = sectionItem.icon;
-                    const isActive = section === sectionItem.id;
+                    const isActive = currentSectionId === sectionItem.id;
                     
                     return (
                       <Link
