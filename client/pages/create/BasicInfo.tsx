@@ -8,7 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
-import { Calendar, MapPin, FileText, Image } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { Calendar, MapPin, FileText, Image, Save } from "lucide-react";
 
 export default function BasicInfo() {
   const navigate = useNavigate();
