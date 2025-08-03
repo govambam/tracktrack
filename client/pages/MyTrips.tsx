@@ -125,34 +125,8 @@ export default function MyTrips() {
   };
 
   const handleEditEvent = async (event: Event) => {
-    try {
-      console.log('Editing event:', event.id);
-
-      // Load complete event data from database
-      const result = await loadCompleteEvent(event.id);
-
-      if (result.success) {
-        toast({
-          title: "Event Loaded",
-          description: "Event data loaded for editing",
-        });
-        // Navigate to the basic info page for editing
-        navigate('/app/create/basic-info');
-      } else {
-        toast({
-          title: "Load Failed",
-          description: result.error || "Failed to load event data",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error('Error loading event for editing:', error);
-      toast({
-        title: "Load Failed",
-        description: "Failed to load event data",
-        variant: "destructive",
-      });
-    }
+    // Navigate to the new event editing route
+    navigate(`/app/${event.id}/basic`);
   };
 
   const handleCreateNew = () => {
