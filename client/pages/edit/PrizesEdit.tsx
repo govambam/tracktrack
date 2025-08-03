@@ -52,6 +52,27 @@ export default function PrizesEdit() {
     }
   }, [tripData]);
 
+  // Get skills contests from rounds data
+  const getSkillsContestsFromRounds = () => {
+    const contests: { hole: number; type: string; roundName: string }[] = [];
+    tripData.rounds.forEach(round => {
+      if (round.skillsContests && round.skillsContests.length > 0) {
+        round.skillsContests.forEach(contest => {
+          contests.push({
+            hole: contest.hole,
+            type: contest.type === 'longest_drive' ? 'Longest Drive' : 'Closest to Pin',
+            roundName: round.courseName
+          });
+        });
+      }
+    });
+    return contests;
+  };
+
+  const skillsContestsFromRounds = getSkillsContestsFromRounds();
+  const longestDriveCount = skillsContestsFromRounds.filter(c => c.type === 'Longest Drive').length;
+  const closestToPinCount = skillsContestsFromRounds.filter(c => c.type === 'Closest to Pin').length;
+
   const totalPayout = payoutStructure.champion + payoutStructure.runnerUp + payoutStructure.third;
   const totalContestPrizes = contestPrizes.longestDrive + contestPrizes.closestToPin;
   const totalPrizes = totalPayout + totalContestPrizes;
