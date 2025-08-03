@@ -252,8 +252,14 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       }
 
       if (error) {
-        console.error('Supabase error:', error);
-        return { success: false, error: error.message || 'Database error' };
+        console.error('Supabase error details:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
+        console.error('Full error object:', JSON.stringify(error, null, 2));
+        return { success: false, error: error.message || error.details || 'Database error' };
       }
 
       if (!data) {
