@@ -19,18 +19,23 @@ export default function Index() {
     setStatus({ type: null, message: '' });
 
     try {
-      const { data, error } = await supabase
-        .from('test_messages')
-        .insert([
-          { message: testMessage }
-        ])
-        .select();
+      const response = await fetch('/api/supabase-test', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: testMessage }),
+      });
 
-      if (error) throw error;
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || `HTTP ${response.status}`);
+      }
 
       setStatus({
         type: 'success',
-        message: `Message saved successfully! ID: ${data[0]?.id}`
+        message: `Message saved successfully! ID: ${result.data?.id}`
       });
       setTestMessage("");
     } catch (error) {
