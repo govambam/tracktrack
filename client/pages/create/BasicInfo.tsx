@@ -60,10 +60,40 @@ export default function BasicInfo() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (validateForm()) {
+      setSaving(true);
+
+      // Update basic info in context first
       updateBasicInfo(formData);
-      navigate('/app/create/courses');
+
+      try {
+        // Save to Supabase
+        const result = await saveEvent();
+
+        if (result.success) {
+          toast({
+            title: "Event Saved",
+            description: tripData.id ? "Event updated successfully" : "Event created successfully",
+          });
+          navigate('/app/create/courses');
+        } else {
+          toast({
+            title: "Save Failed",
+            description: result.error || "Failed to save event",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error('Error saving event:', error);
+        toast({
+          title: "Save Failed",
+          description: "An unexpected error occurred",
+          variant: "destructive",
+        });
+      } finally {
+        setSaving(false);
+      }
     }
   };
 
