@@ -1,17 +1,20 @@
 import { createContext, useContext, useReducer, ReactNode, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 
+export interface SkillsContest {
+  id: string;
+  hole: number;
+  type: 'longest_drive' | 'closest_to_pin';
+}
+
 export interface Round {
   id: string;
   courseName: string;
+  courseUrl?: string;
   date: string;
   time: string;
   holes: number;
-  yardage?: string;
-  skillsContests?: {
-    enabled: boolean;
-    holes: string;
-  };
+  skillsContests?: SkillsContest[];
 }
 
 export interface Player {
