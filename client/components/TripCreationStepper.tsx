@@ -120,19 +120,9 @@ export function TripCreationStepper({
             {steps.map((step, index) => {
               const status = getStepStatus(index);
               const isClickable = status === "completed" || status === "current";
-              
-              const StepComponent = isClickable ? Link : "div";
-              const stepProps = isClickable ? { to: step.path } : {};
-              
-              return (
-                <StepComponent
-                  key={step.id}
-                  {...stepProps}
-                  className={cn(
-                    "flex flex-col items-center relative z-10",
-                    isClickable && "cursor-pointer group"
-                  )}
-                >
+
+              const stepContent = (
+                <>
                   <div
                     className={cn(
                       "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors",
@@ -160,7 +150,28 @@ export function TripCreationStepper({
                       {step.title}
                     </div>
                   </div>
-                </StepComponent>
+                </>
+              );
+
+              return isClickable ? (
+                <Link
+                  key={step.id}
+                  to={step.path}
+                  className={cn(
+                    "flex flex-col items-center relative z-10 cursor-pointer group"
+                  )}
+                >
+                  {stepContent}
+                </Link>
+              ) : (
+                <div
+                  key={step.id}
+                  className={cn(
+                    "flex flex-col items-center relative z-10"
+                  )}
+                >
+                  {stepContent}
+                </div>
               );
             })}
           </div>
