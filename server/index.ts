@@ -24,5 +24,8 @@ export function createServer() {
   app.post("/api/supabase-test", handleSupabaseTest);
   app.post("/api/auth-test", handleAuthTest);
 
+  // Events API routes
+  app.use("/api", eventsRouter);
+
   return app;
 }
