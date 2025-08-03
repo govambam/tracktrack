@@ -79,10 +79,10 @@ const sidebarSections = [
     description: "Logistics and schedule",
   },
   {
-    id: "customization",
-    label: "Customization",
+    id: "customizations",
+    label: "Customizations",
     icon: Palette,
-    description: "Branding and privacy",
+    description: "Website content and appearance",
   },
   {
     id: "settings",
