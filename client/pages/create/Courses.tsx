@@ -146,13 +146,10 @@ export default function Courses() {
     updateCourses(rounds);
     console.log('Updated context with rounds');
 
-    // Small delay to ensure context is updated
-    await new Promise(resolve => setTimeout(resolve, 50));
-
     try {
-      // Save rounds to Supabase
-      console.log('Calling saveRounds...');
-      const result = await saveRounds();
+      // Save rounds to Supabase - pass rounds data directly to avoid timing issues
+      console.log('Calling saveRounds with direct data...');
+      const result = await saveRounds(rounds);
       console.log('SaveRounds result:', result);
 
       if (result.success) {
