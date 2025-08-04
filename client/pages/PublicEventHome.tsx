@@ -605,7 +605,7 @@ const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index
                 "{player.bio}"
               </p>
               {shouldShowSeeMore && (
-                <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-white/90 to-transparent pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-white/90 to-transparent pointer-events-none" />
               )}
 
               {shouldShowSeeMore && showSeeMore && (
