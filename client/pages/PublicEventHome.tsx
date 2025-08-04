@@ -1118,14 +1118,25 @@ export default function PublicEventHome() {
   if (error || !eventData) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
-        <div className="text-center">
+        <div className="text-center max-w-2xl mx-auto p-6">
           <Target className="h-16 w-16 text-green-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-green-900 mb-2">
             Event Not Found
           </h1>
-          <p className="text-green-600">
+          <p className="text-green-600 mb-4">
             {error || "This event may not be published or the link is incorrect."}
           </p>
+
+          {/* Debug information */}
+          <div className="bg-white/50 rounded-lg p-4 text-left text-sm text-gray-700 mt-4">
+            <h3 className="font-medium mb-2">Debug Information:</h3>
+            <div>Slug: {slug || 'undefined'}</div>
+            <div>Loading: {loading.toString()}</div>
+            <div>Error: {error || 'none'}</div>
+            <div>Event Data: {eventData ? 'found' : 'null'}</div>
+            <div>URL: {window.location.href}</div>
+            <div>Pathname: {window.location.pathname}</div>
+          </div>
         </div>
       </div>
     );
