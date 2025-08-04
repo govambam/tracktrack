@@ -281,13 +281,9 @@ export default function RulesCustomization() {
                   <div key={rule.id} className="flex items-start space-x-2">
                     <div className="flex-1">
                       <Textarea
-                        value={rule.rule_text}
+                        value={ruleChanges[rule.id] !== undefined ? ruleChanges[rule.id] : rule.rule_text}
                         onChange={(e) => {
-                          setRules(rules.map(r => 
-                            r.id === rule.id 
-                              ? { ...r, rule_text: e.target.value }
-                              : r
-                          ));
+                          setRuleChanges(prev => ({ ...prev, [rule.id]: e.target.value }));
                         }}
 
                         placeholder={`Rule ${index + 1}...`}
