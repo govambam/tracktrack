@@ -271,15 +271,16 @@ export default function TravelCustomization() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-green-800 font-medium">Distance & Directions</Label>
-                  <Input
-                    value={travelInfo.travel_distance || ''}
+                  <Label className="text-green-800 font-medium">Daily Schedule</Label>
+                  <Textarea
+                    value={travelInfo.daily_schedule || ''}
                     onChange={(e) => {
-                      setTravelInfo(prev => ({ ...prev, travel_distance: e.target.value }));
+                      setTravelInfo(prev => ({ ...prev, daily_schedule: e.target.value }));
                     }}
-                    onBlur={(e) => saveTravelField('travel_distance', e.target.value)}
-                    placeholder="Distance from major cities, driving directions"
+                    onBlur={(e) => saveTravelField('daily_schedule', e.target.value)}
+                    placeholder="Daily itinerary, meal plans, activities, check-in times, etc."
                     className="border-green-200 focus:border-emerald-500 bg-white"
+                    rows={4}
                     disabled={!travelEnabled}
                   />
                 </div>
