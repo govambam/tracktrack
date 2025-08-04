@@ -648,7 +648,7 @@ Make it fun while keeping it clear! Use markdown formatting with bold titles and
                                     </h3>
                                   ),
                                   p: ({ children }) => (
-                                    <p className="text-green-700 mb-2 last:mb-0">
+                                    <p className="text-green-700 mb-3 last:mb-0 leading-relaxed">
                                       {children}
                                     </p>
                                   ),
