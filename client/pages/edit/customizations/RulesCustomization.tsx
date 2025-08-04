@@ -30,6 +30,7 @@ export default function RulesCustomization() {
   const [ruleChanges, setRuleChanges] = useState<Record<string, string>>({});
   const [newRuleText, setNewRuleText] = useState("");
   const [editingRuleId, setEditingRuleId] = useState<string | null>(null);
+  const [polishingRuleId, setPolishingRuleId] = useState<string | null>(null);
 
   useEffect(() => {
     if (eventId) {
