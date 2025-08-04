@@ -18,6 +18,7 @@ import { Target, Plus, Trash2, Save, Edit, X, Sparkles } from "lucide-react";
 interface EventRule {
   id: string;
   rule_text: string;
+  isDraft?: boolean; // Flag to indicate if rule is not yet saved to database
 }
 
 export default function RulesCustomization() {
@@ -31,6 +32,7 @@ export default function RulesCustomization() {
   const [newRuleText, setNewRuleText] = useState("");
   const [editingRuleId, setEditingRuleId] = useState<string | null>(null);
   const [polishingRuleId, setPolishingRuleId] = useState<string | null>(null);
+  let nextDraftId = 1; // Counter for generating unique draft IDs
 
   useEffect(() => {
     if (eventId) {
@@ -90,7 +92,19 @@ export default function RulesCustomization() {
     }
   };
 
-  const addRule = async (ruleText: string = "New rule") => {
+  const addDraftRule = () => {
+    // Create a draft rule that doesn't exist in database yet
+    const draftRule: EventRule = {
+      id: `draft_${Date.now()}_${nextDraftId++}`, // Unique temporary ID
+      rule_text: "New rule",
+      isDraft: true,
+    };
+
+    setRules([...rules, draftRule]);
+    setEditingRuleId(draftRule.id); // Start editing the new draft rule
+  };
+
+  const saveDraftRule = async (ruleId: string, ruleText: string) => {
     if (!eventId) return;
 
     try {
@@ -104,20 +118,36 @@ export default function RulesCustomization() {
         .single();
 
       if (error) {
-        console.error("Error adding rule:", error);
+        console.error("Error saving draft rule:", error);
         toast({
-          title: "Add Failed",
-          description: "Failed to add new rule",
+          title: "Save Failed",
+          description: "Failed to save new rule",
           variant: "destructive",
         });
       } else {
-        setRules([...rules, data]);
-        setNewRuleText(""); // Clear the draft text
-        setEditingRuleId(data.id); // Start editing the new rule
+        // Replace the draft rule with the saved rule
+        setRules(prevRules =>
+          prevRules.map(rule =>
+            rule.id === ruleId
+              ? { ...data, isDraft: false }
+              : rule
+          )
+        );
+        setEditingRuleId(null);
+        toast({
+          title: "Rule Saved",
+          description: "New rule has been added successfully",
+        });
       }
     } catch (error) {
-      console.error("Error adding rule:", error);
+      console.error("Error saving draft rule:", error);
     }
+  };
+
+  const deleteDraftRule = (ruleId: string) => {
+    // Simply remove draft rule from local state (no database call needed)
+    setRules(rules.filter(rule => rule.id !== ruleId));
+    setEditingRuleId(null);
   };
 
   const handleNewRuleSubmit = async () => {
@@ -427,7 +457,7 @@ ${currentText}`;
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => addRule()}
+                  onClick={addDraftRule}
                   className="border-green-200 text-green-700 hover:bg-green-50"
                 >
                   <Plus className="h-4 w-4 mr-1" />
@@ -472,7 +502,13 @@ ${currentText}`;
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => deleteRule(rule.id)}
+                              onClick={() => {
+                                if (rule.isDraft) {
+                                  deleteDraftRule(rule.id);
+                                } else {
+                                  deleteRule(rule.id);
+                                }
+                              }}
                               className="border-red-200 text-red-600 hover:bg-red-50"
                             >
                               <Trash2 className="h-4 w-4" />
@@ -491,12 +527,18 @@ ${currentText}`;
                                 variant="outline"
                                 size="sm"
                                 onClick={() => {
-                                  setEditingRuleId(null);
-                                  // Remove any unsaved changes
-                                  setRuleChanges((prev) => {
-                                    const { [rule.id]: removed, ...rest } = prev;
-                                    return rest;
-                                  });
+                                  if (rule.isDraft) {
+                                    // Delete draft rule entirely if it was never saved
+                                    deleteDraftRule(rule.id);
+                                  } else {
+                                    // Just stop editing existing rule
+                                    setEditingRuleId(null);
+                                    // Remove any unsaved changes
+                                    setRuleChanges((prev) => {
+                                      const { [rule.id]: removed, ...rest } = prev;
+                                      return rest;
+                                    });
+                                  }
                                 }}
                                 className="border-gray-200 text-gray-600 hover:bg-gray-50"
                               >
@@ -508,14 +550,22 @@ ${currentText}`;
                                 size="sm"
                                 onClick={async () => {
                                   const newText = ruleChanges[rule.id] || rule.rule_text;
-                                  await updateRule(rule.id, newText);
-                                  setEditingRuleId(null);
-                                  // Update the rules list with the new text
-                                  setRules((prev) =>
-                                    prev.map((r) =>
-                                      r.id === rule.id ? { ...r, rule_text: newText } : r
-                                    )
-                                  );
+
+                                  if (rule.isDraft) {
+                                    // Save draft rule to database
+                                    await saveDraftRule(rule.id, newText);
+                                  } else {
+                                    // Update existing rule
+                                    await updateRule(rule.id, newText);
+                                    setEditingRuleId(null);
+                                    // Update the rules list with the new text
+                                    setRules((prev) =>
+                                      prev.map((r) =>
+                                        r.id === rule.id ? { ...r, rule_text: newText } : r
+                                      )
+                                    );
+                                  }
+
                                   // Clear the changes
                                   setRuleChanges((prev) => {
                                     const { [rule.id]: removed, ...rest } = prev;
