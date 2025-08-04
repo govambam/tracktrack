@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
 import { checkTableExists } from "@/lib/initDatabase";
-import { MapPin, RefreshCw, Save } from "lucide-react";
+import { MapPin, RefreshCw, Save, Sparkles } from "lucide-react";
 
 interface EventCourse {
   id: string;
