@@ -215,11 +215,16 @@ export default function BasicInfoEdit() {
       const prompt = `Write a short, friendly trip description for a golf event called ${event.name}. It takes place in ${event.location} from ${startDate} to ${endDate}. Golf will be played at ${courseNames}. There are ${playerCount} players. The tone should be fun, welcoming, and appropriate for a website.`;
 
       // Call OpenAI API
+      console.log("Making OpenAI API call with prompt:", prompt);
+
+      const apiKey = import.meta.env.VITE_OPENAI_API_KEY || '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';
+      console.log("Using API key:", apiKey ? `${apiKey.substring(0, 10)}...` : 'No key found');
+
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${import.meta.env.VITE_OPENAI_API_KEY || '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'}`
+          "Authorization": `Bearer ${apiKey}`
         },
         body: JSON.stringify({
           model: "gpt-4",
@@ -234,11 +239,17 @@ export default function BasicInfoEdit() {
         })
       });
 
+      console.log("OpenAI API response status:", response.status);
+      console.log("OpenAI API response ok:", response.ok);
+
       if (!response.ok) {
-        throw new Error("Failed to generate description");
+        const errorBody = await response.text();
+        console.error("OpenAI API error response:", errorBody);
+        throw new Error(`OpenAI API error (${response.status}): ${errorBody}`);
       }
 
       const data = await response.json();
+      console.log("OpenAI API response data:", data);
       const generatedDescription = data.choices[0]?.message?.content?.trim();
 
       if (generatedDescription) {
