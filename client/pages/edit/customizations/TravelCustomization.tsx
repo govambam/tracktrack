@@ -153,6 +153,8 @@ export default function TravelCustomization() {
       }
     } catch (error) {
       console.error('Error saving travel info:', error);
+    } finally {
+      setSaving(false);
     }
   };
 
