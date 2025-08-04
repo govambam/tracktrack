@@ -963,6 +963,11 @@ export default function PublicEventHome() {
           .eq("event_id", event.id)
           .order("created_at"),
         supabase.from("skills_contests").select("*").eq("event_id", event.id),
+        supabase
+          .from("stableford_scoring")
+          .select("*")
+          .eq("event_id", event.id)
+          .maybeSingle(),
       ]);
 
       // Handle results with error checking
@@ -1007,7 +1012,7 @@ export default function PublicEventHome() {
     if (startMonth === endMonth) {
       return `${startMonth} ${startDay}–${endDay}, ${year}`;
     } else {
-      return `${startMonth} ${startDay} – ${endMonth} ${endDay}, ${year}`;
+      return `${startMonth} ${startDay} ��� ${endMonth} ${endDay}, ${year}`;
     }
   };
 
