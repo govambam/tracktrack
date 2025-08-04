@@ -653,6 +653,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       const completeEventData: TripData = {
         id: eventData.id,
         tripName: eventData.name,
+        slug: eventData.slug,
         startDate: eventData.start_date,
         endDate: eventData.end_date,
         location: eventData.location,
