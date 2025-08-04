@@ -165,29 +165,30 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
       console.log("Skills contests result:", skillsContestsResult);
       console.log("Custom rules result:", customRulesResult);
 
+      // Handle errors but continue if possible (some tables might not exist for new events)
       if (playersResult.error) {
         console.error("Players error:", playersResult.error);
-        throw new Error(`Failed to load players: ${playersResult.error.message}`);
+        console.warn("Continuing without players data");
       }
       if (roundsResult.error) {
         console.error("Rounds error:", roundsResult.error);
-        throw new Error(`Failed to load rounds: ${roundsResult.error.message}`);
+        console.warn("Continuing without rounds data");
       }
       if (coursesResult.error) {
         console.error("Courses error:", coursesResult.error);
-        throw new Error(`Failed to load courses: ${coursesResult.error.message}`);
+        console.warn("Continuing without courses data");
       }
       if (prizesResult.error) {
         console.error("Prizes error:", prizesResult.error);
-        throw new Error(`Failed to load prizes: ${prizesResult.error.message}`);
+        console.warn("Continuing without prizes data");
       }
       if (skillsContestsResult.error) {
         console.error("Skills contests error:", skillsContestsResult.error);
-        throw new Error(`Failed to load contests: ${skillsContestsResult.error.message}`);
+        console.warn("Continuing without skills contests data");
       }
       if (customRulesResult.error) {
         console.error("Custom rules error:", customRulesResult.error);
-        throw new Error(`Failed to load rules: ${customRulesResult.error.message}`);
+        console.warn("Continuing without custom rules data");
       }
 
       setPlayers(playersResult.data || []);
