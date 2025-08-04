@@ -221,47 +221,37 @@ export default function PublicEventHome() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-emerald-600 to-green-700 text-white overflow-hidden">
-        {eventData.logo_url && (
-          <div className="absolute inset-0 opacity-20">
-            <img 
-              src={eventData.logo_url} 
-              alt="" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-        )}
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <div className="text-center space-y-6 max-w-4xl mx-auto">
-            <Badge variant="secondary" className="bg-white/20 text-white border-white/30 text-sm font-medium px-4 py-2">
-              <Calendar className="h-4 w-4 mr-2" />
+      <section className="relative bg-white text-green-900 overflow-hidden">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
+          <div className="text-center space-y-8 max-w-4xl mx-auto">
+            <Badge className="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-full">
               {formatDateRange(eventData.start_date, eventData.end_date)}
             </Badge>
-            
-            <h1 className="text-4xl sm:text-6xl font-bold leading-tight">
+
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight text-green-900">
               {eventData.name}
             </h1>
-            
+
             {eventData.description && (
-              <p className="text-xl sm:text-2xl text-green-100 max-w-4xl mx-auto leading-relaxed">
+              <p className="text-lg sm:text-xl text-green-700 max-w-3xl mx-auto leading-relaxed font-light">
                 {eventData.description}
               </p>
             )}
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-              <a 
-                href="#courses" 
-                className="bg-white text-emerald-600 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors inline-flex items-center justify-center"
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+              <a
+                href="#courses"
+                className="bg-green-600 text-white px-8 py-4 rounded-lg font-medium hover:bg-green-700 transition-colors inline-flex items-center justify-center text-lg"
               >
-                View Courses <ChevronRight className="h-4 w-4 ml-2" />
+                View Courses
               </a>
-              <a 
-                href="#players" 
-                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors inline-flex items-center justify-center"
+              <a
+                href="#players"
+                className="border-2 border-green-600 text-green-600 px-8 py-4 rounded-lg font-medium hover:bg-green-50 transition-colors inline-flex items-center justify-center text-lg"
               >
-                Meet Players <Users className="h-4 w-4 ml-2" />
+                Meet Players
               </a>
             </div>
           </div>
