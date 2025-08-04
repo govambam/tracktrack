@@ -21,6 +21,7 @@ export default function RulesCustomization() {
   const [rules, setRules] = useState<EventRule[]>([]);
   const [rulesEnabled, setRulesEnabled] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [ruleChanges, setRuleChanges] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (eventId) {
