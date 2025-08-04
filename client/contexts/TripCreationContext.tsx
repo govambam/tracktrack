@@ -694,6 +694,29 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       // Load into context
       dispatch({ type: "LOAD_EVENT", payload: completeEventData });
 
+      // Auto-generate slug if event doesn't have one
+      if (!completeEventData.slug && completeEventData.tripName) {
+        console.log('Event missing slug, auto-generating one...');
+        const autoSlug = generateSlugFromName(completeEventData.tripName);
+
+        // Save the slug to the database
+        const { error: slugUpdateError } = await supabase
+          .from('events')
+          .update({ slug: autoSlug })
+          .eq('id', eventId);
+
+        if (!slugUpdateError) {
+          console.log('Auto-generated and saved slug:', autoSlug);
+          // Update the context with the new slug
+          dispatch({
+            type: "UPDATE_BASIC_INFO",
+            payload: { slug: autoSlug }
+          });
+        } else {
+          console.error('Failed to save auto-generated slug:', slugUpdateError);
+        }
+      }
+
       // Check if we need to sync courses to event_courses table
       // This handles existing events that might not have event_courses entries yet
       if (rounds.length > 0) {
