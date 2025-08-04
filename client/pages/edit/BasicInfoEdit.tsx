@@ -379,9 +379,31 @@ export default function BasicInfoEdit() {
               rows={4}
               className="border-green-200 focus:border-emerald-500"
             />
-            <p className="text-sm text-green-600">
-              Help participants know what to expect at this event
-            </p>
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-green-600">
+                Help participants know what to expect at this event
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={generateAIDescription}
+                disabled={generatingAI}
+                className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+              >
+                {generatingAI ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-600 mr-2"></div>
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    Generate with AI
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
 
           {/* Banner Image (Optional) */}
