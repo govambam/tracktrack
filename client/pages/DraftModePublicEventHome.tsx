@@ -86,6 +86,14 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
       setError(null);
       console.log("Loading event data for eventId:", eventId);
 
+      // Check authentication
+      const { data: { session }, error: authError } = await supabase.auth.getSession();
+      console.log("Current session:", session?.user?.email || "No session");
+
+      if (authError) {
+        console.error("Auth error:", authError);
+      }
+
       // Load main event data
       console.log("Loading main event data...");
       const { data: event, error: eventError } = await supabase
@@ -93,6 +101,8 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
         .select("*")
         .eq("id", eventId)
         .single();
+
+      console.log("Event query result:", { event, eventError });
 
       if (eventError) {
         console.error("Event loading error:", eventError.message, eventError);
