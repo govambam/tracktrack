@@ -4,7 +4,7 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './', // Ensures correct asset paths on Vercel
+  base: '/', // Root path for Vercel deployment
   plugins: [react()],
   resolve: {
     alias: {
