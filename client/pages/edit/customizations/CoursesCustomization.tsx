@@ -754,6 +754,32 @@ Return your response as a JSON object with these fields:
                         disabled={!coursesEnabled}
                       />
                     </div>
+
+                    {/* Generate/Polish with AI Button */}
+                    <div className="pt-4 border-t border-green-100">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => generateCourseWithAI(course)}
+                        disabled={!coursesEnabled || generatingAI === course.id}
+                        className="w-full border-blue-200 text-blue-700 hover:bg-blue-50"
+                      >
+                        {generatingAI === course.id ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                            Generating...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            {course.description || course.par || course.yardage || course.weather_note
+                              ? "Polish with AI"
+                              : "Generate with AI"}
+                          </>
+                        )}
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
