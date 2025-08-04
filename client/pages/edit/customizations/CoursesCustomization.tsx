@@ -348,17 +348,33 @@ export default function CoursesCustomization() {
     if (!eventId) return;
 
     try {
-      // Save courses enabled setting
-      await saveCoursesEnabled(coursesEnabled);
+      // Save all course field changes (courses enabled toggle saves immediately)
+      for (const course of courses) {
+        if (course.image_url !== undefined) {
+          await saveCourseField(course.id, 'image_url', course.image_url || '');
+        }
+        if (course.yardage !== undefined) {
+          await saveCourseField(course.id, 'yardage', course.yardage || 0);
+        }
+        if (course.par !== undefined) {
+          await saveCourseField(course.id, 'par', course.par || 0);
+        }
+        if (course.description !== undefined) {
+          await saveCourseField(course.id, 'description', course.description || '');
+        }
+        if (course.weather_note !== undefined) {
+          await saveCourseField(course.id, 'weather_note', course.weather_note || '');
+        }
+      }
 
       toast({
-        title: "Settings Saved",
-        description: "Course customization settings have been saved successfully",
+        title: "Changes Saved",
+        description: "Course information has been saved successfully",
       });
     } catch (error) {
       toast({
         title: "Save Failed",
-        description: "Failed to save course settings",
+        description: "Failed to save course information",
         variant: "destructive",
       });
     }
