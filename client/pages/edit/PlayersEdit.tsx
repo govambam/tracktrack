@@ -64,7 +64,8 @@ export default function PlayersEdit() {
           image: p.profile_image || ''
         }));
         setPlayers(formattedPlayers);
-        console.log('Loaded players:', formattedPlayers);
+        console.log('Loaded players from database:', formattedPlayers);
+        console.log('Profile images from database:', playersData.map(p => ({ name: p.full_name, profile_image: p.profile_image })));
       } else {
         // No players found, start with one empty player
         setPlayers([{
