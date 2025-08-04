@@ -39,6 +39,7 @@ import TestCourseSync from "./pages/edit/TestCourseSync";
 import SettingsEdit from "./pages/edit/SettingsEdit";
 import PublicEventHome from "./pages/PublicEventHome";
 import PublicLeaderboard from "./pages/PublicLeaderboard";
+import DraftMode from "./pages/DraftMode";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
