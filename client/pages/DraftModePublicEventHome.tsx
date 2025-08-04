@@ -42,6 +42,7 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
   const [rounds, setRounds] = useState<any[]>([]);
   const [travel, setTravel] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   // Modal states
   const [editDescriptionModal, setEditDescriptionModal] = useState(false);
