@@ -38,6 +38,13 @@ import {
   Camera,
   MoreHorizontal,
   X,
+  Crosshair,
+  Zap,
+  Info,
+  Crown,
+  Medal,
+  CheckCircle,
+  Flag,
 } from "lucide-react";
 
 interface DraftModeProps {
