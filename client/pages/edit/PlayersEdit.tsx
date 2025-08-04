@@ -186,13 +186,16 @@ export default function PlayersEdit() {
 
       // Insert new players
       if (players.length > 0) {
-        const playersData = players.map(player => ({
-          event_id: eventId,
-          full_name: player.name.trim(),
-          email: player.email?.trim() || null,
-          handicap: player.handicap || null,
-          profile_image: player.image?.trim() || null
-        }));
+        const playersData = players.map(player => {
+          const profileImage = player.image?.trim();
+          return {
+            event_id: eventId,
+            full_name: player.name.trim(),
+            email: player.email?.trim() || null,
+            handicap: player.handicap || null,
+            profile_image: profileImage && profileImage.length > 0 ? profileImage : null
+          };
+        });
 
         console.log('Saving players data:', playersData);
         console.log('Profile images being saved:', playersData.map(p => ({ name: p.full_name, profile_image: p.profile_image })));
