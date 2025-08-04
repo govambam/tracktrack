@@ -281,7 +281,7 @@ export default function RulesCustomization() {
                   size="sm"
                   onClick={addRule}
                   className="border-green-200 text-green-700 hover:bg-green-50"
-                  disabled={!rulesEnabled}
+
                 >
                   <Plus className="h-4 w-4 mr-1" />
                   Add Rule
@@ -307,7 +307,7 @@ export default function RulesCustomization() {
                         placeholder={`Rule ${index + 1}...`}
                         className="border-green-200 focus:border-emerald-500 bg-white"
                         rows={2}
-                        disabled={!rulesEnabled}
+      
                       />
                     </div>
                     <Button
@@ -315,7 +315,7 @@ export default function RulesCustomization() {
                       size="sm"
                       onClick={() => deleteRule(rule.id)}
                       className="border-red-200 text-red-600 hover:bg-red-50"
-                      disabled={!rulesEnabled}
+    
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
