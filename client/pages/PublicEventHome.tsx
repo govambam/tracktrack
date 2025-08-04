@@ -774,7 +774,7 @@ export default function PublicEventHome() {
 
       {/* Travel & Accommodation Section */}
       {travel && (travel.flight_info || travel.accommodations || travel.daily_schedule) && (
-        <section className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
+        <section id="travel" className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-white to-slate-50/30"></div>
           <div className="absolute top-0 left-0 w-80 h-80 bg-blue-100/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
 
