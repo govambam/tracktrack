@@ -23,6 +23,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { Round, SkillsContest } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import {
   MapPin,
   Plus,
