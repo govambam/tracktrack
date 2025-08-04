@@ -105,6 +105,26 @@ export default function LeaderboardCustomization() {
     }
   };
 
+  const handleSaveAll = async () => {
+    if (!eventId) return;
+
+    try {
+      // Save leaderboard enabled setting
+      await saveLeaderboardEnabled(leaderboardEnabled);
+
+      toast({
+        title: "Settings Saved",
+        description: "Leaderboard customization settings have been saved successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Save Failed",
+        description: "Failed to save leaderboard settings",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
