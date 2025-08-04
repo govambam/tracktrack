@@ -20,6 +20,17 @@ export default function PublicLeaderboard() {
   const { slug } = useParams();
   const [activeTab, setActiveTab] = useState('leaderboard');
 
+  // Navigation items for consistency with home page
+  const navItems = [
+    { name: 'Overview', href: `/events/${slug}#overview` },
+    { name: 'Courses', href: `/events/${slug}#courses` },
+    { name: 'Scoring Format', href: `/events/${slug}#scoring` },
+    { name: 'Players', href: `/events/${slug}#players` },
+    { name: 'Prizes', href: `/events/${slug}#prizes` },
+    { name: 'Travel', href: `/events/${slug}#travel` },
+    { name: 'Leaderboard', href: '/leaderboard' },
+  ];
+
   // Mock data for demonstration
   const mockPlayers = [
     { name: 'Patrick', position: 1, points: 8, badge: 'Current Leader', money: 120 },
