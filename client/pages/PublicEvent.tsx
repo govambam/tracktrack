@@ -412,7 +412,7 @@ function HomeTab({
             <div>
               <h3 className="font-medium text-gray-900 mb-2">Format</h3>
               <Badge variant="outline" className="capitalize">
-                {eventData.scoring_format.replace('-', ' ')}
+                {eventData.scoring_format?.replace('-', ' ') || 'Not specified'}
               </Badge>
             </div>
             <div>
