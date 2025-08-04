@@ -371,8 +371,8 @@ const AnimatedPrizeCard = ({ prize, index }: { prize: any; index: number }) => {
           <Trophy className="h-10 w-10 text-amber-600" />
         </div>
 
-        <h3 className="text-xl font-bold text-slate-900 mb-4 capitalize group-hover:text-amber-700 transition-colors">
-          {prize.category.replace('_', ' ')}
+        <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-amber-700 transition-colors">
+          {prize.category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
         </h3>
 
         {prize.amount > 0 && (
