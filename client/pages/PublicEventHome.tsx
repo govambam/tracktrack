@@ -626,17 +626,25 @@ export default function PublicEventHome() {
                 { info: travel.daily_schedule, icon: Clock, title: "Daily Schedule", color: "purple" }
               ].filter(item => item.info).map((item, index) => {
                 const { isVisible, elementRef } = useScrollAnimation();
+                const colorClasses = {
+                  blue: { bg: 'from-blue-100 to-blue-200', text: 'text-blue-600' },
+                  emerald: { bg: 'from-emerald-100 to-emerald-200', text: 'text-emerald-600' },
+                  purple: { bg: 'from-purple-100 to-purple-200', text: 'text-purple-600' }
+                };
+                const colors = colorClasses[item.color as keyof typeof colorClasses];
+                const delays = ['delay-0', 'delay-150', 'delay-300'];
+
                 return (
                   <div
                     key={item.title}
                     ref={elementRef}
-                    className={`transition-all duration-700 delay-${index * 150} ${
+                    className={`transition-all duration-700 ${delays[index] || 'delay-0'} ${
                       isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
                     }`}
                   >
                     <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 h-full">
-                      <div className={`w-16 h-16 bg-gradient-to-br from-${item.color}-100 to-${item.color}-200 rounded-2xl flex items-center justify-center mb-8`}>
-                        <item.icon className={`h-8 w-8 text-${item.color}-600`} />
+                      <div className={`w-16 h-16 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mb-8`}>
+                        <item.icon className={`h-8 w-8 ${colors.text}`} />
                       </div>
 
                       <h3 className="text-2xl font-bold text-slate-900 mb-6">{item.title}</h3>
