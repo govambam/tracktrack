@@ -101,7 +101,8 @@ export default function PlayersEdit() {
       name: '',
       email: '',
       handicap: undefined,
-      image: ''
+      image: '',
+      bio: ''
     };
     setPlayers([...players, newPlayer]);
     setEditingPlayerId(newPlayer.id); // Start editing the new player
