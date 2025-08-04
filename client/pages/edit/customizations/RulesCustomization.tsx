@@ -28,6 +28,7 @@ export default function RulesCustomization() {
   const [rulesEnabled, setRulesEnabled] = useState(true);
   const [loading, setLoading] = useState(true);
   const [ruleChanges, setRuleChanges] = useState<Record<string, string>>({});
+  const [newRuleText, setNewRuleText] = useState("");
 
   useEffect(() => {
     if (eventId) {
@@ -87,7 +88,7 @@ export default function RulesCustomization() {
     }
   };
 
-  const addRule = async () => {
+  const addRule = async (ruleText: string = "New rule") => {
     if (!eventId) return;
 
     try {
@@ -95,7 +96,7 @@ export default function RulesCustomization() {
         .from("event_rules")
         .insert({
           event_id: eventId,
-          rule_text: "New rule",
+          rule_text: ruleText,
         })
         .select()
         .single();
@@ -109,9 +110,23 @@ export default function RulesCustomization() {
         });
       } else {
         setRules([...rules, data]);
+        setNewRuleText(""); // Clear the draft text
       }
     } catch (error) {
       console.error("Error adding rule:", error);
+    }
+  };
+
+  const handleNewRuleSubmit = async () => {
+    if (newRuleText.trim()) {
+      await addRule(newRuleText.trim());
+    }
+  };
+
+  const handleNewRuleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleNewRuleSubmit();
     }
   };
 
@@ -323,13 +338,16 @@ export default function RulesCustomization() {
               {rules.length === 0 && (
                 <div className="space-y-2">
                   <Textarea
+                    value={newRuleText}
+                    onChange={(e) => setNewRuleText(e.target.value)}
+                    onBlur={handleNewRuleSubmit}
+                    onKeyDown={handleNewRuleKeyDown}
                     placeholder="Add a custom rule..."
                     className="border-green-200 focus:border-emerald-500 bg-white"
                     rows={3}
-                    onFocus={addRule}
                   />
                   <p className="text-sm text-green-600">
-                    Click in the text area above to add your first rule
+                    Start typing your first rule above, then press Enter or click outside to save
                   </p>
                 </div>
               )}
