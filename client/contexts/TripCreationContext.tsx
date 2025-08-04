@@ -198,6 +198,16 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(tripCreationReducer, initialState);
   const [isSaving, setIsSaving] = useState(false);
 
+  // Helper function to generate slug from event name
+  const generateSlugFromName = (name: string): string => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 50) || "golf-event";
+  };
+
   const saveEvent = async (
     formData?: Partial<TripData>,
   ): Promise<{ success: boolean; eventId?: string; error?: string }> => {
