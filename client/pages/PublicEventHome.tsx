@@ -403,12 +403,14 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
             <div className="mb-6 relative">
               <div className="relative">
                 <p
+                  ref={textRef}
                   className="text-slate-600 leading-relaxed overflow-hidden"
                   style={{
                     display: '-webkit-box',
                     WebkitLineClamp: 4,
                     WebkitBoxOrient: 'vertical',
-                    maxHeight: '6rem'
+                    maxHeight: '6rem',
+                    lineHeight: '1.5rem'
                   }}
                 >
                   {course.description}
