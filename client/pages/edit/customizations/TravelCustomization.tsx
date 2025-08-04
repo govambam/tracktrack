@@ -292,7 +292,7 @@ export default function TravelCustomization() {
                     onChange={(e) => {
                       setTravelInfo(prev => ({ ...prev, accommodations: e.target.value }));
                     }}
-                    onBlur={(e) => saveTravelField('accommodations', e.target.value)}
+
                     placeholder="Hotel recommendations, booking links, group rates, lodging information, etc."
                     className="border-green-200 focus:border-emerald-500 bg-white"
                     rows={4}
