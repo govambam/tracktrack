@@ -1097,6 +1097,24 @@ export default function PublicEventHome() {
       );
   };
 
+  // Get contests organized by round
+  const getContestsByRound = () => {
+    return rounds.map((round, index) => {
+      const roundContests = skillsContests.filter((contest) => contest.round_id === round.id);
+      const contests = roundContests.map((contest) => ({
+        hole: contest.hole,
+        type: contest.contest_type,
+        emoji: contest.contest_type === 'closest_to_pin' ? '🎯' : '🏌️‍♂️'
+      }));
+
+      return {
+        roundNumber: index + 1,
+        courseName: round.course_name,
+        contests: contests.sort((a, b) => a.hole - b.hole)
+      };
+    }).filter(round => round.contests.length > 0);
+  };
+
   const closestToPinGroups = getContestsByType("closest_to_pin");
   const longestDriveGroups = getContestsByType("longest_drive");
 
