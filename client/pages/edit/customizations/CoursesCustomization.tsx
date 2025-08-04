@@ -611,7 +611,7 @@ Return your response as a JSON object with these fields:
                 </p>
                 <Button
                   onClick={syncCoursesFromRounds}
-                  disabled={syncing || !coursesEnabled}
+                  disabled={syncing}
                   variant="outline"
                   className="border-green-200 text-green-700 hover:bg-green-100"
                 >
