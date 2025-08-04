@@ -65,6 +65,7 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
   const loadEventData = async () => {
     try {
       setLoading(true);
+      setError(null);
       console.log("Loading event data for eventId:", eventId);
 
       // Load main event data
