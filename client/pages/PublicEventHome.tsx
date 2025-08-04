@@ -567,25 +567,26 @@ const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index
     >
       <div className={`bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white flex flex-col ${!hasBio ? 'h-64' : isShortBio ? 'h-72' : 'h-80'}`}>
 
-        {/* Header with Avatar and Name */}
-        <div className="flex items-center space-x-4 p-6 pb-4">
-          <Avatar className="h-16 w-16 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300 flex-shrink-0">
+        {/* Avatar Section - Top */}
+        <div className="flex flex-col items-center pt-6 pb-4">
+          <Avatar className="h-20 w-20 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300">
             {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
-            <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-lg font-bold">
+            <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-xl font-bold">
               {getPlayerInitials(player.full_name)}
             </AvatarFallback>
           </Avatar>
+        </div>
 
-          <div className="flex-1 text-left">
-            <h3 className="font-bold text-slate-900 text-lg group-hover:text-green-700 transition-colors">
-              {player.full_name}
-            </h3>
-            {player.handicap !== null && player.handicap !== undefined && (
-              <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-3 py-1 mt-2">
-                <span className="text-xs font-semibold text-slate-600">HCP: {player.handicap}</span>
-              </div>
-            )}
-          </div>
+        {/* Name and Handicap Section */}
+        <div className="text-center px-6 pb-4">
+          <h3 className="font-bold text-slate-900 text-lg group-hover:text-green-700 transition-colors mb-2">
+            {player.full_name}
+          </h3>
+          {player.handicap !== null && player.handicap !== undefined && (
+            <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-3 py-1">
+              <span className="text-xs font-semibold text-slate-600">HCP: {player.handicap}</span>
+            </div>
+          )}
         </div>
 
         {/* Bio Section */}
@@ -1381,7 +1382,7 @@ export default function PublicEventHome() {
                           <li>• Must be <strong>ON THE GREEN</strong> to win</li>
                           <li>• Measured to the inch for ties</li>
                           <li>• Ball must come to rest on putting surface</li>
-                          <li>• Winner takes the full prize amount</li>
+                          <li>��� Winner takes the full prize amount</li>
                         </ul>
                       </div>
                     </div>
