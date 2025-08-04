@@ -488,7 +488,7 @@ export default function CoursesCustomization() {
                                   : c
                               ));
                             }}
-                            onBlur={(e) => saveCourseField(course.id, 'par', parseInt(e.target.value) || 0)}
+
                             placeholder="72"
                             className="border-green-200 focus:border-emerald-500 bg-white"
                             disabled={!coursesEnabled}
