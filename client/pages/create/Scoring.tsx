@@ -270,72 +270,7 @@ export default function Scoring() {
             </Card>
           </RadioGroup>
 
-          {/* Enhanced Stableford Points System */}
-          {scoringFormat === "modified-stableford" && (
-            <Card className="border-emerald-100 bg-emerald-50">
-              <CardHeader>
-                <CardTitle className="text-xl text-emerald-900 flex items-center">
-                  <Target className="h-6 w-6 mr-3 text-emerald-600" />
-                  Stableford Scoring System
-                </CardTitle>
-                <CardDescription className="text-emerald-600">
-                  Points awarded based on performance relative to par
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {enhancedStablefordPoints.map((scoring, index) => {
-                    const IconComponent = scoring.icon;
-                    return (
-                      <Card
-                        key={scoring.score}
-                        className={`${scoring.bgColor} border-2 border-opacity-20 hover:scale-105 transition-transform duration-200 shadow-lg`}
-                      >
-                        <CardContent className="p-6">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}>
-                              <span className="text-2xl font-bold text-white">{scoring.points}</span>
-                            </div>
-                            <IconComponent className={`h-6 w-6 ${scoring.iconColor}`} />
-                          </div>
 
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between">
-                              <h3 className={`text-lg font-bold ${scoring.textColor}`}>
-                                {scoring.score}
-                              </h3>
-                              <Badge variant="outline" className={`${scoring.textColor} border-current`}>
-                                {scoring.description}
-                              </Badge>
-                            </div>
-
-                            <p className={`text-sm ${scoring.textColor} opacity-80 leading-relaxed`}>
-                              {scoring.detail}
-                            </p>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
-                </div>
-
-                <Alert className="border-emerald-200 bg-emerald-50">
-                  <Target className="h-4 w-4 text-emerald-600" />
-                  <AlertDescription className="text-emerald-700">
-                    <div className="space-y-2">
-                      <div className="font-medium">Why Stableford?</div>
-                      <ul className="text-sm space-y-1">
-                        <li>• Encourages aggressive, exciting play</li>
-                        <li>• Keeps all players engaged throughout the round</li>
-                        <li>• Reduces the impact of one bad hole</li>
-                        <li>• Perfect for mixed skill level groups</li>
-                      </ul>
-                    </div>
-                  </AlertDescription>
-                </Alert>
-              </CardContent>
-            </Card>
-          )}
 
           {/* Custom Rules Section */}
           {customRules.length > 0 && (
