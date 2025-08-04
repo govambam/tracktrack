@@ -28,7 +28,7 @@ export default function PublicLeaderboard() {
     { name: 'Players', href: `/events/${slug}#players` },
     { name: 'Prizes', href: `/events/${slug}#prizes` },
     { name: 'Travel', href: `/events/${slug}#travel` },
-    { name: 'Leaderboard', href: '/leaderboard' },
+    { name: 'Leaderboard', href: `/events/${slug}/leaderboard` },
   ];
 
   // Mock data for demonstration
