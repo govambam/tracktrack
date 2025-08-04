@@ -35,26 +35,50 @@ export default function TravelCustomization() {
     try {
       setLoading(true);
 
-      // Load travel info from events table
-      const { data: eventData, error: eventError } = await supabase
-        .from('events')
-        .select('travel_lodging, travel_notes, travel_airport, travel_distance')
-        .eq('id', eventId)
+      // Load travel info from event_travel table
+      const { data: travelData, error: travelError } = await supabase
+        .from('event_travel')
+        .select('flight_info, accommodations, daily_schedule')
+        .eq('event_id', eventId)
         .single();
 
-      if (eventError) {
-        console.error('Error loading event data:', {
-          message: eventError.message,
-          details: eventError.details,
-          hint: eventError.hint,
-          code: eventError.code
+      if (travelError) {
+        if (travelError.code === 'PGRST116') {
+          // No record found - this is normal for new events
+          console.log('No travel record found for event:', eventId, '- using defaults');
+          setTravelInfo({
+            flight_info: '',
+            accommodations: '',
+            daily_schedule: '',
+          });
+        } else {
+          console.error('Error loading travel data:', {
+            message: travelError.message,
+            details: travelError.details,
+            hint: travelError.hint,
+            code: travelError.code
+          });
+          // Still set defaults on error
+          setTravelInfo({
+            flight_info: '',
+            accommodations: '',
+            daily_schedule: '',
+          });
+        }
+      } else if (travelData) {
+        console.log('Loaded travel data:', travelData);
+        setTravelInfo({
+          flight_info: travelData.flight_info || '',
+          accommodations: travelData.accommodations || '',
+          daily_schedule: travelData.daily_schedule || '',
         });
       } else {
+        // Fallback - no data and no error
+        console.log('No travel data returned - using defaults');
         setTravelInfo({
-          travel_lodging: eventData.travel_lodging || '',
-          travel_notes: eventData.travel_notes || '',
-          travel_airport: eventData.travel_airport || '',
-          travel_distance: eventData.travel_distance || '',
+          flight_info: '',
+          accommodations: '',
+          daily_schedule: '',
         });
       }
 
