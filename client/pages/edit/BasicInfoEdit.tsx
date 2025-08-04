@@ -230,13 +230,17 @@ export default function BasicInfoEdit() {
       console.log("API response status:", response.status);
       console.log("API response ok:", response.ok);
 
+      // Read the response body once
+      const responseText = await response.text();
+      console.log("API raw response:", responseText);
+
       if (!response.ok) {
-        const errorBody = await response.text();
-        console.error("API error response:", errorBody);
-        throw new Error(`API error (${response.status}): ${errorBody}`);
+        console.error("API error response:", responseText);
+        throw new Error(`API error (${response.status}): ${responseText}`);
       }
 
-      const data = await response.json();
+      // Parse the JSON from the text we already read
+      const data = JSON.parse(responseText);
       console.log("API response data:", data);
       const generatedDescription = data.description;
 
