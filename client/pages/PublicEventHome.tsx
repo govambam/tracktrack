@@ -847,6 +847,7 @@ export default function PublicEventHome() {
   const [isPlayerModalOpen, setIsPlayerModalOpen] = useState(false);
   const [customRules, setCustomRules] = useState<any[]>([]);
   const [skillsContests, setSkillsContests] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (slug) {
@@ -857,6 +858,7 @@ export default function PublicEventHome() {
   const loadEventData = async () => {
     try {
       setLoading(true);
+      setError(null);
 
       // Load main event data
       const { data: event, error: eventError } = await supabase
@@ -868,6 +870,8 @@ export default function PublicEventHome() {
 
       if (eventError || !event) {
         console.error("Event not found:", eventError);
+        setError("Event not found or not published");
+        setLoading(false);
         return;
       }
 
