@@ -71,6 +71,7 @@ export default function PublicEvent() {
   const [courses, setCourses] = useState<EventCourse[]>([]);
   const [customization, setCustomization] = useState<EventCustomization>({});
   const [rules, setRules] = useState<EventRule[]>([]);
+  const [travelData, setTravelData] = useState<TravelData>({});
   const [activeTab, setActiveTab] = useState<TabType>('home');
   const [error, setError] = useState<string | null>(null);
 
