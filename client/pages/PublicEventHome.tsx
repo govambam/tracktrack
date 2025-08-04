@@ -507,9 +507,9 @@ export default function PublicEventHome() {
                   <div
                     key={player.id}
                     ref={elementRef}
-                    className={`group text-center transition-all duration-500 delay-${index * 50} ${
-                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                    }`}
+                    className={`group text-center transition-all duration-500 ${
+                      index < 8 ? `delay-${index * 50}` : 'delay-300'
+                    } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
                   >
                     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white">
                       <Avatar className="h-16 w-16 mx-auto mb-4 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300">
