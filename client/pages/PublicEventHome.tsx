@@ -259,40 +259,40 @@ export default function PublicEventHome() {
       </section>
 
       {/* Summary Cards Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="border-green-100">
-              <CardContent className="p-6 text-center">
-                <MapPin className="h-10 w-10 text-emerald-600 mx-auto mb-4" />
-                <h3 className="font-semibold text-green-900 mb-2">Location</h3>
-                <p className="text-green-600">{eventData.location}</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border-green-100">
-              <CardContent className="p-6 text-center">
-                <Users className="h-10 w-10 text-emerald-600 mx-auto mb-4" />
-                <h3 className="font-semibold text-green-900 mb-2">Players</h3>
-                <p className="text-green-600">{players.length} Registered</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border-green-100">
-              <CardContent className="p-6 text-center">
-                <Target className="h-10 w-10 text-emerald-600 mx-auto mb-4" />
-                <h3 className="font-semibold text-green-900 mb-2">Format</h3>
-                <p className="text-green-600">{getScoringFormat()}</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border-green-100">
-              <CardContent className="p-6 text-center">
-                <Calendar className="h-10 w-10 text-emerald-600 mx-auto mb-4" />
-                <h3 className="font-semibold text-green-900 mb-2">Duration</h3>
-                <p className="text-green-600">{getDuration(eventData.start_date, eventData.end_date)}</p>
-              </CardContent>
-            </Card>
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <MapPin className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="font-semibold text-green-900 mb-2">Location</h3>
+              <p className="text-gray-600">{eventData.location}</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="font-semibold text-green-900 mb-2">Players</h3>
+              <p className="text-gray-600">{players.length} Registered</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Target className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="font-semibold text-green-900 mb-2">Format</h3>
+              <p className="text-gray-600">{getScoringFormat()}</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Calendar className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="font-semibold text-green-900 mb-2">Duration</h3>
+              <p className="text-gray-600">{getDuration(eventData.start_date, eventData.end_date)}</p>
+            </div>
           </div>
         </div>
       </section>
