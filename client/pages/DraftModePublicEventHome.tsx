@@ -1078,12 +1078,58 @@ export default function DraftModePublicEventHome({
                         key={rule.id}
                         className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-slate-200/50"
                       >
-                        <h4 className="text-lg font-bold text-slate-900 mb-3">
-                          {rule.title}
-                        </h4>
-                        <p className="text-slate-600 leading-relaxed whitespace-pre-line">
-                          {rule.description}
-                        </p>
+                        {rule.rule_title && (
+                          <h4 className="text-lg font-bold text-slate-900 mb-3">
+                            {rule.rule_title}
+                          </h4>
+                        )}
+                        <div className="text-slate-600 leading-relaxed">
+                          <ReactMarkdown
+                            components={{
+                              h1: ({ children }) => (
+                                <h1 className="text-lg font-bold text-slate-800 mb-3">
+                                  {children}
+                                </h1>
+                              ),
+                              h2: ({ children }) => (
+                                <h2 className="text-base font-semibold text-slate-800 mb-2">
+                                  {children}
+                                </h2>
+                              ),
+                              h3: ({ children }) => (
+                                <h3 className="text-sm font-medium text-slate-800 mb-2">
+                                  {children}
+                                </h3>
+                              ),
+                              ul: ({ children }) => (
+                                <ul className="text-slate-600 ml-6 mb-3 list-disc">
+                                  {children}
+                                </ul>
+                              ),
+                              ol: ({ children }) => (
+                                <ol className="text-slate-600 ml-6 mb-3 list-decimal">
+                                  {children}
+                                </ol>
+                              ),
+                              li: ({ children }) => (
+                                <li className="mb-1">{children}</li>
+                              ),
+                              p: ({ children }) => (
+                                <p className="mb-3">{children}</p>
+                              ),
+                              strong: ({ children }) => (
+                                <strong className="font-semibold text-slate-800">
+                                  {children}
+                                </strong>
+                              ),
+                              em: ({ children }) => (
+                                <em className="italic">{children}</em>
+                              ),
+                            }}
+                          >
+                            {rule.rule_text || ""}
+                          </ReactMarkdown>
+                        </div>
                       </div>
                     ))}
                   </div>
