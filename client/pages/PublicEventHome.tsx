@@ -235,6 +235,79 @@ const AnimatedStatCard = ({ item, index }: { item: any; index: number }) => {
   );
 };
 
+// Player Modal Component
+const PlayerModal = ({ player, isOpen, onClose }: { player: any; isOpen: boolean; onClose: () => void }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  if (!isOpen || !player) return null;
+
+  const getPlayerInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div className="relative bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+        >
+          <X className="h-5 w-5 text-slate-600" />
+        </button>
+
+        {/* Content */}
+        <div className="p-8 text-center">
+          <Avatar className="h-24 w-24 mx-auto mb-6 ring-4 ring-green-200">
+            {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
+            <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-2xl font-bold">
+              {getPlayerInitials(player.full_name)}
+            </AvatarFallback>
+          </Avatar>
+
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">{player.full_name}</h2>
+
+          {(player.handicap !== null && player.handicap !== undefined) && (
+            <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-4 py-2 mb-6">
+              <span className="text-sm font-semibold text-slate-600">Handicap: {player.handicap}</span>
+            </div>
+          )}
+
+          {player.bio && player.bio.trim() && (
+            <div className="mt-6 text-left">
+              <h3 className="text-lg font-semibold text-slate-900 mb-3">About {player.full_name.split(' ')[0]}</h3>
+              <p className="text-slate-700 leading-relaxed whitespace-pre-line">
+                {player.bio}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Course Modal Component
 const CourseModal = ({ course, round, isOpen, onClose }: { course: any; round: any; isOpen: boolean; onClose: () => void }) => {
   useEffect(() => {
