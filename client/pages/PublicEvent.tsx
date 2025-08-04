@@ -360,7 +360,7 @@ export default function PublicEvent() {
           <LeaderboardTab />
         )}
         {activeTab === 'travel' && (
-          <TravelTab eventData={eventData} />
+          <TravelTab travelData={travelData} />
         )}
       </main>
 
