@@ -199,6 +199,13 @@ export default function BasicInfoEdit() {
 
     setGeneratingAI(true);
 
+    // Variables that might be needed for fallback
+    let event: any = null;
+    let courses: any[] = [];
+    let playerCount = 0;
+    let startDate = "";
+    let endDate = "";
+
     try {
       // Fetch event data including courses and player count
       console.log("Fetching event data for ID:", eventId);
@@ -214,19 +221,19 @@ export default function BasicInfoEdit() {
         throw new Error("Failed to fetch event data");
       }
 
-      const event = eventResult.data;
-      const courses = coursesResult.data || [];
-      const playerCount = playersResult.data?.length || 0;
+      event = eventResult.data;
+      courses = coursesResult.data || [];
+      playerCount = playersResult.data?.length || 0;
 
       console.log("Event data:", { event, courses, playerCount });
 
       // Format dates
-      const startDate = new Date(event.start_date).toLocaleDateString("en-US", {
+      startDate = new Date(event.start_date).toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric"
       });
-      const endDate = new Date(event.end_date).toLocaleDateString("en-US", {
+      endDate = new Date(event.end_date).toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric"
