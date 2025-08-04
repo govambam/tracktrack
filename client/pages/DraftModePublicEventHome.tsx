@@ -64,61 +64,98 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
   const loadEventData = async () => {
     try {
       setLoading(true);
+      console.log("Loading event data for eventId:", eventId);
 
       // Load main event data
+      console.log("Loading main event data...");
       const { data: event, error: eventError } = await supabase
         .from("events")
         .select("*")
         .eq("id", eventId)
         .single();
 
-      if (eventError) throw eventError;
+      if (eventError) {
+        console.error("Event loading error:", eventError.message, eventError);
+        throw new Error(`Failed to load event: ${eventError.message}`);
+      }
+
+      if (!event) {
+        throw new Error("Event not found");
+      }
+
+      console.log("Event loaded:", event);
       setEventData(event);
 
       // Load players
+      console.log("Loading players...");
       const { data: playersData, error: playersError } = await supabase
         .from("event_players")
         .select("*")
         .eq("event_id", eventId)
         .order("created_at");
 
-      if (playersError) throw playersError;
+      if (playersError) {
+        console.error("Players loading error:", playersError.message, playersError);
+        throw new Error(`Failed to load players: ${playersError.message}`);
+      }
+
+      console.log("Players loaded:", playersData?.length || 0, "players");
       setPlayers(playersData || []);
 
-      // Load rounds and courses
+      // Load rounds
+      console.log("Loading rounds...");
       const { data: roundsData, error: roundsError } = await supabase
         .from("event_rounds")
-        .select(`
-          *,
-          event_courses (*)
-        `)
+        .select("*")
         .eq("event_id", eventId)
         .order("round_number");
 
-      if (roundsError) throw roundsError;
+      if (roundsError) {
+        console.error("Rounds loading error:", roundsError.message, roundsError);
+        throw new Error(`Failed to load rounds: ${roundsError.message}`);
+      }
+
+      console.log("Rounds loaded:", roundsData?.length || 0, "rounds");
       setRounds(roundsData || []);
 
       // Load courses
+      console.log("Loading courses...");
       const { data: coursesData, error: coursesError } = await supabase
         .from("event_courses")
         .select("*")
         .eq("event_id", eventId);
 
-      if (coursesError) throw coursesError;
+      if (coursesError) {
+        console.error("Courses loading error:", coursesError.message, coursesError);
+        throw new Error(`Failed to load courses: ${coursesError.message}`);
+      }
+
+      console.log("Courses loaded:", coursesData?.length || 0, "courses");
       setCourses(coursesData || []);
 
-      // Load travel
+      // Load travel (optional)
+      console.log("Loading travel data...");
       const { data: travelData, error: travelError } = await supabase
         .from("event_travel")
         .select("*")
         .eq("event_id", eventId)
         .single();
 
-      if (travelError && travelError.code !== "PGRST116") throw travelError;
-      setTravel(travelData);
+      if (travelError && travelError.code !== "PGRST116") {
+        console.error("Travel loading error:", travelError.message, travelError);
+        // Don't throw for travel data as it's optional
+        console.warn("Travel data could not be loaded, continuing without it");
+      } else {
+        console.log("Travel data loaded:", !!travelData);
+        setTravel(travelData);
+      }
+
+      console.log("All event data loaded successfully");
 
     } catch (error) {
-      console.error("Error loading event data:", error);
+      console.error("Error loading event data:", error instanceof Error ? error.message : error);
+      console.error("Full error object:", error);
+      // You might want to set an error state here to show to the user
     } finally {
       setLoading(false);
     }
