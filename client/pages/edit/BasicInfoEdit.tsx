@@ -173,26 +173,7 @@ export default function BasicInfoEdit() {
     }
   };
 
-  const generateFallbackDescription = (event: any, courses: any[], playerCount: number, startDate: string, endDate: string) => {
-    const courseText = courses.length > 0
-      ? `at ${courses.map(c => c.name).join(", ")}`
-      : "at beautiful golf courses";
 
-    const playerText = playerCount > 0
-      ? `${playerCount} golfers`
-      : "golf enthusiasts";
-
-    const templates = [
-      `Join us for ${event.name}, an exciting golf experience in ${event.location} from ${startDate} to ${endDate}. ${playerText} will compete ${courseText} in what promises to be an unforgettable tournament. Whether you're a seasoned pro or weekend warrior, this event offers great competition and camaraderie!`,
-
-      `Get ready for ${event.name}! This premier golf event takes place in ${event.location} from ${startDate} to ${endDate}. Our ${playerText} will take on the challenge ${courseText}, creating memories that will last a lifetime. Come for the golf, stay for the friendships!`,
-
-      `${event.name} is set to be an incredible golf adventure in ${event.location}. From ${startDate} to ${endDate}, ${playerText} will enjoy world-class golf ${courseText}. This tournament combines competitive play with a welcoming atmosphere perfect for golfers of all skill levels.`
-    ];
-
-    // Randomly select a template
-    return templates[Math.floor(Math.random() * templates.length)];
-  };
 
   const generateAIDescription = async () => {
     if (!eventId) return;
