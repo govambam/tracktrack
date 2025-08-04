@@ -7,7 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Calendar, Plus, Settings, LogOut, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -23,7 +23,9 @@ export default function AppShell() {
   useEffect(() => {
     // Check for existing session
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
       if (session?.user) {
         setIsAuthenticated(true);
@@ -48,24 +50,24 @@ export default function AppShell() {
     checkAuth();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === 'SIGNED_OUT' || !session) {
-          setIsAuthenticated(false);
-          setUserEmail("");
-          localStorage.removeItem("isAuthenticated");
-          localStorage.removeItem("userEmail");
-          localStorage.removeItem("userId");
-          navigate("/");
-        } else if (session?.user) {
-          setIsAuthenticated(true);
-          setUserEmail(session.user.email || "");
-          localStorage.setItem("isAuthenticated", "true");
-          localStorage.setItem("userEmail", session.user.email || "");
-          localStorage.setItem("userId", session.user.id);
-        }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT" || !session) {
+        setIsAuthenticated(false);
+        setUserEmail("");
+        localStorage.removeItem("isAuthenticated");
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userId");
+        navigate("/");
+      } else if (session?.user) {
+        setIsAuthenticated(true);
+        setUserEmail(session.user.email || "");
+        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("userEmail", session.user.email || "");
+        localStorage.setItem("userId", session.user.id);
       }
-    );
+    });
 
     return () => subscription.unsubscribe();
   }, [navigate]);
@@ -111,7 +113,7 @@ export default function AppShell() {
                       "flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors",
                       isActive
                         ? "text-emerald-600 bg-emerald-50"
-                        : "text-green-700 hover:text-emerald-600 hover:bg-green-50"
+                        : "text-green-700 hover:text-emerald-600 hover:bg-green-50",
                     )}
                   >
                     <Icon className="h-4 w-4 mr-2" />
@@ -125,10 +127,15 @@ export default function AppShell() {
             <div className="flex items-center space-x-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Button
+                    variant="ghost"
+                    className="relative h-8 w-8 rounded-full"
+                  >
                     <Avatar className="h-8 w-8">
                       <AvatarFallback className="bg-emerald-600 text-white">
-                        {userEmail ? userEmail.substring(0, 2).toUpperCase() : 'U'}
+                        {userEmail
+                          ? userEmail.substring(0, 2).toUpperCase()
+                          : "U"}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -136,7 +143,7 @@ export default function AppShell() {
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <div className="flex flex-col space-y-1 p-2">
                     <p className="text-sm font-medium leading-none">
-                      {userEmail.split('@')[0] || 'User'}
+                      {userEmail.split("@")[0] || "User"}
                     </p>
                     <p className="text-xs leading-none text-muted-foreground">
                       {userEmail}
@@ -150,7 +157,10 @@ export default function AppShell() {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="cursor-pointer"
+                  >
                     <LogOut className="mr-2 h-4 w-4" />
                     Log out
                   </DropdownMenuItem>
@@ -164,7 +174,11 @@ export default function AppShell() {
                 className="md:hidden"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
-                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {mobileMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
               </Button>
             </div>
           </div>
@@ -185,7 +199,7 @@ export default function AppShell() {
                         "flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors",
                         isActive
                           ? "text-emerald-600 bg-emerald-50"
-                          : "text-green-700 hover:text-emerald-600 hover:bg-green-50"
+                          : "text-green-700 hover:text-emerald-600 hover:bg-green-50",
                       )}
                     >
                       <Icon className="h-5 w-5 mr-3" />

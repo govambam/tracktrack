@@ -293,7 +293,10 @@ export default function EventEdit() {
                 <span className="hidden lg:inline">Back to Events</span>
               </Button>
 
-              <Separator orientation="vertical" className="h-6 hidden lg:block" />
+              <Separator
+                orientation="vertical"
+                className="h-6 hidden lg:block"
+              />
 
               <div className="min-w-0 flex-1">
                 <h1 className="text-sm md:text-lg font-semibold text-green-900 truncate">
@@ -307,7 +310,10 @@ export default function EventEdit() {
                       {formatDate(eventData.end_date)}
                     </span>
                     <span className="lg:hidden">
-                      {new Date(eventData.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                      {new Date(eventData.start_date).toLocaleDateString(
+                        "en-US",
+                        { month: "short", day: "numeric" },
+                      )}
                     </span>
                   </div>
                   <div className="flex items-center">
@@ -327,7 +333,9 @@ export default function EventEdit() {
                         className="flex items-center text-blue-600 hover:text-blue-700 hover:underline"
                       >
                         <Globe className="h-4 w-4 mr-1" />
-                        <span className="truncate">tracktrack.com/events/{eventData.slug}</span>
+                        <span className="truncate">
+                          tracktrack.com/events/{eventData.slug}
+                        </span>
                       </button>
                     </div>
                   )}
@@ -464,7 +472,10 @@ export default function EventEdit() {
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="fixed inset-0 bg-black bg-opacity-50" onClick={() => setSidebarOpen(false)} />
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50"
+            onClick={() => setSidebarOpen(false)}
+          />
           <div className="fixed top-0 left-0 bottom-0 w-80 max-w-[80vw] bg-white shadow-xl">
             <div className="flex items-center justify-between p-4 border-b border-green-100">
               <h2 className="font-semibold text-green-900">Event Sections</h2>
