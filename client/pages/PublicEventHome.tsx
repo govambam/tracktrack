@@ -655,36 +655,9 @@ export default function PublicEventHome() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {prizes.map((prize, index) => {
-                const { isVisible, elementRef } = useScrollAnimation();
-                return (
-                  <div
-                    key={prize.id}
-                    ref={elementRef}
-                    className={`group transition-all duration-700 ${
-                      index === 0 ? 'delay-0' : index === 1 ? 'delay-100' : index === 2 ? 'delay-200' : 'delay-300'
-                    } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-                  >
-                    <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-300 group-hover:bg-white">
-                      <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <Trophy className="h-10 w-10 text-amber-600" />
-                      </div>
-
-                      <h3 className="text-xl font-bold text-slate-900 mb-4 capitalize group-hover:text-amber-700 transition-colors">
-                        {prize.category.replace('_', ' ')}
-                      </h3>
-
-                      {prize.amount > 0 && (
-                        <div className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent mb-4">
-                          ${prize.amount}
-                        </div>
-                      )}
-
-                      <p className="text-slate-600 font-medium">{prize.description}</p>
-                    </div>
-                  </div>
-                );
-              })}
+              {prizes.map((prize, index) => (
+                <AnimatedPrizeCard key={prize.id} prize={prize} index={index} />
+              ))}
             </div>
           </div>
         </section>
