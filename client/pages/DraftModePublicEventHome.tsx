@@ -268,6 +268,20 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6">
+          <div className="text-red-600 text-xl font-semibold mb-4">Error Loading Event</div>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <Button onClick={loadEventData} variant="outline">
+            Try Again
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   if (!eventData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
