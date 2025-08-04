@@ -292,12 +292,19 @@ export default function PlayersEdit() {
                           <div className="font-medium text-green-900">
                             {player.name || `Player ${index + 1}`}
                           </div>
-                          <div className="text-sm text-green-600">
-                            {player.email && (
-                              <span className="mr-3">{player.email}</span>
-                            )}
-                            {player.handicap !== undefined && (
-                              <span>HCP: {player.handicap}</span>
+                          <div className="text-sm text-green-600 space-y-1">
+                            <div>
+                              {player.email && (
+                                <span className="mr-3">{player.email}</span>
+                              )}
+                              {player.handicap !== undefined && (
+                                <span>HCP: {player.handicap}</span>
+                              )}
+                            </div>
+                            {player.bio && (
+                              <div className="text-xs text-green-500 italic max-w-md truncate">
+                                "{player.bio}"
+                              </div>
                             )}
                           </div>
                         </div>
