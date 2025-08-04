@@ -22,7 +22,15 @@ import {
   Home,
   BarChart3,
   X,
-  MoreHorizontal
+  MoreHorizontal,
+  FileText,
+  Info,
+  Flag,
+  Crosshair,
+  Zap,
+  Crown,
+  Medal,
+  CheckCircle
 } from "lucide-react";
 
 interface EventData {
