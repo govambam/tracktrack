@@ -507,7 +507,7 @@ export default function CoursesCustomization() {
                               : c
                           ));
                         }}
-                        onBlur={(e) => saveCourseField(course.id, 'description', e.target.value)}
+
                         placeholder="Describe the course layout, features, and difficulty..."
                         className="border-green-200 focus:border-emerald-500 bg-white"
                         rows={3}
