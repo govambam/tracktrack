@@ -104,11 +104,12 @@ export default function Index() {
           <p className="text-xl text-emerald-100 mb-8">
             Join thousands of golf enthusiasts who are already creating amazing experiences
           </p>
-          <Button asChild size="lg" className="bg-white text-emerald-600 hover:bg-gray-50 px-8 py-3 text-lg font-semibold">
-            <Link to="/signup">
-              Start Your First Event <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
+          <Link
+            to="/signup"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-emerald-600 hover:bg-gray-50 h-11 px-8 py-3 text-lg font-semibold cursor-pointer"
+          >
+            Start Your First Event <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
         </div>
       </div>
     </div>
