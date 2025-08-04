@@ -448,54 +448,48 @@ export default function PublicEventHome() {
 
       {/* Travel & Accommodation Section */}
       {travel && (travel.flight_info || travel.accommodations || travel.daily_schedule) && (
-        <section className="py-16 px-6 bg-green-50">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-green-900 mb-4">Travel & Accommodation</h2>
-              <p className="text-xl text-green-600">Everything you need to know</p>
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-900 mb-6">Travel & Accommodation</h2>
+              <p className="text-lg text-gray-600">Everything you need to have a smooth and comfortable trip</p>
             </div>
-            
-            <div className="space-y-6">
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               {travel.flight_info && (
-                <Card className="border-green-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center text-green-900">
-                      <Plane className="h-5 w-5 mr-2 text-emerald-600" />
-                      Getting There
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-green-700 whitespace-pre-line">{travel.flight_info}</p>
-                  </CardContent>
-                </Card>
+                <div>
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+                    <Plane className="h-6 w-6 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-green-900 mb-4">Getting There</h3>
+                  <div className="prose prose-gray max-w-none">
+                    <p className="text-gray-600 whitespace-pre-line leading-relaxed">{travel.flight_info}</p>
+                  </div>
+                </div>
               )}
-              
+
               {travel.accommodations && (
-                <Card className="border-green-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center text-green-900">
-                      <Building className="h-5 w-5 mr-2 text-emerald-600" />
-                      Accommodation
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-green-700 whitespace-pre-line">{travel.accommodations}</p>
-                  </CardContent>
-                </Card>
+                <div>
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+                    <Building className="h-6 w-6 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-green-900 mb-4">Accommodation</h3>
+                  <div className="prose prose-gray max-w-none">
+                    <p className="text-gray-600 whitespace-pre-line leading-relaxed">{travel.accommodations}</p>
+                  </div>
+                </div>
               )}
-              
+
               {travel.daily_schedule && (
-                <Card className="border-green-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center text-green-900">
-                      <Clock className="h-5 w-5 mr-2 text-emerald-600" />
-                      Daily Schedule
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-green-700 whitespace-pre-line">{travel.daily_schedule}</p>
-                  </CardContent>
-                </Card>
+                <div>
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+                    <Clock className="h-6 w-6 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-green-900 mb-4">Daily Schedule</h3>
+                  <div className="prose prose-gray max-w-none">
+                    <p className="text-gray-600 whitespace-pre-line leading-relaxed">{travel.daily_schedule}</p>
+                  </div>
+                </div>
               )}
             </div>
           </div>
