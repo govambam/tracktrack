@@ -344,6 +344,26 @@ export default function CoursesCustomization() {
     }
   };
 
+  const handleSaveAll = async () => {
+    if (!eventId) return;
+
+    try {
+      // Save courses enabled setting
+      await saveCoursesEnabled(coursesEnabled);
+
+      toast({
+        title: "Settings Saved",
+        description: "Course customization settings have been saved successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Save Failed",
+        description: "Failed to save course settings",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
