@@ -353,27 +353,31 @@ export default function PublicLeaderboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50/30">
-      {/* Header */}
-      <div className="bg-white/90 backdrop-blur-sm border-b border-slate-200/50 sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-6 py-6">
+      {/* Header Navigation */}
+      <nav className="bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => window.history.back()}
-                className="text-slate-600 hover:text-slate-900"
-              >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Event
-              </Button>
-            </div>
-            <Badge className="bg-green-600 text-white">
+            <div className="font-bold text-slate-900">
               Tournament Leaderboard
-            </Badge>
+            </div>
+            <div className="hidden md:flex items-center space-x-8">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className={`text-sm font-medium transition-colors ${
+                    item.name === 'Leaderboard'
+                      ? 'text-green-600 font-semibold'
+                      : 'text-slate-600 hover:text-green-600'
+                  }`}
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </nav>
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-6 py-12">
