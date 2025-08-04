@@ -639,7 +639,7 @@ export default function PublicEventHome() {
               </h2>
 
               <p className="text-xl sm:text-2xl text-slate-600 max-w-4xl mx-auto font-light leading-relaxed">
-                {courses.length} beautiful {courses.length === 1 ? 'course' : 'courses'} over {getDuration(eventData.start_date, eventData.end_date).toLowerCase()}
+                {rounds.reduce((total, round) => total + (round.holes || 18), 0)} world class holes played over {getDuration(eventData.start_date, eventData.end_date).toLowerCase()}
               </p>
             </div>
 
