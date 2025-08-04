@@ -981,7 +981,8 @@ export default function PublicEventHome() {
         setCustomization(customizationResult.data || null);
       if (!rulesResult.error) setCustomRules(rulesResult.data || []);
       if (!contestsResult.error) setSkillsContests(contestsResult.data || []);
-      if (!stablefordResult.error) setStablefordScoring(stablefordResult.data || null);
+      if (!stablefordResult.error)
+        setStablefordScoring(stablefordResult.data || null);
 
       // Log any errors for debugging
       if (playersResult.error)
@@ -1122,7 +1123,10 @@ export default function PublicEventHome() {
         score: "Double Bogey+",
         points: scoring.double_bogey,
         description: "2+ over par",
-        detail: scoring.double_bogey > 0 ? `${scoring.double_bogey} points for scores of double bogey or worse.` : "No points awarded for scores of double bogey or worse.",
+        detail:
+          scoring.double_bogey > 0
+            ? `${scoring.double_bogey} points for scores of double bogey or worse.`
+            : "No points awarded for scores of double bogey or worse.",
         color: "from-red-500 to-red-600",
         bgColor: "bg-red-50",
         textColor: "text-red-900",

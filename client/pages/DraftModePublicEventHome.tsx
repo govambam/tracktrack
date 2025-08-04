@@ -526,7 +526,10 @@ export default function DraftModePublicEventHome({
         score: "Double+",
         points: scoring.double_bogey,
         description: "2+ over par",
-        detail: scoring.double_bogey > 0 ? `${scoring.double_bogey} points for scores of double bogey or worse.` : "Reset and focus on the next hole.",
+        detail:
+          scoring.double_bogey > 0
+            ? `${scoring.double_bogey} points for scores of double bogey or worse.`
+            : "Reset and focus on the next hole.",
         color: "from-slate-500 to-gray-500",
         bgColor: "bg-slate-50",
         textColor: "text-slate-900",

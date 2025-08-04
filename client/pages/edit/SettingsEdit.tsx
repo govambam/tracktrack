@@ -636,18 +636,17 @@ export default function SettingsEdit() {
                   Are you absolutely sure?
                 </AlertDialogTitle>
                 <AlertDialogDescription className="space-y-3">
-                  This action cannot be undone. This will permanently delete
-                  the event <span className="font-semibold">"{eventName}"</span>{" "}
-                  and remove all associated data from our servers.
+                  This action cannot be undone. This will permanently delete the
+                  event <span className="font-semibold">"{eventName}"</span> and
+                  remove all associated data from our servers.
                 </AlertDialogDescription>
                 <div className="space-y-2">
                   <Label
                     htmlFor="deleteConfirm"
                     className="text-sm font-medium"
                   >
-                    Please type{" "}
-                    <span className="font-bold">{eventName}</span> to
-                    confirm:
+                    Please type <span className="font-bold">{eventName}</span>{" "}
+                    to confirm:
                   </Label>
                   <Input
                     id="deleteConfirm"
