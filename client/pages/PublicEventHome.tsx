@@ -227,8 +227,126 @@ const AnimatedStatCard = ({ item, index }: { item: any; index: number }) => {
   );
 };
 
-const AnimatedCourseCard = ({ course, round, index }: { course: any; round: any; index: number }) => {
+// Course Modal Component
+const CourseModal = ({ course, round, isOpen, onClose }: { course: any; round: any; isOpen: boolean; onClose: () => void }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div className="relative bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+        >
+          <X className="h-5 w-5 text-slate-600" />
+        </button>
+
+        {/* Image */}
+        {course.image_url && (
+          <div className="h-64 overflow-hidden rounded-t-3xl">
+            <img
+              src={course.image_url}
+              alt={course.name}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+
+        {/* Content */}
+        <div className="p-8">
+          <div className="flex items-center space-x-2 mb-4">
+            <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+              Round {round?.round_number || 1}
+            </Badge>
+          </div>
+
+          <h2 className="text-3xl font-bold text-slate-900 mb-6">{course.name}</h2>
+
+          {course.par && course.yardage && (
+            <div className="flex items-center space-x-6 mb-6">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span className="font-semibold text-slate-700">Par {course.par}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span className="font-semibold text-slate-700">{course.yardage?.toLocaleString()} yards</span>
+              </div>
+            </div>
+          )}
+
+          {course.description && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-slate-900 mb-3">About This Course</h3>
+              <p className="text-slate-600 leading-relaxed whitespace-pre-line">
+                {course.description}
+              </p>
+            </div>
+          )}
+
+          {(round?.tee_time || round?.round_date) && (
+            <div className="space-y-3 pt-6 border-t border-slate-200">
+              <h3 className="text-lg font-semibold text-slate-900">Round Details</h3>
+              {round?.round_date && (
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-5 w-5 text-slate-400" />
+                  <span className="text-slate-600">
+                    {new Date(round.round_date).toLocaleDateString('en-US', {
+                      weekday: 'long',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </span>
+                </div>
+              )}
+              {round?.tee_time && (
+                <div className="flex items-center space-x-3">
+                  <Clock className="h-5 w-5 text-slate-400" />
+                  <span className="text-slate-600">
+                    Tee Time: {round.tee_time}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any; round: any; index: number; onOpenModal: () => void }) => {
   const { isVisible, elementRef } = useScrollAnimation();
+  const [showSeeMore, setShowSeeMore] = useState(false);
+
+  // Function to truncate text to specified number of lines
+  const truncateToLines = (text: string, lines: number) => {
+    const words = text.split(' ');
+    const maxWords = lines * 12; // Approximate words per line
+    return words.length > maxWords ? words.slice(0, maxWords).join(' ') + '...' : text;
+  };
+
+  const hasDescription = course.description && course.description.trim();
+  const shouldShowSeeMore = hasDescription && course.description.split(' ').length > 48; // ~4 lines
 
   return (
     <div
@@ -236,8 +354,10 @@ const AnimatedCourseCard = ({ course, round, index }: { course: any; round: any;
       className={`group transition-all duration-700 ${
         index === 0 ? 'delay-0' : index === 1 ? 'delay-150' : index === 2 ? 'delay-300' : 'delay-450'
       } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+      onMouseEnter={() => setShowSeeMore(true)}
+      onMouseLeave={() => setShowSeeMore(false)}
     >
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-500">
+      <div className={`bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-500 ${hasDescription ? 'min-h-[500px]' : ''}`}>
         {course.image_url && (
           <div className="h-56 overflow-hidden">
             <img
@@ -248,9 +368,9 @@ const AnimatedCourseCard = ({ course, round, index }: { course: any; round: any;
           </div>
         )}
 
-        <div className="p-8">
+        <div className="p-8 relative">
           <div className="flex items-start justify-between mb-6">
-            <div>
+            <div className="flex-1">
               <div className="flex items-center space-x-2 mb-3">
                 <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
                   Round {index + 1}
@@ -272,6 +392,23 @@ const AnimatedCourseCard = ({ course, round, index }: { course: any; round: any;
                 <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                 <span className="font-semibold text-slate-700">{course.yardage?.toLocaleString()} yards</span>
               </div>
+            </div>
+          )}
+
+          {hasDescription && (
+            <div className="mb-6">
+              <p className="text-slate-600 leading-relaxed line-clamp-4">
+                {shouldShowSeeMore ? truncateToLines(course.description, 4) : course.description}
+              </p>
+              {shouldShowSeeMore && showSeeMore && (
+                <button
+                  onClick={onOpenModal}
+                  className="mt-3 text-green-600 hover:text-green-700 font-medium text-sm flex items-center space-x-1 transition-colors"
+                >
+                  <span>See more</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </button>
+              )}
             </div>
           )}
 
