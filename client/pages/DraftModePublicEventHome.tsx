@@ -57,8 +57,12 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
   const [tempTravelData, setTempTravelData] = useState("");
 
   useEffect(() => {
+    console.log("DraftModePublicEventHome mounted with eventId:", eventId);
     if (eventId) {
       loadEventData();
+    } else {
+      setError("No event ID provided");
+      setLoading(false);
     }
   }, [eventId]);
 
