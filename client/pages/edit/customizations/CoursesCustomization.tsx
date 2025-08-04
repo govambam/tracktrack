@@ -405,6 +405,156 @@ export default function CoursesCustomization() {
     }
   };
 
+  const generateCourseWithAI = async (course: EventCourse) => {
+    setGeneratingAI(course.id);
+
+    try {
+      console.log(`Generating AI data for course: ${course.name}`);
+
+      // Get event data for location and dates
+      const { data: eventData, error: eventError } = await supabase
+        .from("events")
+        .select("location, start_date, end_date")
+        .eq("id", eventId)
+        .single();
+
+      if (eventError || !eventData) {
+        console.error("Failed to fetch event data:", eventError);
+        throw new Error("Failed to fetch event data");
+      }
+
+      const startDate = new Date(eventData.start_date).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+      const endDate = new Date(eventData.end_date).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+
+      const prompt = `Write a polished 2-3 sentence description of the golf course "${course.name}" located in ${eventData.location}.
+Also provide:
+- The par score (estimate if unknown).
+- The total yardage (estimate if unknown).
+- A brief weather note for the event dates (${startDate} to ${endDate}).
+
+Return your response as a JSON object with these fields:
+{
+  "description": "...",
+  "par": "...",
+  "yardage": "...",
+  "weather": "..."
+}`;
+
+      console.log("AI prompt:", prompt);
+
+      // Make API call with XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+      const responsePromise = new Promise((resolve, reject) => {
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            console.log(`Course AI XHR Response status:`, xhr.status);
+            console.log(`Course AI XHR Response text:`, xhr.responseText);
+
+            if (xhr.status >= 200 && xhr.status < 300) {
+              try {
+                const data = JSON.parse(xhr.responseText);
+                resolve(data);
+              } catch (parseError) {
+                console.error(`Course AI JSON parse error:`, parseError);
+                reject(new Error(`Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`));
+              }
+            } else {
+              try {
+                const errorData = JSON.parse(xhr.responseText);
+                reject(new Error(`Server error (${xhr.status}): ${errorData.error || errorData.details || 'Unknown error'}`));
+              } catch {
+                reject(new Error(`HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`));
+              }
+            }
+          }
+        };
+
+        xhr.onerror = function() {
+          console.error(`Course AI XHR network error`);
+          reject(new Error("Network error occurred"));
+        };
+
+        xhr.ontimeout = function() {
+          console.error(`Course AI XHR timeout`);
+          reject(new Error("Request timed out"));
+        };
+      });
+
+      xhr.open("POST", "/api/generate-description", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.timeout = 30000; // 30 second timeout
+      xhr.send(JSON.stringify({ prompt }));
+
+      const responseData = await responsePromise;
+      console.log(`Course AI response data:`, responseData);
+
+      const aiResponse = responseData?.description;
+
+      if (!aiResponse) {
+        throw new Error("No AI response received from server");
+      }
+
+      // Parse the JSON response from AI
+      let courseData;
+      try {
+        courseData = JSON.parse(aiResponse);
+      } catch (parseError) {
+        console.error("Failed to parse AI JSON response:", parseError);
+        throw new Error("AI returned invalid JSON format");
+      }
+
+      // Update the course with AI-generated data
+      setCourses(courses.map(c =>
+        c.id === course.id ? {
+          ...c,
+          description: courseData.description || c.description,
+          par: courseData.par ? parseInt(courseData.par) : c.par,
+          yardage: courseData.yardage ? parseInt(courseData.yardage) : c.yardage,
+          weather_note: courseData.weather || c.weather_note
+        } : c
+      ));
+
+      toast({
+        title: "Course Data Generated!",
+        description: `AI has generated data for ${course.name}.`,
+      });
+
+    } catch (error) {
+      console.error(`Error generating AI data for course ${course.name}:`, error);
+
+      let userMessage = "There was an issue generating course data. Please try again later.";
+
+      if (error instanceof Error) {
+        const msg = error.message.toLowerCase();
+        if (msg.includes("network") || msg.includes("fetch")) {
+          userMessage = "Network error. Please check your connection and try again.";
+        } else if (msg.includes("401") || msg.includes("unauthorized")) {
+          userMessage = "API authorization failed. Please contact support.";
+        } else if (msg.includes("server error")) {
+          userMessage = error.message;
+        } else if (msg.includes("json")) {
+          userMessage = "AI response format error. Please try again.";
+        }
+      }
+
+      toast({
+        title: "Generation Failed",
+        description: userMessage,
+        variant: "destructive"
+      });
+    } finally {
+      setGeneratingAI(null);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
