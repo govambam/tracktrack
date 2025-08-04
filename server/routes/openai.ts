@@ -1,15 +1,21 @@
 import { Request, Response } from 'express';
 
 export const generateDescription = async (req: Request, res: Response) => {
+  console.log('=== Generate Description Endpoint Called ===');
+  console.log('Request body:', req.body);
+
   try {
     const { prompt } = req.body;
-    
+
     if (!prompt) {
+      console.log('No prompt provided');
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
     const apiKey = process.env.OPENAI_API_KEY || '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';
-    
+
+    console.log('Using API key:', apiKey ? `${apiKey.substring(0, 10)}...` : 'No key');
+    console.log('Prompt length:', prompt.length);
     console.log('Making OpenAI API call');
     
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
