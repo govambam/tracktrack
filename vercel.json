@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/generate-description.ts": {
-      "runtime": "@vercel/node"
-    }
-  },
   "rewrites": [
     {
       "source": "/((?!api|assets|favicon|robots|sitemap|.*\\.).*)",
