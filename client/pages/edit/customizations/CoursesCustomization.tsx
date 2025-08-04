@@ -884,15 +884,17 @@ Return your response as a JSON object with these fields:
 
       {/* Image Search Modal */}
       <Dialog open={imageSearchModal.isOpen} onOpenChange={closeImageSearch}>
-        <DialogContent className="max-w-4xl h-[80vh]">
+        <DialogContent className="max-w-4xl w-[95vw] h-[90vh] max-h-[600px]">
           <DialogHeader>
-            <DialogTitle className="flex items-center justify-between">
-              <span>Search Images for {imageSearchModal.courseName}</span>
+            <DialogTitle className="flex items-center justify-between pr-6">
+              <span className="text-sm md:text-base truncate">
+                Search Images for {imageSearchModal.courseName}
+              </span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={closeImageSearch}
-                className="h-6 w-6 p-0"
+                className="h-6 w-6 p-0 flex-shrink-0"
               >
                 <X className="h-4 w-4" />
               </Button>
