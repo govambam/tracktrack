@@ -356,7 +356,7 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
         type: contest.contest_type,
         emoji: contest.contest_type === "closest_to_pin" ? "🎯" : "🏌️‍♂️",
       }));
-      
+
       return {
         roundNumber: index + 1,
         courseName: round.course_name,
@@ -364,6 +364,120 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
       };
     }).filter((round) => round.contests.length > 0);
   };
+
+  // Helper functions for contests by type (needed for Contest Rules section)
+  const getContestsByType = (type: string) => {
+    return skillsContests
+      .filter((contest) => contest.contest_type === type)
+      .reduce(
+        (acc, contest) => {
+          const round = rounds.find((r) => r.id === contest.round_id);
+          if (round) {
+            const existing = acc.find(
+              (item) => item.roundName === round.course_name,
+            );
+            if (existing) {
+              existing.holes.push(contest.hole);
+            } else {
+              acc.push({
+                roundName: round.course_name,
+                holes: [contest.hole],
+              });
+            }
+          }
+          return acc;
+        },
+        [] as { roundName: string; holes: number[] }[],
+      );
+  };
+
+  const getScoringFormat = () => {
+    const formats = [...new Set(rounds.map((r) => r.scoring_type))];
+    return (
+      formats
+        .map((format) => {
+          switch (format) {
+            case "stroke_play":
+              return "Stroke Play";
+            case "stableford":
+              return "Stableford";
+            default:
+              return format;
+          }
+        })
+        .join(", ") || "Stroke Play"
+    );
+  };
+
+  // Enhanced Stableford points system (from PublicEventHome)
+  const enhancedStablefordPoints = [
+    {
+      score: "Albatross",
+      points: 20,
+      description: "3 under par",
+      detail: "Legendary! The rarest score in golf deserves the highest reward.",
+      color: "from-purple-500 to-purple-600",
+      bgColor: "bg-purple-50",
+      textColor: "text-purple-900",
+      iconColor: "text-purple-600",
+      icon: Crown,
+    },
+    {
+      score: "Eagle",
+      points: 8,
+      description: "2 under par",
+      detail: "Outstanding performance that separates the field.",
+      color: "from-yellow-500 to-orange-500",
+      bgColor: "bg-yellow-50",
+      textColor: "text-yellow-900",
+      iconColor: "text-yellow-600",
+      icon: Medal,
+    },
+    {
+      score: "Birdie",
+      points: 3,
+      description: "1 under par",
+      detail: "Solid golf rewarded with bonus points.",
+      color: "from-green-500 to-emerald-500",
+      bgColor: "bg-green-50",
+      textColor: "text-green-900",
+      iconColor: "text-green-600",
+      icon: CheckCircle,
+    },
+    {
+      score: "Par",
+      points: 2,
+      description: "On target",
+      detail: "Right where you want to be for consistent scoring.",
+      color: "from-blue-500 to-indigo-500",
+      bgColor: "bg-blue-50",
+      textColor: "text-blue-900",
+      iconColor: "text-blue-600",
+      icon: Target,
+    },
+    {
+      score: "Bogey",
+      points: 1,
+      description: "1 over par",
+      detail: "Still in the game with room for recovery.",
+      color: "from-orange-500 to-red-500",
+      bgColor: "bg-orange-50",
+      textColor: "text-orange-900",
+      iconColor: "text-orange-600",
+      icon: Flag,
+    },
+    {
+      score: "Double+",
+      points: 0,
+      description: "2+ over par",
+      detail: "Reset and focus on the next hole.",
+      color: "from-slate-500 to-gray-500",
+      bgColor: "bg-slate-50",
+      textColor: "text-slate-900",
+      iconColor: "text-slate-600",
+      icon: X,
+    },
+  ];
 
   const closestToPinPrize = prizes.find((p) => p.category === "closest_to_pin")?.amount || 0;
   const longestDrivePrize = prizes.find((p) => p.category === "longest_drive")?.amount || 0;
