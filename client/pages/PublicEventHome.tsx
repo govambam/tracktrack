@@ -348,9 +348,11 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
       const element = textRef.current;
       const lineHeight = parseInt(getComputedStyle(element).lineHeight) || 24;
       const maxHeight = lineHeight * 4; // 4 lines
-      setShouldShowSeeMore(element.scrollHeight > maxHeight);
+      const needsTruncation = element.scrollHeight > maxHeight;
+      setShouldShowSeeMore(needsTruncation);
+      console.log(`Course ${course.name}: scrollHeight=${element.scrollHeight}, maxHeight=${maxHeight}, needsTruncation=${needsTruncation}`);
     }
-  }, [hasDescription, course.description]);
+  }, [hasDescription, course.description, course.name]);
 
   return (
     <div
