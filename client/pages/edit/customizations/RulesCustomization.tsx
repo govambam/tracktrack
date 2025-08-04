@@ -288,7 +288,7 @@ export default function RulesCustomization() {
                               : r
                           ));
                         }}
-                        onBlur={(e) => updateRule(rule.id, e.target.value)}
+
                         placeholder={`Rule ${index + 1}...`}
                         className="border-green-200 focus:border-emerald-500 bg-white"
                         rows={2}
