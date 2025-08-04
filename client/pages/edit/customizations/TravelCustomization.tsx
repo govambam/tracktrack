@@ -305,7 +305,6 @@ export default function TravelCustomization() {
                     placeholder="Nearest airports, flight recommendations, shuttle services, rental car information, etc."
                     className="border-green-200 focus:border-emerald-500 bg-white"
                     rows={4}
-
                   />
                 </div>
                 <div className="space-y-2">
@@ -323,7 +322,6 @@ export default function TravelCustomization() {
                     placeholder="Hotel recommendations, booking links, group rates, lodging information, etc."
                     className="border-green-200 focus:border-emerald-500 bg-white"
                     rows={4}
-
                   />
                 </div>
               </div>
@@ -343,7 +341,6 @@ export default function TravelCustomization() {
                     placeholder="Daily itinerary, meal plans, activities, check-in times, etc."
                     className="border-green-200 focus:border-emerald-500 bg-white"
                     rows={4}
-
                   />
                 </div>
               </div>

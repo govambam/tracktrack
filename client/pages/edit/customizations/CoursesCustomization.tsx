@@ -423,15 +423,18 @@ export default function CoursesCustomization() {
         throw new Error("Failed to fetch event data");
       }
 
-      const startDate = new Date(eventData.start_date).toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric"
-      });
+      const startDate = new Date(eventData.start_date).toLocaleDateString(
+        "en-US",
+        {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        },
+      );
       const endDate = new Date(eventData.end_date).toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
-        year: "numeric"
+        year: "numeric",
       });
 
       const prompt = `Write a polished 2-3 sentence description of the golf course "${course.name}" located in ${eventData.location}.
@@ -453,7 +456,7 @@ Return your response as a JSON object with these fields:
       // Make API call with XMLHttpRequest
       const xhr = new XMLHttpRequest();
       const responsePromise = new Promise((resolve, reject) => {
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
           if (xhr.readyState === 4) {
             console.log(`Course AI XHR Response status:`, xhr.status);
             console.log(`Course AI XHR Response text:`, xhr.responseText);
@@ -464,25 +467,37 @@ Return your response as a JSON object with these fields:
                 resolve(data);
               } catch (parseError) {
                 console.error(`Course AI JSON parse error:`, parseError);
-                reject(new Error(`Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`));
+                reject(
+                  new Error(
+                    `Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`,
+                  ),
+                );
               }
             } else {
               try {
                 const errorData = JSON.parse(xhr.responseText);
-                reject(new Error(`Server error (${xhr.status}): ${errorData.error || errorData.details || 'Unknown error'}`));
+                reject(
+                  new Error(
+                    `Server error (${xhr.status}): ${errorData.error || errorData.details || "Unknown error"}`,
+                  ),
+                );
               } catch {
-                reject(new Error(`HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`));
+                reject(
+                  new Error(
+                    `HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`,
+                  ),
+                );
               }
             }
           }
         };
 
-        xhr.onerror = function() {
+        xhr.onerror = function () {
           console.error(`Course AI XHR network error`);
           reject(new Error("Network error occurred"));
         };
 
-        xhr.ontimeout = function() {
+        xhr.ontimeout = function () {
           console.error(`Course AI XHR timeout`);
           reject(new Error("Request timed out"));
         };
@@ -512,30 +527,40 @@ Return your response as a JSON object with these fields:
       }
 
       // Update the course with AI-generated data
-      setCourses(courses.map(c =>
-        c.id === course.id ? {
-          ...c,
-          description: courseData.description || c.description,
-          par: courseData.par ? parseInt(courseData.par) : c.par,
-          yardage: courseData.yardage ? parseInt(courseData.yardage) : c.yardage,
-          weather_note: courseData.weather || c.weather_note
-        } : c
-      ));
+      setCourses(
+        courses.map((c) =>
+          c.id === course.id
+            ? {
+                ...c,
+                description: courseData.description || c.description,
+                par: courseData.par ? parseInt(courseData.par) : c.par,
+                yardage: courseData.yardage
+                  ? parseInt(courseData.yardage)
+                  : c.yardage,
+                weather_note: courseData.weather || c.weather_note,
+              }
+            : c,
+        ),
+      );
 
       toast({
         title: "Course Data Generated!",
         description: `AI has generated data for ${course.name}.`,
       });
-
     } catch (error) {
-      console.error(`Error generating AI data for course ${course.name}:`, error);
+      console.error(
+        `Error generating AI data for course ${course.name}:`,
+        error,
+      );
 
-      let userMessage = "There was an issue generating course data. Please try again later.";
+      let userMessage =
+        "There was an issue generating course data. Please try again later.";
 
       if (error instanceof Error) {
         const msg = error.message.toLowerCase();
         if (msg.includes("network") || msg.includes("fetch")) {
-          userMessage = "Network error. Please check your connection and try again.";
+          userMessage =
+            "Network error. Please check your connection and try again.";
         } else if (msg.includes("401") || msg.includes("unauthorized")) {
           userMessage = "API authorization failed. Please contact support.";
         } else if (msg.includes("server error")) {
@@ -548,7 +573,7 @@ Return your response as a JSON object with these fields:
       toast({
         title: "Generation Failed",
         description: userMessage,
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setGeneratingAI(null);
@@ -657,7 +682,6 @@ Return your response as a JSON object with these fields:
                           }}
                           placeholder="https://example.com/course-image.jpg"
                           className="border-green-200 focus:border-emerald-500 bg-white"
-
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-2">
@@ -683,7 +707,6 @@ Return your response as a JSON object with these fields:
                             }}
                             placeholder="6800"
                             className="border-green-200 focus:border-emerald-500 bg-white"
-  
                           />
                         </div>
                         <div className="space-y-2">
@@ -708,7 +731,6 @@ Return your response as a JSON object with these fields:
                             }}
                             placeholder="72"
                             className="border-green-200 focus:border-emerald-500 bg-white"
-  
                           />
                         </div>
                       </div>
@@ -731,7 +753,6 @@ Return your response as a JSON object with these fields:
                         placeholder="Describe the course layout, features, and difficulty..."
                         className="border-green-200 focus:border-emerald-500 bg-white"
                         rows={3}
-
                       />
                     </div>
                     <div className="space-y-2">
@@ -751,7 +772,6 @@ Return your response as a JSON object with these fields:
                         }}
                         placeholder="Weather conditions, seasonal notes, etc."
                         className="border-green-200 focus:border-emerald-500 bg-white"
-
                       />
                     </div>
 
@@ -773,7 +793,10 @@ Return your response as a JSON object with these fields:
                         ) : (
                           <>
                             <Sparkles className="h-4 w-4 mr-2" />
-                            {course.description || course.par || course.yardage || course.weather_note
+                            {course.description ||
+                            course.par ||
+                            course.yardage ||
+                            course.weather_note
                               ? "Polish with AI"
                               : "Generate with AI"}
                           </>

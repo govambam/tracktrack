@@ -816,15 +816,41 @@ const AnimatedTravelCard = ({ item, index }: { item: any; index: number }) => {
         <div className="prose prose-slate max-w-none">
           <ReactMarkdown
             components={{
-              h1: ({children}) => <h1 className="text-xl font-bold text-slate-900 mb-3">{children}</h1>,
-              h2: ({children}) => <h2 className="text-lg font-semibold text-slate-900 mb-2">{children}</h2>,
-              h3: ({children}) => <h3 className="text-base font-medium text-slate-900 mb-2">{children}</h3>,
-              p: ({children}) => <p className="text-slate-600 leading-relaxed mb-2">{children}</p>,
-              ul: ({children}) => <ul className="list-disc ml-4 mb-2 text-slate-600">{children}</ul>,
-              ol: ({children}) => <ol className="list-decimal ml-4 mb-2 text-slate-600">{children}</ol>,
-              li: ({children}) => <li className="mb-1">{children}</li>,
-              strong: ({children}) => <strong className="font-semibold">{children}</strong>,
-              em: ({children}) => <em className="italic">{children}</em>,
+              h1: ({ children }) => (
+                <h1 className="text-xl font-bold text-slate-900 mb-3">
+                  {children}
+                </h1>
+              ),
+              h2: ({ children }) => (
+                <h2 className="text-lg font-semibold text-slate-900 mb-2">
+                  {children}
+                </h2>
+              ),
+              h3: ({ children }) => (
+                <h3 className="text-base font-medium text-slate-900 mb-2">
+                  {children}
+                </h3>
+              ),
+              p: ({ children }) => (
+                <p className="text-slate-600 leading-relaxed mb-2">
+                  {children}
+                </p>
+              ),
+              ul: ({ children }) => (
+                <ul className="list-disc ml-4 mb-2 text-slate-600">
+                  {children}
+                </ul>
+              ),
+              ol: ({ children }) => (
+                <ol className="list-decimal ml-4 mb-2 text-slate-600">
+                  {children}
+                </ol>
+              ),
+              li: ({ children }) => <li className="mb-1">{children}</li>,
+              strong: ({ children }) => (
+                <strong className="font-semibold">{children}</strong>
+              ),
+              em: ({ children }) => <em className="italic">{children}</em>,
             }}
           >
             {item.info}
@@ -1112,20 +1138,24 @@ export default function PublicEventHome() {
 
   // Get contests organized by round
   const getContestsByRound = () => {
-    return rounds.map((round, index) => {
-      const roundContests = skillsContests.filter((contest) => contest.round_id === round.id);
-      const contests = roundContests.map((contest) => ({
-        hole: contest.hole,
-        type: contest.contest_type,
-        emoji: contest.contest_type === 'closest_to_pin' ? '🎯' : '🏌️‍♂️'
-      }));
+    return rounds
+      .map((round, index) => {
+        const roundContests = skillsContests.filter(
+          (contest) => contest.round_id === round.id,
+        );
+        const contests = roundContests.map((contest) => ({
+          hole: contest.hole,
+          type: contest.contest_type,
+          emoji: contest.contest_type === "closest_to_pin" ? "🎯" : "🏌️‍♂️",
+        }));
 
-      return {
-        roundNumber: index + 1,
-        courseName: round.course_name,
-        contests: contests.sort((a, b) => a.hole - b.hole)
-      };
-    }).filter(round => round.contests.length > 0);
+        return {
+          roundNumber: index + 1,
+          courseName: round.course_name,
+          contests: contests.sort((a, b) => a.hole - b.hole),
+        };
+      })
+      .filter((round) => round.contests.length > 0);
   };
 
   const closestToPinGroups = getContestsByType("closest_to_pin");
@@ -1626,7 +1656,10 @@ export default function PublicEventHome() {
 
                 <div className="space-y-6">
                   {getContestsByRound().map((round, index) => (
-                    <div key={index} className="bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm">
+                    <div
+                      key={index}
+                      className="bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"
+                    >
                       <h4 className="text-xl font-bold text-indigo-900 mb-4">
                         Round {round.roundNumber} ({round.courseName})
                       </h4>
@@ -1636,7 +1669,15 @@ export default function PublicEventHome() {
                             key={contestIndex}
                             className="flex items-center space-x-2 bg-indigo-50 rounded-lg px-3 py-2"
                           >
-                            <span className="text-lg" role="img" aria-label={contest.type === 'closest_to_pin' ? 'target' : 'golf swing'}>
+                            <span
+                              className="text-lg"
+                              role="img"
+                              aria-label={
+                                contest.type === "closest_to_pin"
+                                  ? "target"
+                                  : "golf swing"
+                              }
+                            >
                               {contest.emoji}
                             </span>
                             <span className="font-medium text-indigo-900 text-sm">
@@ -1651,11 +1692,19 @@ export default function PublicEventHome() {
                   {/* Prize Information */}
                   {(closestToPinPrize > 0 || longestDrivePrize > 0) && (
                     <div className="bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm">
-                      <h4 className="text-lg font-semibold text-indigo-900 mb-4">Prize Information</h4>
+                      <h4 className="text-lg font-semibold text-indigo-900 mb-4">
+                        Prize Information
+                      </h4>
                       <div className="flex flex-wrap gap-4">
                         {closestToPinPrize > 0 && (
                           <div className="flex items-center space-x-2">
-                            <span className="text-lg" role="img" aria-label="target">🎯</span>
+                            <span
+                              className="text-lg"
+                              role="img"
+                              aria-label="target"
+                            >
+                              🎯
+                            </span>
                             <span className="text-sm text-green-700 font-medium">
                               Closest to Pin: ${closestToPinPrize} per hole
                             </span>
@@ -1663,7 +1712,13 @@ export default function PublicEventHome() {
                         )}
                         {longestDrivePrize > 0 && (
                           <div className="flex items-center space-x-2">
-                            <span className="text-lg" role="img" aria-label="golf swing">🏌️‍♂️</span>
+                            <span
+                              className="text-lg"
+                              role="img"
+                              aria-label="golf swing"
+                            >
+                              🏌️‍♂️
+                            </span>
                             <span className="text-sm text-orange-700 font-medium">
                               Long Drive: ${longestDrivePrize} per hole
                             </span>
@@ -1724,7 +1779,9 @@ export default function PublicEventHome() {
                           <li>• Ball must come to rest on putting surface</li>
                           <li>
                             <span className="inline-flex items-center space-x-1">
-                              <span role="img" aria-label="trophy">🏆</span>
+                              <span role="img" aria-label="trophy">
+                                🏆
+                              </span>
                               <span>Winner takes the full prize amount</span>
                             </span>
                           </li>
@@ -1768,8 +1825,6 @@ export default function PublicEventHome() {
                             <li>• Measured to the yard for ties</li>
                           </ul>
                         </div>
-
-
                       </div>
                     </div>
                   )}

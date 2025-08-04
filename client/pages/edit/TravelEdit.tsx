@@ -148,7 +148,10 @@ export default function TravelEdit() {
     }
   };
 
-  const polishFieldWithAI = async (fieldName: string, currentContent: string) => {
+  const polishFieldWithAI = async (
+    fieldName: string,
+    currentContent: string,
+  ) => {
     if (!currentContent || !currentContent.trim()) return;
 
     setPolishingField(fieldName);
@@ -166,36 +169,54 @@ ${currentContent}`;
       // Make API call with XMLHttpRequest
       const xhr = new XMLHttpRequest();
       const responsePromise = new Promise((resolve, reject) => {
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
           if (xhr.readyState === 4) {
             console.log(`Polish ${fieldName} XHR Response status:`, xhr.status);
-            console.log(`Polish ${fieldName} XHR Response text:`, xhr.responseText);
+            console.log(
+              `Polish ${fieldName} XHR Response text:`,
+              xhr.responseText,
+            );
 
             if (xhr.status >= 200 && xhr.status < 300) {
               try {
                 const data = JSON.parse(xhr.responseText);
                 resolve(data);
               } catch (parseError) {
-                console.error(`Polish ${fieldName} JSON parse error:`, parseError);
-                reject(new Error(`Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`));
+                console.error(
+                  `Polish ${fieldName} JSON parse error:`,
+                  parseError,
+                );
+                reject(
+                  new Error(
+                    `Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`,
+                  ),
+                );
               }
             } else {
               try {
                 const errorData = JSON.parse(xhr.responseText);
-                reject(new Error(`Server error (${xhr.status}): ${errorData.error || errorData.details || 'Unknown error'}`));
+                reject(
+                  new Error(
+                    `Server error (${xhr.status}): ${errorData.error || errorData.details || "Unknown error"}`,
+                  ),
+                );
               } catch {
-                reject(new Error(`HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`));
+                reject(
+                  new Error(
+                    `HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`,
+                  ),
+                );
               }
             }
           }
         };
 
-        xhr.onerror = function() {
+        xhr.onerror = function () {
           console.error(`Polish ${fieldName} XHR network error`);
           reject(new Error("Network error occurred"));
         };
 
-        xhr.ontimeout = function() {
+        xhr.ontimeout = function () {
           console.error(`Polish ${fieldName} XHR timeout`);
           reject(new Error("Request timed out"));
         };
@@ -220,18 +241,19 @@ ${currentContent}`;
 
       toast({
         title: "Content Polished!",
-        description: `AI has polished your ${fieldName.replace(/([A-Z])/g, ' $1').toLowerCase()} content.`,
+        description: `AI has polished your ${fieldName.replace(/([A-Z])/g, " $1").toLowerCase()} content.`,
       });
-
     } catch (error) {
       console.error(`Error polishing ${fieldName}:`, error);
 
-      let userMessage = "There was an issue polishing your content. Please try again later.";
+      let userMessage =
+        "There was an issue polishing your content. Please try again later.";
 
       if (error instanceof Error) {
         const msg = error.message.toLowerCase();
         if (msg.includes("network") || msg.includes("fetch")) {
-          userMessage = "Network error. Please check your connection and try again.";
+          userMessage =
+            "Network error. Please check your connection and try again.";
         } else if (msg.includes("401") || msg.includes("unauthorized")) {
           userMessage = "API authorization failed. Please contact support.";
         } else if (msg.includes("server error")) {
@@ -242,7 +264,7 @@ ${currentContent}`;
       toast({
         title: "Polish Failed",
         description: userMessage,
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setPolishingField(null);
@@ -301,7 +323,9 @@ ${currentContent}`;
                       type="button"
                       variant="outline"
                       size="sm"
-                      onClick={() => polishFieldWithAI("flightTimes", travelInfo.flightTimes)}
+                      onClick={() =>
+                        polishFieldWithAI("flightTimes", travelInfo.flightTimes)
+                      }
                       disabled={polishingField === "flightTimes"}
                       className="border-blue-200 text-blue-700 hover:bg-blue-50"
                     >
@@ -343,31 +367,37 @@ ${currentContent}`;
                 />
                 <div className="flex items-center justify-between">
                   <p className="text-xs text-green-600">
-                    Include hotel details, room blocks, special rates, and nearby
-                    amenities
+                    Include hotel details, room blocks, special rates, and
+                    nearby amenities
                   </p>
-                  {travelInfo.accommodations && travelInfo.accommodations.trim() && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => polishFieldWithAI("accommodations", travelInfo.accommodations)}
-                      disabled={polishingField === "accommodations"}
-                      className="border-blue-200 text-blue-700 hover:bg-blue-50"
-                    >
-                      {polishingField === "accommodations" ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
-                          Polishing...
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="h-4 w-4 mr-2" />
-                          Polish with AI
-                        </>
-                      )}
-                    </Button>
-                  )}
+                  {travelInfo.accommodations &&
+                    travelInfo.accommodations.trim() && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                          polishFieldWithAI(
+                            "accommodations",
+                            travelInfo.accommodations,
+                          )
+                        }
+                        disabled={polishingField === "accommodations"}
+                        className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                      >
+                        {polishingField === "accommodations" ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                            Polishing...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            Polish with AI
+                          </>
+                        )}
+                      </Button>
+                    )}
                 </div>
               </div>
             </CardContent>
@@ -393,31 +423,37 @@ ${currentContent}`;
                 />
                 <div className="flex items-center justify-between">
                   <p className="text-xs text-green-600">
-                    Outline the schedule for each day including tee times, meals,
-                    and activities
+                    Outline the schedule for each day including tee times,
+                    meals, and activities
                   </p>
-                  {travelInfo.dailySchedule && travelInfo.dailySchedule.trim() && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => polishFieldWithAI("dailySchedule", travelInfo.dailySchedule)}
-                      disabled={polishingField === "dailySchedule"}
-                      className="border-blue-200 text-blue-700 hover:bg-blue-50"
-                    >
-                      {polishingField === "dailySchedule" ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
-                          Polishing...
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="h-4 w-4 mr-2" />
-                          Polish with AI
-                        </>
-                      )}
-                    </Button>
-                  )}
+                  {travelInfo.dailySchedule &&
+                    travelInfo.dailySchedule.trim() && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                          polishFieldWithAI(
+                            "dailySchedule",
+                            travelInfo.dailySchedule,
+                          )
+                        }
+                        disabled={polishingField === "dailySchedule"}
+                        className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                      >
+                        {polishingField === "dailySchedule" ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                            Polishing...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            Polish with AI
+                          </>
+                        )}
+                      </Button>
+                    )}
                 </div>
               </div>
             </CardContent>

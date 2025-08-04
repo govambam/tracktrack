@@ -15,7 +15,14 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
-import { Calendar, MapPin, FileText, Image, Save, Sparkles } from "lucide-react";
+import {
+  Calendar,
+  MapPin,
+  FileText,
+  Image,
+  Save,
+  Sparkles,
+} from "lucide-react";
 
 export default function BasicInfoEdit() {
   const { eventId } = useParams();
@@ -174,8 +181,6 @@ export default function BasicInfoEdit() {
     }
   };
 
-
-
   const generateAIDescription = async () => {
     if (!eventId) return;
 
@@ -193,9 +198,13 @@ export default function BasicInfoEdit() {
       console.log("Fetching event data for ID:", eventId);
 
       const [eventResult, coursesResult, playersResult] = await Promise.all([
-        supabase.from("events").select("name, location, start_date, end_date").eq("id", eventId).single(),
+        supabase
+          .from("events")
+          .select("name, location, start_date, end_date")
+          .eq("id", eventId)
+          .single(),
         supabase.from("event_courses").select("name").eq("event_id", eventId),
-        supabase.from("event_players").select("id").eq("event_id", eventId)
+        supabase.from("event_players").select("id").eq("event_id", eventId),
       ]);
 
       if (eventResult.error) {
@@ -213,18 +222,19 @@ export default function BasicInfoEdit() {
       startDate = new Date(event.start_date).toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
-        year: "numeric"
+        year: "numeric",
       });
       endDate = new Date(event.end_date).toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
-        year: "numeric"
+        year: "numeric",
       });
 
       // Format course names
-      const courseNames = courses.length > 0
-        ? courses.map(c => c.name).join(", ")
-        : "beautiful golf courses";
+      const courseNames =
+        courses.length > 0
+          ? courses.map((c) => c.name).join(", ")
+          : "beautiful golf courses";
 
       // Construct prompt
       const prompt = `Write a short, fun trip description for a golf getaway among friends. The event is called ${event.name} and takes place in ${event.location} from ${startDate} to ${endDate}. They'll be playing at ${courseNames}. The tone should be lighthearted, personal, and reflect the spirit of friends' golf trip—light competition, lots of camaraderie, good times, and memorable moments. Limit the response to a maximum of 2-3 sentences.`;
@@ -234,7 +244,7 @@ export default function BasicInfoEdit() {
       // Make API call with XMLHttpRequest to avoid fetch stream issues
       const xhr = new XMLHttpRequest();
       const responsePromise = new Promise((resolve, reject) => {
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
           if (xhr.readyState === 4) {
             console.log("XHR Response status:", xhr.status);
             console.log("XHR Response text:", xhr.responseText);
@@ -245,25 +255,37 @@ export default function BasicInfoEdit() {
                 resolve(data);
               } catch (parseError) {
                 console.error("JSON parse error:", parseError);
-                reject(new Error(`Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`));
+                reject(
+                  new Error(
+                    `Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`,
+                  ),
+                );
               }
             } else {
               try {
                 const errorData = JSON.parse(xhr.responseText);
-                reject(new Error(`Server error (${xhr.status}): ${errorData.error || errorData.details || 'Unknown error'}`));
+                reject(
+                  new Error(
+                    `Server error (${xhr.status}): ${errorData.error || errorData.details || "Unknown error"}`,
+                  ),
+                );
               } catch {
-                reject(new Error(`HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`));
+                reject(
+                  new Error(
+                    `HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`,
+                  ),
+                );
               }
             }
           }
         };
 
-        xhr.onerror = function() {
+        xhr.onerror = function () {
           console.error("XHR network error");
           reject(new Error("Network error occurred"));
         };
 
-        xhr.ontimeout = function() {
+        xhr.ontimeout = function () {
           console.error("XHR timeout");
           reject(new Error("Request timed out"));
         };
@@ -291,16 +313,17 @@ export default function BasicInfoEdit() {
         title: "Description Generated!",
         description: "AI has created a new event description for you.",
       });
-
     } catch (error) {
       console.error("Full error details:", error);
 
-      let userMessage = "There was an issue generating your description. Please try again later.";
+      let userMessage =
+        "There was an issue generating your description. Please try again later.";
 
       if (error instanceof Error) {
         const msg = error.message.toLowerCase();
         if (msg.includes("network") || msg.includes("fetch")) {
-          userMessage = "Network error. Please check your connection and try again.";
+          userMessage =
+            "Network error. Please check your connection and try again.";
         } else if (msg.includes("401") || msg.includes("unauthorized")) {
           userMessage = "API authorization failed. Please contact support.";
         } else if (msg.includes("server error")) {
@@ -311,7 +334,7 @@ export default function BasicInfoEdit() {
       toast({
         title: "Generation Failed",
         description: userMessage,
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setGeneratingAI(false);
@@ -336,7 +359,7 @@ ${formData.description}`;
       // Make API call with XMLHttpRequest
       const xhr = new XMLHttpRequest();
       const responsePromise = new Promise((resolve, reject) => {
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
           if (xhr.readyState === 4) {
             console.log("Polish XHR Response status:", xhr.status);
             console.log("Polish XHR Response text:", xhr.responseText);
@@ -347,25 +370,37 @@ ${formData.description}`;
                 resolve(data);
               } catch (parseError) {
                 console.error("Polish JSON parse error:", parseError);
-                reject(new Error(`Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`));
+                reject(
+                  new Error(
+                    `Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`,
+                  ),
+                );
               }
             } else {
               try {
                 const errorData = JSON.parse(xhr.responseText);
-                reject(new Error(`Server error (${xhr.status}): ${errorData.error || errorData.details || 'Unknown error'}`));
+                reject(
+                  new Error(
+                    `Server error (${xhr.status}): ${errorData.error || errorData.details || "Unknown error"}`,
+                  ),
+                );
               } catch {
-                reject(new Error(`HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`));
+                reject(
+                  new Error(
+                    `HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`,
+                  ),
+                );
               }
             }
           }
         };
 
-        xhr.onerror = function() {
+        xhr.onerror = function () {
           console.error("Polish XHR network error");
           reject(new Error("Network error occurred"));
         };
 
-        xhr.ontimeout = function() {
+        xhr.ontimeout = function () {
           console.error("Polish XHR timeout");
           reject(new Error("Request timed out"));
         };
@@ -392,16 +427,17 @@ ${formData.description}`;
         title: "Description Polished!",
         description: "AI has polished your event description.",
       });
-
     } catch (error) {
       console.error("Error polishing description:", error);
 
-      let userMessage = "There was an issue polishing your description. Please try again later.";
+      let userMessage =
+        "There was an issue polishing your description. Please try again later.";
 
       if (error instanceof Error) {
         const msg = error.message.toLowerCase();
         if (msg.includes("network") || msg.includes("fetch")) {
-          userMessage = "Network error. Please check your connection and try again.";
+          userMessage =
+            "Network error. Please check your connection and try again.";
         } else if (msg.includes("401") || msg.includes("unauthorized")) {
           userMessage = "API authorization failed. Please contact support.";
         } else if (msg.includes("server error")) {
@@ -412,7 +448,7 @@ ${formData.description}`;
       toast({
         title: "Polish Failed",
         description: userMessage,
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setPolishingAI(false);

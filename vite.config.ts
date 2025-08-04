@@ -22,15 +22,17 @@ export default defineConfig({
         changeOrigin: true,
         configure: (proxy, options) => {
           // Handle proxy errors gracefully
-          proxy.on('error', (err, req, res) => {
-            console.log('Proxy error:', err);
+          proxy.on("error", (err, req, res) => {
+            console.log("Proxy error:", err);
             res.writeHead(500, {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             });
-            res.end(JSON.stringify({
-              error: 'Proxy server not available',
-              details: 'Backend server is not running'
-            }));
+            res.end(
+              JSON.stringify({
+                error: "Proxy server not available",
+                details: "Backend server is not running",
+              }),
+            );
           });
         },
       },
