@@ -880,47 +880,61 @@ Return your response as a JSON object with these fields:
             </DialogTitle>
           </DialogHeader>
 
-          <div className="flex-1 flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <div className="flex items-start space-x-3">
                 <ExternalLink className="h-5 w-5 text-blue-600 mt-0.5" />
                 <div>
-                  <h4 className="font-medium text-blue-900 mb-1">How to select an image:</h4>
-                  <ol className="text-sm text-blue-700 space-y-1">
-                    <li>1. Browse the search results below</li>
+                  <h4 className="font-medium text-blue-900 mb-2">How to find and use an image:</h4>
+                  <ol className="text-sm text-blue-700 space-y-1 mb-3">
+                    <li>1. Click "Open Google Images" below to search for course images</li>
                     <li>2. Right-click on an image you like</li>
                     <li>3. Select "Copy image address" or "Copy image URL"</li>
-                    <li>4. Paste the URL in the text field and click "Use This Image"</li>
+                    <li>4. Return here, paste the URL, and click "Use This Image"</li>
                   </ol>
+                  <Button
+                    onClick={() => {
+                      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(imageSearchModal.courseName + ' golf course')}&tbm=isch`;
+                      window.open(searchUrl, '_blank');
+                    }}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    Open Google Images
+                  </Button>
                 </div>
               </div>
             </div>
 
-            <div className="flex space-x-2">
-              <Input
-                id="imageUrl"
-                placeholder="Paste image URL here..."
-                className="flex-1"
-              />
-              <Button
-                onClick={() => {
-                  const input = document.getElementById('imageUrl') as HTMLInputElement;
-                  if (input?.value.trim()) {
-                    handleImageSelect(input.value.trim());
-                  }
-                }}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                Use This Image
-              </Button>
+            <div className="space-y-3">
+              <Label htmlFor="imageUrl" className="text-sm font-medium text-gray-700">
+                Paste Image URL:
+              </Label>
+              <div className="flex space-x-2">
+                <Input
+                  id="imageUrl"
+                  placeholder="https://example.com/course-image.jpg"
+                  className="flex-1"
+                />
+                <Button
+                  onClick={() => {
+                    const input = document.getElementById('imageUrl') as HTMLInputElement;
+                    if (input?.value.trim()) {
+                      handleImageSelect(input.value.trim());
+                    }
+                  }}
+                  className="bg-green-600 hover:bg-green-700 text-white px-6"
+                >
+                  Use This Image
+                </Button>
+              </div>
             </div>
 
-            <div className="flex-1 border border-gray-200 rounded-lg overflow-hidden">
-              <iframe
-                src={`https://www.google.com/search?q=${encodeURIComponent(imageSearchModal.courseName + ' golf course')}&tbm=isch`}
-                className="w-full h-full"
-                title="Google Images Search"
-              />
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+              <p className="text-sm text-yellow-800">
+                <strong>Tip:</strong> Look for high-quality images that show the course layout or signature holes.
+                Make sure the URL ends with .jpg, .png, or .webp for best compatibility.
+              </p>
             </div>
           </div>
         </DialogContent>
