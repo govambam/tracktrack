@@ -37,7 +37,7 @@ import LeaderboardCustomization from "./pages/edit/customizations/LeaderboardCus
 import TravelCustomization from "./pages/edit/customizations/TravelCustomization";
 import TestCourseSync from "./pages/edit/TestCourseSync";
 import SettingsEdit from "./pages/edit/SettingsEdit";
-import PublicEvent from "./pages/PublicEvent";
+import PublicEventHome from "./pages/PublicEventHome";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
