@@ -128,6 +128,11 @@ function tripCreationReducer(
 ): TripCreationState {
   switch (action.type) {
     case "UPDATE_BASIC_INFO":
+      console.log('TripCreationContext: UPDATE_BASIC_INFO called with:', action.payload);
+      return {
+        ...state,
+        tripData: { ...state.tripData, ...action.payload },
+      };
     case "UPDATE_SCORING":
     case "UPDATE_PRIZES":
     case "UPDATE_TRAVEL":
