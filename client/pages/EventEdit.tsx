@@ -103,9 +103,9 @@ const sidebarSections = [
       },
       {
         id: "customizations/rules",
-        label: "Rules",
+        label: "Scoring & Rules",
         icon: Target,
-        description: "Tournament rules",
+        description: "Tournament rules and scoring",
       },
       {
         id: "customizations/leaderboard",
