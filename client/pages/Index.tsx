@@ -36,7 +36,7 @@ export default function Index() {
         </div>
         
         {/* Golf Course Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-20 left-10 w-4 h-4 bg-green-600 rounded-full"></div>
           <div className="absolute top-40 right-20 w-6 h-6 bg-emerald-500 rounded-full"></div>
           <div className="absolute bottom-20 left-1/4 w-3 h-3 bg-green-700 rounded-full"></div>
