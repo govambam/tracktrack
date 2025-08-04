@@ -318,6 +318,107 @@ export default function BasicInfoEdit() {
     }
   };
 
+  const polishWithAI = async () => {
+    if (!formData.description || !formData.description.trim()) return;
+
+    setPolishingAI(true);
+
+    try {
+      console.log("Polishing description with AI");
+
+      const prompt = `Take the following event description and polish it for use on a public-facing event website. Improve flow, clarity, and tone while preserving the original intent. Make it sound fun, well-written, and trip-appropriate—but not overly formal.
+
+Description:
+${formData.description}`;
+
+      console.log("Polish prompt:", prompt);
+
+      // Make API call with XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+      const responsePromise = new Promise((resolve, reject) => {
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            console.log("Polish XHR Response status:", xhr.status);
+            console.log("Polish XHR Response text:", xhr.responseText);
+
+            if (xhr.status >= 200 && xhr.status < 300) {
+              try {
+                const data = JSON.parse(xhr.responseText);
+                resolve(data);
+              } catch (parseError) {
+                console.error("Polish JSON parse error:", parseError);
+                reject(new Error(`Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`));
+              }
+            } else {
+              try {
+                const errorData = JSON.parse(xhr.responseText);
+                reject(new Error(`Server error (${xhr.status}): ${errorData.error || errorData.details || 'Unknown error'}`));
+              } catch {
+                reject(new Error(`HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`));
+              }
+            }
+          }
+        };
+
+        xhr.onerror = function() {
+          console.error("Polish XHR network error");
+          reject(new Error("Network error occurred"));
+        };
+
+        xhr.ontimeout = function() {
+          console.error("Polish XHR timeout");
+          reject(new Error("Request timed out"));
+        };
+      });
+
+      xhr.open("POST", "/api/generate-description", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.timeout = 30000; // 30 second timeout
+      xhr.send(JSON.stringify({ prompt }));
+
+      const responseData = await responsePromise;
+      console.log("Polish API response data:", responseData);
+
+      const polishedDescription = responseData?.description;
+
+      if (!polishedDescription) {
+        throw new Error("No polished description received from server");
+      }
+
+      // Update the form
+      handleInputChange("description", polishedDescription);
+
+      toast({
+        title: "Description Polished!",
+        description: "AI has polished your event description.",
+      });
+
+    } catch (error) {
+      console.error("Error polishing description:", error);
+
+      let userMessage = "There was an issue polishing your description. Please try again later.";
+
+      if (error instanceof Error) {
+        const msg = error.message.toLowerCase();
+        if (msg.includes("network") || msg.includes("fetch")) {
+          userMessage = "Network error. Please check your connection and try again.";
+        } else if (msg.includes("401") || msg.includes("unauthorized")) {
+          userMessage = "API authorization failed. Please contact support.";
+        } else if (msg.includes("server error")) {
+          userMessage = error.message;
+        }
+      }
+
+      toast({
+        title: "Polish Failed",
+        description: userMessage,
+        variant: "destructive"
+      });
+    } finally {
+      setPolishingAI(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
