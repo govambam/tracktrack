@@ -161,7 +161,7 @@ const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
 };
 
 // Sticky Navigation Component
-const StickyNavigation = ({ eventName }: { eventName: string }) => {
+const StickyNavigation = ({ eventName, slug }: { eventName: string; slug: string }) => {
   const navItems = [
     { name: 'Overview', href: '#overview' },
     { name: 'Courses', href: '#courses' },
@@ -169,7 +169,7 @@ const StickyNavigation = ({ eventName }: { eventName: string }) => {
     { name: 'Players', href: '#players' },
     { name: 'Prizes', href: '#prizes' },
     { name: 'Travel', href: '#travel' },
-    { name: 'Leaderboard', href: '/leaderboard' },
+    { name: 'Leaderboard', href: `/events/${slug}/leaderboard` },
   ];
 
   return (
@@ -549,7 +549,7 @@ export default function PublicEventHome() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50/30">
-      <StickyNavigation eventName={eventData.name} />
+      <StickyNavigation eventName={eventData.name} slug={slug!} />
 
       {/* Hero Section */}
       <section id="overview" className="relative overflow-hidden">
