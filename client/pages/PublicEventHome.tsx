@@ -1709,7 +1709,12 @@ export default function PublicEventHome() {
                           </li>
                           <li>• Measured to the inch for ties</li>
                           <li>• Ball must come to rest on putting surface</li>
-                          <li>��� Winner takes the full prize amount</li>
+                          <li>
+                            <span className="inline-flex items-center space-x-1">
+                              <span role="img" aria-label="trophy">🏆</span>
+                              <span>Winner takes the full prize amount</span>
+                            </span>
+                          </li>
                         </ul>
                       </div>
                     </div>
