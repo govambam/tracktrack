@@ -160,7 +160,7 @@ export default function RulesCustomization() {
       isDraft: true,
     };
 
-    setRules([...rules, draftRule]);
+    setRules([draftRule, ...rules]); // Add new rule at the top
     setEditingRuleId(draftRule.id); // Start editing the new draft rule
   };
 
