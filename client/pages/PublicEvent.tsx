@@ -28,10 +28,12 @@ interface EventData {
   is_published: boolean;
   is_private: boolean;
   scoring_format: string;
-  travel_lodging?: string;
-  travel_notes?: string;
-  travel_airport?: string;
-  travel_distance?: string;
+}
+
+interface TravelData {
+  flight_info?: string;
+  accommodations?: string;
+  daily_schedule?: string;
 }
 
 interface EventCourse {
