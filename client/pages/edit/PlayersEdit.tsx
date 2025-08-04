@@ -62,7 +62,8 @@ export default function PlayersEdit() {
           name: p.full_name || '',
           email: p.email || '',
           handicap: p.handicap,
-          image: p.profile_image || ''
+          image: p.profile_image || '',
+          bio: p.bio || ''
         }));
         setPlayers(formattedPlayers);
         console.log('Loaded players from database:', formattedPlayers);
