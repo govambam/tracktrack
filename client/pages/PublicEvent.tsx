@@ -585,7 +585,7 @@ function RulesTab({ eventData, rules }: { eventData: EventData; rules: EventRule
         <CardContent>
           <div className="mb-4">
             <Badge variant="outline" className="text-lg py-1 px-3 capitalize">
-              {eventData.scoring_format.replace('-', ' ')}
+              {eventData.scoring_format?.replace('-', ' ') || 'Not specified'}
             </Badge>
           </div>
           <p className="text-gray-600">{getScoringDescription(eventData.scoring_format)}</p>
