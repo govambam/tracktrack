@@ -54,7 +54,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Auth />} />
               <Route path="/signup" element={<Auth />} />
-              <Route path="/events/:slug" element={<PublicEvent />} />
+              <Route path="/events/:slug" element={<PublicEventHome />} />
               <Route path="/app" element={<AppShell />}>
                 <Route index element={<MyTrips />} />
                 <Route path="create" element={<CreateTrip />} />
