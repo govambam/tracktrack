@@ -860,6 +860,9 @@ export default function PublicEventHome() {
       setLoading(true);
       setError(null);
 
+      console.log("Loading event data for slug:", slug);
+      console.log("Supabase client:", supabase);
+
       // Load main event data
       const { data: event, error: eventError } = await supabase
         .from("events")
@@ -868,9 +871,11 @@ export default function PublicEventHome() {
         .eq("is_published", true)
         .single();
 
+      console.log("Event query result:", { event, eventError });
+
       if (eventError || !event) {
         console.error("Event not found:", eventError);
-        setError("Event not found or not published");
+        setError(`Event not found or not published. Slug: ${slug}, Error: ${eventError?.message || 'No event data'}`);
         setLoading(false);
         return;
       }
