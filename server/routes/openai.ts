@@ -1,5 +1,30 @@
 import { Request, Response } from 'express';
 
+const generateFallbackDescription = (prompt: string): string => {
+  // Extract basic info from the prompt
+  const eventNameMatch = prompt.match(/golf event called ([^.]+)\./);
+  const locationMatch = prompt.match(/takes place in ([^,]+),/);
+  const dateMatch = prompt.match(/from ([^.]+)\./);
+  const coursesMatch = prompt.match(/Golf will be played at ([^.]+)\./);
+  const playersMatch = prompt.match(/There are (\d+) players/);
+
+  const eventName = eventNameMatch?.[1] || 'this golf event';
+  const location = locationMatch?.[1] || 'a beautiful destination';
+  const dates = dateMatch?.[1] || 'upcoming dates';
+  const courses = coursesMatch?.[1] || 'world-class golf courses';
+  const playerCount = playersMatch?.[1] || 'golf enthusiasts';
+
+  const templates = [
+    `Join us for ${eventName}, an exciting golf adventure in ${location}! Taking place ${dates}, this event brings together ${playerCount} players for unforgettable rounds at ${courses}. Whether you're here for the competition or the camaraderie, this promises to be an amazing golf experience that you won't want to miss!`,
+
+    `Get ready for ${eventName}! This premier golf event in ${location} runs ${dates} and features incredible play at ${courses}. With ${playerCount} players participating, you can expect great competition, lasting friendships, and memories to last a lifetime. Come for the golf, stay for the fun!`,
+
+    `${eventName} is set to be an incredible golf getaway in ${location}. From ${dates}, ${playerCount} golfers will take on the challenge at ${courses}. This tournament perfectly blends competitive spirit with a welcoming atmosphere, making it ideal for players of all skill levels. Don't miss this amazing opportunity!`
+  ];
+
+  return templates[Math.floor(Math.random() * templates.length)];
+};
+
 export const generateDescription = async (req: Request, res: Response) => {
   console.log('=== Generate Description Endpoint Called ===');
   console.log('Request body:', req.body);
