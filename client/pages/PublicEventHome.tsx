@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { Badge } from "@/components/ui/badge";
