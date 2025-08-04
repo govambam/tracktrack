@@ -331,57 +331,105 @@ export default function PublicEventHome() {
 
       {/* Courses Overview Section */}
       {courses.length > 0 && (
-        <section id="courses" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-900 mb-6">
+        <section id="courses" className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute inset-0 bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20"></div>
+          <div className="absolute top-20 right-0 w-72 h-72 bg-green-100/10 rounded-full blur-3xl"></div>
+
+          <div className="relative max-w-6xl mx-auto">
+            <div className="text-center mb-20">
+              <div className="inline-flex items-center space-x-2 bg-green-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
+                <Sparkles className="h-4 w-4 text-green-600" />
+                <span className="text-sm font-medium text-green-800">Championship Venues</span>
+              </div>
+
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
                 {courses.length > 1 ? 'Golf Courses' : 'Golf Course'}
               </h2>
+
               {customization?.home_headline && (
-                <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto font-light leading-relaxed">
+                <p className="text-xl sm:text-2xl text-slate-600 max-w-4xl mx-auto font-light leading-relaxed">
                   {customization.home_headline}
                 </p>
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10">
               {courses.map((course, index) => {
                 const round = rounds.find(r => r.course_name === course.name);
-                return (
-                  <div key={course.id} className="group">
-                    {course.image_url && (
-                      <div className="h-64 overflow-hidden rounded-lg mb-6">
-                        <img
-                          src={course.image_url}
-                          alt={course.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    )}
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="text-xl font-bold text-green-900 mb-2">{course.name}</h3>
-                        {course.par && course.yardage && (
-                          <p className="text-gray-600">
-                            Par {course.par} • {course.yardage.toLocaleString()} yards
-                          </p>
-                        )}
-                      </div>
+                const { isVisible, elementRef } = useScrollAnimation();
 
-                      {(round?.tee_time || round?.round_date) && (
-                        <div className="space-y-1 text-sm text-gray-500">
-                          {round?.round_date && (
-                            <p>{new Date(round.round_date).toLocaleDateString('en-US', {
-                              weekday: 'long',
-                              month: 'long',
-                              day: 'numeric'
-                            })}</p>
-                          )}
-                          {round?.tee_time && (
-                            <p>Tee Time: {round.tee_time}</p>
-                          )}
+                return (
+                  <div
+                    key={course.id}
+                    ref={elementRef}
+                    className={`group transition-all duration-700 delay-${index * 150} ${
+                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                    }`}
+                  >
+                    <div className="bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-500">
+                      {course.image_url && (
+                        <div className="h-56 overflow-hidden">
+                          <img
+                            src={course.image_url}
+                            alt={course.name}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          />
                         </div>
                       )}
+
+                      <div className="p-8">
+                        <div className="flex items-start justify-between mb-6">
+                          <div>
+                            <div className="flex items-center space-x-2 mb-3">
+                              <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                Round {index + 1}
+                              </Badge>
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors">
+                              {course.name}
+                            </h3>
+                          </div>
+                        </div>
+
+                        {course.par && course.yardage && (
+                          <div className="flex items-center space-x-6 mb-6 text-sm">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              <span className="font-semibold text-slate-700">Par {course.par}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                              <span className="font-semibold text-slate-700">{course.yardage?.toLocaleString()} yards</span>
+                            </div>
+                          </div>
+                        )}
+
+                        {(round?.tee_time || round?.round_date) && (
+                          <div className="space-y-3 pt-4 border-t border-slate-200">
+                            {round?.round_date && (
+                              <div className="flex items-center space-x-3">
+                                <Calendar className="h-4 w-4 text-slate-400" />
+                                <span className="text-sm font-medium text-slate-600">
+                                  {new Date(round.round_date).toLocaleDateString('en-US', {
+                                    weekday: 'long',
+                                    month: 'long',
+                                    day: 'numeric'
+                                  })}
+                                </span>
+                              </div>
+                            )}
+                            {round?.tee_time && (
+                              <div className="flex items-center space-x-3">
+                                <Clock className="h-4 w-4 text-slate-400" />
+                                <span className="text-sm font-medium text-slate-600">
+                                  Tee Time: {round.tee_time}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
