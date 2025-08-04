@@ -3,11 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
-import {
-  ArrowLeft,
-  Save,
-  AlertCircle,
-} from "lucide-react";
+import { ArrowLeft, Save, AlertCircle } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,12 +20,12 @@ export default function DraftMode() {
   const { eventId } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
-  
+
   const [hasChanges, setHasChanges] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [localChanges, setLocalChanges] = useState<any>({});
-  
+
   const handleBack = () => {
     if (hasChanges) {
       setShowExitDialog(true);
@@ -55,80 +51,89 @@ export default function DraftMode() {
           supabase
             .from("events")
             .update({ description: localChanges.eventDescription })
-            .eq("id", eventId)
+            .eq("id", eventId),
         );
       }
 
       // Save course changes
       if (localChanges.courses) {
-        Object.entries(localChanges.courses).forEach(([courseId, courseData]: [string, any]) => {
-          if (courseData.course_name !== undefined) {
-            promises.push(
-              supabase
-                .from("event_rounds")
-                .update({ course_name: courseData.course_name })
-                .eq("id", courseId)
-            );
-          }
-          if (courseData.tee_time !== undefined) {
-            promises.push(
-              supabase
-                .from("event_rounds")
-                .update({ tee_time: courseData.tee_time })
-                .eq("id", courseId)
-            );
-          }
-          if (courseData.round_date !== undefined) {
-            promises.push(
-              supabase
-                .from("event_rounds")
-                .update({ round_date: courseData.round_date })
-                .eq("id", courseId)
-            );
-          }
-          if (courseData.description !== undefined) {
-            promises.push(
-              supabase
-                .from("event_courses")
-                .update({ description: courseData.description })
-                .eq("round_id", courseId)
-            );
-          }
-        });
+        Object.entries(localChanges.courses).forEach(
+          ([courseId, courseData]: [string, any]) => {
+            if (courseData.course_name !== undefined) {
+              promises.push(
+                supabase
+                  .from("event_rounds")
+                  .update({ course_name: courseData.course_name })
+                  .eq("id", courseId),
+              );
+            }
+            if (courseData.tee_time !== undefined) {
+              promises.push(
+                supabase
+                  .from("event_rounds")
+                  .update({ tee_time: courseData.tee_time })
+                  .eq("id", courseId),
+              );
+            }
+            if (courseData.round_date !== undefined) {
+              promises.push(
+                supabase
+                  .from("event_rounds")
+                  .update({ round_date: courseData.round_date })
+                  .eq("id", courseId),
+              );
+            }
+            if (courseData.description !== undefined) {
+              promises.push(
+                supabase
+                  .from("event_courses")
+                  .update({ description: courseData.description })
+                  .eq("round_id", courseId),
+              );
+            }
+          },
+        );
       }
 
       // Save player changes
       if (localChanges.players) {
-        Object.entries(localChanges.players).forEach(([playerId, playerData]: [string, any]) => {
-          const updates: any = {};
-          if (playerData.full_name !== undefined) updates.full_name = playerData.full_name;
-          if (playerData.handicap !== undefined) updates.handicap = playerData.handicap;
-          if (playerData.bio !== undefined) updates.bio = playerData.bio;
-          
-          if (Object.keys(updates).length > 0) {
-            promises.push(
-              supabase
-                .from("event_players")
-                .update(updates)
-                .eq("id", playerId)
-            );
-          }
-        });
+        Object.entries(localChanges.players).forEach(
+          ([playerId, playerData]: [string, any]) => {
+            const updates: any = {};
+            if (playerData.full_name !== undefined)
+              updates.full_name = playerData.full_name;
+            if (playerData.handicap !== undefined)
+              updates.handicap = playerData.handicap;
+            if (playerData.bio !== undefined) updates.bio = playerData.bio;
+
+            if (Object.keys(updates).length > 0) {
+              promises.push(
+                supabase
+                  .from("event_players")
+                  .update(updates)
+                  .eq("id", playerId),
+              );
+            }
+          },
+        );
       }
 
       // Save travel changes
       if (localChanges.travel) {
         const travelUpdates: any = {};
-        if (localChanges.travel.flight_info !== undefined) travelUpdates.flight_info = localChanges.travel.flight_info;
-        if (localChanges.travel.accommodations !== undefined) travelUpdates.accommodations = localChanges.travel.accommodations;
-        if (localChanges.travel.daily_schedule !== undefined) travelUpdates.daily_schedule = localChanges.travel.daily_schedule;
-        
+        if (localChanges.travel.flight_info !== undefined)
+          travelUpdates.flight_info = localChanges.travel.flight_info;
+        if (localChanges.travel.accommodations !== undefined)
+          travelUpdates.accommodations = localChanges.travel.accommodations;
+        if (localChanges.travel.daily_schedule !== undefined)
+          travelUpdates.daily_schedule = localChanges.travel.daily_schedule;
+
         if (Object.keys(travelUpdates).length > 0) {
           promises.push(
             supabase
               .from("event_travel")
               .update(travelUpdates)
-              .eq("event_id", eventId)
+              .eq("event_id", eventId),
           );
         }
       }
@@ -137,7 +142,7 @@ export default function DraftMode() {
 
       setHasChanges(false);
       setLocalChanges({});
-      
+
       toast({
         title: "Changes Saved",
         description: "All your changes have been saved successfully.",
@@ -176,18 +181,18 @@ export default function DraftMode() {
   };
 
   const updateLocalChanges = (path: string, value: any) => {
-    setLocalChanges(prev => {
+    setLocalChanges((prev) => {
       const newChanges = { ...prev };
-      const keys = path.split('.');
+      const keys = path.split(".");
       let current = newChanges;
-      
+
       for (let i = 0; i < keys.length - 1; i++) {
         if (!(keys[i] in current)) {
           current[keys[i]] = {};
         }
         current = current[keys[i]];
       }
-      
+
       current[keys[keys.length - 1]] = value;
       return newChanges;
     });
@@ -219,7 +224,7 @@ export default function DraftMode() {
                 </div>
               )}
             </div>
-            
+
             <Button
               onClick={handleSaveChanges}
               disabled={!hasChanges || saving}
@@ -233,7 +238,7 @@ export default function DraftMode() {
       </div>
 
       {/* Draft Mode Content - Full Public Site Experience */}
-      <DraftModePublicEventHome 
+      <DraftModePublicEventHome
         localChanges={localChanges}
         updateLocalChanges={updateLocalChanges}
       />

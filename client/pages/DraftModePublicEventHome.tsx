@@ -52,7 +52,10 @@ interface DraftModeProps {
   updateLocalChanges: (path: string, value: any) => void;
 }
 
-export default function DraftModePublicEventHome({ localChanges, updateLocalChanges }: DraftModeProps) {
+export default function DraftModePublicEventHome({
+  localChanges,
+  updateLocalChanges,
+}: DraftModeProps) {
   const { eventId } = useParams();
   const [eventData, setEventData] = useState<any>(null);
   const [players, setPlayers] = useState<any[]>([]);
@@ -64,13 +67,16 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
   const [customRules, setCustomRules] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Modal states
   const [editDescriptionModal, setEditDescriptionModal] = useState(false);
   const [editCourseModal, setEditCourseModal] = useState<any>(null);
   const [editPlayerModal, setEditPlayerModal] = useState<any>(null);
-  const [editTravelModal, setEditTravelModal] = useState<{ type: string; title: string } | null>(null);
-  
+  const [editTravelModal, setEditTravelModal] = useState<{
+    type: string;
+    title: string;
+  } | null>(null);
+
   // Temporary form states
   const [tempDescription, setTempDescription] = useState("");
   const [tempCourseData, setTempCourseData] = useState<any>({});
@@ -94,7 +100,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
       console.log("Loading event data for eventId:", eventId);
 
       // Check authentication
-      const { data: { session }, error: authError } = await supabase.auth.getSession();
+      const {
+        data: { session },
+        error: authError,
+      } = await supabase.auth.getSession();
       console.log("Current session:", session?.user?.email || "No session");
 
       if (authError) {
@@ -115,11 +124,11 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
         console.error("Event loading error:", eventError.message, eventError);
         throw new Error(`Failed to load event: ${eventError.message}`);
       }
-      
+
       if (!event) {
         throw new Error("Event not found");
       }
-      
+
       console.log("Event loaded:", event);
       setEventData(event);
 
@@ -131,7 +140,7 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
         prizesResult,
         travelResult,
         skillsContestsResult,
-        customRulesResult
+        customRulesResult,
       ] = await Promise.all([
         supabase
           .from("event_players")
@@ -143,25 +152,19 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
           .select("*")
           .eq("event_id", eventId)
           .order("round_date"),
-        supabase
-          .from("event_courses")
-          .select("*")
-          .eq("event_id", eventId),
+        supabase.from("event_courses").select("*").eq("event_id", eventId),
         supabase.from("event_prizes").select("*").eq("event_id", eventId),
         supabase
           .from("event_travel")
           .select("*")
           .eq("event_id", eventId)
           .maybeSingle(),
-        supabase
-          .from("skills_contests")
-          .select("*")
-          .eq("event_id", eventId),
+        supabase.from("skills_contests").select("*").eq("event_id", eventId),
         supabase
           .from("event_rules")
           .select("*")
           .eq("event_id", eventId)
-          .order("display_order")
+          .order("display_order"),
       ]);
 
       // Handle results with detailed error logging
@@ -207,9 +210,9 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
       setCustomRules(customRulesResult.data || []);
 
       console.log("All event data loaded successfully");
-
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error occurred";
       console.error("Error loading event data:", errorMessage);
       console.error("Full error object:", error);
       setError(errorMessage);
@@ -220,9 +223,9 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
 
   // Helper functions
   const getValue = (path: string, defaultValue: any = "") => {
-    const keys = path.split('.');
+    const keys = path.split(".");
     let current = localChanges;
-    
+
     for (const key of keys) {
       if (current && current[key] !== undefined) {
         current = current[key];
@@ -230,19 +233,27 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
         return defaultValue;
       }
     }
-    
+
     return current !== undefined ? current : defaultValue;
   };
 
   const getEventDescription = () => {
-    return getValue('eventDescription', eventData?.description || "");
+    return getValue("eventDescription", eventData?.description || "");
   };
 
-  const getCourseValue = (courseId: string, field: string, defaultValue: any = "") => {
+  const getCourseValue = (
+    courseId: string,
+    field: string,
+    defaultValue: any = "",
+  ) => {
     return getValue(`courses.${courseId}.${field}`, defaultValue);
   };
 
-  const getPlayerValue = (playerId: string, field: string, defaultValue: any = "") => {
+  const getPlayerValue = (
+    playerId: string,
+    field: string,
+    defaultValue: any = "",
+  ) => {
     return getValue(`players.${playerId}.${field}`, defaultValue);
   };
 
@@ -253,32 +264,32 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
   const formatDateRange = (startDate: string, endDate: string) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
-    
-    const options: Intl.DateTimeFormatOptions = { 
-      month: 'long', 
-      day: 'numeric'
+
+    const options: Intl.DateTimeFormatOptions = {
+      month: "long",
+      day: "numeric",
     };
-    
+
     if (start.getFullYear() !== new Date().getFullYear()) {
-      options.year = 'numeric';
+      options.year = "numeric";
     }
-    
+
     if (start.toDateString() === end.toDateString()) {
-      return start.toLocaleDateString('en-US', options);
+      return start.toLocaleDateString("en-US", options);
     }
-    
+
     if (start.getMonth() === end.getMonth()) {
-      return `${start.getDate()}-${end.toLocaleDateString('en-US', options)}`;
+      return `${start.getDate()}-${end.toLocaleDateString("en-US", options)}`;
     }
-    
-    return `${start.toLocaleDateString('en-US', options)} - ${end.toLocaleDateString('en-US', options)}`;
+
+    return `${start.toLocaleDateString("en-US", options)} - ${end.toLocaleDateString("en-US", options)}`;
   };
 
   const getPlayerInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
@@ -290,46 +301,65 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
   };
 
   const handleSaveDescription = () => {
-    updateLocalChanges('eventDescription', tempDescription);
+    updateLocalChanges("eventDescription", tempDescription);
     setEditDescriptionModal(false);
   };
 
   const handleEditCourse = (round: any, roundIndex?: number) => {
-    const course = courses.find(c => c.round_id === round.id);
-    const calculatedRoundNumber = roundIndex !== undefined ? roundIndex + 1 : rounds.findIndex(r => r.id === round.id) + 1;
+    const course = courses.find((c) => c.round_id === round.id);
+    const calculatedRoundNumber =
+      roundIndex !== undefined
+        ? roundIndex + 1
+        : rounds.findIndex((r) => r.id === round.id) + 1;
     setTempCourseData({
       id: round.id,
       roundNumber: calculatedRoundNumber,
-      course_name: getCourseValue(round.id, 'course_name', round.course_name),
-      tee_time: getCourseValue(round.id, 'tee_time', round.tee_time),
-      round_date: getCourseValue(round.id, 'round_date', round.round_date),
-      description: getCourseValue(round.id, 'description', course?.description || ""),
+      course_name: getCourseValue(round.id, "course_name", round.course_name),
+      tee_time: getCourseValue(round.id, "tee_time", round.tee_time),
+      round_date: getCourseValue(round.id, "round_date", round.round_date),
+      description: getCourseValue(
+        round.id,
+        "description",
+        course?.description || "",
+      ),
     });
     setEditCourseModal(round);
   };
 
   const handleSaveCourse = () => {
     const courseId = tempCourseData.id;
-    updateLocalChanges(`courses.${courseId}.course_name`, tempCourseData.course_name);
+    updateLocalChanges(
+      `courses.${courseId}.course_name`,
+      tempCourseData.course_name,
+    );
     updateLocalChanges(`courses.${courseId}.tee_time`, tempCourseData.tee_time);
-    updateLocalChanges(`courses.${courseId}.round_date`, tempCourseData.round_date);
-    updateLocalChanges(`courses.${courseId}.description`, tempCourseData.description);
+    updateLocalChanges(
+      `courses.${courseId}.round_date`,
+      tempCourseData.round_date,
+    );
+    updateLocalChanges(
+      `courses.${courseId}.description`,
+      tempCourseData.description,
+    );
     setEditCourseModal(null);
   };
 
   const handleEditPlayer = (player: any) => {
     setTempPlayerData({
       id: player.id,
-      full_name: getPlayerValue(player.id, 'full_name', player.full_name),
-      handicap: getPlayerValue(player.id, 'handicap', player.handicap),
-      bio: getPlayerValue(player.id, 'bio', player.bio || ""),
+      full_name: getPlayerValue(player.id, "full_name", player.full_name),
+      handicap: getPlayerValue(player.id, "handicap", player.handicap),
+      bio: getPlayerValue(player.id, "bio", player.bio || ""),
     });
     setEditPlayerModal(player);
   };
 
   const handleSavePlayer = () => {
     const playerId = tempPlayerData.id;
-    updateLocalChanges(`players.${playerId}.full_name`, tempPlayerData.full_name);
+    updateLocalChanges(
+      `players.${playerId}.full_name`,
+      tempPlayerData.full_name,
+    );
     updateLocalChanges(`players.${playerId}.handicap`, tempPlayerData.handicap);
     updateLocalChanges(`players.${playerId}.bio`, tempPlayerData.bio);
     setEditPlayerModal(null);
@@ -349,20 +379,24 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
 
   // Get contest data organized by round (from PublicEventHome)
   const getContestsByRound = () => {
-    return rounds.map((round, index) => {
-      const roundContests = skillsContests.filter((contest) => contest.round_id === round.id);
-      const contests = roundContests.map((contest) => ({
-        hole: contest.hole,
-        type: contest.contest_type,
-        emoji: contest.contest_type === "closest_to_pin" ? "🎯" : "🏌️‍♂️",
-      }));
+    return rounds
+      .map((round, index) => {
+        const roundContests = skillsContests.filter(
+          (contest) => contest.round_id === round.id,
+        );
+        const contests = roundContests.map((contest) => ({
+          hole: contest.hole,
+          type: contest.contest_type,
+          emoji: contest.contest_type === "closest_to_pin" ? "🎯" : "🏌️‍♂️",
+        }));
 
-      return {
-        roundNumber: index + 1,
-        courseName: round.course_name,
-        contests: contests.sort((a, b) => a.hole - b.hole),
-      };
-    }).filter((round) => round.contests.length > 0);
+        return {
+          roundNumber: index + 1,
+          courseName: round.course_name,
+          contests: contests.sort((a, b) => a.hole - b.hole),
+        };
+      })
+      .filter((round) => round.contests.length > 0);
   };
 
   // Helper functions for contests by type (needed for Contest Rules section)
@@ -415,7 +449,8 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
       score: "Albatross",
       points: 20,
       description: "3 under par",
-      detail: "Legendary! The rarest score in golf deserves the highest reward.",
+      detail:
+        "Legendary! The rarest score in golf deserves the highest reward.",
       color: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-50",
       textColor: "text-purple-900",
@@ -479,8 +514,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
     },
   ];
 
-  const closestToPinPrize = prizes.find((p) => p.category === "closest_to_pin")?.amount || 0;
-  const longestDrivePrize = prizes.find((p) => p.category === "longest_drive")?.amount || 0;
+  const closestToPinPrize =
+    prizes.find((p) => p.category === "closest_to_pin")?.amount || 0;
+  const longestDrivePrize =
+    prizes.find((p) => p.category === "longest_drive")?.amount || 0;
 
   const closestToPinGroups = getContestsByType("closest_to_pin");
   const longestDriveGroups = getContestsByType("longest_drive");
@@ -500,7 +537,9 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center max-w-md mx-auto p-6">
-          <div className="text-red-600 text-xl font-semibold mb-4">Error Loading Event</div>
+          <div className="text-red-600 text-xl font-semibold mb-4">
+            Error Loading Event
+          </div>
           <p className="text-gray-600 mb-4">{error}</p>
           <Button onClick={loadEventData} variant="outline">
             Try Again
@@ -542,7 +581,7 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                 {/* Editable Description */}
                 <div className="relative group">
                   {getEventDescription() ? (
-                    <p 
+                    <p
                       className="text-xl sm:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light cursor-pointer hover:bg-blue-50 p-4 rounded-lg transition-colors"
                       onClick={handleEditDescription}
                     >
@@ -610,29 +649,51 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                 {
                   icon: Trophy,
                   title: "Duration",
-                  value: `${rounds.length} Round${rounds.length !== 1 ? 's' : ''}`,
+                  value: `${rounds.length} Round${rounds.length !== 1 ? "s" : ""}`,
                   color: "orange",
                 },
               ].map((item, index) => {
                 const colorClasses = {
-                  emerald: { bg: 'from-emerald-100 to-emerald-200', text: 'text-emerald-600' },
-                  blue: { bg: 'from-blue-100 to-blue-200', text: 'text-blue-600' },
-                  purple: { bg: 'from-purple-100 to-purple-200', text: 'text-purple-600' },
-                  orange: { bg: 'from-orange-100 to-orange-200', text: 'text-orange-600' }
+                  emerald: {
+                    bg: "from-emerald-100 to-emerald-200",
+                    text: "text-emerald-600",
+                  },
+                  blue: {
+                    bg: "from-blue-100 to-blue-200",
+                    text: "text-blue-600",
+                  },
+                  purple: {
+                    bg: "from-purple-100 to-purple-200",
+                    text: "text-purple-600",
+                  },
+                  orange: {
+                    bg: "from-orange-100 to-orange-200",
+                    text: "text-orange-600",
+                  },
                 };
-                const colors = colorClasses[item.color as keyof typeof colorClasses];
-                const delays = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
+                const colors =
+                  colorClasses[item.color as keyof typeof colorClasses];
+                const delays = [
+                  "delay-0",
+                  "delay-100",
+                  "delay-200",
+                  "delay-300",
+                ];
 
                 return (
                   <div
                     key={index}
-                    className={`group cursor-pointer transition-all duration-700 ${delays[index] || 'delay-0'} opacity-100 translate-y-0`}
+                    className={`group cursor-pointer transition-all duration-700 ${delays[index] || "delay-0"} opacity-100 translate-y-0`}
                   >
                     <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white">
-                      <div className={`w-20 h-20 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                      <div
+                        className={`w-20 h-20 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
+                      >
                         <item.icon className={`h-10 w-10 ${colors.text}`} />
                       </div>
-                      <h3 className="font-bold text-slate-900 mb-3 text-lg">{item.title}</h3>
+                      <h3 className="font-bold text-slate-900 mb-3 text-lg">
+                        {item.title}
+                      </h3>
                       <p className="text-slate-600 font-medium">{item.value}</p>
                     </div>
                   </div>
@@ -649,20 +710,43 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
               <div className="text-center mb-16">
                 <div className="inline-flex items-center space-x-2 bg-green-200 rounded-full px-4 py-2 mb-4">
                   <Building className="h-4 w-4 text-green-800" />
-                  <span className="text-sm font-medium text-green-700">Golf Courses</span>
+                  <span className="text-sm font-medium text-green-700">
+                    Golf Courses
+                  </span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Featured Courses</h2>
-                <p className="text-xl text-slate-600 max-w-2xl mx-auto">Experience these exceptional golf courses during your tournament</p>
+                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                  Featured Courses
+                </h2>
+                <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+                  Experience these exceptional golf courses during your
+                  tournament
+                </p>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {rounds.map((round, index) => {
-                  const course = courses.find(c => c.round_id === round.id);
-                  const displayName = getCourseValue(round.id, 'course_name', round.course_name);
-                  const displayTeeTime = getCourseValue(round.id, 'tee_time', round.tee_time);
-                  const displayDate = getCourseValue(round.id, 'round_date', round.round_date);
-                  const displayDescription = getCourseValue(round.id, 'description', course?.description);
-                  
+                  const course = courses.find((c) => c.round_id === round.id);
+                  const displayName = getCourseValue(
+                    round.id,
+                    "course_name",
+                    round.course_name,
+                  );
+                  const displayTeeTime = getCourseValue(
+                    round.id,
+                    "tee_time",
+                    round.tee_time,
+                  );
+                  const displayDate = getCourseValue(
+                    round.id,
+                    "round_date",
+                    round.round_date,
+                  );
+                  const displayDescription = getCourseValue(
+                    round.id,
+                    "description",
+                    course?.description,
+                  );
+
                   return (
                     <div
                       key={round.id}
@@ -676,16 +760,25 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                           </Badge>
                           <Edit className="h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
-                        
+
                         <h3 className="text-2xl font-bold text-slate-900 mb-6 group-hover:text-green-700 transition-colors">
                           {displayName}
                         </h3>
-                        
+
                         <div className="space-y-3 text-sm text-slate-600 mb-6">
                           {displayDate && (
                             <div className="flex items-center">
                               <Calendar className="h-4 w-4 mr-3 text-slate-400" />
-                              <span>{new Date(displayDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+                              <span>
+                                {new Date(displayDate).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    weekday: "long",
+                                    month: "long",
+                                    day: "numeric",
+                                  },
+                                )}
+                              </span>
                             </div>
                           )}
                           {displayTeeTime && (
@@ -695,9 +788,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                             </div>
                           )}
                         </div>
-                        
+
                         <p className="text-slate-600 leading-relaxed">
-                          {displayDescription || "Click to add course description"}
+                          {displayDescription ||
+                            "Click to add course description"}
                         </p>
                       </div>
                     </div>
@@ -710,36 +804,62 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
 
         {/* Player Cards Section */}
         {players.length > 0 && (
-          <section id="players" className="py-20 px-6 sm:px-8 lg:px-12 bg-white/50">
+          <section
+            id="players"
+            className="py-20 px-6 sm:px-8 lg:px-12 bg-white/50"
+          >
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16">
                 <div className="inline-flex items-center space-x-2 bg-blue-200 rounded-full px-4 py-2 mb-4">
                   <Users className="h-4 w-4 text-blue-800" />
-                  <span className="text-sm font-medium text-blue-700">Tournament Roster</span>
+                  <span className="text-sm font-medium text-blue-700">
+                    Tournament Roster
+                  </span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Meet the Players</h2>
-                <p className="text-xl text-slate-600 max-w-2xl mx-auto">Get to know the golfers participating in this tournament</p>
+                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                  Meet the Players
+                </h2>
+                <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+                  Get to know the golfers participating in this tournament
+                </p>
               </div>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {players.map((player) => {
-                  const displayName = getPlayerValue(player.id, 'full_name', player.full_name);
-                  const displayHandicap = getPlayerValue(player.id, 'handicap', player.handicap);
-                  const displayBio = getPlayerValue(player.id, 'bio', player.bio);
+                  const displayName = getPlayerValue(
+                    player.id,
+                    "full_name",
+                    player.full_name,
+                  );
+                  const displayHandicap = getPlayerValue(
+                    player.id,
+                    "handicap",
+                    player.handicap,
+                  );
+                  const displayBio = getPlayerValue(
+                    player.id,
+                    "bio",
+                    player.bio,
+                  );
                   const hasBio = displayBio && displayBio.trim().length > 0;
                   const shouldShowSeeMore = hasBio && displayBio.length > 80;
                   const isShortBio = hasBio && displayBio.length <= 80;
-                  
+
                   return (
                     <div
                       key={player.id}
-                      className={`bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white flex flex-col cursor-pointer group ${!hasBio ? 'h-64' : isShortBio ? 'h-72' : 'h-80'}`}
+                      className={`bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white flex flex-col cursor-pointer group ${!hasBio ? "h-64" : isShortBio ? "h-72" : "h-80"}`}
                       onClick={() => handleEditPlayer(player)}
                     >
                       {/* Avatar Section - Top */}
                       <div className="flex flex-col items-center pt-6 pb-4">
                         <Avatar className="h-20 w-20 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300">
-                          {player.profile_image && <AvatarImage src={player.profile_image} alt={displayName} />}
+                          {player.profile_image && (
+                            <AvatarImage
+                              src={player.profile_image}
+                              alt={displayName}
+                            />
+                          )}
                           <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-xl font-bold">
                             {getPlayerInitials(displayName)}
                           </AvatarFallback>
@@ -754,11 +874,14 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                           </h3>
                           <Edit className="ml-2 h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
-                        {displayHandicap !== null && displayHandicap !== undefined && (
-                          <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-3 py-1">
-                            <span className="text-xs font-semibold text-slate-600">HCP: {displayHandicap}</span>
-                          </div>
-                        )}
+                        {displayHandicap !== null &&
+                          displayHandicap !== undefined && (
+                            <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-3 py-1">
+                              <span className="text-xs font-semibold text-slate-600">
+                                HCP: {displayHandicap}
+                              </span>
+                            </div>
+                          )}
                       </div>
 
                       {/* Bio Section */}
@@ -768,11 +891,11 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                             <p
                               className="text-sm text-slate-600 leading-relaxed overflow-hidden text-center"
                               style={{
-                                display: '-webkit-box',
+                                display: "-webkit-box",
                                 WebkitLineClamp: 2,
-                                WebkitBoxOrient: 'vertical',
-                                maxHeight: '2.75rem',
-                                lineHeight: '1.375rem'
+                                WebkitBoxOrient: "vertical",
+                                maxHeight: "2.75rem",
+                                lineHeight: "1.375rem",
                               }}
                             >
                               "{displayBio}"
@@ -799,7 +922,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
 
         {/* Scoring Format Section */}
         {rounds.length > 0 && (
-          <section id="scoring" className="py-28 px-6 sm:px-8 lg:px-12 relative">
+          <section
+            id="scoring"
+            className="py-28 px-6 sm:px-8 lg:px-12 relative"
+          >
             <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-slate-50/30"></div>
             <div className="relative max-w-6xl mx-auto">
               <div className="text-center mb-20">
@@ -897,7 +1023,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                           Why Stableford?
                         </div>
                         <p className="text-emerald-700 text-sm leading-relaxed">
-                          Stableford scoring rewards aggressive play and reduces the impact of one bad hole. It encourages golfers to take calculated risks and creates more exciting competition throughout the field.
+                          Stableford scoring rewards aggressive play and reduces
+                          the impact of one bad hole. It encourages golfers to
+                          take calculated risks and creates more exciting
+                          competition throughout the field.
                         </p>
                       </div>
                     </div>
@@ -948,20 +1077,32 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                     <TooltipTrigger asChild>
                       <div className="inline-flex items-center space-x-2 bg-indigo-200 rounded-full px-4 py-2 mb-4 cursor-help">
                         <Target className="h-4 w-4 text-indigo-600" />
-                        <span className="text-sm font-medium text-indigo-700">Skills Contests</span>
+                        <span className="text-sm font-medium text-indigo-700">
+                          Skills Contests
+                        </span>
                       </div>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Hole contest details can be edited in the Edit → Rounds page.</p>
+                      <p>
+                        Hole contest details can be edited in the Edit → Rounds
+                        page.
+                      </p>
                     </TooltipContent>
                   </Tooltip>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-indigo-900">Hole Contests</h3>
-                  <p className="text-lg text-indigo-600 font-light">Extra prizes on designated holes</p>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-indigo-900">
+                    Hole Contests
+                  </h3>
+                  <p className="text-lg text-indigo-600 font-light">
+                    Extra prizes on designated holes
+                  </p>
                 </div>
 
                 <div className="space-y-6">
                   {getContestsByRound().map((round, index) => (
-                    <div key={index} className="bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm">
+                    <div
+                      key={index}
+                      className="bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"
+                    >
                       <h4 className="text-xl font-bold text-indigo-900 mb-4">
                         Round {round.roundNumber} ({round.courseName})
                       </h4>
@@ -971,7 +1112,15 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                             key={contestIndex}
                             className="flex items-center space-x-2 bg-indigo-50 rounded-lg px-3 py-2"
                           >
-                            <span className="text-lg" role="img" aria-label={contest.type === 'closest_to_pin' ? 'target' : 'golf swing'}>
+                            <span
+                              className="text-lg"
+                              role="img"
+                              aria-label={
+                                contest.type === "closest_to_pin"
+                                  ? "target"
+                                  : "golf swing"
+                              }
+                            >
                               {contest.emoji}
                             </span>
                             <span className="font-medium text-indigo-900 text-sm">
@@ -986,11 +1135,19 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                   {/* Prize Information */}
                   {(closestToPinPrize > 0 || longestDrivePrize > 0) && (
                     <div className="bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm">
-                      <h4 className="text-lg font-semibold text-indigo-900 mb-4">Prize Information</h4>
+                      <h4 className="text-lg font-semibold text-indigo-900 mb-4">
+                        Prize Information
+                      </h4>
                       <div className="flex flex-wrap gap-4">
                         {closestToPinPrize > 0 && (
                           <div className="flex items-center space-x-2">
-                            <span className="text-lg" role="img" aria-label="target">🎯</span>
+                            <span
+                              className="text-lg"
+                              role="img"
+                              aria-label="target"
+                            >
+                              🎯
+                            </span>
                             <span className="text-sm text-green-700 font-medium">
                               Closest to Pin: ${closestToPinPrize} per hole
                             </span>
@@ -998,7 +1155,13 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                         )}
                         {longestDrivePrize > 0 && (
                           <div className="flex items-center space-x-2">
-                            <span className="text-lg" role="img" aria-label="golf swing">🏌️‍♂️</span>
+                            <span
+                              className="text-lg"
+                              role="img"
+                              aria-label="golf swing"
+                            >
+                              🏌️‍♂️
+                            </span>
                             <span className="text-sm text-orange-700 font-medium">
                               Long Drive: ${longestDrivePrize} per hole
                             </span>
@@ -1029,7 +1192,9 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                       </div>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Contest rules are managed in the Edit → Prizes section.</p>
+                      <p>
+                        Contest rules are managed in the Edit → Prizes section.
+                      </p>
                     </TooltipContent>
                   </Tooltip>
                   <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">
@@ -1138,9 +1303,7 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                         <li>
                           • Contest holes will be clearly marked with signage
                         </li>
-                        <li>
-                          • Winners announced at the post-round gathering
-                        </li>
+                        <li>• Winners announced at the post-round gathering</li>
                       </ul>
                     </div>
                   </div>
@@ -1157,9 +1320,13 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
               <div className="mb-16">
                 <div className="inline-flex items-center space-x-2 bg-yellow-200 rounded-full px-4 py-2 mb-4">
                   <Trophy className="h-4 w-4 text-yellow-800" />
-                  <span className="text-sm font-medium text-yellow-700">Tournament Prizes</span>
+                  <span className="text-sm font-medium text-yellow-700">
+                    Tournament Prizes
+                  </span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Prizes & Buy-In</h2>
+                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                  Prizes & Buy-In
+                </h2>
               </div>
 
               {eventData.buy_in && eventData.buy_in > 0 && (
@@ -1170,7 +1337,9 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                         <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                           <Trophy className="h-8 w-8 text-white" />
                         </div>
-                        <h3 className="text-xl font-bold text-slate-900 mb-2">Tournament Buy-In</h3>
+                        <h3 className="text-xl font-bold text-slate-900 mb-2">
+                          Tournament Buy-In
+                        </h3>
                         <div className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                           ${eventData.buy_in}
                         </div>
@@ -1178,7 +1347,9 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                     </div>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Buy-in and prizes can be edited in the Edit → Prizes page.</p>
+                    <p>
+                      Buy-in and prizes can be edited in the Edit → Prizes page.
+                    </p>
                   </TooltipContent>
                 </Tooltip>
               )}
@@ -1193,61 +1364,83 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
               <div className="text-center mb-16">
                 <div className="inline-flex items-center space-x-2 bg-blue-200 rounded-full px-4 py-2 mb-4">
                   <Plane className="h-4 w-4 text-blue-800" />
-                  <span className="text-sm font-medium text-blue-700">Travel & Accommodation</span>
+                  <span className="text-sm font-medium text-blue-700">
+                    Travel & Accommodation
+                  </span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Travel Information</h2>
-                <p className="text-xl text-slate-600 max-w-2xl mx-auto">Everything you need to know about getting there and staying comfortable</p>
+                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                  Travel Information
+                </h2>
+                <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+                  Everything you need to know about getting there and staying
+                  comfortable
+                </p>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Getting There */}
-                <div 
+                <div
                   className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-2 group"
-                  onClick={() => handleEditTravel('flight_info', 'Getting There')}
+                  onClick={() =>
+                    handleEditTravel("flight_info", "Getting There")
+                  }
                 >
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                     <Plane className="h-8 w-8 text-white" />
                   </div>
                   <div className="flex items-center justify-center mb-4">
-                    <h3 className="text-xl font-bold text-slate-900">Getting There</h3>
+                    <h3 className="text-xl font-bold text-slate-900">
+                      Getting There
+                    </h3>
                     <Edit className="ml-2 h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                   <div className="text-slate-600 leading-relaxed whitespace-pre-line">
-                    {getTravelValue('flight_info', travel.flight_info) || "Click to add flight information"}
+                    {getTravelValue("flight_info", travel.flight_info) ||
+                      "Click to add flight information"}
                   </div>
                 </div>
 
                 {/* Accommodations */}
-                <div 
+                <div
                   className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-2 group"
-                  onClick={() => handleEditTravel('accommodations', 'Accommodations')}
+                  onClick={() =>
+                    handleEditTravel("accommodations", "Accommodations")
+                  }
                 >
                   <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                     <Building className="h-8 w-8 text-white" />
                   </div>
                   <div className="flex items-center justify-center mb-4">
-                    <h3 className="text-xl font-bold text-slate-900">Accommodations</h3>
+                    <h3 className="text-xl font-bold text-slate-900">
+                      Accommodations
+                    </h3>
                     <Edit className="ml-2 h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                   <div className="text-slate-600 leading-relaxed whitespace-pre-line">
-                    {getTravelValue('accommodations', travel.accommodations) || "Click to add accommodation details"}
+                    {getTravelValue("accommodations", travel.accommodations) ||
+                      "Click to add accommodation details"}
                   </div>
                 </div>
 
                 {/* Daily Schedule */}
-                <div 
+                <div
                   className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-2 group"
-                  onClick={() => handleEditTravel('daily_schedule', 'Daily Schedule')}
+                  onClick={() =>
+                    handleEditTravel("daily_schedule", "Daily Schedule")
+                  }
                 >
                   <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                     <Calendar className="h-8 w-8 text-white" />
                   </div>
                   <div className="flex items-center justify-center mb-4">
-                    <h3 className="text-xl font-bold text-slate-900">Daily Schedule</h3>
+                    <h3 className="text-xl font-bold text-slate-900">
+                      Daily Schedule
+                    </h3>
                     <Edit className="ml-2 h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                   <div className="text-slate-600 leading-relaxed whitespace-pre-line">
-                    {getTravelValue('daily_schedule', travel.daily_schedule) || "Click to add daily schedule"}
+                    {getTravelValue("daily_schedule", travel.daily_schedule) ||
+                      "Click to add daily schedule"}
                   </div>
                 </div>
               </div>
@@ -1258,7 +1451,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
         {/* Modals */}
 
         {/* Description Edit Modal */}
-        <Dialog open={editDescriptionModal} onOpenChange={setEditDescriptionModal}>
+        <Dialog
+          open={editDescriptionModal}
+          onOpenChange={setEditDescriptionModal}
+        >
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle>Edit Event Description</DialogTitle>
@@ -1275,7 +1471,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
               />
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setEditDescriptionModal(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setEditDescriptionModal(false)}
+              >
                 Cancel
               </Button>
               <Button onClick={handleSaveDescription}>Save Changes</Button>
@@ -1284,12 +1483,16 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
         </Dialog>
 
         {/* Course Edit Modal */}
-        <Dialog open={!!editCourseModal} onOpenChange={() => setEditCourseModal(null)}>
+        <Dialog
+          open={!!editCourseModal}
+          onOpenChange={() => setEditCourseModal(null)}
+        >
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle>Edit Course Details</DialogTitle>
               <DialogDescription>
-                Update the course information for Round {tempCourseData.roundNumber || 1}.
+                Update the course information for Round{" "}
+                {tempCourseData.roundNumber || 1}.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
@@ -1298,7 +1501,12 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                 <Input
                   id="course_name"
                   value={tempCourseData.course_name || ""}
-                  onChange={(e) => setTempCourseData(prev => ({...prev, course_name: e.target.value}))}
+                  onChange={(e) =>
+                    setTempCourseData((prev) => ({
+                      ...prev,
+                      course_name: e.target.value,
+                    }))
+                  }
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -1308,7 +1516,12 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                     id="round_date"
                     type="date"
                     value={tempCourseData.round_date || ""}
-                    onChange={(e) => setTempCourseData(prev => ({...prev, round_date: e.target.value}))}
+                    onChange={(e) =>
+                      setTempCourseData((prev) => ({
+                        ...prev,
+                        round_date: e.target.value,
+                      }))
+                    }
                   />
                 </div>
                 <div>
@@ -1317,7 +1530,12 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                     id="tee_time"
                     type="time"
                     value={tempCourseData.tee_time || ""}
-                    onChange={(e) => setTempCourseData(prev => ({...prev, tee_time: e.target.value}))}
+                    onChange={(e) =>
+                      setTempCourseData((prev) => ({
+                        ...prev,
+                        tee_time: e.target.value,
+                      }))
+                    }
                   />
                 </div>
               </div>
@@ -1326,13 +1544,21 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                 <Textarea
                   id="description"
                   value={tempCourseData.description || ""}
-                  onChange={(e) => setTempCourseData(prev => ({...prev, description: e.target.value}))}
+                  onChange={(e) =>
+                    setTempCourseData((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
+                  }
                   placeholder="Describe this course..."
                 />
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setEditCourseModal(null)}>
+              <Button
+                variant="outline"
+                onClick={() => setEditCourseModal(null)}
+              >
                 Cancel
               </Button>
               <Button onClick={handleSaveCourse}>Save Changes</Button>
@@ -1341,13 +1567,14 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
         </Dialog>
 
         {/* Player Edit Modal */}
-        <Dialog open={!!editPlayerModal} onOpenChange={() => setEditPlayerModal(null)}>
+        <Dialog
+          open={!!editPlayerModal}
+          onOpenChange={() => setEditPlayerModal(null)}
+        >
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle>Edit Player Details</DialogTitle>
-              <DialogDescription>
-                Update player information.
-              </DialogDescription>
+              <DialogDescription>Update player information.</DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div>
@@ -1355,7 +1582,12 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                 <Input
                   id="full_name"
                   value={tempPlayerData.full_name || ""}
-                  onChange={(e) => setTempPlayerData(prev => ({...prev, full_name: e.target.value}))}
+                  onChange={(e) =>
+                    setTempPlayerData((prev) => ({
+                      ...prev,
+                      full_name: e.target.value,
+                    }))
+                  }
                 />
               </div>
               <div>
@@ -1364,7 +1596,12 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                   id="handicap"
                   type="number"
                   value={tempPlayerData.handicap || ""}
-                  onChange={(e) => setTempPlayerData(prev => ({...prev, handicap: parseFloat(e.target.value) || null}))}
+                  onChange={(e) =>
+                    setTempPlayerData((prev) => ({
+                      ...prev,
+                      handicap: parseFloat(e.target.value) || null,
+                    }))
+                  }
                 />
               </div>
               <div>
@@ -1372,7 +1609,12 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                 <Textarea
                   id="bio"
                   value={tempPlayerData.bio || ""}
-                  onChange={(e) => setTempPlayerData(prev => ({...prev, bio: e.target.value}))}
+                  onChange={(e) =>
+                    setTempPlayerData((prev) => ({
+                      ...prev,
+                      bio: e.target.value,
+                    }))
+                  }
                   placeholder="Tell us about this player..."
                 />
               </div>
@@ -1382,7 +1624,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setEditPlayerModal(null)}>
+              <Button
+                variant="outline"
+                onClick={() => setEditPlayerModal(null)}
+              >
                 Cancel
               </Button>
               <Button onClick={handleSavePlayer}>Save Changes</Button>
@@ -1391,7 +1636,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
         </Dialog>
 
         {/* Travel Edit Modal */}
-        <Dialog open={!!editTravelModal} onOpenChange={() => setEditTravelModal(null)}>
+        <Dialog
+          open={!!editTravelModal}
+          onOpenChange={() => setEditTravelModal(null)}
+        >
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle>Edit {editTravelModal?.title}</DialogTitle>
@@ -1408,7 +1656,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
               />
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setEditTravelModal(null)}>
+              <Button
+                variant="outline"
+                onClick={() => setEditTravelModal(null)}
+              >
                 Cancel
               </Button>
               <Button onClick={handleSaveTravel}>Save Changes</Button>
