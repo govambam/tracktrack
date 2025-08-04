@@ -17,22 +17,50 @@ export default function TravelEdit() {
   const { tripData } = state;
 
   const [travelInfo, setTravelInfo] = useState({
-    flightTimes: tripData.travelInfo?.flightTimes || '',
-    accommodations: tripData.travelInfo?.accommodations || '',
-    dailySchedule: tripData.travelInfo?.dailySchedule || ''
+    flightTimes: '',
+    accommodations: '',
+    dailySchedule: ''
   });
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Update local state when context data changes
-    if (tripData.travelInfo) {
-      setTravelInfo({
-        flightTimes: tripData.travelInfo.flightTimes || '',
-        accommodations: tripData.travelInfo.accommodations || '',
-        dailySchedule: tripData.travelInfo.dailySchedule || ''
-      });
+    if (eventId) {
+      loadTravelData();
     }
-  }, [tripData.travelInfo]);
+  }, [eventId]);
+
+  const loadTravelData = async () => {
+    if (!eventId) return;
+
+    try {
+      setLoading(true);
+      console.log('Loading travel data for event:', eventId);
+
+      // Load travel data directly from Supabase
+      const { data: travelData, error } = await supabase
+        .from('event_travel')
+        .select('flight_info, accommodations, daily_schedule')
+        .eq('event_id', eventId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error loading travel data:', error);
+        // Don't show error for missing travel data, use defaults
+      } else if (travelData) {
+        setTravelInfo({
+          flightTimes: travelData.flight_info || '',
+          accommodations: travelData.accommodations || '',
+          dailySchedule: travelData.daily_schedule || ''
+        });
+        console.log('Loaded travel data:', travelData);
+      }
+    } catch (error) {
+      console.error('Error loading travel data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const updateTravelInfo = (field: keyof typeof travelInfo, value: string) => {
     setTravelInfo(prev => ({ ...prev, [field]: value }));
@@ -114,6 +142,14 @@ export default function TravelEdit() {
   };
 
   const hasAnyContent = Object.values(travelInfo).some(value => value.trim());
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

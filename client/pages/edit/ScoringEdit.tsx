@@ -17,17 +17,45 @@ export default function ScoringEdit() {
   const { state } = useTripCreation();
   const { tripData } = state;
 
-  const [scoringFormat, setScoringFormat] = useState<'stroke-play' | 'modified-stableford'>(
-    tripData.scoringFormat || 'stroke-play'
-  );
+  const [scoringFormat, setScoringFormat] = useState<'stroke-play' | 'modified-stableford'>('stroke-play');
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Update local state when context data changes
-    if (tripData.scoringFormat) {
-      setScoringFormat(tripData.scoringFormat);
+    if (eventId) {
+      loadScoringData();
     }
-  }, [tripData.scoringFormat]);
+  }, [eventId]);
+
+  const loadScoringData = async () => {
+    if (!eventId) return;
+
+    try {
+      setLoading(true);
+      console.log('Loading scoring data for event:', eventId);
+
+      // Load scoring format from rounds data
+      const { data: roundsData, error } = await supabase
+        .from('event_rounds')
+        .select('scoring_type')
+        .eq('event_id', eventId)
+        .limit(1)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error loading scoring data:', error);
+        // Don't show error for missing rounds, use default
+      } else if (roundsData) {
+        const format = roundsData.scoring_type === 'stableford' ? 'modified-stableford' : 'stroke-play';
+        setScoringFormat(format);
+        console.log('Loaded scoring format:', format);
+      }
+    } catch (error) {
+      console.error('Error loading scoring data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const defaultStablefordPoints = {
     eagle: 4,
@@ -97,6 +125,14 @@ export default function ScoringEdit() {
       setSaving(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

@@ -24,41 +24,106 @@ export default function PrizesEdit() {
   const { state, updatePrizes } = useTripCreation();
   const { tripData } = state;
 
-  const [buyIn, setBuyIn] = useState<number | undefined>(tripData.buyIn);
-  const [enablePayout, setEnablePayout] = useState(!!tripData.payoutStructure);
-  const [enableContests, setEnableContests] = useState(
-    !!tripData.contestPrizes,
-  );
+  const [buyIn, setBuyIn] = useState<number | undefined>(undefined);
+  const [enablePayout, setEnablePayout] = useState(false);
+  const [enableContests, setEnableContests] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [payoutStructure, setPayoutStructure] = useState({
-    champion: tripData.payoutStructure?.champion || 0,
-    runnerUp: tripData.payoutStructure?.runnerUp || 0,
-    third: tripData.payoutStructure?.third || 0,
+    champion: 0,
+    runnerUp: 0,
+    third: 0,
   });
 
   const [contestPrizes, setContestPrizes] = useState({
-    longestDrive: tripData.contestPrizes?.longestDrive || 0,
-    closestToPin: tripData.contestPrizes?.closestToPin || 0,
-    other: tripData.contestPrizes?.other || "",
+    longestDrive: 0,
+    closestToPin: 0,
+    other: "",
   });
 
   useEffect(() => {
-    // Update local state when context data changes
-    console.log("PrizesEdit: tripData changed, buyIn:", tripData.buyIn);
-    if (tripData.buyIn !== undefined) {
-      console.log("PrizesEdit: Setting buyIn to:", tripData.buyIn);
-      setBuyIn(tripData.buyIn);
+    if (eventId) {
+      loadPrizesData();
     }
-    if (tripData.payoutStructure) {
-      setEnablePayout(true);
-      setPayoutStructure(tripData.payoutStructure);
+  }, [eventId]);
+
+  const loadPrizesData = async () => {
+    if (!eventId) return;
+
+    try {
+      setLoading(true);
+      console.log('Loading prizes data for event:', eventId);
+
+      // Load buy-in from events table
+      const { data: eventData, error: eventError } = await supabase
+        .from('events')
+        .select('buy_in')
+        .eq('id', eventId)
+        .single();
+
+      if (eventError) {
+        console.error('Error loading event data:', eventError);
+      } else if (eventData) {
+        setBuyIn(eventData.buy_in || 0);
+        console.log('Loaded buy-in:', eventData.buy_in);
+      }
+
+      // Load prizes from event_prizes table
+      const { data: prizesData, error: prizesError } = await supabase
+        .from('event_prizes')
+        .select('*')
+        .eq('event_id', eventId);
+
+      if (prizesError) {
+        console.error('Error loading prizes data:', prizesError);
+      } else if (prizesData && prizesData.length > 0) {
+        const newPayoutStructure = { champion: 0, runnerUp: 0, third: 0 };
+        const newContestPrizes = { longestDrive: 0, closestToPin: 0, other: "" };
+        let hasPayouts = false;
+        let hasContests = false;
+
+        prizesData.forEach(prize => {
+          switch (prize.category) {
+            case 'overall_champion':
+              newPayoutStructure.champion = prize.amount || 0;
+              hasPayouts = true;
+              break;
+            case 'runner_up':
+              newPayoutStructure.runnerUp = prize.amount || 0;
+              hasPayouts = true;
+              break;
+            case 'third_place':
+              newPayoutStructure.third = prize.amount || 0;
+              hasPayouts = true;
+              break;
+            case 'longest_drive':
+              newContestPrizes.longestDrive = prize.amount || 0;
+              hasContests = true;
+              break;
+            case 'closest_to_pin':
+              newContestPrizes.closestToPin = prize.amount || 0;
+              hasContests = true;
+              break;
+            case 'custom':
+              newContestPrizes.other = prize.description || "";
+              hasContests = true;
+              break;
+          }
+        });
+
+        setPayoutStructure(newPayoutStructure);
+        setContestPrizes(newContestPrizes);
+        setEnablePayout(hasPayouts);
+        setEnableContests(hasContests);
+        console.log('Loaded prizes:', { payouts: newPayoutStructure, contests: newContestPrizes });
+      }
+    } catch (error) {
+      console.error('Error loading prizes data:', error);
+    } finally {
+      setLoading(false);
     }
-    if (tripData.contestPrizes) {
-      setEnableContests(true);
-      setContestPrizes(tripData.contestPrizes);
-    }
-  }, [tripData]);
+  };
 
   // Get skills contests from rounds data
   const getSkillsContestsFromRounds = () => {
@@ -232,6 +297,14 @@ export default function PrizesEdit() {
       setSaving(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

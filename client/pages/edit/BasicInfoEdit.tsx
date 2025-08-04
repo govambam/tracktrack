@@ -27,21 +27,61 @@ export default function BasicInfoEdit() {
   });
 
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    // Initialize form with context data
-    if (tripData) {
-      setFormData({
-        tripName: tripData.tripName || '',
-        startDate: tripData.startDate || '',
-        endDate: tripData.endDate || '',
-        location: tripData.location || '',
-        description: tripData.description || '',
-        bannerImage: tripData.bannerImage || ''
-      });
+    if (eventId) {
+      loadBasicInfo();
     }
-  }, [tripData]);
+  }, [eventId]);
+
+  const loadBasicInfo = async () => {
+    if (!eventId) return;
+
+    try {
+      setLoading(true);
+      console.log('Loading basic info for event:', eventId);
+
+      // Load event data directly from Supabase to ensure fresh data
+      const { data: eventData, error } = await supabase
+        .from('events')
+        .select('name, start_date, end_date, location, description, logo_url')
+        .eq('id', eventId)
+        .single();
+
+      if (error) {
+        console.error('Error loading event data:', error);
+        toast({
+          title: "Load Failed",
+          description: error.message || "Failed to load event data",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (eventData) {
+        setFormData({
+          tripName: eventData.name || '',
+          startDate: eventData.start_date || '',
+          endDate: eventData.end_date || '',
+          location: eventData.location || '',
+          description: eventData.description || '',
+          bannerImage: eventData.logo_url || ''
+        });
+        console.log('Loaded basic info:', eventData);
+      }
+    } catch (error) {
+      console.error('Error loading basic info:', error);
+      toast({
+        title: "Load Failed",
+        description: "An unexpected error occurred while loading event data",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -126,6 +166,14 @@ export default function BasicInfoEdit() {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
