@@ -58,10 +58,10 @@ export default function PlayersEdit() {
         // Convert database format to component format
         const formattedPlayers = playersData.map(p => ({
           id: p.id,
-          name: p.name || '',
+          name: p.full_name || '',
           email: p.email || '',
           handicap: p.handicap,
-          image: p.image || ''
+          image: p.profile_image || ''
         }));
         setPlayers(formattedPlayers);
         console.log('Loaded players:', formattedPlayers);
