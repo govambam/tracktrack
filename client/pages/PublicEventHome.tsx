@@ -1519,6 +1519,18 @@ export default function PublicEventHome() {
           }}
         />
       )}
+
+      {/* Player Modal */}
+      {selectedPlayer && (
+        <PlayerModal
+          player={selectedPlayer}
+          isOpen={isPlayerModalOpen}
+          onClose={() => {
+            setIsPlayerModalOpen(false);
+            setSelectedPlayer(null);
+          }}
+        />
+      )}
     </div>
   );
 }
