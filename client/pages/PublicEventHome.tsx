@@ -17,7 +17,9 @@ import {
   Award,
   ChevronRight,
   Loader2,
-  Sparkles
+  Sparkles,
+  Home,
+  BarChart3
 } from "lucide-react";
 
 interface EventData {
