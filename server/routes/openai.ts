@@ -1,32 +1,7 @@
 import { Request, Response } from 'express';
 
-const generateFallbackDescription = (prompt: string): string => {
-  // Extract basic info from the prompt
-  const eventNameMatch = prompt.match(/golf event called ([^.]+)\./);
-  const locationMatch = prompt.match(/takes place in ([^,]+),/);
-  const dateMatch = prompt.match(/from ([^.]+)\./);
-  const coursesMatch = prompt.match(/Golf will be played at ([^.]+)\./);
-  const playersMatch = prompt.match(/There are (\d+) players/);
-
-  const eventName = eventNameMatch?.[1] || 'this golf event';
-  const location = locationMatch?.[1] || 'a beautiful destination';
-  const dates = dateMatch?.[1] || 'upcoming dates';
-  const courses = coursesMatch?.[1] || 'world-class golf courses';
-  const playerCount = playersMatch?.[1] || 'golf enthusiasts';
-
-  const templates = [
-    `Join us for ${eventName}, an exciting golf adventure in ${location}! Taking place ${dates}, this event brings together ${playerCount} players for unforgettable rounds at ${courses}. Whether you're here for the competition or the camaraderie, this promises to be an amazing golf experience that you won't want to miss!`,
-
-    `Get ready for ${eventName}! This premier golf event in ${location} runs ${dates} and features incredible play at ${courses}. With ${playerCount} players participating, you can expect great competition, lasting friendships, and memories to last a lifetime. Come for the golf, stay for the fun!`,
-
-    `${eventName} is set to be an incredible golf getaway in ${location}. From ${dates}, ${playerCount} golfers will take on the challenge at ${courses}. This tournament perfectly blends competitive spirit with a welcoming atmosphere, making it ideal for players of all skill levels. Don't miss this amazing opportunity!`
-  ];
-
-  return templates[Math.floor(Math.random() * templates.length)];
-};
-
 export const generateDescription = async (req: Request, res: Response) => {
-  console.log('=== Generate Description Endpoint Called ===');
+  console.log('=== AI Description Generation Called ===');
   console.log('Request body:', req.body);
 
   try {
@@ -37,12 +12,15 @@ export const generateDescription = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    const apiKey = process.env.OPENAI_API_KEY || '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';
+    const apiKey = process.env.OPENAI_API_KEY;
+    console.log('API key status:', apiKey ? 'Available' : 'Missing');
 
-    console.log('Using API key:', apiKey ? `${apiKey.substring(0, 10)}...` : 'No key');
-    console.log('Prompt length:', prompt.length);
-    console.log('Making OpenAI API call');
-    
+    if (!apiKey) {
+      return res.status(500).json({ error: 'OpenAI API key not configured' });
+    }
+
+    console.log('Calling OpenAI with prompt length:', prompt.length);
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -50,7 +28,7 @@ export const generateDescription = async (req: Request, res: Response) => {
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4',
         messages: [
           {
             role: 'user',
@@ -67,59 +45,28 @@ export const generateDescription = async (req: Request, res: Response) => {
     if (!response.ok) {
       const errorBody = await response.text();
       console.error('OpenAI API error:', errorBody);
-
-      // Parse the error to provide more specific messaging
-      let errorMessage = 'OpenAI API error';
-      let shouldUseFallback = false;
-
-      try {
-        const errorData = JSON.parse(errorBody);
-        if (errorData.error?.code === 'insufficient_quota') {
-          errorMessage = 'OpenAI quota exceeded';
-          shouldUseFallback = true;
-        } else if (errorData.error?.code === 'rate_limit_exceeded') {
-          errorMessage = 'OpenAI rate limit exceeded';
-          shouldUseFallback = true;
-        }
-      } catch (parseError) {
-        console.log('Could not parse OpenAI error response');
-      }
-
-      // If quota exceeded, use fallback generation
-      if (shouldUseFallback) {
-        console.log('Using fallback generation due to OpenAI limits');
-        const fallbackText = generateFallbackDescription(prompt);
-        return res.json({
-          description: fallbackText,
-          source: 'fallback'
-        });
-      }
-
       return res.status(response.status).json({
-        error: errorMessage,
+        error: 'OpenAI API error',
         details: errorBody
       });
     }
 
     const data = await response.json();
-    console.log('OpenAI response data:', data);
-
     const generatedText = data.choices[0]?.message?.content?.trim();
-    console.log('Generated text:', generatedText);
 
     if (!generatedText) {
       console.log('No text was generated by OpenAI');
       return res.status(500).json({ error: 'No text generated' });
     }
 
-    console.log('Sending successful response');
+    console.log('✅ Successfully generated description');
     res.json({ description: generatedText });
 
   } catch (error) {
-    console.error('Error in generateDescription:', error);
-    res.status(500).json({ 
-      error: 'Internal server error', 
-      details: error instanceof Error ? error.message : 'Unknown error' 
+    console.error('❌ Error in generateDescription:', error);
+    res.status(500).json({
+      error: 'Internal server error',
+      details: error instanceof Error ? error.message : 'Unknown error'
     });
   }
 };
