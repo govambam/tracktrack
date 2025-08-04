@@ -1109,7 +1109,7 @@ export default function PublicEventHome() {
     );
   }
 
-  if (!eventData) {
+  if (error || !eventData) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
         <div className="text-center">
@@ -1118,7 +1118,7 @@ export default function PublicEventHome() {
             Event Not Found
           </h1>
           <p className="text-green-600">
-            This event may not be published or the link is incorrect.
+            {error || "This event may not be published or the link is incorrect."}
           </p>
         </div>
       </div>
