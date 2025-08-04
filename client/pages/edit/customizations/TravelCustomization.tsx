@@ -22,6 +22,7 @@ export default function TravelCustomization() {
   const [travelInfo, setTravelInfo] = useState<TravelInfo>({});
   const [travelEnabled, setTravelEnabled] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (eventId) {
