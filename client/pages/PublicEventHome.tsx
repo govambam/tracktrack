@@ -162,17 +162,6 @@ const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
 
 // Sticky Navigation Component
 const StickyNavigation = ({ eventName }: { eventName: string }) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > 100);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const navItems = [
     { name: 'Overview', href: '#overview' },
     { name: 'Courses', href: '#courses' },
@@ -182,8 +171,6 @@ const StickyNavigation = ({ eventName }: { eventName: string }) => {
     { name: 'Travel', href: '#travel' },
     { name: 'Leaderboard', href: '/leaderboard' },
   ];
-
-  if (!isVisible) return null;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg">
