@@ -74,7 +74,12 @@ export default function HomeCustomization() {
         .single();
 
       if (fetchError && fetchError.code !== 'PGRST116') {
-        console.error('Error checking customization:', fetchError);
+        console.error('Error checking customization:', {
+          message: fetchError.message,
+          details: fetchError.details,
+          hint: fetchError.hint,
+          code: fetchError.code
+        });
         return;
       }
 
