@@ -54,7 +54,9 @@ export default function SettingsEdit() {
   const eventName = tripData?.tripName || "this event";
 
   useEffect(() => {
-    loadEventInfo();
+    if (eventId) {
+      loadEventInfo();
+    }
   }, [eventId]);
 
   const loadEventInfo = async () => {
