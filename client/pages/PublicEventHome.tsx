@@ -530,36 +530,60 @@ export default function PublicEventHome() {
 
       {/* Prizes Section */}
       {prizes.length > 0 && (
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-900 mb-6">High Stakes, Higher Handicaps</h2>
-              <p className="text-lg text-gray-600">Tournament Buy-in</p>
-              <div className="text-4xl sm:text-5xl font-bold text-green-600 mt-4">
-                ${eventData.buy_in || 0}
+        <section className="py-28 px-6 sm:px-8 lg:px-12 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
+          <div className="relative max-w-6xl mx-auto">
+            <div className="text-center mb-20">
+              <div className="inline-flex items-center space-x-2 bg-amber-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
+                <Trophy className="h-4 w-4 text-amber-600" />
+                <span className="text-sm font-medium text-amber-800">Prize Pool</span>
               </div>
+
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
+                High Stakes, Higher Handicaps
+              </h2>
+
+              {eventData.buy_in && eventData.buy_in > 0 && (
+                <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-200/50 max-w-md mx-auto">
+                  <p className="text-lg text-slate-600 mb-2">Tournament Buy-in</p>
+                  <div className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                    ${eventData.buy_in}
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {prizes.map((prize) => (
-                <div key={prize.id} className="text-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Trophy className="h-8 w-8 text-green-600" />
-                  </div>
+              {prizes.map((prize, index) => {
+                const { isVisible, elementRef } = useScrollAnimation();
+                return (
+                  <div
+                    key={prize.id}
+                    ref={elementRef}
+                    className={`group transition-all duration-700 delay-${index * 100} ${
+                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    }`}
+                  >
+                    <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-300 group-hover:bg-white">
+                      <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <Trophy className="h-10 w-10 text-amber-600" />
+                      </div>
 
-                  <h3 className="text-lg font-bold text-green-900 mb-2 capitalize">
-                    {prize.category.replace('_', ' ')}
-                  </h3>
+                      <h3 className="text-xl font-bold text-slate-900 mb-4 capitalize group-hover:text-amber-700 transition-colors">
+                        {prize.category.replace('_', ' ')}
+                      </h3>
 
-                  {prize.amount > 0 && (
-                    <div className="text-2xl font-bold text-green-600 mb-2">
-                      ${prize.amount}
+                      {prize.amount > 0 && (
+                        <div className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent mb-4">
+                          ${prize.amount}
+                        </div>
+                      )}
+
+                      <p className="text-slate-600 font-medium">{prize.description}</p>
                     </div>
-                  )}
-
-                  <p className="text-gray-600 text-sm">{prize.description}</p>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -567,49 +591,56 @@ export default function PublicEventHome() {
 
       {/* Travel & Accommodation Section */}
       {travel && (travel.flight_info || travel.accommodations || travel.daily_schedule) && (
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-900 mb-6">Travel & Accommodation</h2>
-              <p className="text-lg text-gray-600">Everything you need to have a smooth and comfortable trip</p>
+        <section className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-white to-slate-50/30"></div>
+          <div className="absolute top-0 left-0 w-80 h-80 bg-blue-100/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+
+          <div className="relative max-w-6xl mx-auto">
+            <div className="text-center mb-20">
+              <div className="inline-flex items-center space-x-2 bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
+                <Plane className="h-4 w-4 text-blue-600" />
+                <span className="text-sm font-medium text-blue-800">Logistics</span>
+              </div>
+
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
+                Travel & Accommodation
+              </h2>
+              <p className="text-xl text-slate-600 font-light max-w-3xl mx-auto">
+                Everything you need to have a smooth and comfortable trip
+              </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              {travel.flight_info && (
-                <div>
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
-                    <Plane className="h-6 w-6 text-green-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-green-900 mb-4">Getting There</h3>
-                  <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-600 whitespace-pre-line leading-relaxed">{travel.flight_info}</p>
-                  </div>
-                </div>
-              )}
+              {[
+                { info: travel.flight_info, icon: Plane, title: "Getting There", color: "blue" },
+                { info: travel.accommodations, icon: Building, title: "Accommodation", color: "emerald" },
+                { info: travel.daily_schedule, icon: Clock, title: "Daily Schedule", color: "purple" }
+              ].filter(item => item.info).map((item, index) => {
+                const { isVisible, elementRef } = useScrollAnimation();
+                return (
+                  <div
+                    key={item.title}
+                    ref={elementRef}
+                    className={`transition-all duration-700 delay-${index * 150} ${
+                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                    }`}
+                  >
+                    <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 h-full">
+                      <div className={`w-16 h-16 bg-gradient-to-br from-${item.color}-100 to-${item.color}-200 rounded-2xl flex items-center justify-center mb-8`}>
+                        <item.icon className={`h-8 w-8 text-${item.color}-600`} />
+                      </div>
 
-              {travel.accommodations && (
-                <div>
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
-                    <Building className="h-6 w-6 text-green-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-green-900 mb-4">Accommodation</h3>
-                  <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-600 whitespace-pre-line leading-relaxed">{travel.accommodations}</p>
-                  </div>
-                </div>
-              )}
+                      <h3 className="text-2xl font-bold text-slate-900 mb-6">{item.title}</h3>
 
-              {travel.daily_schedule && (
-                <div>
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
-                    <Clock className="h-6 w-6 text-green-600" />
+                      <div className="prose prose-slate max-w-none">
+                        <p className="text-slate-600 whitespace-pre-line leading-relaxed font-medium">
+                          {item.info}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-green-900 mb-4">Daily Schedule</h3>
-                  <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-600 whitespace-pre-line leading-relaxed">{travel.daily_schedule}</p>
-                  </div>
-                </div>
-              )}
+                );
+              })}
             </div>
           </div>
         </section>
