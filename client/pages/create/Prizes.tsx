@@ -62,6 +62,27 @@ export default function Prizes() {
     (c) => c.type === "Closest to Pin",
   ).length;
 
+  // Group contests by type for summary display
+  const getContestsByType = (type: string) => {
+    return skillsContestsFromCourses
+      .filter(contest => contest.type === type)
+      .reduce((acc, contest) => {
+        const existing = acc.find(item => item.roundName === contest.roundName);
+        if (existing) {
+          existing.holes.push(contest.hole);
+        } else {
+          acc.push({
+            roundName: contest.roundName,
+            holes: [contest.hole]
+          });
+        }
+        return acc;
+      }, [] as { roundName: string; holes: number[] }[]);
+  };
+
+  const closestToPinGroups = getContestsByType("Closest to Pin");
+  const longestDriveGroups = getContestsByType("Longest Drive");
+
   const [payoutStructure, setPayoutStructure] = useState({
     champion: tripData.payoutStructure?.champion || 0,
     runnerUp: tripData.payoutStructure?.runnerUp || 0,
