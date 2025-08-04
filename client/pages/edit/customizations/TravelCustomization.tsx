@@ -284,19 +284,7 @@ export default function TravelCustomization() {
                     disabled={!travelEnabled}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-green-800 font-medium">Additional Notes</Label>
-                  <Input
-                    value={travelInfo.travel_notes || ''}
-                    onChange={(e) => {
-                      setTravelInfo(prev => ({ ...prev, travel_notes: e.target.value }));
-                    }}
-                    onBlur={(e) => saveTravelField('travel_notes', e.target.value)}
-                    placeholder="Weather, local attractions, dining recommendations, etc."
-                    className="border-green-200 focus:border-emerald-500 bg-white"
-                    disabled={!travelEnabled}
-                  />
-                </div>
+
               </div>
             </CardContent>
           </Card>
