@@ -252,6 +252,132 @@ export default function RulesCustomization() {
     }
   };
 
+  const polishRuleWithAI = async (ruleId: string) => {
+    setPolishingRuleId(ruleId);
+
+    try {
+      const currentText = ruleChanges[ruleId] !== undefined ? ruleChanges[ruleId] : rules.find(r => r.id === ruleId)?.rule_text || "";
+
+      if (!currentText.trim()) {
+        toast({
+          title: "No Content",
+          description: "Please add some text to the rule before polishing",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log(`Polishing rule with AI: ${currentText}`);
+
+      const prompt = `Please improve and polish this golf tournament rule to make it clear, concise, and professional. Keep the core meaning the same but make it well-structured and easy to understand:
+
+Rule:
+${currentText}`;
+
+      console.log("AI prompt:", prompt);
+
+      // Make API call with XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+      const responsePromise = new Promise((resolve, reject) => {
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            console.log(`Rule Polish XHR Response status:`, xhr.status);
+            console.log(`Rule Polish XHR Response text:`, xhr.responseText);
+
+            if (xhr.status >= 200 && xhr.status < 300) {
+              try {
+                const data = JSON.parse(xhr.responseText);
+                resolve(data);
+              } catch (parseError) {
+                console.error(`Rule Polish JSON parse error:`, parseError);
+                reject(
+                  new Error(
+                    `Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`,
+                  ),
+                );
+              }
+            } else {
+              try {
+                const errorData = JSON.parse(xhr.responseText);
+                reject(
+                  new Error(
+                    `Server error (${xhr.status}): ${errorData.error || errorData.details || "Unknown error"}`,
+                  ),
+                );
+              } catch {
+                reject(
+                  new Error(
+                    `HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`,
+                  ),
+                );
+              }
+            }
+          }
+        };
+
+        xhr.onerror = function () {
+          console.error(`Rule Polish XHR network error`);
+          reject(new Error("Network error occurred"));
+        };
+
+        xhr.ontimeout = function () {
+          console.error(`Rule Polish XHR timeout`);
+          reject(new Error("Request timed out"));
+        };
+      });
+
+      xhr.open("POST", "/api/generate-description", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.timeout = 30000; // 30 second timeout
+      xhr.send(JSON.stringify({ prompt }));
+
+      const responseData = await responsePromise;
+      console.log(`Rule Polish API response data:`, responseData);
+
+      const polishedContent = (responseData as any)?.description;
+
+      if (!polishedContent) {
+        throw new Error("No polished content received from server");
+      }
+
+      // Update the rule with polished content
+      setRuleChanges((prev) => ({
+        ...prev,
+        [ruleId]: polishedContent,
+      }));
+
+      toast({
+        title: "Rule Polished!",
+        description: "AI has improved your rule content.",
+      });
+    } catch (error) {
+      console.error(`Error polishing rule:`, error);
+
+      let userMessage = "There was an issue polishing the rule. Please try again later.";
+
+      if (error instanceof Error) {
+        const msg = error.message.toLowerCase();
+        if (msg.includes("network") || msg.includes("fetch")) {
+          userMessage = "Network error. Please check your connection and try again.";
+        } else if (msg.includes("401") || msg.includes("unauthorized")) {
+          userMessage = "API authorization failed. Please contact support.";
+        } else if (msg.includes("server error")) {
+          userMessage = error.message;
+        } else if (msg.includes("json")) {
+          userMessage = "AI response format error. Please try again.";
+        }
+      }
+
+      toast({
+        title: "Polish Failed",
+        description: userMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setPolishingRuleId(null);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
