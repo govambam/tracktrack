@@ -120,6 +120,7 @@ export default function TravelCustomization() {
     if (!eventId) return;
 
     try {
+      setSaving(true);
       console.log('Saving travel field:', field, '=', value, 'for event:', eventId);
 
       // Use upsert to either update existing record or create new one
