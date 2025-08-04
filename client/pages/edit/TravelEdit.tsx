@@ -391,10 +391,34 @@ ${currentContent}`;
                   placeholder="Day-by-day itinerary, meal times, activities, meeting points, transportation..."
                   className="border-green-200 focus:border-emerald-500 bg-white resize-none h-32"
                 />
-                <p className="text-xs text-green-600">
-                  Outline the schedule for each day including tee times, meals,
-                  and activities
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs text-green-600">
+                    Outline the schedule for each day including tee times, meals,
+                    and activities
+                  </p>
+                  {travelInfo.dailySchedule && travelInfo.dailySchedule.trim() && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => polishFieldWithAI("dailySchedule", travelInfo.dailySchedule)}
+                      disabled={polishingField === "dailySchedule"}
+                      className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                    >
+                      {polishingField === "dailySchedule" ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                          Polishing...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="h-4 w-4 mr-2" />
+                          Polish with AI
+                        </>
+                      )}
+                    </Button>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>
