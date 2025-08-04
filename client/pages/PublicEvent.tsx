@@ -184,6 +184,29 @@ export default function PublicEvent() {
         console.error('Rules table may not exist:', err);
       }
 
+      // Load travel data from event_travel table (gracefully handle if table doesn't exist)
+      try {
+        const { data: travelDataResult, error: travelError } = await supabase
+          .from('event_travel')
+          .select('flight_info, accommodations, daily_schedule')
+          .eq('event_id', event.id)
+          .single();
+
+        if (travelError) {
+          if (travelError.code === 'PGRST116') {
+            // No travel record found - this is normal
+            setTravelData({});
+          } else if (travelError.code !== '42P01') {
+            console.error('Error loading travel data:', travelError);
+          }
+        } else {
+          setTravelData(travelDataResult || {});
+        }
+      } catch (err) {
+        console.error('Travel table may not exist:', err);
+        setTravelData({});
+      }
+
     } catch (err) {
       console.error('Error loading event:', err);
       setError('Failed to load event data');
