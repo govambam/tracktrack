@@ -411,33 +411,35 @@ export default function PublicEventHome() {
 
       {/* Prizes Section */}
       {prizes.length > 0 && (
-        <section className="py-16 px-6">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-green-900 mb-4">High Stakes, Higher Handicaps</h2>
-              <p className="text-xl text-green-600">What's up for grabs</p>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-900 mb-6">High Stakes, Higher Handicaps</h2>
+              <p className="text-lg text-gray-600">Tournament Buy-in</p>
+              <div className="text-4xl sm:text-5xl font-bold text-green-600 mt-4">
+                ${eventData.buy_in || 0}
+              </div>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {prizes.map((prize) => (
-                <Card key={prize.id} className="border-green-200">
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <Trophy className="h-8 w-8 text-emerald-600" />
-                      {prize.amount > 0 && (
-                        <Badge className="bg-emerald-600 text-white">
-                          ${prize.amount}
-                        </Badge>
-                      )}
+                <div key={prize.id} className="text-center">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Trophy className="h-8 w-8 text-green-600" />
+                  </div>
+
+                  <h3 className="text-lg font-bold text-green-900 mb-2 capitalize">
+                    {prize.category.replace('_', ' ')}
+                  </h3>
+
+                  {prize.amount > 0 && (
+                    <div className="text-2xl font-bold text-green-600 mb-2">
+                      ${prize.amount}
                     </div>
-                    
-                    <h3 className="text-lg font-bold text-green-900 mb-2 capitalize">
-                      {prize.category.replace('_', ' ')}
-                    </h3>
-                    
-                    <p className="text-green-600">{prize.description}</p>
-                  </CardContent>
-                </Card>
+                  )}
+
+                  <p className="text-gray-600 text-sm">{prize.description}</p>
+                </div>
               ))}
             </div>
           </div>
