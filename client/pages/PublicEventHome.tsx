@@ -1557,12 +1557,12 @@ export default function PublicEventHome() {
                               </p>
                             ),
                             ul: ({ children }) => (
-                              <ul className="text-slate-700 ml-4 mb-2 last:mb-0">
+                              <ul className="text-slate-700 ml-6 mb-2 last:mb-0 list-disc">
                                 {children}
                               </ul>
                             ),
                             ol: ({ children }) => (
-                              <ol className="text-slate-700 ml-4 mb-2 last:mb-0">
+                              <ol className="text-slate-700 ml-6 mb-2 last:mb-0 list-decimal">
                                 {children}
                               </ol>
                             ),
@@ -1919,7 +1919,7 @@ export default function PublicEventHome() {
                           • In case of disputes, tournament organizer has final
                           say
                         </li>
-                        <li>• Prizes paid out after round completion</li>
+                        <li>��� Prizes paid out after round completion</li>
                         <li>• Have fun and play with integrity!</li>
                       </ul>
                     </div>
