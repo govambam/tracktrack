@@ -797,6 +797,147 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
           </section>
         )}
 
+        {/* Scoring Format Section */}
+        {rounds.length > 0 && (
+          <section id="scoring" className="py-28 px-6 sm:px-8 lg:px-12 relative">
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-slate-50/30"></div>
+            <div className="relative max-w-6xl mx-auto">
+              <div className="text-center mb-20">
+                <div className="inline-flex items-center space-x-2 bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
+                  <Target className="h-4 w-4 text-blue-600" />
+                  <span className="text-sm font-medium text-blue-800">
+                    Competition Rules
+                  </span>
+                </div>
+
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
+                  Scoring Format
+                </h2>
+
+                <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl mx-auto mb-16">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <Target className="h-8 w-8 text-green-600" />
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
+                    {getScoringFormat()}
+                  </h3>
+                  <p className="text-lg text-slate-600 leading-relaxed font-light">
+                    {getScoringFormat().includes("Stableford")
+                      ? "Modified Stableford scoring system with preset competition and a team scramble format for added excitement."
+                      : "Traditional stroke play format where every shot counts. Lowest total score wins the championship."}
+                  </p>
+                </div>
+              </div>
+
+              {/* Enhanced Stableford Points System */}
+              {getScoringFormat().includes("Stableford") && (
+                <div className="mb-20">
+                  <div className="text-center mb-12">
+                    <h3 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                      Point Values
+                    </h3>
+                    <p className="text-xl text-slate-600 font-light">
+                      Points awarded based on performance relative to par
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {enhancedStablefordPoints.map((scoring, index) => {
+                      const IconComponent = scoring.icon;
+                      return (
+                        <div
+                          key={scoring.score}
+                          className={`${scoring.bgColor} border-2 border-opacity-20 rounded-3xl p-6 shadow-xl shadow-slate-200/50 hover:scale-105 transition-transform duration-200`}
+                        >
+                          <div className="flex items-center justify-between mb-4">
+                            <div
+                              className={`w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}
+                            >
+                              <span className="text-2xl font-bold text-white">
+                                {scoring.points}
+                              </span>
+                            </div>
+                            <IconComponent
+                              className={`h-6 w-6 ${scoring.iconColor}`}
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <h4
+                                className={`text-lg font-bold ${scoring.textColor}`}
+                              >
+                                {scoring.score}
+                              </h4>
+                              <Badge
+                                variant="outline"
+                                className={`${scoring.textColor} border-current text-xs`}
+                              >
+                                {scoring.description}
+                              </Badge>
+                            </div>
+
+                            <p
+                              className={`text-sm ${scoring.textColor} opacity-80 leading-relaxed`}
+                            >
+                              {scoring.detail}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="mt-8 bg-emerald-50 border border-emerald-200 rounded-2xl p-6">
+                    <div className="flex items-start space-x-3">
+                      <Target className="h-5 w-5 text-emerald-600 mt-0.5" />
+                      <div>
+                        <div className="font-semibold text-emerald-900 mb-2">
+                          Why Stableford?
+                        </div>
+                        <p className="text-emerald-700 text-sm leading-relaxed">
+                          Stableford scoring rewards aggressive play and reduces the impact of one bad hole. It encourages golfers to take calculated risks and creates more exciting competition throughout the field.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Custom Rules Section */}
+              {customRules.length > 0 && (
+                <div className="mb-16">
+                  <div className="text-center mb-12">
+                    <h3 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                      Custom Rules
+                    </h3>
+                    <p className="text-xl text-slate-600 font-light">
+                      Special tournament regulations and guidelines
+                    </p>
+                  </div>
+
+                  <div className="space-y-6">
+                    {customRules.map((rule, index) => (
+                      <div
+                        key={rule.id}
+                        className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-slate-200/50"
+                      >
+                        <h4 className="text-lg font-bold text-slate-900 mb-3">
+                          {rule.title}
+                        </h4>
+                        <p className="text-slate-600 leading-relaxed whitespace-pre-line">
+                          {rule.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* Hole Contests Section */}
         {skillsContests.length > 0 && (
           <section className="py-20 px-6 sm:px-8 lg:px-12">
