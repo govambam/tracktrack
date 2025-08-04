@@ -525,7 +525,7 @@ export default function CoursesCustomization() {
                               : c
                           ));
                         }}
-                        onBlur={(e) => saveCourseField(course.id, 'weather_note', e.target.value)}
+
                         placeholder="Weather conditions, seasonal notes, etc."
                         className="border-green-200 focus:border-emerald-500 bg-white"
                         disabled={!coursesEnabled}
