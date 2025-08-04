@@ -18,6 +18,12 @@ import { supabase } from "@/lib/supabase";
 import { Target, TrendingUp, Info, FileText, Award, Trophy, Crown, Medal, Zap, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+interface EventRule {
+  id: string;
+  rule_title?: string;
+  rule_text: string;
+}
+
 export default function Scoring() {
   const navigate = useNavigate();
   const { state, updateScoring } = useTripCreation();
@@ -27,13 +33,102 @@ export default function Scoring() {
     "stroke-play" | "modified-stableford"
   >(tripData.scoringFormat || "stroke-play");
 
-  const defaultStablefordPoints = {
-    eagle: 4,
-    birdie: 2,
-    par: 0,
-    bogey: -1,
-    doubleBogey: -2,
-  };
+  const [customRules, setCustomRules] = useState<EventRule[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Enhanced Stableford points system
+  const enhancedStablefordPoints = [
+    {
+      score: "Albatross",
+      points: 20,
+      description: "3 under par",
+      detail: "Legendary! The rarest score in golf deserves the highest reward.",
+      color: "from-purple-500 to-purple-600",
+      bgColor: "bg-purple-50",
+      textColor: "text-purple-900",
+      iconColor: "text-purple-600",
+      icon: Crown
+    },
+    {
+      score: "Eagle",
+      points: 8,
+      description: "2 under par",
+      detail: "Exceptional performance! Maximum points for being 2 strokes under par.",
+      color: "from-yellow-500 to-yellow-600",
+      bgColor: "bg-yellow-50",
+      textColor: "text-yellow-900",
+      iconColor: "text-yellow-600",
+      icon: Trophy
+    },
+    {
+      score: "Birdie",
+      points: 4,
+      description: "1 under par",
+      detail: "Great shot! Double points for being 1 stroke under par.",
+      color: "from-green-500 to-green-600",
+      bgColor: "bg-green-50",
+      textColor: "text-green-900",
+      iconColor: "text-green-600",
+      icon: Award
+    },
+    {
+      score: "Par",
+      points: 2,
+      description: "Even",
+      detail: "Solid golf! Standard points for meeting par.",
+      color: "from-blue-500 to-blue-600",
+      bgColor: "bg-blue-50",
+      textColor: "text-blue-900",
+      iconColor: "text-blue-600",
+      icon: CheckCircle
+    },
+    {
+      score: "Bogey",
+      points: 1,
+      description: "1 over par",
+      detail: "Still in the game! One point for being 1 stroke over par.",
+      color: "from-orange-500 to-orange-600",
+      bgColor: "bg-orange-50",
+      textColor: "text-orange-900",
+      iconColor: "text-orange-600",
+      icon: Medal
+    },
+    {
+      score: "Double Bogey+",
+      points: 0,
+      description: "2+ over par",
+      detail: "No points awarded for scores of double bogey or worse.",
+      color: "from-red-500 to-red-600",
+      bgColor: "bg-red-50",
+      textColor: "text-red-900",
+      iconColor: "text-red-600",
+      icon: Zap
+    }
+  ];
+
+  // Load custom rules from database
+  useEffect(() => {
+    const loadCustomRules = async () => {
+      if (tripData.id) {
+        try {
+          const { data: rules, error } = await supabase
+            .from('event_rules')
+            .select('*')
+            .eq('event_id', tripData.id)
+            .order('created_at');
+
+          if (!error && rules) {
+            setCustomRules(rules);
+          }
+        } catch (error) {
+          console.error('Error loading custom rules:', error);
+        }
+      }
+      setLoading(false);
+    };
+
+    loadCustomRules();
+  }, [tripData.id]);
 
   const handleNext = () => {
     const scoringData = {
