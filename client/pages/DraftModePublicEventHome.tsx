@@ -215,6 +215,7 @@ export default function DraftModePublicEventHome({
       setTravel(travelResult.data);
       setSkillsContests(skillsContestsResult.data || []);
       setCustomRules(customRulesResult.data || []);
+      setStablefordScoring(stablefordResult.data || null);
 
       console.log("All event data loaded successfully");
     } catch (error) {
