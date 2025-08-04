@@ -15,7 +15,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
-import { Calendar, MapPin, FileText, Image, Save } from "lucide-react";
+import { Calendar, MapPin, FileText, Image, Save, Sparkles } from "lucide-react";
 
 export default function BasicInfoEdit() {
   const { eventId } = useParams();
