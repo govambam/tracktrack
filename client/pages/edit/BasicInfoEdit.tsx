@@ -180,6 +180,8 @@ export default function BasicInfoEdit() {
 
     try {
       // Fetch event data including courses and player count
+      console.log("Fetching event data for ID:", eventId);
+
       const [eventResult, coursesResult, playersResult] = await Promise.all([
         supabase.from("events").select("name, location, start_date, end_date").eq("id", eventId).single(),
         supabase.from("event_courses").select("name").eq("event_id", eventId),
@@ -187,12 +189,15 @@ export default function BasicInfoEdit() {
       ]);
 
       if (eventResult.error) {
+        console.error("Event fetch error:", eventResult.error);
         throw new Error("Failed to fetch event data");
       }
 
       const event = eventResult.data;
       const courses = coursesResult.data || [];
       const playerCount = playersResult.data?.length || 0;
+
+      console.log("Event data:", { event, courses, playerCount });
 
       // Format dates
       const startDate = new Date(event.start_date).toLocaleDateString("en-US", {
@@ -214,67 +219,75 @@ export default function BasicInfoEdit() {
       // Construct prompt
       const prompt = `Write a short, friendly trip description for a golf event called ${event.name}. It takes place in ${event.location} from ${startDate} to ${endDate}. Golf will be played at ${courseNames}. There are ${playerCount} players. The tone should be fun, welcoming, and appropriate for a website.`;
 
-      // Call our API endpoint
-      console.log("Making API call with prompt:", prompt);
+      console.log("Generated prompt:", prompt);
 
-      const response = await fetch("/api/generate-description", {
+      // Make API call with proper error handling
+      const apiResponse = await fetch("/api/generate-description", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          prompt: prompt
-        })
+        body: JSON.stringify({ prompt })
       });
 
-      console.log("API response status:", response.status);
+      console.log("API Response status:", apiResponse.status);
+      console.log("API Response headers:", Object.fromEntries(apiResponse.headers.entries()));
 
-      let data;
-      try {
-        data = await response.json();
-        console.log("API response data:", data);
-      } catch (parseError) {
-        console.error("Failed to parse response as JSON:", parseError);
-        throw new Error("Invalid response format from server");
-      }
+      // Handle response based on content type
+      const contentType = apiResponse.headers.get("content-type");
+      let responseData;
 
-      if (!response.ok) {
-        const errorMessage = data?.error || data?.details || "Unknown server error";
-        console.error("API error:", errorMessage);
-        throw new Error(`API error (${response.status}): ${errorMessage}`);
-      }
-      const generatedDescription = data.description;
-
-      if (generatedDescription) {
-        handleInputChange("description", generatedDescription);
-        toast({
-          title: "Description Generated",
-          description: "AI has generated a new event description for you!"
-        });
+      if (contentType && contentType.includes("application/json")) {
+        responseData = await apiResponse.json();
       } else {
-        throw new Error("No description generated");
+        // If not JSON, read as text to see what we got
+        const textResponse = await apiResponse.text();
+        console.log("Non-JSON response:", textResponse);
+        throw new Error(`Server returned non-JSON response: ${textResponse.slice(0, 100)}...`);
       }
+
+      console.log("Parsed response data:", responseData);
+
+      if (!apiResponse.ok) {
+        const errorMessage = responseData?.error || responseData?.details || `HTTP ${apiResponse.status}`;
+        throw new Error(`Server error: ${errorMessage}`);
+      }
+
+      const generatedDescription = responseData?.description;
+
+      if (!generatedDescription) {
+        throw new Error("No description received from server");
+      }
+
+      // Update the form
+      handleInputChange("description", generatedDescription);
+
+      toast({
+        title: "Description Generated!",
+        description: "AI has created a new event description for you.",
+      });
 
     } catch (error) {
-      console.error("Error generating description:", error);
+      console.error("Full error details:", error);
 
-      let errorMessage = "There was an issue generating your description. Please try again later.";
+      let userMessage = "There was an issue generating your description. Please try again later.";
 
       if (error instanceof Error) {
-        if (error.message.includes("401")) {
-          errorMessage = "API key is invalid or expired. Please check your OpenAI API key.";
-        } else if (error.message.includes("429")) {
-          errorMessage = "API rate limit exceeded. Please try again in a moment.";
-        } else if (error.message.includes("Failed to fetch")) {
-          errorMessage = "Network error. Please check your internet connection.";
-        } else if (error.message.includes("OpenAI API error")) {
-          errorMessage = `OpenAI API error: ${error.message}`;
+        const msg = error.message.toLowerCase();
+        if (msg.includes("network") || msg.includes("fetch")) {
+          userMessage = "Network error. Please check your connection and try again.";
+        } else if (msg.includes("401") || msg.includes("unauthorized")) {
+          userMessage = "API authorization failed. Please contact support.";
+        } else if (msg.includes("429") || msg.includes("rate limit")) {
+          userMessage = "Too many requests. Please wait a moment and try again.";
+        } else if (msg.includes("server error")) {
+          userMessage = error.message;
         }
       }
 
       toast({
         title: "Generation Failed",
-        description: errorMessage,
+        description: userMessage,
         variant: "destructive"
       });
     } finally {
