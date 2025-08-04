@@ -149,7 +149,7 @@ export default function TravelEdit() {
   };
 
   const polishFieldWithAI = async (
-    fieldName: string,
+    fieldName: keyof typeof travelInfo,
     currentContent: string,
   ) => {
     if (!currentContent || !currentContent.trim()) return;
