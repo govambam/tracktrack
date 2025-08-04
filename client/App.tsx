@@ -112,7 +112,6 @@ const App = () => (
                   />
                   <Route path="debug" element={<TestCourseSync />} />
                   <Route path="settings" element={<SettingsEdit />} />
-                  <Route path="draft" element={<DraftMode />} />
                   <Route index element={<BasicInfoEdit />} />{" "}
                   {/* Default to basic info */}
                 </Route>
