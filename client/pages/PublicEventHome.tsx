@@ -554,81 +554,13 @@ export default function PublicEventHome() {
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10">
               {courses.map((course, index) => {
                 const round = rounds.find(r => r.course_name === course.name);
-                const { isVisible, elementRef } = useScrollAnimation();
-
                 return (
-                  <div
+                  <AnimatedCourseCard
                     key={course.id}
-                    ref={elementRef}
-                    className={`group transition-all duration-700 ${
-                      index === 0 ? 'delay-0' : index === 1 ? 'delay-150' : index === 2 ? 'delay-300' : 'delay-450'
-                    } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
-                  >
-                    <div className="bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-500">
-                      {course.image_url && (
-                        <div className="h-56 overflow-hidden">
-                          <img
-                            src={course.image_url}
-                            alt={course.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                          />
-                        </div>
-                      )}
-
-                      <div className="p-8">
-                        <div className="flex items-start justify-between mb-6">
-                          <div>
-                            <div className="flex items-center space-x-2 mb-3">
-                              <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                                Round {index + 1}
-                              </Badge>
-                            </div>
-                            <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors">
-                              {course.name}
-                            </h3>
-                          </div>
-                        </div>
-
-                        {course.par && course.yardage && (
-                          <div className="flex items-center space-x-6 mb-6 text-sm">
-                            <div className="flex items-center space-x-2">
-                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                              <span className="font-semibold text-slate-700">Par {course.par}</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                              <span className="font-semibold text-slate-700">{course.yardage?.toLocaleString()} yards</span>
-                            </div>
-                          </div>
-                        )}
-
-                        {(round?.tee_time || round?.round_date) && (
-                          <div className="space-y-3 pt-4 border-t border-slate-200">
-                            {round?.round_date && (
-                              <div className="flex items-center space-x-3">
-                                <Calendar className="h-4 w-4 text-slate-400" />
-                                <span className="text-sm font-medium text-slate-600">
-                                  {new Date(round.round_date).toLocaleDateString('en-US', {
-                                    weekday: 'long',
-                                    month: 'long',
-                                    day: 'numeric'
-                                  })}
-                                </span>
-                              </div>
-                            )}
-                            {round?.tee_time && (
-                              <div className="flex items-center space-x-3">
-                                <Clock className="h-4 w-4 text-slate-400" />
-                                <span className="text-sm font-medium text-slate-600">
-                                  Tee Time: {round.tee_time}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                    course={course}
+                    round={round}
+                    index={index}
+                  />
                 );
               })}
             </div>
