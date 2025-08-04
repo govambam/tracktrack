@@ -299,70 +299,59 @@ export default function PublicEventHome() {
 
       {/* Courses Overview Section */}
       {courses.length > 0 && (
-        <section id="courses" className="py-16 px-4 sm:px-6 lg:px-8 bg-green-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-green-900 mb-4">The Courses</h2>
+        <section id="courses" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-900 mb-6">
+                {courses.length > 1 ? 'Golf Courses' : 'Golf Course'}
+              </h2>
               {customization?.home_headline && (
-                <p className="text-xl text-green-600 max-w-3xl mx-auto">{customization.home_headline}</p>
+                <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto font-light leading-relaxed">
+                  {customization.home_headline}
+                </p>
               )}
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {courses.map((course, index) => {
                 const round = rounds.find(r => r.course_name === course.name);
                 return (
-                  <Card key={course.id} className="border-green-200 overflow-hidden">
+                  <div key={course.id} className="group">
                     {course.image_url && (
-                      <div className="h-48 overflow-hidden">
-                        <img 
-                          src={course.image_url} 
+                      <div className="h-64 overflow-hidden rounded-lg mb-6">
+                        <img
+                          src={course.image_url}
                           alt={course.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                     )}
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <Badge variant="outline" className="text-emerald-600 border-emerald-200 mb-2">
-                            Round {index + 1}
-                          </Badge>
-                          <h3 className="text-xl font-bold text-green-900">{course.name}</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-xl font-bold text-green-900 mb-2">{course.name}</h3>
+                        {course.par && course.yardage && (
+                          <p className="text-gray-600">
+                            Par {course.par} • {course.yardage.toLocaleString()} yards
+                          </p>
+                        )}
+                      </div>
+
+                      {(round?.tee_time || round?.round_date) && (
+                        <div className="space-y-1 text-sm text-gray-500">
+                          {round?.round_date && (
+                            <p>{new Date(round.round_date).toLocaleDateString('en-US', {
+                              weekday: 'long',
+                              month: 'long',
+                              day: 'numeric'
+                            })}</p>
+                          )}
+                          {round?.tee_time && (
+                            <p>Tee Time: {round.tee_time}</p>
+                          )}
                         </div>
-                        <Target className="h-6 w-6 text-emerald-600" />
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        {course.par && (
-                          <div>
-                            <span className="text-green-600">Par:</span>
-                            <span className="font-semibold text-green-900 ml-2">{course.par}</span>
-                          </div>
-                        )}
-                        {course.yardage && (
-                          <div>
-                            <span className="text-green-600">Yardage:</span>
-                            <span className="font-semibold text-green-900 ml-2">{course.yardage}</span>
-                          </div>
-                        )}
-                        {round?.tee_time && (
-                          <div>
-                            <span className="text-green-600">Tee Time:</span>
-                            <span className="font-semibold text-green-900 ml-2">{round.tee_time}</span>
-                          </div>
-                        )}
-                        {round?.round_date && (
-                          <div>
-                            <span className="text-green-600">Date:</span>
-                            <span className="font-semibold text-green-900 ml-2">
-                              {new Date(round.round_date).toLocaleDateString()}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
+                      )}
+                    </div>
+                  </div>
                 );
               })}
             </div>
