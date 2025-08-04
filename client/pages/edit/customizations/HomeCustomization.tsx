@@ -284,7 +284,7 @@ export default function HomeCustomization() {
                   onChange={(e) => setHomeHeadline(e.target.value)}
                   placeholder="Add a short headline to display on your event home page"
                   className="border-green-200 focus:border-emerald-500 bg-white"
-                  disabled={!homeEnabled || saving}
+                  disabled={saving}
                 />
                 <p className="text-sm text-green-600">
                   This headline will be prominently displayed on your event's
