@@ -155,9 +155,10 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
       console.log("All event data loaded successfully");
 
     } catch (error) {
-      console.error("Error loading event data:", error instanceof Error ? error.message : error);
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+      console.error("Error loading event data:", errorMessage);
       console.error("Full error object:", error);
-      // You might want to set an error state here to show to the user
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
