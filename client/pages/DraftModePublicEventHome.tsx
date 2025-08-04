@@ -991,7 +991,7 @@ export default function DraftModePublicEventHome({
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {enhancedStablefordPoints.map((scoring, index) => {
+                    {getStablefordPoints().map((scoring, index) => {
                       const IconComponent = scoring.icon;
                       return (
                         <div
