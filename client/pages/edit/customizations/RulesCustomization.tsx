@@ -549,6 +549,30 @@ ${currentText}`;
                             className="border-green-200 focus:border-emerald-500 bg-white"
                             rows={3}
                           />
+
+                          {/* Polish with AI Button */}
+                          <div className="flex justify-end">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => polishRuleWithAI(rule.id)}
+                              disabled={polishingRuleId === rule.id}
+                              className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                            >
+                              {polishingRuleId === rule.id ? (
+                                <>
+                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                                  Polishing...
+                                </>
+                              ) : (
+                                <>
+                                  <Sparkles className="h-4 w-4 mr-2" />
+                                  Polish with AI
+                                </>
+                              )}
+                            </Button>
+                          </div>
                         </div>
                       )}
                     </div>
