@@ -42,9 +42,37 @@ export const generateDescription = async (req: Request, res: Response) => {
     if (!response.ok) {
       const errorBody = await response.text();
       console.error('OpenAI API error:', errorBody);
-      return res.status(response.status).json({ 
-        error: 'OpenAI API error', 
-        details: errorBody 
+
+      // Parse the error to provide more specific messaging
+      let errorMessage = 'OpenAI API error';
+      let shouldUseFallback = false;
+
+      try {
+        const errorData = JSON.parse(errorBody);
+        if (errorData.error?.code === 'insufficient_quota') {
+          errorMessage = 'OpenAI quota exceeded';
+          shouldUseFallback = true;
+        } else if (errorData.error?.code === 'rate_limit_exceeded') {
+          errorMessage = 'OpenAI rate limit exceeded';
+          shouldUseFallback = true;
+        }
+      } catch (parseError) {
+        console.log('Could not parse OpenAI error response');
+      }
+
+      // If quota exceeded, use fallback generation
+      if (shouldUseFallback) {
+        console.log('Using fallback generation due to OpenAI limits');
+        const fallbackText = generateFallbackDescription(prompt);
+        return res.json({
+          description: fallbackText,
+          source: 'fallback'
+        });
+      }
+
+      return res.status(response.status).json({
+        error: errorMessage,
+        details: errorBody
       });
     }
 
