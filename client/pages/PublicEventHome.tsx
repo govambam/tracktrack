@@ -337,16 +337,20 @@ const CourseModal = ({ course, round, isOpen, onClose }: { course: any; round: a
 const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any; round: any; index: number; onOpenModal: () => void }) => {
   const { isVisible, elementRef } = useScrollAnimation();
   const [showSeeMore, setShowSeeMore] = useState(false);
-
-  // Function to truncate text to specified number of lines
-  const truncateToLines = (text: string, lines: number) => {
-    const words = text.split(' ');
-    const maxWords = lines * 12; // Approximate words per line
-    return words.length > maxWords ? words.slice(0, maxWords).join(' ') + '...' : text;
-  };
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const [shouldShowSeeMore, setShouldShowSeeMore] = useState(false);
 
   const hasDescription = course.description && course.description.trim();
-  const shouldShowSeeMore = hasDescription && course.description.split(' ').length > 48; // ~4 lines
+
+  // Check if text actually overflows the 4-line container
+  useEffect(() => {
+    if (hasDescription && textRef.current) {
+      const element = textRef.current;
+      const lineHeight = parseInt(getComputedStyle(element).lineHeight) || 24;
+      const maxHeight = lineHeight * 4; // 4 lines
+      setShouldShowSeeMore(element.scrollHeight > maxHeight);
+    }
+  }, [hasDescription, course.description]);
 
   return (
     <div
