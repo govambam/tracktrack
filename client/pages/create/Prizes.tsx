@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
-import { Trophy, DollarSign, Gift, Target } from "lucide-react";
+import { Trophy, DollarSign, Gift, Target, MapPin, Zap, Info, Flag, Crosshair } from "lucide-react";
 
 export default function Prizes() {
   const navigate = useNavigate();
