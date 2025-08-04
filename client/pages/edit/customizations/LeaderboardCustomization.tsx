@@ -46,7 +46,10 @@ export default function LeaderboardCustomization() {
       }
 
     } catch (error) {
-      console.error('Error loading leaderboard customization data:', error);
+      console.error('Error loading leaderboard customization data:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        error: error
+      });
       toast({
         title: "Load Failed",
         description: "Failed to load leaderboard customization data",
