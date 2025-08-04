@@ -364,7 +364,7 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                     <div
                       key={round.id}
                       className="bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-2 group"
-                      onClick={() => handleEditCourse(round)}
+                      onClick={() => handleEditCourse(round, index)}
                     >
                       <div className="p-8">
                         <div className="flex items-center justify-between mb-4">
