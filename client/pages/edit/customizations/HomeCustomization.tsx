@@ -200,16 +200,15 @@ export default function HomeCustomization() {
     setSaving(true);
     try {
       await saveHomeHeadline(homeHeadline);
-      await saveHomeEnabled(homeEnabled);
 
       toast({
-        title: "Settings Saved",
-        description: "Homepage customization settings have been saved successfully",
+        title: "Changes Saved",
+        description: "Homepage headline has been saved successfully",
       });
     } catch (error) {
       toast({
         title: "Save Failed",
-        description: "Failed to save homepage settings",
+        description: "Failed to save homepage headline",
         variant: "destructive",
       });
     } finally {
