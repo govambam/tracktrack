@@ -443,6 +443,23 @@ export default function PlayersEdit() {
                           />
                         </div>
                       </div>
+
+                      {/* Bio Section */}
+                      <div className="space-y-2 md:col-span-2">
+                        <Label className="text-green-800 font-medium">
+                          Player Bio (Optional)
+                        </Label>
+                        <textarea
+                          value={player.bio || ''}
+                          onChange={(e) => updatePlayer(player.id, 'bio', e.target.value)}
+                          placeholder="Tell us about this player's golf background, achievements, or fun facts..."
+                          className="w-full min-h-[80px] px-3 py-2 border border-green-200 rounded-md focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 resize-vertical"
+                          rows={3}
+                        />
+                        <p className="text-xs text-green-600">
+                          This will appear on the public event page to give attendees more context about each player.
+                        </p>
+                      </div>
                     </div>
                   )}
                 </CardContent>
