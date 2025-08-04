@@ -10,10 +10,9 @@ import { supabase } from "@/lib/supabase";
 import { Plane } from "lucide-react";
 
 interface TravelInfo {
-  travel_lodging?: string;
-  travel_notes?: string;
-  travel_airport?: string;
-  travel_distance?: string;
+  flight_info?: string;
+  accommodations?: string;
+  daily_schedule?: string;
 }
 
 export default function TravelCustomization() {
