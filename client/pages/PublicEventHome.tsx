@@ -337,22 +337,11 @@ const CourseModal = ({ course, round, isOpen, onClose }: { course: any; round: a
 const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any; round: any; index: number; onOpenModal: () => void }) => {
   const { isVisible, elementRef } = useScrollAnimation();
   const [showSeeMore, setShowSeeMore] = useState(false);
-  const textRef = useRef<HTMLParagraphElement>(null);
-  const [shouldShowSeeMore, setShouldShowSeeMore] = useState(false);
 
   const hasDescription = course.description && course.description.trim();
-
-  // Check if text actually overflows the 4-line container
-  useEffect(() => {
-    if (hasDescription && textRef.current) {
-      const element = textRef.current;
-      const lineHeight = parseInt(getComputedStyle(element).lineHeight) || 24;
-      const maxHeight = lineHeight * 4; // 4 lines
-      const needsTruncation = element.scrollHeight > maxHeight;
-      setShouldShowSeeMore(needsTruncation);
-      console.log(`Course ${course.name}: scrollHeight=${element.scrollHeight}, maxHeight=${maxHeight}, needsTruncation=${needsTruncation}`);
-    }
-  }, [hasDescription, course.description, course.name]);
+  // More conservative word count - checking if text is likely to exceed 4 lines
+  // Typical line: ~10-12 words, so 4 lines = ~40-48 words. Using 35 to be safe.
+  const shouldShowSeeMore = hasDescription && course.description.length > 200; // ~35-40 words
 
   return (
     <div
