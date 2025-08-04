@@ -934,6 +934,7 @@ export default function PublicEventHome() {
         customizationResult,
         rulesResult,
         contestsResult,
+        stablefordResult,
       ] = await Promise.all([
         supabase.from("event_players").select("*").eq("event_id", event.id),
         supabase
