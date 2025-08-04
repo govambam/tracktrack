@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
+import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
 import {
   Card,
