@@ -649,25 +649,25 @@ export default function PublicEventHome() {
                 {courses.length > 1 ? 'Golf Courses' : 'Golf Course'}
               </h2>
 
-              {customization?.home_headline && (
-                <p className="text-xl sm:text-2xl text-slate-600 max-w-4xl mx-auto font-light leading-relaxed">
-                  {customization.home_headline}
-                </p>
-              )}
+              <p className="text-xl sm:text-2xl text-slate-600 max-w-4xl mx-auto font-light leading-relaxed">
+                {courses.length} beautiful {courses.length === 1 ? 'course' : 'courses'} over {getDuration(eventData.start_date, eventData.end_date).toLowerCase()}
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10">
-              {courses.map((course, index) => {
-                const round = rounds.find(r => r.course_name === course.name);
-                return (
-                  <AnimatedCourseCard
-                    key={course.id}
-                    course={course}
-                    round={round}
-                    index={index}
-                  />
-                );
-              })}
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 max-w-5xl">
+                {courses.map((course, index) => {
+                  const round = rounds.find(r => r.course_name === course.name);
+                  return (
+                    <AnimatedCourseCard
+                      key={course.id}
+                      course={course}
+                      round={round}
+                      index={index}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
