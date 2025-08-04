@@ -1,6 +1,7 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Calendar,
@@ -10,8 +11,50 @@ import {
   TrendingUp,
   Star,
 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export default function Index() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check for existing session
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (session?.user) {
+        setIsAuthenticated(true);
+      } else {
+        // Check localStorage as fallback
+        const authStatus = localStorage.getItem("isAuthenticated");
+        if (authStatus === "true") {
+          setIsAuthenticated(true);
+        }
+      }
+      setLoading(false);
+    };
+
+    checkAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === 'SIGNED_OUT' || !session) {
+          setIsAuthenticated(false);
+        } else if (session?.user) {
+          setIsAuthenticated(true);
+        }
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleGoToApp = () => {
+    navigate('/app');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -27,18 +70,33 @@ export default function Index() {
 
             {/* Navigation */}
             <div className="flex items-center space-x-4">
-              <Link
-                to="/login"
-                className="text-green-700 hover:text-emerald-600 text-sm font-medium transition-colors"
-              >
-                Log In
-              </Link>
-              <Link
-                to="/signup"
-                className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition-colors cursor-pointer"
-              >
-                Get Started
-              </Link>
+              {loading ? (
+                <div className="animate-pulse">
+                  <div className="h-8 w-20 bg-gray-200 rounded"></div>
+                </div>
+              ) : isAuthenticated ? (
+                <Button
+                  onClick={handleGoToApp}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                >
+                  Go to App <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="text-green-700 hover:text-emerald-600 text-sm font-medium transition-colors"
+                  >
+                    Log In
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition-colors cursor-pointer"
+                  >
+                    Get Started
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -58,18 +116,30 @@ export default function Index() {
               together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/signup"
-                className="inline-flex items-center justify-center px-8 py-3 rounded-md text-lg font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition-colors cursor-pointer"
-              >
-                Get Started <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-              <Link
-                to="/login"
-                className="inline-flex items-center justify-center px-8 py-3 rounded-md text-lg font-medium border border-green-100 bg-white text-green-700 hover:bg-green-50 transition-colors cursor-pointer"
-              >
-                Log In
-              </Link>
+              {isAuthenticated ? (
+                <Button
+                  onClick={handleGoToApp}
+                  size="lg"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 text-lg"
+                >
+                  Go to My Events <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              ) : (
+                <>
+                  <Link
+                    to="/signup"
+                    className="inline-flex items-center justify-center px-8 py-3 rounded-md text-lg font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition-colors cursor-pointer"
+                  >
+                    Get Started <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="inline-flex items-center justify-center px-8 py-3 rounded-md text-lg font-medium border border-green-100 bg-white text-green-700 hover:bg-green-50 transition-colors cursor-pointer"
+                  >
+                    Log In
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -203,12 +273,22 @@ export default function Index() {
                 Join thousands of golf enthusiasts who are already creating
                 amazing experiences
               </p>
-              <Link
-                to="/signup"
-                className="inline-flex items-center justify-center px-8 py-3 rounded-md text-lg font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors cursor-pointer"
-              >
-                Start Your First Event <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+              {isAuthenticated ? (
+                <Button
+                  onClick={handleGoToApp}
+                  size="lg"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 text-lg"
+                >
+                  Create Your Next Event <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              ) : (
+                <Link
+                  to="/signup"
+                  className="inline-flex items-center justify-center px-8 py-3 rounded-md text-lg font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors cursor-pointer"
+                >
+                  Start Your First Event <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              )}
             </CardContent>
           </Card>
         </div>
