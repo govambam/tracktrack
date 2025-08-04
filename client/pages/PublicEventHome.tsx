@@ -814,9 +814,11 @@ const AnimatedTravelCard = ({ item, index }: { item: any; index: number }) => {
         <h3 className="text-2xl font-bold text-slate-900 mb-6">{item.title}</h3>
 
         <div className="prose prose-slate max-w-none">
-          <p className="text-slate-600 whitespace-pre-line leading-relaxed font-medium">
+          <ReactMarkdown
+            className="text-slate-600 leading-relaxed [&>*]:text-slate-600 [&>h1]:text-xl [&>h1]:font-bold [&>h1]:text-slate-900 [&>h2]:text-lg [&>h2]:font-semibold [&>h2]:text-slate-900 [&>h3]:text-base [&>h3]:font-medium [&>h3]:text-slate-900 [&>ul]:list-disc [&>ul]:ml-4 [&>ol]:list-decimal [&>ol]:ml-4 [&>li]:mb-1 [&>strong]:font-semibold [&>em]:italic"
+          >
             {item.info}
-          </p>
+          </ReactMarkdown>
         </div>
       </div>
     </div>
