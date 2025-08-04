@@ -593,6 +593,8 @@ export default function PublicEventHome() {
   const [customization, setCustomization] = useState<EventCustomization | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [customRules, setCustomRules] = useState<any[]>([]);
+  const [skillsContests, setSkillsContests] = useState<any[]>([]);
 
   useEffect(() => {
     if (slug) {
