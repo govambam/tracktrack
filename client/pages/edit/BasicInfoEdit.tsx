@@ -227,7 +227,7 @@ export default function BasicInfoEdit() {
           "Authorization": `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          model: "gpt-4",
+          model: "gpt-3.5-turbo", // Using GPT-3.5-turbo as it's more widely available
           messages: [
             {
               role: "user",
