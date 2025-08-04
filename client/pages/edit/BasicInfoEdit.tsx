@@ -221,37 +221,51 @@ export default function BasicInfoEdit() {
 
       console.log("Generated prompt:", prompt);
 
-      // Make API call with proper error handling
-      const apiResponse = await fetch("/api/generate-description", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ prompt })
+      // Make API call with XMLHttpRequest to avoid fetch stream issues
+      const xhr = new XMLHttpRequest();
+      const responsePromise = new Promise((resolve, reject) => {
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            console.log("XHR Response status:", xhr.status);
+            console.log("XHR Response text:", xhr.responseText);
+
+            if (xhr.status >= 200 && xhr.status < 300) {
+              try {
+                const data = JSON.parse(xhr.responseText);
+                resolve(data);
+              } catch (parseError) {
+                console.error("JSON parse error:", parseError);
+                reject(new Error(`Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`));
+              }
+            } else {
+              try {
+                const errorData = JSON.parse(xhr.responseText);
+                reject(new Error(`Server error (${xhr.status}): ${errorData.error || errorData.details || 'Unknown error'}`));
+              } catch {
+                reject(new Error(`HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`));
+              }
+            }
+          }
+        };
+
+        xhr.onerror = function() {
+          console.error("XHR network error");
+          reject(new Error("Network error occurred"));
+        };
+
+        xhr.ontimeout = function() {
+          console.error("XHR timeout");
+          reject(new Error("Request timed out"));
+        };
       });
 
-      console.log("API Response status:", apiResponse.status);
-      console.log("API Response headers:", Object.fromEntries(apiResponse.headers.entries()));
+      xhr.open("POST", "/api/generate-description", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.timeout = 30000; // 30 second timeout
+      xhr.send(JSON.stringify({ prompt }));
 
-      // Handle response based on content type
-      const contentType = apiResponse.headers.get("content-type");
-      let responseData;
-
-      if (contentType && contentType.includes("application/json")) {
-        responseData = await apiResponse.json();
-      } else {
-        // If not JSON, read as text to see what we got
-        const textResponse = await apiResponse.text();
-        console.log("Non-JSON response:", textResponse);
-        throw new Error(`Server returned non-JSON response: ${textResponse.slice(0, 100)}...`);
-      }
-
+      const responseData = await responsePromise;
       console.log("Parsed response data:", responseData);
-
-      if (!apiResponse.ok) {
-        const errorMessage = responseData?.error || responseData?.details || `HTTP ${apiResponse.status}`;
-        throw new Error(`Server error: ${errorMessage}`);
-      }
 
       const generatedDescription = responseData?.description;
 
