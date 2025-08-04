@@ -786,12 +786,12 @@ export default function PublicEventHome() {
             </div>
 
             <div className="flex justify-center">
-              <div className={`grid gap-10 max-w-5xl ${
+              <div className={`grid gap-10 ${
                 courses.length === 1
-                  ? 'grid-cols-1 max-w-md'
+                  ? 'grid-cols-1 max-w-2xl'
                   : courses.length === 2
-                  ? 'grid-cols-1 lg:grid-cols-2 max-w-3xl'
-                  : 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'
+                  ? 'grid-cols-1 lg:grid-cols-2 max-w-5xl'
+                  : 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 max-w-7xl'
               }`}>
                 {courses.map((course, index) => {
                   const round = rounds.find(r => r.course_name === course.name);
@@ -801,6 +801,10 @@ export default function PublicEventHome() {
                       course={course}
                       round={round}
                       index={index}
+                      onOpenModal={() => {
+                        setSelectedCourse({ course, round });
+                        setIsModalOpen(true);
+                      }}
                     />
                   );
                 })}
