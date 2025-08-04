@@ -241,11 +241,10 @@ export default function PublicEvent() {
     }
 
     // Show travel tab if any travel info exists
-    const hasTravel = eventData?.travel_lodging || 
-                     eventData?.travel_notes || 
-                     eventData?.travel_airport || 
-                     eventData?.travel_distance;
-    
+    const hasTravel = travelData?.flight_info ||
+                     travelData?.accommodations ||
+                     travelData?.daily_schedule;
+
     if (hasTravel && customization.travel_enabled !== false) {
       tabs.push({ id: 'travel', label: 'Travel', icon: Plane });
     }
