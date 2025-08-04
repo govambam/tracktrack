@@ -21,7 +21,9 @@ export default function Index() {
   useEffect(() => {
     // Check for existing session
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
       if (session?.user) {
         setIsAuthenticated(true);
@@ -38,21 +40,21 @@ export default function Index() {
     checkAuth();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === 'SIGNED_OUT' || !session) {
-          setIsAuthenticated(false);
-        } else if (session?.user) {
-          setIsAuthenticated(true);
-        }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT" || !session) {
+        setIsAuthenticated(false);
+      } else if (session?.user) {
+        setIsAuthenticated(true);
       }
-    );
+    });
 
     return () => subscription.unsubscribe();
   }, []);
 
   const handleGoToApp = () => {
-    navigate('/app');
+    navigate("/app");
   };
 
   return (
