@@ -22,13 +22,61 @@ export default function PlayersEdit() {
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState<Record<string, Record<string, string>>>({});
   const [editingPlayerId, setEditingPlayerId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Initialize players with context data
-    if (tripData?.players && tripData.players.length > 0) {
-      setPlayers(tripData.players);
-    } else {
-      // Initialize with one empty player
+    if (eventId) {
+      loadPlayersData();
+    }
+  }, [eventId]);
+
+  const loadPlayersData = async () => {
+    if (!eventId) return;
+
+    try {
+      setLoading(true);
+      console.log('Loading players data for event:', eventId);
+
+      // Load players directly from Supabase to ensure fresh data
+      const { data: playersData, error } = await supabase
+        .from('event_players')
+        .select('*')
+        .eq('event_id', eventId)
+        .order('created_at');
+
+      if (error) {
+        console.error('Error loading players:', error);
+        // Fall back to one empty player if no data exists
+        setPlayers([{
+          id: generateId(),
+          name: '',
+          email: '',
+          handicap: undefined,
+          image: ''
+        }]);
+      } else if (playersData && playersData.length > 0) {
+        // Convert database format to component format
+        const formattedPlayers = playersData.map(p => ({
+          id: p.id,
+          name: p.name || '',
+          email: p.email || '',
+          handicap: p.handicap,
+          image: p.image || ''
+        }));
+        setPlayers(formattedPlayers);
+        console.log('Loaded players:', formattedPlayers);
+      } else {
+        // No players found, start with one empty player
+        setPlayers([{
+          id: generateId(),
+          name: '',
+          email: '',
+          handicap: undefined,
+          image: ''
+        }]);
+      }
+    } catch (error) {
+      console.error('Error loading players data:', error);
       setPlayers([{
         id: generateId(),
         name: '',
@@ -36,8 +84,10 @@ export default function PlayersEdit() {
         handicap: undefined,
         image: ''
       }]);
+    } finally {
+      setLoading(false);
     }
-  }, [tripData?.players]);
+  };
 
   const generateId = () => Math.random().toString(36).substr(2, 9);
 
