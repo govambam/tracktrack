@@ -52,7 +52,8 @@ export default function PlayersEdit() {
           name: '',
           email: '',
           handicap: undefined,
-          image: ''
+          image: '',
+          bio: ''
         }]);
       } else if (playersData && playersData.length > 0) {
         // Convert database format to component format
@@ -73,7 +74,8 @@ export default function PlayersEdit() {
           name: '',
           email: '',
           handicap: undefined,
-          image: ''
+          image: '',
+          bio: ''
         }]);
       }
     } catch (error) {
@@ -83,7 +85,8 @@ export default function PlayersEdit() {
         name: '',
         email: '',
         handicap: undefined,
-        image: ''
+        image: '',
+        bio: ''
       }]);
     } finally {
       setLoading(false);
