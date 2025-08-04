@@ -360,10 +360,18 @@ export default function RulesCustomization() {
 
       console.log(`Polishing rule with AI: ${currentText}`);
 
-      const prompt = `Please improve and polish this golf tournament rule to make it clear, concise, and professional. Keep the core meaning the same but make it well-structured and easy to understand:
+      const prompt = `Please improve and polish this golf tournament rule to make it clear, professional, and well-structured. Use markdown formatting and follow this structure:
 
-Rule:
-${currentText}`;
+1. Start with a bold rule title (e.g., **Late Arrival Policy**)
+2. Follow with a short, clear description
+3. Use bullet points for multiple requirements or details
+4. Keep it concise and skimmable - avoid long paragraphs
+5. Make it easy to understand for all participants
+
+Current rule text:
+${currentText}
+
+Return the improved rule with proper markdown formatting (bold titles, bullet points, etc.).`;
 
       console.log("AI prompt:", prompt);
 
