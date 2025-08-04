@@ -351,13 +351,13 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {rounds.map((round) => {
+                {rounds.map((round, index) => {
                   const course = courses.find(c => c.round_id === round.id);
                   const displayName = getCourseValue(round.id, 'course_name', round.course_name);
                   const displayTeeTime = getCourseValue(round.id, 'tee_time', round.tee_time);
                   const displayDate = getCourseValue(round.id, 'round_date', round.round_date);
                   const displayDescription = getCourseValue(round.id, 'description', course?.description);
-                  
+
                   return (
                     <div
                       key={round.id}
@@ -367,7 +367,7 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
                       <div className="p-8">
                         <div className="flex items-center justify-between mb-4">
                           <span className="text-sm font-medium text-green-700 bg-green-100 px-3 py-1 rounded-full">
-                            Round {round.round_number}
+                            Round {index + 1}
                           </span>
                           <Edit className="h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
