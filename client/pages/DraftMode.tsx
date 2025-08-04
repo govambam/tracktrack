@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -7,7 +7,6 @@ import {
   ArrowLeft,
   Save,
   AlertCircle,
-  Info,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -35,7 +34,12 @@ export default function DraftMode() {
     if (hasChanges) {
       setShowExitDialog(true);
     } else {
-      navigate(`/app/${eventId}/settings`);
+      // Close the tab/window
+      window.close();
+      // Fallback if window.close() doesn't work (some browsers prevent it)
+      setTimeout(() => {
+        window.location.href = `/app/${eventId}/settings`;
+      }, 100);
     }
   };
 
@@ -154,13 +158,21 @@ export default function DraftMode() {
     setLocalChanges({});
     setHasChanges(false);
     setShowExitDialog(false);
-    navigate(`/app/${eventId}/settings`);
+    window.close();
+    // Fallback
+    setTimeout(() => {
+      window.location.href = `/app/${eventId}/settings`;
+    }, 100);
   };
 
   const handleSaveAndExit = async () => {
     await handleSaveChanges();
     setShowExitDialog(false);
-    navigate(`/app/${eventId}/settings`);
+    window.close();
+    // Fallback
+    setTimeout(() => {
+      window.location.href = `/app/${eventId}/settings`;
+    }, 100);
   };
 
   const updateLocalChanges = (path: string, value: any) => {
@@ -183,9 +195,9 @@ export default function DraftMode() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50/30">
+      {/* Persistent Header */}
+      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4">
@@ -220,23 +232,11 @@ export default function DraftMode() {
         </div>
       </div>
 
-      {/* Draft Mode Content */}
+      {/* Draft Mode Content - Full Public Site Experience */}
       <DraftModePublicEventHome 
         localChanges={localChanges}
         updateLocalChanges={updateLocalChanges}
       />
-
-      {/* Persistent Draft Mode Message */}
-      <div className="fixed bottom-4 left-4 right-4 z-40">
-        <div className="max-w-2xl mx-auto bg-blue-50 border border-blue-200 rounded-lg p-3 shadow-lg">
-          <div className="flex items-center text-blue-700">
-            <Info className="h-4 w-4 mr-2 flex-shrink-0" />
-            <span className="text-sm">
-              Some fields aren't editable here. To make deeper edits, return to the Edit Event view.
-            </span>
-          </div>
-        </div>
-      </div>
 
       {/* Exit Confirmation Dialog */}
       <AlertDialog open={showExitDialog} onOpenChange={setShowExitDialog}>
