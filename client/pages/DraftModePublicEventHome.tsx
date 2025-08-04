@@ -1013,6 +1013,143 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
           </section>
         )}
 
+        {/* Contest Rules Section */}
+        {(closestToPinGroups.length > 0 || longestDriveGroups.length > 0) && (
+          <section className="py-20 px-6 sm:px-8 lg:px-12">
+            <div className="max-w-6xl mx-auto">
+              <div className="bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200">
+                <div className="text-center mb-8">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="inline-flex items-center space-x-2 bg-slate-200 rounded-full px-4 py-2 mb-4 cursor-help">
+                        <Info className="h-4 w-4 text-slate-600" />
+                        <span className="text-sm font-medium text-slate-700">
+                          Official Guidelines
+                        </span>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Contest rules are managed in the Edit → Prizes section.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">
+                    Contest Rules
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Closest to Pin Rules */}
+                  {closestToPinGroups.length > 0 && (
+                    <div className="bg-white rounded-2xl p-6 border-2 border-green-200 shadow-sm">
+                      <div className="flex items-center space-x-3 mb-6">
+                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                          <Crosshair className="h-6 w-6 text-green-600" />
+                        </div>
+                        <div>
+                          <h4 className="text-xl font-bold text-green-900">
+                            Closest to the Pin
+                          </h4>
+                          {closestToPinPrize > 0 && (
+                            <p className="text-sm text-green-600">
+                              ${closestToPinPrize} per hole
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="bg-green-50 rounded-lg p-4">
+                        <h5 className="font-semibold text-green-900 text-sm mb-3">
+                          Rules
+                        </h5>
+                        <ul className="text-sm text-green-700 space-y-2">
+                          <li>
+                            • Must be <strong>ON THE GREEN</strong> to win
+                          </li>
+                          <li>• Measured to the inch for ties</li>
+                          <li>• Ball must come to rest on putting surface</li>
+                          <li>
+                            <span className="inline-flex items-center space-x-1">
+                              <span role="img" aria-label="trophy">
+                                🏆
+                              </span>
+                              <span>Winner takes the full prize amount</span>
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Long Drive Rules */}
+                  {longestDriveGroups.length > 0 && (
+                    <div className="bg-white rounded-2xl p-6 border-2 border-orange-200 shadow-sm">
+                      <div className="flex items-center space-x-3 mb-6">
+                        <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                          <Zap className="h-6 w-6 text-orange-600" />
+                        </div>
+                        <div>
+                          <h4 className="text-xl font-bold text-orange-900">
+                            Long Drive
+                          </h4>
+                          {longestDrivePrize > 0 && (
+                            <p className="text-sm text-orange-600">
+                              ${longestDrivePrize} per hole
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="bg-orange-50 rounded-lg p-4">
+                        <h5 className="font-semibold text-orange-900 text-sm mb-3">
+                          Rules
+                        </h5>
+                        <ul className="text-sm text-orange-700 space-y-2">
+                          <li>
+                            • Must be <strong>IN THE FAIRWAY</strong> to win
+                          </li>
+                          <li>
+                            • Winner = shortest distance to flag from approach
+                          </li>
+                          <li>• Placement beats pure distance</li>
+                          <li>• Measured to the yard for ties</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Administration Guidelines */}
+                <div className="mt-8 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                  <div className="flex items-start space-x-3">
+                    <Flag className="h-5 w-5 text-slate-600 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-slate-900 mb-3">
+                        Contest Administration
+                      </div>
+                      <ul className="text-sm text-slate-700 space-y-2">
+                        <li>
+                          • All measurements are final when agreed upon by the
+                          group
+                        </li>
+                        <li>
+                          • In case of disputes, tournament organizer has final
+                          say
+                        </li>
+                        <li>
+                          • Contest holes will be clearly marked with signage
+                        </li>
+                        <li>
+                          • Winners announced at the post-round gathering
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Prizes Section */}
         {(prizes.length > 0 || eventData.buy_in > 0) && (
           <section className="py-20 px-6 sm:px-8 lg:px-12 bg-white/50">
