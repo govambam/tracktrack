@@ -326,7 +326,7 @@ export default function BasicInfoEdit() {
     try {
       console.log("Polishing description with AI");
 
-      const prompt = `Take the following event description and polish it for use on a public-facing event website. Improve flow, clarity, and tone while preserving the original intent. Make it sound fun, well-written, and trip-appropriate—but not overly formal.
+      const prompt = `Take the following event description and polish it for use on a public-facing event website. Improve flow, clarity, and tone while preserving the original intent. Make it sound fun, well-written, and trip-appropriate—but not overly formal. Limit the response to a maximum of 2-3 sentences.
 
 Description:
 ${formData.description}`;
