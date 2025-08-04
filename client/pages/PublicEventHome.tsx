@@ -815,7 +815,17 @@ const AnimatedTravelCard = ({ item, index }: { item: any; index: number }) => {
 
         <div className="prose prose-slate max-w-none">
           <ReactMarkdown
-            className="text-slate-600 leading-relaxed [&>*]:text-slate-600 [&>h1]:text-xl [&>h1]:font-bold [&>h1]:text-slate-900 [&>h2]:text-lg [&>h2]:font-semibold [&>h2]:text-slate-900 [&>h3]:text-base [&>h3]:font-medium [&>h3]:text-slate-900 [&>ul]:list-disc [&>ul]:ml-4 [&>ol]:list-decimal [&>ol]:ml-4 [&>li]:mb-1 [&>strong]:font-semibold [&>em]:italic"
+            components={{
+              h1: ({children}) => <h1 className="text-xl font-bold text-slate-900 mb-3">{children}</h1>,
+              h2: ({children}) => <h2 className="text-lg font-semibold text-slate-900 mb-2">{children}</h2>,
+              h3: ({children}) => <h3 className="text-base font-medium text-slate-900 mb-2">{children}</h3>,
+              p: ({children}) => <p className="text-slate-600 leading-relaxed mb-2">{children}</p>,
+              ul: ({children}) => <ul className="list-disc ml-4 mb-2 text-slate-600">{children}</ul>,
+              ol: ({children}) => <ol className="list-decimal ml-4 mb-2 text-slate-600">{children}</ol>,
+              li: ({children}) => <li className="mb-1">{children}</li>,
+              strong: ({children}) => <strong className="font-semibold">{children}</strong>,
+              em: ({children}) => <em className="italic">{children}</em>,
+            }}
           >
             {item.info}
           </ReactMarkdown>
