@@ -264,9 +264,24 @@ export default function BasicInfoEdit() {
 
     } catch (error) {
       console.error("Error generating description:", error);
+
+      let errorMessage = "There was an issue generating your description. Please try again later.";
+
+      if (error instanceof Error) {
+        if (error.message.includes("401")) {
+          errorMessage = "API key is invalid or expired. Please check your OpenAI API key.";
+        } else if (error.message.includes("429")) {
+          errorMessage = "API rate limit exceeded. Please try again in a moment.";
+        } else if (error.message.includes("Failed to fetch")) {
+          errorMessage = "Network error. Please check your internet connection.";
+        } else if (error.message.includes("OpenAI API error")) {
+          errorMessage = `OpenAI API error: ${error.message}`;
+        }
+      }
+
       toast({
         title: "Generation Failed",
-        description: "There was an issue generating your description. Please try again later.",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
