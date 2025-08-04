@@ -106,23 +106,12 @@ export default function LeaderboardCustomization() {
   };
 
   const handleSaveAll = async () => {
-    if (!eventId) return;
-
-    try {
-      // Save leaderboard enabled setting
-      await saveLeaderboardEnabled(leaderboardEnabled);
-
-      toast({
-        title: "Settings Saved",
-        description: "Leaderboard customization settings have been saved successfully",
-      });
-    } catch (error) {
-      toast({
-        title: "Save Failed",
-        description: "Failed to save leaderboard settings",
-        variant: "destructive",
-      });
-    }
+    // Leaderboard page only has the enable/disable toggle which saves immediately
+    // No other content to save currently
+    toast({
+      title: "No Changes to Save",
+      description: "The leaderboard toggle saves automatically when changed",
+    });
   };
 
   if (loading) {
