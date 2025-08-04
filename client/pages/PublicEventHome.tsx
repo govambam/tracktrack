@@ -497,14 +497,17 @@ export default function PublicEventHome() {
       )}
 
       {/* Footer */}
-      <footer className="bg-green-900 text-white py-12 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h3 className="text-2xl font-bold mb-2">{eventData.name}</h3>
-          <p className="text-green-200 mb-4">
+      <footer className="bg-green-600 text-white py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Target className="h-8 w-8 text-white" />
+          </div>
+          <h3 className="text-2xl sm:text-3xl font-bold mb-4">{eventData.name}</h3>
+          <p className="text-green-100 text-lg mb-8">
             {eventData.location} • {formatDateRange(eventData.start_date, eventData.end_date)}
           </p>
-          <div className="border-t border-green-700 pt-6 mt-6">
-            <p className="text-green-300 text-sm">Powered by TrackTrack Golf</p>
+          <div className="border-t border-green-500 pt-8 mt-8">
+            <p className="text-green-200">Powered by TrackTrack Golf</p>
           </div>
         </div>
       </footer>
