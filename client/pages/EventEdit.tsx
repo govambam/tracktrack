@@ -29,6 +29,8 @@ import {
   ChevronDown,
   ChevronRight,
   Home,
+  Menu,
+  X,
 } from "lucide-react";
 
 interface EventData {
@@ -148,6 +150,7 @@ export default function EventEdit() {
   const [expandedMenus, setExpandedMenus] = useState<string[]>([
     "customizations",
   ]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (eventId) {
@@ -269,36 +272,54 @@ export default function EventEdit() {
       <header className="bg-white border-b border-green-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 md:space-x-4 flex-1 min-w-0">
+              {/* Mobile menu button */}
               <Button
                 variant="ghost"
-                onClick={() => navigate("/app")}
-                className="text-green-600 hover:text-green-700"
+                size="sm"
+                onClick={() => setSidebarOpen(true)}
+                className="lg:hidden text-green-600 hover:text-green-700 p-2"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Events
+                <Menu className="h-5 w-5" />
               </Button>
-              <Separator orientation="vertical" className="h-6" />
-              <div>
-                <h1 className="text-lg font-semibold text-green-900">
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/app")}
+                className="text-green-600 hover:text-green-700 p-2 lg:px-3 lg:py-2"
+              >
+                <ArrowLeft className="h-4 w-4 lg:mr-2" />
+                <span className="hidden lg:inline">Back to Events</span>
+              </Button>
+
+              <Separator orientation="vertical" className="h-6 hidden lg:block" />
+
+              <div className="min-w-0 flex-1">
+                <h1 className="text-sm md:text-lg font-semibold text-green-900 truncate">
                   {eventData.name}
                 </h1>
-                <div className="flex items-center text-sm text-green-600 space-x-4">
+                <div className="hidden md:flex items-center text-xs md:text-sm text-green-600 space-x-2 lg:space-x-4">
                   <div className="flex items-center">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    {formatDate(eventData.start_date)} -{" "}
-                    {formatDate(eventData.end_date)}
+                    <Calendar className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+                    <span className="hidden lg:inline">
+                      {formatDate(eventData.start_date)} -{" "}
+                      {formatDate(eventData.end_date)}
+                    </span>
+                    <span className="lg:hidden">
+                      {new Date(eventData.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                    </span>
                   </div>
                   <div className="flex items-center">
                     {eventData.is_private ? (
-                      <Lock className="h-4 w-4 mr-1" />
+                      <Lock className="h-3 w-3 md:h-4 md:w-4 mr-1" />
                     ) : (
-                      <Globe className="h-4 w-4 mr-1" />
+                      <Globe className="h-3 w-3 md:h-4 md:w-4 mr-1" />
                     )}
                     {eventData.is_private ? "Private" : "Public"}
                   </div>
                   {eventData.is_published && eventData.slug && (
-                    <div className="flex items-center">
+                    <div className="hidden lg:flex items-center">
                       <button
                         onClick={() =>
                           window.open(`/events/${eventData.slug}`, "_blank")
@@ -306,7 +327,7 @@ export default function EventEdit() {
                         className="flex items-center text-blue-600 hover:text-blue-700 hover:underline"
                       >
                         <Globe className="h-4 w-4 mr-1" />
-                        tracktrack.com/events/{eventData.slug}
+                        <span className="truncate">tracktrack.com/events/{eventData.slug}</span>
                       </button>
                     </div>
                   )}
@@ -315,7 +336,7 @@ export default function EventEdit() {
             </div>
             <Badge
               variant="outline"
-              className="text-green-700 border-green-200"
+              className="text-green-700 border-green-200 text-xs"
             >
               Editing
             </Badge>
@@ -323,10 +344,10 @@ export default function EventEdit() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-8">
-          {/* Sidebar Navigation */}
-          <div className="w-64 flex-shrink-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
+        <div className="flex gap-4 lg:gap-8">
+          {/* Desktop Sidebar Navigation */}
+          <div className="hidden lg:block w-64 flex-shrink-0">
             <Card className="border-green-100">
               <CardContent className="p-0">
                 <div className="p-4 border-b border-green-100">
@@ -421,24 +442,126 @@ export default function EventEdit() {
           {/* Main Content Area */}
           <div className="flex-1 min-w-0">
             <div className="bg-white rounded-lg border border-green-100 shadow-sm">
-              <div className="p-6 border-b border-green-100">
+              <div className="p-4 lg:p-6 border-b border-green-100">
                 <div className="flex items-center">
                   <currentSection.icon className="h-5 w-5 mr-2 text-emerald-600" />
-                  <h1 className="text-xl font-semibold text-green-900">
+                  <h1 className="text-lg lg:text-xl font-semibold text-green-900">
                     {currentSection.label}
                   </h1>
                 </div>
-                <p className="text-green-600 mt-1">
+                <p className="text-green-600 mt-1 text-sm lg:text-base">
                   {currentSection.description}
                 </p>
               </div>
-              <div className="p-6">
+              <div className="p-4 lg:p-6">
                 <Outlet />
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div className="fixed inset-0 bg-black bg-opacity-50" onClick={() => setSidebarOpen(false)} />
+          <div className="fixed top-0 left-0 bottom-0 w-80 max-w-[80vw] bg-white shadow-xl">
+            <div className="flex items-center justify-between p-4 border-b border-green-100">
+              <h2 className="font-semibold text-green-900">Event Sections</h2>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSidebarOpen(false)}
+                className="p-2"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="p-4">
+              <p className="text-sm text-green-600 mb-4">
+                {currentSection.description}
+              </p>
+            </div>
+            <nav className="px-2 pb-4">
+              {sidebarSections.map((sectionItem) => {
+                const Icon = sectionItem.icon;
+                const isActive = currentSectionId === sectionItem.id;
+                const isCustomizations = sectionItem.id === "customizations";
+                const isExpanded = expandedMenus.includes(sectionItem.id);
+                const hasActiveSubmenu = sectionItem.submenu?.some(
+                  (sub) => sub.id === currentSectionId,
+                );
+
+                return (
+                  <div key={sectionItem.id}>
+                    {sectionItem.submenu ? (
+                      // Expandable menu item
+                      <button
+                        onClick={() => toggleMenu(sectionItem.id)}
+                        className={`w-full flex items-center justify-between px-3 py-3 rounded-md text-sm font-medium transition-colors ${
+                          hasActiveSubmenu
+                            ? "bg-emerald-50 text-emerald-700"
+                            : "text-green-700 hover:bg-green-50 hover:text-emerald-600"
+                        }`}
+                      >
+                        <div className="flex items-center">
+                          <Icon className="h-5 w-5 mr-3" />
+                          {sectionItem.label}
+                        </div>
+                        {isExpanded ? (
+                          <ChevronDown className="h-4 w-4" />
+                        ) : (
+                          <ChevronRight className="h-4 w-4" />
+                        )}
+                      </button>
+                    ) : (
+                      // Regular menu item
+                      <Link
+                        to={`/app/${eventId}/${sectionItem.id}`}
+                        onClick={() => setSidebarOpen(false)}
+                        className={`flex items-center px-3 py-3 rounded-md text-sm font-medium transition-colors ${
+                          isActive
+                            ? "bg-emerald-50 text-emerald-700 border-l-2 border-emerald-600"
+                            : "text-green-700 hover:bg-green-50 hover:text-emerald-600"
+                        }`}
+                      >
+                        <Icon className="h-5 w-5 mr-3" />
+                        {sectionItem.label}
+                      </Link>
+                    )}
+
+                    {/* Submenu items */}
+                    {sectionItem.submenu && isExpanded && (
+                      <div className="ml-4 mt-1 space-y-1">
+                        {sectionItem.submenu.map((subItem) => {
+                          const SubIcon = subItem.icon;
+                          const isSubActive = currentSectionId === subItem.id;
+
+                          return (
+                            <Link
+                              key={subItem.id}
+                              to={`/app/${eventId}/${subItem.id}`}
+                              onClick={() => setSidebarOpen(false)}
+                              className={`flex items-center px-3 py-2 rounded-md text-sm transition-colors ${
+                                isSubActive
+                                  ? "bg-emerald-100 text-emerald-700 border-l-2 border-emerald-600"
+                                  : "text-green-600 hover:bg-green-50 hover:text-emerald-600"
+                              }`}
+                            >
+                              <SubIcon className="h-4 w-4 mr-3" />
+                              {subItem.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </nav>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
