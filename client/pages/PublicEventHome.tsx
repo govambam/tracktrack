@@ -576,7 +576,7 @@ const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index
           </Avatar>
 
           <div className="flex-1 text-left">
-            <h3 className="font-bold text-slate-900 text-lg group-hover:text-green-700 transition-colors line-clamp-2">
+            <h3 className="font-bold text-slate-900 text-lg group-hover:text-green-700 transition-colors">
               {player.full_name}
             </h3>
             {player.handicap !== null && player.handicap !== undefined && (
