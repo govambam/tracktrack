@@ -46,6 +46,19 @@ export default function Summary() {
 
     try {
       console.log('Starting complete event creation...');
+      console.log('Current tripData state:', {
+        id: tripData.id,
+        tripName: tripData.tripName,
+        startDate: tripData.startDate,
+        endDate: tripData.endDate,
+        location: tripData.location,
+        hasBasicInfo: !!(tripData.tripName && tripData.startDate && tripData.endDate && tripData.location)
+      });
+
+      // Check if we have basic required data before attempting to save
+      if (!tripData.tripName || !tripData.startDate || !tripData.endDate || !tripData.location) {
+        throw new Error('Basic event information is missing. Please return to the Basic Info step and ensure all required fields are filled out.');
+      }
 
       // Step 1: Ensure main event is saved (might already be saved from BasicInfo)
       if (!tripData.id) {
