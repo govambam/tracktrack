@@ -78,7 +78,10 @@ export default function TravelCustomization() {
       }
 
     } catch (error) {
-      console.error('Error loading travel customization data:', error);
+      console.error('Error loading travel customization data:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        error: error
+      });
       toast({
         title: "Load Failed",
         description: "Failed to load travel customization data",
