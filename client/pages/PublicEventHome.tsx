@@ -1756,16 +1756,7 @@ export default function PublicEventHome() {
                           </ul>
                         </div>
 
-                        <div className="bg-orange-50 rounded-lg p-4">
-                          <h5 className="font-semibold text-orange-900 text-sm mb-3">
-                            Strategy Tips
-                          </h5>
-                          <ul className="text-sm text-orange-700 space-y-2">
-                            <li>• Smart positioning beats pure distance</li>
-                            <li>• Know the pin location</li>
-                            <li>• Risk vs. reward on tricky Par 5s</li>
-                          </ul>
-                        </div>
+
                       </div>
                     </div>
                   )}
