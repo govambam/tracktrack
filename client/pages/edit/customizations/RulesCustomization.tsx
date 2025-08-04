@@ -200,6 +200,26 @@ export default function RulesCustomization() {
     }
   };
 
+  const handleSaveAll = async () => {
+    if (!eventId) return;
+
+    try {
+      // Save rules enabled setting
+      await saveRulesEnabled(rulesEnabled);
+
+      toast({
+        title: "Settings Saved",
+        description: "Rules customization settings have been saved successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Save Failed",
+        description: "Failed to save rules settings",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
