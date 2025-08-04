@@ -278,7 +278,7 @@ export default function TravelCustomization() {
                     onChange={(e) => {
                       setTravelInfo(prev => ({ ...prev, flight_info: e.target.value }));
                     }}
-                    onBlur={(e) => saveTravelField('flight_info', e.target.value)}
+
                     placeholder="Nearest airports, flight recommendations, shuttle services, rental car information, etc."
                     className="border-green-200 focus:border-emerald-500 bg-white"
                     rows={4}
