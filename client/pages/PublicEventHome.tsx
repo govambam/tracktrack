@@ -565,7 +565,7 @@ const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index
       onMouseEnter={() => setShowSeeMore(true)}
       onMouseLeave={() => setShowSeeMore(false)}
     >
-      <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white h-80 flex flex-col">
+      <div className={`bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white flex flex-col ${!hasBio ? 'h-64' : isShortBio ? 'h-72' : 'h-80'}`}>
 
         {/* Header with Avatar and Name */}
         <div className="flex items-center space-x-4 p-6 pb-4">
