@@ -226,7 +226,7 @@ export default function BasicInfoEdit() {
         : "beautiful golf courses";
 
       // Construct prompt
-      const prompt = `Write a short, friendly trip description for a golf event called ${event.name}. It takes place in ${event.location} from ${startDate} to ${endDate}. Golf will be played at ${courseNames}. There are ${playerCount} players. The tone should be fun, welcoming, and appropriate for a website.`;
+      const prompt = `Write a short, fun trip description for a golf getaway among friends. The event is called ${event.name} and takes place in ${event.location} from ${startDate} to ${endDate}. They'll be playing at ${courseNames}. The tone should be lighthearted, personal, and reflect the spirit of friends' golf trip—light competition, lots of camaraderie, good times, and memorable moments.`;
 
       console.log("Generated prompt:", prompt);
 
