@@ -117,8 +117,8 @@ export default function PublicEventHome() {
         supabase.from('event_courses').select('*').eq('event_id', event.id).order('display_order'),
         supabase.from('event_rounds').select('*').eq('event_id', event.id).order('round_date'),
         supabase.from('event_prizes').select('*').eq('event_id', event.id),
-        supabase.from('event_travel').select('*').eq('event_id', event.id).single(),
-        supabase.from('event_customization').select('*').eq('event_id', event.id).single()
+        supabase.from('event_travel').select('*').eq('event_id', event.id).maybeSingle(),
+        supabase.from('event_customization').select('*').eq('event_id', event.id).maybeSingle()
       ]);
 
       setPlayers(playersResult.data || []);
