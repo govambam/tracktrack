@@ -713,7 +713,7 @@ function LeaderboardTab() {
 }
 
 // Travel Tab Component
-function TravelTab({ eventData }: { eventData: EventData }) {
+function TravelTab({ travelData }: { travelData: TravelData }) {
   return (
     <div className="space-y-6">
       <div>
@@ -722,59 +722,47 @@ function TravelTab({ eventData }: { eventData: EventData }) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Lodging */}
-        {eventData.travel_lodging && (
+        {/* Flight Information */}
+        {travelData.flight_info && (
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Plane className="h-5 w-5 mr-2 text-green-600" />
-                Lodging
+                Flight Information
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700 whitespace-pre-line">{eventData.travel_lodging}</p>
+              <p className="text-gray-700 whitespace-pre-line">{travelData.flight_info}</p>
             </CardContent>
           </Card>
         )}
 
-        {/* Airport Information */}
-        {eventData.travel_airport && (
+        {/* Accommodations */}
+        {travelData.accommodations && (
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Plane className="h-5 w-5 mr-2 text-green-600" />
-                Airport Information
+                Accommodations
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700 whitespace-pre-line">{eventData.travel_airport}</p>
+              <p className="text-gray-700 whitespace-pre-line">{travelData.accommodations}</p>
             </CardContent>
           </Card>
         )}
 
-        {/* Transportation */}
-        {eventData.travel_distance && (
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <MapPin className="h-5 w-5 mr-2 text-green-600" />
-                Transportation
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 whitespace-pre-line">{eventData.travel_distance}</p>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Additional Notes */}
-        {eventData.travel_notes && (
+        {/* Daily Schedule */}
+        {travelData.daily_schedule && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>Additional Travel Notes</CardTitle>
+              <CardTitle className="flex items-center">
+                <Calendar className="h-5 w-5 mr-2 text-green-600" />
+                Daily Schedule
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700 whitespace-pre-line">{eventData.travel_notes}</p>
+              <p className="text-gray-700 whitespace-pre-line">{travelData.daily_schedule}</p>
             </CardContent>
           </Card>
         )}
