@@ -340,7 +340,7 @@ export default function PublicEventHome() {
                           </Badge>
                           <h3 className="text-xl font-bold text-green-900">{course.name}</h3>
                         </div>
-                        <Golf className="h-6 w-6 text-emerald-600" />
+                        <Target className="h-6 w-6 text-emerald-600" />
                       </div>
                       
                       <div className="grid grid-cols-2 gap-4 text-sm">
