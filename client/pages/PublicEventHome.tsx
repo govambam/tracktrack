@@ -941,6 +941,7 @@ export default function PublicEventHome() {
         console.log("Customization error:", customizationResult.error);
     } catch (error) {
       console.error("Error loading event data:", error);
+      setError("Failed to load event data. Please try again later.");
     } finally {
       setLoading(false);
     }
