@@ -238,7 +238,7 @@ export default function BasicInfoEdit() {
 
       const data = await response.json();
       console.log("API response data:", data);
-      const generatedDescription = data.choices[0]?.message?.content?.trim();
+      const generatedDescription = data.description;
 
       if (generatedDescription) {
         handleInputChange("description", generatedDescription);
