@@ -875,7 +875,9 @@ export default function PublicEventHome() {
 
       if (eventError || !event) {
         console.error("Event not found:", eventError);
-        setError(`Event not found or not published. Slug: ${slug}, Error: ${eventError?.message || 'No event data'}`);
+        setError(
+          `Event not found or not published. Slug: ${slug}, Error: ${eventError?.message || "No event data"}`,
+        );
         setLoading(false);
         return;
       }
@@ -1124,16 +1126,17 @@ export default function PublicEventHome() {
             Event Not Found
           </h1>
           <p className="text-green-600 mb-4">
-            {error || "This event may not be published or the link is incorrect."}
+            {error ||
+              "This event may not be published or the link is incorrect."}
           </p>
 
           {/* Debug information */}
           <div className="bg-white/50 rounded-lg p-4 text-left text-sm text-gray-700 mt-4">
             <h3 className="font-medium mb-2">Debug Information:</h3>
-            <div>Slug: {slug || 'undefined'}</div>
+            <div>Slug: {slug || "undefined"}</div>
             <div>Loading: {loading.toString()}</div>
-            <div>Error: {error || 'none'}</div>
-            <div>Event Data: {eventData ? 'found' : 'null'}</div>
+            <div>Error: {error || "none"}</div>
+            <div>Event Data: {eventData ? "found" : "null"}</div>
             <div>URL: {window.location.href}</div>
             <div>Pathname: {window.location.pathname}</div>
           </div>
