@@ -592,12 +592,12 @@ const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index
           {hasBio && (
             <div className="relative h-full">
               <p
-                className="text-sm text-slate-600 leading-relaxed overflow-hidden"
+                className="text-sm text-slate-600 leading-relaxed overflow-hidden text-center"
                 style={{
                   display: '-webkit-box',
-                  WebkitLineClamp: 4,
+                  WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
-                  maxHeight: '5.5rem',
+                  maxHeight: '2.75rem',
                   lineHeight: '1.375rem'
                 }}
               >
