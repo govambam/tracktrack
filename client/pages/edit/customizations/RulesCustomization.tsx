@@ -294,7 +294,7 @@ export default function RulesCustomization() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={addRule}
+                  onClick={() => addRule()}
                   className="border-green-200 text-green-700 hover:bg-green-50"
                 >
                   <Plus className="h-4 w-4 mr-1" />
