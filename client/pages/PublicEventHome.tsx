@@ -640,6 +640,8 @@ export default function PublicEventHome() {
       if (!prizesResult.error) setPrizes(prizesResult.data || []);
       if (!travelResult.error) setTravel(travelResult.data || null);
       if (!customizationResult.error) setCustomization(customizationResult.data || null);
+      if (!rulesResult.error) setCustomRules(rulesResult.data || []);
+      if (!contestsResult.error) setSkillsContests(contestsResult.data || []);
 
       // Log any errors for debugging
       if (playersResult.error) console.log('Players error:', playersResult.error);
