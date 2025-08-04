@@ -285,6 +285,7 @@ export default function BasicInfoEdit() {
       console.error("Full error details:", error);
 
       let userMessage = "There was an issue generating your description. Please try again later.";
+      let shouldShowFallback = false;
 
       if (error instanceof Error) {
         const msg = error.message.toLowerCase();
@@ -293,9 +294,27 @@ export default function BasicInfoEdit() {
         } else if (msg.includes("401") || msg.includes("unauthorized")) {
           userMessage = "API authorization failed. Please contact support.";
         } else if (msg.includes("429") || msg.includes("rate limit")) {
-          userMessage = "Too many requests. Please wait a moment and try again.";
+          userMessage = "OpenAI rate limit exceeded. Using fallback description generator.";
+          shouldShowFallback = true;
         } else if (msg.includes("server error")) {
           userMessage = error.message;
+        }
+      }
+
+      // If it's a rate limit error, generate a fallback description
+      if (shouldShowFallback) {
+        try {
+          const fallbackDescription = generateFallbackDescription(event, courses, playerCount, startDate, endDate);
+          handleInputChange("description", fallbackDescription);
+
+          toast({
+            title: "Description Generated",
+            description: "Used fallback generator due to API limits. You can edit this description as needed.",
+          });
+          return;
+        } catch (fallbackError) {
+          console.error("Fallback generation failed:", fallbackError);
+          userMessage = "Both AI and fallback generation failed. Please try again later.";
         }
       }
 
