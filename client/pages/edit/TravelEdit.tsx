@@ -148,6 +148,107 @@ export default function TravelEdit() {
     }
   };
 
+  const polishFieldWithAI = async (fieldName: string, currentContent: string) => {
+    if (!currentContent || !currentContent.trim()) return;
+
+    setPolishingField(fieldName);
+
+    try {
+      console.log(`Polishing ${fieldName} with AI`);
+
+      const prompt = `Please improve and polish the following text so that it's clear, concise, and well-structured. Return the result in markdown format, including subheadings, bold or italicized text where appropriate, and bullet points if useful.
+
+Text:
+${currentContent}`;
+
+      console.log("Polish prompt:", prompt);
+
+      // Make API call with XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+      const responsePromise = new Promise((resolve, reject) => {
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            console.log(`Polish ${fieldName} XHR Response status:`, xhr.status);
+            console.log(`Polish ${fieldName} XHR Response text:`, xhr.responseText);
+
+            if (xhr.status >= 200 && xhr.status < 300) {
+              try {
+                const data = JSON.parse(xhr.responseText);
+                resolve(data);
+              } catch (parseError) {
+                console.error(`Polish ${fieldName} JSON parse error:`, parseError);
+                reject(new Error(`Invalid JSON response: ${xhr.responseText.slice(0, 100)}...`));
+              }
+            } else {
+              try {
+                const errorData = JSON.parse(xhr.responseText);
+                reject(new Error(`Server error (${xhr.status}): ${errorData.error || errorData.details || 'Unknown error'}`));
+              } catch {
+                reject(new Error(`HTTP ${xhr.status}: ${xhr.responseText.slice(0, 100)}...`));
+              }
+            }
+          }
+        };
+
+        xhr.onerror = function() {
+          console.error(`Polish ${fieldName} XHR network error`);
+          reject(new Error("Network error occurred"));
+        };
+
+        xhr.ontimeout = function() {
+          console.error(`Polish ${fieldName} XHR timeout`);
+          reject(new Error("Request timed out"));
+        };
+      });
+
+      xhr.open("POST", "/api/generate-description", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.timeout = 30000; // 30 second timeout
+      xhr.send(JSON.stringify({ prompt }));
+
+      const responseData = await responsePromise;
+      console.log(`Polish ${fieldName} API response data:`, responseData);
+
+      const polishedContent = responseData?.description;
+
+      if (!polishedContent) {
+        throw new Error("No polished content received from server");
+      }
+
+      // Update the appropriate field
+      updateTravelInfo(fieldName, polishedContent);
+
+      toast({
+        title: "Content Polished!",
+        description: `AI has polished your ${fieldName.replace(/([A-Z])/g, ' $1').toLowerCase()} content.`,
+      });
+
+    } catch (error) {
+      console.error(`Error polishing ${fieldName}:`, error);
+
+      let userMessage = "There was an issue polishing your content. Please try again later.";
+
+      if (error instanceof Error) {
+        const msg = error.message.toLowerCase();
+        if (msg.includes("network") || msg.includes("fetch")) {
+          userMessage = "Network error. Please check your connection and try again.";
+        } else if (msg.includes("401") || msg.includes("unauthorized")) {
+          userMessage = "API authorization failed. Please contact support.";
+        } else if (msg.includes("server error")) {
+          userMessage = error.message;
+        }
+      }
+
+      toast({
+        title: "Polish Failed",
+        description: userMessage,
+        variant: "destructive"
+      });
+    } finally {
+      setPolishingField(null);
+    }
+  };
+
   const hasAnyContent = Object.values(travelInfo).some((value) => value.trim());
 
   if (loading) {
