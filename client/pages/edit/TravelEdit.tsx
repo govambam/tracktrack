@@ -14,7 +14,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
-import { Plane, Building, Calendar, Info, Save } from "lucide-react";
+import { Plane, Building, Calendar, Info, Save, Sparkles } from "lucide-react";
 
 export default function TravelEdit() {
   const { eventId } = useParams();
