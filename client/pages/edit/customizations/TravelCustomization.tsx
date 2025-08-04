@@ -119,19 +119,35 @@ export default function TravelCustomization() {
     if (!eventId) return;
 
     try {
-      const updateData = { [field]: value };
+      console.log('Saving travel field:', field, '=', value, 'for event:', eventId);
+
+      // Use upsert to either update existing record or create new one
       const { error } = await supabase
-        .from('events')
-        .update(updateData)
-        .eq('id', eventId);
+        .from('event_travel')
+        .upsert({
+          event_id: eventId,
+          [field]: value,
+          // Include all current values to avoid overwriting
+          ...travelInfo,
+          [field]: value
+        }, {
+          onConflict: 'event_id'
+        });
 
       if (error) {
-        console.error('Error saving travel info:', error);
+        console.error('Error saving travel info:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
         toast({
           title: "Save Failed",
           description: "Failed to save travel information",
           variant: "destructive",
         });
+      } else {
+        console.log('Successfully saved travel field:', field);
       }
     } catch (error) {
       console.error('Error saving travel info:', error);
