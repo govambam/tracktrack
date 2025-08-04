@@ -13,7 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
-import { Target, Plus, Trash2, Save, Edit, X } from "lucide-react";
+import { Target, Plus, Trash2, Save, Edit, X, Sparkles } from "lucide-react";
 
 interface EventRule {
   id: string;
