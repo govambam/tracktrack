@@ -482,6 +482,9 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
   const closestToPinPrize = prizes.find((p) => p.category === "closest_to_pin")?.amount || 0;
   const longestDrivePrize = prizes.find((p) => p.category === "longest_drive")?.amount || 0;
 
+  const closestToPinGroups = getContestsByType("closest_to_pin");
+  const longestDriveGroups = getContestsByType("longest_drive");
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
