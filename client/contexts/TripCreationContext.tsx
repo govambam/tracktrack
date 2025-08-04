@@ -30,6 +30,7 @@ export interface Player {
   email?: string;
   handicap?: number;
   image?: string;
+  bio?: string;
 }
 
 export interface TripData {
