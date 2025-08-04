@@ -647,17 +647,28 @@ export default function PublicEventHome() {
       )}
 
       {/* Footer */}
-      <footer className="bg-green-600 text-white py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Target className="h-8 w-8 text-white" />
+      <footer className="relative py-20 px-6 sm:px-8 lg:px-12 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(34,197,94,0.1),_transparent_70%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(6,182,212,0.1),_transparent_70%)]"></div>
+
+        <div className="relative max-w-4xl mx-auto text-center">
+          <div className="w-24 h-24 bg-white/10 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/20">
+            <Target className="h-12 w-12 text-white" />
           </div>
-          <h3 className="text-2xl sm:text-3xl font-bold mb-4">{eventData.name}</h3>
-          <p className="text-green-100 text-lg mb-8">
+
+          <h3 className="text-3xl sm:text-4xl font-bold mb-6 text-white">
+            {eventData.name}
+          </h3>
+
+          <p className="text-xl text-green-200 mb-12 font-light">
             {eventData.location} • {formatDateRange(eventData.start_date, eventData.end_date)}
           </p>
-          <div className="border-t border-green-500 pt-8 mt-8">
-            <p className="text-green-200">Powered by TrackTrack Golf</p>
+
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+            <p className="text-green-200 text-lg font-medium">
+              Powered by TrackTrack Golf
+            </p>
           </div>
         </div>
       </footer>
