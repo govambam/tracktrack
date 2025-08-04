@@ -167,6 +167,11 @@ export default function DraftModePublicEventHome({
           .select("*")
           .eq("event_id", eventId)
           .order("display_order"),
+        supabase
+          .from("stableford_scoring")
+          .select("*")
+          .eq("event_id", eventId)
+          .maybeSingle(),
       ]);
 
       // Handle results with detailed error logging
