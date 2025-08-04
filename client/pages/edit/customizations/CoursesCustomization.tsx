@@ -38,6 +38,7 @@ export default function CoursesCustomization() {
   const [coursesEnabled, setCoursesEnabled] = useState(true);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
+  const [generatingAI, setGeneratingAI] = useState<string | null>(null);
 
   useEffect(() => {
     if (eventId) {
