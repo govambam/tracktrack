@@ -530,7 +530,7 @@ Return your response as a JSON object with these fields:
       const responseData = await responsePromise;
       console.log(`Course AI response data:`, responseData);
 
-      const aiResponse = responseData?.description;
+      const aiResponse = (responseData as any)?.description;
 
       if (!aiResponse) {
         throw new Error("No AI response received from server");
