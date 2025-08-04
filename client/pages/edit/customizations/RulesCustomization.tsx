@@ -653,17 +653,17 @@ Make it fun while keeping it clear! Use markdown formatting with bold titles and
                                     </p>
                                   ),
                                   ul: ({ children }) => (
-                                    <ul className="text-green-700 ml-4 mb-2 last:mb-0">
+                                    <ul className="text-green-700 ml-6 mb-3 last:mb-0 list-disc">
                                       {children}
                                     </ul>
                                   ),
                                   ol: ({ children }) => (
-                                    <ol className="text-green-700 ml-4 mb-2 last:mb-0">
+                                    <ol className="text-green-700 ml-6 mb-3 last:mb-0 list-decimal">
                                       {children}
                                     </ol>
                                   ),
                                   li: ({ children }) => (
-                                    <li className="mb-1 last:mb-0">
+                                    <li className="mb-1 last:mb-0 leading-relaxed">
                                       {children}
                                     </li>
                                   ),
