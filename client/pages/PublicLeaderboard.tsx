@@ -380,7 +380,7 @@ export default function PublicLeaderboard() {
       </nav>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="max-w-6xl mx-auto px-6 pt-8 pb-12">
         {/* Title Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">
