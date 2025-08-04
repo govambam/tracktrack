@@ -622,13 +622,15 @@ export default function PublicEventHome() {
       setEventData(event);
 
       // Load all related data in parallel
-      const [playersResult, coursesResult, roundsResult, prizesResult, travelResult, customizationResult] = await Promise.all([
+      const [playersResult, coursesResult, roundsResult, prizesResult, travelResult, customizationResult, rulesResult, contestsResult] = await Promise.all([
         supabase.from('event_players').select('*').eq('event_id', event.id),
         supabase.from('event_courses').select('*').eq('event_id', event.id).order('display_order'),
         supabase.from('event_rounds').select('*').eq('event_id', event.id).order('round_date'),
         supabase.from('event_prizes').select('*').eq('event_id', event.id),
         supabase.from('event_travel').select('*').eq('event_id', event.id).maybeSingle(),
-        supabase.from('event_customization').select('*').eq('event_id', event.id).maybeSingle()
+        supabase.from('event_customization').select('*').eq('event_id', event.id).maybeSingle(),
+        supabase.from('event_rules').select('*').eq('event_id', event.id).order('created_at'),
+        supabase.from('skills_contests').select('*').eq('event_id', event.id)
       ]);
 
       // Handle results with error checking
