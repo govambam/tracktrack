@@ -234,8 +234,8 @@ export default function PublicEventHome() {
             />
           </div>
         )}
-        <div className="relative max-w-6xl mx-auto px-6 py-16 sm:py-24">
-          <div className="text-center space-y-6">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+          <div className="text-center space-y-6 max-w-4xl mx-auto">
             <Badge variant="secondary" className="bg-white/20 text-white border-white/30 text-sm font-medium px-4 py-2">
               <Calendar className="h-4 w-4 mr-2" />
               {formatDateRange(eventData.start_date, eventData.end_date)}
