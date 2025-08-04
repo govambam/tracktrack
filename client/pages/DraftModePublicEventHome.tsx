@@ -570,8 +570,8 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
             <DialogHeader>
               <DialogTitle>Edit Course Details</DialogTitle>
               <DialogDescription>
-                Update the course information for Round {editCourseModal?.round_number}.
-              </DialogDescription>
+              Update the course information for Round {tempCourseData.roundNumber || 1}.
+            </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div>
