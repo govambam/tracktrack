@@ -731,7 +731,7 @@ Return your response as a JSON object with these fields:
                         placeholder="Describe the course layout, features, and difficulty..."
                         className="border-green-200 focus:border-emerald-500 bg-white"
                         rows={3}
-                        disabled={!coursesEnabled}
+
                       />
                     </div>
                     <div className="space-y-2">
@@ -751,7 +751,7 @@ Return your response as a JSON object with these fields:
                         }}
                         placeholder="Weather conditions, seasonal notes, etc."
                         className="border-green-200 focus:border-emerald-500 bg-white"
-                        disabled={!coursesEnabled}
+
                       />
                     </div>
 
