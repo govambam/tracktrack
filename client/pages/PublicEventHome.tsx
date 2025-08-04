@@ -1105,11 +1105,13 @@ export default function PublicEventHome() {
       )}
 
       {/* Prizes Section */}
-      {prizes.length > 0 && (
+      {(prizes.length > 0 || skillsContests.length > 0) && (
         <section id="prizes" className="py-28 px-6 sm:px-8 lg:px-12 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
-          <div className="relative max-w-6xl mx-auto">
-            <div className="text-center mb-20">
+          <div className="relative max-w-6xl mx-auto space-y-20">
+
+            {/* Header and Buy-in */}
+            <div className="text-center">
               <div className="inline-flex items-center space-x-2 bg-amber-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
                 <Trophy className="h-4 w-4 text-amber-600" />
                 <span className="text-sm font-medium text-amber-800">Prize Pool</span>
@@ -1129,21 +1131,186 @@ export default function PublicEventHome() {
               )}
             </div>
 
-            <div className="flex justify-center">
-              <div className={`grid gap-8 ${
-                prizes.length === 1
-                  ? 'grid-cols-1 max-w-sm'
-                  : prizes.length === 2
-                  ? 'grid-cols-1 sm:grid-cols-2 max-w-2xl'
-                  : prizes.length === 3
-                  ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl'
-                  : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl'
-              }`}>
-                {prizes.map((prize, index) => (
-                  <AnimatedPrizeCard key={prize.id} prize={prize} index={index} />
-                ))}
+            {/* Prize Cards */}
+            {prizes.length > 0 && (
+              <div className="flex justify-center">
+                <div className={`grid gap-8 ${
+                  prizes.length === 1
+                    ? 'grid-cols-1 max-w-sm'
+                    : prizes.length === 2
+                    ? 'grid-cols-1 sm:grid-cols-2 max-w-2xl'
+                    : prizes.length === 3
+                    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl'
+                    : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl'
+                }`}>
+                  {prizes.map((prize, index) => (
+                    <AnimatedPrizeCard key={prize.id} prize={prize} index={index} />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Hole Contests Summary */}
+            {skillsContests.length > 0 && (
+              <div className="bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200">
+                <div className="text-center mb-8">
+                  <div className="inline-flex items-center space-x-2 bg-indigo-200 rounded-full px-4 py-2 mb-4">
+                    <Target className="h-4 w-4 text-indigo-600" />
+                    <span className="text-sm font-medium text-indigo-700">Skills Contests</span>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-indigo-900">Hole Contests</h3>
+                  <p className="text-lg text-indigo-600 font-light">Extra prizes on designated holes</p>
+                </div>
+
+                <div className="space-y-8">
+                  {/* Closest to Pin Contests */}
+                  {closestToPinGroups.length > 0 && (
+                    <div>
+                      <div className="flex items-center space-x-3 mb-4">
+                        <Crosshair className="h-5 w-5 text-green-600" />
+                        <h4 className="text-xl font-bold text-indigo-900">Closest to the Pin</h4>
+                        {closestToPinPrize > 0 && (
+                          <Badge className="bg-green-100 text-green-800 border border-green-300">
+                            ${closestToPinPrize} per hole
+                          </Badge>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {closestToPinGroups.map((group, index) => (
+                          <div key={index} className="bg-white rounded-2xl p-4 border border-indigo-200 shadow-sm">
+                            <div className="font-semibold text-indigo-900 mb-1">{group.roundName}</div>
+                            <div className="text-sm text-indigo-600">
+                              Holes: {group.holes.sort((a, b) => a - b).join(", ")}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Long Drive Contests */}
+                  {longestDriveGroups.length > 0 && (
+                    <div>
+                      <div className="flex items-center space-x-3 mb-4">
+                        <Zap className="h-5 w-5 text-orange-600" />
+                        <h4 className="text-xl font-bold text-indigo-900">Long Drive</h4>
+                        {longestDrivePrize > 0 && (
+                          <Badge className="bg-orange-100 text-orange-800 border border-orange-300">
+                            ${longestDrivePrize} per hole
+                          </Badge>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {longestDriveGroups.map((group, index) => (
+                          <div key={index} className="bg-white rounded-2xl p-4 border border-indigo-200 shadow-sm">
+                            <div className="font-semibold text-indigo-900 mb-1">{group.roundName}</div>
+                            <div className="text-sm text-indigo-600">
+                              Holes: {group.holes.sort((a, b) => a - b).join(", ")}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Contest Rules */}
+            {(closestToPinGroups.length > 0 || longestDriveGroups.length > 0) && (
+              <div className="bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200">
+                <div className="text-center mb-8">
+                  <div className="inline-flex items-center space-x-2 bg-slate-200 rounded-full px-4 py-2 mb-4">
+                    <Info className="h-4 w-4 text-slate-600" />
+                    <span className="text-sm font-medium text-slate-700">Official Guidelines</span>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Contest Rules</h3>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Closest to Pin Rules */}
+                  {closestToPinGroups.length > 0 && (
+                    <div className="bg-white rounded-2xl p-6 border-2 border-green-200 shadow-sm">
+                      <div className="flex items-center space-x-3 mb-6">
+                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                          <Crosshair className="h-6 w-6 text-green-600" />
+                        </div>
+                        <div>
+                          <h4 className="text-xl font-bold text-green-900">Closest to the Pin</h4>
+                          {closestToPinPrize > 0 && (
+                            <p className="text-sm text-green-600">${closestToPinPrize} per hole</p>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="bg-green-50 rounded-lg p-4">
+                        <h5 className="font-semibold text-green-900 text-sm mb-3">Rules</h5>
+                        <ul className="text-sm text-green-700 space-y-2">
+                          <li>• Must be <strong>ON THE GREEN</strong> to win</li>
+                          <li>• Measured to the inch for ties</li>
+                          <li>• Ball must come to rest on putting surface</li>
+                          <li>• Winner takes the full prize amount</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Long Drive Rules */}
+                  {longestDriveGroups.length > 0 && (
+                    <div className="bg-white rounded-2xl p-6 border-2 border-orange-200 shadow-sm">
+                      <div className="flex items-center space-x-3 mb-6">
+                        <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                          <Zap className="h-6 w-6 text-orange-600" />
+                        </div>
+                        <div>
+                          <h4 className="text-xl font-bold text-orange-900">Long Drive</h4>
+                          {longestDrivePrize > 0 && (
+                            <p className="text-sm text-orange-600">${longestDrivePrize} per hole</p>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div className="bg-orange-50 rounded-lg p-4">
+                          <h5 className="font-semibold text-orange-900 text-sm mb-3">Rules</h5>
+                          <ul className="text-sm text-orange-700 space-y-2">
+                            <li>• Must be <strong>IN THE FAIRWAY</strong> to win</li>
+                            <li>• Winner = shortest distance to flag from approach</li>
+                            <li>• Placement beats pure distance</li>
+                            <li>• Measured to the yard for ties</li>
+                          </ul>
+                        </div>
+
+                        <div className="bg-orange-50 rounded-lg p-4">
+                          <h5 className="font-semibold text-orange-900 text-sm mb-3">Strategy Tips</h5>
+                          <ul className="text-sm text-orange-700 space-y-2">
+                            <li>• Smart positioning beats pure distance</li>
+                            <li>• Know the pin location</li>
+                            <li>• Risk vs. reward on tricky Par 5s</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Administration Guidelines */}
+                <div className="mt-8 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                  <div className="flex items-start space-x-3">
+                    <Flag className="h-5 w-5 text-slate-600 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-slate-900 mb-3">Contest Administration</div>
+                      <ul className="text-sm text-slate-700 space-y-2">
+                        <li>• All measurements are final when agreed upon by the group</li>
+                        <li>• In case of disputes, tournament organizer has final say</li>
+                        <li>• Prizes paid out after round completion</li>
+                        <li>• Have fun and play with integrity!</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}
