@@ -138,6 +138,13 @@ export default function HomeCustomization() {
       }
     } catch (error) {
       console.error('Error saving home headline:', error);
+      toast({
+        title: "Save Failed",
+        description: "Failed to save homepage headline",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
     }
   };
 
