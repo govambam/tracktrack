@@ -29,6 +29,7 @@ export default function TravelEdit() {
   });
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [polishingField, setPolishingField] = useState<string | null>(null);
 
   useEffect(() => {
     if (eventId) {
