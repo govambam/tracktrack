@@ -299,8 +299,8 @@ export default function BasicInfoEdit() {
       const responseData = await responsePromise;
       console.log("Parsed response data:", responseData);
 
-      const generatedDescription = responseData?.description;
-      const source = responseData?.source;
+      const generatedDescription = (responseData as any)?.description;
+      const source = (responseData as any)?.source;
 
       if (!generatedDescription) {
         throw new Error("No description received from server");
@@ -414,7 +414,7 @@ ${formData.description}`;
       const responseData = await responsePromise;
       console.log("Polish API response data:", responseData);
 
-      const polishedDescription = responseData?.description;
+      const polishedDescription = (responseData as any)?.description;
 
       if (!polishedDescription) {
         throw new Error("No polished description received from server");
