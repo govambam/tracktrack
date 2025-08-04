@@ -981,6 +981,7 @@ export default function PublicEventHome() {
         setCustomization(customizationResult.data || null);
       if (!rulesResult.error) setCustomRules(rulesResult.data || []);
       if (!contestsResult.error) setSkillsContests(contestsResult.data || []);
+      if (!stablefordResult.error) setStablefordScoring(stablefordResult.data || null);
 
       // Log any errors for debugging
       if (playersResult.error)
