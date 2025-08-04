@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +16,8 @@ import {
   Star,
   Award,
   ChevronRight,
-  Loader2
+  Loader2,
+  Sparkles
 } from "lucide-react";
 
 interface EventData {
