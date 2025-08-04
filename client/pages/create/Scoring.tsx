@@ -134,7 +134,14 @@ export default function Scoring() {
     const scoringData = {
       scoringFormat,
       ...(scoringFormat === "modified-stableford" && {
-        stablefordPoints: defaultStablefordPoints,
+        stablefordPoints: {
+          albatross: 20,
+          eagle: 8,
+          birdie: 4,
+          par: 2,
+          bogey: 1,
+          doubleBogey: 0,
+        },
       }),
     };
 
