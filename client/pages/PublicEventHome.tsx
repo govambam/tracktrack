@@ -380,33 +380,29 @@ export default function PublicEventHome() {
 
       {/* Players Section */}
       {players.length > 0 && (
-        <section id="players" className="py-16 px-6 bg-green-50">
+        <section id="players" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-green-900 mb-4">Meet the Players</h2>
-              <p className="text-xl text-green-600">The competitors taking on the course</p>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-900 mb-6">Players</h2>
+              <p className="text-lg text-gray-600">Tournament starts at {formatDateRange(eventData.start_date, eventData.end_date).split(',')[0]}</p>
             </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
               {players.map((player) => (
-                <Card key={player.id} className="border-green-200">
-                  <CardContent className="p-6 text-center">
-                    <Avatar className="h-16 w-16 mx-auto mb-4">
-                      {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
-                      <AvatarFallback className="bg-emerald-600 text-white text-lg">
-                        {getPlayerInitials(player.full_name)}
-                      </AvatarFallback>
-                    </Avatar>
-                    
-                    <h3 className="font-semibold text-green-900 mb-2">{player.full_name}</h3>
-                    
-                    {player.handicap !== null && player.handicap !== undefined && (
-                      <Badge variant="outline" className="text-emerald-600 border-emerald-200">
-                        HCP: {player.handicap}
-                      </Badge>
-                    )}
-                  </CardContent>
-                </Card>
+                <div key={player.id} className="text-center">
+                  <Avatar className="h-20 w-20 mx-auto mb-4">
+                    {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
+                    <AvatarFallback className="bg-green-600 text-white text-xl">
+                      {getPlayerInitials(player.full_name)}
+                    </AvatarFallback>
+                  </Avatar>
+
+                  <h3 className="font-semibold text-green-900 text-sm">{player.full_name}</h3>
+
+                  {player.handicap !== null && player.handicap !== undefined && (
+                    <p className="text-xs text-gray-500 mt-1">HCP: {player.handicap}</p>
+                  )}
+                </div>
               ))}
             </div>
           </div>
