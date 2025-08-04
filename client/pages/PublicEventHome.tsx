@@ -339,9 +339,16 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
   const [showSeeMore, setShowSeeMore] = useState(false);
 
   const hasDescription = course.description && course.description.trim();
-  // More conservative word count - checking if text is likely to exceed 4 lines
-  // Typical line: ~10-12 words, so 4 lines = ~40-48 words. Using 35 to be safe.
-  const shouldShowSeeMore = hasDescription && course.description.length > 200; // ~35-40 words
+  // More conservative character count - checking if text is likely to exceed 4 lines
+  const shouldShowSeeMore = hasDescription && course.description.length > 200;
+
+  // Debug logging
+  console.log(`Course ${course.name}:`, {
+    hasDescription,
+    descriptionLength: course.description?.length,
+    shouldShowSeeMore,
+    index
+  });
 
   return (
     <div
