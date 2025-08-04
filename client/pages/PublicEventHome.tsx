@@ -29,6 +29,7 @@ interface EventData {
   logo_url?: string;
   is_published: boolean;
   is_private: boolean;
+  buy_in?: number;
 }
 
 interface EventPlayer {
