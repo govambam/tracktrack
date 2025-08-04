@@ -1611,69 +1611,51 @@ export default function PublicEventHome() {
                   </p>
                 </div>
 
-                <div className="space-y-8">
-                  {/* Closest to Pin Contests */}
-                  {closestToPinGroups.length > 0 && (
-                    <div>
-                      <div className="flex items-center space-x-3 mb-4">
-                        <Crosshair className="h-5 w-5 text-green-600" />
-                        <h4 className="text-xl font-bold text-indigo-900">
-                          Closest to the Pin
-                        </h4>
-                        {closestToPinPrize > 0 && (
-                          <Badge className="bg-green-100 text-green-800 border border-green-300">
-                            ${closestToPinPrize} per hole
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {closestToPinGroups.map((group, index) => (
+                <div className="space-y-6">
+                  {getContestsByRound().map((round, index) => (
+                    <div key={index} className="bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm">
+                      <h4 className="text-xl font-bold text-indigo-900 mb-4">
+                        Round {round.roundNumber} ({round.courseName})
+                      </h4>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                        {round.contests.map((contest, contestIndex) => (
                           <div
-                            key={index}
-                            className="bg-white rounded-2xl p-4 border border-indigo-200 shadow-sm"
+                            key={contestIndex}
+                            className="flex items-center space-x-2 bg-indigo-50 rounded-lg px-3 py-2"
                           >
-                            <div className="font-semibold text-indigo-900 mb-1">
-                              {group.roundName}
-                            </div>
-                            <div className="text-sm text-indigo-600">
-                              Holes:{" "}
-                              {group.holes.sort((a, b) => a - b).join(", ")}
-                            </div>
+                            <span className="text-lg" role="img" aria-label={contest.type === 'closest_to_pin' ? 'target' : 'golf swing'}>
+                              {contest.emoji}
+                            </span>
+                            <span className="font-medium text-indigo-900 text-sm">
+                              Hole {contest.hole}
+                            </span>
                           </div>
                         ))}
                       </div>
                     </div>
-                  )}
+                  ))}
 
-                  {/* Long Drive Contests */}
-                  {longestDriveGroups.length > 0 && (
-                    <div>
-                      <div className="flex items-center space-x-3 mb-4">
-                        <Zap className="h-5 w-5 text-orange-600" />
-                        <h4 className="text-xl font-bold text-indigo-900">
-                          Long Drive
-                        </h4>
-                        {longestDrivePrize > 0 && (
-                          <Badge className="bg-orange-100 text-orange-800 border border-orange-300">
-                            ${longestDrivePrize} per hole
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {longestDriveGroups.map((group, index) => (
-                          <div
-                            key={index}
-                            className="bg-white rounded-2xl p-4 border border-indigo-200 shadow-sm"
-                          >
-                            <div className="font-semibold text-indigo-900 mb-1">
-                              {group.roundName}
-                            </div>
-                            <div className="text-sm text-indigo-600">
-                              Holes:{" "}
-                              {group.holes.sort((a, b) => a - b).join(", ")}
-                            </div>
+                  {/* Prize Information */}
+                  {(closestToPinPrize > 0 || longestDrivePrize > 0) && (
+                    <div className="bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm">
+                      <h4 className="text-lg font-semibold text-indigo-900 mb-4">Prize Information</h4>
+                      <div className="flex flex-wrap gap-4">
+                        {closestToPinPrize > 0 && (
+                          <div className="flex items-center space-x-2">
+                            <span className="text-lg" role="img" aria-label="target">🎯</span>
+                            <span className="text-sm text-green-700 font-medium">
+                              Closest to Pin: ${closestToPinPrize} per hole
+                            </span>
                           </div>
-                        ))}
+                        )}
+                        {longestDrivePrize > 0 && (
+                          <div className="flex items-center space-x-2">
+                            <span className="text-lg" role="img" aria-label="golf swing">🏌️‍♂️</span>
+                            <span className="text-sm text-orange-700 font-medium">
+                              Long Drive: ${longestDrivePrize} per hole
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
