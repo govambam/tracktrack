@@ -12,11 +12,24 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
 import { checkTableExists } from "@/lib/initDatabase";
-import { MapPin, RefreshCw, Save, Sparkles, Search, X, ExternalLink } from "lucide-react";
+import {
+  MapPin,
+  RefreshCw,
+  Save,
+  Sparkles,
+  Search,
+  X,
+  ExternalLink,
+} from "lucide-react";
 
 interface EventCourse {
   id: string;
@@ -40,7 +53,11 @@ export default function CoursesCustomization() {
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const [generatingAI, setGeneratingAI] = useState<string | null>(null);
-  const [imageSearchModal, setImageSearchModal] = useState<{isOpen: boolean, courseId: string, courseName: string}>({isOpen: false, courseId: '', courseName: ''});
+  const [imageSearchModal, setImageSearchModal] = useState<{
+    isOpen: boolean;
+    courseId: string;
+    courseName: string;
+  }>({ isOpen: false, courseId: "", courseName: "" });
 
   useEffect(() => {
     if (eventId) {
@@ -583,23 +600,23 @@ Return your response as a JSON object with these fields:
   };
 
   const openImageSearch = (courseId: string, courseName: string) => {
-    setImageSearchModal({isOpen: true, courseId, courseName});
+    setImageSearchModal({ isOpen: true, courseId, courseName });
   };
 
   const closeImageSearch = () => {
-    setImageSearchModal({isOpen: false, courseId: '', courseName: ''});
+    setImageSearchModal({ isOpen: false, courseId: "", courseName: "" });
   };
 
   const handleImageSelect = (imageUrl: string) => {
     // Update the course with the selected image URL
-    setCourses(courses.map(c =>
-      c.id === imageSearchModal.courseId
-        ? { ...c, image_url: imageUrl }
-        : c
-    ));
+    setCourses(
+      courses.map((c) =>
+        c.id === imageSearchModal.courseId ? { ...c, image_url: imageUrl } : c,
+      ),
+    );
 
     // Save the image URL immediately
-    saveCourseField(imageSearchModal.courseId, 'image_url', imageUrl);
+    saveCourseField(imageSearchModal.courseId, "image_url", imageUrl);
 
     toast({
       title: "Image Selected",
@@ -717,7 +734,9 @@ Return your response as a JSON object with these fields:
                             type="button"
                             variant="outline"
                             size="sm"
-                            onClick={() => openImageSearch(course.id, course.name)}
+                            onClick={() =>
+                              openImageSearch(course.id, course.name)
+                            }
                             className="mt-2 border-blue-200 text-blue-700 hover:bg-blue-50"
                           >
                             <Search className="h-4 w-4 mr-2" />
@@ -885,17 +904,24 @@ Return your response as a JSON object with these fields:
               <div className="flex items-start space-x-3">
                 <ExternalLink className="h-5 w-5 text-blue-600 mt-0.5" />
                 <div>
-                  <h4 className="font-medium text-blue-900 mb-2">How to find and use an image:</h4>
+                  <h4 className="font-medium text-blue-900 mb-2">
+                    How to find and use an image:
+                  </h4>
                   <ol className="text-sm text-blue-700 space-y-1 mb-3">
-                    <li>1. Click "Open Google Images" below to search for course images</li>
+                    <li>
+                      1. Click "Open Google Images" below to search for course
+                      images
+                    </li>
                     <li>2. Right-click on an image you like</li>
                     <li>3. Select "Copy image address" or "Copy image URL"</li>
-                    <li>4. Return here, paste the URL, and click "Use This Image"</li>
+                    <li>
+                      4. Return here, paste the URL, and click "Use This Image"
+                    </li>
                   </ol>
                   <Button
                     onClick={() => {
-                      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(imageSearchModal.courseName + ' golf course')}&tbm=isch`;
-                      window.open(searchUrl, '_blank');
+                      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(imageSearchModal.courseName + " golf course")}&tbm=isch`;
+                      window.open(searchUrl, "_blank");
                     }}
                     className="bg-blue-600 hover:bg-blue-700 text-white"
                   >
@@ -907,7 +933,10 @@ Return your response as a JSON object with these fields:
             </div>
 
             <div className="space-y-3">
-              <Label htmlFor="imageUrl" className="text-sm font-medium text-gray-700">
+              <Label
+                htmlFor="imageUrl"
+                className="text-sm font-medium text-gray-700"
+              >
                 Paste Image URL:
               </Label>
               <div className="flex space-x-2">
@@ -918,7 +947,9 @@ Return your response as a JSON object with these fields:
                 />
                 <Button
                   onClick={() => {
-                    const input = document.getElementById('imageUrl') as HTMLInputElement;
+                    const input = document.getElementById(
+                      "imageUrl",
+                    ) as HTMLInputElement;
                     if (input?.value.trim()) {
                       handleImageSelect(input.value.trim());
                     }
@@ -932,8 +963,9 @@ Return your response as a JSON object with these fields:
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
               <p className="text-sm text-yellow-800">
-                <strong>Tip:</strong> Look for high-quality images that show the course layout or signature holes.
-                Make sure the URL ends with .jpg, .png, or .webp for best compatibility.
+                <strong>Tip:</strong> Look for high-quality images that show the
+                course layout or signature holes. Make sure the URL ends with
+                .jpg, .png, or .webp for best compatibility.
               </p>
             </div>
           </div>
