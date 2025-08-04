@@ -539,8 +539,9 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
   );
 };
 
-const AnimatedPlayerCard = ({ player, index }: { player: any; index: number }) => {
+const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index: number; onOpenModal: () => void }) => {
   const { isVisible, elementRef } = useScrollAnimation();
+  const [showSeeMore, setShowSeeMore] = useState(false);
 
   const getPlayerInitials = (name: string) => {
     return name
@@ -552,40 +553,75 @@ const AnimatedPlayerCard = ({ player, index }: { player: any; index: number }) =
   };
 
   const hasBio = player.bio && player.bio.trim().length > 0;
+  const shouldShowSeeMore = hasBio && player.bio.length > 150; // ~4 lines worth of text
 
   return (
     <div
       ref={elementRef}
-      className={`group text-center transition-all duration-500 ${
+      className={`group transition-all duration-500 ${
         index < 8 ? `delay-${index * 50}` : 'delay-300'
       } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      onMouseEnter={() => setShowSeeMore(true)}
+      onMouseLeave={() => setShowSeeMore(false)}
     >
-      <div className={`bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white ${hasBio ? 'min-h-[280px]' : 'min-h-[200px]'} flex flex-col justify-between`}>
-        <div className="flex-1">
-          <Avatar className="h-20 w-20 mx-auto mb-6 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300">
+      <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white h-80 flex flex-col">
+
+        {/* Header with Avatar and Name */}
+        <div className="flex items-center space-x-4 p-6 pb-4">
+          <Avatar className="h-16 w-16 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300 flex-shrink-0">
             {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
-            <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-xl font-bold">
+            <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-lg font-bold">
               {getPlayerInitials(player.full_name)}
             </AvatarFallback>
           </Avatar>
 
-          <h3 className="font-bold text-slate-900 text-lg mb-3 group-hover:text-green-700 transition-colors">
-            {player.full_name}
-          </h3>
-
-          {hasBio && (
-            <div className="mb-4 px-2">
-              <p className="text-sm text-slate-600 leading-relaxed italic">
-                "{player.bio}"
-              </p>
-            </div>
-          )}
+          <div className="flex-1 text-left">
+            <h3 className="font-bold text-slate-900 text-lg group-hover:text-green-700 transition-colors line-clamp-2">
+              {player.full_name}
+            </h3>
+            {player.handicap !== null && player.handicap !== undefined && (
+              <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-3 py-1 mt-2">
+                <span className="text-xs font-semibold text-slate-600">HCP: {player.handicap}</span>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="mt-auto">
-          {player.handicap !== null && player.handicap !== undefined && (
-            <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-4 py-2">
-              <span className="text-sm font-semibold text-slate-600">HCP: {player.handicap}</span>
+        {/* Bio Section */}
+        <div className="flex-1 px-6 pb-6 relative">
+          {hasBio && (
+            <div className="relative h-full">
+              <p
+                className="text-sm text-slate-600 leading-relaxed overflow-hidden"
+                style={{
+                  display: '-webkit-box',
+                  WebkitLineClamp: 4,
+                  WebkitBoxOrient: 'vertical',
+                  maxHeight: '5.5rem',
+                  lineHeight: '1.375rem'
+                }}
+              >
+                "{player.bio}"
+              </p>
+              {shouldShowSeeMore && (
+                <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-white/90 to-transparent pointer-events-none" />
+              )}
+
+              {shouldShowSeeMore && showSeeMore && (
+                <button
+                  onClick={onOpenModal}
+                  className="absolute bottom-0 right-0 text-green-600 hover:text-green-700 font-medium text-sm flex items-center space-x-1 transition-colors bg-white/90 px-2 py-1 rounded-md"
+                >
+                  <span>See more</span>
+                  <MoreHorizontal className="h-3 w-3" />
+                </button>
+              )}
+            </div>
+          )}
+
+          {!hasBio && (
+            <div className="flex items-center justify-center h-full">
+              <p className="text-sm text-slate-400 italic">No bio available</p>
             </div>
           )}
         </div>
