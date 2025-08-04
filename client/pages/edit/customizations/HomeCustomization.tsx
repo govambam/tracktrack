@@ -274,7 +274,7 @@ export default function HomeCustomization() {
                   id="homepage-headline"
                   value={homeHeadline}
                   onChange={(e) => setHomeHeadline(e.target.value)}
-                  onBlur={() => saveHomeHeadline(homeHeadline)}
+
                   placeholder="Add a short headline to display on your event home page"
                   className="border-green-200 focus:border-emerald-500 bg-white"
                   disabled={!homeEnabled || saving}
