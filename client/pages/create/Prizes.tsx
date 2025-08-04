@@ -351,6 +351,62 @@ export default function Prizes() {
             )}
           </Card>
 
+          {/* Hole Contests Summary */}
+          {skillsContestsFromCourses.length > 0 && (
+            <Card className="border-indigo-100 bg-indigo-50">
+              <CardHeader>
+                <CardTitle className="text-lg text-indigo-900 flex items-center">
+                  <MapPin className="h-5 w-5 mr-2 text-indigo-600" />
+                  Hole Contests Summary
+                </CardTitle>
+                <CardDescription className="text-indigo-600">
+                  Overview of skills contests across all rounds
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {closestToPinGroups.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Crosshair className="h-4 w-4 text-green-600" />
+                        <h4 className="font-semibold text-indigo-900">Closest to the Pin</h4>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {closestToPinGroups.map((group, index) => (
+                          <div key={index} className="bg-white rounded-lg p-3 border border-indigo-200">
+                            <div className="font-medium text-indigo-900 text-sm">{group.roundName}</div>
+                            <div className="text-sm text-indigo-600">
+                              Holes: {group.holes.sort((a, b) => a - b).join(", ")}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {longestDriveGroups.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Zap className="h-4 w-4 text-orange-600" />
+                        <h4 className="font-semibold text-indigo-900">Long Drive</h4>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {longestDriveGroups.map((group, index) => (
+                          <div key={index} className="bg-white rounded-lg p-3 border border-indigo-200">
+                            <div className="font-medium text-indigo-900 text-sm">{group.roundName}</div>
+                            <div className="text-sm text-indigo-600">
+                              Holes: {group.holes.sort((a, b) => a - b).join(", ")}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Skills Contest Prizes */}
           <Card className="border-green-100 bg-green-50">
             <CardHeader>
