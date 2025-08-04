@@ -886,6 +886,7 @@ export default function PublicEventHome() {
   const [isPlayerModalOpen, setIsPlayerModalOpen] = useState(false);
   const [customRules, setCustomRules] = useState<any[]>([]);
   const [skillsContests, setSkillsContests] = useState<any[]>([]);
+  const [stablefordScoring, setStablefordScoring] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
