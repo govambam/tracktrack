@@ -675,7 +675,7 @@ export default function PublicEventHome() {
 
       {/* Scoring Format Section */}
       {rounds.length > 0 && (
-        <section className="py-28 px-6 sm:px-8 lg:px-12 relative">
+        <section id="scoring" className="py-28 px-6 sm:px-8 lg:px-12 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-slate-50/30"></div>
           <div className="relative max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center space-x-2 bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
@@ -684,7 +684,7 @@ export default function PublicEventHome() {
             </div>
 
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-16 tracking-tight">
-              Tournament Format
+              Scoring Format
             </h2>
 
             <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-12 sm:p-16 shadow-2xl shadow-slate-200/50 border border-slate-200/50">
