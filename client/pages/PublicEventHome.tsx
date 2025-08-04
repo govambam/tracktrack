@@ -696,6 +696,104 @@ export default function PublicEventHome() {
     }).join(', ') || 'Stroke Play';
   };
 
+  // Enhanced Stableford points system
+  const enhancedStablefordPoints = [
+    {
+      score: "Albatross",
+      points: 20,
+      description: "3 under par",
+      detail: "Legendary! The rarest score in golf deserves the highest reward.",
+      color: "from-purple-500 to-purple-600",
+      bgColor: "bg-purple-50",
+      textColor: "text-purple-900",
+      iconColor: "text-purple-600",
+      icon: Crown
+    },
+    {
+      score: "Eagle",
+      points: 8,
+      description: "2 under par",
+      detail: "Exceptional performance! Maximum points for being 2 strokes under par.",
+      color: "from-yellow-500 to-yellow-600",
+      bgColor: "bg-yellow-50",
+      textColor: "text-yellow-900",
+      iconColor: "text-yellow-600",
+      icon: Trophy
+    },
+    {
+      score: "Birdie",
+      points: 4,
+      description: "1 under par",
+      detail: "Great shot! Double points for being 1 stroke under par.",
+      color: "from-green-500 to-green-600",
+      bgColor: "bg-green-50",
+      textColor: "text-green-900",
+      iconColor: "text-green-600",
+      icon: Award
+    },
+    {
+      score: "Par",
+      points: 2,
+      description: "Even",
+      detail: "Solid golf! Standard points for meeting par.",
+      color: "from-blue-500 to-blue-600",
+      bgColor: "bg-blue-50",
+      textColor: "text-blue-900",
+      iconColor: "text-blue-600",
+      icon: CheckCircle
+    },
+    {
+      score: "Bogey",
+      points: 1,
+      description: "1 over par",
+      detail: "Still in the game! One point for being 1 stroke over par.",
+      color: "from-orange-500 to-orange-600",
+      bgColor: "bg-orange-50",
+      textColor: "text-orange-900",
+      iconColor: "text-orange-600",
+      icon: Medal
+    },
+    {
+      score: "Double Bogey+",
+      points: 0,
+      description: "2+ over par",
+      detail: "No points awarded for scores of double bogey or worse.",
+      color: "from-red-500 to-red-600",
+      bgColor: "bg-red-50",
+      textColor: "text-red-900",
+      iconColor: "text-red-600",
+      icon: Target
+    }
+  ];
+
+  // Helper functions for contests
+  const getContestsByType = (type: string) => {
+    return skillsContests
+      .filter(contest => contest.contest_type === type)
+      .reduce((acc, contest) => {
+        const round = rounds.find(r => r.id === contest.round_id);
+        if (round) {
+          const existing = acc.find(item => item.roundName === round.course_name);
+          if (existing) {
+            existing.holes.push(contest.hole);
+          } else {
+            acc.push({
+              roundName: round.course_name,
+              holes: [contest.hole]
+            });
+          }
+        }
+        return acc;
+      }, [] as { roundName: string; holes: number[] }[]);
+  };
+
+  const closestToPinGroups = getContestsByType("closest_to_pin");
+  const longestDriveGroups = getContestsByType("longest_drive");
+
+  // Get prize amounts for contests
+  const closestToPinPrize = prizes.find(p => p.category === 'closest_to_pin')?.amount || 0;
+  const longestDrivePrize = prizes.find(p => p.category === 'longest_drive')?.amount || 0;
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
