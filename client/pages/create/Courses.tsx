@@ -425,21 +425,24 @@ export default function Courses() {
                               <Label className="text-sm text-green-800">
                                 Hole Number
                               </Label>
-                              <Input
-                                type="number"
-                                min="1"
-                                max={round.holes}
+                              <select
                                 value={contest.hole}
                                 onChange={(e) =>
                                   updateSkillsContest(
                                     round.id,
                                     contest.id,
                                     "hole",
-                                    parseInt(e.target.value) || 1,
+                                    parseInt(e.target.value),
                                   )
                                 }
-                                className="border-green-200 focus:border-emerald-500"
-                              />
+                                className="w-full px-3 py-2 border border-green-200 rounded-md focus:border-emerald-500 focus:outline-none bg-white"
+                              >
+                                {Array.from({ length: round.holes }, (_, i) => i + 1).map(holeNum => (
+                                  <option key={holeNum} value={holeNum}>
+                                    Hole {holeNum}
+                                  </option>
+                                ))}
+                              </select>
                             </div>
                             <div className="space-y-1">
                               <Label className="text-sm text-green-800">
