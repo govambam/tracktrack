@@ -67,7 +67,7 @@ const App = () => (
                 <Route path="create/prizes" element={<Prizes />} />
                 <Route path="create/travel" element={<Travel />} />
                 <Route path="create/customization" element={<Customization />} />
-              <Route path="create/summary" element={<Summary />} />
+                <Route path="create/summary" element={<Summary />} />
               <Route path="settings" element={<Settings />} />
 
               {/* Event Editing Routes */}
