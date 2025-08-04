@@ -193,12 +193,14 @@ export default function PlayersEdit() {
       if (players.length > 0) {
         const playersData = players.map(player => {
           const profileImage = player.image?.trim();
+          const bio = player.bio?.trim();
           return {
             event_id: eventId,
             full_name: player.name.trim(),
             email: player.email?.trim() || null,
             handicap: player.handicap || null,
-            profile_image: profileImage && profileImage.length > 0 ? profileImage : null
+            profile_image: profileImage && profileImage.length > 0 ? profileImage : null,
+            bio: bio && bio.length > 0 ? bio : null
           };
         });
 
