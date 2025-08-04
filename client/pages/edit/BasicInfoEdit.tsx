@@ -173,6 +173,96 @@ export default function BasicInfoEdit() {
     }
   };
 
+  const generateAIDescription = async () => {
+    if (!eventId) return;
+
+    setGeneratingAI(true);
+
+    try {
+      // Fetch event data including courses and player count
+      const [eventResult, coursesResult, playersResult] = await Promise.all([
+        supabase.from("events").select("name, location, start_date, end_date").eq("id", eventId).single(),
+        supabase.from("event_courses").select("name").eq("event_id", eventId),
+        supabase.from("event_players").select("id").eq("event_id", eventId)
+      ]);
+
+      if (eventResult.error) {
+        throw new Error("Failed to fetch event data");
+      }
+
+      const event = eventResult.data;
+      const courses = coursesResult.data || [];
+      const playerCount = playersResult.data?.length || 0;
+
+      // Format dates
+      const startDate = new Date(event.start_date).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+      const endDate = new Date(event.end_date).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+
+      // Format course names
+      const courseNames = courses.length > 0
+        ? courses.map(c => c.name).join(", ")
+        : "beautiful golf courses";
+
+      // Construct prompt
+      const prompt = `Write a short, friendly trip description for a golf event called ${event.name}. It takes place in ${event.location} from ${startDate} to ${endDate}. Golf will be played at ${courseNames}. There are ${playerCount} players. The tone should be fun, welcoming, and appropriate for a website.`;
+
+      // Call OpenAI API
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${import.meta.env.VITE_OPENAI_API_KEY || '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'}`
+        },
+        body: JSON.stringify({
+          model: "gpt-4",
+          messages: [
+            {
+              role: "user",
+              content: prompt
+            }
+          ],
+          temperature: 0.8,
+          max_tokens: 300
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate description");
+      }
+
+      const data = await response.json();
+      const generatedDescription = data.choices[0]?.message?.content?.trim();
+
+      if (generatedDescription) {
+        handleInputChange("description", generatedDescription);
+        toast({
+          title: "Description Generated",
+          description: "AI has generated a new event description for you!"
+        });
+      } else {
+        throw new Error("No description generated");
+      }
+
+    } catch (error) {
+      console.error("Error generating description:", error);
+      toast({
+        title: "Generation Failed",
+        description: "There was an issue generating your description. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setGeneratingAI(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
