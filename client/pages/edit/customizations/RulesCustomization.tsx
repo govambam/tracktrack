@@ -780,16 +780,16 @@ ${currentText}`;
 
           {/* Stableford Scoring Section */}
           {isStablefordEvent && stablefordScoring && (
-            <Card className="border-blue-100 bg-blue-50">
+            <Card className="border-green-100 bg-green-50">
               <CardContent className="p-4 space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label className="text-blue-800 font-medium flex items-center">
+                  <Label className="text-green-800 font-medium flex items-center">
                     <Target className="h-4 w-4 mr-2" />
                     Stableford Point Values
                   </Label>
                 </div>
 
-                <div className="text-sm text-blue-600 mb-4">
+                <div className="text-sm text-green-600 mb-4">
                   Customize the points awarded for each score relative to par.
                 </div>
 
@@ -807,9 +807,7 @@ ${currentText}`;
                         {label}
                       </Label>
                       <Input
-                        type="number"
-                        min="0"
-                        max="10"
+                        type="text"
                         value={
                           stablefordChanges[key as keyof StablefordScoring] !== undefined
                             ? stablefordChanges[key as keyof StablefordScoring]
@@ -822,7 +820,7 @@ ${currentText}`;
                             [key]: value,
                           }));
                         }}
-                        className="border-blue-200 focus:border-blue-500 bg-white text-center font-medium"
+                        className="border-green-200 focus:border-emerald-500 bg-white text-center font-medium"
                       />
                     </div>
                   ))}
@@ -833,7 +831,7 @@ ${currentText}`;
                     <Button
                       onClick={saveStablefordScoring}
                       size="sm"
-                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white"
                     >
                       <Save className="h-4 w-4 mr-2" />
                       Save Point Values
