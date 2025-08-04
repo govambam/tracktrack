@@ -66,7 +66,10 @@ export default function RulesCustomization() {
       }
 
     } catch (error) {
-      console.error('Error loading rules customization data:', error);
+      console.error('Error loading rules customization data:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        error: error
+      });
       toast({
         title: "Load Failed",
         description: "Failed to load rules customization data",
