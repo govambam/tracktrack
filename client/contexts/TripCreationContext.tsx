@@ -265,9 +265,16 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         };
       }
 
+      // Auto-generate slug if not provided
+      let finalSlug = tripData.slug?.trim() || null;
+      if (!finalSlug) {
+        finalSlug = generateSlugFromName(tripData.tripName.trim());
+        console.log('Auto-generated slug:', finalSlug);
+      }
+
       const eventData = {
         name: tripData.tripName.trim(),
-        slug: tripData.slug?.trim() || null,
+        slug: finalSlug,
         start_date: tripData.startDate.trim(),
         end_date: tripData.endDate.trim(),
         location: tripData.location.trim(),
