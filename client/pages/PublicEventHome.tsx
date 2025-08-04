@@ -767,7 +767,15 @@ export default function PublicEventHome() {
             </div>
 
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl">
+              <div className={`grid gap-8 ${
+                prizes.length === 1
+                  ? 'grid-cols-1 max-w-sm'
+                  : prizes.length === 2
+                  ? 'grid-cols-1 sm:grid-cols-2 max-w-2xl'
+                  : prizes.length === 3
+                  ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl'
+                  : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl'
+              }`}>
                 {prizes.map((prize, index) => (
                   <AnimatedPrizeCard key={prize.id} prize={prize} index={index} />
                 ))}
