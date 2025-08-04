@@ -308,7 +308,7 @@ export default function TravelCustomization() {
                     onChange={(e) => {
                       setTravelInfo(prev => ({ ...prev, daily_schedule: e.target.value }));
                     }}
-                    onBlur={(e) => saveTravelField('daily_schedule', e.target.value)}
+
                     placeholder="Daily itinerary, meal plans, activities, check-in times, etc."
                     className="border-green-200 focus:border-emerald-500 bg-white"
                     rows={4}
