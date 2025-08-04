@@ -196,7 +196,12 @@ export default function CoursesCustomization() {
           });
 
         if (error) {
-          console.error('Error creating customization record:', error);
+          console.error('Error creating customization record:', {
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+            code: error.code
+          });
         }
       }
     } catch (error) {
