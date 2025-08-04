@@ -117,7 +117,10 @@ export default function CoursesCustomization() {
       }
 
     } catch (error) {
-      console.error('Error loading courses customization data:', error);
+      console.error('Error loading courses customization data:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        error: error
+      });
       toast({
         title: "Load Failed",
         description: "Failed to load courses customization data",
