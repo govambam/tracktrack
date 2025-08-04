@@ -397,8 +397,13 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
 
           {hasDescription && (
             <div className="mb-6">
-              <p className="text-slate-600 leading-relaxed line-clamp-4">
-                {shouldShowSeeMore ? truncateToLines(course.description, 4) : course.description}
+              <p className="text-slate-600 leading-relaxed overflow-hidden" style={{
+                display: '-webkit-box',
+                WebkitLineClamp: shouldShowSeeMore ? 4 : 'none',
+                WebkitBoxOrient: 'vertical',
+                maxHeight: shouldShowSeeMore ? '6rem' : 'none'
+              }}>
+                {course.description}
               </p>
               {shouldShowSeeMore && showSeeMore && (
                 <button
