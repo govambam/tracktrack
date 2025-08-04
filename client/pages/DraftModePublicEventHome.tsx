@@ -114,7 +114,7 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
         .from("event_rounds")
         .select("*")
         .eq("event_id", eventId)
-        .order("round_number");
+        .order("round_date");
 
       if (roundsError) {
         console.error("Rounds loading error:", roundsError.message, roundsError);
