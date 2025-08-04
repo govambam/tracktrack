@@ -738,7 +738,7 @@ export default function PublicEventHome() {
 
       {/* Prizes Section */}
       {prizes.length > 0 && (
-        <section className="py-28 px-6 sm:px-8 lg:px-12 relative">
+        <section id="prizes" className="py-28 px-6 sm:px-8 lg:px-12 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
           <div className="relative max-w-6xl mx-auto">
             <div className="text-center mb-20">
@@ -761,10 +761,12 @@ export default function PublicEventHome() {
               )}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {prizes.map((prize, index) => (
-                <AnimatedPrizeCard key={prize.id} prize={prize} index={index} />
-              ))}
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl">
+                {prizes.map((prize, index) => (
+                  <AnimatedPrizeCard key={prize.id} prize={prize} index={index} />
+                ))}
+              </div>
             </div>
           </div>
         </section>
