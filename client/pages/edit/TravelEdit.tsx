@@ -341,10 +341,34 @@ ${currentContent}`;
                   placeholder="Hotel name, address, check-in/out times, room arrangements, amenities..."
                   className="border-green-200 focus:border-emerald-500 bg-white resize-none h-24"
                 />
-                <p className="text-xs text-green-600">
-                  Include hotel details, room blocks, special rates, and nearby
-                  amenities
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs text-green-600">
+                    Include hotel details, room blocks, special rates, and nearby
+                    amenities
+                  </p>
+                  {travelInfo.accommodations && travelInfo.accommodations.trim() && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => polishFieldWithAI("accommodations", travelInfo.accommodations)}
+                      disabled={polishingField === "accommodations"}
+                      className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                    >
+                      {polishingField === "accommodations" ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                          Polishing...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="h-4 w-4 mr-2" />
+                          Polish with AI
+                        </>
+                      )}
+                    </Button>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>
