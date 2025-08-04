@@ -188,8 +188,11 @@ export default function PlayersEdit() {
           full_name: player.name.trim(),
           email: player.email?.trim() || null,
           handicap: player.handicap || null,
-          profile_image: player.image || null
+          profile_image: player.image?.trim() || null
         }));
+
+        console.log('Saving players data:', playersData);
+        console.log('Profile images being saved:', playersData.map(p => ({ name: p.full_name, profile_image: p.profile_image })));
 
         const { error: insertError } = await supabase
           .from('event_players')
@@ -204,6 +207,8 @@ export default function PlayersEdit() {
           });
           return;
         }
+
+        console.log('Players saved successfully to database');
       }
 
       toast({
