@@ -39,6 +39,7 @@ import TestCourseSync from "./pages/edit/TestCourseSync";
 import SettingsEdit from "./pages/edit/SettingsEdit";
 import PublicEventHome from "./pages/PublicEventHome";
 import PublicLeaderboard from "./pages/PublicLeaderboard";
+import DraftMode from "./pages/DraftMode";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -60,6 +61,7 @@ const App = () => (
                 path="/events/:slug/leaderboard"
                 element={<PublicLeaderboard />}
               />
+              <Route path="/app/:eventId/draft" element={<DraftMode />} />
               <Route path="/app" element={<AppShell />}>
                 <Route index element={<MyTrips />} />
                 <Route path="create" element={<CreateTrip />} />

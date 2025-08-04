@@ -36,6 +36,7 @@ import {
   Eye,
   EyeOff,
   Share,
+  Edit,
 } from "lucide-react";
 
 export default function SettingsEdit() {
@@ -444,7 +445,21 @@ export default function SettingsEdit() {
                 </Alert>
               )}
 
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-3 flex-wrap gap-y-3">
+                <Button
+                  variant="outline"
+                  onClick={() =>
+                    window.open(
+                      `${window.location.origin}/app/${eventId}/draft`,
+                      "_blank",
+                    )
+                  }
+                  className="border-green-200 text-green-700 hover:bg-green-50"
+                >
+                  <Edit className="h-4 w-4 mr-2" />
+                  Edit Draft Site
+                </Button>
+
                 {eventInfo?.is_published && eventInfo?.slug && (
                   <Button
                     variant="outline"
