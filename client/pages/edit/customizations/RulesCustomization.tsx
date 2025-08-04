@@ -44,9 +44,12 @@ export default function RulesCustomization() {
   const [newRuleText, setNewRuleText] = useState("");
   const [editingRuleId, setEditingRuleId] = useState<string | null>(null);
   const [polishingRuleId, setPolishingRuleId] = useState<string | null>(null);
-  const [stablefordScoring, setStablefordScoring] = useState<StablefordScoring | null>(null);
+  const [stablefordScoring, setStablefordScoring] =
+    useState<StablefordScoring | null>(null);
   const [isStablefordEvent, setIsStablefordEvent] = useState(false);
-  const [stablefordChanges, setStablefordChanges] = useState<Partial<StablefordScoring>>({});
+  const [stablefordChanges, setStablefordChanges] = useState<
+    Partial<StablefordScoring>
+  >({});
   const [editingStableford, setEditingStableford] = useState(false);
   let nextDraftId = 1; // Counter for generating unique draft IDs
 
@@ -107,11 +110,12 @@ export default function RulesCustomization() {
 
         // If it's a Stableford event, load the scoring configuration
         if (isStableford) {
-          const { data: stablefordData, error: stablefordError } = await supabase
-            .from("stableford_scoring")
-            .select("*")
-            .eq("event_id", eventId)
-            .single();
+          const { data: stablefordData, error: stablefordError } =
+            await supabase
+              .from("stableford_scoring")
+              .select("*")
+              .eq("event_id", eventId)
+              .single();
 
           if (stablefordError && stablefordError.code !== "PGRST116") {
             console.error("Error loading Stableford scoring:", stablefordError);
@@ -181,12 +185,10 @@ export default function RulesCustomization() {
         });
       } else {
         // Replace the draft rule with the saved rule
-        setRules(prevRules =>
-          prevRules.map(rule =>
-            rule.id === ruleId
-              ? { ...data, isDraft: false }
-              : rule
-          )
+        setRules((prevRules) =>
+          prevRules.map((rule) =>
+            rule.id === ruleId ? { ...data, isDraft: false } : rule,
+          ),
         );
         setEditingRuleId(null);
         toast({
@@ -201,7 +203,7 @@ export default function RulesCustomization() {
 
   const deleteDraftRule = (ruleId: string) => {
     // Simply remove draft rule from local state (no database call needed)
-    setRules(rules.filter(rule => rule.id !== ruleId));
+    setRules(rules.filter((rule) => rule.id !== ruleId));
     setEditingRuleId(null);
   };
 
@@ -212,7 +214,7 @@ export default function RulesCustomization() {
   };
 
   const handleNewRuleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleNewRuleSubmit();
     }
@@ -341,7 +343,10 @@ export default function RulesCustomization() {
     setPolishingRuleId(ruleId);
 
     try {
-      const currentText = ruleChanges[ruleId] !== undefined ? ruleChanges[ruleId] : rules.find(r => r.id === ruleId)?.rule_text || "";
+      const currentText =
+        ruleChanges[ruleId] !== undefined
+          ? ruleChanges[ruleId]
+          : rules.find((r) => r.id === ruleId)?.rule_text || "";
 
       if (!currentText.trim()) {
         toast({
@@ -438,12 +443,14 @@ ${currentText}`;
     } catch (error) {
       console.error(`Error polishing rule:`, error);
 
-      let userMessage = "There was an issue polishing the rule. Please try again later.";
+      let userMessage =
+        "There was an issue polishing the rule. Please try again later.";
 
       if (error instanceof Error) {
         const msg = error.message.toLowerCase();
         if (msg.includes("network") || msg.includes("fetch")) {
-          userMessage = "Network error. Please check your connection and try again.";
+          userMessage =
+            "Network error. Please check your connection and try again.";
         } else if (msg.includes("401") || msg.includes("unauthorized")) {
           userMessage = "API authorization failed. Please contact support.";
         } else if (msg.includes("server error")) {
@@ -600,7 +607,10 @@ ${currentText}`;
                   const isEditing = editingRuleId === rule.id;
 
                   return (
-                    <div key={rule.id} className="border border-green-100 rounded-lg p-4 bg-white">
+                    <div
+                      key={rule.id}
+                      className="border border-green-100 rounded-lg p-4 bg-white"
+                    >
                       {!isEditing ? (
                         // View mode - show rule text with edit/delete buttons
                         <div className="flex items-start justify-between space-x-4">
@@ -665,7 +675,8 @@ ${currentText}`;
                                     setEditingRuleId(null);
                                     // Remove any unsaved changes
                                     setRuleChanges((prev) => {
-                                      const { [rule.id]: removed, ...rest } = prev;
+                                      const { [rule.id]: removed, ...rest } =
+                                        prev;
                                       return rest;
                                     });
                                   }
@@ -679,7 +690,8 @@ ${currentText}`;
                                 variant="outline"
                                 size="sm"
                                 onClick={async () => {
-                                  const newText = ruleChanges[rule.id] || rule.rule_text;
+                                  const newText =
+                                    ruleChanges[rule.id] || rule.rule_text;
 
                                   if (rule.isDraft) {
                                     // Save draft rule to database
@@ -691,14 +703,17 @@ ${currentText}`;
                                     // Update the rules list with the new text
                                     setRules((prev) =>
                                       prev.map((r) =>
-                                        r.id === rule.id ? { ...r, rule_text: newText } : r
-                                      )
+                                        r.id === rule.id
+                                          ? { ...r, rule_text: newText }
+                                          : r,
+                                      ),
                                     );
                                   }
 
                                   // Clear the changes
                                   setRuleChanges((prev) => {
-                                    const { [rule.id]: removed, ...rest } = prev;
+                                    const { [rule.id]: removed, ...rest } =
+                                      prev;
                                     return rest;
                                   });
                                 }}
@@ -772,7 +787,8 @@ ${currentText}`;
                     rows={3}
                   />
                   <p className="text-sm text-green-600">
-                    Start typing your first rule above, then press Enter or click outside to save
+                    Start typing your first rule above, then press Enter or
+                    click outside to save
                   </p>
                 </div>
               )}
@@ -819,19 +835,44 @@ ${currentText}`;
 
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       {[
-                        { key: 'albatross', label: 'Albatross (-3)', color: 'text-purple-700' },
-                        { key: 'eagle', label: 'Eagle (-2)', color: 'text-yellow-700' },
-                        { key: 'birdie', label: 'Birdie (-1)', color: 'text-green-700' },
-                        { key: 'par', label: 'Par (0)', color: 'text-blue-700' },
-                        { key: 'bogey', label: 'Bogey (+1)', color: 'text-orange-700' },
-                        { key: 'double_bogey', label: 'Double Bogey (+2)', color: 'text-red-700' },
+                        {
+                          key: "albatross",
+                          label: "Albatross (-3)",
+                          color: "text-purple-700",
+                        },
+                        {
+                          key: "eagle",
+                          label: "Eagle (-2)",
+                          color: "text-yellow-700",
+                        },
+                        {
+                          key: "birdie",
+                          label: "Birdie (-1)",
+                          color: "text-green-700",
+                        },
+                        {
+                          key: "par",
+                          label: "Par (0)",
+                          color: "text-blue-700",
+                        },
+                        {
+                          key: "bogey",
+                          label: "Bogey (+1)",
+                          color: "text-orange-700",
+                        },
+                        {
+                          key: "double_bogey",
+                          label: "Double Bogey (+2)",
+                          color: "text-red-700",
+                        },
                       ].map(({ key, label, color }) => (
                         <div key={key} className="space-y-1">
                           <Label className={`text-xs font-medium ${color}`}>
                             {label}
                           </Label>
                           <div className="text-center font-bold text-lg text-green-800">
-                            {stablefordScoring[key as keyof StablefordScoring]} pts
+                            {stablefordScoring[key as keyof StablefordScoring]}{" "}
+                            pts
                           </div>
                         </div>
                       ))}
@@ -874,17 +915,42 @@ ${currentText}`;
                     </div>
 
                     <div className="text-sm text-green-600 mb-4">
-                      Customize the points awarded for each score relative to par.
+                      Customize the points awarded for each score relative to
+                      par.
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       {[
-                        { key: 'albatross', label: 'Albatross (-3)', color: 'text-purple-700' },
-                        { key: 'eagle', label: 'Eagle (-2)', color: 'text-yellow-700' },
-                        { key: 'birdie', label: 'Birdie (-1)', color: 'text-green-700' },
-                        { key: 'par', label: 'Par (0)', color: 'text-blue-700' },
-                        { key: 'bogey', label: 'Bogey (+1)', color: 'text-orange-700' },
-                        { key: 'double_bogey', label: 'Double Bogey (+2)', color: 'text-red-700' },
+                        {
+                          key: "albatross",
+                          label: "Albatross (-3)",
+                          color: "text-purple-700",
+                        },
+                        {
+                          key: "eagle",
+                          label: "Eagle (-2)",
+                          color: "text-yellow-700",
+                        },
+                        {
+                          key: "birdie",
+                          label: "Birdie (-1)",
+                          color: "text-green-700",
+                        },
+                        {
+                          key: "par",
+                          label: "Par (0)",
+                          color: "text-blue-700",
+                        },
+                        {
+                          key: "bogey",
+                          label: "Bogey (+1)",
+                          color: "text-orange-700",
+                        },
+                        {
+                          key: "double_bogey",
+                          label: "Double Bogey (+2)",
+                          color: "text-red-700",
+                        },
                       ].map(({ key, label, color }) => (
                         <div key={key} className="space-y-1">
                           <Label className={`text-xs font-medium ${color}`}>
@@ -893,9 +959,15 @@ ${currentText}`;
                           <Input
                             type="text"
                             value={
-                              stablefordChanges[key as keyof StablefordScoring] !== undefined
-                                ? stablefordChanges[key as keyof StablefordScoring]
-                                : stablefordScoring[key as keyof StablefordScoring]
+                              stablefordChanges[
+                                key as keyof StablefordScoring
+                              ] !== undefined
+                                ? stablefordChanges[
+                                    key as keyof StablefordScoring
+                                  ]
+                                : stablefordScoring[
+                                    key as keyof StablefordScoring
+                                  ]
                             }
                             onChange={(e) => {
                               const value = parseInt(e.target.value) || 0;
@@ -914,8 +986,6 @@ ${currentText}`;
               </CardContent>
             </Card>
           )}
-
-
         </CardContent>
       </Card>
     </div>
