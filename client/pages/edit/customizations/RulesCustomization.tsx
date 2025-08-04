@@ -321,9 +321,16 @@ export default function RulesCustomization() {
               </div>
 
               {rules.length === 0 && (
-                <div className="text-center py-8 text-green-600">
-                  <Target className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                  <p>No rules added yet. Click "Add Rule" to get started.</p>
+                <div className="space-y-2">
+                  <Textarea
+                    placeholder="Add a custom rule..."
+                    className="border-green-200 focus:border-emerald-500 bg-white"
+                    rows={3}
+                    onFocus={addRule}
+                  />
+                  <p className="text-sm text-green-600">
+                    Click in the text area above to add your first rule
+                  </p>
                 </div>
               )}
             </CardContent>
