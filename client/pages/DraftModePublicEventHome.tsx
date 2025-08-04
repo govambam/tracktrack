@@ -451,76 +451,90 @@ export default function DraftModePublicEventHome({
     );
   };
 
-  // Enhanced Stableford points system (from PublicEventHome)
-  const enhancedStablefordPoints = [
-    {
-      score: "Albatross",
-      points: 20,
-      description: "3 under par",
-      detail:
-        "Legendary! The rarest score in golf deserves the highest reward.",
-      color: "from-purple-500 to-purple-600",
-      bgColor: "bg-purple-50",
-      textColor: "text-purple-900",
-      iconColor: "text-purple-600",
-      icon: Crown,
-    },
-    {
-      score: "Eagle",
-      points: 8,
-      description: "2 under par",
-      detail: "Outstanding performance that separates the field.",
-      color: "from-yellow-500 to-orange-500",
-      bgColor: "bg-yellow-50",
-      textColor: "text-yellow-900",
-      iconColor: "text-yellow-600",
-      icon: Medal,
-    },
-    {
-      score: "Birdie",
-      points: 3,
-      description: "1 under par",
-      detail: "Solid golf rewarded with bonus points.",
-      color: "from-green-500 to-emerald-500",
-      bgColor: "bg-green-50",
-      textColor: "text-green-900",
-      iconColor: "text-green-600",
-      icon: CheckCircle,
-    },
-    {
-      score: "Par",
-      points: 2,
-      description: "On target",
-      detail: "Right where you want to be for consistent scoring.",
-      color: "from-blue-500 to-indigo-500",
-      bgColor: "bg-blue-50",
-      textColor: "text-blue-900",
-      iconColor: "text-blue-600",
-      icon: Target,
-    },
-    {
-      score: "Bogey",
-      points: 1,
-      description: "1 over par",
-      detail: "Still in the game with room for recovery.",
-      color: "from-orange-500 to-red-500",
-      bgColor: "bg-orange-50",
-      textColor: "text-orange-900",
-      iconColor: "text-orange-600",
-      icon: Flag,
-    },
-    {
-      score: "Double+",
-      points: 0,
-      description: "2+ over par",
-      detail: "Reset and focus on the next hole.",
-      color: "from-slate-500 to-gray-500",
-      bgColor: "bg-slate-50",
-      textColor: "text-slate-900",
-      iconColor: "text-slate-600",
-      icon: X,
-    },
-  ];
+  // Enhanced Stableford points system with custom scoring
+  const getStablefordPoints = () => {
+    // Default values if no custom scoring is set
+    const defaultScoring = {
+      albatross: 5,
+      eagle: 4,
+      birdie: 3,
+      par: 2,
+      bogey: 1,
+      double_bogey: 0,
+    };
+
+    const scoring = stablefordScoring || defaultScoring;
+
+    return [
+      {
+        score: "Albatross",
+        points: scoring.albatross,
+        description: "3 under par",
+        detail:
+          "Legendary! The rarest score in golf deserves the highest reward.",
+        color: "from-purple-500 to-purple-600",
+        bgColor: "bg-purple-50",
+        textColor: "text-purple-900",
+        iconColor: "text-purple-600",
+        icon: Crown,
+      },
+      {
+        score: "Eagle",
+        points: scoring.eagle,
+        description: "2 under par",
+        detail: "Outstanding performance that separates the field.",
+        color: "from-yellow-500 to-orange-500",
+        bgColor: "bg-yellow-50",
+        textColor: "text-yellow-900",
+        iconColor: "text-yellow-600",
+        icon: Medal,
+      },
+      {
+        score: "Birdie",
+        points: scoring.birdie,
+        description: "1 under par",
+        detail: "Solid golf rewarded with bonus points.",
+        color: "from-green-500 to-emerald-500",
+        bgColor: "bg-green-50",
+        textColor: "text-green-900",
+        iconColor: "text-green-600",
+        icon: CheckCircle,
+      },
+      {
+        score: "Par",
+        points: scoring.par,
+        description: "On target",
+        detail: "Right where you want to be for consistent scoring.",
+        color: "from-blue-500 to-indigo-500",
+        bgColor: "bg-blue-50",
+        textColor: "text-blue-900",
+        iconColor: "text-blue-600",
+        icon: Target,
+      },
+      {
+        score: "Bogey",
+        points: scoring.bogey,
+        description: "1 over par",
+        detail: "Still in the game with room for recovery.",
+        color: "from-orange-500 to-red-500",
+        bgColor: "bg-orange-50",
+        textColor: "text-orange-900",
+        iconColor: "text-orange-600",
+        icon: Flag,
+      },
+      {
+        score: "Double+",
+        points: scoring.double_bogey,
+        description: "2+ over par",
+        detail: scoring.double_bogey > 0 ? `${scoring.double_bogey} points for scores of double bogey or worse.` : "Reset and focus on the next hole.",
+        color: "from-slate-500 to-gray-500",
+        bgColor: "bg-slate-50",
+        textColor: "text-slate-900",
+        iconColor: "text-slate-600",
+        icon: X,
+      },
+    ];
+  };
 
   const closestToPinPrize =
     prizes.find((p) => p.category === "closest_to_pin")?.amount || 0;
