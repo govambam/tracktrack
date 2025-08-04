@@ -536,6 +536,17 @@ export default function CoursesCustomization() {
               ))}
             </div>
           )}
+
+          {/* Save Button */}
+          <div className="flex justify-end pt-4">
+            <Button
+              onClick={handleSaveAll}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+            >
+              <Save className="h-4 w-4 mr-2" />
+              Save Changes
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
