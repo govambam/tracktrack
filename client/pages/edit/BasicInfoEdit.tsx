@@ -228,18 +228,21 @@ export default function BasicInfoEdit() {
       });
 
       console.log("API response status:", response.status);
-      console.log("API response ok:", response.ok);
 
-      if (!response.ok) {
-        // Clone the response so we can read the body for error handling
-        const errorText = await response.clone().text();
-        console.error("API error response:", errorText);
-        throw new Error(`API error (${response.status}): ${errorText}`);
+      let data;
+      try {
+        data = await response.json();
+        console.log("API response data:", data);
+      } catch (parseError) {
+        console.error("Failed to parse response as JSON:", parseError);
+        throw new Error("Invalid response format from server");
       }
 
-      // Read JSON response for successful requests
-      const data = await response.json();
-      console.log("API response data:", data);
+      if (!response.ok) {
+        const errorMessage = data?.error || data?.details || "Unknown server error";
+        console.error("API error:", errorMessage);
+        throw new Error(`API error (${response.status}): ${errorMessage}`);
+      }
       const generatedDescription = data.description;
 
       if (generatedDescription) {
