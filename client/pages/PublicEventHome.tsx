@@ -121,12 +121,21 @@ export default function PublicEventHome() {
         supabase.from('event_customization').select('*').eq('event_id', event.id).maybeSingle()
       ]);
 
-      setPlayers(playersResult.data || []);
-      setCourses(coursesResult.data || []);
-      setRounds(roundsResult.data || []);
-      setPrizes(prizesResult.data || []);
-      setTravel(travelResult.data || null);
-      setCustomization(customizationResult.data || null);
+      // Handle results with error checking
+      if (!playersResult.error) setPlayers(playersResult.data || []);
+      if (!coursesResult.error) setCourses(coursesResult.data || []);
+      if (!roundsResult.error) setRounds(roundsResult.data || []);
+      if (!prizesResult.error) setPrizes(prizesResult.data || []);
+      if (!travelResult.error) setTravel(travelResult.data || null);
+      if (!customizationResult.error) setCustomization(customizationResult.data || null);
+
+      // Log any errors for debugging
+      if (playersResult.error) console.log('Players error:', playersResult.error);
+      if (coursesResult.error) console.log('Courses error:', coursesResult.error);
+      if (roundsResult.error) console.log('Rounds error:', roundsResult.error);
+      if (prizesResult.error) console.log('Prizes error:', prizesResult.error);
+      if (travelResult.error) console.log('Travel error:', travelResult.error);
+      if (customizationResult.error) console.log('Customization error:', customizationResult.error);
 
     } catch (error) {
       console.error('Error loading event data:', error);
