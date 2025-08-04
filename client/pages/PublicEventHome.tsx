@@ -361,21 +361,19 @@ export default function PublicEventHome() {
 
       {/* Scoring Format Section */}
       {rounds.length > 0 && (
-        <section className="py-16 px-6">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-green-900 mb-6">Scoring Format</h2>
-            <Card className="border-green-200">
-              <CardContent className="p-8">
-                <Target className="h-12 w-12 text-emerald-600 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-green-900 mb-4">{getScoringFormat()}</h3>
-                <p className="text-green-600 leading-relaxed">
-                  {getScoringFormat().includes('Stableford') 
-                    ? "Points-based scoring system where players earn points based on performance relative to par. Higher scores win!"
-                    : "Traditional stroke play format where every shot counts. Lowest total score wins!"
-                  }
-                </p>
-              </CardContent>
-            </Card>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-900 mb-16">Tournament Format</h2>
+
+            <div className="bg-white rounded-xl p-8 sm:p-12 shadow-sm">
+              <h3 className="text-2xl sm:text-3xl font-bold text-green-900 mb-6">{getScoringFormat()}</h3>
+              <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
+                {getScoringFormat().includes('Stableford')
+                  ? "Modified Stableford scoring system with preset competition and a team scramble format for added excitement."
+                  : "Traditional stroke play format where every shot counts. Lowest total score wins the championship."
+                }
+              </p>
+            </div>
           </div>
         </section>
       )}
