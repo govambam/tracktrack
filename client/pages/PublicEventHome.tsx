@@ -553,7 +553,8 @@ const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index
   };
 
   const hasBio = player.bio && player.bio.trim().length > 0;
-  const shouldShowSeeMore = hasBio && player.bio.length > 150; // ~4 lines worth of text
+  const shouldShowSeeMore = hasBio && player.bio.length > 80; // ~2 lines worth of text
+  const isShortBio = hasBio && player.bio.length <= 80;
 
   return (
     <div
