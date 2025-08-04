@@ -941,7 +941,7 @@ Return your response as a JSON object with these fields:
               >
                 Paste Image URL:
               </Label>
-              <div className="flex space-x-2">
+              <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                 <Input
                   id="imageUrl"
                   placeholder="https://example.com/course-image.jpg"
@@ -956,7 +956,7 @@ Return your response as a JSON object with these fields:
                       handleImageSelect(input.value.trim());
                     }
                   }}
-                  className="bg-green-600 hover:bg-green-700 text-white px-6"
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 whitespace-nowrap"
                 >
                   Use This Image
                 </Button>
