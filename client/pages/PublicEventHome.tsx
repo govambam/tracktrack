@@ -76,6 +76,31 @@ interface EventCustomization {
   home_headline?: string;
 }
 
+// Custom hook for scroll animations
+const useScrollAnimation = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const elementRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return { isVisible, elementRef };
+};
+
 export default function PublicEventHome() {
   // Add smooth scrolling to page
   useEffect(() => {
