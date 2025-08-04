@@ -478,6 +478,8 @@ const AnimatedPlayerCard = ({ player, index }: { player: any; index: number }) =
       .slice(0, 2);
   };
 
+  const hasBio = player.bio && player.bio.trim().length > 0;
+
   return (
     <div
       ref={elementRef}
@@ -485,23 +487,35 @@ const AnimatedPlayerCard = ({ player, index }: { player: any; index: number }) =
         index < 8 ? `delay-${index * 50}` : 'delay-300'
       } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
-      <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white">
-        <Avatar className="h-16 w-16 mx-auto mb-4 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300">
-          {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
-          <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-lg font-bold">
-            {getPlayerInitials(player.full_name)}
-          </AvatarFallback>
-        </Avatar>
+      <div className={`bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white ${hasBio ? 'min-h-[280px]' : 'min-h-[200px]'} flex flex-col justify-between`}>
+        <div className="flex-1">
+          <Avatar className="h-20 w-20 mx-auto mb-6 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300">
+            {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
+            <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-xl font-bold">
+              {getPlayerInitials(player.full_name)}
+            </AvatarFallback>
+          </Avatar>
 
-        <h3 className="font-bold text-slate-900 text-sm mb-2 group-hover:text-green-700 transition-colors">
-          {player.full_name}
-        </h3>
+          <h3 className="font-bold text-slate-900 text-lg mb-3 group-hover:text-green-700 transition-colors">
+            {player.full_name}
+          </h3>
 
-        {player.handicap !== null && player.handicap !== undefined && (
-          <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-3 py-1">
-            <span className="text-xs font-semibold text-slate-600">HCP: {player.handicap}</span>
-          </div>
-        )}
+          {hasBio && (
+            <div className="mb-4 px-2">
+              <p className="text-sm text-slate-600 leading-relaxed italic">
+                "{player.bio}"
+              </p>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-auto">
+          {player.handicap !== null && player.handicap !== undefined && (
+            <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-4 py-2">
+              <span className="text-sm font-semibold text-slate-600">HCP: {player.handicap}</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
