@@ -318,6 +318,10 @@ export default function RulesCustomization() {
                             [rule.id]: e.target.value,
                           }));
                         }}
+                        onFocus={(e) => {
+                          // Select all text when focusing, especially helpful for "New rule" default text
+                          e.target.select();
+                        }}
                         placeholder={`Rule ${index + 1}...`}
                         className="border-green-200 focus:border-emerald-500 bg-white"
                         rows={2}
