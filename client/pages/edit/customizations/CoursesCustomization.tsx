@@ -451,7 +451,7 @@ export default function CoursesCustomization() {
                                 : c
                             ));
                           }}
-                          onBlur={(e) => saveCourseField(course.id, 'image_url', e.target.value)}
+
                           placeholder="https://example.com/course-image.jpg"
                           className="border-green-200 focus:border-emerald-500 bg-white"
                           disabled={!coursesEnabled}
