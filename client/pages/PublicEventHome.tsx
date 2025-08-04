@@ -296,40 +296,35 @@ export default function PublicEventHome() {
       </section>
 
       {/* Summary Cards Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-24 px-6 sm:px-8 lg:px-12 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white"></div>
+        <div className="relative max-w-5xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="h-8 w-8 text-green-600" />
-              </div>
-              <h3 className="font-semibold text-green-900 mb-2">Location</h3>
-              <p className="text-gray-600">{eventData.location}</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-green-600" />
-              </div>
-              <h3 className="font-semibold text-green-900 mb-2">Players</h3>
-              <p className="text-gray-600">{players.length} Registered</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Target className="h-8 w-8 text-green-600" />
-              </div>
-              <h3 className="font-semibold text-green-900 mb-2">Format</h3>
-              <p className="text-gray-600">{getScoringFormat()}</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Calendar className="h-8 w-8 text-green-600" />
-              </div>
-              <h3 className="font-semibold text-green-900 mb-2">Duration</h3>
-              <p className="text-gray-600">{getDuration(eventData.start_date, eventData.end_date)}</p>
-            </div>
+            {[
+              { icon: MapPin, title: "Location", value: eventData.location, color: "emerald" },
+              { icon: Users, title: "Players", value: `${players.length} Registered`, color: "blue" },
+              { icon: Target, title: "Format", value: getScoringFormat(), color: "purple" },
+              { icon: Calendar, title: "Duration", value: getDuration(eventData.start_date, eventData.end_date), color: "orange" }
+            ].map((item, index) => {
+              const { isVisible, elementRef } = useScrollAnimation();
+              return (
+                <div
+                  key={item.title}
+                  ref={elementRef}
+                  className={`group cursor-pointer transition-all duration-700 delay-${index * 100} ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                  }`}
+                >
+                  <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white">
+                    <div className={`w-20 h-20 bg-gradient-to-br from-${item.color}-100 to-${item.color}-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                      <item.icon className={`h-10 w-10 text-${item.color}-600`} />
+                    </div>
+                    <h3 className="font-bold text-slate-900 mb-3 text-lg">{item.title}</h3>
+                    <p className="text-slate-600 font-medium">{item.value}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
