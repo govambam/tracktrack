@@ -19,16 +19,18 @@ export default function Index() {
               Track scores live, manage events, and bring your golf community together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 text-lg">
-                <Link to="/signup">
-                  Get Started <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-3 text-lg">
-                <Link to="/login">
-                  Log In
-                </Link>
-              </Button>
+              <Link
+                to="/signup"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-emerald-600 text-white hover:bg-emerald-700 h-11 px-8 py-3 text-lg cursor-pointer"
+              >
+                Get Started <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link
+                to="/login"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-green-600 bg-background hover:bg-green-50 text-green-600 h-11 px-8 py-3 text-lg cursor-pointer"
+              >
+                Log In
+              </Link>
             </div>
           </div>
         </div>
