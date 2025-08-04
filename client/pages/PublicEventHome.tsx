@@ -13,7 +13,6 @@ import {
   Plane,
   Building,
   Clock,
-  Golf,
   Star,
   Award,
   ChevronRight,
