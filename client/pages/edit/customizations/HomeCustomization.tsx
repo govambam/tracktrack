@@ -83,6 +83,8 @@ export default function HomeCustomization() {
     if (!eventId) return;
 
     try {
+      setSaving(true);
+      console.log('Saving home headline:', headline, 'for event:', eventId);
       // First check if customization record exists
       const { data: existing, error: fetchError } = await supabase
         .from('event_customization')
