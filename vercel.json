@@ -1,11 +1,12 @@
 {
+  "functions": {
+    "api/generate-description.ts": {
+      "runtime": "@vercel/node"
+    }
+  },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
-    {
-      "source": "/((?!assets|favicon|robots|sitemap|.*\\.).*)",
+      "source": "/((?!api|assets|favicon|robots|sitemap|.*\\.).*)",
       "destination": "/index.html"
     }
   ]
