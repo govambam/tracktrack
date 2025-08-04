@@ -203,6 +203,32 @@ export default function TravelCustomization() {
     }
   };
 
+  const handleSaveAll = async () => {
+    if (!eventId) return;
+
+    setSaving(true);
+    try {
+      // Save all travel fields
+      if (travelInfo.flight_info) await saveTravelField('flight_info', travelInfo.flight_info);
+      if (travelInfo.accommodations) await saveTravelField('accommodations', travelInfo.accommodations);
+      if (travelInfo.daily_schedule) await saveTravelField('daily_schedule', travelInfo.daily_schedule);
+      await saveTravelEnabled(travelEnabled);
+
+      toast({
+        title: "Settings Saved",
+        description: "Travel customization settings have been saved successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Save Failed",
+        description: "Failed to save travel settings",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
