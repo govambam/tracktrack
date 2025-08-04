@@ -35,16 +35,32 @@ export default function HomeCustomization() {
         .eq('event_id', eventId)
         .single();
 
-      if (customizationError && customizationError.code !== 'PGRST116') {
-        console.error('Error loading customization data:', {
-          message: customizationError.message,
-          details: customizationError.details,
-          hint: customizationError.hint,
-          code: customizationError.code
-        });
+      if (customizationError) {
+        if (customizationError.code === 'PGRST116') {
+          // No record found - this is normal for new events, use defaults
+          console.log('No customization record found for event:', eventId, '- using defaults');
+          setHomeHeadline('');
+          setHomeEnabled(true);
+        } else {
+          console.error('Error loading customization data:', {
+            message: customizationError.message,
+            details: customizationError.details,
+            hint: customizationError.hint,
+            code: customizationError.code
+          });
+          // Still set defaults on error
+          setHomeHeadline('');
+          setHomeEnabled(true);
+        }
       } else if (customizationData) {
+        console.log('Loaded customization data:', customizationData);
         setHomeHeadline(customizationData.home_headline || '');
         setHomeEnabled(customizationData.home_enabled ?? true);
+      } else {
+        // Fallback - no data and no error
+        console.log('No customization data returned - using defaults');
+        setHomeHeadline('');
+        setHomeEnabled(true);
       }
 
     } catch (error) {
