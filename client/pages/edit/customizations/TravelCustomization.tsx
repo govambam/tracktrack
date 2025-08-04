@@ -241,14 +241,14 @@ export default function TravelCustomization() {
             <CardContent className="p-4 space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-green-800 font-medium">Lodging Information</Label>
+                  <Label className="text-green-800 font-medium">Flight Information</Label>
                   <Textarea
-                    value={travelInfo.travel_lodging || ''}
+                    value={travelInfo.flight_info || ''}
                     onChange={(e) => {
-                      setTravelInfo(prev => ({ ...prev, travel_lodging: e.target.value }));
+                      setTravelInfo(prev => ({ ...prev, flight_info: e.target.value }));
                     }}
-                    onBlur={(e) => saveTravelField('travel_lodging', e.target.value)}
-                    placeholder="Hotel recommendations, booking links, group rates, etc."
+                    onBlur={(e) => saveTravelField('flight_info', e.target.value)}
+                    placeholder="Nearest airports, flight recommendations, shuttle services, rental car information, etc."
                     className="border-green-200 focus:border-emerald-500 bg-white"
                     rows={4}
                     disabled={!travelEnabled}
