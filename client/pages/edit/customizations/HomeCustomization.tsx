@@ -193,6 +193,29 @@ export default function HomeCustomization() {
     }
   };
 
+  const handleSaveAll = async () => {
+    if (!eventId) return;
+
+    setSaving(true);
+    try {
+      await saveHomeHeadline(homeHeadline);
+      await saveHomeEnabled(homeEnabled);
+
+      toast({
+        title: "Settings Saved",
+        description: "Homepage customization settings have been saved successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Save Failed",
+        description: "Failed to save homepage settings",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
