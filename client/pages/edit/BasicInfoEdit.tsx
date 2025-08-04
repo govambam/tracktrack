@@ -286,15 +286,9 @@ export default function BasicInfoEdit() {
       // Update the form
       handleInputChange("description", generatedDescription);
 
-      // Show appropriate message based on source
-      const title = source === 'fallback' ? "Description Generated (Fallback)" : "Description Generated!";
-      const description = source === 'fallback'
-        ? "Generated using fallback due to OpenAI limits. You can edit as needed."
-        : "AI has created a new event description for you.";
-
       toast({
-        title,
-        description,
+        title: "Description Generated!",
+        description: "AI has created a new event description for you.",
       });
 
     } catch (error) {
