@@ -631,15 +631,49 @@ Return the improved rule with proper markdown formatting (bold titles, bullet po
                               <ReactMarkdown
                                 components={{
                                   // Custom styling for markdown elements
-                                  h1: ({ children }) => <h1 className="text-lg font-bold text-green-800 mb-2">{children}</h1>,
-                                  h2: ({ children }) => <h2 className="text-base font-bold text-green-800 mb-2">{children}</h2>,
-                                  h3: ({ children }) => <h3 className="text-sm font-bold text-green-800 mb-1">{children}</h3>,
-                                  p: ({ children }) => <p className="text-green-700 mb-2 last:mb-0">{children}</p>,
-                                  ul: ({ children }) => <ul className="text-green-700 ml-4 mb-2 last:mb-0">{children}</ul>,
-                                  ol: ({ children }) => <ol className="text-green-700 ml-4 mb-2 last:mb-0">{children}</ol>,
-                                  li: ({ children }) => <li className="mb-1 last:mb-0">{children}</li>,
-                                  strong: ({ children }) => <strong className="font-bold text-green-800">{children}</strong>,
-                                  em: ({ children }) => <em className="italic">{children}</em>,
+                                  h1: ({ children }) => (
+                                    <h1 className="text-lg font-bold text-green-800 mb-2">
+                                      {children}
+                                    </h1>
+                                  ),
+                                  h2: ({ children }) => (
+                                    <h2 className="text-base font-bold text-green-800 mb-2">
+                                      {children}
+                                    </h2>
+                                  ),
+                                  h3: ({ children }) => (
+                                    <h3 className="text-sm font-bold text-green-800 mb-1">
+                                      {children}
+                                    </h3>
+                                  ),
+                                  p: ({ children }) => (
+                                    <p className="text-green-700 mb-2 last:mb-0">
+                                      {children}
+                                    </p>
+                                  ),
+                                  ul: ({ children }) => (
+                                    <ul className="text-green-700 ml-4 mb-2 last:mb-0">
+                                      {children}
+                                    </ul>
+                                  ),
+                                  ol: ({ children }) => (
+                                    <ol className="text-green-700 ml-4 mb-2 last:mb-0">
+                                      {children}
+                                    </ol>
+                                  ),
+                                  li: ({ children }) => (
+                                    <li className="mb-1 last:mb-0">
+                                      {children}
+                                    </li>
+                                  ),
+                                  strong: ({ children }) => (
+                                    <strong className="font-bold text-green-800">
+                                      {children}
+                                    </strong>
+                                  ),
+                                  em: ({ children }) => (
+                                    <em className="italic">{children}</em>
+                                  ),
                                 }}
                               >
                                 {rule.rule_text}
