@@ -44,15 +44,32 @@ export default function CoursesEdit() {
   const [errors, setErrors] = useState<Record<string, Record<string, string>>>(
     {},
   );
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Initialize rounds with context data
-    if (tripData?.rounds && tripData.rounds.length > 0) {
-      setRounds(tripData.rounds);
-    } else {
-      // Initialize with one empty round
-      setRounds([
-        {
+    if (eventId) {
+      loadRoundsData();
+    }
+  }, [eventId]);
+
+  const loadRoundsData = async () => {
+    if (!eventId) return;
+
+    try {
+      setLoading(true);
+      console.log('Loading rounds data for event:', eventId);
+
+      // Load rounds directly from Supabase to ensure fresh data
+      const { data: roundsData, error } = await supabase
+        .from('event_rounds')
+        .select('*')
+        .eq('event_id', eventId)
+        .order('created_at');
+
+      if (error) {
+        console.error('Error loading rounds:', error);
+        // Fall back to one empty round if no data exists
+        setRounds([{
           id: generateId(),
           courseName: "",
           courseUrl: "",
@@ -60,10 +77,47 @@ export default function CoursesEdit() {
           time: "",
           holes: 18,
           skillsContests: [],
-        },
-      ]);
+        }]);
+      } else if (roundsData && roundsData.length > 0) {
+        // Convert database format to component format
+        const formattedRounds = roundsData.map(r => ({
+          id: r.id,
+          courseName: r.course_name || '',
+          courseUrl: r.course_url || '',
+          date: r.round_date || '',
+          time: r.tee_time || '',
+          holes: r.holes || 18,
+          skillsContests: [] // Skills contests would need separate loading
+        }));
+        setRounds(formattedRounds);
+        console.log('Loaded rounds:', formattedRounds);
+      } else {
+        // No rounds found, start with one empty round
+        setRounds([{
+          id: generateId(),
+          courseName: "",
+          courseUrl: "",
+          date: "",
+          time: "",
+          holes: 18,
+          skillsContests: [],
+        }]);
+      }
+    } catch (error) {
+      console.error('Error loading rounds data:', error);
+      setRounds([{
+        id: generateId(),
+        courseName: "",
+        courseUrl: "",
+        date: "",
+        time: "",
+        holes: 18,
+        skillsContests: [],
+      }]);
+    } finally {
+      setLoading(false);
     }
-  }, [tripData?.rounds]);
+  };
 
   const generateId = () => Math.random().toString(36).substr(2, 9);
 
