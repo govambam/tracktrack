@@ -15,6 +15,7 @@ export default function HomeCustomization() {
   const [homeHeadline, setHomeHeadline] = useState('');
   const [homeEnabled, setHomeEnabled] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (eventId) {
