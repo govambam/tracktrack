@@ -36,6 +36,7 @@ export default function BasicInfoEdit() {
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [generatingAI, setGeneratingAI] = useState(false);
+  const [polishingAI, setPolishingAI] = useState(false);
 
   useEffect(() => {
     if (eventId) {
