@@ -690,7 +690,23 @@ function RulesTab({
               {rules.map((rule) => (
                 <li key={rule.id} className="flex items-start">
                   <div className="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                  <p className="text-gray-700">{rule.rule_text}</p>
+                  <div className="text-gray-700 prose prose-sm max-w-none">
+                    <ReactMarkdown
+                      components={{
+                        h1: ({ children }) => <h1 className="text-base font-bold text-gray-800 mb-1">{children}</h1>,
+                        h2: ({ children }) => <h2 className="text-sm font-bold text-gray-800 mb-1">{children}</h2>,
+                        h3: ({ children }) => <h3 className="text-sm font-bold text-gray-800 mb-1">{children}</h3>,
+                        p: ({ children }) => <p className="text-gray-700 mb-1 last:mb-0">{children}</p>,
+                        ul: ({ children }) => <ul className="text-gray-700 ml-4 mb-1 last:mb-0">{children}</ul>,
+                        ol: ({ children }) => <ol className="text-gray-700 ml-4 mb-1 last:mb-0">{children}</ol>,
+                        li: ({ children }) => <li className="mb-0.5 last:mb-0">{children}</li>,
+                        strong: ({ children }) => <strong className="font-bold text-gray-800">{children}</strong>,
+                        em: ({ children }) => <em className="italic">{children}</em>,
+                      }}
+                    >
+                      {rule.rule_text}
+                    </ReactMarkdown>
+                  </div>
                 </li>
               ))}
             </ul>
