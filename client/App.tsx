@@ -38,6 +38,7 @@ import TravelCustomization from "./pages/edit/customizations/TravelCustomization
 import TestCourseSync from "./pages/edit/TestCourseSync";
 import SettingsEdit from "./pages/edit/SettingsEdit";
 import PublicEventHome from "./pages/PublicEventHome";
+import PublicLeaderboard from "./pages/PublicLeaderboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
