@@ -118,10 +118,12 @@ export default function PlayersEdit() {
   };
 
   const updatePlayer = (id: string, field: keyof Player, value: any) => {
-    setPlayers(players.map(player => 
+    console.log(`Updating player ${id}, field: ${field}, value:`, value);
+
+    setPlayers(players.map(player =>
       player.id === id ? { ...player, [field]: value } : player
     ));
-    
+
     // Clear error for this field
     if (errors[id]?.[field]) {
       const newErrors = { ...errors };
