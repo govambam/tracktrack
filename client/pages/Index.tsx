@@ -1,10 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowRight, Calendar, Trophy, Users, ChevronRight, TrendingUp, Star } from "lucide-react";
+import {
+  ArrowRight,
+  Calendar,
+  Trophy,
+  Users,
+  ChevronRight,
+  TrendingUp,
+  Star,
+} from "lucide-react";
 
 export default function Index() {
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -47,7 +54,8 @@ export default function Index() {
             </h1>
             <p className="text-xl text-green-600 mb-8 max-w-3xl mx-auto leading-relaxed">
               Create stunning custom websites for golf events and tournaments.
-              Track scores live, manage events, and bring your golf community together.
+              Track scores live, manage events, and bring your golf community
+              together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -75,7 +83,8 @@ export default function Index() {
               Everything You Need for Golf Events
             </h2>
             <p className="text-xl text-green-600 max-w-2xl mx-auto">
-              Professional tools to create, manage, and showcase your golf events and tournaments
+              Professional tools to create, manage, and showcase your golf
+              events and tournaments
             </p>
           </div>
 
@@ -85,12 +94,15 @@ export default function Index() {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 text-white rounded-lg mb-4 mx-auto">
                   <Calendar className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-xl text-green-900">Build Custom Golf Event Websites</CardTitle>
+                <CardTitle className="text-xl text-green-900">
+                  Build Custom Golf Event Websites
+                </CardTitle>
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-green-600">
-                  Create beautiful, personalized websites for your golf events with custom branding,
-                  itineraries, and participant information.
+                  Create beautiful, personalized websites for your golf events
+                  with custom branding, itineraries, and participant
+                  information.
                 </p>
               </CardContent>
             </Card>
@@ -100,12 +112,15 @@ export default function Index() {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 text-white rounded-lg mb-4 mx-auto">
                   <Trophy className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-xl text-green-900">Track Scores Live</CardTitle>
+                <CardTitle className="text-xl text-green-900">
+                  Track Scores Live
+                </CardTitle>
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-green-600">
-                  Real-time score tracking and leaderboards keep everyone engaged.
-                  Update scores on the go and watch the competition unfold.
+                  Real-time score tracking and leaderboards keep everyone
+                  engaged. Update scores on the go and watch the competition
+                  unfold.
                 </p>
               </CardContent>
             </Card>
@@ -115,12 +130,14 @@ export default function Index() {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 text-white rounded-lg mb-4 mx-auto">
                   <Users className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-xl text-green-900">Manage Tournaments</CardTitle>
+                <CardTitle className="text-xl text-green-900">
+                  Manage Tournaments
+                </CardTitle>
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-green-600">
-                  Organize participants, set up brackets, manage tee times,
-                  and handle all tournament logistics from one central platform.
+                  Organize participants, set up brackets, manage tee times, and
+                  handle all tournament logistics from one central platform.
                 </p>
               </CardContent>
             </Card>
@@ -174,8 +191,6 @@ export default function Index() {
         </div>
       </div>
 
-
-
       {/* CTA Section */}
       <div className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -185,7 +200,8 @@ export default function Index() {
                 Ready to Transform Your Golf Events?
               </h2>
               <p className="text-xl text-green-600 mb-8">
-                Join thousands of golf enthusiasts who are already creating amazing experiences
+                Join thousands of golf enthusiasts who are already creating
+                amazing experiences
               </p>
               <Link
                 to="/signup"
