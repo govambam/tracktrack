@@ -396,15 +396,23 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
           )}
 
           {hasDescription && (
-            <div className="mb-6">
-              <p className="text-slate-600 leading-relaxed overflow-hidden" style={{
-                display: '-webkit-box',
-                WebkitLineClamp: shouldShowSeeMore ? 4 : 'none',
-                WebkitBoxOrient: 'vertical',
-                maxHeight: shouldShowSeeMore ? '6rem' : 'none'
-              }}>
-                {course.description}
-              </p>
+            <div className="mb-6 relative">
+              <div className="relative">
+                <p
+                  className="text-slate-600 leading-relaxed overflow-hidden"
+                  style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 4,
+                    WebkitBoxOrient: 'vertical',
+                    maxHeight: '6rem'
+                  }}
+                >
+                  {course.description}
+                </p>
+                {shouldShowSeeMore && (
+                  <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-white/90 to-transparent pointer-events-none" />
+                )}
+              </div>
               {shouldShowSeeMore && showSeeMore && (
                 <button
                   onClick={onOpenModal}
