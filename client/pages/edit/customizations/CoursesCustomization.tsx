@@ -12,10 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
 import { checkTableExists } from "@/lib/initDatabase";
-import { MapPin, RefreshCw, Save, Sparkles } from "lucide-react";
+import { MapPin, RefreshCw, Save, Sparkles, Search, X, ExternalLink } from "lucide-react";
 
 interface EventCourse {
   id: string;
@@ -39,6 +40,7 @@ export default function CoursesCustomization() {
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const [generatingAI, setGeneratingAI] = useState<string | null>(null);
+  const [imageSearchModal, setImageSearchModal] = useState<{isOpen: boolean, courseId: string, courseName: string}>({isOpen: false, courseId: '', courseName: ''});
 
   useEffect(() => {
     if (eventId) {
@@ -580,6 +582,33 @@ Return your response as a JSON object with these fields:
     }
   };
 
+  const openImageSearch = (courseId: string, courseName: string) => {
+    setImageSearchModal({isOpen: true, courseId, courseName});
+  };
+
+  const closeImageSearch = () => {
+    setImageSearchModal({isOpen: false, courseId: '', courseName: ''});
+  };
+
+  const handleImageSelect = (imageUrl: string) => {
+    // Update the course with the selected image URL
+    setCourses(courses.map(c =>
+      c.id === imageSearchModal.courseId
+        ? { ...c, image_url: imageUrl }
+        : c
+    ));
+
+    // Save the image URL immediately
+    saveCourseField(imageSearchModal.courseId, 'image_url', imageUrl);
+
+    toast({
+      title: "Image Selected",
+      description: "Course image has been updated successfully",
+    });
+
+    closeImageSearch();
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -683,6 +712,18 @@ Return your response as a JSON object with these fields:
                           placeholder="https://example.com/course-image.jpg"
                           className="border-green-200 focus:border-emerald-500 bg-white"
                         />
+                        {!course.image_url && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => openImageSearch(course.id, course.name)}
+                            className="mt-2 border-blue-200 text-blue-700 hover:bg-blue-50"
+                          >
+                            <Search className="h-4 w-4 mr-2" />
+                            Search for Course Image
+                          </Button>
+                        )}
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         <div className="space-y-2">
@@ -821,6 +862,69 @@ Return your response as a JSON object with these fields:
           </div>
         </CardContent>
       </Card>
+
+      {/* Image Search Modal */}
+      <Dialog open={imageSearchModal.isOpen} onOpenChange={closeImageSearch}>
+        <DialogContent className="max-w-4xl h-[80vh]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between">
+              <span>Search Images for {imageSearchModal.courseName}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={closeImageSearch}
+                className="h-6 w-6 p-0"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="flex-1 flex flex-col space-y-4">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="flex items-start space-x-3">
+                <ExternalLink className="h-5 w-5 text-blue-600 mt-0.5" />
+                <div>
+                  <h4 className="font-medium text-blue-900 mb-1">How to select an image:</h4>
+                  <ol className="text-sm text-blue-700 space-y-1">
+                    <li>1. Browse the search results below</li>
+                    <li>2. Right-click on an image you like</li>
+                    <li>3. Select "Copy image address" or "Copy image URL"</li>
+                    <li>4. Paste the URL in the text field and click "Use This Image"</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex space-x-2">
+              <Input
+                id="imageUrl"
+                placeholder="Paste image URL here..."
+                className="flex-1"
+              />
+              <Button
+                onClick={() => {
+                  const input = document.getElementById('imageUrl') as HTMLInputElement;
+                  if (input?.value.trim()) {
+                    handleImageSelect(input.value.trim());
+                  }
+                }}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                Use This Image
+              </Button>
+            </div>
+
+            <div className="flex-1 border border-gray-200 rounded-lg overflow-hidden">
+              <iframe
+                src={`https://www.google.com/search?q=${encodeURIComponent(imageSearchModal.courseName + ' golf course')}&tbm=isch`}
+                className="w-full h-full"
+                title="Google Images Search"
+              />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
