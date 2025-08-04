@@ -539,26 +539,50 @@ ${formData.description}`;
               <p className="text-sm text-green-600">
                 Help participants know what to expect at this event
               </p>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={generateAIDescription}
-                disabled={generatingAI}
-                className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
-              >
-                {generatingAI ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-600 mr-2"></div>
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Generate with AI
-                  </>
+              <div className="flex items-center gap-2">
+                {formData.description && formData.description.trim() && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={polishWithAI}
+                    disabled={polishingAI || generatingAI}
+                    className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                  >
+                    {polishingAI ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                        Polishing...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-4 w-4 mr-2" />
+                        Polish with AI
+                      </>
+                    )}
+                  </Button>
                 )}
-              </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={generateAIDescription}
+                  disabled={generatingAI || polishingAI}
+                  className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                >
+                  {generatingAI ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-600 mr-2"></div>
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="h-4 w-4 mr-2" />
+                      Generate with AI
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
           </div>
 
