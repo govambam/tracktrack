@@ -21,6 +21,17 @@ interface EventRule {
   isDraft?: boolean; // Flag to indicate if rule is not yet saved to database
 }
 
+interface StablefordScoring {
+  id?: string;
+  event_id: string;
+  albatross: number;
+  eagle: number;
+  birdie: number;
+  par: number;
+  bogey: number;
+  double_bogey: number;
+}
+
 export default function RulesCustomization() {
   const { eventId } = useParams();
   const { toast } = useToast();
@@ -32,6 +43,9 @@ export default function RulesCustomization() {
   const [newRuleText, setNewRuleText] = useState("");
   const [editingRuleId, setEditingRuleId] = useState<string | null>(null);
   const [polishingRuleId, setPolishingRuleId] = useState<string | null>(null);
+  const [stablefordScoring, setStablefordScoring] = useState<StablefordScoring | null>(null);
+  const [isStablefordEvent, setIsStablefordEvent] = useState(false);
+  const [stablefordChanges, setStablefordChanges] = useState<Partial<StablefordScoring>>({});
   let nextDraftId = 1; // Counter for generating unique draft IDs
 
   useEffect(() => {
@@ -76,6 +90,45 @@ export default function RulesCustomization() {
         });
       } else if (customizationData) {
         setRulesEnabled(customizationData.rules_enabled ?? true);
+      }
+
+      // Check if this is a Stableford event by looking at rounds scoring_type
+      const { data: roundsData, error: roundsError } = await supabase
+        .from("event_rounds")
+        .select("scoring_type")
+        .eq("event_id", eventId)
+        .limit(1);
+
+      if (!roundsError && roundsData && roundsData.length > 0) {
+        const isStableford = roundsData[0].scoring_type === "stableford";
+        setIsStablefordEvent(isStableford);
+
+        // If it's a Stableford event, load the scoring configuration
+        if (isStableford) {
+          const { data: stablefordData, error: stablefordError } = await supabase
+            .from("stableford_scoring")
+            .select("*")
+            .eq("event_id", eventId)
+            .single();
+
+          if (stablefordError && stablefordError.code !== "PGRST116") {
+            console.error("Error loading Stableford scoring:", stablefordError);
+          } else if (stablefordData) {
+            setStablefordScoring(stablefordData);
+          } else {
+            // Create default Stableford scoring if none exists
+            const defaultScoring: StablefordScoring = {
+              event_id: eventId,
+              albatross: 5,
+              eagle: 4,
+              birdie: 3,
+              par: 2,
+              bogey: 1,
+              double_bogey: 0,
+            };
+            setStablefordScoring(defaultScoring);
+          }
+        }
       }
     } catch (error) {
       console.error("Error loading rules customization data:", {
@@ -408,6 +461,81 @@ ${currentText}`;
     }
   };
 
+  const saveStablefordScoring = async () => {
+    if (!eventId || !stablefordScoring) return;
+
+    try {
+      const scoringData = {
+        ...stablefordScoring,
+        ...stablefordChanges,
+      };
+
+      if (stablefordScoring.id) {
+        // Update existing scoring
+        const { error } = await supabase
+          .from("stableford_scoring")
+          .update({
+            albatross: scoringData.albatross,
+            eagle: scoringData.eagle,
+            birdie: scoringData.birdie,
+            par: scoringData.par,
+            bogey: scoringData.bogey,
+            double_bogey: scoringData.double_bogey,
+          })
+          .eq("id", stablefordScoring.id);
+
+        if (error) {
+          console.error("Error updating Stableford scoring:", error);
+          toast({
+            title: "Save Failed",
+            description: "Failed to update Stableford scoring",
+            variant: "destructive",
+          });
+        } else {
+          setStablefordScoring({ ...scoringData });
+          setStablefordChanges({});
+          toast({
+            title: "Stableford Scoring Updated",
+            description: "Point values have been saved successfully",
+          });
+        }
+      } else {
+        // Create new scoring
+        const { data, error } = await supabase
+          .from("stableford_scoring")
+          .insert({
+            event_id: eventId,
+            albatross: scoringData.albatross,
+            eagle: scoringData.eagle,
+            birdie: scoringData.birdie,
+            par: scoringData.par,
+            bogey: scoringData.bogey,
+            double_bogey: scoringData.double_bogey,
+          })
+          .select()
+          .single();
+
+        if (error) {
+          console.error("Error creating Stableford scoring:", error);
+          toast({
+            title: "Save Failed",
+            description: "Failed to create Stableford scoring",
+            variant: "destructive",
+          });
+        } else {
+          setStablefordScoring(data);
+          setStablefordChanges({});
+          toast({
+            title: "Stableford Scoring Created",
+            description: "Point values have been saved successfully",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error saving Stableford scoring:", error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -648,6 +776,72 @@ ${currentText}`;
               )}
             </CardContent>
           </Card>
+
+          {/* Stableford Scoring Section */}
+          {isStablefordEvent && stablefordScoring && (
+            <Card className="border-blue-100 bg-blue-50">
+              <CardContent className="p-4 space-y-4">
+                <div className="flex items-center justify-between">
+                  <Label className="text-blue-800 font-medium flex items-center">
+                    <Target className="h-4 w-4 mr-2" />
+                    Stableford Point Values
+                  </Label>
+                </div>
+
+                <div className="text-sm text-blue-600 mb-4">
+                  Customize the points awarded for each score relative to par.
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {[
+                    { key: 'albatross', label: 'Albatross (-3)', color: 'text-purple-700' },
+                    { key: 'eagle', label: 'Eagle (-2)', color: 'text-yellow-700' },
+                    { key: 'birdie', label: 'Birdie (-1)', color: 'text-green-700' },
+                    { key: 'par', label: 'Par (0)', color: 'text-blue-700' },
+                    { key: 'bogey', label: 'Bogey (+1)', color: 'text-orange-700' },
+                    { key: 'double_bogey', label: 'Double Bogey (+2)', color: 'text-red-700' },
+                  ].map(({ key, label, color }) => (
+                    <div key={key} className="space-y-1">
+                      <Label className={`text-xs font-medium ${color}`}>
+                        {label}
+                      </Label>
+                      <Input
+                        type="number"
+                        min="0"
+                        max="10"
+                        value={
+                          stablefordChanges[key as keyof StablefordScoring] !== undefined
+                            ? stablefordChanges[key as keyof StablefordScoring]
+                            : stablefordScoring[key as keyof StablefordScoring]
+                        }
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value) || 0;
+                          setStablefordChanges((prev) => ({
+                            ...prev,
+                            [key]: value,
+                          }));
+                        }}
+                        className="border-blue-200 focus:border-blue-500 bg-white text-center font-medium"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {Object.keys(stablefordChanges).length > 0 && (
+                  <div className="flex justify-end pt-2">
+                    <Button
+                      onClick={saveStablefordScoring}
+                      size="sm"
+                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                      <Save className="h-4 w-4 mr-2" />
+                      Save Point Values
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
 
           {/* Save Button */}
           <div className="flex justify-end pt-4">
