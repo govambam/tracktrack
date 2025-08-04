@@ -4,6 +4,7 @@ import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleSupabaseTest } from "./routes/supabase-test";
 import { handleAuthTest } from "./routes/auth-test";
+import { generateDescription } from "./routes/openai";
 import eventsRouter from "./routes/events";
 
 export function createServer() {
