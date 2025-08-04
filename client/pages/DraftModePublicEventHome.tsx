@@ -65,6 +65,7 @@ export default function DraftModePublicEventHome({
   const [travel, setTravel] = useState<any>(null);
   const [skillsContests, setSkillsContests] = useState<any[]>([]);
   const [customRules, setCustomRules] = useState<any[]>([]);
+  const [stablefordScoring, setStablefordScoring] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
