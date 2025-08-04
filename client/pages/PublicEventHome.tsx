@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   MapPin,
   Users,
@@ -19,7 +20,9 @@ import {
   Loader2,
   Sparkles,
   Home,
-  BarChart3
+  BarChart3,
+  X,
+  MoreHorizontal
 } from "lucide-react";
 
 interface EventData {
@@ -427,6 +430,8 @@ export default function PublicEventHome() {
   const [prizes, setPrizes] = useState<EventPrize[]>([]);
   const [travel, setTravel] = useState<TravelData | null>(null);
   const [customization, setCustomization] = useState<EventCustomization | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (slug) {
