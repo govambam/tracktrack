@@ -230,7 +230,7 @@ ${currentContent}`;
       const responseData = await responsePromise;
       console.log(`Polish ${fieldName} API response data:`, responseData);
 
-      const polishedContent = responseData?.description;
+      const polishedContent = (responseData as any)?.description;
 
       if (!polishedContent) {
         throw new Error("No polished content received from server");
