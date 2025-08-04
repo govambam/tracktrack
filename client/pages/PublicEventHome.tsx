@@ -429,15 +429,6 @@ export default function PublicEventHome() {
     }).join(', ') || 'Stroke Play';
   };
 
-  const getPlayerInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
