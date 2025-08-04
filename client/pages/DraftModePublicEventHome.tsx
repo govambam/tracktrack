@@ -142,6 +142,7 @@ export default function DraftModePublicEventHome({
         travelResult,
         skillsContestsResult,
         customRulesResult,
+        stablefordResult,
       ] = await Promise.all([
         supabase
           .from("event_players")
