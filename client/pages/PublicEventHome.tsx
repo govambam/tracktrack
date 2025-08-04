@@ -76,6 +76,13 @@ interface EventCustomization {
 }
 
 export default function PublicEventHome() {
+  // Add smooth scrolling to page
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = 'smooth';
+    return () => {
+      document.documentElement.style.scrollBehavior = 'auto';
+    };
+  }, []);
   const { slug } = useParams();
   const [loading, setLoading] = useState(true);
   const [eventData, setEventData] = useState<EventData | null>(null);
