@@ -150,6 +150,17 @@ export default function EventEdit() {
     }
   }, [eventId]);
 
+  // Reload data when navigating between sections to ensure fresh data
+  useEffect(() => {
+    if (eventId && eventData) {
+      // Small delay to allow for navigation to complete
+      const timer = setTimeout(() => {
+        loadEventData();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [currentSectionId]);
+
   const loadEventData = async () => {
     if (!eventId) return;
 
