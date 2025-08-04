@@ -291,10 +291,34 @@ ${currentContent}`;
                   placeholder="Include flight times, airlines, confirmation numbers, and any group booking details..."
                   className="border-green-200 focus:border-emerald-500 bg-white resize-none h-24"
                 />
-                <p className="text-xs text-green-600">
-                  Add departure/arrival times, airport codes, and any group
-                  travel arrangements
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs text-green-600">
+                    Add departure/arrival times, airport codes, and any group
+                    travel arrangements
+                  </p>
+                  {travelInfo.flightTimes && travelInfo.flightTimes.trim() && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => polishFieldWithAI("flightTimes", travelInfo.flightTimes)}
+                      disabled={polishingField === "flightTimes"}
+                      className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                    >
+                      {polishingField === "flightTimes" ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                          Polishing...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="h-4 w-4 mr-2" />
+                          Polish with AI
+                        </>
+                      )}
+                    </Button>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>
