@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
-import { Home } from "lucide-react";
+import { Home, Save } from "lucide-react";
 
 export default function HomeCustomization() {
   const { eventId } = useParams();
