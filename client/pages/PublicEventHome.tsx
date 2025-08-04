@@ -103,6 +103,110 @@ const useScrollAnimation = () => {
   return { isVisible, elementRef };
 };
 
+// Countdown Timer Component
+const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const target = new Date(targetDate).getTime();
+      const difference = target - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [targetDate]);
+
+  if (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0) {
+    return null;
+  }
+
+  return (
+    <div className="inline-flex items-center space-x-4 bg-white/90 backdrop-blur-sm border border-green-200/50 rounded-2xl px-6 py-4 shadow-lg">
+      <Clock className="h-5 w-5 text-green-600" />
+      <div className="flex items-center space-x-3 text-sm font-medium text-slate-700">
+        <div className="text-center">
+          <div className="font-bold text-lg text-green-600">{timeLeft.days}</div>
+          <div className="text-xs">days</div>
+        </div>
+        <div className="text-green-400">:</div>
+        <div className="text-center">
+          <div className="font-bold text-lg text-green-600">{timeLeft.hours}</div>
+          <div className="text-xs">hours</div>
+        </div>
+        <div className="text-green-400">:</div>
+        <div className="text-center">
+          <div className="font-bold text-lg text-green-600">{timeLeft.minutes}</div>
+          <div className="text-xs">mins</div>
+        </div>
+        <div className="text-green-400">:</div>
+        <div className="text-center">
+          <div className="font-bold text-lg text-green-600">{timeLeft.seconds}</div>
+          <div className="text-xs">secs</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Sticky Navigation Component
+const StickyNavigation = ({ eventName }: { eventName: string }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsVisible(window.scrollY > 100);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { name: 'Overview', href: '#overview' },
+    { name: 'Courses', href: '#courses' },
+    { name: 'Scoring Format', href: '#scoring' },
+    { name: 'Players', href: '#players' },
+    { name: 'Prizes', href: '#prizes' },
+    { name: 'Travel', href: '#travel' },
+    { name: 'Leaderboard', href: '/leaderboard' },
+  ];
+
+  if (!isVisible) return null;
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg">
+      <div className="max-w-6xl mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="font-bold text-slate-900">{eventName}</div>
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-sm font-medium text-slate-600 hover:text-green-600 transition-colors"
+              >
+                {item.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
 // Animated components to avoid hooks in loops
 const AnimatedStatCard = ({ item, index }: { item: any; index: number }) => {
   const { isVisible, elementRef } = useScrollAnimation();
