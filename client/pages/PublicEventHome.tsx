@@ -721,7 +721,17 @@ export default function PublicEventHome() {
             </div>
 
             <div className="flex justify-center">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 max-w-5xl">
+              <div className={`grid gap-8 ${
+                players.length <= 2
+                  ? 'grid-cols-2 max-w-md'
+                  : players.length <= 3
+                  ? 'grid-cols-2 sm:grid-cols-3 max-w-lg'
+                  : players.length <= 4
+                  ? 'grid-cols-2 sm:grid-cols-4 max-w-2xl'
+                  : players.length <= 5
+                  ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 max-w-3xl'
+                  : 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 max-w-5xl'
+              }`}>
                 {players.map((player, index) => (
                   <AnimatedPlayerCard key={player.id} player={player} index={index} />
                 ))}
