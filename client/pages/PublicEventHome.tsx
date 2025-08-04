@@ -101,6 +101,220 @@ const useScrollAnimation = () => {
   return { isVisible, elementRef };
 };
 
+// Animated components to avoid hooks in loops
+const AnimatedStatCard = ({ item, index }: { item: any; index: number }) => {
+  const { isVisible, elementRef } = useScrollAnimation();
+  const colorClasses = {
+    emerald: { bg: 'from-emerald-100 to-emerald-200', text: 'text-emerald-600' },
+    blue: { bg: 'from-blue-100 to-blue-200', text: 'text-blue-600' },
+    purple: { bg: 'from-purple-100 to-purple-200', text: 'text-purple-600' },
+    orange: { bg: 'from-orange-100 to-orange-200', text: 'text-orange-600' }
+  };
+  const colors = colorClasses[item.color as keyof typeof colorClasses];
+  const delays = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
+
+  return (
+    <div
+      ref={elementRef}
+      className={`group cursor-pointer transition-all duration-700 ${delays[index] || 'delay-0'} ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
+      <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white">
+        <div className={`w-20 h-20 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
+          <item.icon className={`h-10 w-10 ${colors.text}`} />
+        </div>
+        <h3 className="font-bold text-slate-900 mb-3 text-lg">{item.title}</h3>
+        <p className="text-slate-600 font-medium">{item.value}</p>
+      </div>
+    </div>
+  );
+};
+
+const AnimatedCourseCard = ({ course, round, index }: { course: any; round: any; index: number }) => {
+  const { isVisible, elementRef } = useScrollAnimation();
+
+  return (
+    <div
+      ref={elementRef}
+      className={`group transition-all duration-700 ${
+        index === 0 ? 'delay-0' : index === 1 ? 'delay-150' : index === 2 ? 'delay-300' : 'delay-450'
+      } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+    >
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-500">
+        {course.image_url && (
+          <div className="h-56 overflow-hidden">
+            <img
+              src={course.image_url}
+              alt={course.name}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+          </div>
+        )}
+
+        <div className="p-8">
+          <div className="flex items-start justify-between mb-6">
+            <div>
+              <div className="flex items-center space-x-2 mb-3">
+                <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                  Round {index + 1}
+                </Badge>
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors">
+                {course.name}
+              </h3>
+            </div>
+          </div>
+
+          {course.par && course.yardage && (
+            <div className="flex items-center space-x-6 mb-6 text-sm">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span className="font-semibold text-slate-700">Par {course.par}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="font-semibold text-slate-700">{course.yardage?.toLocaleString()} yards</span>
+              </div>
+            </div>
+          )}
+
+          {(round?.tee_time || round?.round_date) && (
+            <div className="space-y-3 pt-4 border-t border-slate-200">
+              {round?.round_date && (
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-4 w-4 text-slate-400" />
+                  <span className="text-sm font-medium text-slate-600">
+                    {new Date(round.round_date).toLocaleDateString('en-US', {
+                      weekday: 'long',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </span>
+                </div>
+              )}
+              {round?.tee_time && (
+                <div className="flex items-center space-x-3">
+                  <Clock className="h-4 w-4 text-slate-400" />
+                  <span className="text-sm font-medium text-slate-600">
+                    Tee Time: {round.tee_time}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AnimatedPlayerCard = ({ player, index }: { player: any; index: number }) => {
+  const { isVisible, elementRef } = useScrollAnimation();
+
+  const getPlayerInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  return (
+    <div
+      ref={elementRef}
+      className={`group text-center transition-all duration-500 ${
+        index < 8 ? `delay-${index * 50}` : 'delay-300'
+      } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+    >
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white">
+        <Avatar className="h-16 w-16 mx-auto mb-4 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300">
+          {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
+          <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-lg font-bold">
+            {getPlayerInitials(player.full_name)}
+          </AvatarFallback>
+        </Avatar>
+
+        <h3 className="font-bold text-slate-900 text-sm mb-2 group-hover:text-green-700 transition-colors">
+          {player.full_name}
+        </h3>
+
+        {player.handicap !== null && player.handicap !== undefined && (
+          <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-3 py-1">
+            <span className="text-xs font-semibold text-slate-600">HCP: {player.handicap}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const AnimatedPrizeCard = ({ prize, index }: { prize: any; index: number }) => {
+  const { isVisible, elementRef } = useScrollAnimation();
+
+  return (
+    <div
+      ref={elementRef}
+      className={`group transition-all duration-700 ${
+        index === 0 ? 'delay-0' : index === 1 ? 'delay-100' : index === 2 ? 'delay-200' : 'delay-300'
+      } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+    >
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-300 group-hover:bg-white">
+        <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+          <Trophy className="h-10 w-10 text-amber-600" />
+        </div>
+
+        <h3 className="text-xl font-bold text-slate-900 mb-4 capitalize group-hover:text-amber-700 transition-colors">
+          {prize.category.replace('_', ' ')}
+        </h3>
+
+        {prize.amount > 0 && (
+          <div className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent mb-4">
+            ${prize.amount}
+          </div>
+        )}
+
+        <p className="text-slate-600 font-medium">{prize.description}</p>
+      </div>
+    </div>
+  );
+};
+
+const AnimatedTravelCard = ({ item, index }: { item: any; index: number }) => {
+  const { isVisible, elementRef } = useScrollAnimation();
+  const colorClasses = {
+    blue: { bg: 'from-blue-100 to-blue-200', text: 'text-blue-600' },
+    emerald: { bg: 'from-emerald-100 to-emerald-200', text: 'text-emerald-600' },
+    purple: { bg: 'from-purple-100 to-purple-200', text: 'text-purple-600' }
+  };
+  const colors = colorClasses[item.color as keyof typeof colorClasses];
+  const delays = ['delay-0', 'delay-150', 'delay-300'];
+
+  return (
+    <div
+      ref={elementRef}
+      className={`transition-all duration-700 ${delays[index] || 'delay-0'} ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+      }`}
+    >
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 h-full">
+        <div className={`w-16 h-16 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mb-8`}>
+          <item.icon className={`h-8 w-8 ${colors.text}`} />
+        </div>
+
+        <h3 className="text-2xl font-bold text-slate-900 mb-6">{item.title}</h3>
+
+        <div className="prose prose-slate max-w-none">
+          <p className="text-slate-600 whitespace-pre-line leading-relaxed font-medium">
+            {item.info}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function PublicEventHome() {
   // Add smooth scrolling to page
   useEffect(() => {
