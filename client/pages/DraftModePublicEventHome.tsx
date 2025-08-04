@@ -157,13 +157,38 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
           .order("display_order")
       ]);
 
-      // Handle results
-      if (playersResult.error) throw new Error(`Failed to load players: ${playersResult.error.message}`);
-      if (roundsResult.error) throw new Error(`Failed to load rounds: ${roundsResult.error.message}`);
-      if (coursesResult.error) throw new Error(`Failed to load courses: ${coursesResult.error.message}`);
-      if (prizesResult.error) throw new Error(`Failed to load prizes: ${prizesResult.error.message}`);
-      if (skillsContestsResult.error) throw new Error(`Failed to load contests: ${skillsContestsResult.error.message}`);
-      if (customRulesResult.error) throw new Error(`Failed to load rules: ${customRulesResult.error.message}`);
+      // Handle results with detailed error logging
+      console.log("Players result:", playersResult);
+      console.log("Rounds result:", roundsResult);
+      console.log("Courses result:", coursesResult);
+      console.log("Prizes result:", prizesResult);
+      console.log("Skills contests result:", skillsContestsResult);
+      console.log("Custom rules result:", customRulesResult);
+
+      if (playersResult.error) {
+        console.error("Players error:", playersResult.error);
+        throw new Error(`Failed to load players: ${playersResult.error.message}`);
+      }
+      if (roundsResult.error) {
+        console.error("Rounds error:", roundsResult.error);
+        throw new Error(`Failed to load rounds: ${roundsResult.error.message}`);
+      }
+      if (coursesResult.error) {
+        console.error("Courses error:", coursesResult.error);
+        throw new Error(`Failed to load courses: ${coursesResult.error.message}`);
+      }
+      if (prizesResult.error) {
+        console.error("Prizes error:", prizesResult.error);
+        throw new Error(`Failed to load prizes: ${prizesResult.error.message}`);
+      }
+      if (skillsContestsResult.error) {
+        console.error("Skills contests error:", skillsContestsResult.error);
+        throw new Error(`Failed to load contests: ${skillsContestsResult.error.message}`);
+      }
+      if (customRulesResult.error) {
+        console.error("Custom rules error:", customRulesResult.error);
+        throw new Error(`Failed to load rules: ${customRulesResult.error.message}`);
+      }
 
       setPlayers(playersResult.data || []);
       setRounds(roundsResult.data || []);
