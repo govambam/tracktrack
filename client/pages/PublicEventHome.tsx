@@ -372,9 +372,9 @@ export default function PublicEventHome() {
                   <div
                     key={course.id}
                     ref={elementRef}
-                    className={`group transition-all duration-700 delay-${index * 150} ${
-                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                    }`}
+                    className={`group transition-all duration-700 ${
+                      index === 0 ? 'delay-0' : index === 1 ? 'delay-150' : index === 2 ? 'delay-300' : 'delay-450'
+                    } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
                   >
                     <div className="bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-500">
                       {course.image_url && (
