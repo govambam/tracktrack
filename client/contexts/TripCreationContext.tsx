@@ -152,6 +152,7 @@ function tripCreationReducer(
         currentStep: action.payload,
       };
     case "RESET_TRIP":
+      console.log('TripCreationContext: RESET_TRIP called - clearing all event data');
       return initialState;
     case "LOAD_EVENT":
       return {
