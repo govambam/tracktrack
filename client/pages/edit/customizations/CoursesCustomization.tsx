@@ -657,7 +657,7 @@ Return your response as a JSON object with these fields:
                           }}
                           placeholder="https://example.com/course-image.jpg"
                           className="border-green-200 focus:border-emerald-500 bg-white"
-                          disabled={!coursesEnabled}
+
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-2">
@@ -683,7 +683,7 @@ Return your response as a JSON object with these fields:
                             }}
                             placeholder="6800"
                             className="border-green-200 focus:border-emerald-500 bg-white"
-                            disabled={!coursesEnabled}
+  
                           />
                         </div>
                         <div className="space-y-2">
@@ -708,7 +708,7 @@ Return your response as a JSON object with these fields:
                             }}
                             placeholder="72"
                             className="border-green-200 focus:border-emerald-500 bg-white"
-                            disabled={!coursesEnabled}
+  
                           />
                         </div>
                       </div>
