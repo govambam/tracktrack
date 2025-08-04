@@ -441,13 +441,25 @@ export default function PublicEventHome() {
 
       {/* Scoring Format Section */}
       {rounds.length > 0 && (
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-900 mb-16">Tournament Format</h2>
+        <section className="py-28 px-6 sm:px-8 lg:px-12 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-slate-50/30"></div>
+          <div className="relative max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center space-x-2 bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
+              <Target className="h-4 w-4 text-blue-600" />
+              <span className="text-sm font-medium text-blue-800">Competition Rules</span>
+            </div>
 
-            <div className="bg-white rounded-xl p-8 sm:p-12 shadow-sm">
-              <h3 className="text-2xl sm:text-3xl font-bold text-green-900 mb-6">{getScoringFormat()}</h3>
-              <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-16 tracking-tight">
+              Tournament Format
+            </h2>
+
+            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-12 sm:p-16 shadow-2xl shadow-slate-200/50 border border-slate-200/50">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                <Target className="h-10 w-10 text-green-600" />
+              </div>
+
+              <h3 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-8">{getScoringFormat()}</h3>
+              <p className="text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto font-light">
                 {getScoringFormat().includes('Stableford')
                   ? "Modified Stableford scoring system with preset competition and a team scramble format for added excitement."
                   : "Traditional stroke play format where every shot counts. Lowest total score wins the championship."
@@ -460,30 +472,57 @@ export default function PublicEventHome() {
 
       {/* Players Section */}
       {players.length > 0 && (
-        <section id="players" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-900 mb-6">Players</h2>
-              <p className="text-lg text-gray-600">Tournament starts at {formatDateRange(eventData.start_date, eventData.end_date).split(',')[0]}</p>
+        <section id="players" className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-green-50/20 via-white to-emerald-50/10"></div>
+          <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-green-100/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+
+          <div className="relative max-w-6xl mx-auto">
+            <div className="text-center mb-20">
+              <div className="inline-flex items-center space-x-2 bg-purple-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
+                <Users className="h-4 w-4 text-purple-600" />
+                <span className="text-sm font-medium text-purple-800">Competitors</span>
+              </div>
+
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
+                Players
+              </h2>
+              <p className="text-xl text-slate-600 font-light">
+                Tournament starts {formatDateRange(eventData.start_date, eventData.end_date).split(',')[0]} • {players.length} players registered
+              </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-              {players.map((player) => (
-                <div key={player.id} className="text-center">
-                  <Avatar className="h-20 w-20 mx-auto mb-4">
-                    {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
-                    <AvatarFallback className="bg-green-600 text-white text-xl">
-                      {getPlayerInitials(player.full_name)}
-                    </AvatarFallback>
-                  </Avatar>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8">
+              {players.map((player, index) => {
+                const { isVisible, elementRef } = useScrollAnimation();
+                return (
+                  <div
+                    key={player.id}
+                    ref={elementRef}
+                    className={`group text-center transition-all duration-500 delay-${index * 50} ${
+                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    }`}
+                  >
+                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white">
+                      <Avatar className="h-16 w-16 mx-auto mb-4 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300">
+                        {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
+                        <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-lg font-bold">
+                          {getPlayerInitials(player.full_name)}
+                        </AvatarFallback>
+                      </Avatar>
 
-                  <h3 className="font-semibold text-green-900 text-sm">{player.full_name}</h3>
+                      <h3 className="font-bold text-slate-900 text-sm mb-2 group-hover:text-green-700 transition-colors">
+                        {player.full_name}
+                      </h3>
 
-                  {player.handicap !== null && player.handicap !== undefined && (
-                    <p className="text-xs text-gray-500 mt-1">HCP: {player.handicap}</p>
-                  )}
-                </div>
-              ))}
+                      {player.handicap !== null && player.handicap !== undefined && (
+                        <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-3 py-1">
+                          <span className="text-xs font-semibold text-slate-600">HCP: {player.handicap}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
