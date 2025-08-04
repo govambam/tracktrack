@@ -556,7 +556,7 @@ export default function PublicEventHome() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-green-100/20 rounded-full blur-3xl -translate-y-24 translate-x-24"></div>
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100/20 rounded-full blur-3xl translate-y-24 -translate-x-24"></div>
 
-        <div className="relative max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-24 sm:py-32 lg:py-40">
+        <div className="relative max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-24 sm:pt-40 sm:pb-32 lg:pt-48 lg:pb-40">
           <div className="text-center space-y-10 max-w-4xl mx-auto">
             <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-green-200/50 rounded-full px-6 py-3 shadow-lg shadow-green-100/50">
               <Calendar className="h-4 w-4 text-green-600" />
@@ -708,7 +708,7 @@ export default function PublicEventHome() {
                 Players
               </h2>
               <p className="text-xl text-slate-600 font-light">
-                Tournament starts {formatDateRange(eventData.start_date, eventData.end_date).split(',')[0]} • {players.length} players registered
+                Tournament starts {formatDateRange(eventData.start_date, eventData.end_date).split(',')[0]} ��� {players.length} players registered
               </p>
             </div>
 
