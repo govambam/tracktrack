@@ -1,4 +1,12 @@
 {
+<<<<<<< HEAD
+=======
+  "functions": {
+    "api/generate-description.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
+>>>>>>> a89cfb1e3f027d6a90bd39e9499f7229448b4b5b
   "rewrites": [
     {
       "source": "/((?!api|assets|favicon|robots|sitemap|.*\\.).*)",
