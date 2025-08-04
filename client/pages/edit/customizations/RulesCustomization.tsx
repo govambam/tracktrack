@@ -13,7 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
-import { Target, Plus, Trash2, Save } from "lucide-react";
+import { Target, Plus, Trash2, Save, Edit, X } from "lucide-react";
 
 interface EventRule {
   id: string;
@@ -29,6 +29,7 @@ export default function RulesCustomization() {
   const [loading, setLoading] = useState(true);
   const [ruleChanges, setRuleChanges] = useState<Record<string, string>>({});
   const [newRuleText, setNewRuleText] = useState("");
+  const [editingRuleId, setEditingRuleId] = useState<string | null>(null);
 
   useEffect(() => {
     if (eventId) {
@@ -111,6 +112,7 @@ export default function RulesCustomization() {
       } else {
         setRules([...rules, data]);
         setNewRuleText(""); // Clear the draft text
+        setEditingRuleId(data.id); // Start editing the new rule
       }
     } catch (error) {
       console.error("Error adding rule:", error);
@@ -172,6 +174,10 @@ export default function RulesCustomization() {
         });
       } else {
         setRules(rules.filter((rule) => rule.id !== ruleId));
+        // Stop editing if we're deleting the rule being edited
+        if (editingRuleId === ruleId) {
+          setEditingRuleId(null);
+        }
       }
     } catch (error) {
       console.error("Error deleting rule:", error);
@@ -303,40 +309,124 @@ export default function RulesCustomization() {
               </div>
 
               <div className="space-y-3">
-                {rules.map((rule, index) => (
-                  <div key={rule.id} className="flex items-start space-x-2">
-                    <div className="flex-1">
-                      <Textarea
-                        value={
-                          ruleChanges[rule.id] !== undefined
-                            ? ruleChanges[rule.id]
-                            : rule.rule_text
-                        }
-                        onChange={(e) => {
-                          setRuleChanges((prev) => ({
-                            ...prev,
-                            [rule.id]: e.target.value,
-                          }));
-                        }}
-                        onFocus={(e) => {
-                          // Select all text when focusing, especially helpful for "New rule" default text
-                          e.target.select();
-                        }}
-                        placeholder={`Rule ${index + 1}...`}
-                        className="border-green-200 focus:border-emerald-500 bg-white"
-                        rows={2}
-                      />
+                {rules.map((rule, index) => {
+                  const isEditing = editingRuleId === rule.id;
+
+                  return (
+                    <div key={rule.id} className="border border-green-100 rounded-lg p-4 bg-white">
+                      {!isEditing ? (
+                        // View mode - show rule text with edit/delete buttons
+                        <div className="flex items-start justify-between space-x-4">
+                          <div className="flex-1">
+                            <div className="text-sm font-medium text-green-800 mb-1">
+                              Rule {index + 1}
+                            </div>
+                            <p className="text-green-700 whitespace-pre-wrap">
+                              {rule.rule_text}
+                            </p>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setEditingRuleId(rule.id);
+                                // Initialize the rule changes with current text
+                                setRuleChanges((prev) => ({
+                                  ...prev,
+                                  [rule.id]: rule.rule_text,
+                                }));
+                              }}
+                              className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                            >
+                              <Edit className="h-4 w-4 mr-1" />
+                              Edit
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => deleteRule(rule.id)}
+                              className="border-red-200 text-red-600 hover:bg-red-50"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        // Edit mode - show textarea with save/cancel buttons
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <div className="text-sm font-medium text-green-800">
+                              Edit Rule {index + 1}
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                  setEditingRuleId(null);
+                                  // Remove any unsaved changes
+                                  setRuleChanges((prev) => {
+                                    const { [rule.id]: removed, ...rest } = prev;
+                                    return rest;
+                                  });
+                                }}
+                                className="border-gray-200 text-gray-600 hover:bg-gray-50"
+                              >
+                                <X className="h-4 w-4 mr-1" />
+                                Cancel
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={async () => {
+                                  const newText = ruleChanges[rule.id] || rule.rule_text;
+                                  await updateRule(rule.id, newText);
+                                  setEditingRuleId(null);
+                                  // Update the rules list with the new text
+                                  setRules((prev) =>
+                                    prev.map((r) =>
+                                      r.id === rule.id ? { ...r, rule_text: newText } : r
+                                    )
+                                  );
+                                  // Clear the changes
+                                  setRuleChanges((prev) => {
+                                    const { [rule.id]: removed, ...rest } = prev;
+                                    return rest;
+                                  });
+                                }}
+                                className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                              >
+                                <Save className="h-4 w-4 mr-1" />
+                                Save
+                              </Button>
+                            </div>
+                          </div>
+                          <Textarea
+                            value={
+                              ruleChanges[rule.id] !== undefined
+                                ? ruleChanges[rule.id]
+                                : rule.rule_text
+                            }
+                            onChange={(e) => {
+                              setRuleChanges((prev) => ({
+                                ...prev,
+                                [rule.id]: e.target.value,
+                              }));
+                            }}
+                            onFocus={(e) => {
+                              // Select all text when focusing, especially helpful for "New rule" default text
+                              e.target.select();
+                            }}
+                            placeholder={`Rule ${index + 1}...`}
+                            className="border-green-200 focus:border-emerald-500 bg-white"
+                            rows={3}
+                          />
+                        </div>
+                      )}
                     </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => deleteRule(rule.id)}
-                      className="border-red-200 text-red-600 hover:bg-red-50"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {rules.length === 0 && (
