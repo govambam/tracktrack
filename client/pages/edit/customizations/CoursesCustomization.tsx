@@ -710,7 +710,7 @@ Return your response as a JSON object with these fields:
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
                       <div className="space-y-2">
                         <Label className="text-green-800 font-medium">
                           Course Image URL
@@ -737,16 +737,16 @@ Return your response as a JSON object with these fields:
                             onClick={() =>
                               openImageSearch(course.id, course.name)
                             }
-                            className="mt-2 border-blue-200 text-blue-700 hover:bg-blue-50"
+                            className="w-full sm:w-auto mt-2 border-blue-200 text-blue-700 hover:bg-blue-50"
                           >
                             <Search className="h-4 w-4 mr-2" />
                             Search for Course Image
                           </Button>
                         )}
                       </div>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-2 gap-2 sm:gap-4">
                         <div className="space-y-2">
-                          <Label className="text-green-800 font-medium">
+                          <Label className="text-green-800 font-medium text-sm">
                             Yardage
                           </Label>
                           <Input
@@ -770,7 +770,7 @@ Return your response as a JSON object with these fields:
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-green-800 font-medium">
+                          <Label className="text-green-800 font-medium text-sm">
                             Par
                           </Label>
                           <Input
