@@ -635,34 +635,28 @@ export default function SettingsEdit() {
                 <AlertDialogTitle className="text-red-900">
                   Are you absolutely sure?
                 </AlertDialogTitle>
-                <AlertDialogDescription>
-                  <div className="space-y-3">
-                    <div>
-                      This action cannot be undone. This will permanently delete
-                      the event
-                      <span className="font-semibold"> "{eventName}" </span>
-                      and remove all associated data from our servers.
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="deleteConfirm"
-                        className="text-sm font-medium"
-                      >
-                        Please type{" "}
-                        <span className="font-bold">{eventName}</span> to
-                        confirm:
-                      </Label>
-                      <Input
-                        id="deleteConfirm"
-                        value={deleteConfirmText}
-                        onChange={(e) => setDeleteConfirmText(e.target.value)}
-                        placeholder="Type the event name here"
-                        className="border-red-200 focus:border-red-500"
-                      />
-                    </div>
-                  </div>
+                <AlertDialogDescription className="space-y-3">
+                  This action cannot be undone. This will permanently delete
+                  the event <span className="font-semibold">"{eventName}"</span>{" "}
+                  and remove all associated data from our servers.
                 </AlertDialogDescription>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="deleteConfirm"
+                    className="text-sm font-medium"
+                  >
+                    Please type{" "}
+                    <span className="font-bold">{eventName}</span> to
+                    confirm:
+                  </Label>
+                  <Input
+                    id="deleteConfirm"
+                    value={deleteConfirmText}
+                    onChange={(e) => setDeleteConfirmText(e.target.value)}
+                    placeholder="Type the event name here"
+                    className="border-red-200 focus:border-red-500"
+                  />
+                </div>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel onClick={() => setDeleteConfirmText("")}>
