@@ -255,14 +255,14 @@ export default function TravelCustomization() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-green-800 font-medium">Airport Information</Label>
+                  <Label className="text-green-800 font-medium">Accommodations</Label>
                   <Textarea
-                    value={travelInfo.travel_airport || ''}
+                    value={travelInfo.accommodations || ''}
                     onChange={(e) => {
-                      setTravelInfo(prev => ({ ...prev, travel_airport: e.target.value }));
+                      setTravelInfo(prev => ({ ...prev, accommodations: e.target.value }));
                     }}
-                    onBlur={(e) => saveTravelField('travel_airport', e.target.value)}
-                    placeholder="Nearest airports, shuttle services, rental car information, etc."
+                    onBlur={(e) => saveTravelField('accommodations', e.target.value)}
+                    placeholder="Hotel recommendations, booking links, group rates, lodging information, etc."
                     className="border-green-200 focus:border-emerald-500 bg-white"
                     rows={4}
                     disabled={!travelEnabled}
