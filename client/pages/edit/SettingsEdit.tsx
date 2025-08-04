@@ -36,6 +36,7 @@ import {
   Eye,
   EyeOff,
   Share,
+  Edit,
 } from "lucide-react";
 
 export default function SettingsEdit() {
