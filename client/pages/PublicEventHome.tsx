@@ -1507,9 +1507,23 @@ export default function PublicEventHome() {
                           {rule.rule_title}
                         </h4>
                       )}
-                      <p className="text-slate-700 leading-relaxed">
-                        {rule.rule_text}
-                      </p>
+                      <div className="text-slate-700 prose prose-sm max-w-none">
+                        <ReactMarkdown
+                          components={{
+                            h1: ({ children }) => <h1 className="text-lg font-bold text-slate-800 mb-2">{children}</h1>,
+                            h2: ({ children }) => <h2 className="text-base font-bold text-slate-800 mb-2">{children}</h2>,
+                            h3: ({ children }) => <h3 className="text-sm font-bold text-slate-800 mb-1">{children}</h3>,
+                            p: ({ children }) => <p className="text-slate-700 mb-2 last:mb-0 leading-relaxed">{children}</p>,
+                            ul: ({ children }) => <ul className="text-slate-700 ml-4 mb-2 last:mb-0">{children}</ul>,
+                            ol: ({ children }) => <ol className="text-slate-700 ml-4 mb-2 last:mb-0">{children}</ol>,
+                            li: ({ children }) => <li className="mb-1 last:mb-0">{children}</li>,
+                            strong: ({ children }) => <strong className="font-bold text-slate-800">{children}</strong>,
+                            em: ({ children }) => <em className="italic">{children}</em>,
+                          }}
+                        >
+                          {rule.rule_text}
+                        </ReactMarkdown>
+                      </div>
                     </div>
                   ))}
                 </div>
