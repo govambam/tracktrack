@@ -205,17 +205,22 @@ export default function RulesCustomization() {
     if (!eventId) return;
 
     try {
-      // Save rules enabled setting
-      await saveRulesEnabled(rulesEnabled);
+      // Save any rule text changes (rules enabled toggle saves immediately)
+      for (const [ruleId, newText] of Object.entries(ruleChanges)) {
+        await updateRule(ruleId, newText);
+      }
+
+      // Clear the changes after saving
+      setRuleChanges({});
 
       toast({
-        title: "Settings Saved",
-        description: "Rules customization settings have been saved successfully",
+        title: "Changes Saved",
+        description: "Rule changes have been saved successfully",
       });
     } catch (error) {
       toast({
         title: "Save Failed",
-        description: "Failed to save rules settings",
+        description: "Failed to save rule changes",
         variant: "destructive",
       });
     }
