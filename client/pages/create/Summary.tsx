@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -22,7 +28,7 @@ import {
   MapPin,
   DollarSign,
   Lock,
-  Globe
+  Globe,
 } from "lucide-react";
 
 export default function Summary() {
@@ -35,7 +41,7 @@ export default function Summary() {
     savePlayers,
     savePrizes,
     saveTravel,
-    saveCustomization
+    saveCustomization,
   } = useTripCreation();
   const { tripData } = state;
   const { toast } = useToast();
@@ -45,27 +51,39 @@ export default function Summary() {
     setCreating(true);
 
     try {
-      console.log('Starting complete event creation...');
-      console.log('Current tripData state:', {
+      console.log("Starting complete event creation...");
+      console.log("Current tripData state:", {
         id: tripData.id,
         tripName: tripData.tripName,
         startDate: tripData.startDate,
         endDate: tripData.endDate,
         location: tripData.location,
-        hasBasicInfo: !!(tripData.tripName && tripData.startDate && tripData.endDate && tripData.location)
+        hasBasicInfo: !!(
+          tripData.tripName &&
+          tripData.startDate &&
+          tripData.endDate &&
+          tripData.location
+        ),
       });
 
       // Check if we have basic required data before attempting to save
-      if (!tripData.tripName || !tripData.startDate || !tripData.endDate || !tripData.location) {
-        throw new Error('Basic event information is missing. Please return to the Basic Info step and ensure all required fields are filled out.');
+      if (
+        !tripData.tripName ||
+        !tripData.startDate ||
+        !tripData.endDate ||
+        !tripData.location
+      ) {
+        throw new Error(
+          "Basic event information is missing. Please return to the Basic Info step and ensure all required fields are filled out.",
+        );
       }
 
       // Step 1: Ensure main event is saved (might already be saved from BasicInfo)
       if (!tripData.id) {
-        console.log('Saving main event first...');
+        console.log("Saving main event first...");
         const eventResult = await saveEvent();
         if (!eventResult.success) {
-          throw new Error(eventResult.error || 'Failed to save event');
+          throw new Error(eventResult.error || "Failed to save event");
         }
       }
 
@@ -73,27 +91,31 @@ export default function Summary() {
       const saveOperations = [];
 
       if (tripData.rounds && tripData.rounds.length > 0) {
-        console.log('Saving rounds...');
+        console.log("Saving rounds...");
         saveOperations.push(saveRounds());
       }
 
       if (tripData.players && tripData.players.length > 0) {
-        console.log('Saving players...');
+        console.log("Saving players...");
         saveOperations.push(savePlayers());
       }
 
-      if (tripData.buyIn || tripData.payoutStructure || tripData.contestPrizes) {
-        console.log('Saving prizes...');
+      if (
+        tripData.buyIn ||
+        tripData.payoutStructure ||
+        tripData.contestPrizes
+      ) {
+        console.log("Saving prizes...");
         saveOperations.push(savePrizes());
       }
 
       if (tripData.travelInfo) {
-        console.log('Saving travel info...');
+        console.log("Saving travel info...");
         saveOperations.push(saveTravel());
       }
 
       if (tripData.customization) {
-        console.log('Saving customization...');
+        console.log("Saving customization...");
         saveOperations.push(saveCustomization());
       }
 
@@ -101,30 +123,31 @@ export default function Summary() {
       const results = await Promise.all(saveOperations);
 
       // Check if any failed
-      const failedOperations = results.filter(result => !result.success);
+      const failedOperations = results.filter((result) => !result.success);
       if (failedOperations.length > 0) {
-        console.error('Some save operations failed:', failedOperations);
+        console.error("Some save operations failed:", failedOperations);
         toast({
           title: "Partial Save",
-          description: `Event created but some details failed to save: ${failedOperations.map(f => f.error).join(', ')}`,
+          description: `Event created but some details failed to save: ${failedOperations.map((f) => f.error).join(", ")}`,
           variant: "destructive",
         });
       } else {
         toast({
           title: "Event Created!",
-          description: "Your golf event has been successfully created with all details",
+          description:
+            "Your golf event has been successfully created with all details",
         });
       }
 
       // Reset the trip creation state and navigate
       resetTrip();
-      navigate('/app');
-
+      navigate("/app");
     } catch (error) {
-      console.error('Error creating event:', error);
+      console.error("Error creating event:", error);
       toast({
         title: "Creation Failed",
-        description: error instanceof Error ? error.message : "Failed to create event",
+        description:
+          error instanceof Error ? error.message : "Failed to create event",
         variant: "destructive",
       });
     } finally {
@@ -133,32 +156,32 @@ export default function Summary() {
   };
 
   const handlePrevious = () => {
-    navigate('/app/create/customization');
+    navigate("/app/create/customization");
   };
 
   const getPlayerInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
   const formatTime = (timeString: string) => {
-    return new Date(`2000-01-01T${timeString}`).toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true
+    return new Date(`2000-01-01T${timeString}`).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
     });
   };
 
@@ -194,10 +217,13 @@ export default function Summary() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold text-green-900 text-xl">{tripData.tripName}</h3>
+              <h3 className="font-semibold text-green-900 text-xl">
+                {tripData.tripName}
+              </h3>
               <div className="flex items-center text-green-600 mt-1">
                 <Calendar className="h-4 w-4 mr-2" />
-                {formatDate(tripData.startDate)} - {formatDate(tripData.endDate)}
+                {formatDate(tripData.startDate)} -{" "}
+                {formatDate(tripData.endDate)}
               </div>
               <div className="flex items-center text-green-600 mt-1">
                 <MapPin className="h-4 w-4 mr-2" />
@@ -223,9 +249,14 @@ export default function Summary() {
         </CardHeader>
         <CardContent className="space-y-4">
           {tripData.rounds.map((round, index) => (
-            <div key={round.id} className="p-4 bg-green-50 rounded-lg border border-green-100">
+            <div
+              key={round.id}
+              className="p-4 bg-green-50 rounded-lg border border-green-100"
+            >
               <div className="flex items-center justify-between mb-2">
-                <h4 className="font-semibold text-green-900">Round {index + 1}: {round.courseName}</h4>
+                <h4 className="font-semibold text-green-900">
+                  Round {index + 1}: {round.courseName}
+                </h4>
                 <Badge variant="outline">{round.holes} holes</Badge>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-green-600">
@@ -255,17 +286,22 @@ export default function Summary() {
           </CardHeader>
           <CardContent>
             <Badge variant="secondary" className="mb-2">
-              {tripData.scoringFormat === 'stroke-play' ? 'Stroke Play' : 'Modified Stableford'}
+              {tripData.scoringFormat === "stroke-play"
+                ? "Stroke Play"
+                : "Modified Stableford"}
             </Badge>
-            {tripData.scoringFormat === 'modified-stableford' && tripData.stablefordPoints && (
-              <div className="mt-3 space-y-1 text-sm text-green-600">
-                <div>Eagle: +{tripData.stablefordPoints.eagle} pts</div>
-                <div>Birdie: +{tripData.stablefordPoints.birdie} pts</div>
-                <div>Par: {tripData.stablefordPoints.par} pts</div>
-                <div>Bogey: {tripData.stablefordPoints.bogey} pts</div>
-                <div>Double Bogey+: {tripData.stablefordPoints.doubleBogey} pts</div>
-              </div>
-            )}
+            {tripData.scoringFormat === "modified-stableford" &&
+              tripData.stablefordPoints && (
+                <div className="mt-3 space-y-1 text-sm text-green-600">
+                  <div>Eagle: +{tripData.stablefordPoints.eagle} pts</div>
+                  <div>Birdie: +{tripData.stablefordPoints.birdie} pts</div>
+                  <div>Par: {tripData.stablefordPoints.par} pts</div>
+                  <div>Bogey: {tripData.stablefordPoints.bogey} pts</div>
+                  <div>
+                    Double Bogey+: {tripData.stablefordPoints.doubleBogey} pts
+                  </div>
+                </div>
+              )}
           </CardContent>
         </Card>
 
@@ -307,7 +343,9 @@ export default function Summary() {
       </div>
 
       {/* Optional Sections */}
-      {(tripData.buyIn || tripData.payoutStructure || tripData.contestPrizes) && (
+      {(tripData.buyIn ||
+        tripData.payoutStructure ||
+        tripData.contestPrizes) && (
         <Card className="border-green-100">
           <CardHeader>
             <CardTitle className="text-lg text-green-900 flex items-center">
@@ -319,25 +357,45 @@ export default function Summary() {
             {tripData.buyIn && (
               <div className="flex items-center">
                 <DollarSign className="h-4 w-4 mr-2 text-emerald-600" />
-                <span>Buy-in: <Badge variant="secondary">${tripData.buyIn}</Badge></span>
+                <span>
+                  Buy-in: <Badge variant="secondary">${tripData.buyIn}</Badge>
+                </span>
               </div>
             )}
             {tripData.payoutStructure && (
               <div className="space-y-1">
-                <div className="font-medium text-green-900">Tournament Payouts:</div>
+                <div className="font-medium text-green-900">
+                  Tournament Payouts:
+                </div>
                 <div className="grid grid-cols-3 gap-2 text-sm">
-                  {tripData.payoutStructure.champion > 0 && <div>1st: ${tripData.payoutStructure.champion}</div>}
-                  {tripData.payoutStructure.runnerUp > 0 && <div>2nd: ${tripData.payoutStructure.runnerUp}</div>}
-                  {tripData.payoutStructure.third > 0 && <div>3rd: ${tripData.payoutStructure.third}</div>}
+                  {tripData.payoutStructure.champion > 0 && (
+                    <div>1st: ${tripData.payoutStructure.champion}</div>
+                  )}
+                  {tripData.payoutStructure.runnerUp > 0 && (
+                    <div>2nd: ${tripData.payoutStructure.runnerUp}</div>
+                  )}
+                  {tripData.payoutStructure.third > 0 && (
+                    <div>3rd: ${tripData.payoutStructure.third}</div>
+                  )}
                 </div>
               </div>
             )}
             {tripData.contestPrizes && (
               <div className="space-y-1">
-                <div className="font-medium text-green-900">Contest Prizes:</div>
+                <div className="font-medium text-green-900">
+                  Contest Prizes:
+                </div>
                 <div className="grid grid-cols-2 gap-2 text-sm">
-                  {tripData.contestPrizes.longestDrive > 0 && <div>Longest Drive: ${tripData.contestPrizes.longestDrive}</div>}
-                  {tripData.contestPrizes.closestToPin > 0 && <div>Closest to Pin: ${tripData.contestPrizes.closestToPin}</div>}
+                  {tripData.contestPrizes.longestDrive > 0 && (
+                    <div>
+                      Longest Drive: ${tripData.contestPrizes.longestDrive}
+                    </div>
+                  )}
+                  {tripData.contestPrizes.closestToPin > 0 && (
+                    <div>
+                      Closest to Pin: ${tripData.contestPrizes.closestToPin}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -356,9 +414,15 @@ export default function Summary() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              {tripData.travelInfo.flightTimes && <div>✈️ Flight details included</div>}
-              {tripData.travelInfo.accommodations && <div>🏨 Hotel information included</div>}
-              {tripData.travelInfo.dailySchedule && <div>📋 Daily schedule included</div>}
+              {tripData.travelInfo.flightTimes && (
+                <div>✈️ Flight details included</div>
+              )}
+              {tripData.travelInfo.accommodations && (
+                <div>🏨 Hotel information included</div>
+              )}
+              {tripData.travelInfo.dailySchedule && (
+                <div>📋 Daily schedule included</div>
+              )}
             </CardContent>
           </Card>
         )}
@@ -377,7 +441,11 @@ export default function Summary() {
               ) : (
                 <Globe className="h-4 w-4 mr-2 text-blue-600" />
               )}
-              <span>{tripData.customization?.isPrivate ? 'Private trip' : 'Public trip'}</span>
+              <span>
+                {tripData.customization?.isPrivate
+                  ? "Private trip"
+                  : "Public trip"}
+              </span>
             </div>
             {tripData.customization?.logoUrl && <div>🎨 Custom logo added</div>}
             {tripData.customization?.customDomain && (
@@ -392,10 +460,13 @@ export default function Summary() {
         <CheckCircle className="h-4 w-4 text-emerald-600" />
         <AlertDescription className="text-emerald-700">
           <div className="space-y-2">
-            <div className="font-semibold">Ready to create your golf event!</div>
+            <div className="font-semibold">
+              Ready to create your golf event!
+            </div>
             <div>
-              Your event "{tripData.tripName}" will be created with {tripData.rounds.length} rounds
-              and {tripData.players.length} players. You can edit all details after creation.
+              Your event "{tripData.tripName}" will be created with{" "}
+              {tripData.rounds.length} rounds and {tripData.players.length}{" "}
+              players. You can edit all details after creation.
             </div>
           </div>
         </AlertDescription>

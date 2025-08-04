@@ -10,13 +10,22 @@ export default function CreateTrip() {
   useEffect(() => {
     // Only reset if we don't have any ongoing creation data
     // This prevents accidental resets if user navigates back to /app/create
-    const hasOngoingCreation = tripData.tripName || tripData.startDate || tripData.endDate || tripData.location || tripData.rounds?.length > 0;
+    const hasOngoingCreation =
+      tripData.tripName ||
+      tripData.startDate ||
+      tripData.endDate ||
+      tripData.location ||
+      tripData.rounds?.length > 0;
 
     if (!hasOngoingCreation) {
-      console.log('CreateTrip: Starting fresh event creation - resetting context');
+      console.log(
+        "CreateTrip: Starting fresh event creation - resetting context",
+      );
       resetTrip();
     } else {
-      console.log('CreateTrip: Ongoing creation detected, not resetting context');
+      console.log(
+        "CreateTrip: Ongoing creation detected, not resetting context",
+      );
     }
 
     // Redirect to the first step of event creation

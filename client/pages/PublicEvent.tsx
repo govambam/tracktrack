@@ -3,7 +3,13 @@ import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 import {
@@ -15,7 +21,7 @@ import {
   Calendar,
   Clock,
   Globe,
-  Loader2
+  Loader2,
 } from "lucide-react";
 
 interface EventData {
@@ -60,19 +66,19 @@ interface EventRule {
   rule_text: string;
 }
 
-type TabType = 'home' | 'courses' | 'rules' | 'leaderboard' | 'travel';
+type TabType = "home" | "courses" | "rules" | "leaderboard" | "travel";
 
 export default function PublicEvent() {
   const { slug } = useParams();
   const { toast } = useToast();
-  
+
   const [loading, setLoading] = useState(true);
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [courses, setCourses] = useState<EventCourse[]>([]);
   const [customization, setCustomization] = useState<EventCustomization>({});
   const [rules, setRules] = useState<EventRule[]>([]);
   const [travelData, setTravelData] = useState<TravelData>({});
-  const [activeTab, setActiveTab] = useState<TabType>('home');
+  const [activeTab, setActiveTab] = useState<TabType>("home");
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -87,15 +93,19 @@ export default function PublicEvent() {
       document.title = `${eventData.name} | TrackTrack Golf`;
 
       // Add meta description
-      const metaDescription = document.querySelector('meta[name="description"]');
+      const metaDescription = document.querySelector(
+        'meta[name="description"]',
+      );
       if (metaDescription) {
-        metaDescription.setAttribute('content',
-          eventData.description || `Golf tournament: ${eventData.name}`
+        metaDescription.setAttribute(
+          "content",
+          eventData.description || `Golf tournament: ${eventData.name}`,
         );
       } else {
-        const meta = document.createElement('meta');
-        meta.name = 'description';
-        meta.content = eventData.description || `Golf tournament: ${eventData.name}`;
+        const meta = document.createElement("meta");
+        meta.name = "description";
+        meta.content =
+          eventData.description || `Golf tournament: ${eventData.name}`;
         document.head.appendChild(meta);
       }
     }
@@ -108,22 +118,22 @@ export default function PublicEvent() {
 
       // Load main event data
       const { data: event, error: eventError } = await supabase
-        .from('events')
-        .select('*')
-        .eq('slug', slug)
+        .from("events")
+        .select("*")
+        .eq("slug", slug)
         .single();
 
       if (eventError) {
-        if (eventError.code === 'PGRST116') {
-          setError('Event not found');
+        if (eventError.code === "PGRST116") {
+          setError("Event not found");
         } else {
-          setError('Failed to load event');
+          setError("Failed to load event");
         }
         return;
       }
 
       if (!event.is_published) {
-        setError('This event has not been published yet.');
+        setError("This event has not been published yet.");
         return;
       }
 
@@ -132,84 +142,88 @@ export default function PublicEvent() {
       // Load courses (gracefully handle if table doesn't exist)
       try {
         const { data: coursesData, error: coursesError } = await supabase
-          .from('event_courses')
-          .select('*')
-          .eq('event_id', event.id)
-          .order('display_order', { ascending: true });
+          .from("event_courses")
+          .select("*")
+          .eq("event_id", event.id)
+          .order("display_order", { ascending: true });
 
-        if (coursesError && coursesError.code !== '42P01') {
-          console.error('Error loading courses:', coursesError);
+        if (coursesError && coursesError.code !== "42P01") {
+          console.error("Error loading courses:", coursesError);
         } else {
           setCourses(coursesData || []);
         }
       } catch (err) {
-        console.error('Courses table may not exist:', err);
+        console.error("Courses table may not exist:", err);
       }
 
       // Load customization (gracefully handle if table doesn't exist)
       try {
-        const { data: customizationData, error: customizationError } = await supabase
-          .from('event_customization')
-          .select('*')
-          .eq('event_id', event.id)
-          .single();
+        const { data: customizationData, error: customizationError } =
+          await supabase
+            .from("event_customization")
+            .select("*")
+            .eq("event_id", event.id)
+            .single();
 
-        if (customizationError && customizationError.code !== 'PGRST116' && customizationError.code !== '42P01') {
-          console.error('Error loading customization data:', {
+        if (
+          customizationError &&
+          customizationError.code !== "PGRST116" &&
+          customizationError.code !== "42P01"
+        ) {
+          console.error("Error loading customization data:", {
             message: customizationError.message,
             details: customizationError.details,
             hint: customizationError.hint,
-            code: customizationError.code
+            code: customizationError.code,
           });
         } else {
           setCustomization(customizationData || {});
         }
       } catch (err) {
-        console.error('Customization table may not exist:', err);
+        console.error("Customization table may not exist:", err);
       }
 
       // Load rules (gracefully handle if table doesn't exist)
       try {
         const { data: rulesData, error: rulesError } = await supabase
-          .from('event_rules')
-          .select('*')
-          .eq('event_id', event.id);
+          .from("event_rules")
+          .select("*")
+          .eq("event_id", event.id);
 
-        if (rulesError && rulesError.code !== '42P01') {
-          console.error('Error loading rules:', rulesError);
+        if (rulesError && rulesError.code !== "42P01") {
+          console.error("Error loading rules:", rulesError);
         } else {
           setRules(rulesData || []);
         }
       } catch (err) {
-        console.error('Rules table may not exist:', err);
+        console.error("Rules table may not exist:", err);
       }
 
       // Load travel data from event_travel table (gracefully handle if table doesn't exist)
       try {
         const { data: travelDataResult, error: travelError } = await supabase
-          .from('event_travel')
-          .select('flight_info, accommodations, daily_schedule')
-          .eq('event_id', event.id)
+          .from("event_travel")
+          .select("flight_info, accommodations, daily_schedule")
+          .eq("event_id", event.id)
           .single();
 
         if (travelError) {
-          if (travelError.code === 'PGRST116') {
+          if (travelError.code === "PGRST116") {
             // No travel record found - this is normal
             setTravelData({});
-          } else if (travelError.code !== '42P01') {
-            console.error('Error loading travel data:', travelError);
+          } else if (travelError.code !== "42P01") {
+            console.error("Error loading travel data:", travelError);
           }
         } else {
           setTravelData(travelDataResult || {});
         }
       } catch (err) {
-        console.error('Travel table may not exist:', err);
+        console.error("Travel table may not exist:", err);
         setTravelData({});
       }
-
     } catch (err) {
-      console.error('Error loading event:', err);
-      setError('Failed to load event data');
+      console.error("Error loading event:", err);
+      setError("Failed to load event data");
     } finally {
       setLoading(false);
     }
@@ -225,28 +239,29 @@ export default function PublicEvent() {
 
   const getAvailableTabs = () => {
     const tabs: { id: TabType; label: string; icon: any }[] = [
-      { id: 'home', label: 'Home', icon: Home }
+      { id: "home", label: "Home", icon: Home },
     ];
 
     if (courses.length > 0 && customization.courses_enabled !== false) {
-      tabs.push({ id: 'courses', label: 'Courses', icon: MapPin });
+      tabs.push({ id: "courses", label: "Courses", icon: MapPin });
     }
 
     if (customization.rules_enabled !== false) {
-      tabs.push({ id: 'rules', label: 'Rules & Scoring', icon: Target });
+      tabs.push({ id: "rules", label: "Rules & Scoring", icon: Target });
     }
 
     if (customization.leaderboard_enabled !== false) {
-      tabs.push({ id: 'leaderboard', label: 'Leaderboard', icon: Trophy });
+      tabs.push({ id: "leaderboard", label: "Leaderboard", icon: Trophy });
     }
 
     // Show travel tab if any travel info exists
-    const hasTravel = travelData?.flight_info ||
-                     travelData?.accommodations ||
-                     travelData?.daily_schedule;
+    const hasTravel =
+      travelData?.flight_info ||
+      travelData?.accommodations ||
+      travelData?.daily_schedule;
 
     if (hasTravel && customization.travel_enabled !== false) {
-      tabs.push({ id: 'travel', label: 'Travel', icon: Plane });
+      tabs.push({ id: "travel", label: "Travel", icon: Plane });
     }
 
     return tabs;
@@ -269,10 +284,15 @@ export default function PublicEvent() {
         <div className="text-center max-w-md mx-auto p-6">
           <div className="bg-white rounded-lg border border-red-200 shadow-sm p-8">
             <h1 className="text-2xl font-bold text-red-900 mb-4">
-              {error === 'Event not found' ? '404 - Event Not Found' : 'Event Unavailable'}
+              {error === "Event not found"
+                ? "404 - Event Not Found"
+                : "Event Unavailable"}
             </h1>
             <p className="text-red-600 mb-6">{error}</p>
-            <Button onClick={() => window.location.href = '/'} className="bg-green-600 hover:bg-green-700">
+            <Button
+              onClick={() => (window.location.href = "/")}
+              className="bg-green-600 hover:bg-green-700"
+            >
               Go to Homepage
             </Button>
           </div>
@@ -294,7 +314,9 @@ export default function PublicEvent() {
             <div className="flex items-center space-x-4">
               <Globe className="h-6 w-6 text-green-600" />
               <div>
-                <h1 className="text-lg font-semibold text-green-900">{eventData.name}</h1>
+                <h1 className="text-lg font-semibold text-green-900">
+                  {eventData.name}
+                </h1>
               </div>
             </div>
             <div className="flex items-center space-x-4 text-sm text-green-600">
@@ -328,8 +350,8 @@ export default function PublicEvent() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center px-3 py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                     activeTab === tab.id
-                      ? 'border-green-500 text-green-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? "border-green-500 text-green-600"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
                   <Icon className="h-4 w-4 mr-2" />
@@ -343,25 +365,19 @@ export default function PublicEvent() {
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {activeTab === 'home' && (
-          <HomeTab 
-            eventData={eventData} 
-            courses={courses} 
+        {activeTab === "home" && (
+          <HomeTab
+            eventData={eventData}
+            courses={courses}
             customization={customization}
           />
         )}
-        {activeTab === 'courses' && (
-          <CoursesTab courses={courses} />
-        )}
-        {activeTab === 'rules' && (
+        {activeTab === "courses" && <CoursesTab courses={courses} />}
+        {activeTab === "rules" && (
           <RulesTab eventData={eventData} rules={rules} />
         )}
-        {activeTab === 'leaderboard' && (
-          <LeaderboardTab />
-        )}
-        {activeTab === 'travel' && (
-          <TravelTab travelData={travelData} />
-        )}
+        {activeTab === "leaderboard" && <LeaderboardTab />}
+        {activeTab === "travel" && <TravelTab travelData={travelData} />}
       </main>
 
       {/* Footer */}
@@ -377,25 +393,31 @@ export default function PublicEvent() {
 }
 
 // Home Tab Component
-function HomeTab({ 
-  eventData, 
-  courses, 
-  customization 
-}: { 
-  eventData: EventData; 
-  courses: EventCourse[]; 
+function HomeTab({
+  eventData,
+  courses,
+  customization,
+}: {
+  eventData: EventData;
+  courses: EventCourse[];
   customization: EventCustomization;
 }) {
   return (
     <div className="space-y-8">
       {/* Hero Section */}
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-green-900 mb-4">{eventData.name}</h1>
+        <h1 className="text-4xl font-bold text-green-900 mb-4">
+          {eventData.name}
+        </h1>
         {customization.home_headline && (
-          <p className="text-xl text-green-600 mb-6">{customization.home_headline}</p>
+          <p className="text-xl text-green-600 mb-6">
+            {customization.home_headline}
+          </p>
         )}
         {eventData.description && (
-          <p className="text-gray-600 max-w-3xl mx-auto">{eventData.description}</p>
+          <p className="text-gray-600 max-w-3xl mx-auto">
+            {eventData.description}
+          </p>
         )}
       </div>
 
@@ -419,12 +441,16 @@ function HomeTab({
                   year: "numeric",
                 })}
                 {eventData.end_date !== eventData.start_date && (
-                  <span> - {new Date(eventData.end_date).toLocaleDateString("en-US", {
-                    weekday: "long",
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  })}</span>
+                  <span>
+                    {" "}
+                    -{" "}
+                    {new Date(eventData.end_date).toLocaleDateString("en-US", {
+                      weekday: "long",
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </span>
                 )}
               </p>
             </div>
@@ -437,7 +463,7 @@ function HomeTab({
             <div>
               <h3 className="font-medium text-gray-900 mb-2">Format</h3>
               <Badge variant="outline" className="capitalize">
-                {eventData.scoring_format?.replace('-', ' ') || 'Not specified'}
+                {eventData.scoring_format?.replace("-", " ") || "Not specified"}
               </Badge>
             </div>
             <div>
@@ -458,33 +484,40 @@ function HomeTab({
               <MapPin className="h-5 w-5 mr-2 text-green-600" />
               Courses
             </CardTitle>
-            <CardDescription>
-              Golf courses for this event
-            </CardDescription>
+            <CardDescription>Golf courses for this event</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {courses.slice(0, 4).map((course) => (
-                <div key={course.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                <div
+                  key={course.id}
+                  className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                >
                   {course.image_url && (
                     <img
                       src={course.image_url}
                       alt={course.name}
                       className="w-full h-48 object-cover"
                       onError={(e) => {
-                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.style.display = "none";
                       }}
                     />
                   )}
                   <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 mb-2">{course.name}</h3>
+                    <h3 className="font-semibold text-gray-900 mb-2">
+                      {course.name}
+                    </h3>
                     {course.description && (
-                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{course.description}</p>
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                        {course.description}
+                      </p>
                     )}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4 text-sm text-gray-500">
                         {course.par && <span>Par {course.par}</span>}
-                        {course.yardage && <span>{course.yardage.toLocaleString()} yards</span>}
+                        {course.yardage && (
+                          <span>{course.yardage.toLocaleString()} yards</span>
+                        )}
                       </div>
                       {course.weather_note && (
                         <Badge variant="secondary" className="text-xs">
@@ -499,7 +532,8 @@ function HomeTab({
             {courses.length > 4 && (
               <div className="text-center mt-4">
                 <p className="text-gray-500">
-                  And {courses.length - 4} more course{courses.length - 4 !== 1 ? 's' : ''}...
+                  And {courses.length - 4} more course
+                  {courses.length - 4 !== 1 ? "s" : ""}...
                 </p>
               </div>
             )}
@@ -516,7 +550,9 @@ function CoursesTab({ courses }: { courses: EventCourse[] }) {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-green-900 mb-2">Courses</h1>
-        <p className="text-gray-600">Detailed information about each golf course</p>
+        <p className="text-gray-600">
+          Detailed information about each golf course
+        </p>
       </div>
 
       {courses.map((course) => (
@@ -525,27 +561,35 @@ function CoursesTab({ courses }: { courses: EventCourse[] }) {
             <div className="md:flex">
               {course.image_url && (
                 <div className="md:w-1/3">
-                  <img 
-                    src={course.image_url} 
+                  <img
+                    src={course.image_url}
                     alt={course.name}
                     className="w-full h-64 md:h-full object-cover"
                   />
                 </div>
               )}
-              <div className={`p-6 ${course.image_url ? 'md:w-2/3' : 'w-full'}`}>
-                <h2 className="text-2xl font-bold text-green-900 mb-4">{course.name}</h2>
-                
+              <div
+                className={`p-6 ${course.image_url ? "md:w-2/3" : "w-full"}`}
+              >
+                <h2 className="text-2xl font-bold text-green-900 mb-4">
+                  {course.name}
+                </h2>
+
                 {/* Course Stats */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                   {course.par && (
                     <div className="text-center p-3 bg-green-50 rounded-lg">
-                      <div className="text-2xl font-bold text-green-900">{course.par}</div>
+                      <div className="text-2xl font-bold text-green-900">
+                        {course.par}
+                      </div>
                       <div className="text-sm text-green-600">Par</div>
                     </div>
                   )}
                   {course.yardage && (
                     <div className="text-center p-3 bg-green-50 rounded-lg">
-                      <div className="text-2xl font-bold text-green-900">{course.yardage.toLocaleString()}</div>
+                      <div className="text-2xl font-bold text-green-900">
+                        {course.yardage.toLocaleString()}
+                      </div>
                       <div className="text-sm text-green-600">Yards</div>
                     </div>
                   )}
@@ -554,7 +598,9 @@ function CoursesTab({ courses }: { courses: EventCourse[] }) {
                 {/* Description */}
                 {course.description && (
                   <div className="mb-4">
-                    <h3 className="font-medium text-gray-900 mb-2">About This Course</h3>
+                    <h3 className="font-medium text-gray-900 mb-2">
+                      About This Course
+                    </h3>
                     <p className="text-gray-600">{course.description}</p>
                   </div>
                 )}
@@ -562,7 +608,9 @@ function CoursesTab({ courses }: { courses: EventCourse[] }) {
                 {/* Weather Note */}
                 {course.weather_note && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h3 className="font-medium text-blue-900 mb-1">Weather Note</h3>
+                    <h3 className="font-medium text-blue-900 mb-1">
+                      Weather Note
+                    </h3>
                     <p className="text-blue-700">{course.weather_note}</p>
                   </div>
                 )}
@@ -576,26 +624,34 @@ function CoursesTab({ courses }: { courses: EventCourse[] }) {
 }
 
 // Rules Tab Component
-function RulesTab({ eventData, rules }: { eventData: EventData; rules: EventRule[] }) {
+function RulesTab({
+  eventData,
+  rules,
+}: {
+  eventData: EventData;
+  rules: EventRule[];
+}) {
   const getScoringDescription = (format: string) => {
     switch (format) {
-      case 'stroke-play':
-        return 'Traditional stroke play - lowest total score wins.';
-      case 'match-play':
-        return 'Match play format - compete hole by hole against opponents.';
-      case 'modified-stableford':
-        return 'Modified Stableford scoring - points awarded based on score relative to par.';
-      case 'scramble':
-        return 'Team scramble format - all players hit, team plays best shot.';
+      case "stroke-play":
+        return "Traditional stroke play - lowest total score wins.";
+      case "match-play":
+        return "Match play format - compete hole by hole against opponents.";
+      case "modified-stableford":
+        return "Modified Stableford scoring - points awarded based on score relative to par.";
+      case "scramble":
+        return "Team scramble format - all players hit, team plays best shot.";
       default:
-        return 'Custom scoring format for this event.';
+        return "Custom scoring format for this event.";
     }
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-green-900 mb-2">Rules & Scoring</h1>
+        <h1 className="text-3xl font-bold text-green-900 mb-2">
+          Rules & Scoring
+        </h1>
         <p className="text-gray-600">Tournament format and competition rules</p>
       </div>
 
@@ -610,10 +666,12 @@ function RulesTab({ eventData, rules }: { eventData: EventData; rules: EventRule
         <CardContent>
           <div className="mb-4">
             <Badge variant="outline" className="text-lg py-1 px-3 capitalize">
-              {eventData.scoring_format?.replace('-', ' ') || 'Not specified'}
+              {eventData.scoring_format?.replace("-", " ") || "Not specified"}
             </Badge>
           </div>
-          <p className="text-gray-600">{getScoringDescription(eventData.scoring_format || '')}</p>
+          <p className="text-gray-600">
+            {getScoringDescription(eventData.scoring_format || "")}
+          </p>
         </CardContent>
       </Card>
 
@@ -660,7 +718,9 @@ function RulesTab({ eventData, rules }: { eventData: EventData; rules: EventRule
 
 // Leaderboard Tab Component
 function LeaderboardTab() {
-  const [activeLeaderboardTab, setActiveLeaderboardTab] = useState<'leaderboard' | 'moneyboard' | 'scorecards'>('leaderboard');
+  const [activeLeaderboardTab, setActiveLeaderboardTab] = useState<
+    "leaderboard" | "moneyboard" | "scorecards"
+  >("leaderboard");
 
   return (
     <div className="space-y-6">
@@ -673,17 +733,17 @@ function LeaderboardTab() {
       <div className="border-b border-gray-200">
         <nav className="flex space-x-8">
           {[
-            { id: 'leaderboard', label: 'Leaderboard' },
-            { id: 'moneyboard', label: 'Moneyboard' },
-            { id: 'scorecards', label: 'Scorecards' }
+            { id: "leaderboard", label: "Leaderboard" },
+            { id: "moneyboard", label: "Moneyboard" },
+            { id: "scorecards", label: "Scorecards" },
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveLeaderboardTab(tab.id as any)}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeLeaderboardTab === tab.id
-                  ? 'border-green-500 text-green-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  ? "border-green-500 text-green-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
               }`}
             >
               {tab.label}
@@ -697,14 +757,18 @@ function LeaderboardTab() {
         <CardContent className="py-16 text-center">
           <Trophy className="h-16 w-16 text-gray-300 mx-auto mb-4" />
           <h3 className="text-xl font-medium text-gray-900 mb-2">
-            {activeLeaderboardTab === 'leaderboard' && 'Leaderboard Coming Soon'}
-            {activeLeaderboardTab === 'moneyboard' && 'Moneyboard Coming Soon'}
-            {activeLeaderboardTab === 'scorecards' && 'Scorecards Coming Soon'}
+            {activeLeaderboardTab === "leaderboard" &&
+              "Leaderboard Coming Soon"}
+            {activeLeaderboardTab === "moneyboard" && "Moneyboard Coming Soon"}
+            {activeLeaderboardTab === "scorecards" && "Scorecards Coming Soon"}
           </h3>
           <p className="text-gray-500 max-w-md mx-auto">
-            {activeLeaderboardTab === 'leaderboard' && 'Tournament standings will be displayed here once play begins.'}
-            {activeLeaderboardTab === 'moneyboard' && 'Prize money distribution will be shown here after the tournament.'}
-            {activeLeaderboardTab === 'scorecards' && 'Individual player scorecards will be available here during the event.'}
+            {activeLeaderboardTab === "leaderboard" &&
+              "Tournament standings will be displayed here once play begins."}
+            {activeLeaderboardTab === "moneyboard" &&
+              "Prize money distribution will be shown here after the tournament."}
+            {activeLeaderboardTab === "scorecards" &&
+              "Individual player scorecards will be available here during the event."}
           </p>
         </CardContent>
       </Card>
@@ -717,8 +781,13 @@ function TravelTab({ travelData }: { travelData: TravelData }) {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-green-900 mb-2">Travel Information</h1>
-        <p className="text-gray-600">Everything you need to know about getting there and staying comfortable</p>
+        <h1 className="text-3xl font-bold text-green-900 mb-2">
+          Travel Information
+        </h1>
+        <p className="text-gray-600">
+          Everything you need to know about getting there and staying
+          comfortable
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -732,7 +801,9 @@ function TravelTab({ travelData }: { travelData: TravelData }) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700 whitespace-pre-line">{travelData.flight_info}</p>
+              <p className="text-gray-700 whitespace-pre-line">
+                {travelData.flight_info}
+              </p>
             </CardContent>
           </Card>
         )}
@@ -747,7 +818,9 @@ function TravelTab({ travelData }: { travelData: TravelData }) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700 whitespace-pre-line">{travelData.accommodations}</p>
+              <p className="text-gray-700 whitespace-pre-line">
+                {travelData.accommodations}
+              </p>
             </CardContent>
           </Card>
         )}
@@ -762,7 +835,9 @@ function TravelTab({ travelData }: { travelData: TravelData }) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700 whitespace-pre-line">{travelData.daily_schedule}</p>
+              <p className="text-gray-700 whitespace-pre-line">
+                {travelData.daily_schedule}
+              </p>
             </CardContent>
           </Card>
         )}

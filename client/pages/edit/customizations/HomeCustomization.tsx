@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,7 +19,7 @@ export default function HomeCustomization() {
   const { eventId } = useParams();
   const { toast } = useToast();
 
-  const [homeHeadline, setHomeHeadline] = useState('');
+  const [homeHeadline, setHomeHeadline] = useState("");
   const [homeEnabled, setHomeEnabled] = useState(true);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -31,44 +37,48 @@ export default function HomeCustomization() {
       setLoading(true);
 
       // Load home headline from event_customization table
-      const { data: customizationData, error: customizationError } = await supabase
-        .from('event_customization')
-        .select('home_headline, home_enabled')
-        .eq('event_id', eventId)
-        .single();
+      const { data: customizationData, error: customizationError } =
+        await supabase
+          .from("event_customization")
+          .select("home_headline, home_enabled")
+          .eq("event_id", eventId)
+          .single();
 
       if (customizationError) {
-        if (customizationError.code === 'PGRST116') {
+        if (customizationError.code === "PGRST116") {
           // No record found - this is normal for new events, use defaults
-          console.log('No customization record found for event:', eventId, '- using defaults');
-          setHomeHeadline('');
+          console.log(
+            "No customization record found for event:",
+            eventId,
+            "- using defaults",
+          );
+          setHomeHeadline("");
           setHomeEnabled(true);
         } else {
-          console.error('Error loading customization data:', {
+          console.error("Error loading customization data:", {
             message: customizationError.message,
             details: customizationError.details,
             hint: customizationError.hint,
-            code: customizationError.code
+            code: customizationError.code,
           });
           // Still set defaults on error
-          setHomeHeadline('');
+          setHomeHeadline("");
           setHomeEnabled(true);
         }
       } else if (customizationData) {
-        console.log('Loaded customization data:', customizationData);
-        setHomeHeadline(customizationData.home_headline || '');
+        console.log("Loaded customization data:", customizationData);
+        setHomeHeadline(customizationData.home_headline || "");
         setHomeEnabled(customizationData.home_enabled ?? true);
       } else {
         // Fallback - no data and no error
-        console.log('No customization data returned - using defaults');
-        setHomeHeadline('');
+        console.log("No customization data returned - using defaults");
+        setHomeHeadline("");
         setHomeEnabled(true);
       }
-
     } catch (error) {
-      console.error('Error loading home customization data:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        error: error
+      console.error("Error loading home customization data:", {
+        message: error instanceof Error ? error.message : "Unknown error",
+        error: error,
       });
       toast({
         title: "Load Failed",
@@ -85,20 +95,20 @@ export default function HomeCustomization() {
 
     try {
       setSaving(true);
-      console.log('Saving home headline:', headline, 'for event:', eventId);
+      console.log("Saving home headline:", headline, "for event:", eventId);
       // First check if customization record exists
       const { data: existing, error: fetchError } = await supabase
-        .from('event_customization')
-        .select('*')
-        .eq('event_id', eventId)
+        .from("event_customization")
+        .select("*")
+        .eq("event_id", eventId)
         .single();
 
-      if (fetchError && fetchError.code !== 'PGRST116') {
-        console.error('Error checking customization:', {
+      if (fetchError && fetchError.code !== "PGRST116") {
+        console.error("Error checking customization:", {
           message: fetchError.message,
           details: fetchError.details,
           hint: fetchError.hint,
-          code: fetchError.code
+          code: fetchError.code,
         });
         return;
       }
@@ -106,12 +116,12 @@ export default function HomeCustomization() {
       if (existing) {
         // Update existing record
         const { error } = await supabase
-          .from('event_customization')
+          .from("event_customization")
           .update({ home_headline: headline })
-          .eq('event_id', eventId);
+          .eq("event_id", eventId);
 
         if (error) {
-          console.error('Error saving home headline:', error);
+          console.error("Error saving home headline:", error);
           toast({
             title: "Save Failed",
             description: "Failed to save homepage headline",
@@ -120,16 +130,14 @@ export default function HomeCustomization() {
         }
       } else {
         // Create new record
-        const { error } = await supabase
-          .from('event_customization')
-          .insert({ 
-            event_id: eventId,
-            home_headline: headline,
-            home_enabled: homeEnabled
-          });
+        const { error } = await supabase.from("event_customization").insert({
+          event_id: eventId,
+          home_headline: headline,
+          home_enabled: homeEnabled,
+        });
 
         if (error) {
-          console.error('Error creating customization record:', error);
+          console.error("Error creating customization record:", error);
           toast({
             title: "Save Failed",
             description: "Failed to save homepage headline",
@@ -138,7 +146,7 @@ export default function HomeCustomization() {
         }
       }
     } catch (error) {
-      console.error('Error saving home headline:', error);
+      console.error("Error saving home headline:", error);
       toast({
         title: "Save Failed",
         description: "Failed to save homepage headline",
@@ -155,42 +163,40 @@ export default function HomeCustomization() {
     try {
       // First check if customization record exists
       const { data: existing, error: fetchError } = await supabase
-        .from('event_customization')
-        .select('*')
-        .eq('event_id', eventId)
+        .from("event_customization")
+        .select("*")
+        .eq("event_id", eventId)
         .single();
 
-      if (fetchError && fetchError.code !== 'PGRST116') {
-        console.error('Error checking customization:', fetchError);
+      if (fetchError && fetchError.code !== "PGRST116") {
+        console.error("Error checking customization:", fetchError);
         return;
       }
 
       if (existing) {
         // Update existing record
         const { error } = await supabase
-          .from('event_customization')
+          .from("event_customization")
           .update({ home_enabled: enabled })
-          .eq('event_id', eventId);
+          .eq("event_id", eventId);
 
         if (error) {
-          console.error('Error saving home enabled:', error);
+          console.error("Error saving home enabled:", error);
         }
       } else {
         // Create new record
-        const { error } = await supabase
-          .from('event_customization')
-          .insert({ 
-            event_id: eventId,
-            home_enabled: enabled,
-            home_headline: homeHeadline
-          });
+        const { error } = await supabase.from("event_customization").insert({
+          event_id: eventId,
+          home_enabled: enabled,
+          home_headline: homeHeadline,
+        });
 
         if (error) {
-          console.error('Error creating customization record:', error);
+          console.error("Error creating customization record:", error);
         }
       }
     } catch (error) {
-      console.error('Error saving home enabled:', error);
+      console.error("Error saving home enabled:", error);
     }
   };
 
@@ -253,13 +259,16 @@ export default function HomeCustomization() {
             </div>
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           <Card className="border-green-100 bg-green-50">
             <CardContent className="p-4 space-y-4">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="homepage-headline" className="text-green-800 font-medium">
+                  <Label
+                    htmlFor="homepage-headline"
+                    className="text-green-800 font-medium"
+                  >
                     Homepage Headline
                   </Label>
                   {saving && (
@@ -273,13 +282,13 @@ export default function HomeCustomization() {
                   id="homepage-headline"
                   value={homeHeadline}
                   onChange={(e) => setHomeHeadline(e.target.value)}
-
                   placeholder="Add a short headline to display on your event home page"
                   className="border-green-200 focus:border-emerald-500 bg-white"
                   disabled={!homeEnabled || saving}
                 />
                 <p className="text-sm text-green-600">
-                  This headline will be prominently displayed on your event's homepage to welcome visitors.
+                  This headline will be prominently displayed on your event's
+                  homepage to welcome visitors.
                 </p>
               </div>
             </CardContent>
@@ -293,7 +302,7 @@ export default function HomeCustomization() {
               className="bg-emerald-600 hover:bg-emerald-700 text-white"
             >
               <Save className="h-4 w-4 mr-2" />
-              {saving ? 'Saving...' : 'Save Changes'}
+              {saving ? "Saving..." : "Save Changes"}
             </Button>
           </div>
         </CardContent>

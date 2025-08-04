@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -46,12 +52,13 @@ export default function CoursesCustomization() {
       setLoading(true);
 
       // Check if event_courses table exists
-      const coursesTableExists = await checkTableExists('event_courses');
+      const coursesTableExists = await checkTableExists("event_courses");
       if (!coursesTableExists) {
-        console.error('event_courses table does not exist');
+        console.error("event_courses table does not exist");
         toast({
           title: "Database Setup Required",
-          description: "The event_courses table doesn't exist. Please run the event_courses_table_schema.sql script in Supabase SQL Editor.",
+          description:
+            "The event_courses table doesn't exist. Please run the event_courses_table_schema.sql script in Supabase SQL Editor.",
           variant: "destructive",
         });
         setLoading(false);
@@ -60,24 +67,25 @@ export default function CoursesCustomization() {
 
       // Load courses from event_courses table
       const { data: coursesData, error: coursesError } = await supabase
-        .from('event_courses')
-        .select('*')
-        .eq('event_id', eventId)
-        .order('display_order', { ascending: true });
+        .from("event_courses")
+        .select("*")
+        .eq("event_id", eventId)
+        .order("display_order", { ascending: true });
 
       if (coursesError) {
-        console.error('Error loading courses:', {
+        console.error("Error loading courses:", {
           message: coursesError.message,
           details: coursesError.details,
           hint: coursesError.hint,
-          code: coursesError.code
+          code: coursesError.code,
         });
 
-        if (coursesError.code === '42P01') {
+        if (coursesError.code === "42P01") {
           // Table doesn't exist - show helpful message
           toast({
             title: "Database Setup Required",
-            description: "The event_courses table doesn't exist. Please run the database schema script.",
+            description:
+              "The event_courses table doesn't exist. Please run the database schema script.",
             variant: "destructive",
           });
         }
@@ -86,12 +94,15 @@ export default function CoursesCustomization() {
       }
 
       // Check if event_customization table exists
-      const customizationTableExists = await checkTableExists('event_customization');
+      const customizationTableExists = await checkTableExists(
+        "event_customization",
+      );
       if (!customizationTableExists) {
-        console.error('event_customization table does not exist');
+        console.error("event_customization table does not exist");
         toast({
           title: "Database Setup Required",
-          description: "The event_customization table doesn't exist. Please run the database schema scripts in Supabase SQL Editor.",
+          description:
+            "The event_customization table doesn't exist. Please run the database schema scripts in Supabase SQL Editor.",
           variant: "destructive",
         });
         setLoading(false);
@@ -99,27 +110,27 @@ export default function CoursesCustomization() {
       }
 
       // Load courses enabled setting from event_customization
-      const { data: customizationData, error: customizationError } = await supabase
-        .from('event_customization')
-        .select('courses_enabled')
-        .eq('event_id', eventId)
-        .single();
+      const { data: customizationData, error: customizationError } =
+        await supabase
+          .from("event_customization")
+          .select("courses_enabled")
+          .eq("event_id", eventId)
+          .single();
 
-      if (customizationError && customizationError.code !== 'PGRST116') {
-        console.error('Error loading customization data:', {
+      if (customizationError && customizationError.code !== "PGRST116") {
+        console.error("Error loading customization data:", {
           message: customizationError.message,
           details: customizationError.details,
           hint: customizationError.hint,
-          code: customizationError.code
+          code: customizationError.code,
         });
       } else if (customizationData) {
         setCoursesEnabled(customizationData.courses_enabled ?? true);
       }
-
     } catch (error) {
-      console.error('Error loading courses customization data:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        error: error
+      console.error("Error loading courses customization data:", {
+        message: error instanceof Error ? error.message : "Unknown error",
+        error: error,
       });
       toast({
         title: "Load Failed",
@@ -131,19 +142,23 @@ export default function CoursesCustomization() {
     }
   };
 
-  const saveCourseField = async (courseId: string, field: string, value: string | number) => {
+  const saveCourseField = async (
+    courseId: string,
+    field: string,
+    value: string | number,
+  ) => {
     if (!eventId) return;
 
     try {
       const updateData = { [field]: value };
       const { error } = await supabase
-        .from('event_courses')
+        .from("event_courses")
         .update(updateData)
-        .eq('id', courseId)
-        .eq('event_id', eventId);
+        .eq("id", courseId)
+        .eq("event_id", eventId);
 
       if (error) {
-        console.error('Error saving course field:', error);
+        console.error("Error saving course field:", error);
         toast({
           title: "Save Failed",
           description: "Failed to save course information",
@@ -151,7 +166,7 @@ export default function CoursesCustomization() {
         });
       }
     } catch (error) {
-      console.error('Error saving course field:', error);
+      console.error("Error saving course field:", error);
     }
   };
 
@@ -161,17 +176,17 @@ export default function CoursesCustomization() {
     try {
       // First check if customization record exists
       const { data: existing, error: fetchError } = await supabase
-        .from('event_customization')
-        .select('*')
-        .eq('event_id', eventId)
+        .from("event_customization")
+        .select("*")
+        .eq("event_id", eventId)
         .single();
 
-      if (fetchError && fetchError.code !== 'PGRST116') {
-        console.error('Error checking customization:', {
+      if (fetchError && fetchError.code !== "PGRST116") {
+        console.error("Error checking customization:", {
           message: fetchError.message,
           details: fetchError.details,
           hint: fetchError.hint,
-          code: fetchError.code
+          code: fetchError.code,
         });
         return;
       }
@@ -179,33 +194,31 @@ export default function CoursesCustomization() {
       if (existing) {
         // Update existing record
         const { error } = await supabase
-          .from('event_customization')
+          .from("event_customization")
           .update({ courses_enabled: enabled })
-          .eq('event_id', eventId);
+          .eq("event_id", eventId);
 
         if (error) {
-          console.error('Error saving courses enabled:', error);
+          console.error("Error saving courses enabled:", error);
         }
       } else {
         // Create new record
-        const { error } = await supabase
-          .from('event_customization')
-          .insert({ 
-            event_id: eventId,
-            courses_enabled: enabled
-          });
+        const { error } = await supabase.from("event_customization").insert({
+          event_id: eventId,
+          courses_enabled: enabled,
+        });
 
         if (error) {
-          console.error('Error creating customization record:', {
+          console.error("Error creating customization record:", {
             message: error.message,
             details: error.details,
             hint: error.hint,
-            code: error.code
+            code: error.code,
           });
         }
       }
     } catch (error) {
-      console.error('Error saving courses enabled:', error);
+      console.error("Error saving courses enabled:", error);
     }
   };
 
@@ -216,17 +229,17 @@ export default function CoursesCustomization() {
     try {
       // Get rounds for this event
       const { data: roundsData, error: roundsError } = await supabase
-        .from('event_rounds')
-        .select('course_name')
-        .eq('event_id', eventId)
-        .order('created_at');
+        .from("event_rounds")
+        .select("course_name")
+        .eq("event_id", eventId)
+        .order("created_at");
 
       if (roundsError) {
-        console.error('Error loading rounds:', {
+        console.error("Error loading rounds:", {
           message: roundsError.message,
           details: roundsError.details,
           hint: roundsError.hint,
-          code: roundsError.code
+          code: roundsError.code,
         });
         toast({
           title: "Sync Failed",
@@ -246,16 +259,19 @@ export default function CoursesCustomization() {
       }
 
       // Get unique course names from rounds
-      const uniqueCourses = roundsData.reduce((acc, round, index) => {
-        const courseName = round.course_name?.trim();
-        if (courseName && !acc.some(course => course.name === courseName)) {
-          acc.push({
-            name: courseName,
-            display_order: index + 1
-          });
-        }
-        return acc;
-      }, [] as { name: string; display_order: number }[]);
+      const uniqueCourses = roundsData.reduce(
+        (acc, round, index) => {
+          const courseName = round.course_name?.trim();
+          if (courseName && !acc.some((course) => course.name === courseName)) {
+            acc.push({
+              name: courseName,
+              display_order: index + 1,
+            });
+          }
+          return acc;
+        },
+        [] as { name: string; display_order: number }[],
+      );
 
       if (uniqueCourses.length === 0) {
         toast({
@@ -268,16 +284,16 @@ export default function CoursesCustomization() {
 
       // Delete existing event_courses for this event first
       const { error: deleteError } = await supabase
-        .from('event_courses')
+        .from("event_courses")
         .delete()
-        .eq('event_id', eventId);
+        .eq("event_id", eventId);
 
       if (deleteError) {
-        console.error('Error deleting existing courses:', {
+        console.error("Error deleting existing courses:", {
           message: deleteError.message,
           details: deleteError.details,
           hint: deleteError.hint,
-          code: deleteError.code
+          code: deleteError.code,
         });
         toast({
           title: "Sync Failed",
@@ -288,30 +304,31 @@ export default function CoursesCustomization() {
       }
 
       // Insert unique courses into event_courses table
-      const coursesData = uniqueCourses.map(course => ({
+      const coursesData = uniqueCourses.map((course) => ({
         event_id: eventId,
         name: course.name,
-        display_order: course.display_order
+        display_order: course.display_order,
       }));
 
-      console.log('Attempting to insert courses data:', coursesData);
+      console.log("Attempting to insert courses data:", coursesData);
 
       const { data: insertData, error: insertError } = await supabase
-        .from('event_courses')
+        .from("event_courses")
         .insert(coursesData)
         .select();
 
       if (insertError) {
-        console.error('Error inserting courses:', {
+        console.error("Error inserting courses:", {
           message: insertError.message,
           details: insertError.details,
           hint: insertError.hint,
-          code: insertError.code
+          code: insertError.code,
         });
 
         let description = "Failed to create course entries";
-        if (insertError.code === '42P01') {
-          description = "The event_courses table doesn't exist. Please run the database schema script.";
+        if (insertError.code === "42P01") {
+          description =
+            "The event_courses table doesn't exist. Please run the database schema script.";
         } else if (insertError.message) {
           description = insertError.message;
         }
@@ -326,14 +343,13 @@ export default function CoursesCustomization() {
 
       toast({
         title: "Courses Synced",
-        description: `Successfully synced ${uniqueCourses.length} unique course${uniqueCourses.length !== 1 ? 's' : ''} from your rounds`,
+        description: `Successfully synced ${uniqueCourses.length} unique course${uniqueCourses.length !== 1 ? "s" : ""} from your rounds`,
       });
 
       // Reload the courses data
       loadCoursesData();
-
     } catch (error) {
-      console.error('Error syncing courses:', error);
+      console.error("Error syncing courses:", error);
       toast({
         title: "Sync Failed",
         description: "An unexpected error occurred",
@@ -351,19 +367,27 @@ export default function CoursesCustomization() {
       // Save all course field changes (courses enabled toggle saves immediately)
       for (const course of courses) {
         if (course.image_url !== undefined) {
-          await saveCourseField(course.id, 'image_url', course.image_url || '');
+          await saveCourseField(course.id, "image_url", course.image_url || "");
         }
         if (course.yardage !== undefined) {
-          await saveCourseField(course.id, 'yardage', course.yardage || 0);
+          await saveCourseField(course.id, "yardage", course.yardage || 0);
         }
         if (course.par !== undefined) {
-          await saveCourseField(course.id, 'par', course.par || 0);
+          await saveCourseField(course.id, "par", course.par || 0);
         }
         if (course.description !== undefined) {
-          await saveCourseField(course.id, 'description', course.description || '');
+          await saveCourseField(
+            course.id,
+            "description",
+            course.description || "",
+          );
         }
         if (course.weather_note !== undefined) {
-          await saveCourseField(course.id, 'weather_note', course.weather_note || '');
+          await saveCourseField(
+            course.id,
+            "weather_note",
+            course.weather_note || "",
+          );
         }
       }
 
@@ -399,11 +423,15 @@ export default function CoursesCustomization() {
                 Course Details
               </CardTitle>
               <CardDescription className="text-green-600">
-                Customize the information displayed for each course in your event
+                Customize the information displayed for each course in your
+                event
               </CardDescription>
             </div>
             <div className="flex items-center space-x-2">
-              <Label htmlFor="courses-toggle" className="text-sm text-green-700">
+              <Label
+                htmlFor="courses-toggle"
+                className="text-sm text-green-700"
+              >
                 Enable Courses Page
               </Label>
               <Switch
@@ -417,15 +445,18 @@ export default function CoursesCustomization() {
             </div>
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {courses.length === 0 ? (
             <Card className="border-dashed border-green-200 bg-green-50">
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <MapPin className="h-12 w-12 text-green-400 mb-4" />
-                <h3 className="text-lg font-medium text-green-900 mb-2">No courses found</h3>
+                <h3 className="text-lg font-medium text-green-900 mb-2">
+                  No courses found
+                </h3>
                 <p className="text-green-600 text-center mb-4">
-                  Courses will appear here once you add them to your event in the Courses section.
+                  Courses will appear here once you add them to your event in
+                  the Courses section.
                 </p>
                 <Button
                   onClick={syncCoursesFromRounds}
@@ -452,22 +483,27 @@ export default function CoursesCustomization() {
               {courses.map((course) => (
                 <Card key={course.id} className="border-green-100 bg-green-50">
                   <CardHeader>
-                    <CardTitle className="text-base text-green-900">{course.name}</CardTitle>
+                    <CardTitle className="text-base text-green-900">
+                      {course.name}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label className="text-green-800 font-medium">Course Image URL</Label>
+                        <Label className="text-green-800 font-medium">
+                          Course Image URL
+                        </Label>
                         <Input
-                          value={course.image_url || ''}
+                          value={course.image_url || ""}
                           onChange={(e) => {
-                            setCourses(courses.map(c => 
-                              c.id === course.id 
-                                ? { ...c, image_url: e.target.value }
-                                : c
-                            ));
+                            setCourses(
+                              courses.map((c) =>
+                                c.id === course.id
+                                  ? { ...c, image_url: e.target.value }
+                                  : c,
+                              ),
+                            );
                           }}
-
                           placeholder="https://example.com/course-image.jpg"
                           className="border-green-200 focus:border-emerald-500 bg-white"
                           disabled={!coursesEnabled}
@@ -475,36 +511,50 @@ export default function CoursesCustomization() {
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         <div className="space-y-2">
-                          <Label className="text-green-800 font-medium">Yardage</Label>
+                          <Label className="text-green-800 font-medium">
+                            Yardage
+                          </Label>
                           <Input
                             type="number"
-                            value={course.yardage || ''}
+                            value={course.yardage || ""}
                             onChange={(e) => {
-                              setCourses(courses.map(c => 
-                                c.id === course.id 
-                                  ? { ...c, yardage: parseInt(e.target.value) || undefined }
-                                  : c
-                              ));
+                              setCourses(
+                                courses.map((c) =>
+                                  c.id === course.id
+                                    ? {
+                                        ...c,
+                                        yardage:
+                                          parseInt(e.target.value) || undefined,
+                                      }
+                                    : c,
+                                ),
+                              );
                             }}
-
                             placeholder="6800"
                             className="border-green-200 focus:border-emerald-500 bg-white"
                             disabled={!coursesEnabled}
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-green-800 font-medium">Par</Label>
+                          <Label className="text-green-800 font-medium">
+                            Par
+                          </Label>
                           <Input
                             type="number"
-                            value={course.par || ''}
+                            value={course.par || ""}
                             onChange={(e) => {
-                              setCourses(courses.map(c => 
-                                c.id === course.id 
-                                  ? { ...c, par: parseInt(e.target.value) || undefined }
-                                  : c
-                              ));
+                              setCourses(
+                                courses.map((c) =>
+                                  c.id === course.id
+                                    ? {
+                                        ...c,
+                                        par:
+                                          parseInt(e.target.value) || undefined,
+                                      }
+                                    : c,
+                                ),
+                              );
                             }}
-
                             placeholder="72"
                             className="border-green-200 focus:border-emerald-500 bg-white"
                             disabled={!coursesEnabled}
@@ -513,17 +563,20 @@ export default function CoursesCustomization() {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-green-800 font-medium">Course Description</Label>
+                      <Label className="text-green-800 font-medium">
+                        Course Description
+                      </Label>
                       <Textarea
-                        value={course.description || ''}
+                        value={course.description || ""}
                         onChange={(e) => {
-                          setCourses(courses.map(c => 
-                            c.id === course.id 
-                              ? { ...c, description: e.target.value }
-                              : c
-                          ));
+                          setCourses(
+                            courses.map((c) =>
+                              c.id === course.id
+                                ? { ...c, description: e.target.value }
+                                : c,
+                            ),
+                          );
                         }}
-
                         placeholder="Describe the course layout, features, and difficulty..."
                         className="border-green-200 focus:border-emerald-500 bg-white"
                         rows={3}
@@ -531,17 +584,20 @@ export default function CoursesCustomization() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-green-800 font-medium">Weather Note</Label>
+                      <Label className="text-green-800 font-medium">
+                        Weather Note
+                      </Label>
                       <Input
-                        value={course.weather_note || ''}
+                        value={course.weather_note || ""}
                         onChange={(e) => {
-                          setCourses(courses.map(c => 
-                            c.id === course.id 
-                              ? { ...c, weather_note: e.target.value }
-                              : c
-                          ));
+                          setCourses(
+                            courses.map((c) =>
+                              c.id === course.id
+                                ? { ...c, weather_note: e.target.value }
+                                : c,
+                            ),
+                          );
                         }}
-
                         placeholder="Weather conditions, seasonal notes, etc."
                         className="border-green-200 focus:border-emerald-500 bg-white"
                         disabled={!coursesEnabled}

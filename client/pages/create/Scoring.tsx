@@ -15,7 +15,18 @@ import { Badge } from "@/components/ui/badge";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
-import { Target, TrendingUp, Info, FileText, Award, Trophy, Crown, Medal, Zap, CheckCircle } from "lucide-react";
+import {
+  Target,
+  TrendingUp,
+  Info,
+  FileText,
+  Award,
+  Trophy,
+  Crown,
+  Medal,
+  Zap,
+  CheckCircle,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface EventRule {
@@ -42,23 +53,25 @@ export default function Scoring() {
       score: "Albatross",
       points: 20,
       description: "3 under par",
-      detail: "Legendary! The rarest score in golf deserves the highest reward.",
+      detail:
+        "Legendary! The rarest score in golf deserves the highest reward.",
       color: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-50",
       textColor: "text-purple-900",
       iconColor: "text-purple-600",
-      icon: Crown
+      icon: Crown,
     },
     {
       score: "Eagle",
       points: 8,
       description: "2 under par",
-      detail: "Exceptional performance! Maximum points for being 2 strokes under par.",
+      detail:
+        "Exceptional performance! Maximum points for being 2 strokes under par.",
       color: "from-yellow-500 to-yellow-600",
       bgColor: "bg-yellow-50",
       textColor: "text-yellow-900",
       iconColor: "text-yellow-600",
-      icon: Trophy
+      icon: Trophy,
     },
     {
       score: "Birdie",
@@ -69,7 +82,7 @@ export default function Scoring() {
       bgColor: "bg-green-50",
       textColor: "text-green-900",
       iconColor: "text-green-600",
-      icon: Award
+      icon: Award,
     },
     {
       score: "Par",
@@ -80,7 +93,7 @@ export default function Scoring() {
       bgColor: "bg-blue-50",
       textColor: "text-blue-900",
       iconColor: "text-blue-600",
-      icon: CheckCircle
+      icon: CheckCircle,
     },
     {
       score: "Bogey",
@@ -91,7 +104,7 @@ export default function Scoring() {
       bgColor: "bg-orange-50",
       textColor: "text-orange-900",
       iconColor: "text-orange-600",
-      icon: Medal
+      icon: Medal,
     },
     {
       score: "Double Bogey+",
@@ -102,8 +115,8 @@ export default function Scoring() {
       bgColor: "bg-red-50",
       textColor: "text-red-900",
       iconColor: "text-red-600",
-      icon: Zap
-    }
+      icon: Zap,
+    },
   ];
 
   // Load custom rules from database
@@ -112,16 +125,16 @@ export default function Scoring() {
       if (tripData.id) {
         try {
           const { data: rules, error } = await supabase
-            .from('event_rules')
-            .select('*')
-            .eq('event_id', tripData.id)
-            .order('created_at');
+            .from("event_rules")
+            .select("*")
+            .eq("event_id", tripData.id)
+            .order("created_at");
 
           if (!error && rules) {
             setCustomRules(rules);
           }
         } catch (error) {
-          console.error('Error loading custom rules:', error);
+          console.error("Error loading custom rules:", error);
         }
       }
       setLoading(false);
@@ -270,8 +283,6 @@ export default function Scoring() {
             </Card>
           </RadioGroup>
 
-
-
           {/* Custom Rules Section */}
           {customRules.length > 0 && (
             <Card className="border-slate-100 bg-slate-50">
@@ -287,7 +298,10 @@ export default function Scoring() {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {customRules.map((rule, index) => (
-                    <Card key={rule.id} className="bg-white border border-slate-200">
+                    <Card
+                      key={rule.id}
+                      className="bg-white border border-slate-200"
+                    >
                       <CardContent className="p-4">
                         {rule.rule_title && (
                           <h4 className="font-semibold text-slate-900 mb-2">

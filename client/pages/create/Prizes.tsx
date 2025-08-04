@@ -16,7 +16,17 @@ import { Badge } from "@/components/ui/badge";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
-import { Trophy, DollarSign, Gift, Target, MapPin, Zap, Info, Flag, Crosshair } from "lucide-react";
+import {
+  Trophy,
+  DollarSign,
+  Gift,
+  Target,
+  MapPin,
+  Zap,
+  Info,
+  Flag,
+  Crosshair,
+} from "lucide-react";
 
 export default function Prizes() {
   const navigate = useNavigate();
@@ -65,19 +75,24 @@ export default function Prizes() {
   // Group contests by type for summary display
   const getContestsByType = (type: string) => {
     return skillsContestsFromCourses
-      .filter(contest => contest.type === type)
-      .reduce((acc, contest) => {
-        const existing = acc.find(item => item.roundName === contest.roundName);
-        if (existing) {
-          existing.holes.push(contest.hole);
-        } else {
-          acc.push({
-            roundName: contest.roundName,
-            holes: [contest.hole]
-          });
-        }
-        return acc;
-      }, [] as { roundName: string; holes: number[] }[]);
+      .filter((contest) => contest.type === type)
+      .reduce(
+        (acc, contest) => {
+          const existing = acc.find(
+            (item) => item.roundName === contest.roundName,
+          );
+          if (existing) {
+            existing.holes.push(contest.hole);
+          } else {
+            acc.push({
+              roundName: contest.roundName,
+              holes: [contest.hole],
+            });
+          }
+          return acc;
+        },
+        [] as { roundName: string; holes: number[] }[],
+      );
   };
 
   const closestToPinGroups = getContestsByType("Closest to Pin");
@@ -351,8 +366,6 @@ export default function Prizes() {
             )}
           </Card>
 
-
-
           {/* Skills Contest Prizes */}
           <Card className="border-green-100 bg-green-50">
             <CardHeader>
@@ -491,8 +504,6 @@ export default function Prizes() {
               </CardContent>
             )}
           </Card>
-
-
 
           {/* Prize Summary */}
           {(buyIn || totalPrizes > 0) && (

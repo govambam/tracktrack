@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -29,27 +35,27 @@ export default function LeaderboardCustomization() {
       setLoading(true);
 
       // Load leaderboard enabled setting
-      const { data: customizationData, error: customizationError } = await supabase
-        .from('event_customization')
-        .select('leaderboard_enabled')
-        .eq('event_id', eventId)
-        .single();
+      const { data: customizationData, error: customizationError } =
+        await supabase
+          .from("event_customization")
+          .select("leaderboard_enabled")
+          .eq("event_id", eventId)
+          .single();
 
-      if (customizationError && customizationError.code !== 'PGRST116') {
-        console.error('Error loading customization data:', {
+      if (customizationError && customizationError.code !== "PGRST116") {
+        console.error("Error loading customization data:", {
           message: customizationError.message,
           details: customizationError.details,
           hint: customizationError.hint,
-          code: customizationError.code
+          code: customizationError.code,
         });
       } else if (customizationData) {
         setLeaderboardEnabled(customizationData.leaderboard_enabled ?? true);
       }
-
     } catch (error) {
-      console.error('Error loading leaderboard customization data:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        error: error
+      console.error("Error loading leaderboard customization data:", {
+        message: error instanceof Error ? error.message : "Unknown error",
+        error: error,
       });
       toast({
         title: "Load Failed",
@@ -67,41 +73,39 @@ export default function LeaderboardCustomization() {
     try {
       // First check if customization record exists
       const { data: existing, error: fetchError } = await supabase
-        .from('event_customization')
-        .select('*')
-        .eq('event_id', eventId)
+        .from("event_customization")
+        .select("*")
+        .eq("event_id", eventId)
         .single();
 
-      if (fetchError && fetchError.code !== 'PGRST116') {
-        console.error('Error checking customization:', fetchError);
+      if (fetchError && fetchError.code !== "PGRST116") {
+        console.error("Error checking customization:", fetchError);
         return;
       }
 
       if (existing) {
         // Update existing record
         const { error } = await supabase
-          .from('event_customization')
+          .from("event_customization")
           .update({ leaderboard_enabled: enabled })
-          .eq('event_id', eventId);
+          .eq("event_id", eventId);
 
         if (error) {
-          console.error('Error saving leaderboard enabled:', error);
+          console.error("Error saving leaderboard enabled:", error);
         }
       } else {
         // Create new record
-        const { error } = await supabase
-          .from('event_customization')
-          .insert({ 
-            event_id: eventId,
-            leaderboard_enabled: enabled
-          });
+        const { error } = await supabase.from("event_customization").insert({
+          event_id: eventId,
+          leaderboard_enabled: enabled,
+        });
 
         if (error) {
-          console.error('Error creating customization record:', error);
+          console.error("Error creating customization record:", error);
         }
       }
     } catch (error) {
-      console.error('Error saving leaderboard enabled:', error);
+      console.error("Error saving leaderboard enabled:", error);
     }
   };
 
@@ -133,11 +137,15 @@ export default function LeaderboardCustomization() {
                 Leaderboard
               </CardTitle>
               <CardDescription className="text-green-600">
-                Configure how the leaderboard will be displayed on your event website
+                Configure how the leaderboard will be displayed on your event
+                website
               </CardDescription>
             </div>
             <div className="flex items-center space-x-2">
-              <Label htmlFor="leaderboard-toggle" className="text-sm text-green-700">
+              <Label
+                htmlFor="leaderboard-toggle"
+                className="text-sm text-green-700"
+              >
                 Enable Leaderboard Page
               </Label>
               <Switch
@@ -151,15 +159,18 @@ export default function LeaderboardCustomization() {
             </div>
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           <Alert className="border-blue-200 bg-blue-50">
             <Info className="h-4 w-4 text-blue-600" />
             <AlertDescription className="text-blue-700">
-              <div className="font-semibold">Leaderboard functionality coming soon</div>
+              <div className="font-semibold">
+                Leaderboard functionality coming soon
+              </div>
               <div className="mt-1">
-                This page will automatically update when score entry is enabled. 
-                Players and spectators will be able to view real-time standings during your tournament.
+                This page will automatically update when score entry is enabled.
+                Players and spectators will be able to view real-time standings
+                during your tournament.
               </div>
             </AlertDescription>
           </Alert>
@@ -170,7 +181,9 @@ export default function LeaderboardCustomization() {
                 <h4 className="font-medium text-green-900">Future Features</h4>
                 <ul className="space-y-2 text-sm text-green-700">
                   <li>• Real-time score updates during the tournament</li>
-                  <li>• Multiple leaderboard views (overall, daily, gross/net)</li>
+                  <li>
+                    • Multiple leaderboard views (overall, daily, gross/net)
+                  </li>
                   <li>• Player position tracking and movement indicators</li>
                   <li>• Skills contest standings integration</li>
                   <li>• Customizable scoring formats and tie-breaking rules</li>

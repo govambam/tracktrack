@@ -129,7 +129,10 @@ function tripCreationReducer(
 ): TripCreationState {
   switch (action.type) {
     case "UPDATE_BASIC_INFO":
-      console.log('TripCreationContext: UPDATE_BASIC_INFO called with:', action.payload);
+      console.log(
+        "TripCreationContext: UPDATE_BASIC_INFO called with:",
+        action.payload,
+      );
       return {
         ...state,
         tripData: { ...state.tripData, ...action.payload },
@@ -158,7 +161,9 @@ function tripCreationReducer(
         currentStep: action.payload,
       };
     case "RESET_TRIP":
-      console.log('TripCreationContext: RESET_TRIP called - clearing all event data');
+      console.log(
+        "TripCreationContext: RESET_TRIP called - clearing all event data",
+      );
       return initialState;
     case "LOAD_EVENT":
       return {
@@ -207,12 +212,14 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
   // Helper function to generate slug from event name
   const generateSlugFromName = (name: string): string => {
-    return name
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/^-+|-+$/g, "")
-      .slice(0, 50) || "golf-event";
+    return (
+      name
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 50) || "golf-event"
+    );
   };
 
   const saveEvent = async (
@@ -286,7 +293,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       let finalSlug = tripData.slug?.trim() || null;
       if (!finalSlug) {
         finalSlug = generateSlugFromName(tripData.tripName.trim());
-        console.log('Auto-generated slug:', finalSlug);
+        console.log("Auto-generated slug:", finalSlug);
       }
 
       const eventData = {
@@ -406,86 +413,104 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     dispatch({ type: "LOAD_EVENT", payload: eventData });
   };
 
-  const syncCoursesToEventCourses = async (eventId: string, rounds: Round[]) => {
+  const syncCoursesToEventCourses = async (
+    eventId: string,
+    rounds: Round[],
+  ) => {
     try {
-      console.log('=== SYNC COURSES FUNCTION CALLED ===');
-      console.log('Event ID:', eventId);
-      console.log('Rounds:', rounds.length);
-      console.log('Round course names:', rounds.map(r => r.courseName));
-      console.log('Syncing courses to event_courses table for event:', eventId);
+      console.log("=== SYNC COURSES FUNCTION CALLED ===");
+      console.log("Event ID:", eventId);
+      console.log("Rounds:", rounds.length);
+      console.log(
+        "Round course names:",
+        rounds.map((r) => r.courseName),
+      );
+      console.log("Syncing courses to event_courses table for event:", eventId);
 
       // First check if event_courses table exists
-      const tableExists = await checkTableExists('event_courses');
+      const tableExists = await checkTableExists("event_courses");
       if (!tableExists) {
-        console.error('event_courses table does not exist. Please run the event_courses_table_schema.sql script in Supabase SQL Editor.');
+        console.error(
+          "event_courses table does not exist. Please run the event_courses_table_schema.sql script in Supabase SQL Editor.",
+        );
         return;
       }
 
       // Get existing courses for this event
       const { data: existingCourses, error: fetchError } = await supabase
-        .from('event_courses')
-        .select('name')
-        .eq('event_id', eventId);
+        .from("event_courses")
+        .select("name")
+        .eq("event_id", eventId);
 
       if (fetchError) {
-        console.error('Error fetching existing courses:', {
+        console.error("Error fetching existing courses:", {
           message: fetchError.message,
           details: fetchError.details,
           hint: fetchError.hint,
-          code: fetchError.code
+          code: fetchError.code,
         });
         return;
       }
 
-      const existingCourseNames = existingCourses?.map(c => c.name.toLowerCase()) || [];
-      console.log('Existing course names:', existingCourseNames);
+      const existingCourseNames =
+        existingCourses?.map((c) => c.name.toLowerCase()) || [];
+      console.log("Existing course names:", existingCourseNames);
 
       // Get unique course names from rounds that don't already exist
-      const newCourses = rounds.reduce((acc, round, index) => {
-        const courseName = round.courseName?.trim();
-        if (courseName) {
-          const courseNameLower = courseName.toLowerCase();
-          // Check if course doesn't exist and isn't already in our new courses list
-          if (!existingCourseNames.includes(courseNameLower) &&
-              !acc.some(course => course.name.toLowerCase() === courseNameLower)) {
-            acc.push({
-              name: courseName,
-              display_order: (existingCourseNames.length + acc.length + 1)
-            });
+      const newCourses = rounds.reduce(
+        (acc, round, index) => {
+          const courseName = round.courseName?.trim();
+          if (courseName) {
+            const courseNameLower = courseName.toLowerCase();
+            // Check if course doesn't exist and isn't already in our new courses list
+            if (
+              !existingCourseNames.includes(courseNameLower) &&
+              !acc.some(
+                (course) => course.name.toLowerCase() === courseNameLower,
+              )
+            ) {
+              acc.push({
+                name: courseName,
+                display_order: existingCourseNames.length + acc.length + 1,
+              });
+            }
           }
-        }
-        return acc;
-      }, [] as { name: string; display_order: number }[]);
+          return acc;
+        },
+        [] as { name: string; display_order: number }[],
+      );
 
-      console.log('New courses to add:', newCourses);
+      console.log("New courses to add:", newCourses);
 
       if (newCourses.length > 0) {
-        console.log('Inserting new courses:', newCourses);
+        console.log("Inserting new courses:", newCourses);
 
         const { data: insertData, error: insertError } = await supabase
-          .from('event_courses')
-          .insert(newCourses.map(course => ({
-            event_id: eventId,
-            name: course.name,
-            display_order: course.display_order
-          })))
+          .from("event_courses")
+          .insert(
+            newCourses.map((course) => ({
+              event_id: eventId,
+              name: course.name,
+              display_order: course.display_order,
+            })),
+          )
           .select();
 
         if (insertError) {
-          console.error('Error inserting courses:', {
+          console.error("Error inserting courses:", {
             message: insertError.message,
             details: insertError.details,
             hint: insertError.hint,
-            code: insertError.code
+            code: insertError.code,
           });
         } else {
-          console.log('Successfully inserted new courses:', insertData);
+          console.log("Successfully inserted new courses:", insertData);
         }
       } else {
-        console.log('No new courses to insert');
+        console.log("No new courses to insert");
       }
     } catch (error) {
-      console.error('Error syncing courses to event_courses:', error);
+      console.error("Error syncing courses to event_courses:", error);
     }
   };
 
@@ -568,7 +593,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
           message: customizationError.message,
           details: customizationError.details,
           hint: customizationError.hint,
-          code: customizationError.code
+          code: customizationError.code,
         });
         return { success: false, error: customizationError.message };
       }
@@ -703,37 +728,43 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
       // Auto-generate slug if event doesn't have one
       if (!completeEventData.slug && completeEventData.tripName) {
-        console.log('Event missing slug, auto-generating one...');
+        console.log("Event missing slug, auto-generating one...");
         const autoSlug = generateSlugFromName(completeEventData.tripName);
 
         // Save the slug to the database
         const { error: slugUpdateError } = await supabase
-          .from('events')
+          .from("events")
           .update({ slug: autoSlug })
-          .eq('id', eventId);
+          .eq("id", eventId);
 
         if (!slugUpdateError) {
-          console.log('Auto-generated and saved slug:', autoSlug);
+          console.log("Auto-generated and saved slug:", autoSlug);
           // Update the context with the new slug
           dispatch({
             type: "UPDATE_BASIC_INFO",
-            payload: { slug: autoSlug }
+            payload: { slug: autoSlug },
           });
         } else {
-          console.error('Failed to save auto-generated slug:', slugUpdateError);
+          console.error("Failed to save auto-generated slug:", slugUpdateError);
         }
       }
 
       // Check if we need to sync courses to event_courses table
       // This handles existing events that might not have event_courses entries yet
       if (rounds.length > 0) {
-        const { data: existingCourses, error: coursesCheckError } = await supabase
-          .from('event_courses')
-          .select('id')
-          .eq('event_id', eventId);
+        const { data: existingCourses, error: coursesCheckError } =
+          await supabase
+            .from("event_courses")
+            .select("id")
+            .eq("event_id", eventId);
 
-        if (!coursesCheckError && (!existingCourses || existingCourses.length === 0)) {
-          console.log('No courses found in event_courses, syncing from rounds...');
+        if (
+          !coursesCheckError &&
+          (!existingCourses || existingCourses.length === 0)
+        ) {
+          console.log(
+            "No courses found in event_courses, syncing from rounds...",
+          );
           await syncCoursesToEventCourses(eventId, rounds);
         }
       }
@@ -856,10 +887,13 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         }
 
         // Sync courses to event_courses table
-        console.log('About to sync courses for event:', tripData.id);
-        console.log('Rounds data for sync:', rounds.map(r => ({ courseName: r.courseName, id: r.id })));
+        console.log("About to sync courses for event:", tripData.id);
+        console.log(
+          "Rounds data for sync:",
+          rounds.map((r) => ({ courseName: r.courseName, id: r.id })),
+        );
         await syncCoursesToEventCourses(tripData.id, rounds);
-        console.log('Course sync completed');
+        console.log("Course sync completed");
       }
 
       console.log("Rounds and skills contests saved successfully");

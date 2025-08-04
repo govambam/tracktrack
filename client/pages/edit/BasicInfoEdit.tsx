@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,12 +24,12 @@ export default function BasicInfoEdit() {
   const { tripData } = state;
 
   const [formData, setFormData] = useState({
-    tripName: '',
-    startDate: '',
-    endDate: '',
-    location: '',
-    description: '',
-    bannerImage: ''
+    tripName: "",
+    startDate: "",
+    endDate: "",
+    location: "",
+    description: "",
+    bannerImage: "",
   });
 
   const [saving, setSaving] = useState(false);
@@ -41,17 +47,17 @@ export default function BasicInfoEdit() {
 
     try {
       setLoading(true);
-      console.log('Loading basic info for event:', eventId);
+      console.log("Loading basic info for event:", eventId);
 
       // Load event data directly from Supabase to ensure fresh data
       const { data: eventData, error } = await supabase
-        .from('events')
-        .select('name, start_date, end_date, location, description, logo_url')
-        .eq('id', eventId)
+        .from("events")
+        .select("name, start_date, end_date, location, description, logo_url")
+        .eq("id", eventId)
         .single();
 
       if (error) {
-        console.error('Error loading event data:', error);
+        console.error("Error loading event data:", error);
         toast({
           title: "Load Failed",
           description: error.message || "Failed to load event data",
@@ -62,17 +68,17 @@ export default function BasicInfoEdit() {
 
       if (eventData) {
         setFormData({
-          tripName: eventData.name || '',
-          startDate: eventData.start_date || '',
-          endDate: eventData.end_date || '',
-          location: eventData.location || '',
-          description: eventData.description || '',
-          bannerImage: eventData.logo_url || ''
+          tripName: eventData.name || "",
+          startDate: eventData.start_date || "",
+          endDate: eventData.end_date || "",
+          location: eventData.location || "",
+          description: eventData.description || "",
+          bannerImage: eventData.logo_url || "",
         });
-        console.log('Loaded basic info:', eventData);
+        console.log("Loaded basic info:", eventData);
       }
     } catch (error) {
-      console.error('Error loading basic info:', error);
+      console.error("Error loading basic info:", error);
       toast({
         title: "Load Failed",
         description: "An unexpected error occurred while loading event data",
@@ -87,26 +93,26 @@ export default function BasicInfoEdit() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.tripName.trim()) {
-      newErrors.tripName = 'Event name is required';
+      newErrors.tripName = "Event name is required";
     }
 
     if (!formData.startDate) {
-      newErrors.startDate = 'Start date is required';
+      newErrors.startDate = "Start date is required";
     }
 
     if (!formData.endDate) {
-      newErrors.endDate = 'End date is required';
+      newErrors.endDate = "End date is required";
     }
 
     if (!formData.location.trim()) {
-      newErrors.location = 'Location is required';
+      newErrors.location = "Location is required";
     }
 
     if (formData.startDate && formData.endDate) {
       const start = new Date(formData.startDate);
       const end = new Date(formData.endDate);
       if (end < start) {
-        newErrors.endDate = 'End date must be after start date';
+        newErrors.endDate = "End date must be after start date";
       }
     }
 
@@ -121,7 +127,7 @@ export default function BasicInfoEdit() {
 
     try {
       const { error } = await supabase
-        .from('events')
+        .from("events")
         .update({
           name: formData.tripName.trim(),
           start_date: formData.startDate.trim(),
@@ -129,12 +135,12 @@ export default function BasicInfoEdit() {
           location: formData.location.trim(),
           description: formData.description.trim() || null,
           logo_url: formData.bannerImage.trim() || null,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
-        .eq('id', eventId);
+        .eq("id", eventId);
 
       if (error) {
-        console.error('Error updating event:', error);
+        console.error("Error updating event:", error);
         toast({
           title: "Save Failed",
           description: error.message || "Failed to update event",
@@ -147,9 +153,8 @@ export default function BasicInfoEdit() {
         title: "Event Updated",
         description: "Basic information has been saved successfully",
       });
-
     } catch (error) {
-      console.error('Error saving event:', error);
+      console.error("Error saving event:", error);
       toast({
         title: "Save Failed",
         description: "An unexpected error occurred",
@@ -161,9 +166,9 @@ export default function BasicInfoEdit() {
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
 
@@ -187,7 +192,7 @@ export default function BasicInfoEdit() {
             Update the basic information for your golf event
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {/* Event Name */}
           <div className="space-y-2">
@@ -197,9 +202,9 @@ export default function BasicInfoEdit() {
             <Input
               id="tripName"
               value={formData.tripName}
-              onChange={(e) => handleInputChange('tripName', e.target.value)}
+              onChange={(e) => handleInputChange("tripName", e.target.value)}
               placeholder="e.g., Pebble Beach Golf Weekend"
-              className={`border-green-200 focus:border-emerald-500 ${errors.tripName ? 'border-red-300' : ''}`}
+              className={`border-green-200 focus:border-emerald-500 ${errors.tripName ? "border-red-300" : ""}`}
             />
             {errors.tripName && (
               <p className="text-sm text-red-600">{errors.tripName}</p>
@@ -209,7 +214,10 @@ export default function BasicInfoEdit() {
           {/* Dates */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="startDate" className="text-green-800 font-medium flex items-center">
+              <Label
+                htmlFor="startDate"
+                className="text-green-800 font-medium flex items-center"
+              >
                 <Calendar className="h-4 w-4 mr-1 text-emerald-600" />
                 Start Date *
               </Label>
@@ -217,8 +225,8 @@ export default function BasicInfoEdit() {
                 id="startDate"
                 type="date"
                 value={formData.startDate}
-                onChange={(e) => handleInputChange('startDate', e.target.value)}
-                className={`border-green-200 focus:border-emerald-500 ${errors.startDate ? 'border-red-300' : ''}`}
+                onChange={(e) => handleInputChange("startDate", e.target.value)}
+                className={`border-green-200 focus:border-emerald-500 ${errors.startDate ? "border-red-300" : ""}`}
               />
               {errors.startDate && (
                 <p className="text-sm text-red-600">{errors.startDate}</p>
@@ -226,7 +234,10 @@ export default function BasicInfoEdit() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="endDate" className="text-green-800 font-medium flex items-center">
+              <Label
+                htmlFor="endDate"
+                className="text-green-800 font-medium flex items-center"
+              >
                 <Calendar className="h-4 w-4 mr-1 text-emerald-600" />
                 End Date *
               </Label>
@@ -234,8 +245,8 @@ export default function BasicInfoEdit() {
                 id="endDate"
                 type="date"
                 value={formData.endDate}
-                onChange={(e) => handleInputChange('endDate', e.target.value)}
-                className={`border-green-200 focus:border-emerald-500 ${errors.endDate ? 'border-red-300' : ''}`}
+                onChange={(e) => handleInputChange("endDate", e.target.value)}
+                className={`border-green-200 focus:border-emerald-500 ${errors.endDate ? "border-red-300" : ""}`}
               />
               {errors.endDate && (
                 <p className="text-sm text-red-600">{errors.endDate}</p>
@@ -245,16 +256,19 @@ export default function BasicInfoEdit() {
 
           {/* Location */}
           <div className="space-y-2">
-            <Label htmlFor="location" className="text-green-800 font-medium flex items-center">
+            <Label
+              htmlFor="location"
+              className="text-green-800 font-medium flex items-center"
+            >
               <MapPin className="h-4 w-4 mr-1 text-emerald-600" />
               Location (City, State) *
             </Label>
             <Input
               id="location"
               value={formData.location}
-              onChange={(e) => handleInputChange('location', e.target.value)}
+              onChange={(e) => handleInputChange("location", e.target.value)}
               placeholder="e.g., Pebble Beach, CA"
-              className={`border-green-200 focus:border-emerald-500 ${errors.location ? 'border-red-300' : ''}`}
+              className={`border-green-200 focus:border-emerald-500 ${errors.location ? "border-red-300" : ""}`}
             />
             {errors.location && (
               <p className="text-sm text-red-600">{errors.location}</p>
@@ -269,7 +283,7 @@ export default function BasicInfoEdit() {
             <Textarea
               id="description"
               value={formData.description}
-              onChange={(e) => handleInputChange('description', e.target.value)}
+              onChange={(e) => handleInputChange("description", e.target.value)}
               placeholder="Describe your golf event, what makes it special, activities planned..."
               rows={4}
               className="border-green-200 focus:border-emerald-500"
@@ -281,7 +295,10 @@ export default function BasicInfoEdit() {
 
           {/* Banner Image (Optional) */}
           <div className="space-y-2">
-            <Label htmlFor="bannerImage" className="text-green-800 font-medium flex items-center">
+            <Label
+              htmlFor="bannerImage"
+              className="text-green-800 font-medium flex items-center"
+            >
               <Image className="h-4 w-4 mr-1 text-emerald-600" />
               Banner Image URL (Optional)
             </Label>
@@ -289,7 +306,7 @@ export default function BasicInfoEdit() {
               id="bannerImage"
               type="url"
               value={formData.bannerImage}
-              onChange={(e) => handleInputChange('bannerImage', e.target.value)}
+              onChange={(e) => handleInputChange("bannerImage", e.target.value)}
               placeholder="https://example.com/your-banner-image.jpg"
               className="border-green-200 focus:border-emerald-500"
             />
@@ -301,7 +318,8 @@ export default function BasicInfoEdit() {
           {/* Required Fields Notice */}
           <Alert className="border-blue-200 bg-blue-50">
             <AlertDescription className="text-blue-700">
-              Fields marked with * are required. Changes will be saved when you click the Save button.
+              Fields marked with * are required. Changes will be saved when you
+              click the Save button.
             </AlertDescription>
           </Alert>
 
@@ -313,7 +331,7 @@ export default function BasicInfoEdit() {
               className="bg-emerald-600 hover:bg-emerald-700 text-white"
             >
               <Save className="h-4 w-4 mr-2" />
-              {saving ? 'Saving...' : 'Save Changes'}
+              {saving ? "Saving..." : "Save Changes"}
             </Button>
           </div>
         </CardContent>
@@ -333,12 +351,18 @@ export default function BasicInfoEdit() {
               <div className="text-3xl">🏌️‍♂️</div>
               <div>
                 <h3 className="font-semibold text-green-900">
-                  {formData.tripName || 'Your Event Name'}
+                  {formData.tripName || "Your Event Name"}
                 </h3>
                 <p className="text-green-600 text-sm">
-                  {formData.location || 'Location'} 
+                  {formData.location || "Location"}
                   {formData.startDate && formData.endDate && (
-                    <> • {new Date(formData.startDate).toLocaleDateString()} - {new Date(formData.endDate).toLocaleDateString()}</>
+                    <>
+                      {" "}
+                      • {new Date(
+                        formData.startDate,
+                      ).toLocaleDateString()} -{" "}
+                      {new Date(formData.endDate).toLocaleDateString()}
+                    </>
                   )}
                 </p>
                 {formData.description && (

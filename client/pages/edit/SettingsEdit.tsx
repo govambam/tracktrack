@@ -634,8 +634,9 @@ export default function SettingsEdit() {
                         htmlFor="deleteConfirm"
                         className="text-sm font-medium"
                       >
-                        Please type <span className="font-bold">{eventName}</span>{" "}
-                        to confirm:
+                        Please type{" "}
+                        <span className="font-bold">{eventName}</span> to
+                        confirm:
                       </Label>
                       <Input
                         id="deleteConfirm"

@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -37,39 +43,39 @@ export default function RulesCustomization() {
 
       // Load rules from event_rules table
       const { data: rulesData, error: rulesError } = await supabase
-        .from('event_rules')
-        .select('id, rule_text')
-        .eq('event_id', eventId)
-        .order('created_at');
+        .from("event_rules")
+        .select("id, rule_text")
+        .eq("event_id", eventId)
+        .order("created_at");
 
       if (rulesError) {
-        console.error('Error loading rules:', rulesError);
+        console.error("Error loading rules:", rulesError);
       } else {
         setRules(rulesData || []);
       }
 
       // Load rules enabled setting
-      const { data: customizationData, error: customizationError } = await supabase
-        .from('event_customization')
-        .select('rules_enabled')
-        .eq('event_id', eventId)
-        .single();
+      const { data: customizationData, error: customizationError } =
+        await supabase
+          .from("event_customization")
+          .select("rules_enabled")
+          .eq("event_id", eventId)
+          .single();
 
-      if (customizationError && customizationError.code !== 'PGRST116') {
-        console.error('Error loading customization data:', {
+      if (customizationError && customizationError.code !== "PGRST116") {
+        console.error("Error loading customization data:", {
           message: customizationError.message,
           details: customizationError.details,
           hint: customizationError.hint,
-          code: customizationError.code
+          code: customizationError.code,
         });
       } else if (customizationData) {
         setRulesEnabled(customizationData.rules_enabled ?? true);
       }
-
     } catch (error) {
-      console.error('Error loading rules customization data:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        error: error
+      console.error("Error loading rules customization data:", {
+        message: error instanceof Error ? error.message : "Unknown error",
+        error: error,
       });
       toast({
         title: "Load Failed",
@@ -86,16 +92,16 @@ export default function RulesCustomization() {
 
     try {
       const { data, error } = await supabase
-        .from('event_rules')
-        .insert({ 
-          event_id: eventId, 
-          rule_text: 'New rule' 
+        .from("event_rules")
+        .insert({
+          event_id: eventId,
+          rule_text: "New rule",
         })
         .select()
         .single();
 
       if (error) {
-        console.error('Error adding rule:', error);
+        console.error("Error adding rule:", error);
         toast({
           title: "Add Failed",
           description: "Failed to add new rule",
@@ -105,7 +111,7 @@ export default function RulesCustomization() {
         setRules([...rules, data]);
       }
     } catch (error) {
-      console.error('Error adding rule:', error);
+      console.error("Error adding rule:", error);
     }
   };
 
@@ -114,13 +120,13 @@ export default function RulesCustomization() {
 
     try {
       const { error } = await supabase
-        .from('event_rules')
+        .from("event_rules")
         .update({ rule_text: ruleText })
-        .eq('id', ruleId)
-        .eq('event_id', eventId);
+        .eq("id", ruleId)
+        .eq("event_id", eventId);
 
       if (error) {
-        console.error('Error updating rule:', error);
+        console.error("Error updating rule:", error);
         toast({
           title: "Update Failed",
           description: "Failed to update rule",
@@ -128,7 +134,7 @@ export default function RulesCustomization() {
         });
       }
     } catch (error) {
-      console.error('Error updating rule:', error);
+      console.error("Error updating rule:", error);
     }
   };
 
@@ -137,23 +143,23 @@ export default function RulesCustomization() {
 
     try {
       const { error } = await supabase
-        .from('event_rules')
+        .from("event_rules")
         .delete()
-        .eq('id', ruleId)
-        .eq('event_id', eventId);
+        .eq("id", ruleId)
+        .eq("event_id", eventId);
 
       if (error) {
-        console.error('Error deleting rule:', error);
+        console.error("Error deleting rule:", error);
         toast({
           title: "Delete Failed",
           description: "Failed to delete rule",
           variant: "destructive",
         });
       } else {
-        setRules(rules.filter(rule => rule.id !== ruleId));
+        setRules(rules.filter((rule) => rule.id !== ruleId));
       }
     } catch (error) {
-      console.error('Error deleting rule:', error);
+      console.error("Error deleting rule:", error);
     }
   };
 
@@ -163,41 +169,39 @@ export default function RulesCustomization() {
     try {
       // First check if customization record exists
       const { data: existing, error: fetchError } = await supabase
-        .from('event_customization')
-        .select('*')
-        .eq('event_id', eventId)
+        .from("event_customization")
+        .select("*")
+        .eq("event_id", eventId)
         .single();
 
-      if (fetchError && fetchError.code !== 'PGRST116') {
-        console.error('Error checking customization:', fetchError);
+      if (fetchError && fetchError.code !== "PGRST116") {
+        console.error("Error checking customization:", fetchError);
         return;
       }
 
       if (existing) {
         // Update existing record
         const { error } = await supabase
-          .from('event_customization')
+          .from("event_customization")
           .update({ rules_enabled: enabled })
-          .eq('event_id', eventId);
+          .eq("event_id", eventId);
 
         if (error) {
-          console.error('Error saving rules enabled:', error);
+          console.error("Error saving rules enabled:", error);
         }
       } else {
         // Create new record
-        const { error } = await supabase
-          .from('event_customization')
-          .insert({ 
-            event_id: eventId,
-            rules_enabled: enabled
-          });
+        const { error } = await supabase.from("event_customization").insert({
+          event_id: eventId,
+          rules_enabled: enabled,
+        });
 
         if (error) {
-          console.error('Error creating customization record:', error);
+          console.error("Error creating customization record:", error);
         }
       }
     } catch (error) {
-      console.error('Error saving rules enabled:', error);
+      console.error("Error saving rules enabled:", error);
     }
   };
 
@@ -245,7 +249,8 @@ export default function RulesCustomization() {
                 Scoring & Rules
               </CardTitle>
               <CardDescription className="text-green-600">
-                Define the tournament rules and scoring guidelines for your event
+                Define the tournament rules and scoring guidelines for your
+                event
               </CardDescription>
             </div>
             <div className="flex items-center space-x-2">
@@ -263,12 +268,14 @@ export default function RulesCustomization() {
             </div>
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           <Card className="border-green-100 bg-green-50">
             <CardContent className="p-4 space-y-4">
               <div className="flex items-center justify-between">
-                <Label className="text-green-800 font-medium">Tournament Rules</Label>
+                <Label className="text-green-800 font-medium">
+                  Tournament Rules
+                </Label>
                 <Button
                   variant="outline"
                   size="sm"
@@ -286,11 +293,17 @@ export default function RulesCustomization() {
                   <div key={rule.id} className="flex items-start space-x-2">
                     <div className="flex-1">
                       <Textarea
-                        value={ruleChanges[rule.id] !== undefined ? ruleChanges[rule.id] : rule.rule_text}
+                        value={
+                          ruleChanges[rule.id] !== undefined
+                            ? ruleChanges[rule.id]
+                            : rule.rule_text
+                        }
                         onChange={(e) => {
-                          setRuleChanges(prev => ({ ...prev, [rule.id]: e.target.value }));
+                          setRuleChanges((prev) => ({
+                            ...prev,
+                            [rule.id]: e.target.value,
+                          }));
                         }}
-
                         placeholder={`Rule ${index + 1}...`}
                         className="border-green-200 focus:border-emerald-500 bg-white"
                         rows={2}

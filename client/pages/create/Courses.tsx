@@ -437,7 +437,10 @@ export default function Courses() {
                                 }
                                 className="w-full px-3 py-2 border border-green-200 rounded-md focus:border-emerald-500 focus:outline-none bg-white"
                               >
-                                {Array.from({ length: round.holes }, (_, i) => i + 1).map(holeNum => (
+                                {Array.from(
+                                  { length: round.holes },
+                                  (_, i) => i + 1,
+                                ).map((holeNum) => (
                                   <option key={holeNum} value={holeNum}>
                                     Hole {holeNum}
                                   </option>

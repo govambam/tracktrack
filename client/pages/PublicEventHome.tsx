@@ -2,7 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +36,7 @@ import {
   Zap,
   Crown,
   Medal,
-  CheckCircle
+  CheckCircle,
 } from "lucide-react";
 
 interface EventData {
@@ -101,7 +107,7 @@ const useScrollAnimation = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1, rootMargin: '50px' }
+      { threshold: 0.1, rootMargin: "50px" },
     );
 
     if (elementRef.current) {
@@ -116,7 +122,12 @@ const useScrollAnimation = () => {
 
 // Countdown Timer Component
 const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -127,9 +138,11 @@ const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
       if (difference > 0) {
         setTimeLeft({
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          hours: Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+          ),
           minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+          seconds: Math.floor((difference % (1000 * 60)) / 1000),
         });
       } else {
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -139,7 +152,12 @@ const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
     return () => clearInterval(timer);
   }, [targetDate]);
 
-  if (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0) {
+  if (
+    timeLeft.days === 0 &&
+    timeLeft.hours === 0 &&
+    timeLeft.minutes === 0 &&
+    timeLeft.seconds === 0
+  ) {
     return null;
   }
 
@@ -148,22 +166,30 @@ const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
       <Clock className="h-5 w-5 text-green-600" />
       <div className="flex items-center space-x-3 text-sm font-medium text-slate-700">
         <div className="text-center">
-          <div className="font-bold text-lg text-green-600">{timeLeft.days}</div>
+          <div className="font-bold text-lg text-green-600">
+            {timeLeft.days}
+          </div>
           <div className="text-xs">days</div>
         </div>
         <div className="text-green-400">:</div>
         <div className="text-center">
-          <div className="font-bold text-lg text-green-600">{timeLeft.hours}</div>
+          <div className="font-bold text-lg text-green-600">
+            {timeLeft.hours}
+          </div>
           <div className="text-xs">hours</div>
         </div>
         <div className="text-green-400">:</div>
         <div className="text-center">
-          <div className="font-bold text-lg text-green-600">{timeLeft.minutes}</div>
+          <div className="font-bold text-lg text-green-600">
+            {timeLeft.minutes}
+          </div>
           <div className="text-xs">mins</div>
         </div>
         <div className="text-green-400">:</div>
         <div className="text-center">
-          <div className="font-bold text-lg text-green-600">{timeLeft.seconds}</div>
+          <div className="font-bold text-lg text-green-600">
+            {timeLeft.seconds}
+          </div>
           <div className="text-xs">secs</div>
         </div>
       </div>
@@ -172,15 +198,21 @@ const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
 };
 
 // Sticky Navigation Component
-const StickyNavigation = ({ eventName, slug }: { eventName: string; slug: string }) => {
+const StickyNavigation = ({
+  eventName,
+  slug,
+}: {
+  eventName: string;
+  slug: string;
+}) => {
   const navItems = [
-    { name: 'Overview', href: '#overview' },
-    { name: 'Courses', href: '#courses' },
-    { name: 'Scoring Format', href: '#scoring' },
-    { name: 'Players', href: '#players' },
-    { name: 'Prizes', href: '#prizes' },
-    { name: 'Travel', href: '#travel' },
-    { name: 'Leaderboard', href: `/events/${slug}/leaderboard` },
+    { name: "Overview", href: "#overview" },
+    { name: "Courses", href: "#courses" },
+    { name: "Scoring Format", href: "#scoring" },
+    { name: "Players", href: "#players" },
+    { name: "Prizes", href: "#prizes" },
+    { name: "Travel", href: "#travel" },
+    { name: "Leaderboard", href: `/events/${slug}/leaderboard` },
   ];
 
   return (
@@ -209,23 +241,28 @@ const StickyNavigation = ({ eventName, slug }: { eventName: string; slug: string
 const AnimatedStatCard = ({ item, index }: { item: any; index: number }) => {
   const { isVisible, elementRef } = useScrollAnimation();
   const colorClasses = {
-    emerald: { bg: 'from-emerald-100 to-emerald-200', text: 'text-emerald-600' },
-    blue: { bg: 'from-blue-100 to-blue-200', text: 'text-blue-600' },
-    purple: { bg: 'from-purple-100 to-purple-200', text: 'text-purple-600' },
-    orange: { bg: 'from-orange-100 to-orange-200', text: 'text-orange-600' }
+    emerald: {
+      bg: "from-emerald-100 to-emerald-200",
+      text: "text-emerald-600",
+    },
+    blue: { bg: "from-blue-100 to-blue-200", text: "text-blue-600" },
+    purple: { bg: "from-purple-100 to-purple-200", text: "text-purple-600" },
+    orange: { bg: "from-orange-100 to-orange-200", text: "text-orange-600" },
   };
   const colors = colorClasses[item.color as keyof typeof colorClasses];
-  const delays = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
+  const delays = ["delay-0", "delay-100", "delay-200", "delay-300"];
 
   return (
     <div
       ref={elementRef}
-      className={`group cursor-pointer transition-all duration-700 ${delays[index] || 'delay-0'} ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      className={`group cursor-pointer transition-all duration-700 ${delays[index] || "delay-0"} ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}
     >
       <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white">
-        <div className={`w-20 h-20 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
+        <div
+          className={`w-20 h-20 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
+        >
           <item.icon className={`h-10 w-10 ${colors.text}`} />
         </div>
         <h3 className="font-bold text-slate-900 mb-3 text-lg">{item.title}</h3>
@@ -236,15 +273,23 @@ const AnimatedStatCard = ({ item, index }: { item: any; index: number }) => {
 };
 
 // Player Modal Component
-const PlayerModal = ({ player, isOpen, onClose }: { player: any; isOpen: boolean; onClose: () => void }) => {
+const PlayerModal = ({
+  player,
+  isOpen,
+  onClose,
+}: {
+  player: any;
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
@@ -252,9 +297,9 @@ const PlayerModal = ({ player, isOpen, onClose }: { player: any; isOpen: boolean
 
   const getPlayerInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
@@ -280,23 +325,31 @@ const PlayerModal = ({ player, isOpen, onClose }: { player: any; isOpen: boolean
         {/* Content */}
         <div className="p-8 text-center">
           <Avatar className="h-24 w-24 mx-auto mb-6 ring-4 ring-green-200">
-            {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
+            {player.profile_image && (
+              <AvatarImage src={player.profile_image} alt={player.full_name} />
+            )}
             <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-2xl font-bold">
               {getPlayerInitials(player.full_name)}
             </AvatarFallback>
           </Avatar>
 
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">{player.full_name}</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">
+            {player.full_name}
+          </h2>
 
-          {(player.handicap !== null && player.handicap !== undefined) && (
+          {player.handicap !== null && player.handicap !== undefined && (
             <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-4 py-2 mb-6">
-              <span className="text-sm font-semibold text-slate-600">Handicap: {player.handicap}</span>
+              <span className="text-sm font-semibold text-slate-600">
+                Handicap: {player.handicap}
+              </span>
             </div>
           )}
 
           {player.bio && player.bio.trim() && (
             <div className="mt-6 text-left">
-              <h3 className="text-lg font-semibold text-slate-900 mb-3">About {player.full_name.split(' ')[0]}</h3>
+              <h3 className="text-lg font-semibold text-slate-900 mb-3">
+                About {player.full_name.split(" ")[0]}
+              </h3>
               <p className="text-slate-700 leading-relaxed whitespace-pre-line">
                 {player.bio}
               </p>
@@ -309,15 +362,25 @@ const PlayerModal = ({ player, isOpen, onClose }: { player: any; isOpen: boolean
 };
 
 // Course Modal Component
-const CourseModal = ({ course, round, isOpen, onClose }: { course: any; round: any; isOpen: boolean; onClose: () => void }) => {
+const CourseModal = ({
+  course,
+  round,
+  isOpen,
+  onClose,
+}: {
+  course: any;
+  round: any;
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
@@ -360,24 +423,32 @@ const CourseModal = ({ course, round, isOpen, onClose }: { course: any; round: a
             </Badge>
           </div>
 
-          <h2 className="text-3xl font-bold text-slate-900 mb-6">{course.name}</h2>
+          <h2 className="text-3xl font-bold text-slate-900 mb-6">
+            {course.name}
+          </h2>
 
           {course.par && course.yardage && (
             <div className="flex items-center space-x-6 mb-6">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span className="font-semibold text-slate-700">Par {course.par}</span>
+                <span className="font-semibold text-slate-700">
+                  Par {course.par}
+                </span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span className="font-semibold text-slate-700">{course.yardage?.toLocaleString()} yards</span>
+                <span className="font-semibold text-slate-700">
+                  {course.yardage?.toLocaleString()} yards
+                </span>
               </div>
             </div>
           )}
 
           {course.description && (
             <div className="mb-6">
-              <h3 className="text-lg font-semibold text-slate-900 mb-3">About This Course</h3>
+              <h3 className="text-lg font-semibold text-slate-900 mb-3">
+                About This Course
+              </h3>
               <p className="text-slate-600 leading-relaxed whitespace-pre-line">
                 {course.description}
               </p>
@@ -386,15 +457,17 @@ const CourseModal = ({ course, round, isOpen, onClose }: { course: any; round: a
 
           {(round?.tee_time || round?.round_date) && (
             <div className="space-y-3 pt-6 border-t border-slate-200">
-              <h3 className="text-lg font-semibold text-slate-900">Round Details</h3>
+              <h3 className="text-lg font-semibold text-slate-900">
+                Round Details
+              </h3>
               {round?.round_date && (
                 <div className="flex items-center space-x-3">
                   <Calendar className="h-5 w-5 text-slate-400" />
                   <span className="text-slate-600">
-                    {new Date(round.round_date).toLocaleDateString('en-US', {
-                      weekday: 'long',
-                      month: 'long',
-                      day: 'numeric'
+                    {new Date(round.round_date).toLocaleDateString("en-US", {
+                      weekday: "long",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </span>
                 </div>
@@ -415,7 +488,17 @@ const CourseModal = ({ course, round, isOpen, onClose }: { course: any; round: a
   );
 };
 
-const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any; round: any; index: number; onOpenModal: () => void }) => {
+const AnimatedCourseCard = ({
+  course,
+  round,
+  index,
+  onOpenModal,
+}: {
+  course: any;
+  round: any;
+  index: number;
+  onOpenModal: () => void;
+}) => {
   const { isVisible, elementRef } = useScrollAnimation();
   const [showSeeMore, setShowSeeMore] = useState(false);
 
@@ -428,19 +511,27 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
     hasDescription,
     descriptionLength: course.description?.length,
     shouldShowSeeMore,
-    index
+    index,
   });
 
   return (
     <div
       ref={elementRef}
       className={`group transition-all duration-700 ${
-        index === 0 ? 'delay-0' : index === 1 ? 'delay-150' : index === 2 ? 'delay-300' : 'delay-450'
-      } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+        index === 0
+          ? "delay-0"
+          : index === 1
+            ? "delay-150"
+            : index === 2
+              ? "delay-300"
+              : "delay-450"
+      } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
       onMouseEnter={() => setShowSeeMore(true)}
       onMouseLeave={() => setShowSeeMore(false)}
     >
-      <div className={`bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-500 ${hasDescription ? 'min-h-[500px]' : ''}`}>
+      <div
+        className={`bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-500 ${hasDescription ? "min-h-[500px]" : ""}`}
+      >
         {course.image_url && (
           <div className="h-56 overflow-hidden">
             <img
@@ -469,11 +560,15 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
             <div className="flex items-center space-x-6 mb-6 text-sm">
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="font-semibold text-slate-700">Par {course.par}</span>
+                <span className="font-semibold text-slate-700">
+                  Par {course.par}
+                </span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span className="font-semibold text-slate-700">{course.yardage?.toLocaleString()} yards</span>
+                <span className="font-semibold text-slate-700">
+                  {course.yardage?.toLocaleString()} yards
+                </span>
               </div>
             </div>
           )}
@@ -484,11 +579,11 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
                 <p
                   className="text-slate-600 leading-relaxed overflow-hidden"
                   style={{
-                    display: '-webkit-box',
+                    display: "-webkit-box",
                     WebkitLineClamp: 4,
-                    WebkitBoxOrient: 'vertical',
-                    maxHeight: '6rem',
-                    lineHeight: '1.5rem'
+                    WebkitBoxOrient: "vertical",
+                    maxHeight: "6rem",
+                    lineHeight: "1.5rem",
                   }}
                 >
                   {course.description}
@@ -515,10 +610,10 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
                 <div className="flex items-center space-x-3">
                   <Calendar className="h-4 w-4 text-slate-400" />
                   <span className="text-sm font-medium text-slate-600">
-                    {new Date(round.round_date).toLocaleDateString('en-US', {
-                      weekday: 'long',
-                      month: 'long',
-                      day: 'numeric'
+                    {new Date(round.round_date).toLocaleDateString("en-US", {
+                      weekday: "long",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </span>
                 </div>
@@ -539,15 +634,23 @@ const AnimatedCourseCard = ({ course, round, index, onOpenModal }: { course: any
   );
 };
 
-const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index: number; onOpenModal: () => void }) => {
+const AnimatedPlayerCard = ({
+  player,
+  index,
+  onOpenModal,
+}: {
+  player: any;
+  index: number;
+  onOpenModal: () => void;
+}) => {
   const { isVisible, elementRef } = useScrollAnimation();
   const [showSeeMore, setShowSeeMore] = useState(false);
 
   const getPlayerInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
@@ -560,17 +663,20 @@ const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index
     <div
       ref={elementRef}
       className={`group transition-all duration-500 ${
-        index < 8 ? `delay-${index * 50}` : 'delay-300'
-      } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+        index < 8 ? `delay-${index * 50}` : "delay-300"
+      } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
       onMouseEnter={() => setShowSeeMore(true)}
       onMouseLeave={() => setShowSeeMore(false)}
     >
-      <div className={`bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white flex flex-col ${!hasBio ? 'h-64' : isShortBio ? 'h-72' : 'h-80'}`}>
-
+      <div
+        className={`bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 group-hover:bg-white flex flex-col ${!hasBio ? "h-64" : isShortBio ? "h-72" : "h-80"}`}
+      >
         {/* Avatar Section - Top */}
         <div className="flex flex-col items-center pt-6 pb-4">
           <Avatar className="h-20 w-20 ring-4 ring-white/50 group-hover:ring-green-200 transition-all duration-300">
-            {player.profile_image && <AvatarImage src={player.profile_image} alt={player.full_name} />}
+            {player.profile_image && (
+              <AvatarImage src={player.profile_image} alt={player.full_name} />
+            )}
             <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-white text-xl font-bold">
               {getPlayerInitials(player.full_name)}
             </AvatarFallback>
@@ -584,7 +690,9 @@ const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index
           </h3>
           {player.handicap !== null && player.handicap !== undefined && (
             <div className="inline-flex items-center space-x-1 bg-slate-100 rounded-full px-3 py-1">
-              <span className="text-xs font-semibold text-slate-600">HCP: {player.handicap}</span>
+              <span className="text-xs font-semibold text-slate-600">
+                HCP: {player.handicap}
+              </span>
             </div>
           )}
         </div>
@@ -596,11 +704,11 @@ const AnimatedPlayerCard = ({ player, index, onOpenModal }: { player: any; index
               <p
                 className="text-sm text-slate-600 leading-relaxed overflow-hidden text-center"
                 style={{
-                  display: '-webkit-box',
+                  display: "-webkit-box",
                   WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical',
-                  maxHeight: '2.75rem',
-                  lineHeight: '1.375rem'
+                  WebkitBoxOrient: "vertical",
+                  maxHeight: "2.75rem",
+                  lineHeight: "1.375rem",
                 }}
               >
                 "{player.bio}"
@@ -639,8 +747,14 @@ const AnimatedPrizeCard = ({ prize, index }: { prize: any; index: number }) => {
     <div
       ref={elementRef}
       className={`group transition-all duration-700 ${
-        index === 0 ? 'delay-0' : index === 1 ? 'delay-100' : index === 2 ? 'delay-200' : 'delay-300'
-      } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+        index === 0
+          ? "delay-0"
+          : index === 1
+            ? "delay-100"
+            : index === 2
+              ? "delay-200"
+              : "delay-300"
+      } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
     >
       <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-300 group-hover:bg-white h-80 flex flex-col">
         <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -648,7 +762,9 @@ const AnimatedPrizeCard = ({ prize, index }: { prize: any; index: number }) => {
         </div>
 
         <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-amber-700 transition-colors min-h-[3.5rem] flex items-center justify-center">
-          {prize.category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+          {prize.category
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, (l) => l.toUpperCase())}
         </h3>
 
         <div className="flex-1 flex flex-col justify-center">
@@ -658,7 +774,9 @@ const AnimatedPrizeCard = ({ prize, index }: { prize: any; index: number }) => {
             </div>
           )}
 
-          <p className="text-slate-600 font-medium leading-relaxed">{prize.description}</p>
+          <p className="text-slate-600 font-medium leading-relaxed">
+            {prize.description}
+          </p>
         </div>
       </div>
     </div>
@@ -668,22 +786,27 @@ const AnimatedPrizeCard = ({ prize, index }: { prize: any; index: number }) => {
 const AnimatedTravelCard = ({ item, index }: { item: any; index: number }) => {
   const { isVisible, elementRef } = useScrollAnimation();
   const colorClasses = {
-    blue: { bg: 'from-blue-100 to-blue-200', text: 'text-blue-600' },
-    emerald: { bg: 'from-emerald-100 to-emerald-200', text: 'text-emerald-600' },
-    purple: { bg: 'from-purple-100 to-purple-200', text: 'text-purple-600' }
+    blue: { bg: "from-blue-100 to-blue-200", text: "text-blue-600" },
+    emerald: {
+      bg: "from-emerald-100 to-emerald-200",
+      text: "text-emerald-600",
+    },
+    purple: { bg: "from-purple-100 to-purple-200", text: "text-purple-600" },
   };
   const colors = colorClasses[item.color as keyof typeof colorClasses];
-  const delays = ['delay-0', 'delay-150', 'delay-300'];
+  const delays = ["delay-0", "delay-150", "delay-300"];
 
   return (
     <div
       ref={elementRef}
-      className={`transition-all duration-700 ${delays[index] || 'delay-0'} ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+      className={`transition-all duration-700 ${delays[index] || "delay-0"} ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
       }`}
     >
       <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 h-full">
-        <div className={`w-16 h-16 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mb-8`}>
+        <div
+          className={`w-16 h-16 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mb-8`}
+        >
           <item.icon className={`h-8 w-8 ${colors.text}`} />
         </div>
 
@@ -702,9 +825,9 @@ const AnimatedTravelCard = ({ item, index }: { item: any; index: number }) => {
 export default function PublicEventHome() {
   // Add smooth scrolling to page
   useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth';
+    document.documentElement.style.scrollBehavior = "smooth";
     return () => {
-      document.documentElement.style.scrollBehavior = 'auto';
+      document.documentElement.style.scrollBehavior = "auto";
     };
   }, []);
   const { slug } = useParams();
@@ -715,7 +838,9 @@ export default function PublicEventHome() {
   const [rounds, setRounds] = useState<EventRound[]>([]);
   const [prizes, setPrizes] = useState<EventPrize[]>([]);
   const [travel, setTravel] = useState<TravelData | null>(null);
-  const [customization, setCustomization] = useState<EventCustomization | null>(null);
+  const [customization, setCustomization] = useState<EventCustomization | null>(
+    null,
+  );
   const [selectedCourse, setSelectedCourse] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<any>(null);
@@ -735,29 +860,58 @@ export default function PublicEventHome() {
 
       // Load main event data
       const { data: event, error: eventError } = await supabase
-        .from('events')
-        .select('*')
-        .eq('slug', slug)
-        .eq('is_published', true)
+        .from("events")
+        .select("*")
+        .eq("slug", slug)
+        .eq("is_published", true)
         .single();
 
       if (eventError || !event) {
-        console.error('Event not found:', eventError);
+        console.error("Event not found:", eventError);
         return;
       }
 
       setEventData(event);
 
       // Load all related data in parallel
-      const [playersResult, coursesResult, roundsResult, prizesResult, travelResult, customizationResult, rulesResult, contestsResult] = await Promise.all([
-        supabase.from('event_players').select('*').eq('event_id', event.id),
-        supabase.from('event_courses').select('*').eq('event_id', event.id).order('display_order'),
-        supabase.from('event_rounds').select('*').eq('event_id', event.id).order('round_date'),
-        supabase.from('event_prizes').select('*').eq('event_id', event.id),
-        supabase.from('event_travel').select('*').eq('event_id', event.id).maybeSingle(),
-        supabase.from('event_customization').select('*').eq('event_id', event.id).maybeSingle(),
-        supabase.from('event_rules').select('*').eq('event_id', event.id).order('created_at'),
-        supabase.from('skills_contests').select('*').eq('event_id', event.id)
+      const [
+        playersResult,
+        coursesResult,
+        roundsResult,
+        prizesResult,
+        travelResult,
+        customizationResult,
+        rulesResult,
+        contestsResult,
+      ] = await Promise.all([
+        supabase.from("event_players").select("*").eq("event_id", event.id),
+        supabase
+          .from("event_courses")
+          .select("*")
+          .eq("event_id", event.id)
+          .order("display_order"),
+        supabase
+          .from("event_rounds")
+          .select("*")
+          .eq("event_id", event.id)
+          .order("round_date"),
+        supabase.from("event_prizes").select("*").eq("event_id", event.id),
+        supabase
+          .from("event_travel")
+          .select("*")
+          .eq("event_id", event.id)
+          .maybeSingle(),
+        supabase
+          .from("event_customization")
+          .select("*")
+          .eq("event_id", event.id)
+          .maybeSingle(),
+        supabase
+          .from("event_rules")
+          .select("*")
+          .eq("event_id", event.id)
+          .order("created_at"),
+        supabase.from("skills_contests").select("*").eq("event_id", event.id),
       ]);
 
       // Handle results with error checking
@@ -766,20 +920,23 @@ export default function PublicEventHome() {
       if (!roundsResult.error) setRounds(roundsResult.data || []);
       if (!prizesResult.error) setPrizes(prizesResult.data || []);
       if (!travelResult.error) setTravel(travelResult.data || null);
-      if (!customizationResult.error) setCustomization(customizationResult.data || null);
+      if (!customizationResult.error)
+        setCustomization(customizationResult.data || null);
       if (!rulesResult.error) setCustomRules(rulesResult.data || []);
       if (!contestsResult.error) setSkillsContests(contestsResult.data || []);
 
       // Log any errors for debugging
-      if (playersResult.error) console.log('Players error:', playersResult.error);
-      if (coursesResult.error) console.log('Courses error:', coursesResult.error);
-      if (roundsResult.error) console.log('Rounds error:', roundsResult.error);
-      if (prizesResult.error) console.log('Prizes error:', prizesResult.error);
-      if (travelResult.error) console.log('Travel error:', travelResult.error);
-      if (customizationResult.error) console.log('Customization error:', customizationResult.error);
-
+      if (playersResult.error)
+        console.log("Players error:", playersResult.error);
+      if (coursesResult.error)
+        console.log("Courses error:", coursesResult.error);
+      if (roundsResult.error) console.log("Rounds error:", roundsResult.error);
+      if (prizesResult.error) console.log("Prizes error:", prizesResult.error);
+      if (travelResult.error) console.log("Travel error:", travelResult.error);
+      if (customizationResult.error)
+        console.log("Customization error:", customizationResult.error);
     } catch (error) {
-      console.error('Error loading event data:', error);
+      console.error("Error loading event data:", error);
     } finally {
       setLoading(false);
     }
@@ -788,10 +945,10 @@ export default function PublicEventHome() {
   const formatDateRange = (startDate: string, endDate: string) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
-    
-    const startMonth = start.toLocaleDateString('en-US', { month: 'long' });
+
+    const startMonth = start.toLocaleDateString("en-US", { month: "long" });
     const startDay = start.getDate();
-    const endMonth = end.toLocaleDateString('en-US', { month: 'long' });
+    const endMonth = end.toLocaleDateString("en-US", { month: "long" });
     const endDay = end.getDate();
     const year = end.getFullYear();
 
@@ -807,20 +964,27 @@ export default function PublicEventHome() {
     const end = new Date(endDate);
     const diffTime = Math.abs(end.getTime() - start.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 1) return "1 Day";
     return `${diffDays} Days`;
   };
 
   const getScoringFormat = () => {
-    const formats = [...new Set(rounds.map(r => r.scoring_type))];
-    return formats.map(format => {
-      switch (format) {
-        case 'stroke_play': return 'Stroke Play';
-        case 'stableford': return 'Stableford';
-        default: return format;
-      }
-    }).join(', ') || 'Stroke Play';
+    const formats = [...new Set(rounds.map((r) => r.scoring_type))];
+    return (
+      formats
+        .map((format) => {
+          switch (format) {
+            case "stroke_play":
+              return "Stroke Play";
+            case "stableford":
+              return "Stableford";
+            default:
+              return format;
+          }
+        })
+        .join(", ") || "Stroke Play"
+    );
   };
 
   // Enhanced Stableford points system
@@ -829,23 +993,25 @@ export default function PublicEventHome() {
       score: "Albatross",
       points: 20,
       description: "3 under par",
-      detail: "Legendary! The rarest score in golf deserves the highest reward.",
+      detail:
+        "Legendary! The rarest score in golf deserves the highest reward.",
       color: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-50",
       textColor: "text-purple-900",
       iconColor: "text-purple-600",
-      icon: Crown
+      icon: Crown,
     },
     {
       score: "Eagle",
       points: 8,
       description: "2 under par",
-      detail: "Exceptional performance! Maximum points for being 2 strokes under par.",
+      detail:
+        "Exceptional performance! Maximum points for being 2 strokes under par.",
       color: "from-yellow-500 to-yellow-600",
       bgColor: "bg-yellow-50",
       textColor: "text-yellow-900",
       iconColor: "text-yellow-600",
-      icon: Trophy
+      icon: Trophy,
     },
     {
       score: "Birdie",
@@ -856,7 +1022,7 @@ export default function PublicEventHome() {
       bgColor: "bg-green-50",
       textColor: "text-green-900",
       iconColor: "text-green-600",
-      icon: Award
+      icon: Award,
     },
     {
       score: "Par",
@@ -867,7 +1033,7 @@ export default function PublicEventHome() {
       bgColor: "bg-blue-50",
       textColor: "text-blue-900",
       iconColor: "text-blue-600",
-      icon: CheckCircle
+      icon: CheckCircle,
     },
     {
       score: "Bogey",
@@ -878,7 +1044,7 @@ export default function PublicEventHome() {
       bgColor: "bg-orange-50",
       textColor: "text-orange-900",
       iconColor: "text-orange-600",
-      icon: Medal
+      icon: Medal,
     },
     {
       score: "Double Bogey+",
@@ -889,37 +1055,44 @@ export default function PublicEventHome() {
       bgColor: "bg-red-50",
       textColor: "text-red-900",
       iconColor: "text-red-600",
-      icon: Target
-    }
+      icon: Target,
+    },
   ];
 
   // Helper functions for contests
   const getContestsByType = (type: string) => {
     return skillsContests
-      .filter(contest => contest.contest_type === type)
-      .reduce((acc, contest) => {
-        const round = rounds.find(r => r.id === contest.round_id);
-        if (round) {
-          const existing = acc.find(item => item.roundName === round.course_name);
-          if (existing) {
-            existing.holes.push(contest.hole);
-          } else {
-            acc.push({
-              roundName: round.course_name,
-              holes: [contest.hole]
-            });
+      .filter((contest) => contest.contest_type === type)
+      .reduce(
+        (acc, contest) => {
+          const round = rounds.find((r) => r.id === contest.round_id);
+          if (round) {
+            const existing = acc.find(
+              (item) => item.roundName === round.course_name,
+            );
+            if (existing) {
+              existing.holes.push(contest.hole);
+            } else {
+              acc.push({
+                roundName: round.course_name,
+                holes: [contest.hole],
+              });
+            }
           }
-        }
-        return acc;
-      }, [] as { roundName: string; holes: number[] }[]);
+          return acc;
+        },
+        [] as { roundName: string; holes: number[] }[],
+      );
   };
 
   const closestToPinGroups = getContestsByType("closest_to_pin");
   const longestDriveGroups = getContestsByType("longest_drive");
 
   // Get prize amounts for contests
-  const closestToPinPrize = prizes.find(p => p.category === 'closest_to_pin')?.amount || 0;
-  const longestDrivePrize = prizes.find(p => p.category === 'longest_drive')?.amount || 0;
+  const closestToPinPrize =
+    prizes.find((p) => p.category === "closest_to_pin")?.amount || 0;
+  const longestDrivePrize =
+    prizes.find((p) => p.category === "longest_drive")?.amount || 0;
 
   if (loading) {
     return (
@@ -937,8 +1110,12 @@ export default function PublicEventHome() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
         <div className="text-center">
           <Target className="h-16 w-16 text-green-400 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-green-900 mb-2">Event Not Found</h1>
-          <p className="text-green-600">This event may not be published or the link is incorrect.</p>
+          <h1 className="text-2xl font-bold text-green-900 mb-2">
+            Event Not Found
+          </h1>
+          <p className="text-green-600">
+            This event may not be published or the link is incorrect.
+          </p>
         </div>
       </div>
     );
@@ -1006,10 +1183,30 @@ export default function PublicEventHome() {
         <div className="relative max-w-5xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: MapPin, title: "Location", value: eventData.location, color: "emerald" },
-              { icon: Users, title: "Players", value: `${players.length} Registered`, color: "blue" },
-              { icon: Target, title: "Format", value: getScoringFormat(), color: "purple" },
-              { icon: Calendar, title: "Duration", value: getDuration(eventData.start_date, eventData.end_date), color: "orange" }
+              {
+                icon: MapPin,
+                title: "Location",
+                value: eventData.location,
+                color: "emerald",
+              },
+              {
+                icon: Users,
+                title: "Players",
+                value: `${players.length} Registered`,
+                color: "blue",
+              },
+              {
+                icon: Target,
+                title: "Format",
+                value: getScoringFormat(),
+                color: "purple",
+              },
+              {
+                icon: Calendar,
+                title: "Duration",
+                value: getDuration(eventData.start_date, eventData.end_date),
+                color: "orange",
+              },
             ].map((item, index) => (
               <AnimatedStatCard key={item.title} item={item} index={index} />
             ))}
@@ -1019,7 +1216,10 @@ export default function PublicEventHome() {
 
       {/* Courses Overview Section */}
       {courses.length > 0 && (
-        <section id="courses" className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
+        <section
+          id="courses"
+          className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"
+        >
           {/* Background decoration */}
           <div className="absolute inset-0 bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20"></div>
           <div className="absolute top-20 right-0 w-72 h-72 bg-green-100/10 rounded-full blur-3xl"></div>
@@ -1028,28 +1228,42 @@ export default function PublicEventHome() {
             <div className="text-center mb-20">
               <div className="inline-flex items-center space-x-2 bg-green-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
                 <Sparkles className="h-4 w-4 text-green-600" />
-                <span className="text-sm font-medium text-green-800">Championship Venues</span>
+                <span className="text-sm font-medium text-green-800">
+                  Championship Venues
+                </span>
               </div>
 
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
-                {courses.length > 1 ? 'Golf Courses' : 'Golf Course'}
+                {courses.length > 1 ? "Golf Courses" : "Golf Course"}
               </h2>
 
               <p className="text-xl sm:text-2xl text-slate-600 max-w-4xl mx-auto font-light leading-relaxed">
-                {rounds.reduce((total, round) => total + (round.holes || 18), 0)} world class holes played over {getDuration(eventData.start_date, eventData.end_date).toLowerCase()}
+                {rounds.reduce(
+                  (total, round) => total + (round.holes || 18),
+                  0,
+                )}{" "}
+                world class holes played over{" "}
+                {getDuration(
+                  eventData.start_date,
+                  eventData.end_date,
+                ).toLowerCase()}
               </p>
             </div>
 
             <div className="flex justify-center">
-              <div className={`grid gap-10 ${
-                courses.length === 1
-                  ? 'grid-cols-1 max-w-2xl'
-                  : courses.length === 2
-                  ? 'grid-cols-1 lg:grid-cols-2 max-w-5xl'
-                  : 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 max-w-7xl'
-              }`}>
+              <div
+                className={`grid gap-10 ${
+                  courses.length === 1
+                    ? "grid-cols-1 max-w-2xl"
+                    : courses.length === 2
+                      ? "grid-cols-1 lg:grid-cols-2 max-w-5xl"
+                      : "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 max-w-7xl"
+                }`}
+              >
                 {courses.map((course, index) => {
-                  const round = rounds.find(r => r.course_name === course.name);
+                  const round = rounds.find(
+                    (r) => r.course_name === course.name,
+                  );
                   return (
                     <AnimatedCourseCard
                       key={course.id}
@@ -1077,7 +1291,9 @@ export default function PublicEventHome() {
             <div className="text-center mb-20">
               <div className="inline-flex items-center space-x-2 bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
                 <Target className="h-4 w-4 text-blue-600" />
-                <span className="text-sm font-medium text-blue-800">Competition Rules</span>
+                <span className="text-sm font-medium text-blue-800">
+                  Competition Rules
+                </span>
               </div>
 
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
@@ -1089,22 +1305,27 @@ export default function PublicEventHome() {
                   <Target className="h-8 w-8 text-green-600" />
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">{getScoringFormat()}</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
+                  {getScoringFormat()}
+                </h3>
                 <p className="text-lg text-slate-600 leading-relaxed font-light">
-                  {getScoringFormat().includes('Stableford')
+                  {getScoringFormat().includes("Stableford")
                     ? "Modified Stableford scoring system with preset competition and a team scramble format for added excitement."
-                    : "Traditional stroke play format where every shot counts. Lowest total score wins the championship."
-                  }
+                    : "Traditional stroke play format where every shot counts. Lowest total score wins the championship."}
                 </p>
               </div>
             </div>
 
             {/* Enhanced Stableford Points System */}
-            {getScoringFormat().includes('Stableford') && (
+            {getScoringFormat().includes("Stableford") && (
               <div className="mb-20">
                 <div className="text-center mb-12">
-                  <h3 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Point Values</h3>
-                  <p className="text-xl text-slate-600 font-light">Points awarded based on performance relative to par</p>
+                  <h3 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                    Point Values
+                  </h3>
+                  <p className="text-xl text-slate-600 font-light">
+                    Points awarded based on performance relative to par
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -1116,23 +1337,36 @@ export default function PublicEventHome() {
                         className={`${scoring.bgColor} border-2 border-opacity-20 rounded-3xl p-6 shadow-xl shadow-slate-200/50 hover:scale-105 transition-transform duration-200`}
                       >
                         <div className="flex items-center justify-between mb-4">
-                          <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}>
-                            <span className="text-2xl font-bold text-white">{scoring.points}</span>
+                          <div
+                            className={`w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}
+                          >
+                            <span className="text-2xl font-bold text-white">
+                              {scoring.points}
+                            </span>
                           </div>
-                          <IconComponent className={`h-6 w-6 ${scoring.iconColor}`} />
+                          <IconComponent
+                            className={`h-6 w-6 ${scoring.iconColor}`}
+                          />
                         </div>
 
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <h4 className={`text-lg font-bold ${scoring.textColor}`}>
+                            <h4
+                              className={`text-lg font-bold ${scoring.textColor}`}
+                            >
                               {scoring.score}
                             </h4>
-                            <Badge variant="outline" className={`${scoring.textColor} border-current text-xs`}>
+                            <Badge
+                              variant="outline"
+                              className={`${scoring.textColor} border-current text-xs`}
+                            >
                               {scoring.description}
                             </Badge>
                           </div>
 
-                          <p className={`text-sm ${scoring.textColor} opacity-80 leading-relaxed`}>
+                          <p
+                            className={`text-sm ${scoring.textColor} opacity-80 leading-relaxed`}
+                          >
                             {scoring.detail}
                           </p>
                         </div>
@@ -1145,10 +1379,14 @@ export default function PublicEventHome() {
                   <div className="flex items-start space-x-3">
                     <Target className="h-5 w-5 text-emerald-600 mt-0.5" />
                     <div>
-                      <div className="font-semibold text-emerald-900 mb-2">Why Stableford?</div>
+                      <div className="font-semibold text-emerald-900 mb-2">
+                        Why Stableford?
+                      </div>
                       <ul className="text-sm text-emerald-700 space-y-1">
                         <li>• Encourages aggressive, exciting play</li>
-                        <li>• Keeps all players engaged throughout the round</li>
+                        <li>
+                          • Keeps all players engaged throughout the round
+                        </li>
                         <li>• Reduces the impact of one bad hole</li>
                         <li>• Perfect for mixed skill level groups</li>
                       </ul>
@@ -1164,14 +1402,21 @@ export default function PublicEventHome() {
                 <div className="text-center mb-8">
                   <div className="inline-flex items-center space-x-2 bg-slate-200 rounded-full px-4 py-2 mb-4">
                     <FileText className="h-4 w-4 text-slate-600" />
-                    <span className="text-sm font-medium text-slate-700">Tournament Guidelines</span>
+                    <span className="text-sm font-medium text-slate-700">
+                      Tournament Guidelines
+                    </span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Custom Rules</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">
+                    Custom Rules
+                  </h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {customRules.map((rule, index) => (
-                    <div key={rule.id} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <div
+                      key={rule.id}
+                      className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"
+                    >
                       {rule.rule_title && (
                         <h4 className="font-semibold text-slate-900 mb-3 text-lg">
                           {rule.rule_title}
@@ -1191,7 +1436,10 @@ export default function PublicEventHome() {
 
       {/* Players Section */}
       {players.length > 0 && (
-        <section id="players" className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
+        <section
+          id="players"
+          className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"
+        >
           <div className="absolute inset-0 bg-gradient-to-br from-green-50/20 via-white to-emerald-50/10"></div>
           <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-green-100/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
 
@@ -1199,27 +1447,38 @@ export default function PublicEventHome() {
             <div className="text-center mb-20">
               <div className="inline-flex items-center space-x-2 bg-purple-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
                 <Users className="h-4 w-4 text-purple-600" />
-                <span className="text-sm font-medium text-purple-800">Competitors</span>
+                <span className="text-sm font-medium text-purple-800">
+                  Competitors
+                </span>
               </div>
 
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
                 Players
               </h2>
               <p className="text-xl text-slate-600 font-light">
-                Tournament starts {formatDateRange(eventData.start_date, eventData.end_date).split(',')[0]} • {players.length} players registered
+                Tournament starts{" "}
+                {
+                  formatDateRange(
+                    eventData.start_date,
+                    eventData.end_date,
+                  ).split(",")[0]
+                }{" "}
+                • {players.length} players registered
               </p>
             </div>
 
             <div className="flex justify-center">
-              <div className={`grid gap-8 ${
-                players.length === 1
-                  ? 'grid-cols-1 max-w-sm'
-                  : players.length === 2
-                  ? 'grid-cols-1 sm:grid-cols-2 max-w-3xl'
-                  : players.length === 3
-                  ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl'
-                  : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl'
-              }`}>
+              <div
+                className={`grid gap-8 ${
+                  players.length === 1
+                    ? "grid-cols-1 max-w-sm"
+                    : players.length === 2
+                      ? "grid-cols-1 sm:grid-cols-2 max-w-3xl"
+                      : players.length === 3
+                        ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl"
+                        : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl"
+                }`}
+              >
                 {players.map((player, index) => (
                   <AnimatedPlayerCard
                     key={player.id}
@@ -1242,12 +1501,13 @@ export default function PublicEventHome() {
         <section id="prizes" className="py-28 px-6 sm:px-8 lg:px-12 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
           <div className="relative max-w-6xl mx-auto space-y-20">
-
             {/* Header and Buy-in */}
             <div className="text-center">
               <div className="inline-flex items-center space-x-2 bg-amber-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
                 <Trophy className="h-4 w-4 text-amber-600" />
-                <span className="text-sm font-medium text-amber-800">Prize Pool</span>
+                <span className="text-sm font-medium text-amber-800">
+                  Prize Pool
+                </span>
               </div>
 
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
@@ -1256,7 +1516,9 @@ export default function PublicEventHome() {
 
               {eventData.buy_in && eventData.buy_in > 0 && (
                 <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-200/50 max-w-md mx-auto">
-                  <p className="text-lg text-slate-600 mb-2">Tournament Buy-in</p>
+                  <p className="text-lg text-slate-600 mb-2">
+                    Tournament Buy-in
+                  </p>
                   <div className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                     ${eventData.buy_in}
                   </div>
@@ -1267,17 +1529,23 @@ export default function PublicEventHome() {
             {/* Prize Cards */}
             {prizes.length > 0 && (
               <div className="flex justify-center">
-                <div className={`grid gap-8 ${
-                  prizes.length === 1
-                    ? 'grid-cols-1 max-w-sm'
-                    : prizes.length === 2
-                    ? 'grid-cols-1 sm:grid-cols-2 max-w-2xl'
-                    : prizes.length === 3
-                    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl'
-                    : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl'
-                }`}>
+                <div
+                  className={`grid gap-8 ${
+                    prizes.length === 1
+                      ? "grid-cols-1 max-w-sm"
+                      : prizes.length === 2
+                        ? "grid-cols-1 sm:grid-cols-2 max-w-2xl"
+                        : prizes.length === 3
+                          ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl"
+                          : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl"
+                  }`}
+                >
                   {prizes.map((prize, index) => (
-                    <AnimatedPrizeCard key={prize.id} prize={prize} index={index} />
+                    <AnimatedPrizeCard
+                      key={prize.id}
+                      prize={prize}
+                      index={index}
+                    />
                   ))}
                 </div>
               </div>
@@ -1289,10 +1557,16 @@ export default function PublicEventHome() {
                 <div className="text-center mb-8">
                   <div className="inline-flex items-center space-x-2 bg-indigo-200 rounded-full px-4 py-2 mb-4">
                     <Target className="h-4 w-4 text-indigo-600" />
-                    <span className="text-sm font-medium text-indigo-700">Skills Contests</span>
+                    <span className="text-sm font-medium text-indigo-700">
+                      Skills Contests
+                    </span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-indigo-900">Hole Contests</h3>
-                  <p className="text-lg text-indigo-600 font-light">Extra prizes on designated holes</p>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-indigo-900">
+                    Hole Contests
+                  </h3>
+                  <p className="text-lg text-indigo-600 font-light">
+                    Extra prizes on designated holes
+                  </p>
                 </div>
 
                 <div className="space-y-8">
@@ -1301,7 +1575,9 @@ export default function PublicEventHome() {
                     <div>
                       <div className="flex items-center space-x-3 mb-4">
                         <Crosshair className="h-5 w-5 text-green-600" />
-                        <h4 className="text-xl font-bold text-indigo-900">Closest to the Pin</h4>
+                        <h4 className="text-xl font-bold text-indigo-900">
+                          Closest to the Pin
+                        </h4>
                         {closestToPinPrize > 0 && (
                           <Badge className="bg-green-100 text-green-800 border border-green-300">
                             ${closestToPinPrize} per hole
@@ -1310,10 +1586,16 @@ export default function PublicEventHome() {
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {closestToPinGroups.map((group, index) => (
-                          <div key={index} className="bg-white rounded-2xl p-4 border border-indigo-200 shadow-sm">
-                            <div className="font-semibold text-indigo-900 mb-1">{group.roundName}</div>
+                          <div
+                            key={index}
+                            className="bg-white rounded-2xl p-4 border border-indigo-200 shadow-sm"
+                          >
+                            <div className="font-semibold text-indigo-900 mb-1">
+                              {group.roundName}
+                            </div>
                             <div className="text-sm text-indigo-600">
-                              Holes: {group.holes.sort((a, b) => a - b).join(", ")}
+                              Holes:{" "}
+                              {group.holes.sort((a, b) => a - b).join(", ")}
                             </div>
                           </div>
                         ))}
@@ -1326,7 +1608,9 @@ export default function PublicEventHome() {
                     <div>
                       <div className="flex items-center space-x-3 mb-4">
                         <Zap className="h-5 w-5 text-orange-600" />
-                        <h4 className="text-xl font-bold text-indigo-900">Long Drive</h4>
+                        <h4 className="text-xl font-bold text-indigo-900">
+                          Long Drive
+                        </h4>
                         {longestDrivePrize > 0 && (
                           <Badge className="bg-orange-100 text-orange-800 border border-orange-300">
                             ${longestDrivePrize} per hole
@@ -1335,10 +1619,16 @@ export default function PublicEventHome() {
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {longestDriveGroups.map((group, index) => (
-                          <div key={index} className="bg-white rounded-2xl p-4 border border-indigo-200 shadow-sm">
-                            <div className="font-semibold text-indigo-900 mb-1">{group.roundName}</div>
+                          <div
+                            key={index}
+                            className="bg-white rounded-2xl p-4 border border-indigo-200 shadow-sm"
+                          >
+                            <div className="font-semibold text-indigo-900 mb-1">
+                              {group.roundName}
+                            </div>
                             <div className="text-sm text-indigo-600">
-                              Holes: {group.holes.sort((a, b) => a - b).join(", ")}
+                              Holes:{" "}
+                              {group.holes.sort((a, b) => a - b).join(", ")}
                             </div>
                           </div>
                         ))}
@@ -1350,14 +1640,19 @@ export default function PublicEventHome() {
             )}
 
             {/* Contest Rules */}
-            {(closestToPinGroups.length > 0 || longestDriveGroups.length > 0) && (
+            {(closestToPinGroups.length > 0 ||
+              longestDriveGroups.length > 0) && (
               <div className="bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200">
                 <div className="text-center mb-8">
                   <div className="inline-flex items-center space-x-2 bg-slate-200 rounded-full px-4 py-2 mb-4">
                     <Info className="h-4 w-4 text-slate-600" />
-                    <span className="text-sm font-medium text-slate-700">Official Guidelines</span>
+                    <span className="text-sm font-medium text-slate-700">
+                      Official Guidelines
+                    </span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Contest Rules</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">
+                    Contest Rules
+                  </h3>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -1369,17 +1664,25 @@ export default function PublicEventHome() {
                           <Crosshair className="h-6 w-6 text-green-600" />
                         </div>
                         <div>
-                          <h4 className="text-xl font-bold text-green-900">Closest to the Pin</h4>
+                          <h4 className="text-xl font-bold text-green-900">
+                            Closest to the Pin
+                          </h4>
                           {closestToPinPrize > 0 && (
-                            <p className="text-sm text-green-600">${closestToPinPrize} per hole</p>
+                            <p className="text-sm text-green-600">
+                              ${closestToPinPrize} per hole
+                            </p>
                           )}
                         </div>
                       </div>
 
                       <div className="bg-green-50 rounded-lg p-4">
-                        <h5 className="font-semibold text-green-900 text-sm mb-3">Rules</h5>
+                        <h5 className="font-semibold text-green-900 text-sm mb-3">
+                          Rules
+                        </h5>
                         <ul className="text-sm text-green-700 space-y-2">
-                          <li>• Must be <strong>ON THE GREEN</strong> to win</li>
+                          <li>
+                            • Must be <strong>ON THE GREEN</strong> to win
+                          </li>
                           <li>• Measured to the inch for ties</li>
                           <li>• Ball must come to rest on putting surface</li>
                           <li>��� Winner takes the full prize amount</li>
@@ -1396,26 +1699,38 @@ export default function PublicEventHome() {
                           <Zap className="h-6 w-6 text-orange-600" />
                         </div>
                         <div>
-                          <h4 className="text-xl font-bold text-orange-900">Long Drive</h4>
+                          <h4 className="text-xl font-bold text-orange-900">
+                            Long Drive
+                          </h4>
                           {longestDrivePrize > 0 && (
-                            <p className="text-sm text-orange-600">${longestDrivePrize} per hole</p>
+                            <p className="text-sm text-orange-600">
+                              ${longestDrivePrize} per hole
+                            </p>
                           )}
                         </div>
                       </div>
 
                       <div className="space-y-4">
                         <div className="bg-orange-50 rounded-lg p-4">
-                          <h5 className="font-semibold text-orange-900 text-sm mb-3">Rules</h5>
+                          <h5 className="font-semibold text-orange-900 text-sm mb-3">
+                            Rules
+                          </h5>
                           <ul className="text-sm text-orange-700 space-y-2">
-                            <li>• Must be <strong>IN THE FAIRWAY</strong> to win</li>
-                            <li>• Winner = shortest distance to flag from approach</li>
+                            <li>
+                              • Must be <strong>IN THE FAIRWAY</strong> to win
+                            </li>
+                            <li>
+                              • Winner = shortest distance to flag from approach
+                            </li>
                             <li>• Placement beats pure distance</li>
                             <li>• Measured to the yard for ties</li>
                           </ul>
                         </div>
 
                         <div className="bg-orange-50 rounded-lg p-4">
-                          <h5 className="font-semibold text-orange-900 text-sm mb-3">Strategy Tips</h5>
+                          <h5 className="font-semibold text-orange-900 text-sm mb-3">
+                            Strategy Tips
+                          </h5>
                           <ul className="text-sm text-orange-700 space-y-2">
                             <li>• Smart positioning beats pure distance</li>
                             <li>• Know the pin location</li>
@@ -1432,10 +1747,18 @@ export default function PublicEventHome() {
                   <div className="flex items-start space-x-3">
                     <Flag className="h-5 w-5 text-slate-600 mt-0.5" />
                     <div>
-                      <div className="font-semibold text-slate-900 mb-3">Contest Administration</div>
+                      <div className="font-semibold text-slate-900 mb-3">
+                        Contest Administration
+                      </div>
                       <ul className="text-sm text-slate-700 space-y-2">
-                        <li>• All measurements are final when agreed upon by the group</li>
-                        <li>• In case of disputes, tournament organizer has final say</li>
+                        <li>
+                          • All measurements are final when agreed upon by the
+                          group
+                        </li>
+                        <li>
+                          • In case of disputes, tournament organizer has final
+                          say
+                        </li>
                         <li>• Prizes paid out after round completion</li>
                         <li>• Have fun and play with integrity!</li>
                       </ul>
@@ -1449,38 +1772,67 @@ export default function PublicEventHome() {
       )}
 
       {/* Travel & Accommodation Section */}
-      {travel && (travel.flight_info || travel.accommodations || travel.daily_schedule) && (
-        <section id="travel" className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-white to-slate-50/30"></div>
-          <div className="absolute top-0 left-0 w-80 h-80 bg-blue-100/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+      {travel &&
+        (travel.flight_info ||
+          travel.accommodations ||
+          travel.daily_schedule) && (
+          <section
+            id="travel"
+            className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-white to-slate-50/30"></div>
+            <div className="absolute top-0 left-0 w-80 h-80 bg-blue-100/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
 
-          <div className="relative max-w-6xl mx-auto">
-            <div className="text-center mb-20">
-              <div className="inline-flex items-center space-x-2 bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
-                <Plane className="h-4 w-4 text-blue-600" />
-                <span className="text-sm font-medium text-blue-800">Logistics</span>
+            <div className="relative max-w-6xl mx-auto">
+              <div className="text-center mb-20">
+                <div className="inline-flex items-center space-x-2 bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
+                  <Plane className="h-4 w-4 text-blue-600" />
+                  <span className="text-sm font-medium text-blue-800">
+                    Logistics
+                  </span>
+                </div>
+
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
+                  Travel & Accommodation
+                </h2>
+                <p className="text-xl text-slate-600 font-light max-w-3xl mx-auto">
+                  Everything you need to have a smooth and comfortable trip
+                </p>
               </div>
 
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
-                Travel & Accommodation
-              </h2>
-              <p className="text-xl text-slate-600 font-light max-w-3xl mx-auto">
-                Everything you need to have a smooth and comfortable trip
-              </p>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                {[
+                  {
+                    info: travel.flight_info,
+                    icon: Plane,
+                    title: "Getting There",
+                    color: "blue",
+                  },
+                  {
+                    info: travel.accommodations,
+                    icon: Building,
+                    title: "Accommodation",
+                    color: "emerald",
+                  },
+                  {
+                    info: travel.daily_schedule,
+                    icon: Clock,
+                    title: "Daily Schedule",
+                    color: "purple",
+                  },
+                ]
+                  .filter((item) => item.info)
+                  .map((item, index) => (
+                    <AnimatedTravelCard
+                      key={item.title}
+                      item={item}
+                      index={index}
+                    />
+                  ))}
+              </div>
             </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              {[
-                { info: travel.flight_info, icon: Plane, title: "Getting There", color: "blue" },
-                { info: travel.accommodations, icon: Building, title: "Accommodation", color: "emerald" },
-                { info: travel.daily_schedule, icon: Clock, title: "Daily Schedule", color: "purple" }
-              ].filter(item => item.info).map((item, index) => (
-                <AnimatedTravelCard key={item.title} item={item} index={index} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+          </section>
+        )}
 
       {/* Footer */}
       <footer className="relative py-20 px-6 sm:px-8 lg:px-12 overflow-hidden">
@@ -1498,7 +1850,8 @@ export default function PublicEventHome() {
           </h3>
 
           <p className="text-xl text-green-200 mb-12 font-light">
-            {eventData.location} • {formatDateRange(eventData.start_date, eventData.end_date)}
+            {eventData.location} •{" "}
+            {formatDateRange(eventData.start_date, eventData.end_date)}
           </p>
 
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">

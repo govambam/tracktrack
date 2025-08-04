@@ -136,13 +136,18 @@ export default function EventEdit() {
 
   // Extract current section from the pathname
   const pathParts = location.pathname.split("/");
-  const currentSectionId = pathParts.slice(-2).join("/").startsWith("customizations/")
+  const currentSectionId = pathParts
+    .slice(-2)
+    .join("/")
+    .startsWith("customizations/")
     ? pathParts.slice(-2).join("/")
     : pathParts.pop() || "basic";
 
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [expandedMenus, setExpandedMenus] = useState<string[]>(["customizations"]);
+  const [expandedMenus, setExpandedMenus] = useState<string[]>([
+    "customizations",
+  ]);
 
   useEffect(() => {
     if (eventId) {
@@ -237,19 +242,24 @@ export default function EventEdit() {
     // First check if it's a submenu item
     for (const section of sidebarSections) {
       if (section.submenu) {
-        const submenuItem = section.submenu.find((sub) => sub.id === currentSectionId);
+        const submenuItem = section.submenu.find(
+          (sub) => sub.id === currentSectionId,
+        );
         if (submenuItem) return submenuItem;
       }
     }
     // Then check if it's a main section
-    return sidebarSections.find((s) => s.id === currentSectionId) || sidebarSections[0];
+    return (
+      sidebarSections.find((s) => s.id === currentSectionId) ||
+      sidebarSections[0]
+    );
   })();
 
   const toggleMenu = (sectionId: string) => {
     setExpandedMenus((prev) =>
       prev.includes(sectionId)
         ? prev.filter((id) => id !== sectionId)
-        : [...prev, sectionId]
+        : [...prev, sectionId],
     );
   };
 
@@ -331,9 +341,12 @@ export default function EventEdit() {
                   {sidebarSections.map((sectionItem) => {
                     const Icon = sectionItem.icon;
                     const isActive = currentSectionId === sectionItem.id;
-                    const isCustomizations = sectionItem.id === "customizations";
+                    const isCustomizations =
+                      sectionItem.id === "customizations";
                     const isExpanded = expandedMenus.includes(sectionItem.id);
-                    const hasActiveSubmenu = sectionItem.submenu?.some(sub => sub.id === currentSectionId);
+                    const hasActiveSubmenu = sectionItem.submenu?.some(
+                      (sub) => sub.id === currentSectionId,
+                    );
 
                     return (
                       <div key={sectionItem.id}>
@@ -377,7 +390,8 @@ export default function EventEdit() {
                           <div className="ml-4 mt-1 space-y-1">
                             {sectionItem.submenu.map((subItem) => {
                               const SubIcon = subItem.icon;
-                              const isSubActive = currentSectionId === subItem.id;
+                              const isSubActive =
+                                currentSectionId === subItem.id;
 
                               return (
                                 <Link
