@@ -210,10 +210,12 @@ export default function DraftModePublicEventHome({ localChanges, updateLocalChan
     setEditDescriptionModal(false);
   };
 
-  const handleEditCourse = (round: any) => {
+  const handleEditCourse = (round: any, roundIndex?: number) => {
     const course = courses.find(c => c.round_id === round.id);
+    const calculatedRoundNumber = roundIndex !== undefined ? roundIndex + 1 : rounds.findIndex(r => r.id === round.id) + 1;
     setTempCourseData({
       id: round.id,
+      roundNumber: calculatedRoundNumber,
       course_name: getCourseValue(round.id, 'course_name', round.course_name),
       tee_time: getCourseValue(round.id, 'tee_time', round.tee_time),
       round_date: getCourseValue(round.id, 'round_date', round.round_date),
