@@ -991,6 +991,19 @@ export default function PublicEventHome() {
           </div>
         </div>
       </footer>
+
+      {/* Course Modal */}
+      {selectedCourse && (
+        <CourseModal
+          course={selectedCourse.course}
+          round={selectedCourse.round}
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedCourse(null);
+          }}
+        />
+      )}
     </div>
   );
 }
