@@ -208,20 +208,19 @@ export default function TravelCustomization() {
 
     setSaving(true);
     try {
-      // Save all travel fields
-      if (travelInfo.flight_info) await saveTravelField('flight_info', travelInfo.flight_info);
-      if (travelInfo.accommodations) await saveTravelField('accommodations', travelInfo.accommodations);
-      if (travelInfo.daily_schedule) await saveTravelField('daily_schedule', travelInfo.daily_schedule);
-      await saveTravelEnabled(travelEnabled);
+      // Save all travel fields (content only, toggle saves immediately)
+      if (travelInfo.flight_info !== undefined) await saveTravelField('flight_info', travelInfo.flight_info);
+      if (travelInfo.accommodations !== undefined) await saveTravelField('accommodations', travelInfo.accommodations);
+      if (travelInfo.daily_schedule !== undefined) await saveTravelField('daily_schedule', travelInfo.daily_schedule);
 
       toast({
-        title: "Settings Saved",
-        description: "Travel customization settings have been saved successfully",
+        title: "Changes Saved",
+        description: "Travel information has been saved successfully",
       });
     } catch (error) {
       toast({
         title: "Save Failed",
-        description: "Failed to save travel settings",
+        description: "Failed to save travel information",
         variant: "destructive",
       });
     } finally {
