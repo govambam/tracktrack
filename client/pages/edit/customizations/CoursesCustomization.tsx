@@ -762,7 +762,7 @@ Return your response as a JSON object with these fields:
                         variant="outline"
                         size="sm"
                         onClick={() => generateCourseWithAI(course)}
-                        disabled={!coursesEnabled || generatingAI === course.id}
+                        disabled={generatingAI === course.id}
                         className="w-full border-blue-200 text-blue-700 hover:bg-blue-50"
                       >
                         {generatingAI === course.id ? (
