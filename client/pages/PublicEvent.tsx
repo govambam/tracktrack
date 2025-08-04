@@ -152,7 +152,12 @@ export default function PublicEvent() {
           .single();
 
         if (customizationError && customizationError.code !== 'PGRST116' && customizationError.code !== '42P01') {
-          console.error('Error loading customization:', customizationError);
+          console.error('Error loading customization data:', {
+            message: customizationError.message,
+            details: customizationError.details,
+            hint: customizationError.hint,
+            code: customizationError.code
+          });
         } else {
           setCustomization(customizationData || {});
         }
