@@ -353,22 +353,24 @@ const AnimatedPrizeCard = ({ prize, index }: { prize: any; index: number }) => {
         index === 0 ? 'delay-0' : index === 1 ? 'delay-100' : index === 2 ? 'delay-200' : 'delay-300'
       } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-300 group-hover:bg-white">
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-300 group-hover:bg-white h-80 flex flex-col">
         <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
           <Trophy className="h-10 w-10 text-amber-600" />
         </div>
 
-        <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-amber-700 transition-colors">
+        <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-amber-700 transition-colors min-h-[3.5rem] flex items-center justify-center">
           {prize.category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
         </h3>
 
-        {prize.amount > 0 && (
-          <div className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent mb-4">
-            ${prize.amount}
-          </div>
-        )}
+        <div className="flex-1 flex flex-col justify-center">
+          {prize.amount > 0 && (
+            <div className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent mb-4">
+              ${prize.amount}
+            </div>
+          )}
 
-        <p className="text-slate-600 font-medium">{prize.description}</p>
+          <p className="text-slate-600 font-medium leading-relaxed">{prize.description}</p>
+        </div>
       </div>
     </div>
   );
@@ -708,7 +710,7 @@ export default function PublicEventHome() {
                 Players
               </h2>
               <p className="text-xl text-slate-600 font-light">
-                Tournament starts {formatDateRange(eventData.start_date, eventData.end_date).split(',')[0]} ��� {players.length} players registered
+                Tournament starts {formatDateRange(eventData.start_date, eventData.end_date).split(',')[0]} • {players.length} players registered
               </p>
             </div>
 
