@@ -47,6 +47,7 @@ export default function RulesCustomization() {
   const [stablefordScoring, setStablefordScoring] = useState<StablefordScoring | null>(null);
   const [isStablefordEvent, setIsStablefordEvent] = useState(false);
   const [stablefordChanges, setStablefordChanges] = useState<Partial<StablefordScoring>>({});
+  const [editingStableford, setEditingStableford] = useState(false);
   let nextDraftId = 1; // Counter for generating unique draft IDs
 
   useEffect(() => {
@@ -782,61 +783,133 @@ ${currentText}`;
           {isStablefordEvent && stablefordScoring && (
             <Card className="border-green-100 bg-green-50">
               <CardContent className="p-4 space-y-4">
-                <div className="flex items-center justify-between">
-                  <Label className="text-green-800 font-medium flex items-center">
-                    <Target className="h-4 w-4 mr-2" />
-                    Stableford Point Values
-                  </Label>
-                </div>
-
-                <div className="text-sm text-green-600 mb-4">
-                  Customize the points awarded for each score relative to par.
-                </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {[
-                    { key: 'albatross', label: 'Albatross (-3)', color: 'text-purple-700' },
-                    { key: 'eagle', label: 'Eagle (-2)', color: 'text-yellow-700' },
-                    { key: 'birdie', label: 'Birdie (-1)', color: 'text-green-700' },
-                    { key: 'par', label: 'Par (0)', color: 'text-blue-700' },
-                    { key: 'bogey', label: 'Bogey (+1)', color: 'text-orange-700' },
-                    { key: 'double_bogey', label: 'Double Bogey (+2)', color: 'text-red-700' },
-                  ].map(({ key, label, color }) => (
-                    <div key={key} className="space-y-1">
-                      <Label className={`text-xs font-medium ${color}`}>
-                        {label}
+                {!editingStableford ? (
+                  // View mode - show point values with edit button
+                  <>
+                    <div className="flex items-center justify-between">
+                      <Label className="text-green-800 font-medium flex items-center">
+                        <Target className="h-4 w-4 mr-2" />
+                        Stableford Point Values
                       </Label>
-                      <Input
-                        type="text"
-                        value={
-                          stablefordChanges[key as keyof StablefordScoring] !== undefined
-                            ? stablefordChanges[key as keyof StablefordScoring]
-                            : stablefordScoring[key as keyof StablefordScoring]
-                        }
-                        onChange={(e) => {
-                          const value = parseInt(e.target.value) || 0;
-                          setStablefordChanges((prev) => ({
-                            ...prev,
-                            [key]: value,
-                          }));
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setEditingStableford(true);
+                          // Initialize changes with current values
+                          setStablefordChanges({
+                            albatross: stablefordScoring.albatross,
+                            eagle: stablefordScoring.eagle,
+                            birdie: stablefordScoring.birdie,
+                            par: stablefordScoring.par,
+                            bogey: stablefordScoring.bogey,
+                            double_bogey: stablefordScoring.double_bogey,
+                          });
                         }}
-                        className="border-green-200 focus:border-emerald-500 bg-white text-center font-medium"
-                      />
+                        className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                      >
+                        <Edit className="h-4 w-4 mr-1" />
+                        Edit
+                      </Button>
                     </div>
-                  ))}
-                </div>
 
-                {Object.keys(stablefordChanges).length > 0 && (
-                  <div className="flex justify-end pt-2">
-                    <Button
-                      onClick={saveStablefordScoring}
-                      size="sm"
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white"
-                    >
-                      <Save className="h-4 w-4 mr-2" />
-                      Save Point Values
-                    </Button>
-                  </div>
+                    <div className="text-sm text-green-600 mb-4">
+                      Current point values for each score relative to par.
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {[
+                        { key: 'albatross', label: 'Albatross (-3)', color: 'text-purple-700' },
+                        { key: 'eagle', label: 'Eagle (-2)', color: 'text-yellow-700' },
+                        { key: 'birdie', label: 'Birdie (-1)', color: 'text-green-700' },
+                        { key: 'par', label: 'Par (0)', color: 'text-blue-700' },
+                        { key: 'bogey', label: 'Bogey (+1)', color: 'text-orange-700' },
+                        { key: 'double_bogey', label: 'Double Bogey (+2)', color: 'text-red-700' },
+                      ].map(({ key, label, color }) => (
+                        <div key={key} className="space-y-1">
+                          <Label className={`text-xs font-medium ${color}`}>
+                            {label}
+                          </Label>
+                          <div className="text-center font-bold text-lg text-green-800">
+                            {stablefordScoring[key as keyof StablefordScoring]} pts
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  // Edit mode - show input fields with save/cancel buttons
+                  <>
+                    <div className="flex items-center justify-between">
+                      <Label className="text-green-800 font-medium flex items-center">
+                        <Target className="h-4 w-4 mr-2" />
+                        Edit Stableford Point Values
+                      </Label>
+                      <div className="flex items-center space-x-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setEditingStableford(false);
+                            setStablefordChanges({});
+                          }}
+                          className="border-gray-200 text-gray-600 hover:bg-gray-50"
+                        >
+                          <X className="h-4 w-4 mr-1" />
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={async () => {
+                            await saveStablefordScoring();
+                            setEditingStableford(false);
+                          }}
+                          className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                        >
+                          <Save className="h-4 w-4 mr-1" />
+                          Save
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="text-sm text-green-600 mb-4">
+                      Customize the points awarded for each score relative to par.
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {[
+                        { key: 'albatross', label: 'Albatross (-3)', color: 'text-purple-700' },
+                        { key: 'eagle', label: 'Eagle (-2)', color: 'text-yellow-700' },
+                        { key: 'birdie', label: 'Birdie (-1)', color: 'text-green-700' },
+                        { key: 'par', label: 'Par (0)', color: 'text-blue-700' },
+                        { key: 'bogey', label: 'Bogey (+1)', color: 'text-orange-700' },
+                        { key: 'double_bogey', label: 'Double Bogey (+2)', color: 'text-red-700' },
+                      ].map(({ key, label, color }) => (
+                        <div key={key} className="space-y-1">
+                          <Label className={`text-xs font-medium ${color}`}>
+                            {label}
+                          </Label>
+                          <Input
+                            type="text"
+                            value={
+                              stablefordChanges[key as keyof StablefordScoring] !== undefined
+                                ? stablefordChanges[key as keyof StablefordScoring]
+                                : stablefordScoring[key as keyof StablefordScoring]
+                            }
+                            onChange={(e) => {
+                              const value = parseInt(e.target.value) || 0;
+                              setStablefordChanges((prev) => ({
+                                ...prev,
+                                [key]: value,
+                              }));
+                            }}
+                            className="border-green-200 focus:border-emerald-500 bg-white text-center font-medium"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </>
                 )}
               </CardContent>
             </Card>
