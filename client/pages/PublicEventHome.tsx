@@ -639,23 +639,23 @@ const AnimatedCourseCard = ({
                   Round {index + 1}
                 </Badge>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors">
+              <h3 className={`${isTourTech ? "text-xl font-semibold text-slate-900 mb-1" : "text-2xl font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors"}`}>
                 {course.name}
               </h3>
             </div>
           </div>
 
           {course.par && course.yardage && (
-            <div className="flex items-center space-x-6 mb-6 text-sm">
+            <div className={`flex items-center space-x-6 ${isTourTech ? "mb-4" : "mb-6"} text-sm`}>
               <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="font-semibold text-slate-700">
+                {!isTourTech && <div className="w-2 h-2 bg-green-500 rounded-full"></div>}
+                <span className={`${isTourTech ? "font-mono text-slate-800" : "font-semibold text-slate-700"}`}>
                   Par {course.par}
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span className="font-semibold text-slate-700">
+                {!isTourTech && <div className="w-2 h-2 bg-blue-500 rounded-full"></div>}
+                <span className={`${isTourTech ? "font-mono text-slate-800" : "font-semibold text-slate-700"}`}>
                   {course.yardage?.toLocaleString()} yards
                 </span>
               </div>
