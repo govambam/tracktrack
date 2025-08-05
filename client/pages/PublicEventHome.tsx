@@ -1788,28 +1788,31 @@ export default function PublicEventHome() {
 
       {/* Prizes Section */}
       {(prizes.length > 0 || skillsContests.length > 0) && (
-        <section id="prizes" className="py-28 px-6 sm:px-8 lg:px-12 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
-          <div className="relative max-w-6xl mx-auto space-y-20">
+        <section id="prizes" className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative"} ${theme.sectionPadding} ${theme.containerPadding}`}>
+          {/* Background decoration - only for GolfOS */}
+          {eventData?.theme !== "TourTech" && (
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
+          )}
+          <div className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "8" : "20"}`}>
             {/* Header and Buy-in */}
-            <div className="text-center">
-              <div className="inline-flex items-center space-x-2 bg-amber-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
-                <Trophy className="h-4 w-4 text-amber-600" />
-                <span className="text-sm font-medium text-amber-800">
-                  Prize Pool
+            <div className={`text-center ${theme.headerSpacing}`}>
+              <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
+                <Trophy className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-amber-600"}`} />
+                <span className={`${eventData?.theme === "TourTech" ? theme.monoLabel : "text-sm font-medium text-amber-800"}`}>
+                  {eventData?.theme === "TourTech" ? "PRIZES" : "Prize Pool"}
                 </span>
               </div>
 
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
-                High Stakes, Higher Handicaps
+              <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
+                {eventData?.theme === "TourTech" ? "Tournament Prizes" : "High Stakes, Higher Handicaps"}
               </h2>
 
               {eventData.buy_in && eventData.buy_in > 0 && (
-                <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-200/50 max-w-md mx-auto">
-                  <p className="text-lg text-slate-600 mb-2">
+                <div className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth} mx-auto`}>
+                  <p className={`${theme.cardText} mb-2`}>
                     Tournament Buy-in
                   </p>
-                  <div className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                  <div className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}>
                     ${eventData.buy_in}
                   </div>
                 </div>
