@@ -2124,13 +2124,19 @@ export default function PublicEventHome() {
                     : "High Stakes, Higher Handicaps"}
               </h2>
 
-              {eventData.buy_in && eventData.buy_in > 0 && (
+              {eventData.buy_in && eventData.buy_in > 0 && eventData?.theme === "Masters" && (
+                <p className="font-serif text-green-800/70 text-lg mb-8">
+                  Tournament Buy-in: <span className="font-serif font-semibold text-yellow-600 text-xl">${eventData.buy_in}</span>
+                </p>
+              )}
+
+              {eventData.buy_in && eventData.buy_in > 0 && eventData?.theme !== "Masters" && (
                 <div
                   className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth} mx-auto`}
                 >
                   <p className={`${theme.cardText} mb-2`}>Tournament Buy-in</p>
                   <div
-                    className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : eventData?.theme === "Masters" ? "text-4xl font-serif font-bold text-yellow-600" : "text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
+                    className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
                   >
                     ${eventData.buy_in}
                   </div>
