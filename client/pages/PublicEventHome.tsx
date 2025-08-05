@@ -1475,8 +1475,8 @@ export default function PublicEventHome() {
           <div className={`relative ${theme.maxContentWidth} mx-auto`}>
             <div className={`text-center ${theme.headerSpacing}`}>
               <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
-                <Sparkles className={`h-3.5 w-3.5 ${theme.accentColor}`} />
-                <span className={`${eventData?.theme === "TourTech" ? theme.tableHeader : "text-sm font-medium text-green-800"}`}>
+                <Sparkles className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : theme.accentColor}`} />
+                <span className={`${eventData?.theme === "TourTech" ? `${theme.monoLabel} text-orange-600` : "text-sm font-medium text-green-800"}`}>
                   {eventData?.theme === "TourTech" ? "VENUES" : "Championship Venues"}
                 </span>
               </div>
