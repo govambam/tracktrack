@@ -2232,9 +2232,9 @@ export default function PublicEventHome() {
                   {/* Prize Information */}
                   {(closestToPinPrize > 0 || longestDrivePrize > 0) && (
                     <div
-                      className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
+                      className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : eventData?.theme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
                     >
-                      <h4 className="text-lg font-semibold text-indigo-900 mb-4">
+                      <h4 className={`text-lg font-semibold mb-4 ${eventData?.theme === "Masters" ? "text-green-900 font-serif" : "text-indigo-900"}`}>
                         Prize Information
                       </h4>
                       <div className="flex flex-wrap gap-4">
@@ -2247,7 +2247,7 @@ export default function PublicEventHome() {
                             >
                               ����
                             </span>
-                            <span className="text-sm text-green-700 font-medium">
+                            <span className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-green-700"}`}>
                               Closest to Pin: ${closestToPinPrize} per hole
                             </span>
                           </div>
@@ -2261,7 +2261,7 @@ export default function PublicEventHome() {
                             >
                               🏌️�����️
                             </span>
-                            <span className="text-sm text-orange-700 font-medium">
+                            <span className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-orange-700"}`}>
                               Long Drive: ${longestDrivePrize} per hole
                             </span>
                           </div>
