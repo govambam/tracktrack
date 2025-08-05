@@ -2374,7 +2374,7 @@ export default function PublicEventHome() {
 
             {/* Contest Rules */}
             {(closestToPinGroups.length > 0 ||
-              longestDriveGroups.length > 0) && (
+              longestDriveGroups.length > 0) && eventData?.theme !== "Masters" && (
               <div
                 className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : eventData?.theme === "Masters" ? "bg-green-50/20 rounded-lg p-8 sm:p-12 border border-green-800/20 mt-20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}
               >
