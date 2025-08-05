@@ -1609,7 +1609,7 @@ export default function PublicEventHome() {
       </section>
 
       {/* Summary Cards Section */}
-      {eventData?.theme !== "TourTech" && (
+      {eventData?.theme !== "TourTech" && eventData?.theme !== "Masters" && (
         <section className="py-24 px-6 sm:px-8 lg:px-12 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white"></div>
           <div className="relative max-w-5xl mx-auto">
