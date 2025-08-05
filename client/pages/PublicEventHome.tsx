@@ -132,13 +132,16 @@ const getThemeStyles = (theme: string = "GolfOS") => {
       sectionBackground: "bg-gray-50",
       modalBackground: "bg-white",
 
-      // Typography - Compact, weight-based hierarchy
+      // Typography - Compact, weight-based hierarchy with monospace emphasis
       heroTitle: "text-slate-900 font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight",
       heroSubtitle: "text-slate-600 font-normal text-base sm:text-lg",
       sectionTitle: "text-slate-900 font-semibold text-lg sm:text-xl tracking-tight",
       cardTitle: "text-slate-900 font-semibold text-base",
       cardText: "text-slate-600 text-sm",
       dataText: "font-mono text-slate-800 font-medium",
+      monoText: "font-mono text-slate-800 font-medium",
+      monoLabel: "font-mono text-xs uppercase tracking-wide text-slate-500",
+      orangeText: "text-orange-600 font-medium",
 
       // Buttons - Solid, enterprise-style
       primaryButton: "bg-orange-600 hover:bg-orange-700 text-white font-medium transition-colors",
