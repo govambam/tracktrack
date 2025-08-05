@@ -675,33 +675,21 @@ export default function DraftModePublicEventHome({
   return (
     <TooltipProvider>
       <div className={`min-h-screen ${theme.heroContainer}`}>
-        {/* Hero Section - Matches PublicEventHome exactly */}
-        <section id="overview" className="relative overflow-hidden">
-          {/* Subtle background pattern */}
-          <div className={`absolute inset-0 ${theme.heroGradient}`}></div>
-          {eventData?.theme !== "TourTech" && (
-            <>
-              <div className="absolute top-0 right-0 w-96 h-96 bg-green-100/20 rounded-full blur-3xl -translate-y-24 translate-x-24"></div>
-              <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100/20 rounded-full blur-3xl translate-y-24 -translate-x-24"></div>
-            </>
-          )}
-          <div
-            className={`relative max-w-6xl mx-auto ${theme.containerPadding} pt-20 pb-32`}
-          >
-            <div className="relative text-center">
-              <div
-                className={`inline-flex items-center space-x-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners === "rounded-3xl" ? "rounded-full" : "rounded-lg"} px-4 py-2 mb-8 ${theme.cardShadow}`}
-              >
-                <Calendar className={`h-4 w-4 ${theme.accentColor}`} />
-                <span className={`text-sm font-medium ${theme.accentColor}`}>
+        {/* Hero Section - Tour Tech Enterprise Design */}
+        <section id="overview" className={`${theme.heroContainer} border-b border-slate-200`}>
+          <div className={`${theme.maxContentWidth} mx-auto ${theme.containerPadding} ${theme.sectionPadding}`}>
+            <div className="space-y-6">
+              {/* Event Badge */}
+              <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}`}>
+                <Calendar className={`h-3.5 w-3.5 ${theme.accentColor}`} />
+                <span className={`text-xs font-medium ${theme.accentColor} uppercase tracking-wide`}>
                   {formatDateRange(eventData.start_date, eventData.end_date)}
                 </span>
               </div>
 
-              <div className="space-y-8">
-                <h1
-                  className={`text-5xl sm:text-7xl lg:text-8xl ${eventData?.theme === "TourTech" ? "text-slate-900 font-bold" : "font-bold"} leading-[0.9] ${theme.heroTitle}`}
-                >
+              {/* Title & Description */}
+              <div className="space-y-3">
+                <h1 className={`${theme.heroTitle} leading-tight`}>
                   {eventData.name}
                 </h1>
 
