@@ -2277,21 +2277,23 @@ export default function PublicEventHome() {
             {(closestToPinGroups.length > 0 ||
               longestDriveGroups.length > 0) && (
               <div
-                className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}
+                className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : eventData?.theme === "Masters" ? "bg-green-50/20 rounded-lg p-8 sm:p-12 border border-green-800/20 mt-20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}
               >
                 <div className="text-center mb-8">
                   <div
-                    className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
+                    className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
                   >
-                    <Info className="h-4 w-4 text-slate-600" />
-                    <span className="text-sm font-medium text-slate-700">
+                    <Info className={`h-4 w-4 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-600"}`} />
+                    <span className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-slate-700"}`}>
                       {eventData?.theme === "TourTech"
                         ? "CONTEST RULES"
-                        : "Official Guidelines"}
+                        : eventData?.theme === "Masters"
+                          ? "Contest Rules"
+                          : "Official Guidelines"}
                     </span>
                   </div>
                   <h3
-                    className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
+                    className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
                   >
                     Contest Rules
                   </h3>
