@@ -50,6 +50,10 @@ import {
 
 // Theme utility function
 const getThemeStyles = (theme: string = "GolfOS") => {
+  console.log("🎨 Draft getThemeStyles Debug - Input theme:", theme);
+  console.log("🎨 Draft getThemeStyles Debug - Theme type:", typeof theme);
+  console.log("🎨 Draft getThemeStyles Debug - Is TourTech?", theme === "TourTech");
+
   if (theme === "TourTech") {
     return {
       // Container styles
