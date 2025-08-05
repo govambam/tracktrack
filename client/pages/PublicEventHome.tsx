@@ -1872,16 +1872,16 @@ export default function PublicEventHome() {
             {skillsContests.length > 0 && (
               <div className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-12" : "bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200"}`}>
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-center space-x-2 bg-indigo-200 rounded-full px-4 py-2 mb-4">
-                    <Target className="h-4 w-4 text-indigo-600" />
-                    <span className="text-sm font-medium text-indigo-700">
-                      Skills Contests
+                  <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : "bg-indigo-200 rounded-full"} px-4 py-2 mb-4`}>
+                    <Target className={`h-4 w-4 ${eventData?.theme === "TourTech" ? "text-gray-600" : "text-indigo-600"}`} />
+                    <span className={`text-sm font-medium ${eventData?.theme === "TourTech" ? "text-gray-700" : "text-indigo-700"}`}>
+                      {eventData?.theme === "TourTech" ? "SKILLS CONTESTS" : "Skills Contests"}
                     </span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-indigo-900">
+                  <h3 className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : "text-2xl sm:text-3xl font-bold text-indigo-900"}`}>
                     Hole Contests
                   </h3>
-                  <p className="text-lg text-indigo-600 font-light">
+                  <p className={`${eventData?.theme === "TourTech" ? "text-sm text-slate-600" : "text-lg text-indigo-600 font-light"}`}>
                     Extra prizes on designated holes
                   </p>
                 </div>
