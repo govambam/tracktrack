@@ -367,16 +367,16 @@ const StickyNavigation = ({
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg">
+    <nav className={`fixed top-0 left-0 right-0 z-50 ${theme === "Masters" ? "bg-white/98 backdrop-blur-sm border-b border-green-800/20 shadow-sm" : "bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg"}`}>
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="font-bold text-slate-900">{eventName}</div>
+          <div className={`font-bold ${theme === "Masters" ? "text-green-900 font-serif text-lg" : "text-slate-900"}`}>{eventName}</div>
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium text-slate-600 hover:text-green-600 transition-colors"
+                className={`text-sm font-medium transition-colors ${theme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
               >
                 {item.name}
               </a>
