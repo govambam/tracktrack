@@ -1047,32 +1047,32 @@ const AnimatedTravelCard = ({
           <ReactMarkdown
             components={{
               h1: ({ children }) => (
-                <h1 className="text-xl font-bold text-slate-900 mb-3">
+                <h1 className={`text-xl font-bold mb-3 ${isMasters ? "text-green-900 font-serif" : "text-slate-900"}`}>
                   {children}
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="text-lg font-semibold text-slate-900 mb-2">
+                <h2 className={`text-lg font-semibold mb-2 ${isMasters ? "text-green-900 font-serif" : "text-slate-900"}`}>
                   {children}
                 </h2>
               ),
               h3: ({ children }) => (
-                <h3 className="text-base font-medium text-slate-900 mb-2">
+                <h3 className={`text-base font-medium mb-2 ${isMasters ? "text-green-900 font-serif" : "text-slate-900"}`}>
                   {children}
                 </h3>
               ),
               p: ({ children }) => (
-                <p className="text-slate-600 leading-relaxed mb-2">
+                <p className={`leading-relaxed mb-2 ${isMasters ? "text-green-800/70 font-serif" : "text-slate-600"}`}>
                   {children}
                 </p>
               ),
               ul: ({ children }) => (
-                <ul className="list-disc ml-4 mb-2 text-slate-600">
+                <ul className={`list-disc ml-4 mb-2 ${isMasters ? "text-green-800/70 font-serif" : "text-slate-600"}`}>
                   {children}
                 </ul>
               ),
               ol: ({ children }) => (
-                <ol className="list-decimal ml-4 mb-2 text-slate-600">
+                <ol className={`list-decimal ml-4 mb-2 ${isMasters ? "text-green-800/70 font-serif" : "text-slate-600"}`}>
                   {children}
                 </ol>
               ),
