@@ -2148,27 +2148,32 @@ export default function PublicEventHome() {
         )}
 
       {/* Footer */}
-      <footer className="relative py-20 px-6 sm:px-8 lg:px-12 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(34,197,94,0.1),_transparent_70%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(6,182,212,0.1),_transparent_70%)]"></div>
+      <footer className={`relative ${eventData?.theme === "TourTech" ? "py-12 px-6 sm:px-8 lg:px-12 bg-gray-50 border-t border-gray-200" : "py-20 px-6 sm:px-8 lg:px-12 overflow-hidden"}`}>
+        {/* Background decoration - only for GolfOS */}
+        {eventData?.theme !== "TourTech" && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(34,197,94,0.1),_transparent_70%)]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(6,182,212,0.1),_transparent_70%)]"></div>
+          </>
+        )}
 
-        <div className="relative max-w-4xl mx-auto text-center">
-          <div className="w-24 h-24 bg-white/10 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/20">
-            <Target className="h-12 w-12 text-white" />
+        <div className={`relative ${theme.maxContentWidth} mx-auto text-center`}>
+          <div className={`${eventData?.theme === "TourTech" ? `w-16 h-16 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-6` : "w-24 h-24 bg-white/10 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/20"}`}>
+            <Target className={`${eventData?.theme === "TourTech" ? "h-8 w-8 text-white" : "h-12 w-12 text-white"}`} />
           </div>
 
-          <h3 className="text-3xl sm:text-4xl font-bold mb-6 text-white">
+          <h3 className={`${eventData?.theme === "TourTech" ? `${theme.sectionTitle} text-slate-900 mb-3` : "text-3xl sm:text-4xl font-bold mb-6 text-white"}`}>
             {eventData.name}
           </h3>
 
-          <p className="text-xl text-green-200 mb-12 font-light">
+          <p className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-slate-600 mb-6` : "text-xl text-green-200 mb-12 font-light"}`}>
             {eventData.location} •{" "}
             {formatDateRange(eventData.start_date, eventData.end_date)}
           </p>
 
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-            <p className="text-green-200 text-lg font-medium">
+          <div className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} p-4` : "bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"}`}>
+            <p className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-slate-500 text-sm` : "text-green-200 text-lg font-medium"}`}>
               Powered by TrackTrack Golf
             </p>
           </div>
