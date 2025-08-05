@@ -119,6 +119,12 @@ const sidebarSections = [
         icon: Plane,
         description: "Travel information",
       },
+      {
+        id: "customizations/theme",
+        label: "Theme",
+        icon: Palette,
+        description: "Visual theme and design",
+      },
     ],
   },
   {
