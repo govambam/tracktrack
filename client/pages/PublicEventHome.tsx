@@ -218,11 +218,15 @@ const getThemeStyles = (theme: string = "GolfOS") => {
       tableHeader: "font-serif text-sm font-medium tracking-wide text-green-800",
       tableCell: "font-sans text-base text-green-900",
 
-      // Layout Constraints
-      maxContentWidth: "max-w-6xl",
-      textMaxWidth: "max-w-4xl",
+      // Layout Constraints - Wider to match Fore the Boy
+      maxContentWidth: "max-w-7xl",
+      textMaxWidth: "max-w-5xl",
 
-      // Masters-specific styles
+      // Masters-specific styles with improved hover states
+      mastersCardBorder: "border border-green-800/20",
+      mastersCardHover: "hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300",
+      mastersCardShadow: "shadow-sm hover:shadow-lg",
+
       mastersGreen: "text-green-800",
       mastersGreenDeep: "text-green-900",
       mastersGold: "text-yellow-600",
