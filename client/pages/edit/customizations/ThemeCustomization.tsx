@@ -135,8 +135,8 @@ export default function ThemeCustomization() {
           <Palette className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Theme Selection</h1>
-          <p className="text-slate-600">Choose your event's visual theme and personality</p>
+          <h1 className="text-2xl font-bold text-slate-900">Public Site Theme</h1>
+          <p className="text-slate-600">Choose your public event website's visual theme and personality</p>
         </div>
       </div>
 
