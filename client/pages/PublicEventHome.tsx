@@ -159,9 +159,11 @@ const getThemeStyles = (theme: string = "GolfOS") => {
   return {
     // Container styles
     heroContainer: "bg-gradient-to-br from-green-50 via-white to-emerald-50",
-    heroGradient: "bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20",
+    heroGradient:
+      "bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20",
     cardBackground: "bg-white/90 backdrop-blur-sm",
-    sectionBackground: "bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20",
+    sectionBackground:
+      "bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20",
 
     // Typography
     heroTitle: "text-slate-900 font-bold tracking-tight",
@@ -171,13 +173,15 @@ const getThemeStyles = (theme: string = "GolfOS") => {
     cardText: "text-slate-600",
 
     // Buttons and accents
-    primaryButton: "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white border-0",
+    primaryButton:
+      "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white border-0",
     accentColor: "text-green-600",
     accentBackground: "bg-green-600",
 
     // Borders and shadows
     cardBorder: "border border-slate-200/50",
-    cardShadow: "shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50",
+    cardShadow:
+      "shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50",
     roundedCorners: "rounded-3xl",
 
     // Spacing
@@ -1305,7 +1309,10 @@ export default function PublicEventHome() {
   console.log("🎨 Theme Application - Event data theme:", eventData?.theme);
   const theme = getThemeStyles(eventData?.theme);
   console.log("🎨 Theme Application - Applied theme styles:", theme);
-  console.log("🎨 Theme Application - Hero container class:", theme.heroContainer);
+  console.log(
+    "🎨 Theme Application - Hero container class:",
+    theme.heroContainer,
+  );
 
   return (
     <div className={`min-h-screen ${theme.heroContainer}`}>
@@ -1322,9 +1329,13 @@ export default function PublicEventHome() {
           </>
         )}
 
-        <div className={`relative max-w-5xl mx-auto ${theme.containerPadding} pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26`}>
+        <div
+          className={`relative max-w-5xl mx-auto ${theme.containerPadding} pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26`}
+        >
           <div className="text-center space-y-10 max-w-4xl mx-auto">
-            <div className={`inline-flex items-center space-x-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners === "rounded-3xl" ? "rounded-full" : "rounded-lg"} px-6 py-3 ${theme.cardShadow}`}>
+            <div
+              className={`inline-flex items-center space-x-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners === "rounded-3xl" ? "rounded-full" : "rounded-lg"} px-6 py-3 ${theme.cardShadow}`}
+            >
               <Calendar className={`h-4 w-4 ${theme.accentColor}`} />
               <span className={`text-sm font-medium ${theme.accentColor}`}>
                 {formatDateRange(eventData.start_date, eventData.end_date)}
@@ -1332,12 +1343,16 @@ export default function PublicEventHome() {
             </div>
 
             <div className="space-y-6">
-              <h1 className={`text-5xl sm:text-7xl lg:text-8xl ${eventData?.theme === "TourTech" ? "text-slate-900 font-bold" : "font-bold"} leading-[0.9] ${theme.heroTitle}`}>
+              <h1
+                className={`text-5xl sm:text-7xl lg:text-8xl ${eventData?.theme === "TourTech" ? "text-slate-900 font-bold" : "font-bold"} leading-[0.9] ${theme.heroTitle}`}
+              >
                 {eventData.name}
               </h1>
 
               {eventData.description && (
-                <p className={`text-xl sm:text-2xl ${theme.heroSubtitle} max-w-3xl mx-auto leading-relaxed ${eventData?.theme === "TourTech" ? "font-normal" : "font-light"}`}>
+                <p
+                  className={`text-xl sm:text-2xl ${theme.heroSubtitle} max-w-3xl mx-auto leading-relaxed ${eventData?.theme === "TourTech" ? "font-normal" : "font-light"}`}
+                >
                   {eventData.description}
                 </p>
               )}

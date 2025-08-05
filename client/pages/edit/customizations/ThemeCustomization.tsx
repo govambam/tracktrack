@@ -16,7 +16,8 @@ const AVAILABLE_THEMES = [
   {
     id: "GolfOS",
     name: "GolfOS",
-    description: "Colorful, playful design for your public event website inspired by classic Apple UIs with bright accents and rounded elements",
+    description:
+      "Colorful, playful design for your public event website inspired by classic Apple UIs with bright accents and rounded elements",
     preview: {
       primary: "bg-gradient-to-r from-green-400 to-green-600",
       secondary: "bg-gradient-to-r from-blue-400 to-blue-600",
@@ -27,13 +28,14 @@ const AVAILABLE_THEMES = [
       "Bright, cheerful accent colors",
       "Generous spacing and oversized buttons",
       "Sans-serif, high-contrast typography",
-      "Subtle gradients and layered components"
-    ]
+      "Subtle gradients and layered components",
+    ],
   },
   {
     id: "TourTech",
     name: "Tour Tech",
-    description: "Clean, professional design inspired by modern SaaS platforms with high-contrast typography and minimalist layout",
+    description:
+      "Clean, professional design inspired by modern SaaS platforms with high-contrast typography and minimalist layout",
     preview: {
       primary: "bg-gradient-to-r from-slate-800 to-slate-900",
       secondary: "bg-gradient-to-r from-slate-600 to-slate-700",
@@ -45,9 +47,9 @@ const AVAILABLE_THEMES = [
       "Minimalist UI with clear information hierarchy",
       "Sharp corners, no unnecessary drop shadows",
       "Modern geometric fonts for headers",
-      "Professional, structured design approach"
-    ]
-  }
+      "Professional, structured design approach",
+    ],
+  },
 ];
 
 export default function ThemeCustomization() {
@@ -129,7 +131,7 @@ export default function ThemeCustomization() {
     } catch (error) {
       console.error("Error saving theme:", error);
       toast({
-        title: "Error", 
+        title: "Error",
         description: "Failed to save theme",
         variant: "destructive",
       });
@@ -153,8 +155,12 @@ export default function ThemeCustomization() {
           <Palette className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Public Site Theme</h1>
-          <p className="text-slate-600">Choose your public event website's visual theme and personality</p>
+          <h1 className="text-2xl font-bold text-slate-900">
+            Public Site Theme
+          </h1>
+          <p className="text-slate-600">
+            Choose your public event website's visual theme and personality
+          </p>
         </div>
       </div>
 
@@ -180,9 +186,15 @@ export default function ThemeCustomization() {
                   )}
                 </div>
                 <div className="flex space-x-2">
-                  <div className={`w-6 h-6 rounded-full ${theme.preview.primary}`}></div>
-                  <div className={`w-6 h-6 rounded-full ${theme.preview.secondary}`}></div>
-                  <div className={`w-6 h-6 rounded-full ${theme.preview.accent}`}></div>
+                  <div
+                    className={`w-6 h-6 rounded-full ${theme.preview.primary}`}
+                  ></div>
+                  <div
+                    className={`w-6 h-6 rounded-full ${theme.preview.secondary}`}
+                  ></div>
+                  <div
+                    className={`w-6 h-6 rounded-full ${theme.preview.accent}`}
+                  ></div>
                 </div>
               </div>
               <CardDescription className="text-slate-600">
@@ -191,10 +203,15 @@ export default function ThemeCustomization() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-slate-800 mb-2">Key Features:</h4>
+                <h4 className="text-sm font-semibold text-slate-800 mb-2">
+                  Key Features:
+                </h4>
                 <ul className="space-y-1">
                   {theme.characteristics.map((characteristic, index) => (
-                    <li key={index} className="text-sm text-slate-600 flex items-center space-x-2">
+                    <li
+                      key={index}
+                      className="text-sm text-slate-600 flex items-center space-x-2"
+                    >
                       <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
                       <span>{characteristic}</span>
                     </li>
