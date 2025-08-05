@@ -1935,7 +1935,7 @@ export default function PublicEventHome() {
                 </div>
 
                 <div
-                  className={`mt-6 ${eventData?.theme === "TourTech" ? "bg-gray-50 border border-gray-200 rounded-md p-4" : eventData?.theme === "Masters" ? "bg-green-50/30 border border-green-800/20 rounded-lg p-6" : "bg-emerald-50 border border-emerald-200 rounded-2xl p-6"}`}
+                  className={`mt-6 ${eventData?.theme === "Masters" ? "hidden" : eventData?.theme === "TourTech" ? "bg-gray-50 border border-gray-200 rounded-md p-4" : "bg-emerald-50 border border-emerald-200 rounded-2xl p-6"}`}
                 >
                   <div
                     className={`${eventData?.theme === "TourTech" ? "space-y-2" : eventData?.theme === "Masters" ? "flex items-start space-x-3" : "flex items-start space-x-3"}`}
