@@ -1505,6 +1505,8 @@ export default function PublicEventHome() {
                       course={course}
                       round={round}
                       index={index}
+                      theme={theme}
+                      isTourTech={eventData?.theme === "TourTech"}
                       onOpenModal={() => {
                         setSelectedCourse({ course, round });
                         setIsModalOpen(true);
