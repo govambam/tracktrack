@@ -1654,7 +1654,12 @@ export default function PublicEventHome() {
           className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : eventData?.theme === "Masters" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding} relative overflow-hidden` : "py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"}`}
         >
           {/* Background decoration */}
-          {eventData?.theme === "TourTech" ? null : (
+          {eventData?.theme === "TourTech" ? null : eventData?.theme === "Masters" ? (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-white to-green-50/10"></div>
+              <div className="absolute top-20 right-0 w-72 h-72 bg-yellow-100/10 rounded-full blur-3xl"></div>
+            </>
+          ) : (
             <>
               <div className="absolute inset-0 bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20"></div>
               <div className="absolute top-20 right-0 w-72 h-72 bg-green-100/10 rounded-full blur-3xl"></div>
