@@ -2630,53 +2630,38 @@ export default function PublicEventHome() {
               </div>
 
               {eventData?.theme === "Masters" ? (
-                <div className="space-y-12">
-                  {/* 2-column grid for Getting There and Accommodation */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                    {[
-                      {
-                        info: travel.flight_info,
-                        icon: Plane,
-                        title: "Getting There",
-                        color: "blue",
-                      },
-                      {
-                        info: travel.accommodations,
-                        icon: Building,
-                        title: "Accommodation",
-                        color: "emerald",
-                      },
-                    ]
-                      .filter((item) => item.info)
-                      .map((item, index) => (
-                        <AnimatedTravelCard
-                          key={item.title}
-                          item={item}
-                          index={index}
-                          theme={theme}
-                          isTourTech={eventData?.theme === "TourTech"}
-                          isMasters={eventData?.theme === "Masters"}
-                        />
-                      ))}
-                  </div>
-
-                  {/* Daily Schedule below in full width */}
-                  {travel.daily_schedule && (
-                    <div className="max-w-5xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                  {[
+                    {
+                      info: travel.flight_info,
+                      icon: Plane,
+                      title: "Getting There",
+                      color: "blue",
+                    },
+                    {
+                      info: travel.accommodations,
+                      icon: Building,
+                      title: "Accommodation",
+                      color: "emerald",
+                    },
+                    {
+                      info: travel.daily_schedule,
+                      icon: Clock,
+                      title: "Daily Schedule",
+                      color: "purple",
+                    },
+                  ]
+                    .filter((item) => item.info)
+                    .map((item, index) => (
                       <AnimatedTravelCard
-                        item={{
-                          info: travel.daily_schedule,
-                          icon: Clock,
-                          title: "Daily Schedule",
-                          color: "purple",
-                        }}
-                        index={2}
+                        key={item.title}
+                        item={item}
+                        index={index}
                         theme={theme}
                         isTourTech={eventData?.theme === "TourTech"}
                         isMasters={eventData?.theme === "Masters"}
                       />
-                    </div>
-                  )}
+                    ))}
                 </div>
               ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
