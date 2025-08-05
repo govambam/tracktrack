@@ -1333,7 +1333,7 @@ export default function PublicEventHome() {
 
       {/* Hero Section */}
       <section id="overview" className={`${eventData?.theme === "TourTech" ? "bg-white border-b border-slate-200" : theme.heroContainer}`}>
-        <div className={`${theme.maxContentWidth} mx-auto ${theme.containerPadding} ${eventData?.theme === "TourTech" ? "pt-6 pb-8" : theme.sectionPadding}`}>
+        <div className={`${theme.maxContentWidth} mx-auto ${theme.containerPadding} ${eventData?.theme === "TourTech" ? "pt-12 pb-8" : theme.sectionPadding}`}>
           <div className={`space-y-${eventData?.theme === "TourTech" ? "4" : "6"}`}>
             {/* Event Badge - Tour Tech: smaller pill, neutral styling */}
             <div className={`inline-flex items-center gap-2 ${eventData?.theme === "TourTech" ? "bg-gray-100 border border-gray-300 text-gray-700" : `${theme.cardBackground} ${theme.cardBorder} ${theme.accentColor}`} ${theme.roundedCorners} px-3 py-1.5 ${eventData?.theme === "TourTech" ? "shadow-none" : theme.cardShadow}`}>
