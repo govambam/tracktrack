@@ -2200,7 +2200,7 @@ export default function PublicEventHome() {
                       key={index}
                       className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : eventData?.theme === "Masters" ? "bg-green-50/30 rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
                     >
-                      <h4 className="text-xl font-bold text-indigo-900 mb-4">
+                      <h4 className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900" : "font-bold text-indigo-900"} text-xl mb-4`}>
                         Round {round.roundNumber} ({round.courseName})
                       </h4>
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
@@ -2245,7 +2245,7 @@ export default function PublicEventHome() {
                               role="img"
                               aria-label="target"
                             >
-                              ����
+                              ������
                             </span>
                             <span className="text-sm text-green-700 font-medium">
                               Closest to Pin: ${closestToPinPrize} per hole
