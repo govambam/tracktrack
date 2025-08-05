@@ -2260,9 +2260,9 @@ export default function PublicEventHome() {
             )}
 
             {/* Hole Contests Summary */}
-            {skillsContests.length > 0 && (
+            {skillsContests.length > 0 && eventData?.theme !== "Masters" && (
               <div
-                className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : eventData?.theme === "Masters" ? "bg-white rounded-lg p-8 sm:p-12 border border-green-800/20 mt-20 shadow-sm" : "bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200 mt-16"}`}
+                className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : "bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200 mt-16"}`}
               >
                 <div className="text-center mb-8">
                   <div
