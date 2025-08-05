@@ -2291,8 +2291,7 @@ export default function PublicEventHome() {
                         <ul className="text-sm text-green-700 space-y-2 font-serif">
                           <li>• Must hit on the green to win</li>
                           <li>��� Measured to the inch for ties</li>
-                          <li>• Ball must come to rest on putting surface</li>
-                          <li>• Winner takes the full prize amount</li>
+                          <li>• Multiple opportunities to win</li>
                         </ul>
                       </div>
                     </div>
