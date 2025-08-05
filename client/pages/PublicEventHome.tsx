@@ -2418,13 +2418,19 @@ export default function PublicEventHome() {
           travel.daily_schedule) && (
           <section
             id="travel"
-            className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} pt-16 pb-8` : "relative overflow-hidden"} ${eventData?.theme === "TourTech" ? "" : theme.sectionPadding} ${theme.containerPadding}`}
+            className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} pt-16 pb-8` : eventData?.theme === "Masters" ? "bg-amber-50/20 relative overflow-hidden py-20" : "relative overflow-hidden"} ${eventData?.theme === "TourTech" ? "" : eventData?.theme === "Masters" ? "" : theme.sectionPadding} ${theme.containerPadding}`}
           >
-            {/* Background decoration - only for GolfOS */}
-            {eventData?.theme !== "TourTech" && (
+            {/* Background decoration */}
+            {eventData?.theme === "GolfOS" && (
               <>
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-white to-slate-50/30"></div>
                 <div className="absolute top-0 left-0 w-80 h-80 bg-blue-100/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+              </>
+            )}
+            {eventData?.theme === "Masters" && (
+              <>
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-white to-green-50/10"></div>
+                <div className="absolute top-0 left-0 w-80 h-80 bg-yellow-100/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
               </>
             )}
 
@@ -2434,12 +2440,12 @@ export default function PublicEventHome() {
                   className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}
                 >
                   <Plane
-                    className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-blue-600"}`}
+                    className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : eventData?.theme === "Masters" ? "text-yellow-600" : "text-blue-600"}`}
                   />
                   <span
-                    className={`${eventData?.theme === "TourTech" ? theme.monoLabel : "text-sm font-medium text-blue-800"}`}
+                    className={`${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-blue-800"}`}
                   >
-                    {eventData?.theme === "TourTech" ? "TRAVEL" : "Logistics"}
+                    {eventData?.theme === "TourTech" ? "TRAVEL" : eventData?.theme === "Masters" ? "Travel" : "Logistics"}
                   </span>
                 </div>
 
