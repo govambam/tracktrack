@@ -35,7 +35,7 @@ const AVAILABLE_THEMES = [
     id: "TourTech",
     name: "Tour Tech",
     description:
-      "Clean, professional design inspired by modern SaaS platforms with high-contrast typography and minimalist layout",
+      "Enterprise-ready design inspired by PlanetScale and Linear. Compact layout, monospace data display, and bold orange accents for serious tournaments",
     preview: {
       primary: "bg-gradient-to-r from-slate-800 to-slate-900",
       secondary: "bg-gradient-to-r from-slate-600 to-slate-700",
