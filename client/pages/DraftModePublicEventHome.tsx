@@ -52,33 +52,47 @@ import {
 const getThemeStyles = (theme: string = "GolfOS") => {
   if (theme === "TourTech") {
     return {
-      // Container styles - Clean white with subtle slate accents
-      heroContainer: "bg-slate-50",
-      heroGradient: "bg-gradient-to-b from-white via-slate-50 to-slate-100",
+      // Layout & Container - Enterprise clean, no gradients
+      heroContainer: "bg-white",
+      heroGradient: "bg-white",
       cardBackground: "bg-white",
-      sectionBackground: "bg-white",
+      sectionBackground: "bg-gray-50",
+      modalBackground: "bg-white",
 
-      // Typography - High contrast, more compact
-      heroTitle: "text-slate-900 font-extrabold tracking-tight",
-      heroSubtitle: "text-slate-700 font-medium",
-      sectionTitle: "text-slate-900 font-bold tracking-tight",
-      cardTitle: "text-slate-900 font-semibold",
-      cardText: "text-slate-700",
+      // Typography - Compact, weight-based hierarchy
+      heroTitle: "text-slate-900 font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight",
+      heroSubtitle: "text-slate-600 font-normal text-base sm:text-lg",
+      sectionTitle: "text-slate-900 font-semibold text-lg sm:text-xl tracking-tight",
+      cardTitle: "text-slate-900 font-semibold text-base",
+      cardText: "text-slate-600 text-sm",
+      dataText: "font-mono text-slate-800 font-medium",
 
-      // Buttons and accents - Bold green on clean background
-      primaryButton: "bg-green-600 hover:bg-green-700 text-white shadow-md hover:shadow-lg",
-      accentColor: "text-green-700",
-      accentBackground: "bg-green-600",
+      // Buttons - Solid, enterprise-style
+      primaryButton: "bg-orange-600 hover:bg-orange-700 text-white font-medium transition-colors",
+      secondaryButton: "bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium transition-colors",
+      accentColor: "text-orange-600",
+      accentBackground: "bg-orange-600",
 
-      // Borders and shadows - Sharp, minimal
-      cardBorder: "border border-slate-300",
-      cardShadow: "shadow-md hover:shadow-lg border border-slate-200",
-      roundedCorners: "rounded-lg",
+      // Borders & Shadows - Flat, minimal
+      cardBorder: "border border-slate-200",
+      cardShadow: "shadow-sm",
+      cardHover: "hover:shadow-md transition-shadow",
+      roundedCorners: "rounded-md",
 
-      // Spacing - More compact, professional
-      containerPadding: "px-6 sm:px-8 lg:px-12",
-      sectionPadding: "py-12",
-      cardPadding: "p-6",
+      // Spacing - Compact, efficient
+      containerPadding: "px-4 sm:px-6 lg:px-8",
+      sectionPadding: "py-8 sm:py-10",
+      cardPadding: "p-4 sm:p-5",
+      headerSpacing: "mb-4",
+
+      // Data Display - Monospace for clarity
+      scoreFont: "font-mono font-semibold",
+      tableHeader: "font-mono text-xs uppercase tracking-wide text-slate-500",
+      tableCell: "font-mono text-sm text-slate-900",
+
+      // Layout Constraints
+      maxContentWidth: "max-w-4xl",
+      textMaxWidth: "max-w-2xl",
     };
   }
 
@@ -1387,7 +1401,7 @@ export default function DraftModePublicEventHome({
                         </h5>
                         <ul className="text-sm text-green-700 space-y-2">
                           <li>
-                            • Must be <strong>ON THE GREEN</strong> to win
+                            �� Must be <strong>ON THE GREEN</strong> to win
                           </li>
                           <li>• Measured to the inch for ties</li>
                           <li>• Ball must come to rest on putting surface</li>
