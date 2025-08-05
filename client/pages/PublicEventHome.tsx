@@ -960,18 +960,18 @@ const AnimatedPrizeCard = ({
       } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
     >
       <div
-        className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3"} ${isTourTech ? theme.roundedCorners : "rounded-3xl"} ${isTourTech ? theme.cardPadding : "p-8"} text-center transition-all duration-300 group-hover:bg-white h-80 flex flex-col`}
+        className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : isMasters ? "bg-white border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg" : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3"} ${isTourTech ? theme.roundedCorners : isMasters ? "rounded-lg" : "rounded-3xl"} ${isTourTech ? theme.cardPadding : isMasters ? "p-6" : "p-8"} text-center transition-all duration-300 group-hover:bg-white h-80 flex flex-col`}
       >
         <div
-          className={`${isTourTech ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-4` : "w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300"}`}
+          className={`${isTourTech ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-4` : isMasters ? "w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-4" : "w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300"}`}
         >
           <Trophy
-            className={`${isTourTech ? "h-6 w-6 text-white" : "h-10 w-10 text-amber-600"}`}
+            className={`${isTourTech ? "h-6 w-6 text-white" : isMasters ? "h-6 w-6 text-white" : "h-10 w-10 text-amber-600"}`}
           />
         </div>
 
         <h3
-          className={`${isTourTech ? theme.cardTitle : "text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors"} mb-4 min-h-[3.5rem] flex items-center justify-center`}
+          className={`${isTourTech ? theme.cardTitle : isMasters ? "font-serif font-semibold text-green-900 text-lg group-hover:text-yellow-600 transition-colors" : "text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors"} mb-4 min-h-[3.5rem] flex items-center justify-center`}
         >
           {prize.category
             .replace(/_/g, " ")
@@ -980,7 +980,7 @@ const AnimatedPrizeCard = ({
 
         <div className="flex-1 flex flex-col justify-center">
           {prize.amount > 0 && (
-            <div className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent mb-4">
+            <div className={`${isMasters ? "text-3xl font-serif font-bold text-yellow-600" : "text-3xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent"} mb-4`}>
               ${prize.amount}
             </div>
           )}
