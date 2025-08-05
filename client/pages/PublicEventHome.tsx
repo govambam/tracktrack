@@ -1870,7 +1870,7 @@ export default function PublicEventHome() {
 
             {/* Hole Contests Summary */}
             {skillsContests.length > 0 && (
-              <div className="bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200">
+              <div className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-12" : "bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200"}`}>
                 <div className="text-center mb-8">
                   <div className="inline-flex items-center space-x-2 bg-indigo-200 rounded-full px-4 py-2 mb-4">
                     <Target className="h-4 w-4 text-indigo-600" />
