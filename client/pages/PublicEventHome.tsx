@@ -1923,7 +1923,7 @@ export default function PublicEventHome() {
 
                   {/* Prize Information */}
                   {(closestToPinPrize > 0 || longestDrivePrize > 0) && (
-                    <div className="bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm">
+                    <div className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}>
                       <h4 className="text-lg font-semibold text-indigo-900 mb-4">
                         Prize Information
                       </h4>
