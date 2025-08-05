@@ -1405,7 +1405,7 @@ export default function PublicEventHome() {
               </a>
             </div>
 
-            {/* Event Stats - Tour Tech: compact monochrome design */}
+            {/* Event Stats */}
             {eventData?.theme === "TourTech" ? (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-gray-200 mt-6">
                 {[
@@ -1421,20 +1421,7 @@ export default function PublicEventHome() {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
-                {[
-                  { label: "Courses", value: courses.length.toString(), icon: MapPin },
-                  { label: "Players", value: players.length.toString(), icon: Users },
-                  { label: "Format", value: getScoringFormat(), icon: Target },
-                  { label: "Duration", value: getDuration(eventData.start_date, eventData.end_date), icon: Calendar },
-                ].map((stat, index) => (
-                  <div key={index} className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} text-center`}>
-                    <stat.icon className={`h-4 w-4 text-slate-500 mx-auto mb-1`} />
-                    <div className={`${theme.dataText} text-lg`}>{stat.value}</div>
-                    <div className={`${theme.cardText} text-xs uppercase tracking-wide`}>{stat.label}</div>
-                  </div>
-                ))}
-              </div>
+              <CountdownTimer targetDate={eventData.start_date} />
             )}
           </div>
         </div>
