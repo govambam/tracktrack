@@ -724,21 +724,21 @@ const AnimatedCourseCard = ({
               className={`flex items-center space-x-6 ${isTourTech ? "mb-4" : isMasters ? "mb-5" : "mb-6"} text-sm`}
             >
               <div className="flex items-center space-x-2">
-                {!isTourTech && (
+                {!isTourTech && !isMasters && (
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 )}
                 <span
-                  className={`${isTourTech ? "font-mono text-slate-800" : "font-semibold text-slate-700"}`}
+                  className={`${isTourTech ? "font-mono text-slate-800" : isMasters ? "font-serif font-medium text-green-800" : "font-semibold text-slate-700"}`}
                 >
                   Par {course.par}
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                {!isTourTech && (
+                {!isTourTech && !isMasters && (
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                 )}
                 <span
-                  className={`${isTourTech ? "font-mono text-slate-800" : "font-semibold text-slate-700"}`}
+                  className={`${isTourTech ? "font-mono text-slate-800" : isMasters ? "font-serif font-medium text-green-800" : "font-semibold text-slate-700"}`}
                 >
                   {course.yardage?.toLocaleString()} yards
                 </span>
