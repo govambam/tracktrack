@@ -37,9 +37,9 @@ const AVAILABLE_THEMES = [
     description:
       "Enterprise-ready design inspired by PlanetScale and Linear. Compact layout, monospace data display, and bold orange accents for serious tournaments",
     preview: {
-      primary: "bg-gradient-to-r from-slate-800 to-slate-900",
-      secondary: "bg-gradient-to-r from-slate-600 to-slate-700",
-      accent: "bg-gradient-to-r from-green-600 to-green-700",
+      primary: "bg-slate-900",
+      secondary: "bg-slate-600",
+      accent: "bg-orange-600",
     },
     characteristics: [
       "Compact layout with efficient spacing (800px max width)",
