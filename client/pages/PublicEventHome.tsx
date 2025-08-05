@@ -1968,13 +1968,13 @@ export default function PublicEventHome() {
               longestDriveGroups.length > 0) && (
               <div className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-16" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200"}`}>
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-center space-x-2 bg-slate-200 rounded-full px-4 py-2 mb-4">
+                  <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}>
                     <Info className="h-4 w-4 text-slate-600" />
                     <span className="text-sm font-medium text-slate-700">
-                      Official Guidelines
+                      {eventData?.theme === "TourTech" ? "CONTEST RULES" : "Official Guidelines"}
                     </span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">
+                  <h3 className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}>
                     Contest Rules
                   </h3>
                 </div>
@@ -2053,7 +2053,7 @@ export default function PublicEventHome() {
                             <li>
                               • Winner = shortest distance to flag from approach
                             </li>
-                            <li>• Placement beats pure distance</li>
+                            <li>�� Placement beats pure distance</li>
                             <li>• Measured to the yard for ties</li>
                           </ul>
                         </div>
