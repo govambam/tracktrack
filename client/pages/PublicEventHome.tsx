@@ -723,10 +723,14 @@ const AnimatedPlayerCard = ({
   player,
   index,
   onOpenModal,
+  theme,
+  isTourTech = false,
 }: {
   player: any;
   index: number;
   onOpenModal: () => void;
+  theme: any;
+  isTourTech?: boolean;
 }) => {
   const { isVisible, elementRef } = useScrollAnimation();
   const [showSeeMore, setShowSeeMore] = useState(false);
