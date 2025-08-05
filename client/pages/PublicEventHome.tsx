@@ -1937,7 +1937,7 @@ export default function PublicEventHome() {
                   {customRules.map((rule, index) => (
                     <div
                       key={rule.id}
-                      className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow}` : "bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"}`}
+                      className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow}` : eventData?.theme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"}`}
                     >
                       {rule.rule_title && (
                         <h4 className="font-semibold text-slate-900 mb-3 text-lg">
