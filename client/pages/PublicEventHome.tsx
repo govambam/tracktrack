@@ -879,7 +879,17 @@ const AnimatedPrizeCard = ({ prize, index }: { prize: any; index: number }) => {
   );
 };
 
-const AnimatedTravelCard = ({ item, index }: { item: any; index: number }) => {
+const AnimatedTravelCard = ({
+  item,
+  index,
+  theme,
+  isTourTech = false
+}: {
+  item: any;
+  index: number;
+  theme: any;
+  isTourTech?: boolean;
+}) => {
   const { isVisible, elementRef } = useScrollAnimation();
   const colorClasses = {
     blue: { bg: "from-blue-100 to-blue-200", text: "text-blue-600" },
