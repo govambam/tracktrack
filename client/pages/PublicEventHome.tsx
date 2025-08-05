@@ -909,7 +909,7 @@ const AnimatedTravelCard = ({
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
       }`}
     >
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2 transition-all duration-300 h-full">
+      <div className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2"} ${isTourTech ? theme.roundedCorners : "rounded-3xl"} ${isTourTech ? theme.cardPadding : "p-8"} transition-all duration-300 h-full`}>
         <div
           className={`w-16 h-16 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mb-8`}
         >
