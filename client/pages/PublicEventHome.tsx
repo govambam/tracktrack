@@ -2099,7 +2099,7 @@ export default function PublicEventHome() {
             <div className="absolute inset-0 bg-gradient-to-b from-amber-50/20 via-white to-green-50/10"></div>
           )}
           <div
-            className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "12" : eventData?.theme === "Masters" ? "12" : "20"}`}
+            className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "12" : eventData?.theme === "Masters" ? "16" : "20"}`}
           >
             {/* Header and Buy-in */}
             <div className={`text-center ${theme.headerSpacing}`}>
