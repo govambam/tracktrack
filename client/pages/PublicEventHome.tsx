@@ -2539,7 +2539,7 @@ export default function PublicEventHome() {
             className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} p-4` : eventData?.theme === "Masters" ? "bg-green-800/50 backdrop-blur-sm rounded-lg p-6 border border-yellow-600/20" : "bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"}`}
           >
             <p
-              className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-slate-500 text-sm` : "text-green-200 text-lg font-medium"}`}
+              className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-slate-500 text-sm` : eventData?.theme === "Masters" ? "font-serif text-green-200 text-sm" : "text-green-200 text-lg font-medium"}`}
             >
               Powered by TrackTrack Golf
             </p>
