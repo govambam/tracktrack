@@ -1811,15 +1811,19 @@ export default function PublicEventHome() {
                   {getScoringFormat()}
                 </h3>
                 <p
-                  className={`${eventData?.theme === "TourTech" ? theme.cardText : "text-lg text-slate-600 font-light"} leading-relaxed`}
+                  className={`${eventData?.theme === "TourTech" ? theme.cardText : eventData?.theme === "Masters" ? theme.cardText : "text-lg text-slate-600 font-light"} leading-relaxed`}
                 >
                   {getScoringFormat().includes("Stableford")
                     ? eventData?.theme === "TourTech"
                       ? "Modified Stableford scoring system with preset competition and team scramble format."
-                      : "Modified Stableford scoring system with preset competition and a team scramble format for added excitement."
+                      : eventData?.theme === "Masters"
+                        ? "Traditional modified Stableford system where points are awarded based on performance relative to par on each hole."
+                        : "Modified Stableford scoring system with preset competition and a team scramble format for added excitement."
                     : eventData?.theme === "TourTech"
                       ? "Traditional stroke play format where every shot counts. Lowest total score wins."
-                      : "Traditional stroke play format where every shot counts. Lowest total score wins the championship."}
+                      : eventData?.theme === "Masters"
+                        ? "Classic stroke play format where precision and consistency determine the champion."
+                        : "Traditional stroke play format where every shot counts. Lowest total score wins the championship."}
                 </p>
               </div>
             </div>
