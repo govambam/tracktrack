@@ -1469,7 +1469,7 @@ export default function PublicEventHome() {
 
   return (
     <div className={`min-h-screen ${theme.heroContainer}`}>
-      <StickyNavigation eventName={eventData.name} slug={slug!} />
+      <StickyNavigation eventName={eventData.name} slug={slug!} theme={eventData?.theme} />
 
       {/* Hero Section */}
       <section
