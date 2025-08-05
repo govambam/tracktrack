@@ -697,7 +697,7 @@ const AnimatedCourseCard = ({
           </div>
         )}
 
-        <div className={`${isTourTech ? "p-6" : "p-8"} relative`}>
+        <div className={`${isTourTech ? "p-6" : isMasters ? theme.cardPadding : "p-8"} relative`}>
           <div
             className={`flex items-start justify-between ${isTourTech ? "mb-4" : "mb-6"}`}
           >
