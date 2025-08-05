@@ -1324,64 +1324,77 @@ export default function PublicEventHome() {
       <StickyNavigation eventName={eventData.name} slug={slug!} />
 
       {/* Hero Section */}
-      <section id="overview" className="relative overflow-hidden">
-        {/* Subtle background pattern */}
-        <div className={`absolute inset-0 ${theme.heroGradient}`}></div>
-        {eventData?.theme !== "TourTech" && (
-          <>
-            <div className="absolute top-0 right-0 w-96 h-96 bg-green-100/20 rounded-full blur-3xl -translate-y-24 translate-x-24"></div>
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100/20 rounded-full blur-3xl translate-y-24 -translate-x-24"></div>
-          </>
-        )}
-
-        <div
-          className={`relative max-w-5xl mx-auto ${theme.containerPadding} pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26`}
-        >
-          <div className="text-center space-y-10 max-w-4xl mx-auto">
-            <div
-              className={`inline-flex items-center space-x-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners === "rounded-3xl" ? "rounded-full" : "rounded-lg"} px-6 py-3 ${theme.cardShadow}`}
-            >
-              <Calendar className={`h-4 w-4 ${theme.accentColor}`} />
-              <span className={`text-sm font-medium ${theme.accentColor}`}>
+      <section id="overview" className={`${theme.heroContainer} border-b border-slate-200`}>
+        <div className={`${theme.maxContentWidth} mx-auto ${theme.containerPadding} ${theme.sectionPadding}`}>
+          <div className="space-y-6">
+            {/* Event Badge */}
+            <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}`}>
+              <Calendar className={`h-3.5 w-3.5 ${theme.accentColor}`} />
+              <span className={`text-xs font-medium ${theme.accentColor} uppercase tracking-wide`}>
                 {formatDateRange(eventData.start_date, eventData.end_date)}
               </span>
             </div>
 
-            <div className="space-y-6">
-              <h1
-                className={`text-5xl sm:text-7xl lg:text-8xl ${eventData?.theme === "TourTech" ? "text-slate-900 font-bold" : "font-bold"} leading-[0.9] ${theme.heroTitle}`}
-              >
+            {/* Title & Description */}
+            <div className="space-y-3">
+              <h1 className={`${theme.heroTitle} leading-tight`}>
                 {eventData.name}
               </h1>
-
               {eventData.description && (
-                <p
-                  className={`text-xl sm:text-2xl ${theme.heroSubtitle} max-w-3xl mx-auto leading-relaxed ${eventData?.theme === "TourTech" ? "font-normal" : "font-light"}`}
-                >
+                <p className={`${theme.heroSubtitle} ${theme.textMaxWidth} leading-relaxed`}>
                   {eventData.description}
                 </p>
               )}
             </div>
 
-            <div className="flex flex-col items-center gap-8 mt-16">
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <a
-                  href="#courses"
-                  className={`group ${theme.primaryButton} px-10 py-5 ${theme.roundedCorners === "rounded-3xl" ? "rounded-2xl" : "rounded-lg"} font-semibold transition-all duration-300 inline-flex items-center justify-center text-lg ${eventData?.theme === "TourTech" ? "shadow-md hover:shadow-lg" : "shadow-xl shadow-green-600/25 hover:shadow-2xl hover:shadow-green-600/40"} hover:-translate-y-1`}
-                >
-                  View Courses
-                  <ChevronRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="#players"
-                  className={`group ${eventData?.theme === "TourTech" ? "bg-white border-2 border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300" : "bg-white/80 backdrop-blur-sm border-2 border-green-200 text-green-700 hover:bg-green-50 hover:border-green-300"} px-10 py-5 ${theme.roundedCorners === "rounded-3xl" ? "rounded-2xl" : "rounded-lg"} font-semibold transition-all duration-300 inline-flex items-center justify-center text-lg ${eventData?.theme === "TourTech" ? "shadow-md hover:shadow-lg" : "shadow-lg hover:shadow-xl"} hover:-translate-y-1`}
-                >
-                  Meet Players
-                  <Users className="h-5 w-5 ml-2 group-hover:scale-110 transition-transform" />
-                </a>
-              </div>
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <a
+                href="#courses"
+                className={`${theme.primaryButton} px-6 py-2.5 ${theme.roundedCorners} inline-flex items-center gap-2 text-sm ${theme.cardShadow} ${theme.cardHover}`}
+              >
+                <span>View Courses</span>
+                <ChevronRight className="h-4 w-4" />
+              </a>
+              <a
+                href="#players"
+                className={`${theme.secondaryButton} px-6 py-2.5 ${theme.roundedCorners} inline-flex items-center gap-2 text-sm ${theme.cardShadow} ${theme.cardHover}`}
+              >
+                <span>View Players</span>
+                <Users className="h-4 w-4" />
+              </a>
+            </div>
 
-              <CountdownTimer targetDate={eventData.start_date} />
+            {/* Event Stats */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
+              {[
+                {
+                  label: "Courses",
+                  value: courses.length.toString(),
+                  icon: MapPin,
+                },
+                {
+                  label: "Players",
+                  value: players.length.toString(),
+                  icon: Users,
+                },
+                {
+                  label: "Format",
+                  value: getScoringFormat(),
+                  icon: Target,
+                },
+                {
+                  label: "Duration",
+                  value: getDuration(eventData.start_date, eventData.end_date),
+                  icon: Calendar,
+                },
+              ].map((stat, index) => (
+                <div key={index} className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} text-center`}>
+                  <stat.icon className={`h-4 w-4 ${theme.accentColor} mx-auto mb-1`} />
+                  <div className={`${theme.dataText} text-lg`}>{stat.value}</div>
+                  <div className={`${theme.cardText} text-xs uppercase tracking-wide`}>{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -1888,7 +1901,7 @@ export default function PublicEventHome() {
                               role="img"
                               aria-label="golf swing"
                             >
-                              🏌️‍♂️
+                              🏌️��♂️
                             </span>
                             <span className="text-sm text-orange-700 font-medium">
                               Long Drive: ${longestDrivePrize} per hole
