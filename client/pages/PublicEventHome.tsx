@@ -1420,7 +1420,7 @@ export default function PublicEventHome() {
                   { label: "Duration", value: getDuration(eventData.start_date, eventData.end_date), icon: Calendar },
                 ].map((stat, index) => (
                   <div key={index} className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} text-center`}>
-                    <stat.icon className={`h-4 w-4 ${theme.accentColor} mx-auto mb-1`} />
+                    <stat.icon className={`h-4 w-4 text-slate-500 mx-auto mb-1`} />
                     <div className={`${theme.dataText} text-lg`}>{stat.value}</div>
                     <div className={`${theme.cardText} text-xs uppercase tracking-wide`}>{stat.label}</div>
                   </div>
