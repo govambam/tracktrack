@@ -1609,7 +1609,7 @@ export default function PublicEventHome() {
                   })}
                 </div>
 
-                <div className="mt-8 bg-emerald-50 border border-emerald-200 rounded-2xl p-6">
+                <div className={`mt-6 ${eventData?.theme === "TourTech" ? "bg-gray-50 border border-gray-200 rounded-md p-4" : "bg-emerald-50 border border-emerald-200 rounded-2xl p-6"}`}>
                   <div className="flex items-start space-x-3">
                     <Target className="h-5 w-5 text-emerald-600 mt-0.5" />
                     <div>
