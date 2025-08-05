@@ -1667,28 +1667,30 @@ export default function PublicEventHome() {
           )}
 
           <div
-            className={`relative ${eventData?.theme === "TourTech" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}
+            className={`relative ${eventData?.theme === "TourTech" ? theme.maxContentWidth : eventData?.theme === "Masters" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}
           >
             <div
-              className={`text-center ${eventData?.theme === "TourTech" ? theme.headerSpacing : "mb-20"}`}
+              className={`text-center ${eventData?.theme === "TourTech" ? theme.headerSpacing : eventData?.theme === "Masters" ? theme.headerSpacing : "mb-20"}`}
             >
               <div
-                className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : "bg-green-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${eventData?.theme === "TourTech" ? "4" : "8"}`}
+                className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg px-4 py-2 shadow-sm" : "bg-green-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${eventData?.theme === "TourTech" ? "4" : eventData?.theme === "Masters" ? "4" : "8"}`}
               >
                 <Sparkles
-                  className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-green-600"}`}
+                  className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.orangeText : eventData?.theme === "Masters" ? "text-yellow-600" : "text-green-600"}`}
                 />
                 <span
-                  className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.monoLabel : "text-green-800"}`}
+                  className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-green-800"}`}
                 >
                   {eventData?.theme === "TourTech"
                     ? "VENUES"
-                    : "Championship Venues"}
+                    : eventData?.theme === "Masters"
+                      ? "Championship Venues"
+                      : "Championship Venues"}
                 </span>
               </div>
 
               <h2
-                className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : "8"}`}
+                className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : eventData?.theme === "Masters" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : eventData?.theme === "Masters" ? theme.headerSpacing : "8"}`}
               >
                 {courses.length > 1 ? "Golf Courses" : "Golf Course"}
               </h2>
