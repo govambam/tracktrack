@@ -1400,7 +1400,7 @@ export default function PublicEventHome() {
                 href="#players"
                 className={`${eventData?.theme === "TourTech" ? "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2.5 rounded-md text-sm shadow-sm" : "group bg-white/80 backdrop-blur-sm border-2 border-green-200 text-green-700 px-10 py-5 rounded-2xl font-semibold hover:bg-green-50 hover:border-green-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 text-lg"} inline-flex items-center gap-2 font-medium transition-colors`}
               >
-                <span>${eventData?.theme === "TourTech" ? "View Players" : "Meet Players"}</span>
+                <span>{eventData?.theme === "TourTech" ? "View Players" : "Meet Players"}</span>
                 <Users className={`h-${eventData?.theme === "TourTech" ? "4" : "5"} w-${eventData?.theme === "TourTech" ? "4" : "5"} ${eventData?.theme === "TourTech" ? "" : "group-hover:scale-110 transition-transform"}`} />
               </a>
             </div>
