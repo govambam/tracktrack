@@ -1408,7 +1408,7 @@ export default function PublicEventHome() {
         const contests = roundContests.map((contest) => ({
           hole: contest.hole,
           type: contest.contest_type,
-          emoji: contest.contest_type === "closest_to_pin" ? "🎯" : "🏌️‍♂️",
+          emoji: contest.contest_type === "closest_to_pin" ? "����" : "🏌️‍♂️",
         }));
 
         return {
@@ -2239,7 +2239,7 @@ export default function PublicEventHome() {
                 <div
                   className={`grid gap-4 ${
                     eventData?.theme === "Masters"
-                      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-4xl mx-auto"
+                      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto"
                       : prizes.length === 1
                         ? "grid-cols-1 max-w-sm"
                         : prizes.length === 2
@@ -2266,7 +2266,7 @@ export default function PublicEventHome() {
             {/* Contest Rules - Clean 2-column layout directly below prizes for Masters theme */}
             {eventData?.theme === "Masters" && (closestToPinGroups.length > 0 || longestDriveGroups.length > 0) && (
               <div className="mt-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
                   {/* Closest to Pin Rules */}
                   {closestToPinGroups.length > 0 && (
                     <div className="bg-white rounded-xl p-6 border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
