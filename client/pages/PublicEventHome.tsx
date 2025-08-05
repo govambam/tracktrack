@@ -2079,14 +2079,17 @@ export default function PublicEventHome() {
       {(prizes.length > 0 || skillsContests.length > 0) && (
         <section
           id="prizes"
-          className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative"} ${theme.sectionPadding} ${theme.containerPadding}`}
+          className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : eventData?.theme === "Masters" ? `${theme.sectionBackground} relative` : "relative"} ${theme.sectionPadding} ${theme.containerPadding}`}
         >
-          {/* Background decoration - only for GolfOS */}
-          {eventData?.theme !== "TourTech" && (
+          {/* Background decoration */}
+          {eventData?.theme === "GolfOS" && (
             <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
           )}
+          {eventData?.theme === "Masters" && (
+            <div className="absolute inset-0 bg-gradient-to-b from-amber-50/20 via-white to-green-50/10"></div>
+          )}
           <div
-            className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "12" : "20"}`}
+            className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "12" : eventData?.theme === "Masters" ? "12" : "20"}`}
           >
             {/* Header and Buy-in */}
             <div className={`text-center ${theme.headerSpacing}`}>
@@ -2094,12 +2097,12 @@ export default function PublicEventHome() {
                 className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}
               >
                 <Trophy
-                  className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-amber-600"}`}
+                  className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : eventData?.theme === "Masters" ? "text-yellow-600" : "text-amber-600"}`}
                 />
                 <span
-                  className={`${eventData?.theme === "TourTech" ? theme.monoLabel : "text-sm font-medium text-amber-800"}`}
+                  className={`${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-amber-800"}`}
                 >
-                  {eventData?.theme === "TourTech" ? "PRIZES" : "Prize Pool"}
+                  {eventData?.theme === "TourTech" ? "PRIZES" : eventData?.theme === "Masters" ? "Prize Pool" : "Prize Pool"}
                 </span>
               </div>
 
@@ -2235,7 +2238,7 @@ export default function PublicEventHome() {
                               role="img"
                               aria-label="target"
                             >
-                              ����
+                              �����
                             </span>
                             <span className="text-sm text-green-700 font-medium">
                               Closest to Pin: ${closestToPinPrize} per hole
