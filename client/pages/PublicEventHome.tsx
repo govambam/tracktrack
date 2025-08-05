@@ -2138,6 +2138,8 @@ export default function PublicEventHome() {
                       key={item.title}
                       item={item}
                       index={index}
+                      theme={theme}
+                      isTourTech={eventData?.theme === "TourTech"}
                     />
                   ))}
               </div>
