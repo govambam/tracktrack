@@ -1355,44 +1355,53 @@ export default function PublicEventHome() {
       <StickyNavigation eventName={eventData.name} slug={slug!} />
 
       {/* Hero Section */}
-      <section id="overview" className={`${eventData?.theme === "TourTech" ? "bg-white border-b border-slate-200" : theme.heroContainer}`}>
-        <div className={`${theme.maxContentWidth} mx-auto ${theme.containerPadding} ${eventData?.theme === "TourTech" ? "pt-20 pb-8" : theme.sectionPadding}`}>
-          <div className={`space-y-${eventData?.theme === "TourTech" ? "4" : "6"}`}>
-            {/* Event Badge - Tour Tech: smaller pill, neutral styling */}
-            <div className={`inline-flex items-center gap-2 ${eventData?.theme === "TourTech" ? "bg-gray-100 border border-gray-300 text-gray-700" : `${theme.cardBackground} ${theme.cardBorder} ${theme.accentColor}`} ${theme.roundedCorners} px-3 py-1.5 ${eventData?.theme === "TourTech" ? "shadow-none" : theme.cardShadow}`}>
-              <Calendar className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? "text-gray-500" : theme.accentColor}`} />
-              <span className={`text-xs font-medium ${eventData?.theme === "TourTech" ? "text-gray-700 normal-case tracking-normal" : `${theme.accentColor} uppercase tracking-wide`}`}>
+      <section id="overview" className={`${eventData?.theme === "TourTech" ? "bg-white border-b border-slate-200" : "relative overflow-hidden"}`}>
+        {/* Subtle background pattern - GolfOS only */}
+        {eventData?.theme !== "TourTech" && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 via-transparent to-emerald-50/30"></div>
+            <div className="absolute top-0 right-0 w-96 h-96 bg-green-100/20 rounded-full blur-3xl -translate-y-24 translate-x-24"></div>
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100/20 rounded-full blur-3xl translate-y-24 -translate-x-24"></div>
+          </>
+        )}
+
+        <div className={`relative ${eventData?.theme === "TourTech" ? `${theme.maxContentWidth} mx-auto ${theme.containerPadding} pt-20 pb-8` : "max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26"}`}>
+          <div className={`${eventData?.theme === "TourTech" ? "space-y-4" : "text-center space-y-10 max-w-4xl mx-auto"}`}>
+            {/* Event Badge */}
+            <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-100 border border-gray-300 text-gray-700 rounded-md px-3 py-1.5 shadow-none" : "bg-white/80 backdrop-blur-sm border border-green-200/50 rounded-full px-6 py-3 shadow-lg shadow-green-100/50"}`}>
+              <Calendar className={`h-4 w-4 ${eventData?.theme === "TourTech" ? "text-gray-500" : "text-green-600"}`} />
+              <span className={`text-sm font-medium ${eventData?.theme === "TourTech" ? "text-gray-700 normal-case tracking-normal" : "text-green-800"}`}>
                 {formatDateRange(eventData.start_date, eventData.end_date)}
               </span>
             </div>
 
             {/* Title & Description */}
-            <div className="space-y-3">
-              <h1 className={`${theme.heroTitle} leading-tight`}>
+            <div className={`${eventData?.theme === "TourTech" ? "space-y-3" : "space-y-6"}`}>
+              <h1 className={`${eventData?.theme === "TourTech" ? theme.heroTitle : "text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.9] text-slate-900 tracking-tight"} leading-tight`}>
                 {eventData.name}
               </h1>
               {eventData.description && (
-                <p className={`${theme.heroSubtitle} ${theme.textMaxWidth} leading-relaxed`}>
+                <p className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-3xl mx-auto font-light"} leading-relaxed`}>
                   {eventData.description}
                 </p>
               )}
             </div>
 
-            {/* Action Buttons - Tour Tech: neutral styling */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            {/* Action Buttons */}
+            <div className={`flex flex-col sm:flex-row gap-${eventData?.theme === "TourTech" ? "3" : "6"} ${eventData?.theme === "TourTech" ? "pt-2" : "justify-center"}`}>
               <a
                 href="#courses"
-                className={`${eventData?.theme === "TourTech" ? "bg-slate-800 hover:bg-slate-900 text-white" : theme.primaryButton} px-6 py-2.5 ${theme.roundedCorners} inline-flex items-center gap-2 text-sm font-medium transition-colors ${eventData?.theme === "TourTech" ? "shadow-sm" : `${theme.cardShadow} ${theme.cardHover}`}`}
+                className={`${eventData?.theme === "TourTech" ? "bg-slate-800 hover:bg-slate-900 text-white px-6 py-2.5 rounded-md text-sm shadow-sm" : "group bg-gradient-to-r from-green-600 to-emerald-600 text-white px-10 py-5 rounded-2xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-xl shadow-green-600/25 hover:shadow-2xl hover:shadow-green-600/40 hover:-translate-y-1 text-lg"} inline-flex items-center gap-2 font-medium transition-colors`}
               >
                 <span>View Courses</span>
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className={`h-${eventData?.theme === "TourTech" ? "4" : "5"} w-${eventData?.theme === "TourTech" ? "4" : "5"} ${eventData?.theme === "TourTech" ? "" : "group-hover:translate-x-1 transition-transform"}`} />
               </a>
               <a
                 href="#players"
-                className={`${eventData?.theme === "TourTech" ? "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50" : theme.secondaryButton} px-6 py-2.5 ${theme.roundedCorners} inline-flex items-center gap-2 text-sm font-medium transition-colors ${eventData?.theme === "TourTech" ? "shadow-sm" : `${theme.cardShadow} ${theme.cardHover}`}`}
+                className={`${eventData?.theme === "TourTech" ? "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2.5 rounded-md text-sm shadow-sm" : "group bg-white/80 backdrop-blur-sm border-2 border-green-200 text-green-700 px-10 py-5 rounded-2xl font-semibold hover:bg-green-50 hover:border-green-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 text-lg"} inline-flex items-center gap-2 font-medium transition-colors`}
               >
-                <span>View Players</span>
-                <Users className="h-4 w-4" />
+                <span>${eventData?.theme === "TourTech" ? "View Players" : "Meet Players"}</span>
+                <Users className={`h-${eventData?.theme === "TourTech" ? "4" : "5"} w-${eventData?.theme === "TourTech" ? "4" : "5"} ${eventData?.theme === "TourTech" ? "" : "group-hover:scale-110 transition-transform"}`} />
               </a>
             </div>
 
