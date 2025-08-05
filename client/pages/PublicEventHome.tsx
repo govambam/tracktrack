@@ -2215,7 +2215,7 @@ export default function PublicEventHome() {
                         </h5>
                         <ul className="text-sm text-green-700 space-y-2 font-serif">
                           <li>• Must be <strong>ON THE GREEN</strong> to win</li>
-                          <li>• Measured to the inch for ties</li>
+                          <li>��� Measured to the inch for ties</li>
                           <li>• Ball must come to rest on putting surface</li>
                           <li>• Winner takes the full prize amount</li>
                         </ul>
@@ -2558,39 +2558,90 @@ export default function PublicEventHome() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                {[
-                  {
-                    info: travel.flight_info,
-                    icon: Plane,
-                    title: "Getting There",
-                    color: "blue",
-                  },
-                  {
-                    info: travel.accommodations,
-                    icon: Building,
-                    title: "Accommodation",
-                    color: "emerald",
-                  },
-                  {
-                    info: travel.daily_schedule,
-                    icon: Clock,
-                    title: "Daily Schedule",
-                    color: "purple",
-                  },
-                ]
-                  .filter((item) => item.info)
-                  .map((item, index) => (
-                    <AnimatedTravelCard
-                      key={item.title}
-                      item={item}
-                      index={index}
-                      theme={theme}
-                      isTourTech={eventData?.theme === "TourTech"}
-                      isMasters={eventData?.theme === "Masters"}
-                    />
-                  ))}
-              </div>
+              {eventData?.theme === "Masters" ? (
+                <div className="space-y-12">
+                  {/* 2-column grid for Getting There and Accommodation */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    {[
+                      {
+                        info: travel.flight_info,
+                        icon: Plane,
+                        title: "Getting There",
+                        color: "blue",
+                      },
+                      {
+                        info: travel.accommodations,
+                        icon: Building,
+                        title: "Accommodation",
+                        color: "emerald",
+                      },
+                    ]
+                      .filter((item) => item.info)
+                      .map((item, index) => (
+                        <AnimatedTravelCard
+                          key={item.title}
+                          item={item}
+                          index={index}
+                          theme={theme}
+                          isTourTech={eventData?.theme === "TourTech"}
+                          isMasters={eventData?.theme === "Masters"}
+                        />
+                      ))}
+                  </div>
+
+                  {/* Daily Schedule below in full width */}
+                  {travel.daily_schedule && (
+                    <div className="max-w-5xl mx-auto">
+                      <AnimatedTravelCard
+                        item={{
+                          info: travel.daily_schedule,
+                          icon: Clock,
+                          title: "Daily Schedule",
+                          color: "purple",
+                        }}
+                        index={2}
+                        theme={theme}
+                        isTourTech={eventData?.theme === "TourTech"}
+                        isMasters={eventData?.theme === "Masters"}
+                      />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                  {[
+                    {
+                      info: travel.flight_info,
+                      icon: Plane,
+                      title: "Getting There",
+                      color: "blue",
+                    },
+                    {
+                      info: travel.accommodations,
+                      icon: Building,
+                      title: "Accommodation",
+                      color: "emerald",
+                    },
+                    {
+                      info: travel.daily_schedule,
+                      icon: Clock,
+                      title: "Daily Schedule",
+                      color: "purple",
+                    },
+                  ]
+                    .filter((item) => item.info)
+                    .map((item, index) => (
+                      <AnimatedTravelCard
+                        key={item.title}
+                        item={item}
+                        index={index}
+                        theme={theme}
+                        isTourTech={eventData?.theme === "TourTech"}
+                        isMasters={eventData?.theme === "Masters"}
+                      />
+                    ))}
+                </div>
+              )}
             </div>
           </section>
         )}
