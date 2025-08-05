@@ -936,11 +936,13 @@ const AnimatedPrizeCard = ({
   index,
   theme,
   isTourTech = false,
+  isMasters = false,
 }: {
   prize: any;
   index: number;
   theme: any;
   isTourTech?: boolean;
+  isMasters?: boolean;
 }) => {
   const { isVisible, elementRef } = useScrollAnimation();
 
