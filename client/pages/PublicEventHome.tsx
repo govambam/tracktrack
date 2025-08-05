@@ -985,7 +985,7 @@ const AnimatedPrizeCard = ({
             </div>
           )}
 
-          <p className="text-slate-600 font-medium leading-relaxed">
+          <p className={`${isMasters ? "text-green-800/70 font-serif" : "text-slate-600 font-medium"} leading-relaxed`}>
             {prize.description}
           </p>
         </div>
