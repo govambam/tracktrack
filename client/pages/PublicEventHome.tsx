@@ -2286,7 +2286,7 @@ export default function PublicEventHome() {
                         </div>
                       </div>
 
-                      <div className="bg-green-50/30 border border-green-800/20 rounded-lg p-4">
+                      <div className="mt-4">
                         <h5 className="font-semibold text-green-900 text-sm mb-3 font-serif">
                           Rules
                         </h5>
@@ -2319,7 +2319,7 @@ export default function PublicEventHome() {
                         </div>
                       </div>
 
-                      <div className="bg-green-50/30 border border-green-800/20 rounded-lg p-4">
+                      <div className="mt-4">
                         <h5 className="font-semibold text-green-900 text-sm mb-3 font-serif">
                           Rules
                         </h5>
