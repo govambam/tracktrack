@@ -2287,9 +2287,7 @@ export default function PublicEventHome() {
                       </div>
 
                       <div className="mt-4">
-                        <h5 className="font-semibold text-green-900 text-sm mb-3 font-serif">
-                          Rules
-                        </h5>
+
                         <ul className="text-sm text-green-700 space-y-2 font-serif">
                           <li>• Must be <strong>ON THE GREEN</strong> to win</li>
                           <li>��� Measured to the inch for ties</li>
@@ -2320,9 +2318,7 @@ export default function PublicEventHome() {
                       </div>
 
                       <div className="mt-4">
-                        <h5 className="font-semibold text-green-900 text-sm mb-3 font-serif">
-                          Rules
-                        </h5>
+
                         <ul className="text-sm text-green-700 space-y-2 font-serif">
                           <li>• Must be <strong>IN THE FAIRWAY</strong> to win</li>
                           <li>• Winner = shortest distance to flag from approach</li>
