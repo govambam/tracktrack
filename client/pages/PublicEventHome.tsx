@@ -2055,11 +2055,17 @@ export default function PublicEventHome() {
           id="players"
           className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative overflow-hidden"} ${theme.sectionPadding} ${theme.containerPadding}`}
         >
-          {/* Background decoration - only for GolfOS */}
-          {eventData?.theme !== "TourTech" && (
+          {/* Background decoration */}
+          {eventData?.theme === "GolfOS" && (
             <>
               <div className="absolute inset-0 bg-gradient-to-br from-green-50/20 via-white to-emerald-50/10"></div>
               <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-green-100/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+            </>
+          )}
+          {eventData?.theme === "Masters" && (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
+              <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-yellow-100/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
             </>
           )}
 
