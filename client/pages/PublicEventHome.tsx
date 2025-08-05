@@ -1466,22 +1466,29 @@ export default function PublicEventHome() {
       {/* Hero Section */}
       <section
         id="overview"
-        className={`${eventData?.theme === "TourTech" ? "bg-white border-b border-slate-200" : "relative overflow-hidden"}`}
+        className={`${eventData?.theme === "TourTech" ? "bg-white border-b border-slate-200" : eventData?.theme === "Masters" ? "relative overflow-hidden bg-gradient-to-br from-amber-50/30 via-white to-green-50/20" : "relative overflow-hidden"}`}
       >
-        {/* Subtle background pattern - GolfOS only */}
-        {eventData?.theme !== "TourTech" && (
+        {/* Subtle background pattern - GolfOS and Masters */}
+        {eventData?.theme === "GolfOS" && (
           <>
             <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 via-transparent to-emerald-50/30"></div>
             <div className="absolute top-0 right-0 w-96 h-96 bg-green-100/20 rounded-full blur-3xl -translate-y-24 translate-x-24"></div>
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100/20 rounded-full blur-3xl translate-y-24 -translate-x-24"></div>
           </>
         )}
+        {eventData?.theme === "Masters" && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
+            <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-100/10 rounded-full blur-3xl -translate-y-24 translate-x-24"></div>
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-green-100/10 rounded-full blur-3xl translate-y-24 -translate-x-24"></div>
+          </>
+        )}
 
         <div
-          className={`relative ${eventData?.theme === "TourTech" ? `${theme.maxContentWidth} mx-auto ${theme.containerPadding} pt-20 pb-8` : "max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26"}`}
+          className={`relative ${eventData?.theme === "TourTech" ? `${theme.maxContentWidth} mx-auto ${theme.containerPadding} pt-20 pb-8` : eventData?.theme === "Masters" ? `${theme.maxContentWidth} mx-auto ${theme.containerPadding} pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26` : "max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26"}`}
         >
           <div
-            className={`${eventData?.theme === "TourTech" ? "space-y-4" : "text-center space-y-10 max-w-4xl mx-auto"}`}
+            className={`${eventData?.theme === "TourTech" ? "space-y-4" : eventData?.theme === "Masters" ? "text-center space-y-8 max-w-5xl mx-auto" : "text-center space-y-10 max-w-4xl mx-auto"}`}
           >
             {/* Event Badge */}
             <div
