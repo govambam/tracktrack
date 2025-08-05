@@ -2120,7 +2120,7 @@ export default function PublicEventHome() {
                 {eventData?.theme === "TourTech"
                   ? "Tournament Prizes"
                   : eventData?.theme === "Masters"
-                    ? "Prize Pool"
+                    ? "High Stakes, Higher Handicaps"
                     : "High Stakes, Higher Handicaps"}
               </h2>
 
