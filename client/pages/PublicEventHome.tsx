@@ -176,6 +176,63 @@ const getThemeStyles = (theme: string = "GolfOS") => {
     };
   }
 
+  if (theme === "Masters") {
+    return {
+      // Layout & Container - Elegant with subtle warmth
+      heroContainer: "bg-gradient-to-br from-amber-50/30 via-white to-green-50/20",
+      heroGradient: "bg-gradient-to-br from-amber-50/20 via-white to-green-50/10",
+      cardBackground: "bg-white",
+      sectionBackground: "bg-gradient-to-b from-amber-50/20 to-white",
+      modalBackground: "bg-white",
+
+      // Typography - Serif elegance with refined hierarchy
+      heroTitle: "font-serif font-semibold text-green-900 text-3xl md:text-7xl tracking-tight",
+      heroSubtitle: "font-serif font-medium text-green-800/80 text-base sm:text-lg tracking-wide",
+      sectionTitle: "font-serif font-semibold text-green-900 text-4xl tracking-tight",
+      cardTitle: "font-serif font-semibold text-green-900 text-lg md:text-2xl tracking-tight",
+      cardText: "text-green-800/70 text-sm md:text-lg",
+      dataText: "font-sans font-semibold text-green-900",
+      elegantText: "font-serif font-medium text-green-800 tracking-wide",
+      goldText: "text-yellow-600 font-semibold",
+
+      // Buttons - Refined with Masters colors
+      primaryButton: "bg-green-800 hover:bg-green-900 text-amber-50 font-medium transition-all duration-300 transform hover:scale-105",
+      secondaryButton: "bg-transparent border-2 border-yellow-600 text-yellow-600 hover:bg-yellow-50 font-medium transition-all duration-300",
+      accentColor: "text-yellow-600",
+      accentBackground: "bg-yellow-600",
+
+      // Borders & Shadows - Elegant with gold accents
+      cardBorder: "border border-green-800/20",
+      cardShadow: "shadow-sm hover:shadow-lg hover:shadow-green-900/10",
+      cardHover: "hover:border-yellow-600 hover:scale-105 transition-all duration-300",
+      roundedCorners: "rounded-lg",
+
+      // Spacing - Generous, refined
+      containerPadding: "px-6 sm:px-8 lg:px-12",
+      sectionPadding: "py-20 sm:py-24",
+      cardPadding: "p-6 sm:p-8",
+      headerSpacing: "mb-6",
+
+      // Data Display - Elegant serif for headings, sans for data
+      scoreFont: "font-serif font-semibold",
+      tableHeader: "font-serif text-sm font-medium tracking-wide text-green-800",
+      tableCell: "font-sans text-base text-green-900",
+
+      // Layout Constraints
+      maxContentWidth: "max-w-6xl",
+      textMaxWidth: "max-w-4xl",
+
+      // Masters-specific styles
+      mastersGreen: "text-green-800",
+      mastersGreenDeep: "text-green-900",
+      mastersGold: "text-yellow-600",
+      mastersGoldLight: "text-yellow-500",
+      mastersCream: "bg-amber-50",
+      mastersIcon: "h-8 w-8 text-yellow-600",
+      mastersIconSmall: "h-4 w-4 text-yellow-600",
+    };
+  }
+
   // Default GolfOS theme
   return {
     // Container styles
@@ -2125,7 +2182,7 @@ export default function PublicEventHome() {
                               role="img"
                               aria-label="target"
                             >
-                              🎯
+                              ��
                             </span>
                             <span className="text-sm text-green-700 font-medium">
                               Closest to Pin: ${closestToPinPrize} per hole
