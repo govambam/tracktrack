@@ -1524,28 +1524,30 @@ export default function PublicEventHome() {
 
             {/* Action Buttons */}
             <div
-              className={`flex flex-col sm:flex-row gap-${eventData?.theme === "TourTech" ? "3" : "6"} ${eventData?.theme === "TourTech" ? "pt-2" : "justify-center"}`}
+              className={`flex flex-col sm:flex-row gap-${eventData?.theme === "TourTech" ? "3" : eventData?.theme === "Masters" ? "4" : "6"} ${eventData?.theme === "TourTech" ? "pt-2" : eventData?.theme === "Masters" ? "justify-center pt-4" : "justify-center"}`}
             >
               <a
                 href="#courses"
-                className={`${eventData?.theme === "TourTech" ? "bg-slate-800 hover:bg-slate-900 text-white px-6 py-2.5 rounded-md text-sm shadow-sm" : "group bg-gradient-to-r from-green-600 to-emerald-600 text-white px-10 py-5 rounded-2xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-xl shadow-green-600/25 hover:shadow-2xl hover:shadow-green-600/40 hover:-translate-y-1 text-lg"} inline-flex items-center gap-2 font-medium transition-colors`}
+                className={`${eventData?.theme === "TourTech" ? "bg-slate-800 hover:bg-slate-900 text-white px-6 py-2.5 rounded-md text-sm shadow-sm" : eventData?.theme === "Masters" ? `${theme.primaryButton} px-8 py-4 ${theme.roundedCorners} font-serif text-lg shadow-lg hover:shadow-xl` : "group bg-gradient-to-r from-green-600 to-emerald-600 text-white px-10 py-5 rounded-2xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-xl shadow-green-600/25 hover:shadow-2xl hover:shadow-green-600/40 hover:-translate-y-1 text-lg"} inline-flex items-center gap-2 font-medium transition-colors`}
               >
                 <span>View Courses</span>
                 <ChevronRight
-                  className={`h-${eventData?.theme === "TourTech" ? "4" : "5"} w-${eventData?.theme === "TourTech" ? "4" : "5"} ${eventData?.theme === "TourTech" ? "" : "group-hover:translate-x-1 transition-transform"}`}
+                  className={`h-${eventData?.theme === "TourTech" ? "4" : eventData?.theme === "Masters" ? "5" : "5"} w-${eventData?.theme === "TourTech" ? "4" : eventData?.theme === "Masters" ? "5" : "5"} ${eventData?.theme === "TourTech" ? "" : eventData?.theme === "Masters" ? "transition-transform duration-300" : "group-hover:translate-x-1 transition-transform"}`}
                 />
               </a>
               <a
                 href="#players"
-                className={`${eventData?.theme === "TourTech" ? "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2.5 rounded-md text-sm shadow-sm" : "group bg-white/80 backdrop-blur-sm border-2 border-green-200 text-green-700 px-10 py-5 rounded-2xl font-semibold hover:bg-green-50 hover:border-green-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 text-lg"} inline-flex items-center gap-2 font-medium transition-colors`}
+                className={`${eventData?.theme === "TourTech" ? "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2.5 rounded-md text-sm shadow-sm" : eventData?.theme === "Masters" ? `${theme.secondaryButton} px-8 py-4 ${theme.roundedCorners} font-serif text-lg shadow-lg hover:shadow-xl` : "group bg-white/80 backdrop-blur-sm border-2 border-green-200 text-green-700 px-10 py-5 rounded-2xl font-semibold hover:bg-green-50 hover:border-green-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 text-lg"} inline-flex items-center gap-2 font-medium transition-colors`}
               >
                 <span>
                   {eventData?.theme === "TourTech"
                     ? "View Players"
-                    : "Meet Players"}
+                    : eventData?.theme === "Masters"
+                      ? "View Players"
+                      : "Meet Players"}
                 </span>
                 <Users
-                  className={`h-${eventData?.theme === "TourTech" ? "4" : "5"} w-${eventData?.theme === "TourTech" ? "4" : "5"} ${eventData?.theme === "TourTech" ? "" : "group-hover:scale-110 transition-transform"}`}
+                  className={`h-${eventData?.theme === "TourTech" ? "4" : eventData?.theme === "Masters" ? "5" : "5"} w-${eventData?.theme === "TourTech" ? "4" : eventData?.theme === "Masters" ? "5" : "5"} ${eventData?.theme === "TourTech" ? "" : eventData?.theme === "Masters" ? "transition-transform duration-300" : "group-hover:scale-110 transition-transform"}`}
                 />
               </a>
             </div>
