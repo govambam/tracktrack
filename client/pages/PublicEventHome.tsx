@@ -1577,6 +1577,30 @@ export default function PublicEventHome() {
                   </div>
                 ))}
               </div>
+            ) : eventData?.theme === "Masters" ? (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-green-800/20 mt-8">
+                {[
+                  { label: "Courses", value: courses.length.toString() },
+                  { label: "Players", value: players.length.toString() },
+                  { label: "Format", value: getScoringFormat() },
+                  {
+                    label: "Duration",
+                    value: getDuration(
+                      eventData.start_date,
+                      eventData.end_date,
+                    ),
+                  },
+                ].map((stat, index) => (
+                  <div key={index} className="text-center py-4">
+                    <div className="font-serif text-2xl font-semibold text-yellow-600 mb-1">
+                      {stat.value}
+                    </div>
+                    <div className="font-serif text-sm font-medium text-green-800 tracking-wide">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
               <CountdownTimer targetDate={eventData.start_date} />
             )}
