@@ -1848,36 +1848,36 @@ export default function PublicEventHome() {
                       >
                         <div className="flex items-center justify-between mb-3">
                           <div
-                            className={`${eventData?.theme === "TourTech" ? `w-8 h-8 ${theme.accentBackground} flex items-center justify-center ${theme.roundedCorners}` : `w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}`}
+                            className={`${eventData?.theme === "TourTech" ? `w-8 h-8 ${theme.accentBackground} flex items-center justify-center ${theme.roundedCorners}` : eventData?.theme === "Masters" ? "w-10 h-10 rounded-lg bg-yellow-600 flex items-center justify-center shadow-sm" : `w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}`}
                           >
                             <span
-                              className={`${eventData?.theme === "TourTech" ? `${theme.scoreFont} text-sm text-white` : "text-2xl font-bold text-white"}`}
+                              className={`${eventData?.theme === "TourTech" ? `${theme.scoreFont} text-sm text-white` : eventData?.theme === "Masters" ? "font-serif text-lg font-semibold text-white" : "text-2xl font-bold text-white"}`}
                             >
                               {scoring.points}
                             </span>
                           </div>
                           <IconComponent
-                            className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.accentColor : scoring.iconColor}`}
+                            className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.accentColor : eventData?.theme === "Masters" ? "text-green-800" : scoring.iconColor}`}
                           />
                         </div>
 
                         <div className="space-y-2">
                           <div className="flex items-center justify-between mb-2">
                             <h4
-                              className={`${eventData?.theme === "TourTech" ? theme.cardTitle : `text-lg font-bold ${scoring.textColor}`}`}
+                              className={`${eventData?.theme === "TourTech" ? theme.cardTitle : eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-lg" : `text-lg font-bold ${scoring.textColor}`}`}
                             >
                               {scoring.score}
                             </h4>
                             <Badge
                               variant="outline"
-                              className={`${eventData?.theme === "TourTech" ? `${theme.cardText} border-slate-300` : `${scoring.textColor} border-current`} text-xs`}
+                              className={`${eventData?.theme === "TourTech" ? `${theme.cardText} border-slate-300` : eventData?.theme === "Masters" ? "text-green-800 border-green-800/30 font-serif" : `${scoring.textColor} border-current`} text-xs`}
                             >
                               {scoring.description}
                             </Badge>
                           </div>
 
                           <p
-                            className={`${eventData?.theme === "TourTech" ? theme.cardText : `text-sm ${scoring.textColor} opacity-80`} leading-relaxed`}
+                            className={`${eventData?.theme === "TourTech" ? theme.cardText : eventData?.theme === "Masters" ? "text-sm text-green-800/70 font-serif" : `text-sm ${scoring.textColor} opacity-80`} leading-relaxed`}
                           >
                             {scoring.detail}
                           </p>
