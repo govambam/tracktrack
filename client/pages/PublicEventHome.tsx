@@ -1696,7 +1696,7 @@ export default function PublicEventHome() {
               </h2>
 
               <p
-                className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-4xl font-light"} mx-auto leading-relaxed`}
+                className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : eventData?.theme === "Masters" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-4xl font-light"} mx-auto leading-relaxed`}
               >
                 {rounds.reduce(
                   (total, round) => total + (round.holes || 18),
@@ -1704,7 +1704,9 @@ export default function PublicEventHome() {
                 )}{" "}
                 {eventData?.theme === "TourTech"
                   ? "holes"
-                  : "world class holes"}{" "}
+                  : eventData?.theme === "Masters"
+                    ? "championship holes"
+                    : "world class holes"}{" "}
                 played over{" "}
                 {getDuration(
                   eventData.start_date,
