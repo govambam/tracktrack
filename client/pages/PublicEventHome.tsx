@@ -133,9 +133,11 @@ const getThemeStyles = (theme: string = "GolfOS") => {
       modalBackground: "bg-white",
 
       // Typography - Compact, weight-based hierarchy with monospace emphasis
-      heroTitle: "text-slate-900 font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight",
+      heroTitle:
+        "text-slate-900 font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight",
       heroSubtitle: "text-slate-600 font-normal text-base sm:text-lg",
-      sectionTitle: "text-slate-900 font-semibold text-lg sm:text-xl tracking-tight",
+      sectionTitle:
+        "text-slate-900 font-semibold text-lg sm:text-xl tracking-tight",
       cardTitle: "text-slate-900 font-semibold text-base",
       cardText: "text-slate-600 text-sm",
       dataText: "font-mono text-slate-800 font-medium",
@@ -144,8 +146,10 @@ const getThemeStyles = (theme: string = "GolfOS") => {
       orangeText: "text-orange-600 font-medium",
 
       // Buttons - Solid, enterprise-style
-      primaryButton: "bg-orange-600 hover:bg-orange-700 text-white font-medium transition-colors",
-      secondaryButton: "bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium transition-colors",
+      primaryButton:
+        "bg-orange-600 hover:bg-orange-700 text-white font-medium transition-colors",
+      secondaryButton:
+        "bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium transition-colors",
       accentColor: "text-orange-600",
       accentBackground: "bg-orange-600",
 
@@ -635,30 +639,48 @@ const AnimatedCourseCard = ({
         )}
 
         <div className={`${isTourTech ? "p-6" : "p-8"} relative`}>
-          <div className={`flex items-start justify-between ${isTourTech ? "mb-4" : "mb-6"}`}>
+          <div
+            className={`flex items-start justify-between ${isTourTech ? "mb-4" : "mb-6"}`}
+          >
             <div className="flex-1">
-              <div className={`flex items-center space-x-2 ${isTourTech ? "mb-2" : "mb-3"}`}>
-                <Badge className={`${isTourTech ? "bg-gray-100 text-gray-700 border border-gray-300" : "bg-gradient-to-r from-green-600 to-emerald-600 text-white"} text-xs font-semibold px-3 py-1 ${isTourTech ? "rounded-md" : "rounded-full"}`}>
+              <div
+                className={`flex items-center space-x-2 ${isTourTech ? "mb-2" : "mb-3"}`}
+              >
+                <Badge
+                  className={`${isTourTech ? "bg-gray-100 text-gray-700 border border-gray-300" : "bg-gradient-to-r from-green-600 to-emerald-600 text-white"} text-xs font-semibold px-3 py-1 ${isTourTech ? "rounded-md" : "rounded-full"}`}
+                >
                   Round {index + 1}
                 </Badge>
               </div>
-              <h3 className={`${isTourTech ? "text-xl font-semibold text-slate-900 mb-1" : "text-2xl font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors"}`}>
+              <h3
+                className={`${isTourTech ? "text-xl font-semibold text-slate-900 mb-1" : "text-2xl font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors"}`}
+              >
                 {course.name}
               </h3>
             </div>
           </div>
 
           {course.par && course.yardage && (
-            <div className={`flex items-center space-x-6 ${isTourTech ? "mb-4" : "mb-6"} text-sm`}>
+            <div
+              className={`flex items-center space-x-6 ${isTourTech ? "mb-4" : "mb-6"} text-sm`}
+            >
               <div className="flex items-center space-x-2">
-                {!isTourTech && <div className="w-2 h-2 bg-green-500 rounded-full"></div>}
-                <span className={`${isTourTech ? "font-mono text-slate-800" : "font-semibold text-slate-700"}`}>
+                {!isTourTech && (
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                )}
+                <span
+                  className={`${isTourTech ? "font-mono text-slate-800" : "font-semibold text-slate-700"}`}
+                >
                   Par {course.par}
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                {!isTourTech && <div className="w-2 h-2 bg-blue-500 rounded-full"></div>}
-                <span className={`${isTourTech ? "font-mono text-slate-800" : "font-semibold text-slate-700"}`}>
+                {!isTourTech && (
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                )}
+                <span
+                  className={`${isTourTech ? "font-mono text-slate-800" : "font-semibold text-slate-700"}`}
+                >
                   {course.yardage?.toLocaleString()} yards
                 </span>
               </div>
@@ -768,25 +790,39 @@ const AnimatedPlayerCard = ({
         className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : "bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50 hover:-translate-y-2"} ${isTourTech ? theme.roundedCorners : "rounded-3xl"} transition-all duration-300 group-hover:bg-white flex flex-col ${!hasBio ? "h-64" : isShortBio ? "h-72" : "h-80"}`}
       >
         {/* Avatar Section - Top */}
-        <div className={`flex flex-col items-center ${isTourTech ? "pt-4 pb-3" : "pt-6 pb-4"}`}>
-          <Avatar className={`${isTourTech ? "h-16 w-16" : "h-20 w-20"} ring-4 ${isTourTech ? "ring-orange-200" : "ring-white/50 group-hover:ring-green-200"} transition-all duration-300`}>
+        <div
+          className={`flex flex-col items-center ${isTourTech ? "pt-4 pb-3" : "pt-6 pb-4"}`}
+        >
+          <Avatar
+            className={`${isTourTech ? "h-16 w-16" : "h-20 w-20"} ring-4 ${isTourTech ? "ring-orange-200" : "ring-white/50 group-hover:ring-green-200"} transition-all duration-300`}
+          >
             {player.profile_image && (
               <AvatarImage src={player.profile_image} alt={player.full_name} />
             )}
-            <AvatarFallback className={`${isTourTech ? theme.accentBackground : "bg-gradient-to-br from-green-500 to-emerald-600"} text-white ${isTourTech ? "text-lg" : "text-xl"} font-bold`}>
+            <AvatarFallback
+              className={`${isTourTech ? theme.accentBackground : "bg-gradient-to-br from-green-500 to-emerald-600"} text-white ${isTourTech ? "text-lg" : "text-xl"} font-bold`}
+            >
               {getPlayerInitials(player.full_name)}
             </AvatarFallback>
           </Avatar>
         </div>
 
         {/* Name and Handicap Section */}
-        <div className={`text-center ${isTourTech ? "px-4 pb-3" : "px-6 pb-4"}`}>
-          <h3 className={`${isTourTech ? theme.cardTitle : "font-bold text-slate-900 text-lg group-hover:text-green-700"} transition-colors mb-2`}>
+        <div
+          className={`text-center ${isTourTech ? "px-4 pb-3" : "px-6 pb-4"}`}
+        >
+          <h3
+            className={`${isTourTech ? theme.cardTitle : "font-bold text-slate-900 text-lg group-hover:text-green-700"} transition-colors mb-2`}
+          >
             {player.full_name}
           </h3>
           {player.handicap !== null && player.handicap !== undefined && (
-            <div className={`inline-flex items-center space-x-1 ${isTourTech ? "bg-slate-100" : "bg-slate-100"} ${isTourTech ? theme.roundedCorners : "rounded-full"} px-3 py-1`}>
-              <span className={`${isTourTech ? theme.dataText : "text-xs font-semibold text-slate-600"}`}>
+            <div
+              className={`inline-flex items-center space-x-1 ${isTourTech ? "bg-slate-100" : "bg-slate-100"} ${isTourTech ? theme.roundedCorners : "rounded-full"} px-3 py-1`}
+            >
+              <span
+                className={`${isTourTech ? theme.dataText : "text-xs font-semibold text-slate-600"}`}
+              >
                 HCP: {player.handicap}
               </span>
             </div>
@@ -840,7 +876,7 @@ const AnimatedPrizeCard = ({
   prize,
   index,
   theme,
-  isTourTech = false
+  isTourTech = false,
 }: {
   prize: any;
   index: number;
@@ -862,12 +898,20 @@ const AnimatedPrizeCard = ({
               : "delay-300"
       } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
     >
-      <div className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3"} ${isTourTech ? theme.roundedCorners : "rounded-3xl"} ${isTourTech ? theme.cardPadding : "p-8"} text-center transition-all duration-300 group-hover:bg-white h-80 flex flex-col`}>
-        <div className={`${isTourTech ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-4` : "w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300"}`}>
-          <Trophy className={`${isTourTech ? "h-6 w-6 text-white" : "h-10 w-10 text-amber-600"}`} />
+      <div
+        className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3"} ${isTourTech ? theme.roundedCorners : "rounded-3xl"} ${isTourTech ? theme.cardPadding : "p-8"} text-center transition-all duration-300 group-hover:bg-white h-80 flex flex-col`}
+      >
+        <div
+          className={`${isTourTech ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-4` : "w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300"}`}
+        >
+          <Trophy
+            className={`${isTourTech ? "h-6 w-6 text-white" : "h-10 w-10 text-amber-600"}`}
+          />
         </div>
 
-        <h3 className={`${isTourTech ? theme.cardTitle : "text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors"} mb-4 min-h-[3.5rem] flex items-center justify-center`}>
+        <h3
+          className={`${isTourTech ? theme.cardTitle : "text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors"} mb-4 min-h-[3.5rem] flex items-center justify-center`}
+        >
           {prize.category
             .replace(/_/g, " ")
             .replace(/\b\w/g, (l) => l.toUpperCase())}
@@ -893,7 +937,7 @@ const AnimatedTravelCard = ({
   item,
   index,
   theme,
-  isTourTech = false
+  isTourTech = false,
 }: {
   item: any;
   index: number;
@@ -919,14 +963,22 @@ const AnimatedTravelCard = ({
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
       }`}
     >
-      <div className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2"} ${isTourTech ? theme.roundedCorners : "rounded-3xl"} ${isTourTech ? theme.cardPadding : "p-8"} transition-all duration-300 h-full`}>
+      <div
+        className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2"} ${isTourTech ? theme.roundedCorners : "rounded-3xl"} ${isTourTech ? theme.cardPadding : "p-8"} transition-all duration-300 h-full`}
+      >
         <div
           className={`${isTourTech ? `w-10 h-10 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mb-4` : `w-16 h-16 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mb-8`}`}
         >
-          <item.icon className={`${isTourTech ? "h-5 w-5 text-white" : `h-8 w-8 ${colors.text}`}`} />
+          <item.icon
+            className={`${isTourTech ? "h-5 w-5 text-white" : `h-8 w-8 ${colors.text}`}`}
+          />
         </div>
 
-        <h3 className={`${isTourTech ? theme.cardTitle : "text-2xl font-bold text-slate-900"} ${isTourTech ? "mb-3" : "mb-6"}`}>{item.title}</h3>
+        <h3
+          className={`${isTourTech ? theme.cardTitle : "text-2xl font-bold text-slate-900"} ${isTourTech ? "mb-3" : "mb-6"}`}
+        >
+          {item.title}
+        </h3>
 
         <div className="prose prose-slate max-w-none">
           <ReactMarkdown
@@ -1355,7 +1407,10 @@ export default function PublicEventHome() {
       <StickyNavigation eventName={eventData.name} slug={slug!} />
 
       {/* Hero Section */}
-      <section id="overview" className={`${eventData?.theme === "TourTech" ? "bg-white border-b border-slate-200" : "relative overflow-hidden"}`}>
+      <section
+        id="overview"
+        className={`${eventData?.theme === "TourTech" ? "bg-white border-b border-slate-200" : "relative overflow-hidden"}`}
+      >
         {/* Subtle background pattern - GolfOS only */}
         {eventData?.theme !== "TourTech" && (
           <>
@@ -1365,43 +1420,69 @@ export default function PublicEventHome() {
           </>
         )}
 
-        <div className={`relative ${eventData?.theme === "TourTech" ? `${theme.maxContentWidth} mx-auto ${theme.containerPadding} pt-20 pb-8` : "max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26"}`}>
-          <div className={`${eventData?.theme === "TourTech" ? "space-y-4" : "text-center space-y-10 max-w-4xl mx-auto"}`}>
+        <div
+          className={`relative ${eventData?.theme === "TourTech" ? `${theme.maxContentWidth} mx-auto ${theme.containerPadding} pt-20 pb-8` : "max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26"}`}
+        >
+          <div
+            className={`${eventData?.theme === "TourTech" ? "space-y-4" : "text-center space-y-10 max-w-4xl mx-auto"}`}
+          >
             {/* Event Badge */}
-            <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-100 border border-gray-300 text-gray-700 rounded-md px-3 py-1.5 shadow-none" : "bg-white/80 backdrop-blur-sm border border-green-200/50 rounded-full px-6 py-3 shadow-lg shadow-green-100/50"}`}>
-              <Calendar className={`h-4 w-4 ${eventData?.theme === "TourTech" ? "text-gray-500" : "text-green-600"}`} />
-              <span className={`text-sm font-medium ${eventData?.theme === "TourTech" ? "text-gray-700 normal-case tracking-normal" : "text-green-800"}`}>
+            <div
+              className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-100 border border-gray-300 text-gray-700 rounded-md px-3 py-1.5 shadow-none" : "bg-white/80 backdrop-blur-sm border border-green-200/50 rounded-full px-6 py-3 shadow-lg shadow-green-100/50"}`}
+            >
+              <Calendar
+                className={`h-4 w-4 ${eventData?.theme === "TourTech" ? "text-gray-500" : "text-green-600"}`}
+              />
+              <span
+                className={`text-sm font-medium ${eventData?.theme === "TourTech" ? "text-gray-700 normal-case tracking-normal" : "text-green-800"}`}
+              >
                 {formatDateRange(eventData.start_date, eventData.end_date)}
               </span>
             </div>
 
             {/* Title & Description */}
-            <div className={`${eventData?.theme === "TourTech" ? "space-y-3" : "space-y-6"}`}>
-              <h1 className={`${eventData?.theme === "TourTech" ? theme.heroTitle : "text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.9] text-slate-900 tracking-tight"} leading-tight`}>
+            <div
+              className={`${eventData?.theme === "TourTech" ? "space-y-3" : "space-y-6"}`}
+            >
+              <h1
+                className={`${eventData?.theme === "TourTech" ? theme.heroTitle : "text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.9] text-slate-900 tracking-tight"} leading-tight`}
+              >
                 {eventData.name}
               </h1>
               {eventData.description && (
-                <p className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-3xl mx-auto font-light"} leading-relaxed`}>
+                <p
+                  className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-3xl mx-auto font-light"} leading-relaxed`}
+                >
                   {eventData.description}
                 </p>
               )}
             </div>
 
             {/* Action Buttons */}
-            <div className={`flex flex-col sm:flex-row gap-${eventData?.theme === "TourTech" ? "3" : "6"} ${eventData?.theme === "TourTech" ? "pt-2" : "justify-center"}`}>
+            <div
+              className={`flex flex-col sm:flex-row gap-${eventData?.theme === "TourTech" ? "3" : "6"} ${eventData?.theme === "TourTech" ? "pt-2" : "justify-center"}`}
+            >
               <a
                 href="#courses"
                 className={`${eventData?.theme === "TourTech" ? "bg-slate-800 hover:bg-slate-900 text-white px-6 py-2.5 rounded-md text-sm shadow-sm" : "group bg-gradient-to-r from-green-600 to-emerald-600 text-white px-10 py-5 rounded-2xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-xl shadow-green-600/25 hover:shadow-2xl hover:shadow-green-600/40 hover:-translate-y-1 text-lg"} inline-flex items-center gap-2 font-medium transition-colors`}
               >
                 <span>View Courses</span>
-                <ChevronRight className={`h-${eventData?.theme === "TourTech" ? "4" : "5"} w-${eventData?.theme === "TourTech" ? "4" : "5"} ${eventData?.theme === "TourTech" ? "" : "group-hover:translate-x-1 transition-transform"}`} />
+                <ChevronRight
+                  className={`h-${eventData?.theme === "TourTech" ? "4" : "5"} w-${eventData?.theme === "TourTech" ? "4" : "5"} ${eventData?.theme === "TourTech" ? "" : "group-hover:translate-x-1 transition-transform"}`}
+                />
               </a>
               <a
                 href="#players"
                 className={`${eventData?.theme === "TourTech" ? "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2.5 rounded-md text-sm shadow-sm" : "group bg-white/80 backdrop-blur-sm border-2 border-green-200 text-green-700 px-10 py-5 rounded-2xl font-semibold hover:bg-green-50 hover:border-green-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 text-lg"} inline-flex items-center gap-2 font-medium transition-colors`}
               >
-                <span>{eventData?.theme === "TourTech" ? "View Players" : "Meet Players"}</span>
-                <Users className={`h-${eventData?.theme === "TourTech" ? "4" : "5"} w-${eventData?.theme === "TourTech" ? "4" : "5"} ${eventData?.theme === "TourTech" ? "" : "group-hover:scale-110 transition-transform"}`} />
+                <span>
+                  {eventData?.theme === "TourTech"
+                    ? "View Players"
+                    : "Meet Players"}
+                </span>
+                <Users
+                  className={`h-${eventData?.theme === "TourTech" ? "4" : "5"} w-${eventData?.theme === "TourTech" ? "4" : "5"} ${eventData?.theme === "TourTech" ? "" : "group-hover:scale-110 transition-transform"}`}
+                />
               </a>
             </div>
 
@@ -1412,11 +1493,21 @@ export default function PublicEventHome() {
                   { label: "Courses", value: courses.length.toString() },
                   { label: "Players", value: players.length.toString() },
                   { label: "Format", value: getScoringFormat() },
-                  { label: "Duration", value: getDuration(eventData.start_date, eventData.end_date) },
+                  {
+                    label: "Duration",
+                    value: getDuration(
+                      eventData.start_date,
+                      eventData.end_date,
+                    ),
+                  },
                 ].map((stat, index) => (
                   <div key={index} className="text-center py-3">
-                    <div className="font-mono text-xl font-semibold text-orange-600">{stat.value}</div>
-                    <div className="font-mono text-xs font-medium text-slate-500 uppercase tracking-wide">{stat.label}</div>
+                    <div className="font-mono text-xl font-semibold text-orange-600">
+                      {stat.value}
+                    </div>
+                    <div className="font-mono text-xs font-medium text-slate-500 uppercase tracking-wide">
+                      {stat.label}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1480,25 +1571,44 @@ export default function PublicEventHome() {
             </>
           )}
 
-          <div className={`relative ${eventData?.theme === "TourTech" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}>
-            <div className={`text-center ${eventData?.theme === "TourTech" ? theme.headerSpacing : "mb-20"}`}>
-              <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : "bg-green-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${eventData?.theme === "TourTech" ? "4" : "8"}`}>
-                <Sparkles className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-green-600"}`} />
-                <span className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.monoLabel : "text-green-800"}`}>
-                  {eventData?.theme === "TourTech" ? "VENUES" : "Championship Venues"}
+          <div
+            className={`relative ${eventData?.theme === "TourTech" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}
+          >
+            <div
+              className={`text-center ${eventData?.theme === "TourTech" ? theme.headerSpacing : "mb-20"}`}
+            >
+              <div
+                className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : "bg-green-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${eventData?.theme === "TourTech" ? "4" : "8"}`}
+              >
+                <Sparkles
+                  className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-green-600"}`}
+                />
+                <span
+                  className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.monoLabel : "text-green-800"}`}
+                >
+                  {eventData?.theme === "TourTech"
+                    ? "VENUES"
+                    : "Championship Venues"}
                 </span>
               </div>
 
-              <h2 className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : "8"}`}>
+              <h2
+                className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : "8"}`}
+              >
                 {courses.length > 1 ? "Golf Courses" : "Golf Course"}
               </h2>
 
-              <p className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-4xl font-light"} mx-auto leading-relaxed`}>
+              <p
+                className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-4xl font-light"} mx-auto leading-relaxed`}
+              >
                 {rounds.reduce(
                   (total, round) => total + (round.holes || 18),
                   0,
                 )}{" "}
-                {eventData?.theme === "TourTech" ? "holes" : "world class holes"} played over{" "}
+                {eventData?.theme === "TourTech"
+                  ? "holes"
+                  : "world class holes"}{" "}
+                played over{" "}
                 {getDuration(
                   eventData.start_date,
                   eventData.end_date,
@@ -1543,33 +1653,60 @@ export default function PublicEventHome() {
 
       {/* Scoring Format Section */}
       {rounds.length > 0 && (
-        <section id="scoring" className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : "py-28 px-6 sm:px-8 lg:px-12 relative"}`}>
+        <section
+          id="scoring"
+          className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : "py-28 px-6 sm:px-8 lg:px-12 relative"}`}
+        >
           {/* Background decoration */}
           {eventData?.theme === "TourTech" ? null : (
             <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-slate-50/30"></div>
           )}
-          <div className={`relative ${eventData?.theme === "TourTech" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}>
-            <div className={`text-center ${eventData?.theme === "TourTech" ? theme.headerSpacing : "mb-20"}`}>
-              <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : "bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${eventData?.theme === "TourTech" ? "4" : "8"}`}>
-                <Target className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.accentColor : "text-blue-600"}`} />
-                <span className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.tableHeader : "text-blue-800"}`}>
-                  {eventData?.theme === "TourTech" ? "SCORING" : "Competition Rules"}
+          <div
+            className={`relative ${eventData?.theme === "TourTech" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}
+          >
+            <div
+              className={`text-center ${eventData?.theme === "TourTech" ? theme.headerSpacing : "mb-20"}`}
+            >
+              <div
+                className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : "bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${eventData?.theme === "TourTech" ? "4" : "8"}`}
+              >
+                <Target
+                  className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.accentColor : "text-blue-600"}`}
+                />
+                <span
+                  className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.tableHeader : "text-blue-800"}`}
+                >
+                  {eventData?.theme === "TourTech"
+                    ? "SCORING"
+                    : "Competition Rules"}
                 </span>
               </div>
 
-              <h2 className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : "8"}`}>
+              <h2
+                className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : "8"}`}
+              >
                 Scoring Format
               </h2>
 
-              <div className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl"} mx-auto mb-${eventData?.theme === "TourTech" ? "8" : "16"}`}>
-                <div className={`${eventData?.theme === "TourTech" ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners}` : "w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl"} flex items-center justify-center mx-auto mb-${eventData?.theme === "TourTech" ? "4" : "6"}`}>
-                  <Target className={`${eventData?.theme === "TourTech" ? "h-5 w-5 text-white" : "h-8 w-8 text-green-600"}`} />
+              <div
+                className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl"} mx-auto mb-${eventData?.theme === "TourTech" ? "8" : "16"}`}
+              >
+                <div
+                  className={`${eventData?.theme === "TourTech" ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners}` : "w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl"} flex items-center justify-center mx-auto mb-${eventData?.theme === "TourTech" ? "4" : "6"}`}
+                >
+                  <Target
+                    className={`${eventData?.theme === "TourTech" ? "h-5 w-5 text-white" : "h-8 w-8 text-green-600"}`}
+                  />
                 </div>
 
-                <h3 className={`${eventData?.theme === "TourTech" ? theme.cardTitle : "text-2xl sm:text-3xl font-bold text-slate-900"} mb-${eventData?.theme === "TourTech" ? "2" : "4"}`}>
+                <h3
+                  className={`${eventData?.theme === "TourTech" ? theme.cardTitle : "text-2xl sm:text-3xl font-bold text-slate-900"} mb-${eventData?.theme === "TourTech" ? "2" : "4"}`}
+                >
                   {getScoringFormat()}
                 </h3>
-                <p className={`${eventData?.theme === "TourTech" ? theme.cardText : "text-lg text-slate-600 font-light"} leading-relaxed`}>
+                <p
+                  className={`${eventData?.theme === "TourTech" ? theme.cardText : "text-lg text-slate-600 font-light"} leading-relaxed`}
+                >
                   {getScoringFormat().includes("Stableford")
                     ? eventData?.theme === "TourTech"
                       ? "Modified Stableford scoring system with preset competition and team scramble format."
@@ -1585,9 +1722,7 @@ export default function PublicEventHome() {
             {getScoringFormat().includes("Stableford") && (
               <div className="mb-8">
                 <div className={`text-center ${theme.headerSpacing}`}>
-                  <h3 className={`${theme.sectionTitle} mb-2`}>
-                    Point Values
-                  </h3>
+                  <h3 className={`${theme.sectionTitle} mb-2`}>Point Values</h3>
                   <p className={`${theme.cardText}`}>
                     Points awarded based on performance relative to par
                   </p>
@@ -1602,8 +1737,12 @@ export default function PublicEventHome() {
                         className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder}` : `${scoring.bgColor} border-2 border-opacity-20`} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${eventData?.theme === "TourTech" ? theme.cardHover : "hover:scale-105 transition-transform duration-200"}`}
                       >
                         <div className="flex items-center justify-between mb-3">
-                          <div className={`${eventData?.theme === "TourTech" ? `w-8 h-8 ${theme.accentBackground} flex items-center justify-center ${theme.roundedCorners}` : `w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}`}>
-                            <span className={`${eventData?.theme === "TourTech" ? `${theme.scoreFont} text-sm text-white` : "text-2xl font-bold text-white"}`}>
+                          <div
+                            className={`${eventData?.theme === "TourTech" ? `w-8 h-8 ${theme.accentBackground} flex items-center justify-center ${theme.roundedCorners}` : `w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}`}
+                          >
+                            <span
+                              className={`${eventData?.theme === "TourTech" ? `${theme.scoreFont} text-sm text-white` : "text-2xl font-bold text-white"}`}
+                            >
                               {scoring.points}
                             </span>
                           </div>
@@ -1614,34 +1753,48 @@ export default function PublicEventHome() {
 
                         <div className="space-y-2">
                           <div className="flex items-center justify-between mb-2">
-                          <h4 className={`${eventData?.theme === "TourTech" ? theme.cardTitle : `text-lg font-bold ${scoring.textColor}`}`}>
-                            {scoring.score}
-                          </h4>
-                          <Badge
-                            variant="outline"
-                            className={`${eventData?.theme === "TourTech" ? `${theme.cardText} border-slate-300` : `${scoring.textColor} border-current`} text-xs`}
-                          >
-                            {scoring.description}
-                          </Badge>
-                        </div>
+                            <h4
+                              className={`${eventData?.theme === "TourTech" ? theme.cardTitle : `text-lg font-bold ${scoring.textColor}`}`}
+                            >
+                              {scoring.score}
+                            </h4>
+                            <Badge
+                              variant="outline"
+                              className={`${eventData?.theme === "TourTech" ? `${theme.cardText} border-slate-300` : `${scoring.textColor} border-current`} text-xs`}
+                            >
+                              {scoring.description}
+                            </Badge>
+                          </div>
 
-                        <p className={`${eventData?.theme === "TourTech" ? theme.cardText : `text-sm ${scoring.textColor} opacity-80`} leading-relaxed`}>
-                          {scoring.detail}
-                        </p>
-                      </div>
+                          <p
+                            className={`${eventData?.theme === "TourTech" ? theme.cardText : `text-sm ${scoring.textColor} opacity-80`} leading-relaxed`}
+                          >
+                            {scoring.detail}
+                          </p>
+                        </div>
                       </div>
                     );
                   })}
                 </div>
 
-                <div className={`mt-6 ${eventData?.theme === "TourTech" ? "bg-gray-50 border border-gray-200 rounded-md p-4" : "bg-emerald-50 border border-emerald-200 rounded-2xl p-6"}`}>
-                  <div className={`${eventData?.theme === "TourTech" ? "space-y-2" : "flex items-start space-x-3"}`}>
-                    {eventData?.theme !== "TourTech" && <Target className="h-5 w-5 text-emerald-600 mt-0.5" />}
+                <div
+                  className={`mt-6 ${eventData?.theme === "TourTech" ? "bg-gray-50 border border-gray-200 rounded-md p-4" : "bg-emerald-50 border border-emerald-200 rounded-2xl p-6"}`}
+                >
+                  <div
+                    className={`${eventData?.theme === "TourTech" ? "space-y-2" : "flex items-start space-x-3"}`}
+                  >
+                    {eventData?.theme !== "TourTech" && (
+                      <Target className="h-5 w-5 text-emerald-600 mt-0.5" />
+                    )}
                     <div>
-                      <div className={`${eventData?.theme === "TourTech" ? "font-semibold text-slate-900 text-sm mb-1" : "font-semibold text-emerald-900 mb-2"}`}>
+                      <div
+                        className={`${eventData?.theme === "TourTech" ? "font-semibold text-slate-900 text-sm mb-1" : "font-semibold text-emerald-900 mb-2"}`}
+                      >
                         Why Stableford?
                       </div>
-                      <ul className={`${eventData?.theme === "TourTech" ? "text-xs text-slate-600 space-y-0.5" : "text-sm text-emerald-700 space-y-1"}`}>
+                      <ul
+                        className={`${eventData?.theme === "TourTech" ? "text-xs text-slate-600 space-y-0.5" : "text-sm text-emerald-700 space-y-1"}`}
+                      >
                         <li>��� Encourages aggressive, exciting play</li>
                         <li>
                           • Keeps all players engaged throughout the round
@@ -1755,9 +1908,13 @@ export default function PublicEventHome() {
 
           <div className={`relative ${theme.maxContentWidth} mx-auto`}>
             <div className={`text-center ${theme.headerSpacing}`}>
-              <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
+              <div
+                className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}
+              >
                 <Users className={`h-3.5 w-3.5 ${theme.accentColor}`} />
-                <span className={`${eventData?.theme === "TourTech" ? theme.tableHeader : "text-sm font-medium text-purple-800"}`}>
+                <span
+                  className={`${eventData?.theme === "TourTech" ? theme.tableHeader : "text-sm font-medium text-purple-800"}`}
+                >
                   {eventData?.theme === "TourTech" ? "PLAYERS" : "Competitors"}
                 </span>
               </div>
@@ -1810,31 +1967,46 @@ export default function PublicEventHome() {
 
       {/* Prizes Section */}
       {(prizes.length > 0 || skillsContests.length > 0) && (
-        <section id="prizes" className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative"} ${theme.sectionPadding} ${theme.containerPadding}`}>
+        <section
+          id="prizes"
+          className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative"} ${theme.sectionPadding} ${theme.containerPadding}`}
+        >
           {/* Background decoration - only for GolfOS */}
           {eventData?.theme !== "TourTech" && (
             <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
           )}
-          <div className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "12" : "20"}`}>
+          <div
+            className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "12" : "20"}`}
+          >
             {/* Header and Buy-in */}
             <div className={`text-center ${theme.headerSpacing}`}>
-              <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
-                <Trophy className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-amber-600"}`} />
-                <span className={`${eventData?.theme === "TourTech" ? theme.monoLabel : "text-sm font-medium text-amber-800"}`}>
+              <div
+                className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}
+              >
+                <Trophy
+                  className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-amber-600"}`}
+                />
+                <span
+                  className={`${eventData?.theme === "TourTech" ? theme.monoLabel : "text-sm font-medium text-amber-800"}`}
+                >
                   {eventData?.theme === "TourTech" ? "PRIZES" : "Prize Pool"}
                 </span>
               </div>
 
               <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
-                {eventData?.theme === "TourTech" ? "Tournament Prizes" : "High Stakes, Higher Handicaps"}
+                {eventData?.theme === "TourTech"
+                  ? "Tournament Prizes"
+                  : "High Stakes, Higher Handicaps"}
               </h2>
 
               {eventData.buy_in && eventData.buy_in > 0 && (
-                <div className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth} mx-auto`}>
-                  <p className={`${theme.cardText} mb-2`}>
-                    Tournament Buy-in
-                  </p>
-                  <div className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}>
+                <div
+                  className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth} mx-auto`}
+                >
+                  <p className={`${theme.cardText} mb-2`}>Tournament Buy-in</p>
+                  <div
+                    className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
+                  >
                     ${eventData.buy_in}
                   </div>
                 </div>
@@ -1843,7 +2015,9 @@ export default function PublicEventHome() {
 
             {/* Prize Cards */}
             {prizes.length > 0 && (
-              <div className={`flex justify-center ${eventData?.theme === "TourTech" ? "mt-12" : "mt-16"}`}>
+              <div
+                className={`flex justify-center ${eventData?.theme === "TourTech" ? "mt-12" : "mt-16"}`}
+              >
                 <div
                   className={`grid gap-8 ${
                     prizes.length === 1
@@ -1870,18 +2044,32 @@ export default function PublicEventHome() {
 
             {/* Hole Contests Summary */}
             {skillsContests.length > 0 && (
-              <div className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : "bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200 mt-16"}`}>
+              <div
+                className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : "bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200 mt-16"}`}
+              >
                 <div className="text-center mb-8">
-                  <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : "bg-indigo-200 rounded-full"} px-4 py-2 mb-4`}>
-                    <Target className={`h-4 w-4 ${eventData?.theme === "TourTech" ? "text-gray-600" : "text-indigo-600"}`} />
-                    <span className={`text-sm font-medium ${eventData?.theme === "TourTech" ? "text-gray-700" : "text-indigo-700"}`}>
-                      {eventData?.theme === "TourTech" ? "SKILLS CONTESTS" : "Skills Contests"}
+                  <div
+                    className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : "bg-indigo-200 rounded-full"} px-4 py-2 mb-4`}
+                  >
+                    <Target
+                      className={`h-4 w-4 ${eventData?.theme === "TourTech" ? "text-gray-600" : "text-indigo-600"}`}
+                    />
+                    <span
+                      className={`text-sm font-medium ${eventData?.theme === "TourTech" ? "text-gray-700" : "text-indigo-700"}`}
+                    >
+                      {eventData?.theme === "TourTech"
+                        ? "SKILLS CONTESTS"
+                        : "Skills Contests"}
                     </span>
                   </div>
-                  <h3 className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : "text-2xl sm:text-3xl font-bold text-indigo-900"}`}>
+                  <h3
+                    className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : "text-2xl sm:text-3xl font-bold text-indigo-900"}`}
+                  >
                     Hole Contests
                   </h3>
-                  <p className={`${eventData?.theme === "TourTech" ? "text-sm text-slate-600" : "text-lg text-indigo-600 font-light"}`}>
+                  <p
+                    className={`${eventData?.theme === "TourTech" ? "text-sm text-slate-600" : "text-lg text-indigo-600 font-light"}`}
+                  >
                     Extra prizes on designated holes
                   </p>
                 </div>
@@ -1923,7 +2111,9 @@ export default function PublicEventHome() {
 
                   {/* Prize Information */}
                   {(closestToPinPrize > 0 || longestDrivePrize > 0) && (
-                    <div className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}>
+                    <div
+                      className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
+                    >
                       <h4 className="text-lg font-semibold text-indigo-900 mb-4">
                         Prize Information
                       </h4>
@@ -1966,15 +2156,23 @@ export default function PublicEventHome() {
             {/* Contest Rules */}
             {(closestToPinGroups.length > 0 ||
               longestDriveGroups.length > 0) && (
-              <div className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}>
+              <div
+                className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}
+              >
                 <div className="text-center mb-8">
-                  <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}>
+                  <div
+                    className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
+                  >
                     <Info className="h-4 w-4 text-slate-600" />
                     <span className="text-sm font-medium text-slate-700">
-                      {eventData?.theme === "TourTech" ? "CONTEST RULES" : "Official Guidelines"}
+                      {eventData?.theme === "TourTech"
+                        ? "CONTEST RULES"
+                        : "Official Guidelines"}
                     </span>
                   </div>
-                  <h3 className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}>
+                  <h3
+                    className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
+                  >
                     Contest Rules
                   </h3>
                 </div>
@@ -2097,31 +2295,39 @@ export default function PublicEventHome() {
           travel.accommodations ||
           travel.daily_schedule) && (
           <section
-          id="travel"
-          className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} pt-16 pb-8` : "relative overflow-hidden"} ${eventData?.theme === "TourTech" ? "" : theme.sectionPadding} ${theme.containerPadding}`}
-        >
-          {/* Background decoration - only for GolfOS */}
-          {eventData?.theme !== "TourTech" && (
-            <>
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-white to-slate-50/30"></div>
-              <div className="absolute top-0 left-0 w-80 h-80 bg-blue-100/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-            </>
-          )}
+            id="travel"
+            className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} pt-16 pb-8` : "relative overflow-hidden"} ${eventData?.theme === "TourTech" ? "" : theme.sectionPadding} ${theme.containerPadding}`}
+          >
+            {/* Background decoration - only for GolfOS */}
+            {eventData?.theme !== "TourTech" && (
+              <>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-white to-slate-50/30"></div>
+                <div className="absolute top-0 left-0 w-80 h-80 bg-blue-100/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+              </>
+            )}
 
-          <div className={`relative ${theme.maxContentWidth} mx-auto`}>
-            <div className={`text-center ${theme.headerSpacing}`}>
-              <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
-                <Plane className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-blue-600"}`} />
-                <span className={`${eventData?.theme === "TourTech" ? theme.monoLabel : "text-sm font-medium text-blue-800"}`}>
-                  {eventData?.theme === "TourTech" ? "TRAVEL" : "Logistics"}
-                </span>
-              </div>
+            <div className={`relative ${theme.maxContentWidth} mx-auto`}>
+              <div className={`text-center ${theme.headerSpacing}`}>
+                <div
+                  className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}
+                >
+                  <Plane
+                    className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-blue-600"}`}
+                  />
+                  <span
+                    className={`${eventData?.theme === "TourTech" ? theme.monoLabel : "text-sm font-medium text-blue-800"}`}
+                  >
+                    {eventData?.theme === "TourTech" ? "TRAVEL" : "Logistics"}
+                  </span>
+                </div>
 
-              <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
-                Travel & Accommodation
-              </h2>
-              <p className={`${theme.heroSubtitle} ${theme.textMaxWidth} mx-auto`}>
-                Everything you need to have a smooth and comfortable trip
+                <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
+                  Travel & Accommodation
+                </h2>
+                <p
+                  className={`${theme.heroSubtitle} ${theme.textMaxWidth} mx-auto`}
+                >
+                  Everything you need to have a smooth and comfortable trip
                 </p>
               </div>
 
@@ -2162,7 +2368,9 @@ export default function PublicEventHome() {
         )}
 
       {/* Footer */}
-      <footer className={`relative ${eventData?.theme === "TourTech" ? "pt-16 pb-12 px-6 sm:px-8 lg:px-12 bg-gray-50 border-t border-gray-200 mt-12" : "py-20 px-6 sm:px-8 lg:px-12 overflow-hidden"}`}>
+      <footer
+        className={`relative ${eventData?.theme === "TourTech" ? "pt-16 pb-12 px-6 sm:px-8 lg:px-12 bg-gray-50 border-t border-gray-200 mt-12" : "py-20 px-6 sm:px-8 lg:px-12 overflow-hidden"}`}
+      >
         {/* Background decoration - only for GolfOS */}
         {eventData?.theme !== "TourTech" && (
           <>
@@ -2172,22 +2380,36 @@ export default function PublicEventHome() {
           </>
         )}
 
-        <div className={`relative ${theme.maxContentWidth} mx-auto text-center`}>
-          <div className={`${eventData?.theme === "TourTech" ? `w-16 h-16 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-6` : "w-24 h-24 bg-white/10 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/20"}`}>
-            <Target className={`${eventData?.theme === "TourTech" ? "h-8 w-8 text-white" : "h-12 w-12 text-white"}`} />
+        <div
+          className={`relative ${theme.maxContentWidth} mx-auto text-center`}
+        >
+          <div
+            className={`${eventData?.theme === "TourTech" ? `w-16 h-16 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-6` : "w-24 h-24 bg-white/10 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/20"}`}
+          >
+            <Target
+              className={`${eventData?.theme === "TourTech" ? "h-8 w-8 text-white" : "h-12 w-12 text-white"}`}
+            />
           </div>
 
-          <h3 className={`${eventData?.theme === "TourTech" ? `${theme.sectionTitle} text-slate-900 mb-3` : "text-3xl sm:text-4xl font-bold mb-6 text-white"}`}>
+          <h3
+            className={`${eventData?.theme === "TourTech" ? `${theme.sectionTitle} text-slate-900 mb-3` : "text-3xl sm:text-4xl font-bold mb-6 text-white"}`}
+          >
             {eventData.name}
           </h3>
 
-          <p className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-slate-600 mb-6` : "text-xl text-green-200 mb-12 font-light"}`}>
+          <p
+            className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-slate-600 mb-6` : "text-xl text-green-200 mb-12 font-light"}`}
+          >
             {eventData.location} •{" "}
             {formatDateRange(eventData.start_date, eventData.end_date)}
           </p>
 
-          <div className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} p-4` : "bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"}`}>
-            <p className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-slate-500 text-sm` : "text-green-200 text-lg font-medium"}`}>
+          <div
+            className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} p-4` : "bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"}`}
+          >
+            <p
+              className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-slate-500 text-sm` : "text-green-200 text-lg font-medium"}`}
+            >
               Powered by TrackTrack Golf
             </p>
           </div>
