@@ -1298,18 +1298,25 @@ export default function PublicEventHome() {
     );
   }
 
+  // Get theme styling
+  const theme = getThemeStyles(eventData?.theme);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50/30">
+    <div className={`min-h-screen ${theme.heroContainer}`}>
       <StickyNavigation eventName={eventData.name} slug={slug!} />
 
       {/* Hero Section */}
       <section id="overview" className="relative overflow-hidden">
         {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 via-transparent to-emerald-50/30"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-green-100/20 rounded-full blur-3xl -translate-y-24 translate-x-24"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100/20 rounded-full blur-3xl translate-y-24 -translate-x-24"></div>
+        <div className={`absolute inset-0 ${theme.heroGradient}`}></div>
+        {eventData?.theme !== "TourTech" && (
+          <>
+            <div className="absolute top-0 right-0 w-96 h-96 bg-green-100/20 rounded-full blur-3xl -translate-y-24 translate-x-24"></div>
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100/20 rounded-full blur-3xl translate-y-24 -translate-x-24"></div>
+          </>
+        )}
 
-        <div className="relative max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26">
+        <div className={`relative max-w-5xl mx-auto ${theme.containerPadding} pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26`}>
           <div className="text-center space-y-10 max-w-4xl mx-auto">
             <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-green-200/50 rounded-full px-6 py-3 shadow-lg shadow-green-100/50">
               <Calendar className="h-4 w-4 text-green-600" />
