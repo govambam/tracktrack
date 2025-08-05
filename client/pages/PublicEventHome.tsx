@@ -1318,9 +1318,9 @@ export default function PublicEventHome() {
 
         <div className={`relative max-w-5xl mx-auto ${theme.containerPadding} pt-20 pb-16 sm:pt-26 sm:pb-20 lg:pt-32 lg:pb-26`}>
           <div className="text-center space-y-10 max-w-4xl mx-auto">
-            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-green-200/50 rounded-full px-6 py-3 shadow-lg shadow-green-100/50">
-              <Calendar className="h-4 w-4 text-green-600" />
-              <span className="text-sm font-medium text-green-800">
+            <div className={`inline-flex items-center space-x-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners === "rounded-3xl" ? "rounded-full" : "rounded-lg"} px-6 py-3 ${theme.cardShadow}`}>
+              <Calendar className={`h-4 w-4 ${theme.accentColor}`} />
+              <span className={`text-sm font-medium ${theme.accentColor}`}>
                 {formatDateRange(eventData.start_date, eventData.end_date)}
               </span>
             </div>
