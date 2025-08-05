@@ -1804,38 +1804,75 @@ export default function PublicEventHome() {
                 Scoring Format
               </h2>
 
-              <div
-                className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : eventData?.theme === "Masters" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl"} mx-auto mb-${eventData?.theme === "TourTech" ? "8" : eventData?.theme === "Masters" ? "8" : "16"}`}
-              >
-                <div
-                  className={`${eventData?.theme === "TourTech" ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners}` : eventData?.theme === "Masters" ? "w-12 h-12 bg-yellow-600 rounded-lg" : "w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl"} flex items-center justify-center mx-auto mb-${eventData?.theme === "TourTech" ? "4" : eventData?.theme === "Masters" ? "4" : "6"}`}
-                >
-                  <Target
-                    className={`${eventData?.theme === "TourTech" ? "h-5 w-5 text-white" : eventData?.theme === "Masters" ? "h-5 w-5 text-white" : "h-8 w-8 text-green-600"}`}
-                  />
-                </div>
+              {/* Masters theme - 2-column layout with more vertical space above */}
+              {eventData?.theme === "Masters" ? (
+                <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                  {/* Modified Stableford Card */}
+                  <div className="bg-white border border-green-800/20 rounded-xl p-8 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+                    <div className="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-6">
+                      <Target className="h-5 w-5 text-white" />
+                    </div>
 
-                <h3
-                  className={`${eventData?.theme === "TourTech" ? theme.cardTitle : eventData?.theme === "Masters" ? theme.cardTitle : "text-2xl sm:text-3xl font-bold text-slate-900"} mb-${eventData?.theme === "TourTech" ? "2" : eventData?.theme === "Masters" ? "3" : "4"}`}
-                >
-                  {getScoringFormat()}
-                </h3>
-                <p
-                  className={`${eventData?.theme === "TourTech" ? theme.cardText : eventData?.theme === "Masters" ? theme.cardText : "text-lg text-slate-600 font-light"} leading-relaxed`}
-                >
-                  {getScoringFormat().includes("Stableford")
-                    ? eventData?.theme === "TourTech"
-                      ? "Modified Stableford scoring system with preset competition and team scramble format."
-                      : eventData?.theme === "Masters"
+                    <h3 className="font-serif font-semibold text-green-900 text-2xl mb-4 text-center">
+                      {getScoringFormat()}
+                    </h3>
+                    <p className="font-serif text-green-800/70 leading-relaxed text-center">
+                      {getScoringFormat().includes("Stableford")
                         ? "Traditional modified Stableford system where points are awarded based on performance relative to par on each hole."
+                        : "Classic stroke play format where precision and consistency determine the champion."}
+                    </p>
+                  </div>
+
+                  {/* Why Stableford Card */}
+                  <div className="bg-white border border-green-800/20 rounded-xl p-8 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+                    <div className="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-6">
+                      <Info className="h-5 w-5 text-white" />
+                    </div>
+
+                    <h3 className="font-serif font-semibold text-green-900 text-2xl mb-4 text-center">
+                      Why Stableford?
+                    </h3>
+                    <div className="font-serif text-green-800/70 leading-relaxed text-center">
+                      <ul className="space-y-2">
+                        <li>• Encourages aggressive, exciting play</li>
+                        <li>• Keeps all players engaged throughout</li>
+                        <li>• Reduces impact of one bad hole</li>
+                        <li>• Perfect for mixed skill level groups</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* Other themes - single card layout */
+                <div
+                  className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl"} mx-auto mb-${eventData?.theme === "TourTech" ? "8" : "16"}`}
+                >
+                  <div
+                    className={`${eventData?.theme === "TourTech" ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners}` : "w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl"} flex items-center justify-center mx-auto mb-${eventData?.theme === "TourTech" ? "4" : "6"}`}
+                  >
+                    <Target
+                      className={`${eventData?.theme === "TourTech" ? "h-5 w-5 text-white" : "h-8 w-8 text-green-600"}`}
+                    />
+                  </div>
+
+                  <h3
+                    className={`${eventData?.theme === "TourTech" ? theme.cardTitle : "text-2xl sm:text-3xl font-bold text-slate-900"} mb-${eventData?.theme === "TourTech" ? "2" : "4"}`}
+                  >
+                    {getScoringFormat()}
+                  </h3>
+                  <p
+                    className={`${eventData?.theme === "TourTech" ? theme.cardText : "text-lg text-slate-600 font-light"} leading-relaxed`}
+                  >
+                    {getScoringFormat().includes("Stableford")
+                      ? eventData?.theme === "TourTech"
+                        ? "Modified Stableford scoring system with preset competition and team scramble format."
                         : "Modified Stableford scoring system with preset competition and a team scramble format for added excitement."
-                    : eventData?.theme === "TourTech"
-                      ? "Traditional stroke play format where every shot counts. Lowest total score wins."
-                      : eventData?.theme === "Masters"
-                        ? "Classic stroke play format where precision and consistency determine the champion."
+                      : eventData?.theme === "TourTech"
+                        ? "Traditional stroke play format where every shot counts. Lowest total score wins."
                         : "Traditional stroke play format where every shot counts. Lowest total score wins the championship."}
-                </p>
-              </div>
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Enhanced Stableford Points System */}
