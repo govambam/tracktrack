@@ -1523,7 +1523,27 @@ export default function PublicEventHome() {
               <h1
                 className={`${eventData?.theme === "TourTech" ? theme.heroTitle : eventData?.theme === "Masters" ? theme.heroTitle : "text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.9] text-slate-900 tracking-tight"} leading-tight`}
               >
-                {eventData.name}
+                {eventData?.theme === "Masters" && eventData.name.split(' ').length >= 3 ? (
+                  (() => {
+                    const words = eventData.name.split(' ');
+                    const midPoint = Math.ceil(words.length / 2);
+                    const firstLine = words.slice(0, midPoint).join(' ');
+                    const secondLine = words.slice(midPoint).join(' ');
+
+                    return (
+                      <>
+                        <span className="block text-green-900">
+                          {firstLine}
+                        </span>
+                        <span className="block text-yellow-600">
+                          {secondLine}
+                        </span>
+                      </>
+                    );
+                  })()
+                ) : (
+                  eventData.name
+                )}
               </h1>
               {eventData.description && (
                 <p
