@@ -750,7 +750,7 @@ const AnimatedCourseCard = ({
             <div className="mb-6 relative">
               <div className="relative">
                 <p
-                  className="text-slate-600 leading-relaxed overflow-hidden"
+                  className={`${isMasters ? "text-green-800/70 font-serif" : "text-slate-600"} leading-relaxed overflow-hidden`}
                   style={{
                     display: "-webkit-box",
                     WebkitLineClamp: 4,
@@ -768,7 +768,7 @@ const AnimatedCourseCard = ({
               {shouldShowSeeMore && showSeeMore && (
                 <button
                   onClick={onOpenModal}
-                  className="mt-3 text-green-600 hover:text-green-700 font-medium text-sm flex items-center space-x-1 transition-colors"
+                  className={`mt-3 ${isMasters ? "text-yellow-600 hover:text-yellow-700 font-serif" : "text-green-600 hover:text-green-700"} font-medium text-sm flex items-center space-x-1 transition-colors`}
                 >
                   <span>See more</span>
                   <MoreHorizontal className="h-4 w-4" />
@@ -778,11 +778,11 @@ const AnimatedCourseCard = ({
           )}
 
           {(round?.tee_time || round?.round_date) && (
-            <div className="space-y-3 pt-4 border-t border-slate-200">
+            <div className={`space-y-3 pt-4 border-t ${isMasters ? "border-green-800/20" : "border-slate-200"}`}>
               {round?.round_date && (
                 <div className="flex items-center space-x-3">
-                  <Calendar className="h-4 w-4 text-slate-400" />
-                  <span className="text-sm font-medium text-slate-600">
+                  <Calendar className={`h-4 w-4 ${isMasters ? "text-yellow-600" : "text-slate-400"}`} />
+                  <span className={`text-sm font-medium ${isMasters ? "text-green-800 font-serif" : "text-slate-600"}`}>
                     {new Date(round.round_date).toLocaleDateString("en-US", {
                       weekday: "long",
                       month: "long",
@@ -793,8 +793,8 @@ const AnimatedCourseCard = ({
               )}
               {round?.tee_time && (
                 <div className="flex items-center space-x-3">
-                  <Clock className="h-4 w-4 text-slate-400" />
-                  <span className="text-sm font-medium text-slate-600">
+                  <Clock className={`h-4 w-4 ${isMasters ? "text-yellow-600" : "text-slate-400"}`} />
+                  <span className={`text-sm font-medium ${isMasters ? "text-green-800 font-serif" : "text-slate-600"}`}>
                     Tee Time: {round.tee_time}
                   </span>
                 </div>
@@ -2227,7 +2227,7 @@ export default function PublicEventHome() {
                               role="img"
                               aria-label="target"
                             >
-                              ��
+                              ����
                             </span>
                             <span className="text-sm text-green-700 font-medium">
                               Closest to Pin: ${closestToPinPrize} per hole
