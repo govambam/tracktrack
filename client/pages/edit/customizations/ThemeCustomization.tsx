@@ -16,7 +16,7 @@ const AVAILABLE_THEMES = [
   {
     id: "GolfOS",
     name: "GolfOS",
-    description: "Colorful, playful design inspired by classic Apple UIs with bright accents and rounded elements",
+    description: "Colorful, playful design for your public event website inspired by classic Apple UIs with bright accents and rounded elements",
     preview: {
       primary: "bg-gradient-to-r from-green-400 to-green-600",
       secondary: "bg-gradient-to-r from-blue-400 to-blue-600", 
