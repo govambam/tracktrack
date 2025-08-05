@@ -2185,7 +2185,7 @@ export default function PublicEventHome() {
             <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
           )}
           {eventData?.theme === "Masters" && (
-            <div className="absolute inset-0 bg-gradient-to-b from-amber-50/20 via-white to-green-50/10"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
           )}
           <div
             className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "12" : eventData?.theme === "Masters" ? "16" : "20"}`}
