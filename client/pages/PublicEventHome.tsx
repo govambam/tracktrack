@@ -1326,12 +1326,12 @@ export default function PublicEventHome() {
             </div>
 
             <div className="space-y-6">
-              <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.9] text-slate-900 tracking-tight">
+              <h1 className={`text-5xl sm:text-7xl lg:text-8xl ${eventData?.theme === "TourTech" ? "text-slate-900 font-bold" : "font-bold"} leading-[0.9] ${theme.heroTitle}`}>
                 {eventData.name}
               </h1>
 
               {eventData.description && (
-                <p className="text-xl sm:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+                <p className={`text-xl sm:text-2xl ${theme.heroSubtitle} max-w-3xl mx-auto leading-relaxed ${eventData?.theme === "TourTech" ? "font-normal" : "font-light"}`}>
                   {eventData.description}
                 </p>
               )}
