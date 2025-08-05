@@ -2073,26 +2073,31 @@ export default function PublicEventHome() {
           travel.accommodations ||
           travel.daily_schedule) && (
           <section
-            id="travel"
-            className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-white to-slate-50/30"></div>
-            <div className="absolute top-0 left-0 w-80 h-80 bg-blue-100/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+          id="travel"
+          className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative overflow-hidden"} ${theme.sectionPadding} ${theme.containerPadding}`}
+        >
+          {/* Background decoration - only for GolfOS */}
+          {eventData?.theme !== "TourTech" && (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-white to-slate-50/30"></div>
+              <div className="absolute top-0 left-0 w-80 h-80 bg-blue-100/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+            </>
+          )}
 
-            <div className="relative max-w-6xl mx-auto">
-              <div className="text-center mb-20">
-                <div className="inline-flex items-center space-x-2 bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
-                  <Plane className="h-4 w-4 text-blue-600" />
-                  <span className="text-sm font-medium text-blue-800">
-                    Logistics
-                  </span>
-                </div>
+          <div className={`relative ${theme.maxContentWidth} mx-auto`}>
+            <div className={`text-center ${theme.headerSpacing}`}>
+              <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
+                <Plane className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-blue-600"}`} />
+                <span className={`${eventData?.theme === "TourTech" ? theme.monoLabel : "text-sm font-medium text-blue-800"}`}>
+                  {eventData?.theme === "TourTech" ? "TRAVEL" : "Logistics"}
+                </span>
+              </div>
 
-                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
-                  Travel & Accommodation
-                </h2>
-                <p className="text-xl text-slate-600 font-light max-w-3xl mx-auto">
-                  Everything you need to have a smooth and comfortable trip
+              <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
+                Travel & Accommodation
+              </h2>
+              <p className={`${theme.heroSubtitle} ${theme.textMaxWidth} mx-auto`}>
+                Everything you need to have a smooth and comfortable trip
                 </p>
               </div>
 
