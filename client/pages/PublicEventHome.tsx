@@ -1369,37 +1369,37 @@ export default function PublicEventHome() {
               </a>
             </div>
 
-            {/* Event Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
-              {[
-                {
-                  label: "Courses",
-                  value: courses.length.toString(),
-                  icon: MapPin,
-                },
-                {
-                  label: "Players",
-                  value: players.length.toString(),
-                  icon: Users,
-                },
-                {
-                  label: "Format",
-                  value: getScoringFormat(),
-                  icon: Target,
-                },
-                {
-                  label: "Duration",
-                  value: getDuration(eventData.start_date, eventData.end_date),
-                  icon: Calendar,
-                },
-              ].map((stat, index) => (
-                <div key={index} className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} text-center`}>
-                  <stat.icon className={`h-4 w-4 ${theme.accentColor} mx-auto mb-1`} />
-                  <div className={`${theme.dataText} text-lg`}>{stat.value}</div>
-                  <div className={`${theme.cardText} text-xs uppercase tracking-wide`}>{stat.label}</div>
-                </div>
-              ))}
-            </div>
+            {/* Event Stats - Tour Tech: compact monochrome design */}
+            {eventData?.theme === "TourTech" ? (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-gray-200 mt-6">
+                {[
+                  { label: "Courses", value: courses.length.toString() },
+                  { label: "Players", value: players.length.toString() },
+                  { label: "Format", value: getScoringFormat() },
+                  { label: "Duration", value: getDuration(eventData.start_date, eventData.end_date) },
+                ].map((stat, index) => (
+                  <div key={index} className="text-center py-3">
+                    <div className="font-mono text-xl font-semibold text-slate-900">{stat.value}</div>
+                    <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
+                {[
+                  { label: "Courses", value: courses.length.toString(), icon: MapPin },
+                  { label: "Players", value: players.length.toString(), icon: Users },
+                  { label: "Format", value: getScoringFormat(), icon: Target },
+                  { label: "Duration", value: getDuration(eventData.start_date, eventData.end_date), icon: Calendar },
+                ].map((stat, index) => (
+                  <div key={index} className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} text-center`}>
+                    <stat.icon className={`h-4 w-4 ${theme.accentColor} mx-auto mb-1`} />
+                    <div className={`${theme.dataText} text-lg`}>{stat.value}</div>
+                    <div className={`${theme.cardText} text-xs uppercase tracking-wide`}>{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
