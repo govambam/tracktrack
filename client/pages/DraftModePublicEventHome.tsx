@@ -651,16 +651,27 @@ export default function DraftModePublicEventHome({
     );
   }
 
+  // Get theme styling
+  const theme = getThemeStyles(eventData?.theme);
+
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50/30">
+      <div className={`min-h-screen ${theme.heroContainer}`}>
         {/* Hero Section - Matches PublicEventHome exactly */}
         <section id="overview" className="relative overflow-hidden">
-          <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-32">
+          {/* Subtle background pattern */}
+          <div className={`absolute inset-0 ${theme.heroGradient}`}></div>
+          {eventData?.theme !== "TourTech" && (
+            <>
+              <div className="absolute top-0 right-0 w-96 h-96 bg-green-100/20 rounded-full blur-3xl -translate-y-24 translate-x-24"></div>
+              <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100/20 rounded-full blur-3xl translate-y-24 -translate-x-24"></div>
+            </>
+          )}
+          <div className={`relative max-w-6xl mx-auto ${theme.containerPadding} pt-20 pb-32`}>
             <div className="relative text-center">
-              <div className="inline-flex items-center space-x-2 bg-green-200 rounded-full px-4 py-2 mb-8">
-                <Calendar className="h-4 w-4 text-green-800" />
-                <span className="text-sm font-medium text-green-800">
+              <div className={`inline-flex items-center space-x-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners === "rounded-3xl" ? "rounded-full" : "rounded-lg"} px-4 py-2 mb-8 ${theme.cardShadow}`}>
+                <Calendar className={`h-4 w-4 ${theme.accentColor}`} />
+                <span className={`text-sm font-medium ${theme.accentColor}`}>
                   {formatDateRange(eventData.start_date, eventData.end_date)}
                 </span>
               </div>
