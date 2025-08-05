@@ -1033,7 +1033,7 @@ const AnimatedTravelCard = ({
       }`}
     >
       <div
-        className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : isMasters ? "bg-white border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg" : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2"} ${isTourTech ? theme.roundedCorners : isMasters ? "rounded-lg" : "rounded-3xl"} ${isTourTech ? theme.cardPadding : isMasters ? "p-6" : "p-8"} transition-all duration-300 h-full`}
+        className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : isMasters ? "bg-white border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300" : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2"} ${isTourTech ? theme.roundedCorners : isMasters ? "rounded-xl" : "rounded-3xl"} ${isTourTech ? theme.cardPadding : isMasters ? "p-8" : "p-8"} transition-all duration-300 h-full`}
       >
         <div
           className={`${isTourTech ? `w-10 h-10 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mb-4` : isMasters ? "w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mb-6" : `w-16 h-16 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mb-8`}`}
