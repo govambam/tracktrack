@@ -42,12 +42,12 @@ const AVAILABLE_THEMES = [
       accent: "bg-gradient-to-r from-green-600 to-green-700",
     },
     characteristics: [
-      "High-contrast typography with compact layout",
-      "Neutral color palette with bold accent colors",
-      "Minimalist UI with clear information hierarchy",
-      "Sharp corners, no unnecessary drop shadows",
-      "Modern geometric fonts for headers",
-      "Professional, structured design approach",
+      "Compact layout with efficient spacing (800px max width)",
+      "Monospace fonts for data, scores, and rules",
+      "Bold orange accents on clean white/gray backgrounds",
+      "Sharp corners and minimal shadows",
+      "Enterprise-grade typography hierarchy",
+      "No gradients or playful elements - pure professional focus",
     ],
   },
 ];
