@@ -619,23 +619,23 @@ const AnimatedCourseCard = ({
       onMouseLeave={() => setShowSeeMore(false)}
     >
       <div
-        className={`bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-500 ${hasDescription ? "min-h-[500px]" : ""}`}
+        className={`${isTourTech ? `${theme.cardBackground} border border-gray-300 ${theme.cardShadow}` : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3"} ${isTourTech ? "rounded-lg" : "rounded-3xl"} overflow-hidden transition-all duration-500 ${hasDescription ? "min-h-[500px]" : ""}`}
       >
         {course.image_url && (
           <div className="h-56 overflow-hidden">
             <img
               src={course.image_url}
               alt={course.name}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              className={`w-full h-full object-cover ${isTourTech ? "" : "group-hover:scale-110 transition-transform duration-700"}`}
             />
           </div>
         )}
 
-        <div className="p-8 relative">
-          <div className="flex items-start justify-between mb-6">
+        <div className={`${isTourTech ? "p-6" : "p-8"} relative`}>
+          <div className={`flex items-start justify-between ${isTourTech ? "mb-4" : "mb-6"}`}>
             <div className="flex-1">
-              <div className="flex items-center space-x-2 mb-3">
-                <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+              <div className={`flex items-center space-x-2 ${isTourTech ? "mb-2" : "mb-3"}`}>
+                <Badge className={`${isTourTech ? "bg-gray-100 text-gray-700 border border-gray-300" : "bg-gradient-to-r from-green-600 to-emerald-600 text-white"} text-xs font-semibold px-3 py-1 ${isTourTech ? "rounded-md" : "rounded-full"}`}>
                   Round {index + 1}
                 </Badge>
               </div>
