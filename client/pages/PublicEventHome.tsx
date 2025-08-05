@@ -2144,21 +2144,21 @@ export default function PublicEventHome() {
               )}
             </div>
 
-            {/* Prize Cards */}
+            {/* Prize Cards - Fore the Boy Style Grid */}
             {prizes.length > 0 && (
-              <div
-                className={`flex justify-center ${eventData?.theme === "TourTech" ? "mt-12" : "mt-16"}`}
-              >
+              <div className="w-full">
                 <div
-                  className={`grid gap-8 ${
-                    prizes.length === 1
-                      ? "grid-cols-1 max-w-sm"
-                      : prizes.length === 2
-                        ? "grid-cols-1 sm:grid-cols-2 max-w-2xl"
-                        : prizes.length === 3
-                          ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl"
-                          : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl"
-                  }`}
+                  className={`grid gap-6 ${
+                    eventData?.theme === "Masters"
+                      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto"
+                      : prizes.length === 1
+                        ? "grid-cols-1 max-w-sm"
+                        : prizes.length === 2
+                          ? "grid-cols-1 sm:grid-cols-2 max-w-2xl"
+                          : prizes.length === 3
+                            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl"
+                            : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl"
+                  } ${eventData?.theme !== "Masters" ? "mx-auto" : ""}`}
                 >
                   {prizes.map((prize, index) => (
                     <AnimatedPrizeCard
