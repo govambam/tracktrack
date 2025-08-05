@@ -1610,13 +1610,13 @@ export default function PublicEventHome() {
                 </div>
 
                 <div className={`mt-6 ${eventData?.theme === "TourTech" ? "bg-gray-50 border border-gray-200 rounded-md p-4" : "bg-emerald-50 border border-emerald-200 rounded-2xl p-6"}`}>
-                  <div className="flex items-start space-x-3">
-                    <Target className="h-5 w-5 text-emerald-600 mt-0.5" />
+                  <div className={`${eventData?.theme === "TourTech" ? "space-y-2" : "flex items-start space-x-3"}`}>
+                    {eventData?.theme !== "TourTech" && <Target className="h-5 w-5 text-emerald-600 mt-0.5" />}
                     <div>
-                      <div className="font-semibold text-emerald-900 mb-2">
+                      <div className={`${eventData?.theme === "TourTech" ? "font-semibold text-slate-900 text-sm mb-1" : "font-semibold text-emerald-900 mb-2"}`}>
                         Why Stableford?
                       </div>
-                      <ul className="text-sm text-emerald-700 space-y-1">
+                      <ul className={`${eventData?.theme === "TourTech" ? "text-xs text-slate-600 space-y-0.5" : "text-sm text-emerald-700 space-y-1"}`}>
                         <li>��� Encourages aggressive, exciting play</li>
                         <li>
                           • Keeps all players engaged throughout the round
