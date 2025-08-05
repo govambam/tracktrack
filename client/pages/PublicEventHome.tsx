@@ -182,7 +182,7 @@ const getThemeStyles = (theme: string = "GolfOS") => {
       heroContainer: "bg-gradient-to-br from-amber-50/30 via-white to-green-50/20",
       heroGradient: "bg-gradient-to-br from-amber-50/20 via-white to-green-50/10",
       cardBackground: "bg-white",
-      sectionBackground: "bg-gradient-to-b from-amber-50/20 to-white",
+      sectionBackground: "bg-gradient-to-br from-amber-50/30 via-white to-green-50/20",
       modalBackground: "bg-white",
 
       // Typography - Serif elegance with refined hierarchy
