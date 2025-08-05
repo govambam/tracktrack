@@ -199,6 +199,9 @@ export default function DraftModePublicEventHome({
 
       console.log("Event loaded:", event);
       setEventData(event);
+      console.log("🎨 Draft Mode Theme Debug - Loaded event data:", event);
+      console.log("🎨 Draft Mode Theme Debug - Event theme value:", event?.theme);
+      console.log("🎨 Draft Mode Theme Debug - Theme type:", typeof event?.theme);
 
       // Load all data in parallel like PublicEventHome does
       const [
