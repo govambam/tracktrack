@@ -1928,7 +1928,7 @@ export default function PublicEventHome() {
                       Tournament Guidelines
                     </span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">
+                  <h3 className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}>
                     Custom Rules
                   </h3>
                 </div>
