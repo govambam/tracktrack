@@ -1965,30 +1965,6 @@ export default function PublicEventHome() {
               </div>
             )}
 
-            {/* Hide duplicate Why Stableford section for Masters theme since it's already in the card above */}
-            {eventData?.theme === "Masters" && getScoringFormat().includes("Stableford") && (
-              <div className="hidden">
-                <div
-                  className="mt-6 bg-green-50/30 border border-green-800/20 rounded-lg p-6"
-                >
-                  <div className="flex items-start space-x-3">
-                    <Target className="h-5 w-5 text-yellow-600 mt-0.5" />
-                    <div>
-                      <div className="font-serif font-semibold text-green-900 mb-2">
-                        Why Stableford?
-                      </div>
-                      <ul className="text-sm text-green-800 space-y-1 font-serif">
-                        <li>• Encourages aggressive, exciting play</li>
-                        <li>• Keeps all players engaged throughout the round</li>
-                        <li>• Reduces the impact of one bad hole</li>
-                        <li>• Perfect for mixed skill level groups</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
             {/* Custom Rules Section */}
             {customRules.length > 0 && (
               <div className={`${eventData?.theme === "Masters" ? "mt-16" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200"}`}>
