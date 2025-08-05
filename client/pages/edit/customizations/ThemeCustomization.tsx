@@ -107,12 +107,16 @@ export default function ThemeCustomization() {
 
     try {
       setSaving(true);
+      console.log("🎨 Theme Save Debug - Event ID:", eventId);
+      console.log("🎨 Theme Save Debug - Selected theme:", selectedTheme);
 
       // Update theme in events table
       const { error } = await supabase
         .from("events")
         .update({ theme: selectedTheme })
         .eq("id", eventId);
+
+      console.log("🎨 Theme Save Debug - Update result error:", error);
 
       if (error) {
         console.error("Error saving theme:", error);
