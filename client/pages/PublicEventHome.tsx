@@ -699,20 +699,20 @@ const AnimatedCourseCard = ({
 
         <div className={`${isTourTech ? "p-6" : isMasters ? theme.cardPadding : "p-8"} relative`}>
           <div
-            className={`flex items-start justify-between ${isTourTech ? "mb-4" : "mb-6"}`}
+            className={`flex items-start justify-between ${isTourTech ? "mb-4" : isMasters ? "mb-5" : "mb-6"}`}
           >
             <div className="flex-1">
               <div
-                className={`flex items-center space-x-2 ${isTourTech ? "mb-2" : "mb-3"}`}
+                className={`flex items-center space-x-2 ${isTourTech ? "mb-2" : isMasters ? "mb-3" : "mb-3"}`}
               >
                 <Badge
-                  className={`${isTourTech ? "bg-gray-100 text-gray-700 border border-gray-300" : "bg-gradient-to-r from-green-600 to-emerald-600 text-white"} text-xs font-semibold px-3 py-1 ${isTourTech ? "rounded-md" : "rounded-full"}`}
+                  className={`${isTourTech ? "bg-gray-100 text-gray-700 border border-gray-300" : isMasters ? "bg-green-800 text-amber-50 border border-green-800" : "bg-gradient-to-r from-green-600 to-emerald-600 text-white"} text-xs font-semibold px-3 py-1 ${isTourTech ? "rounded-md" : isMasters ? "rounded-md" : "rounded-full"}`}
                 >
                   Round {index + 1}
                 </Badge>
               </div>
               <h3
-                className={`${isTourTech ? "text-xl font-semibold text-slate-900 mb-1" : "text-2xl font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors"}`}
+                className={`${isTourTech ? "text-xl font-semibold text-slate-900 mb-1" : isMasters ? `${theme.cardTitle} mb-2 group-hover:text-yellow-600 transition-colors` : "text-2xl font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors"}`}
               >
                 {course.name}
               </h3>
@@ -721,7 +721,7 @@ const AnimatedCourseCard = ({
 
           {course.par && course.yardage && (
             <div
-              className={`flex items-center space-x-6 ${isTourTech ? "mb-4" : "mb-6"} text-sm`}
+              className={`flex items-center space-x-6 ${isTourTech ? "mb-4" : isMasters ? "mb-5" : "mb-6"} text-sm`}
             >
               <div className="flex items-center space-x-2">
                 {!isTourTech && (
