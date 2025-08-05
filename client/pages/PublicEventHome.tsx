@@ -2237,9 +2237,9 @@ export default function PublicEventHome() {
             {prizes.length > 0 && (
               <div className="w-full">
                 <div
-                  className={`grid gap-6 ${
+                  className={`grid gap-4 ${
                     eventData?.theme === "Masters"
-                      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto"
+                      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-4xl mx-auto"
                       : prizes.length === 1
                         ? "grid-cols-1 max-w-sm"
                         : prizes.length === 2
