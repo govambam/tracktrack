@@ -1708,24 +1708,29 @@ export default function PublicEventHome() {
       {players.length > 0 && (
         <section
           id="players"
-          className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"
+          className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative overflow-hidden"} ${theme.sectionPadding} ${theme.containerPadding}`}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-green-50/20 via-white to-emerald-50/10"></div>
-          <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-green-100/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+          {/* Background decoration - only for GolfOS */}
+          {eventData?.theme !== "TourTech" && (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-br from-green-50/20 via-white to-emerald-50/10"></div>
+              <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-green-100/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+            </>
+          )}
 
-          <div className="relative max-w-6xl mx-auto">
-            <div className="text-center mb-20">
-              <div className="inline-flex items-center space-x-2 bg-purple-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
-                <Users className="h-4 w-4 text-purple-600" />
-                <span className="text-sm font-medium text-purple-800">
-                  Competitors
+          <div className={`relative ${theme.maxContentWidth} mx-auto`}>
+            <div className={`text-center ${theme.headerSpacing}`}>
+              <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
+                <Users className={`h-3.5 w-3.5 ${theme.accentColor}`} />
+                <span className={`${eventData?.theme === "TourTech" ? theme.tableHeader : "text-sm font-medium text-purple-800"}`}>
+                  {eventData?.theme === "TourTech" ? "PLAYERS" : "Competitors"}
                 </span>
               </div>
 
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
+              <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
                 Players
               </h2>
-              <p className="text-xl text-slate-600 font-light">
+              <p className={`${theme.heroSubtitle}`}>
                 Tournament starts{" "}
                 {
                   formatDateRange(
