@@ -2664,7 +2664,7 @@ export default function PublicEventHome() {
                     ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                   {[
                     {
                       info: travel.flight_info,
