@@ -1470,35 +1470,35 @@ export default function PublicEventHome() {
       {courses.length > 0 && (
         <section
           id="courses"
-          className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative overflow-hidden"} ${theme.sectionPadding} ${theme.containerPadding}`}
+          className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : "py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"}`}
         >
-          {/* Background decoration - only for GolfOS */}
-          {eventData?.theme !== "TourTech" && (
+          {/* Background decoration */}
+          {eventData?.theme === "TourTech" ? null : (
             <>
               <div className="absolute inset-0 bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20"></div>
               <div className="absolute top-20 right-0 w-72 h-72 bg-green-100/10 rounded-full blur-3xl"></div>
             </>
           )}
 
-          <div className={`relative ${theme.maxContentWidth} mx-auto`}>
-            <div className={`text-center ${theme.headerSpacing}`}>
-              <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
-                <Sparkles className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : theme.accentColor}`} />
-                <span className={`${eventData?.theme === "TourTech" ? `${theme.monoLabel} text-orange-600` : "text-sm font-medium text-green-800"}`}>
+          <div className={`relative ${eventData?.theme === "TourTech" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}>
+            <div className={`text-center ${eventData?.theme === "TourTech" ? theme.headerSpacing : "mb-20"}`}>
+              <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : "bg-green-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${eventData?.theme === "TourTech" ? "4" : "8"}`}>
+                <Sparkles className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.orangeText : "text-green-600"}`} />
+                <span className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.monoLabel : "text-green-800"}`}>
                   {eventData?.theme === "TourTech" ? "VENUES" : "Championship Venues"}
                 </span>
               </div>
 
-              <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
+              <h2 className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : "8"}`}>
                 {courses.length > 1 ? "Golf Courses" : "Golf Course"}
               </h2>
 
-              <p className={`${theme.heroSubtitle} ${theme.textMaxWidth} mx-auto leading-relaxed`}>
+              <p className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-4xl font-light"} mx-auto leading-relaxed`}>
                 {rounds.reduce(
                   (total, round) => total + (round.holes || 18),
                   0,
                 )}{" "}
-                holes played over{" "}
+                {eventData?.theme === "TourTech" ? "holes" : "world class holes"} played over{" "}
                 {getDuration(
                   eventData.start_date,
                   eventData.end_date,
