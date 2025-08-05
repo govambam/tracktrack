@@ -1492,13 +1492,13 @@ export default function PublicEventHome() {
           >
             {/* Event Badge */}
             <div
-              className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-100 border border-gray-300 text-gray-700 rounded-md px-3 py-1.5 shadow-none" : "bg-white/80 backdrop-blur-sm border border-green-200/50 rounded-full px-6 py-3 shadow-lg shadow-green-100/50"}`}
+              className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-100 border border-gray-300 text-gray-700 rounded-md px-3 py-1.5 shadow-none" : eventData?.theme === "Masters" ? "bg-white border border-green-800/20 text-green-800 rounded-lg px-6 py-3 shadow-sm" : "bg-white/80 backdrop-blur-sm border border-green-200/50 rounded-full px-6 py-3 shadow-lg shadow-green-100/50"}`}
             >
               <Calendar
-                className={`h-4 w-4 ${eventData?.theme === "TourTech" ? "text-gray-500" : "text-green-600"}`}
+                className={`h-4 w-4 ${eventData?.theme === "TourTech" ? "text-gray-500" : eventData?.theme === "Masters" ? "text-yellow-600" : "text-green-600"}`}
               />
               <span
-                className={`text-sm font-medium ${eventData?.theme === "TourTech" ? "text-gray-700 normal-case tracking-normal" : "text-green-800"}`}
+                className={`text-sm font-medium ${eventData?.theme === "TourTech" ? "text-gray-700 normal-case tracking-normal" : eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-green-800"}`}
               >
                 {formatDateRange(eventData.start_date, eventData.end_date)}
               </span>
@@ -1506,16 +1506,16 @@ export default function PublicEventHome() {
 
             {/* Title & Description */}
             <div
-              className={`${eventData?.theme === "TourTech" ? "space-y-3" : "space-y-6"}`}
+              className={`${eventData?.theme === "TourTech" ? "space-y-3" : eventData?.theme === "Masters" ? "space-y-6" : "space-y-6"}`}
             >
               <h1
-                className={`${eventData?.theme === "TourTech" ? theme.heroTitle : "text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.9] text-slate-900 tracking-tight"} leading-tight`}
+                className={`${eventData?.theme === "TourTech" ? theme.heroTitle : eventData?.theme === "Masters" ? theme.heroTitle : "text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.9] text-slate-900 tracking-tight"} leading-tight`}
               >
                 {eventData.name}
               </h1>
               {eventData.description && (
                 <p
-                  className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-3xl mx-auto font-light"} leading-relaxed`}
+                  className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : eventData?.theme === "Masters" ? `${theme.heroSubtitle} ${theme.textMaxWidth} mx-auto` : "text-xl sm:text-2xl text-slate-600 max-w-3xl mx-auto font-light"} leading-relaxed`}
                 >
                   {eventData.description}
                 </p>
