@@ -1428,41 +1428,43 @@ export default function PublicEventHome() {
       </section>
 
       {/* Summary Cards Section */}
-      <section className="py-24 px-6 sm:px-8 lg:px-12 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white"></div>
-        <div className="relative max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: MapPin,
-                title: "Location",
-                value: eventData.location,
-                color: "emerald",
-              },
-              {
-                icon: Users,
-                title: "Players",
-                value: `${players.length} Registered`,
-                color: "blue",
-              },
-              {
-                icon: Target,
-                title: "Format",
-                value: getScoringFormat(),
-                color: "purple",
-              },
-              {
-                icon: Calendar,
-                title: "Duration",
-                value: getDuration(eventData.start_date, eventData.end_date),
-                color: "orange",
-              },
-            ].map((item, index) => (
-              <AnimatedStatCard key={item.title} item={item} index={index} />
-            ))}
+      {eventData?.theme !== "TourTech" && (
+        <section className="py-24 px-6 sm:px-8 lg:px-12 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white"></div>
+          <div className="relative max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                {
+                  icon: MapPin,
+                  title: "Location",
+                  value: eventData.location,
+                  color: "emerald",
+                },
+                {
+                  icon: Users,
+                  title: "Players",
+                  value: `${players.length} Registered`,
+                  color: "blue",
+                },
+                {
+                  icon: Target,
+                  title: "Format",
+                  value: getScoringFormat(),
+                  color: "purple",
+                },
+                {
+                  icon: Calendar,
+                  title: "Duration",
+                  value: getDuration(eventData.start_date, eventData.end_date),
+                  color: "orange",
+                },
+              ].map((item, index) => (
+                <AnimatedStatCard key={item.title} item={item} index={index} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Courses Overview Section */}
       {courses.length > 0 && (
