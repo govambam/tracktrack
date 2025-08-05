@@ -19,7 +19,7 @@ const AVAILABLE_THEMES = [
     description: "Colorful, playful design for your public event website inspired by classic Apple UIs with bright accents and rounded elements",
     preview: {
       primary: "bg-gradient-to-r from-green-400 to-green-600",
-      secondary: "bg-gradient-to-r from-blue-400 to-blue-600", 
+      secondary: "bg-gradient-to-r from-blue-400 to-blue-600",
       accent: "bg-gradient-to-r from-purple-400 to-orange-400",
     },
     characteristics: [
@@ -28,6 +28,24 @@ const AVAILABLE_THEMES = [
       "Generous spacing and oversized buttons",
       "Sans-serif, high-contrast typography",
       "Subtle gradients and layered components"
+    ]
+  },
+  {
+    id: "TourTech",
+    name: "Tour Tech",
+    description: "Clean, professional design inspired by modern SaaS platforms with high-contrast typography and minimalist layout",
+    preview: {
+      primary: "bg-gradient-to-r from-slate-800 to-slate-900",
+      secondary: "bg-gradient-to-r from-slate-600 to-slate-700",
+      accent: "bg-gradient-to-r from-green-600 to-green-700",
+    },
+    characteristics: [
+      "High-contrast typography with compact layout",
+      "Neutral color palette with bold accent colors",
+      "Minimalist UI with clear information hierarchy",
+      "Sharp corners, no unnecessary drop shadows",
+      "Modern geometric fonts for headers",
+      "Professional, structured design approach"
     ]
   }
 ];
