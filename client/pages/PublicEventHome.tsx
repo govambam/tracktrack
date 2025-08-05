@@ -1966,7 +1966,7 @@ export default function PublicEventHome() {
             {/* Contest Rules */}
             {(closestToPinGroups.length > 0 ||
               longestDriveGroups.length > 0) && (
-              <div className="bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200">
+              <div className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-16" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200"}`}>
                 <div className="text-center mb-8">
                   <div className="inline-flex items-center space-x-2 bg-slate-200 rounded-full px-4 py-2 mb-4">
                     <Info className="h-4 w-4 text-slate-600" />
