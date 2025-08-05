@@ -123,38 +123,34 @@ const useScrollAnimation = () => {
 
 // Theme utility function
 const getThemeStyles = (theme: string = "GolfOS") => {
-  console.log("🎨 getThemeStyles Debug - Input theme:", theme);
-  console.log("🎨 getThemeStyles Debug - Theme type:", typeof theme);
-  console.log("🎨 getThemeStyles Debug - Is TourTech?", theme === "TourTech");
-
   if (theme === "TourTech") {
     return {
-      // Container styles
-      heroContainer: "bg-white",
-      heroGradient: "bg-gradient-to-b from-slate-50 to-white",
-      cardBackground: "bg-white border-slate-200",
-      sectionBackground: "bg-slate-50",
+      // Container styles - Clean white with subtle slate accents
+      heroContainer: "bg-slate-50",
+      heroGradient: "bg-gradient-to-b from-white via-slate-50 to-slate-100",
+      cardBackground: "bg-white",
+      sectionBackground: "bg-white",
 
-      // Typography
-      heroTitle: "text-slate-900 font-bold tracking-tight",
-      heroSubtitle: "text-slate-600 font-medium",
+      // Typography - High contrast, more compact
+      heroTitle: "text-slate-900 font-extrabold tracking-tight",
+      heroSubtitle: "text-slate-700 font-medium",
       sectionTitle: "text-slate-900 font-bold tracking-tight",
       cardTitle: "text-slate-900 font-semibold",
-      cardText: "text-slate-600",
+      cardText: "text-slate-700",
 
-      // Buttons and accents
-      primaryButton: "bg-green-600 hover:bg-green-700 text-white border-0",
-      accentColor: "text-green-600",
+      // Buttons and accents - Bold green on clean background
+      primaryButton: "bg-green-600 hover:bg-green-700 text-white shadow-md hover:shadow-lg",
+      accentColor: "text-green-700",
       accentBackground: "bg-green-600",
 
-      // Borders and shadows
-      cardBorder: "border border-slate-200",
-      cardShadow: "shadow-sm hover:shadow-md",
+      // Borders and shadows - Sharp, minimal
+      cardBorder: "border border-slate-300",
+      cardShadow: "shadow-md hover:shadow-lg border border-slate-200",
       roundedCorners: "rounded-lg",
 
-      // Spacing
+      // Spacing - More compact, professional
       containerPadding: "px-6 sm:px-8 lg:px-12",
-      sectionPadding: "py-16",
+      sectionPadding: "py-12",
       cardPadding: "p-6",
     };
   }
