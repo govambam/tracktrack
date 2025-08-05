@@ -2109,7 +2109,9 @@ export default function PublicEventHome() {
               <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
                 {eventData?.theme === "TourTech"
                   ? "Tournament Prizes"
-                  : "High Stakes, Higher Handicaps"}
+                  : eventData?.theme === "Masters"
+                    ? "Prize Pool"
+                    : "High Stakes, Higher Handicaps"}
               </h2>
 
               {eventData.buy_in && eventData.buy_in > 0 && (
@@ -2238,7 +2240,7 @@ export default function PublicEventHome() {
                               role="img"
                               aria-label="target"
                             >
-                              �����
+                              ����
                             </span>
                             <span className="text-sm text-green-700 font-medium">
                               Closest to Pin: ${closestToPinPrize} per hole
