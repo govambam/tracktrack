@@ -1843,7 +1843,7 @@ export default function PublicEventHome() {
 
             {/* Prize Cards */}
             {prizes.length > 0 && (
-              <div className="flex justify-center">
+              <div className={`flex justify-center ${eventData?.theme === "TourTech" ? "mt-12" : "mt-16"}`}>
                 <div
                   className={`grid gap-8 ${
                     prizes.length === 1
