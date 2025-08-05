@@ -1036,15 +1036,15 @@ const AnimatedTravelCard = ({
         className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : isMasters ? "bg-white border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300" : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-2"} ${isTourTech ? theme.roundedCorners : isMasters ? "rounded-xl" : "rounded-3xl"} ${isTourTech ? theme.cardPadding : isMasters ? "p-8" : "p-8"} transition-all duration-300 h-full`}
       >
         <div
-          className={`${isTourTech ? `w-10 h-10 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mb-4` : isMasters ? "w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mb-6" : `w-16 h-16 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mb-8`}`}
+          className={`${isTourTech ? `w-10 h-10 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mb-4` : isMasters ? "w-16 h-16 bg-yellow-600 rounded-xl flex items-center justify-center mb-6" : `w-16 h-16 bg-gradient-to-br ${colors.bg} rounded-2xl flex items-center justify-center mb-8`}`}
         >
           <item.icon
-            className={`${isTourTech ? "h-5 w-5 text-white" : isMasters ? "h-6 w-6 text-white" : `h-8 w-8 ${colors.text}`}`}
+            className={`${isTourTech ? "h-5 w-5 text-white" : isMasters ? "h-8 w-8 text-white" : `h-8 w-8 ${colors.text}`}`}
           />
         </div>
 
         <h3
-          className={`${isTourTech ? theme.cardTitle : isMasters ? "font-serif font-semibold text-green-900 text-xl" : "text-2xl font-bold text-slate-900"} ${isTourTech ? "mb-3" : isMasters ? "mb-4" : "mb-6"}`}
+          className={`${isTourTech ? theme.cardTitle : isMasters ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl font-bold text-slate-900"} ${isTourTech ? "mb-3" : isMasters ? "mb-6" : "mb-6"}`}
         >
           {item.title}
         </h3>
