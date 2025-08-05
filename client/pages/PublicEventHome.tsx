@@ -1668,7 +1668,7 @@ export default function PublicEventHome() {
           {/* Background decoration */}
           {eventData?.theme === "TourTech" ? null : eventData?.theme === "Masters" ? (
             <>
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-white to-green-50/10"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
               <div className="absolute top-20 right-0 w-72 h-72 bg-yellow-100/10 rounded-full blur-3xl"></div>
             </>
           ) : (
