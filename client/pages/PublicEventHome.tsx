@@ -1341,14 +1341,14 @@ export default function PublicEventHome() {
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <a
                   href="#courses"
-                  className="group bg-gradient-to-r from-green-600 to-emerald-600 text-white px-10 py-5 rounded-2xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 inline-flex items-center justify-center text-lg shadow-xl shadow-green-600/25 hover:shadow-2xl hover:shadow-green-600/40 hover:-translate-y-1"
+                  className={`group ${theme.primaryButton} px-10 py-5 ${theme.roundedCorners === "rounded-3xl" ? "rounded-2xl" : "rounded-lg"} font-semibold transition-all duration-300 inline-flex items-center justify-center text-lg ${eventData?.theme === "TourTech" ? "shadow-md hover:shadow-lg" : "shadow-xl shadow-green-600/25 hover:shadow-2xl hover:shadow-green-600/40"} hover:-translate-y-1`}
                 >
                   View Courses
                   <ChevronRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a
                   href="#players"
-                  className="group bg-white/80 backdrop-blur-sm border-2 border-green-200 text-green-700 px-10 py-5 rounded-2xl font-semibold hover:bg-green-50 hover:border-green-300 transition-all duration-300 inline-flex items-center justify-center text-lg shadow-lg hover:shadow-xl hover:-translate-y-1"
+                  className={`group ${eventData?.theme === "TourTech" ? "bg-white border-2 border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300" : "bg-white/80 backdrop-blur-sm border-2 border-green-200 text-green-700 hover:bg-green-50 hover:border-green-300"} px-10 py-5 ${theme.roundedCorners === "rounded-3xl" ? "rounded-2xl" : "rounded-lg"} font-semibold transition-all duration-300 inline-flex items-center justify-center text-lg ${eventData?.theme === "TourTech" ? "shadow-md hover:shadow-lg" : "shadow-lg hover:shadow-xl"} hover:-translate-y-1`}
                 >
                   Meet Players
                   <Users className="h-5 w-5 ml-2 group-hover:scale-110 transition-transform" />
