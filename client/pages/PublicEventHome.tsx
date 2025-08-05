@@ -1815,7 +1815,7 @@ export default function PublicEventHome() {
           {eventData?.theme !== "TourTech" && (
             <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
           )}
-          <div className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "8" : "20"}`}>
+          <div className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "12" : "20"}`}>
             {/* Header and Buy-in */}
             <div className={`text-center ${theme.headerSpacing}`}>
               <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
