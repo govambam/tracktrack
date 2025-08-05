@@ -1844,7 +1844,7 @@ export default function PublicEventHome() {
                     return (
                       <div
                         key={scoring.score}
-                        className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder}` : `${scoring.bgColor} border-2 border-opacity-20`} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${eventData?.theme === "TourTech" ? theme.cardHover : "hover:scale-105 transition-transform duration-200"}`}
+                        className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder}` : eventData?.theme === "Masters" ? "bg-white border border-green-800/20" : `${scoring.bgColor} border-2 border-opacity-20`} ${eventData?.theme === "Masters" ? "rounded-lg" : theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${eventData?.theme === "TourTech" ? theme.cardHover : eventData?.theme === "Masters" ? "hover:border-yellow-600 hover:shadow-lg transition-all duration-300" : "hover:scale-105 transition-transform duration-200"}`}
                       >
                         <div className="flex items-center justify-between mb-3">
                           <div
