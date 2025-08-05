@@ -2499,7 +2499,7 @@ export default function PublicEventHome() {
                           <li>
                             • Must be <strong>ON THE GREEN</strong> to win
                           </li>
-                          <li>• Measured to the inch for ties</li>
+                          <li>• Ties carry over to next Par 3 ($20, $30, etc.)</li>
                           <li>• Ball must come to rest on putting surface</li>
                           <li>
                             <span className="inline-flex items-center space-x-1">
