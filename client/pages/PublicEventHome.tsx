@@ -1441,31 +1441,35 @@ export default function PublicEventHome() {
       {courses.length > 0 && (
         <section
           id="courses"
-          className="py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"
+          className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative overflow-hidden"} ${theme.sectionPadding} ${theme.containerPadding}`}
         >
-          {/* Background decoration */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20"></div>
-          <div className="absolute top-20 right-0 w-72 h-72 bg-green-100/10 rounded-full blur-3xl"></div>
+          {/* Background decoration - only for GolfOS */}
+          {eventData?.theme !== "TourTech" && (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20"></div>
+              <div className="absolute top-20 right-0 w-72 h-72 bg-green-100/10 rounded-full blur-3xl"></div>
+            </>
+          )}
 
-          <div className="relative max-w-6xl mx-auto">
-            <div className="text-center mb-20">
-              <div className="inline-flex items-center space-x-2 bg-green-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
-                <Sparkles className="h-4 w-4 text-green-600" />
-                <span className="text-sm font-medium text-green-800">
-                  Championship Venues
+          <div className={`relative ${theme.maxContentWidth} mx-auto`}>
+            <div className={`text-center ${theme.headerSpacing}`}>
+              <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
+                <Sparkles className={`h-3.5 w-3.5 ${theme.accentColor}`} />
+                <span className={`${eventData?.theme === "TourTech" ? theme.tableHeader : "text-sm font-medium text-green-800"}`}>
+                  {eventData?.theme === "TourTech" ? "VENUES" : "Championship Venues"}
                 </span>
               </div>
 
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
+              <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
                 {courses.length > 1 ? "Golf Courses" : "Golf Course"}
               </h2>
 
-              <p className="text-xl sm:text-2xl text-slate-600 max-w-4xl mx-auto font-light leading-relaxed">
+              <p className={`${theme.heroSubtitle} ${theme.textMaxWidth} mx-auto leading-relaxed`}>
                 {rounds.reduce(
                   (total, round) => total + (round.holes || 18),
                   0,
                 )}{" "}
-                world class holes played over{" "}
+                holes played over{" "}
                 {getDuration(
                   eventData.start_date,
                   eventData.end_date,
