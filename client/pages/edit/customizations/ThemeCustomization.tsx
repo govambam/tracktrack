@@ -50,6 +50,25 @@ const AVAILABLE_THEMES = [
       "No gradients or playful elements - pure professional focus",
     ],
   },
+  {
+    id: "Masters",
+    name: "Masters",
+    description:
+      "Prestigious, traditional design inspired by Augusta National and the Masters Tournament. Elegant serif typography, refined green and gold color palette, and classic tournament prestige",
+    preview: {
+      primary: "bg-green-800",
+      secondary: "bg-green-600",
+      accent: "bg-yellow-600",
+    },
+    characteristics: [
+      "Elegant serif typography (Playfair Display, Times New Roman)",
+      "Masters green and gold color palette with cream backgrounds",
+      "Refined white cards with subtle green borders and gold hover effects",
+      "Generous spacing and traditional tournament hierarchy",
+      "Premium feel with smooth transitions and hover animations",
+      "Classic, luxurious design without being overly flashy",
+    ],
+  },
 ];
 
 export default function ThemeCustomization() {
