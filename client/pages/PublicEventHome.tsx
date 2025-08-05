@@ -179,32 +179,42 @@ const getThemeStyles = (theme: string = "GolfOS") => {
   if (theme === "Masters") {
     return {
       // Layout & Container - Elegant with subtle warmth
-      heroContainer: "bg-gradient-to-br from-amber-50/30 via-white to-green-50/20",
-      heroGradient: "bg-gradient-to-br from-amber-50/20 via-white to-green-50/10",
+      heroContainer:
+        "bg-gradient-to-br from-amber-50/30 via-white to-green-50/20",
+      heroGradient:
+        "bg-gradient-to-br from-amber-50/20 via-white to-green-50/10",
       cardBackground: "bg-white",
-      sectionBackground: "bg-gradient-to-br from-amber-50/30 via-white to-green-50/20",
+      sectionBackground:
+        "bg-gradient-to-br from-amber-50/30 via-white to-green-50/20",
       modalBackground: "bg-white",
 
       // Typography - Serif elegance with refined hierarchy
-      heroTitle: "font-serif font-semibold text-green-900 text-3xl md:text-7xl tracking-tight",
-      heroSubtitle: "font-serif font-medium text-green-800/80 text-base sm:text-lg tracking-wide",
-      sectionTitle: "font-serif font-semibold text-green-900 text-4xl tracking-tight",
-      cardTitle: "font-serif font-semibold text-green-900 text-lg md:text-2xl tracking-tight",
+      heroTitle:
+        "font-serif font-semibold text-green-900 text-3xl md:text-7xl tracking-tight",
+      heroSubtitle:
+        "font-serif font-medium text-green-800/80 text-base sm:text-lg tracking-wide",
+      sectionTitle:
+        "font-serif font-semibold text-green-900 text-4xl tracking-tight",
+      cardTitle:
+        "font-serif font-semibold text-green-900 text-lg md:text-2xl tracking-tight",
       cardText: "text-green-800/70 text-sm md:text-lg",
       dataText: "font-sans font-semibold text-green-900",
       elegantText: "font-serif font-medium text-green-800 tracking-wide",
       goldText: "text-yellow-600 font-semibold",
 
       // Buttons - Refined with Masters colors
-      primaryButton: "bg-green-800 hover:bg-green-900 text-amber-50 font-medium transition-all duration-300 transform hover:scale-105",
-      secondaryButton: "bg-transparent border-2 border-yellow-600 text-yellow-600 hover:bg-yellow-50 font-medium transition-all duration-300",
+      primaryButton:
+        "bg-green-800 hover:bg-green-900 text-amber-50 font-medium transition-all duration-300 transform hover:scale-105",
+      secondaryButton:
+        "bg-transparent border-2 border-yellow-600 text-yellow-600 hover:bg-yellow-50 font-medium transition-all duration-300",
       accentColor: "text-yellow-600",
       accentBackground: "bg-yellow-600",
 
       // Borders & Shadows - Elegant with gold accents, refined for Fore the Boy style
       cardBorder: "border border-green-800/20",
       cardShadow: "shadow-sm hover:shadow-lg hover:shadow-green-900/10",
-      cardHover: "hover:border-yellow-600 hover:scale-[1.02] hover:shadow-lg transition-all duration-300",
+      cardHover:
+        "hover:border-yellow-600 hover:scale-[1.02] hover:shadow-lg transition-all duration-300",
       roundedCorners: "rounded-xl",
 
       // Spacing - Generous, refined to match Fore the Boy
@@ -215,7 +225,8 @@ const getThemeStyles = (theme: string = "GolfOS") => {
 
       // Data Display - Elegant serif for headings, sans for data
       scoreFont: "font-serif font-semibold",
-      tableHeader: "font-serif text-sm font-medium tracking-wide text-green-800",
+      tableHeader:
+        "font-serif text-sm font-medium tracking-wide text-green-800",
       tableCell: "font-sans text-base text-green-900",
 
       // Layout Constraints - Wider to match Fore the Boy
@@ -224,7 +235,8 @@ const getThemeStyles = (theme: string = "GolfOS") => {
 
       // Masters-specific styles with improved hover states
       mastersCardBorder: "border border-green-800/20",
-      mastersCardHover: "hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300",
+      mastersCardHover:
+        "hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300",
       mastersCardShadow: "shadow-sm hover:shadow-lg",
 
       mastersGreen: "text-green-800",
@@ -371,10 +383,16 @@ const StickyNavigation = ({
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 ${theme === "Masters" ? "bg-white/98 backdrop-blur-sm border-b border-green-800/20 shadow-sm" : "bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg"}`}>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 ${theme === "Masters" ? "bg-white/98 backdrop-blur-sm border-b border-green-800/20 shadow-sm" : "bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg"}`}
+    >
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className={`font-bold ${theme === "Masters" ? "text-green-900 font-serif text-lg" : "text-slate-900"}`}>{eventName}</div>
+          <div
+            className={`font-bold ${theme === "Masters" ? "text-green-900 font-serif text-lg" : "text-slate-900"}`}
+          >
+            {eventName}
+          </div>
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <a
@@ -703,7 +721,9 @@ const AnimatedCourseCard = ({
           </div>
         )}
 
-        <div className={`${isTourTech ? "p-6" : isMasters ? theme.cardPadding : "p-8"} relative`}>
+        <div
+          className={`${isTourTech ? "p-6" : isMasters ? theme.cardPadding : "p-8"} relative`}
+        >
           <div
             className={`flex items-start justify-between ${isTourTech ? "mb-4" : isMasters ? "mb-5" : "mb-6"}`}
           >
@@ -784,11 +804,17 @@ const AnimatedCourseCard = ({
           )}
 
           {(round?.tee_time || round?.round_date) && (
-            <div className={`space-y-3 pt-4 border-t ${isMasters ? "border-green-800/20" : "border-slate-200"}`}>
+            <div
+              className={`space-y-3 pt-4 border-t ${isMasters ? "border-green-800/20" : "border-slate-200"}`}
+            >
               {round?.round_date && (
                 <div className="flex items-center space-x-3">
-                  <Calendar className={`h-4 w-4 ${isMasters ? "text-yellow-600" : "text-slate-400"}`} />
-                  <span className={`text-sm font-medium ${isMasters ? "text-green-800 font-serif" : "text-slate-600"}`}>
+                  <Calendar
+                    className={`h-4 w-4 ${isMasters ? "text-yellow-600" : "text-slate-400"}`}
+                  />
+                  <span
+                    className={`text-sm font-medium ${isMasters ? "text-green-800 font-serif" : "text-slate-600"}`}
+                  >
                     {new Date(round.round_date).toLocaleDateString("en-US", {
                       weekday: "long",
                       month: "long",
@@ -799,8 +825,12 @@ const AnimatedCourseCard = ({
               )}
               {round?.tee_time && (
                 <div className="flex items-center space-x-3">
-                  <Clock className={`h-4 w-4 ${isMasters ? "text-yellow-600" : "text-slate-400"}`} />
-                  <span className={`text-sm font-medium ${isMasters ? "text-green-800 font-serif" : "text-slate-600"}`}>
+                  <Clock
+                    className={`h-4 w-4 ${isMasters ? "text-yellow-600" : "text-slate-400"}`}
+                  />
+                  <span
+                    className={`text-sm font-medium ${isMasters ? "text-green-800 font-serif" : "text-slate-600"}`}
+                  >
                     Tee Time: {round.tee_time}
                   </span>
                 </div>
@@ -986,12 +1016,16 @@ const AnimatedPrizeCard = ({
 
         <div className="flex-1 flex flex-col justify-center">
           {prize.amount > 0 && (
-            <div className={`${isMasters ? "text-2xl font-serif font-bold text-yellow-600" : "text-3xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent"} mb-3`}>
+            <div
+              className={`${isMasters ? "text-2xl font-serif font-bold text-yellow-600" : "text-3xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent"} mb-3`}
+            >
               ${prize.amount}
             </div>
           )}
 
-          <p className={`${isMasters ? "text-green-800/70 font-serif text-sm" : "text-slate-600 font-medium"} leading-relaxed`}>
+          <p
+            className={`${isMasters ? "text-green-800/70 font-serif text-sm" : "text-slate-600 font-medium"} leading-relaxed`}
+          >
             {prize.description}
           </p>
         </div>
@@ -1053,32 +1087,44 @@ const AnimatedTravelCard = ({
           <ReactMarkdown
             components={{
               h1: ({ children }) => (
-                <h1 className={`text-xl font-bold mb-3 ${isMasters ? "text-green-900 font-serif" : "text-slate-900"}`}>
+                <h1
+                  className={`text-xl font-bold mb-3 ${isMasters ? "text-green-900 font-serif" : "text-slate-900"}`}
+                >
                   {children}
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className={`text-lg font-semibold mb-2 ${isMasters ? "text-green-900 font-serif" : "text-slate-900"}`}>
+                <h2
+                  className={`text-lg font-semibold mb-2 ${isMasters ? "text-green-900 font-serif" : "text-slate-900"}`}
+                >
                   {children}
                 </h2>
               ),
               h3: ({ children }) => (
-                <h3 className={`text-base font-medium mb-2 ${isMasters ? "text-green-900 font-serif" : "text-slate-900"}`}>
+                <h3
+                  className={`text-base font-medium mb-2 ${isMasters ? "text-green-900 font-serif" : "text-slate-900"}`}
+                >
                   {children}
                 </h3>
               ),
               p: ({ children }) => (
-                <p className={`leading-relaxed mb-2 ${isMasters ? "text-green-800/70 font-serif" : "text-slate-600"}`}>
+                <p
+                  className={`leading-relaxed mb-2 ${isMasters ? "text-green-800/70 font-serif" : "text-slate-600"}`}
+                >
                   {children}
                 </p>
               ),
               ul: ({ children }) => (
-                <ul className={`list-disc ml-4 mb-2 ${isMasters ? "text-green-800/70 font-serif" : "text-slate-600"}`}>
+                <ul
+                  className={`list-disc ml-4 mb-2 ${isMasters ? "text-green-800/70 font-serif" : "text-slate-600"}`}
+                >
                   {children}
                 </ul>
               ),
               ol: ({ children }) => (
-                <ol className={`list-decimal ml-4 mb-2 ${isMasters ? "text-green-800/70 font-serif" : "text-slate-600"}`}>
+                <ol
+                  className={`list-decimal ml-4 mb-2 ${isMasters ? "text-green-800/70 font-serif" : "text-slate-600"}`}
+                >
                   {children}
                 </ol>
               ),
@@ -1473,7 +1519,11 @@ export default function PublicEventHome() {
 
   return (
     <div className={`min-h-screen ${theme.heroContainer}`}>
-      <StickyNavigation eventName={eventData.name} slug={slug!} theme={eventData?.theme} />
+      <StickyNavigation
+        eventName={eventData.name}
+        slug={slug!}
+        theme={eventData?.theme}
+      />
 
       {/* Hero Section */}
       <section
@@ -1523,27 +1573,26 @@ export default function PublicEventHome() {
               <h1
                 className={`${eventData?.theme === "TourTech" ? theme.heroTitle : eventData?.theme === "Masters" ? theme.heroTitle : "text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.9] text-slate-900 tracking-tight"} leading-tight`}
               >
-                {eventData?.theme === "Masters" && eventData.name.split(' ').length >= 3 ? (
-                  (() => {
-                    const words = eventData.name.split(' ');
-                    const midPoint = Math.ceil(words.length / 2);
-                    const firstLine = words.slice(0, midPoint).join(' ');
-                    const secondLine = words.slice(midPoint).join(' ');
+                {eventData?.theme === "Masters" &&
+                eventData.name.split(" ").length >= 3
+                  ? (() => {
+                      const words = eventData.name.split(" ");
+                      const midPoint = Math.ceil(words.length / 2);
+                      const firstLine = words.slice(0, midPoint).join(" ");
+                      const secondLine = words.slice(midPoint).join(" ");
 
-                    return (
-                      <>
-                        <span className="block text-green-900">
-                          {firstLine}
-                        </span>
-                        <span className="block text-yellow-600">
-                          {secondLine}
-                        </span>
-                      </>
-                    );
-                  })()
-                ) : (
-                  eventData.name
-                )}
+                      return (
+                        <>
+                          <span className="block text-green-900">
+                            {firstLine}
+                          </span>
+                          <span className="block text-yellow-600">
+                            {secondLine}
+                          </span>
+                        </>
+                      );
+                    })()
+                  : eventData.name}
               </h1>
               {eventData.description && (
                 <p
@@ -1686,7 +1735,8 @@ export default function PublicEventHome() {
           className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : eventData?.theme === "Masters" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding} relative overflow-hidden` : "py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"}`}
         >
           {/* Background decoration */}
-          {eventData?.theme === "TourTech" ? null : eventData?.theme === "Masters" ? (
+          {eventData?.theme === "TourTech" ? null : eventData?.theme ===
+            "Masters" ? (
             <>
               <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
               <div className="absolute top-20 right-0 w-72 h-72 bg-yellow-100/10 rounded-full blur-3xl"></div>
@@ -1790,7 +1840,8 @@ export default function PublicEventHome() {
           className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : eventData?.theme === "Masters" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding} relative` : "py-28 px-6 sm:px-8 lg:px-12 relative"}`}
         >
           {/* Background decoration */}
-          {eventData?.theme === "TourTech" ? null : eventData?.theme === "Masters" ? (
+          {eventData?.theme === "TourTech" ? null : eventData?.theme ===
+            "Masters" ? (
             <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-slate-50/30"></div>
@@ -1899,8 +1950,14 @@ export default function PublicEventHome() {
             {getScoringFormat().includes("Stableford") && (
               <div className="mb-8">
                 <div className={`text-center ${theme.headerSpacing}`}>
-                  <h3 className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl tracking-tight" : theme.sectionTitle} mb-2`}>Point Values</h3>
-                  <p className={`${eventData?.theme === "Masters" ? "font-serif text-green-800/70" : theme.cardText}`}>
+                  <h3
+                    className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl tracking-tight" : theme.sectionTitle} mb-2`}
+                  >
+                    Point Values
+                  </h3>
+                  <p
+                    className={`${eventData?.theme === "Masters" ? "font-serif text-green-800/70" : theme.cardText}`}
+                  >
                     Points awarded based on performance relative to par
                   </p>
                 </div>
@@ -1961,7 +2018,9 @@ export default function PublicEventHome() {
                     className={`${eventData?.theme === "TourTech" ? "space-y-2" : eventData?.theme === "Masters" ? "flex items-start space-x-3" : "flex items-start space-x-3"}`}
                   >
                     {eventData?.theme !== "TourTech" && (
-                      <Target className={`h-5 w-5 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-emerald-600"} mt-0.5`} />
+                      <Target
+                        className={`h-5 w-5 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-emerald-600"} mt-0.5`}
+                      />
                     )}
                     <div>
                       <div
@@ -1987,15 +2046,25 @@ export default function PublicEventHome() {
 
             {/* Custom Rules Section */}
             {customRules.length > 0 && (
-              <div className={`${eventData?.theme === "Masters" ? "mt-16" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200"}`}>
+              <div
+                className={`${eventData?.theme === "Masters" ? "mt-16" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200"}`}
+              >
                 <div className="text-center mb-8">
-                  <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}>
-                    <FileText className={`h-4 w-4 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-600"}`} />
-                    <span className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-slate-700"}`}>
+                  <div
+                    className={`inline-flex items-center space-x-2 ${eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
+                  >
+                    <FileText
+                      className={`h-4 w-4 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-600"}`}
+                    />
+                    <span
+                      className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-slate-700"}`}
+                    >
                       Tournament Guidelines
                     </span>
                   </div>
-                  <h3 className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}>
+                  <h3
+                    className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
+                  >
                     Custom Rules
                   </h3>
                 </div>
@@ -2007,40 +2076,56 @@ export default function PublicEventHome() {
                       className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow}` : eventData?.theme === "Masters" ? "bg-white rounded-xl p-8 border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300" : "bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"}`}
                     >
                       {rule.rule_title && (
-                        <h4 className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-yellow-600 text-xl" : "font-semibold text-slate-900"} mb-3 text-lg`}>
+                        <h4
+                          className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-yellow-600 text-xl" : "font-semibold text-slate-900"} mb-3 text-lg`}
+                        >
                           {rule.rule_title}
                         </h4>
                       )}
-                      <div className={`${eventData?.theme === "Masters" ? "text-green-800" : "text-slate-700"} prose prose-sm max-w-none`}>
+                      <div
+                        className={`${eventData?.theme === "Masters" ? "text-green-800" : "text-slate-700"} prose prose-sm max-w-none`}
+                      >
                         <ReactMarkdown
                           components={{
                             h1: ({ children }) => (
-                              <h1 className={`text-lg font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-2`}>
+                              <h1
+                                className={`text-lg font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-2`}
+                              >
                                 {children}
                               </h1>
                             ),
                             h2: ({ children }) => (
-                              <h2 className={`text-base font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-2`}>
+                              <h2
+                                className={`text-base font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-2`}
+                              >
                                 {children}
                               </h2>
                             ),
                             h3: ({ children }) => (
-                              <h3 className={`text-sm font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-1`}>
+                              <h3
+                                className={`text-sm font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-1`}
+                              >
                                 {children}
                               </h3>
                             ),
                             p: ({ children }) => (
-                              <p className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} mb-2 last:mb-0 leading-relaxed`}>
+                              <p
+                                className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} mb-2 last:mb-0 leading-relaxed`}
+                              >
                                 {children}
                               </p>
                             ),
                             ul: ({ children }) => (
-                              <ul className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} ml-6 mb-2 last:mb-0 list-disc`}>
+                              <ul
+                                className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} ml-6 mb-2 last:mb-0 list-disc`}
+                              >
                                 {children}
                               </ul>
                             ),
                             ol: ({ children }) => (
-                              <ol className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} ml-6 mb-2 last:mb-0 list-decimal`}>
+                              <ol
+                                className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} ml-6 mb-2 last:mb-0 list-decimal`}
+                              >
                                 {children}
                               </ol>
                             ),
@@ -2048,7 +2133,9 @@ export default function PublicEventHome() {
                               <li className="mb-1 last:mb-0">{children}</li>
                             ),
                             strong: ({ children }) => (
-                              <strong className={`font-bold ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-800"}`}>
+                              <strong
+                                className={`font-bold ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-800"}`}
+                              >
                                 {children}
                               </strong>
                             ),
@@ -2098,7 +2185,11 @@ export default function PublicEventHome() {
                 <span
                   className={`${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-green-800"}`}
                 >
-                  {eventData?.theme === "TourTech" ? "PLAYERS" : eventData?.theme === "Masters" ? "Competitors" : "Competitors"}
+                  {eventData?.theme === "TourTech"
+                    ? "PLAYERS"
+                    : eventData?.theme === "Masters"
+                      ? "Competitors"
+                      : "Competitors"}
                 </span>
               </div>
 
@@ -2123,7 +2214,10 @@ export default function PublicEventHome() {
                 {players.map((player, index) => {
                   // Parse bio for tags if present
                   const bio = player.bio || "";
-                  const tags = bio.split(",").map(tag => tag.trim()).filter(tag => tag.length > 0);
+                  const tags = bio
+                    .split(",")
+                    .map((tag) => tag.trim())
+                    .filter((tag) => tag.length > 0);
 
                   return (
                     <div
@@ -2155,13 +2249,14 @@ export default function PublicEventHome() {
                       )}
 
                       {/* Handicap if available */}
-                      {player.handicap !== null && player.handicap !== undefined && (
-                        <div className="mt-2">
-                          <span className="text-xs text-green-800/50 font-serif">
-                            HCP: {player.handicap}
-                          </span>
-                        </div>
-                      )}
+                      {player.handicap !== null &&
+                        player.handicap !== undefined && (
+                          <div className="mt-2">
+                            <span className="text-xs text-green-800/50 font-serif">
+                              HCP: {player.handicap}
+                            </span>
+                          </div>
+                        )}
                     </div>
                   );
                 })}
@@ -2227,7 +2322,11 @@ export default function PublicEventHome() {
                 <span
                   className={`${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-amber-800"}`}
                 >
-                  {eventData?.theme === "TourTech" ? "PRIZES" : eventData?.theme === "Masters" ? "Prize Pool" : "Prize Pool"}
+                  {eventData?.theme === "TourTech"
+                    ? "PRIZES"
+                    : eventData?.theme === "Masters"
+                      ? "Prize Pool"
+                      : "Prize Pool"}
                 </span>
               </div>
 
@@ -2239,24 +2338,33 @@ export default function PublicEventHome() {
                     : "High Stakes, Higher Handicaps"}
               </h2>
 
-              {eventData.buy_in && eventData.buy_in > 0 && eventData?.theme === "Masters" && (
-                <p className="font-serif text-green-800/70 text-lg mb-8">
-                  Tournament Buy-in: <span className="font-serif font-semibold text-yellow-600 text-xl">${eventData.buy_in}</span>
-                </p>
-              )}
+              {eventData.buy_in &&
+                eventData.buy_in > 0 &&
+                eventData?.theme === "Masters" && (
+                  <p className="font-serif text-green-800/70 text-lg mb-8">
+                    Tournament Buy-in:{" "}
+                    <span className="font-serif font-semibold text-yellow-600 text-xl">
+                      ${eventData.buy_in}
+                    </span>
+                  </p>
+                )}
 
-              {eventData.buy_in && eventData.buy_in > 0 && eventData?.theme !== "Masters" && (
-                <div
-                  className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth} mx-auto`}
-                >
-                  <p className={`${theme.cardText} mb-2`}>Tournament Buy-in</p>
+              {eventData.buy_in &&
+                eventData.buy_in > 0 &&
+                eventData?.theme !== "Masters" && (
                   <div
-                    className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
+                    className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth} mx-auto`}
                   >
-                    ${eventData.buy_in}
+                    <p className={`${theme.cardText} mb-2`}>
+                      Tournament Buy-in
+                    </p>
+                    <div
+                      className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
+                    >
+                      ${eventData.buy_in}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
 
             {/* Prize Cards - Fore the Boy Style Grid */}
@@ -2290,71 +2398,73 @@ export default function PublicEventHome() {
             )}
 
             {/* Contest Rules - Clean 2-column layout directly below prizes for Masters theme */}
-            {eventData?.theme === "Masters" && (closestToPinGroups.length > 0 || longestDriveGroups.length > 0) && (
-              <div className="mt-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
-                  {/* Closest to Pin Rules */}
-                  {closestToPinGroups.length > 0 && (
-                    <div className="bg-white rounded-xl p-6 border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
-                      <div className="flex items-center space-x-3 mb-6">
-                        <div className="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center">
-                          <Crosshair className="h-6 w-6 text-white" />
+            {eventData?.theme === "Masters" &&
+              (closestToPinGroups.length > 0 ||
+                longestDriveGroups.length > 0) && (
+                <div className="mt-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+                    {/* Closest to Pin Rules */}
+                    {closestToPinGroups.length > 0 && (
+                      <div className="bg-white rounded-xl p-6 border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+                        <div className="flex items-center space-x-3 mb-6">
+                          <div className="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center">
+                            <Crosshair className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="text-xl font-bold text-green-900 font-serif">
+                              Closest to the Pin
+                            </h4>
+                            {closestToPinPrize > 0 && (
+                              <p className="text-sm text-yellow-600 font-serif">
+                                ${closestToPinPrize} per hole
+                              </p>
+                            )}
+                          </div>
                         </div>
-                        <div>
-                          <h4 className="text-xl font-bold text-green-900 font-serif">
-                            Closest to the Pin
-                          </h4>
-                          {closestToPinPrize > 0 && (
-                            <p className="text-sm text-yellow-600 font-serif">
-                              ${closestToPinPrize} per hole
-                            </p>
-                          )}
-                        </div>
-                      </div>
 
-                      <div className="mt-4">
-
-                        <ul className="text-sm text-green-800 space-y-1 font-serif">
-                          <li>• Must hit on the green to win</li>
-                          <li>��� Measured to the inch for ties</li>
-                          <li>• Multiple opportunities to win</li>
-                        </ul>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Long Drive Rules */}
-                  {longestDriveGroups.length > 0 && (
-                    <div className="bg-white rounded-xl p-6 border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
-                      <div className="flex items-center space-x-3 mb-6">
-                        <div className="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center">
-                          <Zap className="h-6 w-6 text-white" />
-                        </div>
-                        <div>
-                          <h4 className="text-xl font-bold text-green-900 font-serif">
-                            Long Drive
-                          </h4>
-                          {longestDrivePrize > 0 && (
-                            <p className="text-sm text-yellow-600 font-serif">
-                              ${longestDrivePrize} per hole
-                            </p>
-                          )}
+                        <div className="mt-4">
+                          <ul className="text-sm text-green-800 space-y-1 font-serif">
+                            <li>• Must hit on the green to win</li>
+                            <li>��� Measured to the inch for ties</li>
+                            <li>• Multiple opportunities to win</li>
+                          </ul>
                         </div>
                       </div>
+                    )}
 
-                      <div className="mt-4">
+                    {/* Long Drive Rules */}
+                    {longestDriveGroups.length > 0 && (
+                      <div className="bg-white rounded-xl p-6 border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+                        <div className="flex items-center space-x-3 mb-6">
+                          <div className="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center">
+                            <Zap className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="text-xl font-bold text-green-900 font-serif">
+                              Long Drive
+                            </h4>
+                            {longestDrivePrize > 0 && (
+                              <p className="text-sm text-yellow-600 font-serif">
+                                ${longestDrivePrize} per hole
+                              </p>
+                            )}
+                          </div>
+                        </div>
 
-                        <ul className="text-sm text-green-800 space-y-1 font-serif">
-                          <li>• Must hit in fairway to win</li>
-                          <li>• Winner has shortest approach to flag</li>
-                          <li>• Ties carry over to next Par 5 ($20, $30, etc.)</li>
-                        </ul>
+                        <div className="mt-4">
+                          <ul className="text-sm text-green-800 space-y-1 font-serif">
+                            <li>• Must hit in fairway to win</li>
+                            <li>• Winner has shortest approach to flag</li>
+                            <li>
+                              • Ties carry over to next Par 5 ($20, $30, etc.)
+                            </li>
+                          </ul>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Hole Contests Summary */}
             {skillsContests.length > 0 && eventData?.theme !== "Masters" && (
@@ -2396,7 +2506,9 @@ export default function PublicEventHome() {
                       key={index}
                       className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : eventData?.theme === "Masters" ? "bg-green-50/30 rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
                     >
-                      <h4 className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900" : "font-bold text-indigo-900"} text-xl mb-4`}>
+                      <h4
+                        className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900" : "font-bold text-indigo-900"} text-xl mb-4`}
+                      >
                         Round {round.roundNumber} ({round.courseName})
                       </h4>
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
@@ -2416,7 +2528,9 @@ export default function PublicEventHome() {
                             >
                               {contest.emoji}
                             </span>
-                            <span className={`font-medium text-sm ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-indigo-900"}`}>
+                            <span
+                              className={`font-medium text-sm ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-indigo-900"}`}
+                            >
                               Hole {contest.hole}
                             </span>
                           </div>
@@ -2430,7 +2544,9 @@ export default function PublicEventHome() {
                     <div
                       className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : eventData?.theme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
                     >
-                      <h4 className={`text-lg font-semibold mb-4 ${eventData?.theme === "Masters" ? "text-green-900 font-serif" : "text-indigo-900"}`}>
+                      <h4
+                        className={`text-lg font-semibold mb-4 ${eventData?.theme === "Masters" ? "text-green-900 font-serif" : "text-indigo-900"}`}
+                      >
                         Prize Information
                       </h4>
                       <div className="flex flex-wrap gap-4">
@@ -2443,7 +2559,9 @@ export default function PublicEventHome() {
                             >
                               ����
                             </span>
-                            <span className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-green-700"}`}>
+                            <span
+                              className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-green-700"}`}
+                            >
                               Closest to Pin: ${closestToPinPrize} per hole
                             </span>
                           </div>
@@ -2457,7 +2575,9 @@ export default function PublicEventHome() {
                             >
                               🏌️�����️
                             </span>
-                            <span className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-orange-700"}`}>
+                            <span
+                              className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-orange-700"}`}
+                            >
                               Long Drive: ${longestDrivePrize} per hole
                             </span>
                           </div>
@@ -2470,139 +2590,162 @@ export default function PublicEventHome() {
             )}
 
             {/* Contest Rules */}
-            {(closestToPinGroups.length > 0 ||
-              longestDriveGroups.length > 0) && eventData?.theme !== "Masters" && (
-              <div
-                className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : eventData?.theme === "Masters" ? "bg-green-50/20 rounded-lg p-8 sm:p-12 border border-green-800/20 mt-20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}
-              >
-                <div className="text-center mb-8">
-                  <div
-                    className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
-                  >
-                    <Info className={`h-4 w-4 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-600"}`} />
-                    <span className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-slate-700"}`}>
-                      {eventData?.theme === "TourTech"
-                        ? "CONTEST RULES"
-                        : eventData?.theme === "Masters"
-                          ? "Contest Rules"
-                          : "Official Guidelines"}
-                    </span>
-                  </div>
-                  <h3
-                    className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
-                  >
-                    Contest Rules
-                  </h3>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Closest to Pin Rules */}
-                  {closestToPinGroups.length > 0 && (
-                    <div className={`${eventData?.theme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border-2 border-green-200 shadow-sm"}`}>
-                      <div className="flex items-center space-x-3 mb-6">
-                        <div className={`w-12 h-12 ${eventData?.theme === "Masters" ? "bg-yellow-600" : "bg-green-100"} ${eventData?.theme === "Masters" ? "rounded-lg" : "rounded-full"} flex items-center justify-center`}>
-                          <Crosshair className={`h-6 w-6 ${eventData?.theme === "Masters" ? "text-white" : "text-green-600"}`} />
-                        </div>
-                        <div>
-                          <h4 className={`text-xl font-bold ${eventData?.theme === "Masters" ? "text-green-900 font-serif" : "text-green-900"}`}>
-                            Closest to the Pin
-                          </h4>
-                          {closestToPinPrize > 0 && (
-                            <p className={`text-sm ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-green-600"}`}>
-                              ${closestToPinPrize} per hole
-                            </p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className={`${eventData?.theme === "Masters" ? "bg-green-50/30 border border-green-800/20" : "bg-green-50"} rounded-lg p-4`}>
-                        <h5 className={`font-semibold text-green-900 text-sm mb-3 ${eventData?.theme === "Masters" ? "font-serif" : ""}`}>
-                          Rules
-                        </h5>
-                        <ul className={`text-sm text-green-700 space-y-2 ${eventData?.theme === "Masters" ? "font-serif" : ""}`}>
-                          <li>
-                            • Must be <strong>ON THE GREEN</strong> to win
-                          </li>
-                          <li>• Ties carry over to next Par 3 ($20, $30, etc.)</li>
-                          <li>• Ball must come to rest on putting surface</li>
-                          <li>
-                            <span className="inline-flex items-center space-x-1">
-                              <span role="img" aria-label="trophy">
-                                🏆
-                              </span>
-                              <span>Winner takes the full prize amount</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
+            {(closestToPinGroups.length > 0 || longestDriveGroups.length > 0) &&
+              eventData?.theme !== "Masters" && (
+                <div
+                  className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : eventData?.theme === "Masters" ? "bg-green-50/20 rounded-lg p-8 sm:p-12 border border-green-800/20 mt-20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}
+                >
+                  <div className="text-center mb-8">
+                    <div
+                      className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
+                    >
+                      <Info
+                        className={`h-4 w-4 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-600"}`}
+                      />
+                      <span
+                        className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-slate-700"}`}
+                      >
+                        {eventData?.theme === "TourTech"
+                          ? "CONTEST RULES"
+                          : eventData?.theme === "Masters"
+                            ? "Contest Rules"
+                            : "Official Guidelines"}
+                      </span>
                     </div>
-                  )}
+                    <h3
+                      className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
+                    >
+                      Contest Rules
+                    </h3>
+                  </div>
 
-                  {/* Long Drive Rules */}
-                  {longestDriveGroups.length > 0 && (
-                    <div className="bg-white rounded-2xl p-6 border-2 border-orange-200 shadow-sm">
-                      <div className="flex items-center space-x-3 mb-6">
-                        <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                          <Zap className="h-6 w-6 text-orange-600" />
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Closest to Pin Rules */}
+                    {closestToPinGroups.length > 0 && (
+                      <div
+                        className={`${eventData?.theme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border-2 border-green-200 shadow-sm"}`}
+                      >
+                        <div className="flex items-center space-x-3 mb-6">
+                          <div
+                            className={`w-12 h-12 ${eventData?.theme === "Masters" ? "bg-yellow-600" : "bg-green-100"} ${eventData?.theme === "Masters" ? "rounded-lg" : "rounded-full"} flex items-center justify-center`}
+                          >
+                            <Crosshair
+                              className={`h-6 w-6 ${eventData?.theme === "Masters" ? "text-white" : "text-green-600"}`}
+                            />
+                          </div>
+                          <div>
+                            <h4
+                              className={`text-xl font-bold ${eventData?.theme === "Masters" ? "text-green-900 font-serif" : "text-green-900"}`}
+                            >
+                              Closest to the Pin
+                            </h4>
+                            {closestToPinPrize > 0 && (
+                              <p
+                                className={`text-sm ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-green-600"}`}
+                              >
+                                ${closestToPinPrize} per hole
+                              </p>
+                            )}
+                          </div>
                         </div>
-                        <div>
-                          <h4 className="text-xl font-bold text-orange-900">
-                            Long Drive
-                          </h4>
-                          {longestDrivePrize > 0 && (
-                            <p className="text-sm text-orange-600">
-                              ${longestDrivePrize} per hole
-                            </p>
-                          )}
-                        </div>
-                      </div>
 
-                      <div className="space-y-4">
-                        <div className="bg-orange-50 rounded-lg p-4">
-                          <h5 className="font-semibold text-orange-900 text-sm mb-3">
+                        <div
+                          className={`${eventData?.theme === "Masters" ? "bg-green-50/30 border border-green-800/20" : "bg-green-50"} rounded-lg p-4`}
+                        >
+                          <h5
+                            className={`font-semibold text-green-900 text-sm mb-3 ${eventData?.theme === "Masters" ? "font-serif" : ""}`}
+                          >
                             Rules
                           </h5>
-                          <ul className="text-sm text-orange-700 space-y-2">
+                          <ul
+                            className={`text-sm text-green-700 space-y-2 ${eventData?.theme === "Masters" ? "font-serif" : ""}`}
+                          >
                             <li>
-                              • Must be <strong>IN THE FAIRWAY</strong> to win
+                              • Must be <strong>ON THE GREEN</strong> to win
                             </li>
                             <li>
-                              • Winner = shortest distance to flag from approach
+                              • Ties carry over to next Par 3 ($20, $30, etc.)
                             </li>
-                            <li>• Placement beats pure distance</li>
-                            <li>• Measured to the yard for ties</li>
+                            <li>• Ball must come to rest on putting surface</li>
+                            <li>
+                              <span className="inline-flex items-center space-x-1">
+                                <span role="img" aria-label="trophy">
+                                  🏆
+                                </span>
+                                <span>Winner takes the full prize amount</span>
+                              </span>
+                            </li>
                           </ul>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
+                    )}
 
-                {/* Administration Guidelines */}
-                <div className="mt-8 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-                  <div className="flex items-start space-x-3">
-                    <Flag className="h-5 w-5 text-slate-600 mt-0.5" />
-                    <div>
-                      <div className="font-semibold text-slate-900 mb-3">
-                        Contest Administration
+                    {/* Long Drive Rules */}
+                    {longestDriveGroups.length > 0 && (
+                      <div className="bg-white rounded-2xl p-6 border-2 border-orange-200 shadow-sm">
+                        <div className="flex items-center space-x-3 mb-6">
+                          <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                            <Zap className="h-6 w-6 text-orange-600" />
+                          </div>
+                          <div>
+                            <h4 className="text-xl font-bold text-orange-900">
+                              Long Drive
+                            </h4>
+                            {longestDrivePrize > 0 && (
+                              <p className="text-sm text-orange-600">
+                                ${longestDrivePrize} per hole
+                              </p>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <div className="bg-orange-50 rounded-lg p-4">
+                            <h5 className="font-semibold text-orange-900 text-sm mb-3">
+                              Rules
+                            </h5>
+                            <ul className="text-sm text-orange-700 space-y-2">
+                              <li>
+                                • Must be <strong>IN THE FAIRWAY</strong> to win
+                              </li>
+                              <li>
+                                • Winner = shortest distance to flag from
+                                approach
+                              </li>
+                              <li>• Placement beats pure distance</li>
+                              <li>• Measured to the yard for ties</li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                      <ul className="text-sm text-slate-700 space-y-2">
-                        <li>
-                          • All measurements are final when agreed upon by the
-                          group
-                        </li>
-                        <li>
-                          • In case of disputes, tournament organizer has final
-                          say
-                        </li>
-                        <li>��� Prizes paid out after round completion</li>
-                        <li>�� Have fun and play with integrity!</li>
-                      </ul>
+                    )}
+                  </div>
+
+                  {/* Administration Guidelines */}
+                  <div className="mt-8 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <div className="flex items-start space-x-3">
+                      <Flag className="h-5 w-5 text-slate-600 mt-0.5" />
+                      <div>
+                        <div className="font-semibold text-slate-900 mb-3">
+                          Contest Administration
+                        </div>
+                        <ul className="text-sm text-slate-700 space-y-2">
+                          <li>
+                            • All measurements are final when agreed upon by the
+                            group
+                          </li>
+                          <li>
+                            • In case of disputes, tournament organizer has
+                            final say
+                          </li>
+                          <li>��� Prizes paid out after round completion</li>
+                          <li>�� Have fun and play with integrity!</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </section>
       )}
@@ -2641,7 +2784,11 @@ export default function PublicEventHome() {
                   <span
                     className={`${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-blue-800"}`}
                   >
-                    {eventData?.theme === "TourTech" ? "TRAVEL" : eventData?.theme === "Masters" ? "Travel" : "Logistics"}
+                    {eventData?.theme === "TourTech"
+                      ? "TRAVEL"
+                      : eventData?.theme === "Masters"
+                        ? "Travel"
+                        : "Logistics"}
                   </span>
                 </div>
 
