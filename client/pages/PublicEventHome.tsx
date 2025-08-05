@@ -1302,7 +1302,10 @@ export default function PublicEventHome() {
   }
 
   // Get theme styling
+  console.log("🎨 Theme Application - Event data theme:", eventData?.theme);
   const theme = getThemeStyles(eventData?.theme);
+  console.log("🎨 Theme Application - Applied theme styles:", theme);
+  console.log("🎨 Theme Application - Hero container class:", theme.heroContainer);
 
   return (
     <div className={`min-h-screen ${theme.heroContainer}`}>
