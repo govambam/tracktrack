@@ -655,7 +655,10 @@ export default function DraftModePublicEventHome({
   }
 
   // Get theme styling
+  console.log("🎨 Draft Mode Theme Application - Event data theme:", eventData?.theme);
   const theme = getThemeStyles(eventData?.theme);
+  console.log("🎨 Draft Mode Theme Application - Applied theme styles:", theme);
+  console.log("🎨 Draft Mode Theme Application - Hero container class:", theme.heroContainer);
 
   return (
     <TooltipProvider>
