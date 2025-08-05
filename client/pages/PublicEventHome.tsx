@@ -2198,7 +2198,7 @@ export default function PublicEventHome() {
                   {getContestsByRound().map((round, index) => (
                     <div
                       key={index}
-                      className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
+                      className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : eventData?.theme === "Masters" ? "bg-green-50/30 rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
                     >
                       <h4 className="text-xl font-bold text-indigo-900 mb-4">
                         Round {round.roundNumber} ({round.courseName})
