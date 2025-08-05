@@ -836,7 +836,17 @@ const AnimatedPlayerCard = ({
   );
 };
 
-const AnimatedPrizeCard = ({ prize, index }: { prize: any; index: number }) => {
+const AnimatedPrizeCard = ({
+  prize,
+  index,
+  theme,
+  isTourTech = false
+}: {
+  prize: any;
+  index: number;
+  theme: any;
+  isTourTech?: boolean;
+}) => {
   const { isVisible, elementRef } = useScrollAnimation();
 
   return (
