@@ -1512,33 +1512,36 @@ export default function PublicEventHome() {
 
       {/* Scoring Format Section */}
       {rounds.length > 0 && (
-        <section id="scoring" className="py-28 px-6 sm:px-8 lg:px-12 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-slate-50/30"></div>
-          <div className="relative max-w-6xl mx-auto">
-            <div className="text-center mb-20">
-              <div className="inline-flex items-center space-x-2 bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
-                <Target className="h-4 w-4 text-blue-600" />
-                <span className="text-sm font-medium text-blue-800">
-                  Competition Rules
+        <section id="scoring" className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative"} ${theme.sectionPadding} ${theme.containerPadding}`}>
+          {/* Background decoration - only for GolfOS */}
+          {eventData?.theme !== "TourTech" && (
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-slate-50/30"></div>
+          )}
+          <div className={`relative ${theme.maxContentWidth} mx-auto`}>
+            <div className={`text-center ${theme.headerSpacing}`}>
+              <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}>
+                <Target className={`h-3.5 w-3.5 ${theme.accentColor}`} />
+                <span className={`${eventData?.theme === "TourTech" ? theme.tableHeader : "text-sm font-medium text-blue-800"}`}>
+                  {eventData?.theme === "TourTech" ? "SCORING" : "Competition Rules"}
                 </span>
               </div>
 
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
+              <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
                 Scoring Format
               </h2>
 
-              <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl mx-auto mb-16">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Target className="h-8 w-8 text-green-600" />
+              <div className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth} mx-auto mb-8`}>
+                <div className={`w-12 h-12 ${eventData?.theme === "TourTech" ? theme.accentBackground : "bg-gradient-to-br from-green-100 to-emerald-200"} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-4`}>
+                  <Target className={`h-5 w-5 ${eventData?.theme === "TourTech" ? "text-white" : "text-green-600"}`} />
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
+                <h3 className={`${theme.cardTitle} mb-2`}>
                   {getScoringFormat()}
                 </h3>
-                <p className="text-lg text-slate-600 leading-relaxed font-light">
+                <p className={`${theme.cardText} leading-relaxed`}>
                   {getScoringFormat().includes("Stableford")
-                    ? "Modified Stableford scoring system with preset competition and a team scramble format for added excitement."
-                    : "Traditional stroke play format where every shot counts. Lowest total score wins the championship."}
+                    ? "Modified Stableford scoring system with preset competition and team scramble format."
+                    : "Traditional stroke play format where every shot counts. Lowest total score wins."}
                 </p>
               </div>
             </div>
