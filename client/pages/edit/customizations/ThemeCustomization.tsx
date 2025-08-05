@@ -105,8 +105,8 @@ export default function ThemeCustomization() {
       }
 
       toast({
-        title: "Theme Saved",
-        description: `${selectedTheme} theme has been applied to your event`,
+        title: "Public Site Theme Saved",
+        description: `${selectedTheme} theme has been applied to your public event website`,
       });
     } catch (error) {
       console.error("Error saving theme:", error);
