@@ -111,6 +111,10 @@ const App = () => (
                     path="customizations/travel"
                     element={<TravelCustomization />}
                   />
+                  <Route
+                    path="customizations/theme"
+                    element={<ThemeCustomization />}
+                  />
                   <Route path="debug" element={<TestCourseSync />} />
                   <Route path="settings" element={<SettingsEdit />} />
                   <Route index element={<BasicInfoEdit />} />{" "}
