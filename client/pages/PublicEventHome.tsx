@@ -2302,28 +2302,28 @@ export default function PublicEventHome() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Closest to Pin Rules */}
                   {closestToPinGroups.length > 0 && (
-                    <div className="bg-white rounded-2xl p-6 border-2 border-green-200 shadow-sm">
+                    <div className={`${eventData?.theme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border-2 border-green-200 shadow-sm"}`}>
                       <div className="flex items-center space-x-3 mb-6">
-                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                          <Crosshair className="h-6 w-6 text-green-600" />
+                        <div className={`w-12 h-12 ${eventData?.theme === "Masters" ? "bg-yellow-600" : "bg-green-100"} ${eventData?.theme === "Masters" ? "rounded-lg" : "rounded-full"} flex items-center justify-center`}>
+                          <Crosshair className={`h-6 w-6 ${eventData?.theme === "Masters" ? "text-white" : "text-green-600"}`} />
                         </div>
                         <div>
-                          <h4 className="text-xl font-bold text-green-900">
+                          <h4 className={`text-xl font-bold ${eventData?.theme === "Masters" ? "text-green-900 font-serif" : "text-green-900"}`}>
                             Closest to the Pin
                           </h4>
                           {closestToPinPrize > 0 && (
-                            <p className="text-sm text-green-600">
+                            <p className={`text-sm ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-green-600"}`}>
                               ${closestToPinPrize} per hole
                             </p>
                           )}
                         </div>
                       </div>
 
-                      <div className="bg-green-50 rounded-lg p-4">
-                        <h5 className="font-semibold text-green-900 text-sm mb-3">
+                      <div className={`${eventData?.theme === "Masters" ? "bg-green-50/30 border border-green-800/20" : "bg-green-50"} rounded-lg p-4`}>
+                        <h5 className={`font-semibold text-green-900 text-sm mb-3 ${eventData?.theme === "Masters" ? "font-serif" : ""}`}>
                           Rules
                         </h5>
-                        <ul className="text-sm text-green-700 space-y-2">
+                        <ul className={`text-sm text-green-700 space-y-2 ${eventData?.theme === "Masters" ? "font-serif" : ""}`}>
                           <li>
                             • Must be <strong>ON THE GREEN</strong> to win
                           </li>
@@ -2400,7 +2400,7 @@ export default function PublicEventHome() {
                           say
                         </li>
                         <li>��� Prizes paid out after round completion</li>
-                        <li>• Have fun and play with integrity!</li>
+                        <li>�� Have fun and play with integrity!</li>
                       </ul>
                     </div>
                   </div>
