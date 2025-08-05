@@ -685,7 +685,7 @@ const AnimatedCourseCard = ({
       onMouseLeave={() => setShowSeeMore(false)}
     >
       <div
-        className={`${isTourTech ? `${theme.cardBackground} border border-gray-300 ${theme.cardShadow}` : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3"} ${isTourTech ? "rounded-lg" : "rounded-3xl"} overflow-hidden transition-all duration-500 ${hasDescription ? "min-h-[500px]" : ""}`}
+        className={`${isTourTech ? `${theme.cardBackground} border border-gray-300 ${theme.cardShadow}` : isMasters ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3"} ${isTourTech ? "rounded-lg" : isMasters ? theme.roundedCorners : "rounded-3xl"} overflow-hidden transition-all duration-500 ${hasDescription ? "min-h-[500px]" : ""}`}
       >
         {course.image_url && (
           <div className="h-56 overflow-hidden">
