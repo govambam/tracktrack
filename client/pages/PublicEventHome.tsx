@@ -1558,24 +1558,22 @@ export default function PublicEventHome() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                   {getStablefordPoints().map((scoring, index) => {
                     const IconComponent = scoring.icon;
                     return (
                       <div
                         key={scoring.score}
-                        className={`${scoring.bgColor} border-2 border-opacity-20 rounded-3xl p-6 shadow-xl shadow-slate-200/50 hover:scale-105 transition-transform duration-200`}
+                        className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder}` : `${scoring.bgColor} border-2 border-opacity-20`} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${eventData?.theme === "TourTech" ? theme.cardHover : "hover:scale-105 transition-transform duration-200"}`}
                       >
-                        <div className="flex items-center justify-between mb-4">
-                          <div
-                            className={`w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}
-                          >
-                            <span className="text-2xl font-bold text-white">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className={`${eventData?.theme === "TourTech" ? `w-8 h-8 ${theme.accentBackground} flex items-center justify-center ${theme.roundedCorners}` : `w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}`}>
+                            <span className={`${eventData?.theme === "TourTech" ? `${theme.scoreFont} text-sm text-white` : "text-2xl font-bold text-white"}`}>
                               {scoring.points}
                             </span>
                           </div>
                           <IconComponent
-                            className={`h-6 w-6 ${scoring.iconColor}`}
+                            className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.accentColor : scoring.iconColor}`}
                           />
                         </div>
 
@@ -1908,7 +1906,7 @@ export default function PublicEventHome() {
                               role="img"
                               aria-label="golf swing"
                             >
-                              🏌️��♂️
+                              🏌️�����️
                             </span>
                             <span className="text-sm text-orange-700 font-medium">
                               Long Drive: ${longestDrivePrize} per hole
