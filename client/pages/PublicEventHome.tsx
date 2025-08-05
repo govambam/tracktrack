@@ -1578,26 +1578,22 @@ export default function PublicEventHome() {
                         </div>
 
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <h4
-                              className={`text-lg font-bold ${scoring.textColor}`}
-                            >
-                              {scoring.score}
-                            </h4>
-                            <Badge
-                              variant="outline"
-                              className={`${scoring.textColor} border-current text-xs`}
-                            >
-                              {scoring.description}
-                            </Badge>
-                          </div>
-
-                          <p
-                            className={`text-sm ${scoring.textColor} opacity-80 leading-relaxed`}
+                          <div className="flex items-center justify-between mb-2">
+                          <h4 className={`${eventData?.theme === "TourTech" ? theme.cardTitle : `text-lg font-bold ${scoring.textColor}`}`}>
+                            {scoring.score}
+                          </h4>
+                          <Badge
+                            variant="outline"
+                            className={`${eventData?.theme === "TourTech" ? `${theme.cardText} border-slate-300` : `${scoring.textColor} border-current`} text-xs`}
                           >
-                            {scoring.detail}
-                          </p>
+                            {scoring.description}
+                          </Badge>
                         </div>
+
+                        <p className={`${eventData?.theme === "TourTech" ? theme.cardText : `text-sm ${scoring.textColor} opacity-80`} leading-relaxed`}>
+                          {scoring.detail}
+                        </p>
+                      </div>
                       </div>
                     );
                   })}
