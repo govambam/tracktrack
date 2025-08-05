@@ -862,12 +862,12 @@ const AnimatedPrizeCard = ({
               : "delay-300"
       } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
     >
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 text-center border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3 transition-all duration-300 group-hover:bg-white h-80 flex flex-col">
-        <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-          <Trophy className="h-10 w-10 text-amber-600" />
+      <div className={`${isTourTech ? `${theme.cardBackground} ${theme.cardBorder} ${theme.cardShadow} ${theme.cardHover}` : "bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 hover:-translate-y-3"} ${isTourTech ? theme.roundedCorners : "rounded-3xl"} ${isTourTech ? theme.cardPadding : "p-8"} text-center transition-all duration-300 group-hover:bg-white h-80 flex flex-col`}>
+        <div className={`${isTourTech ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-4` : "w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300"}`}>
+          <Trophy className={`${isTourTech ? "h-6 w-6 text-white" : "h-10 w-10 text-amber-600"}`} />
         </div>
 
-        <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-amber-700 transition-colors min-h-[3.5rem] flex items-center justify-center">
+        <h3 className={`${isTourTech ? theme.cardTitle : "text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors"} mb-4 min-h-[3.5rem] flex items-center justify-center`}>
           {prize.category
             .replace(/_/g, " ")
             .replace(/\b\w/g, (l) => l.toUpperCase())}
