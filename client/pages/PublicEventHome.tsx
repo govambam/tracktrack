@@ -1798,15 +1798,15 @@ export default function PublicEventHome() {
                 className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : eventData?.theme === "Masters" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl"} mx-auto mb-${eventData?.theme === "TourTech" ? "8" : eventData?.theme === "Masters" ? "8" : "16"}`}
               >
                 <div
-                  className={`${eventData?.theme === "TourTech" ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners}` : "w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl"} flex items-center justify-center mx-auto mb-${eventData?.theme === "TourTech" ? "4" : "6"}`}
+                  className={`${eventData?.theme === "TourTech" ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners}` : eventData?.theme === "Masters" ? "w-12 h-12 bg-yellow-600 rounded-lg" : "w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl"} flex items-center justify-center mx-auto mb-${eventData?.theme === "TourTech" ? "4" : eventData?.theme === "Masters" ? "4" : "6"}`}
                 >
                   <Target
-                    className={`${eventData?.theme === "TourTech" ? "h-5 w-5 text-white" : "h-8 w-8 text-green-600"}`}
+                    className={`${eventData?.theme === "TourTech" ? "h-5 w-5 text-white" : eventData?.theme === "Masters" ? "h-5 w-5 text-white" : "h-8 w-8 text-green-600"}`}
                   />
                 </div>
 
                 <h3
-                  className={`${eventData?.theme === "TourTech" ? theme.cardTitle : "text-2xl sm:text-3xl font-bold text-slate-900"} mb-${eventData?.theme === "TourTech" ? "2" : "4"}`}
+                  className={`${eventData?.theme === "TourTech" ? theme.cardTitle : eventData?.theme === "Masters" ? theme.cardTitle : "text-2xl sm:text-3xl font-bold text-slate-900"} mb-${eventData?.theme === "TourTech" ? "2" : eventData?.theme === "Masters" ? "3" : "4"}`}
                 >
                   {getScoringFormat()}
                 </h3>
