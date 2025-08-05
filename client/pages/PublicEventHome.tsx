@@ -2207,7 +2207,7 @@ export default function PublicEventHome() {
                         {round.contests.map((contest, contestIndex) => (
                           <div
                             key={contestIndex}
-                            className="flex items-center space-x-2 bg-indigo-50 rounded-lg px-3 py-2"
+                            className={`flex items-center space-x-2 ${eventData?.theme === "Masters" ? "bg-white border border-yellow-600/30" : "bg-indigo-50"} rounded-lg px-3 py-2`}
                           >
                             <span
                               className="text-lg"
@@ -2245,7 +2245,7 @@ export default function PublicEventHome() {
                               role="img"
                               aria-label="target"
                             >
-                              ������
+                              ����
                             </span>
                             <span className="text-sm text-green-700 font-medium">
                               Closest to Pin: ${closestToPinPrize} per hole
