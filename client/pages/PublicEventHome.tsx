@@ -2162,7 +2162,7 @@ export default function PublicEventHome() {
         )}
 
       {/* Footer */}
-      <footer className={`relative ${eventData?.theme === "TourTech" ? "py-12 px-6 sm:px-8 lg:px-12 bg-gray-50 border-t border-gray-200" : "py-20 px-6 sm:px-8 lg:px-12 overflow-hidden"}`}>
+      <footer className={`relative ${eventData?.theme === "TourTech" ? "pt-16 pb-12 px-6 sm:px-8 lg:px-12 bg-gray-50 border-t border-gray-200 mt-12" : "py-20 px-6 sm:px-8 lg:px-12 overflow-hidden"}`}>
         {/* Background decoration - only for GolfOS */}
         {eventData?.theme !== "TourTech" && (
           <>
