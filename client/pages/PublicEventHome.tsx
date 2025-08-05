@@ -999,11 +999,13 @@ const AnimatedTravelCard = ({
   index,
   theme,
   isTourTech = false,
+  isMasters = false,
 }: {
   item: any;
   index: number;
   theme: any;
   isTourTech?: boolean;
+  isMasters?: boolean;
 }) => {
   const { isVisible, elementRef } = useScrollAnimation();
   const colorClasses = {
@@ -2245,7 +2247,7 @@ export default function PublicEventHome() {
                               role="img"
                               aria-label="target"
                             >
-                              ����
+                              ������
                             </span>
                             <span className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-green-700"}`}>
                               Closest to Pin: ${closestToPinPrize} per hole
