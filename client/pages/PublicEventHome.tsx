@@ -2098,7 +2098,7 @@ export default function PublicEventHome() {
           travel.daily_schedule) && (
           <section
           id="travel"
-          className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative overflow-hidden"} ${theme.sectionPadding} ${theme.containerPadding}`}
+          className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} pt-16 pb-8` : "relative overflow-hidden"} ${eventData?.theme === "TourTech" ? "" : theme.sectionPadding} ${theme.containerPadding}`}
         >
           {/* Background decoration - only for GolfOS */}
           {eventData?.theme !== "TourTech" && (
