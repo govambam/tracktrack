@@ -1548,12 +1548,12 @@ export default function PublicEventHome() {
 
             {/* Enhanced Stableford Points System */}
             {getScoringFormat().includes("Stableford") && (
-              <div className="mb-20">
-                <div className="text-center mb-12">
-                  <h3 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+              <div className="mb-8">
+                <div className={`text-center ${theme.headerSpacing}`}>
+                  <h3 className={`${theme.sectionTitle} mb-2`}>
                     Point Values
                   </h3>
-                  <p className="text-xl text-slate-600 font-light">
+                  <p className={`${theme.cardText}`}>
                     Points awarded based on performance relative to par
                   </p>
                 </div>
