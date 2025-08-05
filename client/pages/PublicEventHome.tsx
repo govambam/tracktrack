@@ -1775,25 +1775,27 @@ export default function PublicEventHome() {
                 className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg px-4 py-2 shadow-sm" : "bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${eventData?.theme === "TourTech" ? "4" : eventData?.theme === "Masters" ? "4" : "8"}`}
               >
                 <Target
-                  className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.accentColor : "text-blue-600"}`}
+                  className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.accentColor : eventData?.theme === "Masters" ? "text-yellow-600" : "text-blue-600"}`}
                 />
                 <span
-                  className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.tableHeader : "text-blue-800"}`}
+                  className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.tableHeader : eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-blue-800"}`}
                 >
                   {eventData?.theme === "TourTech"
                     ? "SCORING"
-                    : "Competition Rules"}
+                    : eventData?.theme === "Masters"
+                      ? "Competition Rules"
+                      : "Competition Rules"}
                 </span>
               </div>
 
               <h2
-                className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : "8"}`}
+                className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : eventData?.theme === "Masters" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : eventData?.theme === "Masters" ? theme.headerSpacing : "8"}`}
               >
                 Scoring Format
               </h2>
 
               <div
-                className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl"} mx-auto mb-${eventData?.theme === "TourTech" ? "8" : "16"}`}
+                className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : eventData?.theme === "Masters" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl"} mx-auto mb-${eventData?.theme === "TourTech" ? "8" : eventData?.theme === "Masters" ? "8" : "16"}`}
               >
                 <div
                   className={`${eventData?.theme === "TourTech" ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners}` : "w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl"} flex items-center justify-center mx-auto mb-${eventData?.theme === "TourTech" ? "4" : "6"}`}
