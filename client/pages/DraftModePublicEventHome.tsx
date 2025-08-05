@@ -48,6 +48,72 @@ import {
   Flag,
 } from "lucide-react";
 
+// Theme utility function
+const getThemeStyles = (theme: string = "GolfOS") => {
+  if (theme === "TourTech") {
+    return {
+      // Container styles
+      heroContainer: "bg-white",
+      heroGradient: "bg-gradient-to-b from-slate-50 to-white",
+      cardBackground: "bg-white border-slate-200",
+      sectionBackground: "bg-slate-50",
+
+      // Typography
+      heroTitle: "text-slate-900 font-bold tracking-tight",
+      heroSubtitle: "text-slate-600 font-medium",
+      sectionTitle: "text-slate-900 font-bold tracking-tight",
+      cardTitle: "text-slate-900 font-semibold",
+      cardText: "text-slate-600",
+
+      // Buttons and accents
+      primaryButton: "bg-green-600 hover:bg-green-700 text-white border-0",
+      accentColor: "text-green-600",
+      accentBackground: "bg-green-600",
+
+      // Borders and shadows
+      cardBorder: "border border-slate-200",
+      cardShadow: "shadow-sm hover:shadow-md",
+      roundedCorners: "rounded-lg",
+
+      // Spacing
+      containerPadding: "px-6 sm:px-8 lg:px-12",
+      sectionPadding: "py-16",
+      cardPadding: "p-6",
+    };
+  }
+
+  // Default GolfOS theme
+  return {
+    // Container styles
+    heroContainer: "bg-gradient-to-br from-green-50 via-white to-emerald-50",
+    heroGradient: "bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20",
+    cardBackground: "bg-white/90 backdrop-blur-sm",
+    sectionBackground: "bg-gradient-to-br from-green-50/30 via-white to-emerald-50/20",
+
+    // Typography
+    heroTitle: "text-slate-900 font-bold tracking-tight",
+    heroSubtitle: "text-slate-600",
+    sectionTitle: "text-slate-900 font-bold tracking-tight",
+    cardTitle: "text-slate-900 font-bold",
+    cardText: "text-slate-600",
+
+    // Buttons and accents
+    primaryButton: "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white border-0",
+    accentColor: "text-green-600",
+    accentBackground: "bg-green-600",
+
+    // Borders and shadows
+    cardBorder: "border border-slate-200/50",
+    cardShadow: "shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-300/50",
+    roundedCorners: "rounded-3xl",
+
+    // Spacing
+    containerPadding: "px-6 sm:px-8 lg:px-12",
+    sectionPadding: "py-28",
+    cardPadding: "p-8",
+  };
+};
+
 interface DraftModeProps {
   localChanges: any;
   updateLocalChanges: (path: string, value: any) => void;
