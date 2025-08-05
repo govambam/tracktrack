@@ -201,11 +201,11 @@ const getThemeStyles = (theme: string = "GolfOS") => {
       accentColor: "text-yellow-600",
       accentBackground: "bg-yellow-600",
 
-      // Borders & Shadows - Elegant with gold accents
+      // Borders & Shadows - Elegant with gold accents, refined for Fore the Boy style
       cardBorder: "border border-green-800/20",
       cardShadow: "shadow-sm hover:shadow-lg hover:shadow-green-900/10",
-      cardHover: "hover:border-yellow-600 hover:scale-105 transition-all duration-300",
-      roundedCorners: "rounded-lg",
+      cardHover: "hover:border-yellow-600 hover:scale-[1.02] hover:shadow-lg transition-all duration-300",
+      roundedCorners: "rounded-xl",
 
       // Spacing - Generous, refined to match Fore the Boy
       containerPadding: "px-6 sm:px-8 lg:px-16 xl:px-20",
