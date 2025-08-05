@@ -1651,7 +1651,7 @@ export default function PublicEventHome() {
       {courses.length > 0 && (
         <section
           id="courses"
-          className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : "py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"}`}
+          className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : eventData?.theme === "Masters" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding} relative overflow-hidden` : "py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"}`}
         >
           {/* Background decoration */}
           {eventData?.theme === "TourTech" ? null : (
