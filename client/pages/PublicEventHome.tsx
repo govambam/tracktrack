@@ -1396,8 +1396,8 @@ export default function PublicEventHome() {
                   { label: "Duration", value: getDuration(eventData.start_date, eventData.end_date) },
                 ].map((stat, index) => (
                   <div key={index} className="text-center py-3">
-                    <div className="font-mono text-xl font-semibold text-slate-900">{stat.value}</div>
-                    <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">{stat.label}</div>
+                    <div className="font-mono text-xl font-semibold text-orange-600">{stat.value}</div>
+                    <div className="font-mono text-xs font-medium text-slate-500 uppercase tracking-wide">{stat.label}</div>
                   </div>
                 ))}
               </div>
