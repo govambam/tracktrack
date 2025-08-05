@@ -2288,7 +2288,7 @@ export default function PublicEventHome() {
 
                       <div className="mt-4">
 
-                        <ul className="text-sm text-green-700 space-y-2 font-serif">
+                        <ul className="text-sm text-green-800 space-y-1 font-serif">
                           <li>• Must hit on the green to win</li>
                           <li>��� Measured to the inch for ties</li>
                           <li>• Multiple opportunities to win</li>
@@ -2318,7 +2318,7 @@ export default function PublicEventHome() {
 
                       <div className="mt-4">
 
-                        <ul className="text-sm text-green-700 space-y-2 font-serif">
+                        <ul className="text-sm text-green-800 space-y-1 font-serif">
                           <li>• Must hit in fairway to win</li>
                           <li>• Winner has shortest approach to flag</li>
                           <li>• Ties carry over to next Par 5 ($20, $30, etc.)</li>
