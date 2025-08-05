@@ -644,6 +644,7 @@ const AnimatedCourseCard = ({
   onOpenModal,
   theme,
   isTourTech = false,
+  isMasters = false,
 }: {
   course: any;
   round: any;
@@ -651,6 +652,7 @@ const AnimatedCourseCard = ({
   onOpenModal: () => void;
   theme: any;
   isTourTech?: boolean;
+  isMasters?: boolean;
 }) => {
   const { isVisible, elementRef } = useScrollAnimation();
   const [showSeeMore, setShowSeeMore] = useState(false);
