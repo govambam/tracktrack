@@ -1328,13 +1328,13 @@ export default function PublicEventHome() {
       <StickyNavigation eventName={eventData.name} slug={slug!} />
 
       {/* Hero Section */}
-      <section id="overview" className={`${theme.heroContainer} border-b border-slate-200`}>
-        <div className={`${theme.maxContentWidth} mx-auto ${theme.containerPadding} ${theme.sectionPadding}`}>
-          <div className="space-y-6">
-            {/* Event Badge */}
-            <div className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}`}>
-              <Calendar className={`h-3.5 w-3.5 ${theme.accentColor}`} />
-              <span className={`text-xs font-medium ${theme.accentColor} uppercase tracking-wide`}>
+      <section id="overview" className={`${eventData?.theme === "TourTech" ? "bg-white border-b border-slate-200" : theme.heroContainer}`}>
+        <div className={`${theme.maxContentWidth} mx-auto ${theme.containerPadding} ${eventData?.theme === "TourTech" ? "pt-6 pb-8" : theme.sectionPadding}`}>
+          <div className={`space-y-${eventData?.theme === "TourTech" ? "4" : "6"}`}>
+            {/* Event Badge - Tour Tech: smaller pill, neutral styling */}
+            <div className={`inline-flex items-center gap-2 ${eventData?.theme === "TourTech" ? "bg-gray-100 border border-gray-300 text-gray-700" : `${theme.cardBackground} ${theme.cardBorder} ${theme.accentColor}`} ${theme.roundedCorners} px-3 py-1.5 ${eventData?.theme === "TourTech" ? "shadow-none" : theme.cardShadow}`}>
+              <Calendar className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? "text-gray-500" : theme.accentColor}`} />
+              <span className={`text-xs font-medium ${eventData?.theme === "TourTech" ? "text-gray-700 normal-case tracking-normal" : `${theme.accentColor} uppercase tracking-wide`}`}>
                 {formatDateRange(eventData.start_date, eventData.end_date)}
               </span>
             </div>
@@ -1351,18 +1351,18 @@ export default function PublicEventHome() {
               )}
             </div>
 
-            {/* Action Buttons */}
+            {/* Action Buttons - Tour Tech: neutral styling */}
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <a
                 href="#courses"
-                className={`${theme.primaryButton} px-6 py-2.5 ${theme.roundedCorners} inline-flex items-center gap-2 text-sm ${theme.cardShadow} ${theme.cardHover}`}
+                className={`${eventData?.theme === "TourTech" ? "bg-slate-800 hover:bg-slate-900 text-white" : theme.primaryButton} px-6 py-2.5 ${theme.roundedCorners} inline-flex items-center gap-2 text-sm font-medium transition-colors ${eventData?.theme === "TourTech" ? "shadow-sm" : `${theme.cardShadow} ${theme.cardHover}`}`}
               >
                 <span>View Courses</span>
                 <ChevronRight className="h-4 w-4" />
               </a>
               <a
                 href="#players"
-                className={`${theme.secondaryButton} px-6 py-2.5 ${theme.roundedCorners} inline-flex items-center gap-2 text-sm ${theme.cardShadow} ${theme.cardHover}`}
+                className={`${eventData?.theme === "TourTech" ? "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50" : theme.secondaryButton} px-6 py-2.5 ${theme.roundedCorners} inline-flex items-center gap-2 text-sm font-medium transition-colors ${eventData?.theme === "TourTech" ? "shadow-sm" : `${theme.cardShadow} ${theme.cardHover}`}`}
               >
                 <span>View Players</span>
                 <Users className="h-4 w-4" />
@@ -1611,7 +1611,7 @@ export default function PublicEventHome() {
                         Why Stableford?
                       </div>
                       <ul className="text-sm text-emerald-700 space-y-1">
-                        <li>• Encourages aggressive, exciting play</li>
+                        <li>��� Encourages aggressive, exciting play</li>
                         <li>
                           • Keeps all players engaged throughout the round
                         </li>
