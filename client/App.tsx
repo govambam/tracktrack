@@ -35,6 +35,7 @@ import CoursesCustomization from "./pages/edit/customizations/CoursesCustomizati
 import RulesCustomization from "./pages/edit/customizations/RulesCustomization";
 import LeaderboardCustomization from "./pages/edit/customizations/LeaderboardCustomization";
 import TravelCustomization from "./pages/edit/customizations/TravelCustomization";
+import ThemeCustomization from "./pages/edit/customizations/ThemeCustomization";
 import TestCourseSync from "./pages/edit/TestCourseSync";
 import SettingsEdit from "./pages/edit/SettingsEdit";
 import PublicEventHome from "./pages/PublicEventHome";
