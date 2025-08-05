@@ -993,9 +993,6 @@ export default function PublicEventHome() {
       }
 
       setEventData(event);
-      console.log("🎨 Theme Debug - Loaded event data:", event);
-      console.log("🎨 Theme Debug - Event theme value:", event?.theme);
-      console.log("🎨 Theme Debug - Theme type:", typeof event?.theme);
 
       // Load all related data in parallel
       const [
