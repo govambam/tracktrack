@@ -56,6 +56,16 @@
 
     --radius: 0.5rem;
 
+    /* Masters Theme Colors */
+    --masters-green: 140 35% 25%;
+    --masters-green-deep: 140 45% 15%;
+    --masters-green-light: 142 35% 38%;
+    --masters-gold: 43 74% 49%;
+    --masters-gold-light: 43 84% 65%;
+    --masters-gold-accent: 43 94% 55%;
+    --masters-cream: 43 25% 95%;
+    --masters-bronze: 25 55% 45%;
+
     --sidebar-background: 0 0% 98%;
 
     --sidebar-foreground: 240 5.3% 26.1%;
