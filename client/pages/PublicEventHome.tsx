@@ -1940,7 +1940,7 @@ export default function PublicEventHome() {
                       className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow}` : eventData?.theme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"}`}
                     >
                       {rule.rule_title && (
-                        <h4 className="font-semibold text-slate-900 mb-3 text-lg">
+                        <h4 className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900" : "font-semibold text-slate-900"} mb-3 text-lg`}>
                           {rule.rule_title}
                         </h4>
                       )}
