@@ -1888,22 +1888,22 @@ export default function PublicEventHome() {
                 </div>
 
                 <div
-                  className={`mt-6 ${eventData?.theme === "TourTech" ? "bg-gray-50 border border-gray-200 rounded-md p-4" : "bg-emerald-50 border border-emerald-200 rounded-2xl p-6"}`}
+                  className={`mt-6 ${eventData?.theme === "TourTech" ? "bg-gray-50 border border-gray-200 rounded-md p-4" : eventData?.theme === "Masters" ? "bg-green-50/30 border border-green-800/20 rounded-lg p-6" : "bg-emerald-50 border border-emerald-200 rounded-2xl p-6"}`}
                 >
                   <div
-                    className={`${eventData?.theme === "TourTech" ? "space-y-2" : "flex items-start space-x-3"}`}
+                    className={`${eventData?.theme === "TourTech" ? "space-y-2" : eventData?.theme === "Masters" ? "flex items-start space-x-3" : "flex items-start space-x-3"}`}
                   >
                     {eventData?.theme !== "TourTech" && (
-                      <Target className="h-5 w-5 text-emerald-600 mt-0.5" />
+                      <Target className={`h-5 w-5 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-emerald-600"} mt-0.5`} />
                     )}
                     <div>
                       <div
-                        className={`${eventData?.theme === "TourTech" ? "font-semibold text-slate-900 text-sm mb-1" : "font-semibold text-emerald-900 mb-2"}`}
+                        className={`${eventData?.theme === "TourTech" ? "font-semibold text-slate-900 text-sm mb-1" : eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 mb-2" : "font-semibold text-emerald-900 mb-2"}`}
                       >
                         Why Stableford?
                       </div>
                       <ul
-                        className={`${eventData?.theme === "TourTech" ? "text-xs text-slate-600 space-y-0.5" : "text-sm text-emerald-700 space-y-1"}`}
+                        className={`${eventData?.theme === "TourTech" ? "text-xs text-slate-600 space-y-0.5" : eventData?.theme === "Masters" ? "text-sm text-green-800 space-y-1 font-serif" : "text-sm text-emerald-700 space-y-1"}`}
                       >
                         <li>��� Encourages aggressive, exciting play</li>
                         <li>
