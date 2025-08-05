@@ -2263,22 +2263,10 @@ export default function PublicEventHome() {
               </div>
             )}
 
-            {/* Contest Rules - Positioned after prizes for Masters theme to match Fore the Boy */}
+            {/* Contest Rules - Clean 2-column layout directly below prizes for Masters theme */}
             {eventData?.theme === "Masters" && (closestToPinGroups.length > 0 || longestDriveGroups.length > 0) && (
-              <div className="bg-green-50/20 rounded-xl p-8 sm:p-12 border border-green-800/20 mt-16">
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center space-x-2 bg-white border border-green-800/20 rounded-lg px-4 py-2 mb-4">
-                    <Info className="h-4 w-4 text-yellow-600" />
-                    <span className="text-sm font-medium text-green-800 font-serif tracking-wide">
-                      Contest Rules
-                    </span>
-                  </div>
-                  <h3 className="font-serif font-semibold text-green-900 text-2xl">
-                    Contest Rules
-                  </h3>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              <div className="mt-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-4xl mx-auto">
                   {/* Closest to Pin Rules */}
                   {closestToPinGroups.length > 0 && (
                     <div className="bg-white rounded-xl p-6 border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
