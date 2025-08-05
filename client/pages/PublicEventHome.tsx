@@ -2220,7 +2220,7 @@ export default function PublicEventHome() {
                             >
                               {contest.emoji}
                             </span>
-                            <span className="font-medium text-indigo-900 text-sm">
+                            <span className={`font-medium text-sm ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-indigo-900"}`}>
                               Hole {contest.hole}
                             </span>
                           </div>
