@@ -207,11 +207,11 @@ const getThemeStyles = (theme: string = "GolfOS") => {
       cardHover: "hover:border-yellow-600 hover:scale-105 transition-all duration-300",
       roundedCorners: "rounded-lg",
 
-      // Spacing - Generous, refined
-      containerPadding: "px-6 sm:px-8 lg:px-12",
-      sectionPadding: "py-20 sm:py-24",
+      // Spacing - Generous, refined to match Fore the Boy
+      containerPadding: "px-6 sm:px-8 lg:px-16 xl:px-20",
+      sectionPadding: "py-20 sm:py-24 lg:py-28",
       cardPadding: "p-6 sm:p-8",
-      headerSpacing: "mb-6",
+      headerSpacing: "mb-8",
 
       // Data Display - Elegant serif for headings, sans for data
       scoreFont: "font-serif font-semibold",
