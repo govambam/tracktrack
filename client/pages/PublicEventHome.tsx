@@ -1832,8 +1832,8 @@ export default function PublicEventHome() {
             {getScoringFormat().includes("Stableford") && (
               <div className="mb-8">
                 <div className={`text-center ${theme.headerSpacing}`}>
-                  <h3 className={`${theme.sectionTitle} mb-2`}>Point Values</h3>
-                  <p className={`${theme.cardText}`}>
+                  <h3 className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl tracking-tight" : theme.sectionTitle} mb-2`}>Point Values</h3>
+                  <p className={`${eventData?.theme === "Masters" ? "font-serif text-green-800/70" : theme.cardText}`}>
                     Points awarded based on performance relative to par
                   </p>
                 </div>
