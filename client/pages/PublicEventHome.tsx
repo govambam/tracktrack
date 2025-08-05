@@ -2076,9 +2076,9 @@ export default function PublicEventHome() {
               >
                 <Users className={`h-3.5 w-3.5 ${theme.accentColor}`} />
                 <span
-                  className={`${eventData?.theme === "TourTech" ? theme.tableHeader : "text-sm font-medium text-purple-800"}`}
+                  className={`${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-green-800"}`}
                 >
-                  {eventData?.theme === "TourTech" ? "PLAYERS" : "Competitors"}
+                  {eventData?.theme === "TourTech" ? "PLAYERS" : eventData?.theme === "Masters" ? "Competitors" : "Competitors"}
                 </span>
               </div>
 
