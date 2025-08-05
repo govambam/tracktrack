@@ -1967,7 +1967,7 @@ export default function PublicEventHome() {
 
             {/* Custom Rules Section */}
             {customRules.length > 0 && (
-              <div className={`${eventData?.theme === "Masters" ? "bg-green-50/20 rounded-lg p-8 sm:p-12 border border-green-800/20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200"}`}>
+              <div className={`${eventData?.theme === "Masters" ? "mt-16" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200"}`}>
                 <div className="text-center mb-8">
                   <div className={`inline-flex items-center space-x-2 ${eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}>
                     <FileText className={`h-4 w-4 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-600"}`} />
@@ -1984,43 +1984,43 @@ export default function PublicEventHome() {
                   {customRules.map((rule, index) => (
                     <div
                       key={rule.id}
-                      className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow}` : eventData?.theme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"}`}
+                      className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow}` : eventData?.theme === "Masters" ? "bg-white rounded-xl p-8 border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300" : "bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"}`}
                     >
                       {rule.rule_title && (
-                        <h4 className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900" : "font-semibold text-slate-900"} mb-3 text-lg`}>
+                        <h4 className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-yellow-600 text-xl" : "font-semibold text-slate-900"} mb-3 text-lg`}>
                           {rule.rule_title}
                         </h4>
                       )}
-                      <div className="text-slate-700 prose prose-sm max-w-none">
+                      <div className={`${eventData?.theme === "Masters" ? "text-green-800" : "text-slate-700"} prose prose-sm max-w-none`}>
                         <ReactMarkdown
                           components={{
                             h1: ({ children }) => (
-                              <h1 className="text-lg font-bold text-slate-800 mb-2">
+                              <h1 className={`text-lg font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-2`}>
                                 {children}
                               </h1>
                             ),
                             h2: ({ children }) => (
-                              <h2 className="text-base font-bold text-slate-800 mb-2">
+                              <h2 className={`text-base font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-2`}>
                                 {children}
                               </h2>
                             ),
                             h3: ({ children }) => (
-                              <h3 className="text-sm font-bold text-slate-800 mb-1">
+                              <h3 className={`text-sm font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-1`}>
                                 {children}
                               </h3>
                             ),
                             p: ({ children }) => (
-                              <p className="text-slate-700 mb-2 last:mb-0 leading-relaxed">
+                              <p className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} mb-2 last:mb-0 leading-relaxed`}>
                                 {children}
                               </p>
                             ),
                             ul: ({ children }) => (
-                              <ul className="text-slate-700 ml-6 mb-2 last:mb-0 list-disc">
+                              <ul className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} ml-6 mb-2 last:mb-0 list-disc`}>
                                 {children}
                               </ul>
                             ),
                             ol: ({ children }) => (
-                              <ol className="text-slate-700 ml-6 mb-2 last:mb-0 list-decimal">
+                              <ol className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} ml-6 mb-2 last:mb-0 list-decimal`}>
                                 {children}
                               </ol>
                             ),
@@ -2028,7 +2028,7 @@ export default function PublicEventHome() {
                               <li className="mb-1 last:mb-0">{children}</li>
                             ),
                             strong: ({ children }) => (
-                              <strong className="font-bold text-slate-800">
+                              <strong className={`font-bold ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-800"}`}>
                                 {children}
                               </strong>
                             ),
