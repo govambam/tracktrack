@@ -1763,6 +1763,8 @@ export default function PublicEventHome() {
                     key={player.id}
                     player={player}
                     index={index}
+                    theme={theme}
+                    isTourTech={eventData?.theme === "TourTech"}
                     onOpenModal={() => {
                       setSelectedPlayer(player);
                       setIsPlayerModalOpen(true);
