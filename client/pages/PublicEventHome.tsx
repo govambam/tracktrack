@@ -692,7 +692,7 @@ const AnimatedCourseCard = ({
             <img
               src={course.image_url}
               alt={course.name}
-              className={`w-full h-full object-cover ${isTourTech ? "" : "group-hover:scale-110 transition-transform duration-700"}`}
+              className={`w-full h-full object-cover ${isTourTech ? "" : isMasters ? "group-hover:scale-105 transition-transform duration-500" : "group-hover:scale-110 transition-transform duration-700"}`}
             />
           </div>
         )}
