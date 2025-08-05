@@ -350,9 +350,11 @@ const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
 const StickyNavigation = ({
   eventName,
   slug,
+  theme,
 }: {
   eventName: string;
   slug: string;
+  theme?: string;
 }) => {
   const navItems = [
     { name: "Overview", href: "#overview" },
