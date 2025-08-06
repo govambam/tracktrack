@@ -63,6 +63,12 @@ export function ClubhousePasswordModal({
 
       const result = await response.json();
 
+      console.log("Clubhouse password verification response:", {
+        status: response.status,
+        ok: response.ok,
+        result
+      });
+
       if (!response.ok) {
         setError(result.error || "Invalid password");
         return;
