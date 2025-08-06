@@ -415,6 +415,152 @@ Write the description:`;
     return payouts;
   };
 
+  const generateTravelInfo = async (
+    occasion: string,
+    courses: Course[],
+    dates: { start: string; end: string },
+    playerCount: number,
+  ) => {
+    const courseLocations = courses.map(c => c.location).filter(Boolean);
+    const primaryLocation = courseLocations[0] || 'your golf destination';
+    const startDate = new Date(dates.start).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+    });
+    const endDate = new Date(dates.end).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+    });
+
+    const prompt = `Create helpful travel information for a ${occasion.toLowerCase()} golf trip with these details:
+
+Event: ${occasion}
+Dates: ${startDate} to ${endDate}, ${new Date(dates.start).getFullYear()}
+Location: ${primaryLocation}
+Players: ${playerCount} golfers
+Courses: ${courses.map(c => c.name).join(', ')}
+
+Write a "Getting There" section with:
+- Travel recommendations and timing
+- Transportation options (fly, drive, charter)
+- Arrival timing suggestions
+- Practical travel tips for golf trips
+- Friendly and helpful tone
+
+Format as markdown with headers. Keep it informative but not overly long:`;
+
+    try {
+      const response = await fetch('/api/generate-description', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate travel info');
+      }
+
+      const data = await response.json();
+      return data.description.trim();
+    } catch (error) {
+      console.error('Error generating travel info:', error);
+      return `# Getting There\n\nYour golf adventure awaits! We recommend arriving at least one day before the first round to settle in and get excited for the golf ahead.\n\n## Transportation Options\n- **Fly:** Check nearby airports for the best deals\n- **Drive:** Perfect for bringing extra gear and snacks\n- **Charter:** Split the cost with the group for a fun ride`;
+    }
+  };
+
+  const generateAccommodations = async (
+    occasion: string,
+    courses: Course[],
+    dates: { start: string; end: string },
+    playerCount: number,
+  ) => {
+    const courseLocations = courses.map(c => c.location).filter(Boolean);
+    const primaryLocation = courseLocations[0] || 'your golf destination';
+
+    const prompt = `Create accommodation recommendations for a ${occasion.toLowerCase()} golf trip with these details:
+
+Event: ${occasion}
+Location: ${primaryLocation}
+Players: ${playerCount} golfers
+Courses: ${courses.map(c => c.name).join(', ')}
+
+Write a "Where to Stay" section with:
+- Types of accommodation options
+- What to look for in golf-friendly lodging
+- Group booking tips
+- Budget considerations
+- Location recommendations
+
+Format as markdown with headers. Keep it helpful and practical:`;
+
+    try {
+      const response = await fetch('/api/generate-description', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate accommodations');
+      }
+
+      const data = await response.json();
+      return data.description.trim();
+    } catch (error) {
+      console.error('Error generating accommodations:', error);
+      return `# Where to Stay\n\nWe've scouted some great accommodation options for your ${occasion.toLowerCase()}:\n\n## Recommended Hotels\n- Local golf resorts with course access\n- Hotels with group rates and amenities\n- Vacation rentals for larger groups\n\n*Specific recommendations will be shared based on your group size and preferences.*`;
+    }
+  };
+
+  const generateDailySchedule = async (
+    occasion: string,
+    courses: Course[],
+    dates: { start: string; end: string },
+    playerCount: number,
+  ) => {
+    const courseNames = courses.map(c => c.name);
+
+    const prompt = `Create a daily schedule for a ${occasion.toLowerCase()} golf trip with these details:
+
+Event: ${occasion}
+Duration: ${courses.length} days
+Players: ${playerCount} golfers
+Courses: ${courseNames.join(', ')}
+
+Write a "Daily Itinerary" section with:
+- Day-by-day breakdown for each course
+- Suggested timing for golf rounds
+- Meal and social time recommendations
+- Flexibility for weather/preferences
+- Fun and appropriate tone for ${occasion.toLowerCase()}
+
+Format as markdown with headers. Include each course as a separate day:`;
+
+    try {
+      const response = await fetch('/api/generate-description', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate daily schedule');
+      }
+
+      const data = await response.json();
+      return data.description.trim();
+    } catch (error) {
+      console.error('Error generating daily schedule:', error);
+      return `# Daily Itinerary\n\n## Day-by-Day Schedule\n\n${courseNames.map((course, index) => `**Day ${index + 1}:** ${course}\n- Morning: Arrival and check-in\n- Golf: 18 holes of championship golf\n- Evening: Group dinner and stories`).join('\n\n')}\n\n*Schedule subject to weather and group preferences. Flexibility is key to a great golf trip!*`;
+    }
+  };
+
   const generateAIContent = async () => {
     setCurrentStep("generating");
 
