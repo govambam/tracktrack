@@ -180,7 +180,7 @@ Write a "Daily Itinerary" section with:
 - Flexibility for weather/preferences
 - Fun and appropriate tone for {occasion}
 
-Format as markdown with headers. Include each course as a separate day:
+Format as markdown with headers. Include each course as a separate day. Limit response to 100 words or less:
 ```
 
 ## Error Handling & Fallbacks
