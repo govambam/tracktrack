@@ -26,6 +26,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { supabase } from "@/lib/supabase";
+import { DraftPreviewModal } from "@/components/DraftPreviewModal";
 import {
   Settings,
   Trash2,
