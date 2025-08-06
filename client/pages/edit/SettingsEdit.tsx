@@ -199,6 +199,50 @@ export default function SettingsEdit() {
       });
   };
 
+  const updateClubhousePassword = async () => {
+    if (!eventId) return;
+
+    setUpdatingClubhouse(true);
+
+    try {
+      const { error } = await supabase
+        .from("events")
+        .update({
+          clubhouse_password: clubhousePassword || null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", eventId);
+
+      if (error) {
+        console.error("Error updating clubhouse password:", error);
+        toast({
+          title: "Update Failed",
+          description: error.message || "Failed to update clubhouse password",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      await loadEventInfo();
+
+      toast({
+        title: "Clubhouse Updated",
+        description: clubhousePassword
+          ? "Clubhouse password has been set successfully"
+          : "Clubhouse password has been removed",
+      });
+    } catch (error) {
+      console.error("Error updating clubhouse password:", error);
+      toast({
+        title: "Update Failed",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setUpdatingClubhouse(false);
+    }
+  };
+
   const generateSlug = async () => {
     if (!eventId || !tripData?.tripName) return;
 
