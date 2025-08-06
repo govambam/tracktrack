@@ -291,48 +291,43 @@ export default function ScorecardEdit() {
   };
 
   const handleSave = async () => {
-    if (
-      !eventData ||
-      !round ||
-      !session ||
-      !currentPlayer ||
-      !currentEventPlayer
-    )
-      return;
+    if (!eventData || !round || !session || players.length === 0) return;
 
     setSaving(true);
     try {
-      // Save each hole score using your existing scorecards table structure
-      for (const holeScore of currentPlayer.scores) {
-        // Check if score already exists
-        const { data: existingScore } = await supabase
-          .from("scorecards")
-          .select("id")
-          .eq("event_id", eventData.id)
-          .eq("event_round_id", round.id)
-          .eq("event_player_id", currentEventPlayer.id)
-          .eq("hole_number", holeScore.hole)
-          .single();
-
-        if (existingScore) {
-          // Update existing score
-          await supabase
+      // Save all players' scores
+      for (const player of players) {
+        for (const holeScore of player.scores) {
+          // Check if score already exists
+          const { data: existingScore } = await supabase
             .from("scorecards")
-            .update({
-              strokes: holeScore.strokes,
-              updated_at: new Date().toISOString(),
-            })
-            .eq("id", existingScore.id);
-        } else {
-          // Insert new score (only if strokes > 0 to avoid empty records)
-          if (holeScore.strokes > 0) {
-            await supabase.from("scorecards").insert({
-              event_id: eventData.id,
-              event_round_id: round.id,
-              event_player_id: currentEventPlayer.id,
-              hole_number: holeScore.hole,
-              strokes: holeScore.strokes,
-            });
+            .select("id")
+            .eq("event_id", eventData.id)
+            .eq("event_round_id", round.id)
+            .eq("event_player_id", player.id)
+            .eq("hole_number", holeScore.hole)
+            .single();
+
+          if (existingScore) {
+            // Update existing score
+            await supabase
+              .from("scorecards")
+              .update({
+                strokes: holeScore.strokes,
+                updated_at: new Date().toISOString(),
+              })
+              .eq("id", existingScore.id);
+          } else {
+            // Insert new score (only if strokes > 0 to avoid empty records)
+            if (holeScore.strokes > 0) {
+              await supabase.from("scorecards").insert({
+                event_id: eventData.id,
+                event_round_id: round.id,
+                event_player_id: player.id,
+                hole_number: holeScore.hole,
+                strokes: holeScore.strokes,
+              });
+            }
           }
         }
       }
