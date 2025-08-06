@@ -37,6 +37,13 @@ interface EventData {
   location: string;
 }
 
+interface EventPlayer {
+  id: string;
+  full_name: string;
+  user_id?: string;
+  status: string;
+}
+
 interface HoleScore {
   hole: number;
   strokes: number;
@@ -46,18 +53,12 @@ interface HoleScore {
 }
 
 interface Player {
+  id: string;
   name: string;
   scores: HoleScore[];
   totalStrokes: number;
   totalPar: number;
   scoreRelativeToPar: number;
-}
-
-interface Scorecard {
-  id?: string;
-  playerId: string;
-  playerName: string;
-  scores: HoleScore[];
 }
 
 export default function ScorecardEdit() {
@@ -71,6 +72,7 @@ export default function ScorecardEdit() {
   const [courseHoles, setCourseHoles] = useState<HoleScore[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
+  const [currentEventPlayer, setCurrentEventPlayer] = useState<EventPlayer | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -144,8 +146,8 @@ export default function ScorecardEdit() {
 
       setCourseHoles(holes);
 
-      // Load existing scorecards for this round
-      await loadExistingScorecards(event.id, roundId, holes);
+      // Load event players and their scores
+      await loadEventPlayersAndScores(event.id, roundId, holes);
     } catch (error) {
       console.error("Error loading data:", error);
       setError("Failed to load scorecard data");
@@ -154,37 +156,38 @@ export default function ScorecardEdit() {
     }
   };
 
-  const loadExistingScorecards = async (
+  const loadEventPlayersAndScores = async (
     eventId: string,
     roundId: string,
     holes: HoleScore[],
   ) => {
     try {
-      // Load all scorecards for this round
-      const { data: scorecards, error: scorecardsError } = await supabase
-        .from("scorecards")
+      // Load all event players
+      const { data: eventPlayers, error: playersError } = await supabase
+        .from("event_players")
         .select("*")
         .eq("event_id", eventId)
-        .eq("round_id", roundId);
+        .eq("status", "accepted");
 
-      if (scorecardsError) {
-        console.error("Error loading scorecards:", scorecardsError);
+      if (playersError) {
+        console.error("Error loading players:", playersError);
         return;
       }
 
       const playersData: Player[] = [];
 
-      for (const scorecard of scorecards || []) {
-        // Load hole scores for this scorecard
-        const { data: holeScores } = await supabase
-          .from("hole_scores")
-          .select("*")
-          .eq("scorecard_id", scorecard.id)
-          .order("hole_number");
+      for (const eventPlayer of eventPlayers || []) {
+        // Load existing scores for this player and round
+        const { data: existingScores } = await supabase
+          .from("scorecards")
+          .select("hole_number, strokes")
+          .eq("event_id", eventId)
+          .eq("event_round_id", roundId)
+          .eq("event_player_id", eventPlayer.id);
 
         const playerHoles = holes.map((hole) => {
-          const existingScore = holeScores?.find(
-            (hs) => hs.hole_number === hole.hole,
+          const existingScore = existingScores?.find(
+            (score) => score.hole_number === hole.hole,
           );
           return {
             ...hole,
@@ -199,7 +202,8 @@ export default function ScorecardEdit() {
         const totalPar = playerHoles.reduce((sum, hole) => sum + hole.par, 0);
 
         playersData.push({
-          name: scorecard.player_name,
+          id: eventPlayer.id,
+          name: eventPlayer.full_name,
           scores: playerHoles,
           totalStrokes,
           totalPar,
@@ -209,7 +213,7 @@ export default function ScorecardEdit() {
 
       setPlayers(playersData);
     } catch (error) {
-      console.error("Error loading existing scorecards:", error);
+      console.error("Error loading players and scores:", error);
     }
   };
 
@@ -229,23 +233,40 @@ export default function ScorecardEdit() {
         const parsedSession = JSON.parse(sessionData);
         setSession(parsedSession);
 
-        // Find or create current player
-        const existingPlayer = players.find(
-          (p) => p.name === parsedSession.displayName,
-        );
-        if (existingPlayer) {
-          setCurrentPlayer(existingPlayer);
+        // Find the event_player record for this session
+        // Since clubhouse users don't have user accounts, we'll match by display name
+        const { data: eventPlayer } = await supabase
+          .from("event_players")
+          .select("*")
+          .eq("event_id", event.id)
+          .eq("full_name", parsedSession.displayName)
+          .single();
+
+        if (eventPlayer) {
+          setCurrentEventPlayer(eventPlayer);
+          
+          // Find or create current player
+          const existingPlayer = players.find((p) => p.id === eventPlayer.id);
+          if (existingPlayer) {
+            setCurrentPlayer(existingPlayer);
+          } else {
+            // Create new player with empty scores
+            const newPlayer: Player = {
+              id: eventPlayer.id,
+              name: eventPlayer.full_name,
+              scores: courseHoles.map((hole) => ({ ...hole, strokes: 0 })),
+              totalStrokes: 0,
+              totalPar: courseHoles.reduce((sum, hole) => sum + hole.par, 0),
+              scoreRelativeToPar: 0,
+            };
+            setCurrentPlayer(newPlayer);
+            setPlayers((prev) => [...prev, newPlayer]);
+          }
         } else {
-          // Create new player with empty scores
-          const newPlayer: Player = {
-            name: parsedSession.displayName,
-            scores: courseHoles.map((hole) => ({ ...hole, strokes: 0 })),
-            totalStrokes: 0,
-            totalPar: courseHoles.reduce((sum, hole) => sum + hole.par, 0),
-            scoreRelativeToPar: 0,
-          };
-          setCurrentPlayer(newPlayer);
-          setPlayers((prev) => [...prev, newPlayer]);
+          // No event player found - user needs to be added to the event first
+          setError(
+            "You are not registered as a player for this event. Please contact the event organizer.",
+          );
         }
       } catch (error) {
         console.error("Error parsing session:", error);
@@ -256,10 +277,10 @@ export default function ScorecardEdit() {
     }
   };
 
-  const updateScore = (playerName: string, holeIndex: number, change: number) => {
+  const updateScore = (playerId: string, holeIndex: number, change: number) => {
     setPlayers((prev) =>
       prev.map((player) => {
-        if (player.name !== playerName) return player;
+        if (player.id !== playerId) return player;
 
         const newScores = [...player.scores];
         const currentStrokes = newScores[holeIndex].strokes;
@@ -282,7 +303,7 @@ export default function ScorecardEdit() {
       }),
     );
 
-    if (playerName === session?.displayName) {
+    if (playerId === currentEventPlayer?.id) {
       setCurrentPlayer((prev) =>
         prev
           ? {
@@ -304,78 +325,45 @@ export default function ScorecardEdit() {
     }
   };
 
-  const setScore = (playerName: string, holeIndex: number, strokes: number) => {
-    const validStrokes = Math.max(0, Math.min(15, strokes));
-    updateScore(
-      playerName,
-      holeIndex,
-      validStrokes - players.find((p) => p.name === playerName)!.scores[holeIndex].strokes,
-    );
-  };
-
   const handleSave = async () => {
-    if (!eventData || !round || !session || !currentPlayer) return;
+    if (!eventData || !round || !session || !currentPlayer || !currentEventPlayer) return;
 
     setSaving(true);
     try {
-      // First, create or update scorecard
-      const { data: existingScorecard } = await supabase
-        .from("scorecards")
-        .select("id")
-        .eq("event_id", eventData.id)
-        .eq("round_id", round.id)
-        .eq("session_id", session.sessionId)
-        .single();
-
-      let scorecardId = existingScorecard?.id;
-
-      if (!scorecardId) {
-        // Create new scorecard
-        const { data: newScorecard, error: scorecardError } = await supabase
+      // Save each hole score using your existing scorecards table structure
+      for (const holeScore of currentPlayer.scores) {
+        // Check if score already exists
+        const { data: existingScore } = await supabase
           .from("scorecards")
-          .insert({
-            event_id: eventData.id,
-            round_id: round.id,
-            player_name: session.displayName,
-            session_id: session.sessionId,
-            total_strokes: currentPlayer.totalStrokes,
-            total_par: currentPlayer.totalPar,
-            score_relative_to_par: currentPlayer.scoreRelativeToPar,
-          })
           .select("id")
+          .eq("event_id", eventData.id)
+          .eq("event_round_id", round.id)
+          .eq("event_player_id", currentEventPlayer.id)
+          .eq("hole_number", holeScore.hole)
           .single();
 
-        if (scorecardError) throw scorecardError;
-        scorecardId = newScorecard.id;
-      }
-
-      // Save hole scores
-      for (const holeScore of currentPlayer.scores) {
-        await supabase
-          .from("hole_scores")
-          .upsert(
-            {
-              scorecard_id: scorecardId,
+        if (existingScore) {
+          // Update existing score
+          await supabase
+            .from("scorecards")
+            .update({
+              strokes: holeScore.strokes,
+              updated_at: new Date().toISOString(),
+            })
+            .eq("id", existingScore.id);
+        } else {
+          // Insert new score (only if strokes > 0 to avoid empty records)
+          if (holeScore.strokes > 0) {
+            await supabase.from("scorecards").insert({
+              event_id: eventData.id,
+              event_round_id: round.id,
+              event_player_id: currentEventPlayer.id,
               hole_number: holeScore.hole,
               strokes: holeScore.strokes,
-              par: holeScore.par,
-            },
-            {
-              onConflict: "scorecard_id,hole_number",
-            },
-          );
+            });
+          }
+        }
       }
-
-      // Update scorecard totals
-      await supabase
-        .from("scorecards")
-        .update({
-          total_strokes: currentPlayer.totalStrokes,
-          total_par: currentPlayer.totalPar,
-          score_relative_to_par: currentPlayer.scoreRelativeToPar,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", scorecardId);
 
       alert("Scorecard saved successfully!");
     } catch (error) {
@@ -466,7 +454,7 @@ export default function ScorecardEdit() {
             </div>
             <Button
               onClick={handleSave}
-              disabled={saving}
+              disabled={saving || !currentPlayer}
               className="bg-blue-600 hover:bg-blue-700 text-white"
             >
               {saving ? (
@@ -593,31 +581,31 @@ export default function ScorecardEdit() {
                   {/* Player Rows */}
                   {players.map((player) => (
                     <tr
-                      key={player.name}
+                      key={player.id}
                       className={`border-b border-gray-200 ${
-                        player.name === session?.displayName
+                        player.id === currentEventPlayer?.id
                           ? "bg-blue-50"
                           : "bg-white"
                       } hover:bg-gray-50`}
                     >
                       <td className="font-semibold p-3 text-gray-900">
                         {player.name}
-                        {player.name === session?.displayName && (
+                        {player.id === currentEventPlayer?.id && (
                           <span className="text-blue-600 text-sm ml-2">(You)</span>
                         )}
                       </td>
                       {player.scores.map((hole, holeIndex) => (
                         <td
-                          key={`${player.name}-${hole.hole}`}
+                          key={`${player.id}-${hole.hole}`}
                           className="text-center p-1"
                         >
-                          {player.name === session?.displayName ? (
+                          {player.id === currentEventPlayer?.id ? (
                             <div className="flex items-center justify-center space-x-1">
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={() =>
-                                  updateScore(player.name, holeIndex, -1)
+                                  updateScore(player.id, holeIndex, -1)
                                 }
                                 disabled={hole.strokes <= 0}
                                 className="h-6 w-6 p-0 text-xs hover:bg-red-100"
@@ -638,7 +626,7 @@ export default function ScorecardEdit() {
                                 variant="ghost"
                                 size="sm"
                                 onClick={() =>
-                                  updateScore(player.name, holeIndex, 1)
+                                  updateScore(player.id, holeIndex, 1)
                                 }
                                 disabled={hole.strokes >= 15}
                                 className="h-6 w-6 p-0 text-xs hover:bg-green-100"
