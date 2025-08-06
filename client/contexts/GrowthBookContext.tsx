@@ -3,9 +3,9 @@ import { GrowthBook } from '@growthbook/growthbook-react';
 
 // Create GrowthBook instance
 const growthbook = new GrowthBook({
-  apiHost: "https://cdn.growthbook.io",
-  clientKey: "sdk-w1E948s82nX7yJ5u",
-  enableDevMode: process.env.NODE_ENV === 'development',
+  apiHost: import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io",
+  clientKey: import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u",
+  enableDevMode: import.meta.env.DEV,
   trackingCallback: (experiment, result) => {
     // Optional: Add analytics tracking here
     console.log('GrowthBook Experiment:', experiment.key, result);
