@@ -81,18 +81,35 @@ export default function CoursesEdit() {
           },
         ]);
       } else if (roundsData && roundsData.length > 0) {
+        // Load skills contests for all rounds
+        const { data: skillsContestsData } = await supabase
+          .from("skills_contests")
+          .select("*")
+          .eq("event_id", eventId);
+
         // Convert database format to component format
-        const formattedRounds = roundsData.map((r) => ({
-          id: r.id,
-          courseName: r.course_name || "",
-          courseUrl: r.course_url || "",
-          date: r.round_date || "",
-          time: r.tee_time || "",
-          holes: r.holes || 18,
-          skillsContests: [], // Skills contests would need separate loading
-        }));
+        const formattedRounds = roundsData.map((r) => {
+          // Find skills contests for this round
+          const roundSkillsContests = skillsContestsData
+            ?.filter((contest) => contest.round_id === r.id)
+            ?.map((contest) => ({
+              id: contest.id,
+              hole: contest.hole,
+              type: contest.contest_type as "longest_drive" | "closest_to_pin",
+            })) || [];
+
+          return {
+            id: r.id,
+            courseName: r.course_name || "",
+            courseUrl: r.course_url || "",
+            date: r.round_date || "",
+            time: r.tee_time || "",
+            holes: r.holes || 18,
+            skillsContests: roundSkillsContests,
+          };
+        });
         setRounds(formattedRounds);
-        console.log("Loaded rounds:", formattedRounds);
+        console.log("Loaded rounds with skills contests:", formattedRounds);
       } else {
         // No rounds found, start with one empty round
         setRounds([
