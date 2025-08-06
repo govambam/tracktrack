@@ -1974,7 +1974,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                         </h4>
                       )}
                       <div
-                        className={`${eventData?.theme === "Masters" ? "text-green-800" : "text-slate-700"} prose prose-sm max-w-none`}
+                        className={`${currentTheme === "Masters" ? "text-green-800" : "text-slate-700"} prose prose-sm max-w-none`}
                       >
                         <ReactMarkdown
                           components={{
