@@ -293,20 +293,44 @@ export default function PlayersEdit() {
       );
 
       if (playersWithEmails.length > 0) {
-        console.log("Sending invitation emails...");
+        console.log("Sending invitation emails to:", playersWithEmails.map(p => p.email));
+
+        // First test if the API endpoint is available
         try {
-          // Get session token first
+          const testResponse = await fetch('/api/invitations/test');
+          if (!testResponse.ok) {
+            console.error("Invitations API not available:", testResponse.status);
+            toast({
+              title: "Players Updated",
+              description: "Players saved. Invitation emails are not available right now.",
+            });
+            return;
+          }
+          console.log("✅ Invitations API is available");
+        } catch (testError) {
+          console.error("Cannot reach invitations API:", testError);
+          toast({
+            title: "Players Updated",
+            description: "Players saved. Could not send invitation emails (API unavailable).",
+          });
+          return;
+        }
+
+        try {
+          // Get session token
           const { data: { session } } = await supabase.auth.getSession();
           const accessToken = session?.access_token;
 
           if (!accessToken) {
-            console.error("No access token available for sending invitations");
+            console.error("No access token available");
             toast({
               title: "Players Updated",
               description: "Players saved, but couldn't send invitations (not authenticated).",
             });
             return;
           }
+
+          console.log("🔑 Sending invitation request with token");
 
           const response = await fetch('/api/invitations/send', {
             method: 'POST',
@@ -317,22 +341,21 @@ export default function PlayersEdit() {
             body: JSON.stringify({ event_id: eventId })
           });
 
+          console.log("📧 Invitation API response status:", response.status);
+
           if (!response.ok) {
-            console.error("Invitation API error:", response.status, response.statusText);
-            let errorText = '';
-            try {
-              // Try to read response body only if not already consumed
-              if (!response.bodyUsed) {
-                errorText = await response.text();
-                console.error("Error response:", errorText);
-              }
-            } catch (readError) {
-              console.error("Could not read error response:", readError);
-            }
-            throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+            const errorMsg = `API request failed: ${response.status} ${response.statusText}`;
+            console.error("Invitation API error:", errorMsg);
+            toast({
+              title: "Players Updated",
+              description: `Players saved, but invitation sending failed (${response.status}).`,
+              variant: "destructive"
+            });
+            return;
           }
 
           const result = await response.json();
+          console.log("📧 Invitation API result:", result);
 
           if (result.success && result.sent_count > 0) {
             toast({
