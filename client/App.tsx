@@ -45,6 +45,7 @@ import PublicEventHome from "./pages/PublicEventHome";
 import PublicLeaderboard from "./pages/PublicLeaderboard";
 import DraftMode from "./pages/DraftMode";
 import Admin from "./pages/Admin";
+import Invitation from "./pages/Invitation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
