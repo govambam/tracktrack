@@ -78,27 +78,53 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         .json({ error: "Clubhouse is not enabled for this event" });
     }
 
-    // Create or update session
-    const { data: session, error: sessionError } = await supabase
-      .from("clubhouse_sessions")
-      .upsert(
-        {
-          event_id: eventId,
-          display_name: displayName,
-          session_id: sessionId,
-          last_accessed: new Date().toISOString(),
-          is_active: true,
-        },
-        {
-          onConflict: "session_id",
-        },
-      )
-      .select()
-      .single();
+    // Create or update session - handle missing table gracefully
+    let session, sessionError;
+
+    try {
+      const result = await supabase
+        .from("clubhouse_sessions")
+        .upsert(
+          {
+            event_id: eventId,
+            display_name: displayName,
+            session_id: sessionId,
+            last_accessed: new Date().toISOString(),
+            is_active: true,
+          },
+          {
+            onConflict: "session_id",
+          },
+        )
+        .select()
+        .single();
+
+      session = result.data;
+      sessionError = result.error;
+    } catch (dbError) {
+      console.error("Database error during session creation:", dbError);
+
+      // Check if this is a missing table error
+      if (dbError?.message?.includes('relation "clubhouse_sessions" does not exist')) {
+        return res.status(503).json({
+          error: "Clubhouse feature not available (database migration required)",
+          details: "The clubhouse_sessions table does not exist. Please run the database migration."
+        });
+      }
+
+      // Other database errors
+      return res.status(500).json({
+        error: "Database error",
+        details: dbError?.message || "Unknown database error"
+      });
+    }
 
     if (sessionError) {
       console.error("Error creating session:", sessionError);
-      return res.status(500).json({ error: "Failed to create session" });
+      return res.status(500).json({
+        error: "Failed to create session",
+        details: sessionError.message
+      });
     }
 
     res.json({
