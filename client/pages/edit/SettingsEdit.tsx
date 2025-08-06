@@ -625,6 +625,7 @@ export default function SettingsEdit() {
                   onChange={(e) => setClubhousePassword(e.target.value)}
                   placeholder="Set a password for player access"
                   className="pl-10 border-purple-200 focus:border-purple-500"
+                  disabled={!clubhouseFeatureAvailable}
                 />
               </div>
               <Button
