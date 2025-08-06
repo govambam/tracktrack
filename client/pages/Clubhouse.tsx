@@ -121,9 +121,7 @@ export default function Clubhouse() {
 
     if (eventError || !event) return;
 
-    const sessionData = localStorage.getItem(
-      `clubhouse_session_${event.id}`,
-    );
+    const sessionData = localStorage.getItem(`clubhouse_session_${event.id}`);
     if (sessionData) {
       try {
         const parsedSession = JSON.parse(sessionData);
