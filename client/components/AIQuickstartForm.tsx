@@ -83,19 +83,33 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
   const loadCourses = async () => {
     setLoadingCourses(true);
     try {
+      console.log('Loading courses from database...');
       const { data: coursesData, error } = await supabase
         .from('courses')
         .select('id, name, location, par')
         .order('name');
 
-      if (error) throw error;
+      console.log('Courses query result:', { coursesData, error });
+
+      if (error) {
+        console.error('Courses query error:', error);
+        throw error;
+      }
+
       setCourses(coursesData || []);
+      console.log(`Loaded ${coursesData?.length || 0} courses`);
     } catch (error) {
       console.error('Error loading courses:', error);
 
       let errorMessage = 'Failed to load courses';
-      if (error && typeof error === 'object' && 'message' in error) {
-        errorMessage = `Failed to load courses: ${error.message}`;
+      if (error && typeof error === 'object') {
+        if ('message' in error) {
+          errorMessage = `Failed to load courses: ${error.message}`;
+        } else if ('details' in error) {
+          errorMessage = `Database error: ${error.details}`;
+        } else if ('hint' in error) {
+          errorMessage = `Database error: ${error.hint}`;
+        }
       }
 
       toast({
