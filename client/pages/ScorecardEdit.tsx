@@ -234,40 +234,55 @@ export default function ScorecardEdit() {
         const parsedSession = JSON.parse(sessionData);
         setSession(parsedSession);
 
-        // Find the event_player record for this session
-        // Since clubhouse users don't have user accounts, we'll match by display name
-        const { data: eventPlayer } = await supabase
+        // Find or create the event_player record for this session
+        let { data: eventPlayer } = await supabase
           .from("event_players")
           .select("*")
           .eq("event_id", event.id)
           .eq("full_name", parsedSession.displayName)
           .single();
 
-        if (eventPlayer) {
-          setCurrentEventPlayer(eventPlayer);
+        // If no event_player exists, create one for this clubhouse user
+        if (!eventPlayer) {
+          const { data: newEventPlayer, error: createError } = await supabase
+            .from("event_players")
+            .insert({
+              event_id: event.id,
+              full_name: parsedSession.displayName,
+              status: "accepted", // Clubhouse users are considered accepted
+              role: "player",
+              // No user_id since this is a clubhouse-only user
+            })
+            .select("*")
+            .single();
 
-          // Find or create current player
-          const existingPlayer = players.find((p) => p.id === eventPlayer.id);
-          if (existingPlayer) {
-            setCurrentPlayer(existingPlayer);
-          } else {
-            // Create new player with empty scores
-            const newPlayer: Player = {
-              id: eventPlayer.id,
-              name: eventPlayer.full_name,
-              scores: courseHoles.map((hole) => ({ ...hole, strokes: 0 })),
-              totalStrokes: 0,
-              totalPar: courseHoles.reduce((sum, hole) => sum + hole.par, 0),
-              scoreRelativeToPar: 0,
-            };
-            setCurrentPlayer(newPlayer);
-            setPlayers((prev) => [...prev, newPlayer]);
+          if (createError) {
+            console.error("Error creating event player:", createError);
+            setError("Failed to register player. Please try again.");
+            return;
           }
+
+          eventPlayer = newEventPlayer;
+        }
+
+        setCurrentEventPlayer(eventPlayer);
+
+        // Find or create current player
+        const existingPlayer = players.find((p) => p.id === eventPlayer.id);
+        if (existingPlayer) {
+          setCurrentPlayer(existingPlayer);
         } else {
-          // No event player found - user needs to be added to the event first
-          setError(
-            "You are not registered as a player for this event. Please contact the event organizer.",
-          );
+          // Create new player with empty scores
+          const newPlayer: Player = {
+            id: eventPlayer.id,
+            name: eventPlayer.full_name,
+            scores: courseHoles.map((hole) => ({ ...hole, strokes: 0 })),
+            totalStrokes: 0,
+            totalPar: courseHoles.reduce((sum, hole) => sum + hole.par, 0),
+            scoreRelativeToPar: 0,
+          };
+          setCurrentPlayer(newPlayer);
+          setPlayers((prev) => [...prev, newPlayer]);
         }
       } catch (error) {
         console.error("Error parsing session:", error);
