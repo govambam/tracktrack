@@ -948,7 +948,6 @@ export default function ScorecardEdit() {
                           className={`
                             px-4 py-2 rounded-lg border-2 min-w-[80px] font-bold text-lg
                             transition-all duration-200 hover:shadow-md
-                            ${getScoreColor(currentScore, par)}
                             ${
                               currentScore === 0
                                 ? "border-gray-300 bg-gray-100 text-gray-500"
@@ -956,9 +955,13 @@ export default function ScorecardEdit() {
                             }
                           `}
                         >
-                          {currentScore === 0
-                            ? "Add"
-                            : formatScore(currentScore, par) || currentScore}
+                          {currentScore === 0 ? (
+                            "Add"
+                          ) : (
+                            <div className={`inline-flex ${getScoreStyle(currentScore, par)}`}>
+                              {formatScore(currentScore, par)}
+                            </div>
+                          )}
                         </button>
                       </div>
                     );
