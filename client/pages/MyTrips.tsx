@@ -511,7 +511,7 @@ export default function MyTrips() {
             No events yet
           </h3>
           <p className="text-green-600 mb-6">
-            Create your first golf event to get started
+            Create your first golf event or wait for an invitation from other organizers
           </p>
           <Button
             onClick={handleCreateNew}
