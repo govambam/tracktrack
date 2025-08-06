@@ -327,27 +327,6 @@ export default function ScorecardEdit() {
         };
       }),
     );
-
-    if (playerId === currentEventPlayer?.id) {
-      setCurrentPlayer((prev) =>
-        prev
-          ? {
-              ...prev,
-              scores: prev.scores.map((score, idx) =>
-                idx === holeIndex
-                  ? {
-                      ...score,
-                      strokes: Math.max(
-                        0,
-                        Math.min(15, score.strokes + change),
-                      ),
-                    }
-                  : score,
-              ),
-            }
-          : null,
-      );
-    }
   };
 
   const openHoleEdit = (holeNumber: number) => {
