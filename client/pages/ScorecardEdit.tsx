@@ -797,7 +797,7 @@ export default function ScorecardEdit() {
 
       {/* Hole Edit Modal */}
       <Dialog open={isHoleEditOpen} onOpenChange={setIsHoleEditOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Edit className="h-5 w-5" />
