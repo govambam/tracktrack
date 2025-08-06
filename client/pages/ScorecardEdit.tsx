@@ -551,11 +551,7 @@ export default function ScorecardEdit() {
                   {players.map((player) => (
                     <tr
                       key={player.id}
-                      className={`border-b border-gray-200 ${
-                        player.id === currentEventPlayer?.id
-                          ? "bg-blue-50"
-                          : "bg-white"
-                      } hover:bg-gray-50`}
+                      className="border-b border-gray-200 bg-white hover:bg-gray-50"
                     >
                       <td className="font-semibold p-3 text-gray-900">
                         {player.name}
