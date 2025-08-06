@@ -711,33 +711,47 @@ export default function ScorecardEdit() {
       {/* Golf Scorecard */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Course Information */}
-        <Card className={`mb-6 ${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}>
+        <Card
+          className={`mb-6 ${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}
+        >
           <CardHeader>
-            <CardTitle className={`flex items-center ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}>
-              <Target className={`h-5 w-5 mr-2 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`} />
+            <CardTitle
+              className={`flex items-center ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+            >
+              <Target
+                className={`h-5 w-5 mr-2 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+              />
               {round.course_name} - Round {round.round_number}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
               <div className="flex items-center space-x-2">
-                <Calendar className={`h-4 w-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`} />
+                <Calendar
+                  className={`h-4 w-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                />
                 <span>{new Date(round.round_date).toLocaleDateString()}</span>
               </div>
               {round.tee_time && (
                 <div className="flex items-center space-x-2">
-                  <Clock className={`h-4 w-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`} />
+                  <Clock
+                    className={`h-4 w-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                  />
                   <span>{round.tee_time}</span>
                 </div>
               )}
               <div className="flex items-center space-x-2">
-                <Users className={`h-4 w-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`} />
+                <Users
+                  className={`h-4 w-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                />
                 <span>
                   {players.length} Player{players.length !== 1 ? "s" : ""}
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <Trophy className={`h-4 w-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`} />
+                <Trophy
+                  className={`h-4 w-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                />
                 <span>{round.scoring_type.replace("_", " ")}</span>
               </div>
             </div>
@@ -745,7 +759,9 @@ export default function ScorecardEdit() {
         </Card>
 
         {/* Traditional Golf Scorecard */}
-        <Card className={`${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}>
+        <Card
+          className={`${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}
+        >
           <CardContent className="p-0 overflow-x-auto">
             <div className="min-w-[800px]">
               <table className="w-full">
@@ -896,7 +912,9 @@ export default function ScorecardEdit() {
         </Card>
 
         {/* Legend */}
-        <Card className={`mt-6 ${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}>
+        <Card
+          className={`mt-6 ${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}
+        >
           <CardContent className="p-4">
             <div className="flex flex-wrap gap-4 justify-center text-sm">
               <div className="flex items-center space-x-2">
