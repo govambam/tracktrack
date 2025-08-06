@@ -72,7 +72,8 @@ export default function ScorecardEdit() {
   const [courseHoles, setCourseHoles] = useState<HoleScore[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
-  const [currentEventPlayer, setCurrentEventPlayer] = useState<EventPlayer | null>(null);
+  const [currentEventPlayer, setCurrentEventPlayer] =
+    useState<EventPlayer | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -244,7 +245,7 @@ export default function ScorecardEdit() {
 
         if (eventPlayer) {
           setCurrentEventPlayer(eventPlayer);
-          
+
           // Find or create current player
           const existingPlayer = players.find((p) => p.id === eventPlayer.id);
           if (existingPlayer) {
@@ -326,7 +327,14 @@ export default function ScorecardEdit() {
   };
 
   const handleSave = async () => {
-    if (!eventData || !round || !session || !currentPlayer || !currentEventPlayer) return;
+    if (
+      !eventData ||
+      !round ||
+      !session ||
+      !currentPlayer ||
+      !currentEventPlayer
+    )
+      return;
 
     setSaving(true);
     try {
@@ -492,7 +500,9 @@ export default function ScorecardEdit() {
               )}
               <div className="flex items-center space-x-2">
                 <Users className="h-4 w-4 text-blue-600" />
-                <span>{players.length} Player{players.length !== 1 ? "s" : ""}</span>
+                <span>
+                  {players.length} Player{players.length !== 1 ? "s" : ""}
+                </span>
               </div>
               <div className="flex items-center space-x-2">
                 <Trophy className="h-4 w-4 text-blue-600" />
@@ -591,7 +601,9 @@ export default function ScorecardEdit() {
                       <td className="font-semibold p-3 text-gray-900">
                         {player.name}
                         {player.id === currentEventPlayer?.id && (
-                          <span className="text-blue-600 text-sm ml-2">(You)</span>
+                          <span className="text-blue-600 text-sm ml-2">
+                            (You)
+                          </span>
                         )}
                       </td>
                       {player.scores.map((hole, holeIndex) => (
