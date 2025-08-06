@@ -116,7 +116,9 @@ export default function ScorecardEdit() {
   const checkSession = () => {
     if (!eventData?.id) return;
 
-    const sessionData = localStorage.getItem(`clubhouse_session_${eventData.id}`);
+    const sessionData = localStorage.getItem(
+      `clubhouse_session_${eventData.id}`,
+    );
     if (sessionData) {
       try {
         const parsedSession = JSON.parse(sessionData);
@@ -131,7 +133,7 @@ export default function ScorecardEdit() {
   };
 
   const updateScore = (holeIndex: number, change: number) => {
-    setScores(prev => {
+    setScores((prev) => {
       const newScores = [...prev];
       const currentStrokes = newScores[holeIndex].strokes;
       const newStrokes = Math.max(0, Math.min(15, currentStrokes + change)); // Limit 0-15
@@ -142,7 +144,7 @@ export default function ScorecardEdit() {
 
   const setScore = (holeIndex: number, strokes: number) => {
     const validStrokes = Math.max(0, Math.min(15, strokes));
-    setScores(prev => {
+    setScores((prev) => {
       const newScores = [...prev];
       newScores[holeIndex] = { ...newScores[holeIndex], strokes: validStrokes };
       return newScores;
@@ -161,7 +163,7 @@ export default function ScorecardEdit() {
     const total = calculateTotal();
     const totalPar = calculateTotalPar();
     if (total === 0) return "Not Started";
-    
+
     const difference = total - totalPar;
     if (difference === 0) return "Even";
     if (difference > 0) return `+${difference}`;
@@ -171,11 +173,13 @@ export default function ScorecardEdit() {
   const handleSave = async () => {
     setSaving(true);
     // Simulate save operation - in real app this would save to database
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     setSaving(false);
-    
+
     // Show success message or handle save result
-    alert("Scorecard saved successfully! (This is a demo - scores are not actually stored)");
+    alert(
+      "Scorecard saved successfully! (This is a demo - scores are not actually stored)",
+    );
   };
 
   if (loading) {
@@ -317,7 +321,10 @@ export default function ScorecardEdit() {
               <CardHeader className="pb-3">
                 <CardTitle className="text-center flex items-center justify-between">
                   <span className="text-blue-900">Hole {hole.hole}</span>
-                  <Badge variant="outline" className="border-blue-200 text-blue-700">
+                  <Badge
+                    variant="outline"
+                    className="border-blue-200 text-blue-700"
+                  >
                     Par {hole.par}
                   </Badge>
                 </CardTitle>
@@ -336,7 +343,9 @@ export default function ScorecardEdit() {
                   <Input
                     type="number"
                     value={hole.strokes}
-                    onChange={(e) => setScore(index, parseInt(e.target.value) || 0)}
+                    onChange={(e) =>
+                      setScore(index, parseInt(e.target.value) || 0)
+                    }
                     className="w-16 text-center text-lg font-semibold border-blue-200"
                     min="0"
                     max="15"
@@ -353,16 +362,24 @@ export default function ScorecardEdit() {
                 </div>
                 <div className="text-center text-sm">
                   {hole.strokes > 0 && (
-                    <span className={`font-medium ${
-                      hole.strokes < hole.par ? "text-green-600" :
-                      hole.strokes === hole.par ? "text-blue-600" :
-                      hole.strokes === hole.par + 1 ? "text-orange-600" :
-                      "text-red-600"
-                    }`}>
-                      {hole.strokes < hole.par ? `Eagle -${hole.par - hole.strokes}` :
-                       hole.strokes === hole.par ? "Par" :
-                       hole.strokes === hole.par + 1 ? "Bogey +1" :
-                       `+${hole.strokes - hole.par}`}
+                    <span
+                      className={`font-medium ${
+                        hole.strokes < hole.par
+                          ? "text-green-600"
+                          : hole.strokes === hole.par
+                            ? "text-blue-600"
+                            : hole.strokes === hole.par + 1
+                              ? "text-orange-600"
+                              : "text-red-600"
+                      }`}
+                    >
+                      {hole.strokes < hole.par
+                        ? `Eagle -${hole.par - hole.strokes}`
+                        : hole.strokes === hole.par
+                          ? "Par"
+                          : hole.strokes === hole.par + 1
+                            ? "Bogey +1"
+                            : `+${hole.strokes - hole.par}`}
                     </span>
                   )}
                 </div>
@@ -374,9 +391,9 @@ export default function ScorecardEdit() {
         <Alert className="border-blue-200 bg-blue-50 mt-8">
           <Trophy className="h-4 w-4 text-blue-600" />
           <AlertDescription className="text-blue-700">
-            <strong>Demo Mode:</strong> This is a demonstration of the scorecard interface. 
-            In the full version, scores would be saved to your player profile and visible 
-            on the leaderboard.
+            <strong>Demo Mode:</strong> This is a demonstration of the scorecard
+            interface. In the full version, scores would be saved to your player
+            profile and visible on the leaderboard.
           </AlertDescription>
         </Alert>
       </div>

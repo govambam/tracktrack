@@ -113,7 +113,9 @@ export default function Clubhouse() {
   const checkExistingSession = () => {
     if (!eventData?.id) return;
 
-    const sessionData = localStorage.getItem(`clubhouse_session_${eventData.id}`);
+    const sessionData = localStorage.getItem(
+      `clubhouse_session_${eventData.id}`,
+    );
     if (sessionData) {
       try {
         const parsedSession = JSON.parse(sessionData);
@@ -234,7 +236,11 @@ export default function Clubhouse() {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-6 py-8">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="space-y-6"
+        >
           <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:grid-cols-2">
             <TabsTrigger value="scores" className="flex items-center space-x-2">
               <BarChart3 className="h-4 w-4" />
@@ -317,7 +323,9 @@ export default function Clubhouse() {
                       <Button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                         onClick={() => {
-                          navigate(`/events/${slug}/clubhouse/scorecard/${round.id}`);
+                          navigate(
+                            `/events/${slug}/clubhouse/scorecard/${round.id}`,
+                          );
                         }}
                       >
                         <Edit className="h-4 w-4 mr-2" />
@@ -388,9 +396,9 @@ export default function Clubhouse() {
             <Alert className="border-blue-200 bg-blue-50">
               <MessageCircle className="h-4 w-4 text-blue-600" />
               <AlertDescription className="text-blue-700">
-                <strong>Live Chat Coming Soon:</strong> We're working on bringing
-                you real-time chat functionality to enhance your tournament
-                experience. Stay tuned for updates!
+                <strong>Live Chat Coming Soon:</strong> We're working on
+                bringing you real-time chat functionality to enhance your
+                tournament experience. Stay tuned for updates!
               </AlertDescription>
             </Alert>
           </TabsContent>

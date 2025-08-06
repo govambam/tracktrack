@@ -57,7 +57,9 @@ export function ClubhousePasswordModal({
 
       // Handle case where API endpoint doesn't exist yet (404)
       if (response.status === 404) {
-        setError("Clubhouse feature not deployed yet. Please contact support or try again later.");
+        setError(
+          "Clubhouse feature not deployed yet. Please contact support or try again later.",
+        );
         return;
       }
 
@@ -73,7 +75,9 @@ export function ClubhousePasswordModal({
       setError("");
     } catch (error) {
       console.error("Error verifying password:", error);
-      setError("Clubhouse feature is not available yet. The API endpoint needs to be deployed.");
+      setError(
+        "Clubhouse feature is not available yet. The API endpoint needs to be deployed.",
+      );
     } finally {
       setLoading(false);
     }
@@ -111,16 +115,19 @@ export function ClubhousePasswordModal({
       }
 
       // Store session in localStorage for persistence
-      localStorage.setItem(`clubhouse_session_${eventId}`, JSON.stringify({
-        sessionId,
-        displayName: displayName.trim(),
-        eventId,
-        createdAt: new Date().toISOString(),
-      }));
+      localStorage.setItem(
+        `clubhouse_session_${eventId}`,
+        JSON.stringify({
+          sessionId,
+          displayName: displayName.trim(),
+          eventId,
+          createdAt: new Date().toISOString(),
+        }),
+      );
 
       // Call success callback with display name
       onSuccess(displayName.trim());
-      
+
       // Reset modal state
       setStep("password");
       setPassword("");
@@ -163,10 +170,9 @@ export function ClubhousePasswordModal({
             </span>
           </DialogTitle>
           <DialogDescription>
-            {step === "password" 
+            {step === "password"
               ? `Enter the password to access the ${eventName} clubhouse`
-              : "Choose how your name will appear to other players"
-            }
+              : "Choose how your name will appear to other players"}
           </DialogDescription>
         </DialogHeader>
 
@@ -193,7 +199,8 @@ export function ClubhousePasswordModal({
               <Alert className="border-blue-200 bg-blue-50">
                 <Users className="h-4 w-4 text-blue-600" />
                 <AlertDescription className="text-blue-700">
-                  The clubhouse is where you can view scores, edit scorecards, and chat with other players during the event.
+                  The clubhouse is where you can view scores, edit scorecards,
+                  and chat with other players during the event.
                 </AlertDescription>
               </Alert>
             </>
@@ -226,19 +233,26 @@ export function ClubhousePasswordModal({
           )}
 
           <div className="flex justify-end space-x-2">
-            <Button
-              variant="outline"
-              onClick={handleClose}
-              disabled={loading}
-            >
+            <Button variant="outline" onClick={handleClose} disabled={loading}>
               Cancel
             </Button>
             <Button
-              onClick={step === "password" ? handlePasswordSubmit : handleDisplayNameSubmit}
-              disabled={loading || (step === "password" ? !password.trim() : !displayName.trim())}
+              onClick={
+                step === "password"
+                  ? handlePasswordSubmit
+                  : handleDisplayNameSubmit
+              }
+              disabled={
+                loading ||
+                (step === "password" ? !password.trim() : !displayName.trim())
+              }
               className="bg-blue-600 hover:bg-blue-700"
             >
-              {loading ? "Processing..." : step === "password" ? "Continue" : "Enter Clubhouse"}
+              {loading
+                ? "Processing..."
+                : step === "password"
+                  ? "Continue"
+                  : "Enter Clubhouse"}
             </Button>
           </div>
         </div>

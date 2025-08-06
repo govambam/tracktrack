@@ -9,7 +9,9 @@ router.post("/verify-password", async (req, res) => {
     const { eventId, password } = req.body;
 
     if (!eventId || !password) {
-      return res.status(400).json({ error: "Event ID and password are required" });
+      return res
+        .status(400)
+        .json({ error: "Event ID and password are required" });
     }
 
     // Get event with clubhouse password (handle missing column gracefully)
@@ -37,7 +39,12 @@ router.post("/verify-password", async (req, res) => {
         return res.status(404).json({ error: "Event not found" });
       }
 
-      return res.status(403).json({ error: "Clubhouse feature not available (database migration required)" });
+      return res
+        .status(403)
+        .json({
+          error:
+            "Clubhouse feature not available (database migration required)",
+        });
     }
 
     console.log("Event retrieval debug:", {
@@ -45,7 +52,7 @@ router.post("/verify-password", async (req, res) => {
       error: error?.message,
       eventId,
       isPublished: event?.is_published,
-      hasPassword: !!event?.clubhouse_password
+      hasPassword: !!event?.clubhouse_password,
     });
 
     if (error || !event) {
@@ -57,7 +64,9 @@ router.post("/verify-password", async (req, res) => {
     }
 
     if (!event.clubhouse_password) {
-      return res.status(403).json({ error: "Clubhouse is not enabled for this event" });
+      return res
+        .status(403)
+        .json({ error: "Clubhouse is not enabled for this event" });
     }
 
     console.log("Password verification debug:", {
@@ -65,7 +74,7 @@ router.post("/verify-password", async (req, res) => {
       storedPassword: event.clubhouse_password,
       providedLength: password?.length,
       storedLength: event.clubhouse_password?.length,
-      match: event.clubhouse_password === password
+      match: event.clubhouse_password === password,
     });
 
     if (event.clubhouse_password !== password) {
@@ -85,14 +94,16 @@ router.post("/create-session", async (req, res) => {
     const { eventId, displayName, sessionId } = req.body;
 
     if (!eventId || !displayName || !sessionId) {
-      return res.status(400).json({ 
-        error: "Event ID, display name, and session ID are required" 
+      return res.status(400).json({
+        error: "Event ID, display name, and session ID are required",
       });
     }
 
     // Validate display name length
     if (displayName.length > 50) {
-      return res.status(400).json({ error: "Display name must be 50 characters or less" });
+      return res
+        .status(400)
+        .json({ error: "Display name must be 50 characters or less" });
     }
 
     // Check if event exists and clubhouse is enabled (handle missing column gracefully)
@@ -120,7 +131,12 @@ router.post("/create-session", async (req, res) => {
         return res.status(404).json({ error: "Event not found" });
       }
 
-      return res.status(403).json({ error: "Clubhouse feature not available (database migration required)" });
+      return res
+        .status(403)
+        .json({
+          error:
+            "Clubhouse feature not available (database migration required)",
+        });
     }
 
     if (eventError || !event) {
@@ -132,21 +148,26 @@ router.post("/create-session", async (req, res) => {
     }
 
     if (!event.clubhouse_password) {
-      return res.status(403).json({ error: "Clubhouse is not enabled for this event" });
+      return res
+        .status(403)
+        .json({ error: "Clubhouse is not enabled for this event" });
     }
 
     // Create or update session
     const { data: session, error: sessionError } = await supabase
       .from("clubhouse_sessions")
-      .upsert({
-        event_id: eventId,
-        display_name: displayName,
-        session_id: sessionId,
-        last_accessed: new Date().toISOString(),
-        is_active: true,
-      }, {
-        onConflict: "session_id",
-      })
+      .upsert(
+        {
+          event_id: eventId,
+          display_name: displayName,
+          session_id: sessionId,
+          last_accessed: new Date().toISOString(),
+          is_active: true,
+        },
+        {
+          onConflict: "session_id",
+        },
+      )
       .select()
       .single();
 
@@ -155,13 +176,13 @@ router.post("/create-session", async (req, res) => {
       return res.status(500).json({ error: "Failed to create session" });
     }
 
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       session: {
         id: session.id,
         displayName: session.display_name,
         sessionId: session.session_id,
-      }
+      },
     });
   } catch (error) {
     console.error("Error creating clubhouse session:", error);
@@ -175,7 +196,9 @@ router.post("/verify-session", async (req, res) => {
     const { eventId, sessionId } = req.body;
 
     if (!eventId || !sessionId) {
-      return res.status(400).json({ error: "Event ID and session ID are required" });
+      return res
+        .status(400)
+        .json({ error: "Event ID and session ID are required" });
     }
 
     // Check if session exists and is active
@@ -197,12 +220,12 @@ router.post("/verify-session", async (req, res) => {
       .update({ last_accessed: new Date().toISOString() })
       .eq("id", session.id);
 
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       session: {
         id: session.id,
         displayName: session.display_name,
-      }
+      },
     });
   } catch (error) {
     console.error("Error verifying session:", error);

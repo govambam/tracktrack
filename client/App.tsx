@@ -60,82 +60,85 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/login" element={<Auth />} />
-              <Route path="/signup" element={<Auth />} />
-              <Route path="/events/:slug" element={<PublicEventHome />} />
-              <Route path="/events/:slug/clubhouse" element={<Clubhouse />} />
-              <Route path="/events/:slug/clubhouse/scorecard/:roundId" element={<ScorecardEdit />} />
-              <Route
-                path="/events/:slug/leaderboard"
-                element={<PublicLeaderboard />}
-              />
-              <Route path="/app/:eventId/draft" element={<DraftMode />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/app" element={<AppShell />}>
-                <Route index element={<MyTrips />} />
-                <Route path="create" element={<CreateTrip />} />
-                <Route path="create/basic-info" element={<BasicInfo />} />
-                <Route path="create/courses" element={<Courses />} />
-                <Route path="create/scoring" element={<Scoring />} />
-                <Route path="create/players" element={<Players />} />
-                <Route path="create/prizes" element={<Prizes />} />
-                <Route path="create/travel" element={<Travel />} />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/login" element={<Auth />} />
+                <Route path="/signup" element={<Auth />} />
+                <Route path="/events/:slug" element={<PublicEventHome />} />
+                <Route path="/events/:slug/clubhouse" element={<Clubhouse />} />
                 <Route
-                  path="create/customization"
-                  element={<Customization />}
+                  path="/events/:slug/clubhouse/scorecard/:roundId"
+                  element={<ScorecardEdit />}
                 />
-                <Route path="create/summary" element={<Summary />} />
-                <Route path="settings" element={<Settings />} />
+                <Route
+                  path="/events/:slug/leaderboard"
+                  element={<PublicLeaderboard />}
+                />
+                <Route path="/app/:eventId/draft" element={<DraftMode />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/app" element={<AppShell />}>
+                  <Route index element={<MyTrips />} />
+                  <Route path="create" element={<CreateTrip />} />
+                  <Route path="create/basic-info" element={<BasicInfo />} />
+                  <Route path="create/courses" element={<Courses />} />
+                  <Route path="create/scoring" element={<Scoring />} />
+                  <Route path="create/players" element={<Players />} />
+                  <Route path="create/prizes" element={<Prizes />} />
+                  <Route path="create/travel" element={<Travel />} />
+                  <Route
+                    path="create/customization"
+                    element={<Customization />}
+                  />
+                  <Route path="create/summary" element={<Summary />} />
+                  <Route path="settings" element={<Settings />} />
 
-                {/* Event Editing Routes */}
-                <Route path=":eventId" element={<EventEdit />}>
-                  <Route path="basic" element={<BasicInfoEdit />} />
-                  <Route path="courses" element={<CoursesEdit />} />
-                  <Route path="scoring" element={<ScoringEdit />} />
-                  <Route path="players" element={<PlayersEdit />} />
-                  <Route path="prizes" element={<PrizesEdit />} />
-                  <Route path="travel" element={<TravelEdit />} />
-                  <Route
-                    path="customizations"
-                    element={<CustomizationsEdit />}
-                  />
-                  <Route
-                    path="customizations/home"
-                    element={<HomeCustomization />}
-                  />
-                  <Route
-                    path="customizations/courses"
-                    element={<CoursesCustomization />}
-                  />
-                  <Route
-                    path="customizations/rules"
-                    element={<RulesCustomization />}
-                  />
-                  <Route
-                    path="customizations/leaderboard"
-                    element={<LeaderboardCustomization />}
-                  />
-                  <Route
-                    path="customizations/travel"
-                    element={<TravelCustomization />}
-                  />
-                  <Route
-                    path="customizations/theme"
-                    element={<ThemeCustomization />}
-                  />
-                  <Route path="debug" element={<TestCourseSync />} />
-                  <Route path="settings" element={<SettingsEdit />} />
-                  <Route index element={<BasicInfoEdit />} />{" "}
-                  {/* Default to basic info */}
+                  {/* Event Editing Routes */}
+                  <Route path=":eventId" element={<EventEdit />}>
+                    <Route path="basic" element={<BasicInfoEdit />} />
+                    <Route path="courses" element={<CoursesEdit />} />
+                    <Route path="scoring" element={<ScoringEdit />} />
+                    <Route path="players" element={<PlayersEdit />} />
+                    <Route path="prizes" element={<PrizesEdit />} />
+                    <Route path="travel" element={<TravelEdit />} />
+                    <Route
+                      path="customizations"
+                      element={<CustomizationsEdit />}
+                    />
+                    <Route
+                      path="customizations/home"
+                      element={<HomeCustomization />}
+                    />
+                    <Route
+                      path="customizations/courses"
+                      element={<CoursesCustomization />}
+                    />
+                    <Route
+                      path="customizations/rules"
+                      element={<RulesCustomization />}
+                    />
+                    <Route
+                      path="customizations/leaderboard"
+                      element={<LeaderboardCustomization />}
+                    />
+                    <Route
+                      path="customizations/travel"
+                      element={<TravelCustomization />}
+                    />
+                    <Route
+                      path="customizations/theme"
+                      element={<ThemeCustomization />}
+                    />
+                    <Route path="debug" element={<TestCourseSync />} />
+                    <Route path="settings" element={<SettingsEdit />} />
+                    <Route index element={<BasicInfoEdit />} />{" "}
+                    {/* Default to basic info */}
+                  </Route>
                 </Route>
-              </Route>
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-            </TripCreationProvider>
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TripCreationProvider>
         </GrowthBookProvider>
       </ErrorBoundary>
     </TooltipProvider>

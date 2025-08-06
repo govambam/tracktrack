@@ -57,7 +57,8 @@ export default function SettingsEdit() {
   const [showDraftPreview, setShowDraftPreview] = useState(false);
   const [clubhousePassword, setClubhousePassword] = useState("");
   const [updatingClubhouse, setUpdatingClubhouse] = useState(false);
-  const [clubhouseFeatureAvailable, setClubhouseFeatureAvailable] = useState(true);
+  const [clubhouseFeatureAvailable, setClubhouseFeatureAvailable] =
+    useState(true);
 
   const eventName = tripData?.tripName || "this event";
 
@@ -93,7 +94,11 @@ export default function SettingsEdit() {
           .eq("id", eventId)
           .single();
 
-        if (clubhouseError && clubhouseError.message?.includes("clubhouse_password") && clubhouseError.message?.includes("does not exist")) {
+        if (
+          clubhouseError &&
+          clubhouseError.message?.includes("clubhouse_password") &&
+          clubhouseError.message?.includes("does not exist")
+        ) {
           setClubhouseFeatureAvailable(false);
           setClubhousePassword("");
         } else {
@@ -102,12 +107,17 @@ export default function SettingsEdit() {
         }
       } catch (clubhouseError) {
         // Column doesn't exist yet, that's okay - feature is disabled
-        console.log("Clubhouse feature not available (database migration needed)");
+        console.log(
+          "Clubhouse feature not available (database migration needed)",
+        );
         setClubhouseFeatureAvailable(false);
         setClubhousePassword("");
       }
     } catch (error) {
-      console.error("Error loading event info:", error instanceof Error ? error.message : error);
+      console.error(
+        "Error loading event info:",
+        error instanceof Error ? error.message : error,
+      );
     } finally {
       setLoading(false);
     }
@@ -239,10 +249,14 @@ export default function SettingsEdit() {
         console.error("Error updating clubhouse password:", error);
 
         // Check if it's a column doesn't exist error
-        if (error.message?.includes("clubhouse_password") && error.message?.includes("does not exist")) {
+        if (
+          error.message?.includes("clubhouse_password") &&
+          error.message?.includes("does not exist")
+        ) {
           toast({
             title: "Feature Not Available",
-            description: "Clubhouse feature requires database migration. Please contact support.",
+            description:
+              "Clubhouse feature requires database migration. Please contact support.",
             variant: "destructive",
           });
         } else {
@@ -605,13 +619,19 @@ export default function SettingsEdit() {
             <Alert className="border-yellow-200 bg-yellow-50">
               <AlertTriangle className="h-4 w-4 text-yellow-600" />
               <AlertDescription className="text-yellow-700">
-                <strong>Feature Not Available:</strong> The clubhouse feature requires a database migration. Please run the SQL migration file <code>add_clubhouse_features.sql</code> in your Supabase SQL Editor to enable this feature.
+                <strong>Feature Not Available:</strong> The clubhouse feature
+                requires a database migration. Please run the SQL migration file{" "}
+                <code>add_clubhouse_features.sql</code> in your Supabase SQL
+                Editor to enable this feature.
               </AlertDescription>
             </Alert>
           )}
 
           <div className="space-y-3">
-            <Label htmlFor="clubhousePassword" className="text-purple-800 font-medium">
+            <Label
+              htmlFor="clubhousePassword"
+              className="text-purple-800 font-medium"
+            >
               Clubhouse Password
             </Label>
             <div className="flex items-center space-x-2">
@@ -629,24 +649,28 @@ export default function SettingsEdit() {
               </div>
               <Button
                 onClick={updateClubhousePassword}
-                disabled={!clubhouseFeatureAvailable || updatingClubhouse || clubhousePassword === (eventInfo?.clubhouse_password || "")}
+                disabled={
+                  !clubhouseFeatureAvailable ||
+                  updatingClubhouse ||
+                  clubhousePassword === (eventInfo?.clubhouse_password || "")
+                }
                 className="bg-purple-600 hover:bg-purple-700 text-white"
               >
                 {updatingClubhouse ? "Updating..." : "Update"}
               </Button>
             </div>
             <p className="text-sm text-purple-600">
-              {clubhousePassword ?
-                "Players will need this password to access the clubhouse where they can view scores and chat." :
-                "Leave empty to disable the clubhouse feature for this event."
-              }
+              {clubhousePassword
+                ? "Players will need this password to access the clubhouse where they can view scores and chat."
+                : "Leave empty to disable the clubhouse feature for this event."}
             </p>
           </div>
 
           <Alert className="border-purple-200 bg-purple-50">
             <Users className="h-4 w-4 text-purple-600" />
             <AlertDescription className="text-purple-700">
-              <strong>About the Clubhouse:</strong> When enabled, players can access a special area of your public event site where they can:
+              <strong>About the Clubhouse:</strong> When enabled, players can
+              access a special area of your public event site where they can:
               <ul className="mt-2 list-disc list-inside space-y-1">
                 <li>View and edit scorecards for each round</li>
                 <li>Participate in event chat and announcements</li>
