@@ -78,7 +78,7 @@ export default function SettingsEdit() {
         .single();
 
       if (error) {
-        console.error("Error loading event info:", error);
+        console.error("Error loading event info:", error.message || error);
         return;
       }
 
