@@ -101,7 +101,7 @@ interface EditingPlayerScore {
   playerId: string;
   playerName: string;
   currentScore: number;
-  par: number;
+  par: number | null;
 }
 
 export default function ScorecardEdit() {
