@@ -2168,13 +2168,13 @@ export default function PublicEventHome() {
                 eventData.buy_in > 0 &&
                 eventData?.theme !== "Masters" && (
                   <div
-                    className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth} mx-auto`}
+                    className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${eventData?.theme === "TourTech" ? theme.cardPadding : "p-4"} ${theme.cardShadow} ${eventData?.theme === "TourTech" ? theme.textMaxWidth : "max-w-xs"} mx-auto mb-12`}
                   >
-                    <p className={`${theme.cardText} mb-2`}>
+                    <p className={`${theme.cardText} mb-2 text-center`}>
                       Tournament Buy-in
                     </p>
                     <div
-                      className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
+                      className={`text-center ${eventData?.theme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
                     >
                       ${eventData.buy_in}
                     </div>
