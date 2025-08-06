@@ -40,6 +40,7 @@ import {
   Crown,
   Medal,
   CheckCircle,
+  MessageCircle,
 } from "lucide-react";
 
 // Emoji Safety Utility
