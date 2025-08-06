@@ -556,6 +556,65 @@ export default function SettingsEdit() {
         </CardContent>
       </Card>
 
+      {/* Clubhouse Settings */}
+      <Card className="border-purple-100">
+        <CardHeader>
+          <CardTitle className="text-lg text-purple-900 flex items-center">
+            <Users className="h-5 w-5 mr-2 text-purple-600" />
+            Clubhouse Settings
+          </CardTitle>
+          <CardDescription className="text-purple-600">
+            Configure player access to the event clubhouse for scores and chat
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent className="space-y-4">
+          <div className="space-y-3">
+            <Label htmlFor="clubhousePassword" className="text-purple-800 font-medium">
+              Clubhouse Password
+            </Label>
+            <div className="flex items-center space-x-2">
+              <div className="relative flex-1">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-purple-400" />
+                <Input
+                  id="clubhousePassword"
+                  type="password"
+                  value={clubhousePassword}
+                  onChange={(e) => setClubhousePassword(e.target.value)}
+                  placeholder="Set a password for player access"
+                  className="pl-10 border-purple-200 focus:border-purple-500"
+                />
+              </div>
+              <Button
+                onClick={updateClubhousePassword}
+                disabled={updatingClubhouse || clubhousePassword === (eventInfo?.clubhouse_password || "")}
+                className="bg-purple-600 hover:bg-purple-700 text-white"
+              >
+                {updatingClubhouse ? "Updating..." : "Update"}
+              </Button>
+            </div>
+            <p className="text-sm text-purple-600">
+              {clubhousePassword ?
+                "Players will need this password to access the clubhouse where they can view scores and chat." :
+                "Leave empty to disable the clubhouse feature for this event."
+              }
+            </p>
+          </div>
+
+          <Alert className="border-purple-200 bg-purple-50">
+            <Users className="h-4 w-4 text-purple-600" />
+            <AlertDescription className="text-purple-700">
+              <strong>About the Clubhouse:</strong> When enabled, players can access a special area of your public event site where they can:
+              <ul className="mt-2 list-disc list-inside space-y-1">
+                <li>View and edit scorecards for each round</li>
+                <li>Participate in event chat and announcements</li>
+                <li>Access this content using the password you set above</li>
+              </ul>
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+
       {/* Event Information */}
       <Card className="border-green-100">
         <CardHeader>
