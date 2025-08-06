@@ -1331,9 +1331,42 @@ export default function PublicEventHome({
       if (customizationResult.error)
         console.log("Customization error:", customizationResult.error);
     } catch (error) {
-      console.error("Error loading event data:", error);
+      console.error("Error loading related data:", error);
       setError("Failed to load event data. Please try again later.");
     } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadEventData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      console.log("Loading event data for slug:", slug);
+
+      // Load main event data
+      const { data: event, error: eventError } = await supabase
+        .from("events")
+        .select("*")
+        .eq("slug", slug)
+        .eq("is_published", true)
+        .single();
+
+      if (eventError || !event) {
+        console.error("Event not found:", eventError);
+        setError(
+          `Event not found or not published. Slug: ${slug}, Error: ${eventError?.message || "No event data"}`,
+        );
+        setLoading(false);
+        return;
+      }
+
+      setEventData(event);
+      await loadRelatedData(event.id);
+    } catch (error) {
+      console.error("Error loading event data:", error);
+      setError("Failed to load event data. Please try again later.");
       setLoading(false);
     }
   };
