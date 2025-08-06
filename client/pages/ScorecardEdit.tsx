@@ -724,21 +724,11 @@ export default function ScorecardEdit() {
                       {player.scores.map((hole, holeIndex) => (
                         <td
                           key={`${player.id}-${hole.hole}`}
-                          className="text-center p-1"
+                          className="text-center p-1 cursor-pointer hover:bg-blue-50 transition-colors"
+                          onClick={() => openHoleEdit(hole.hole)}
+                          title={`Click to edit hole ${hole.hole} scores`}
                         >
-                          {/* Allow any clubhouse user to edit any player's scores */}
-                          <div className="flex items-center justify-center space-x-1">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() =>
-                                updateScore(player.id, holeIndex, -1)
-                              }
-                              disabled={hole.strokes <= 0}
-                              className="h-6 w-6 p-0 text-xs hover:bg-red-100"
-                            >
-                              -
-                            </Button>
+                          <div className="flex items-center justify-center min-h-[32px]">
                             <span
                               className={`font-bold text-sm min-w-[20px] ${getScoreColor(
                                 hole.strokes,
@@ -749,17 +739,6 @@ export default function ScorecardEdit() {
                                 hole.strokes ||
                                 ""}
                             </span>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() =>
-                                updateScore(player.id, holeIndex, 1)
-                              }
-                              disabled={hole.strokes >= 15}
-                              className="h-6 w-6 p-0 text-xs hover:bg-green-100"
-                            >
-                              +
-                            </Button>
                           </div>
                         </td>
                       ))}
