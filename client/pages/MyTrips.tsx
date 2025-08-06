@@ -169,7 +169,13 @@ export default function MyTrips() {
         .order("created_at", { ascending: false });
 
       if (invitedError) {
-        console.error("Error loading invited events:", invitedError);
+        console.error("Error loading invited events:", {
+          message: invitedError.message,
+          details: invitedError.details,
+          hint: invitedError.hint,
+          code: invitedError.code
+        });
+        console.error("Full error object:", JSON.stringify(invitedError, null, 2));
         // Don't return here, just log the error and continue with owned events
       }
 
