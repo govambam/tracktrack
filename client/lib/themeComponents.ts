@@ -1,11 +1,11 @@
-import { 
+import {
   MastersHero,
   MastersHeaderCard,
   MastersTravelCard,
   MastersPlayerCard,
   MastersPrizeCard,
   MastersContestRules,
-  MastersFooter
+  MastersFooter,
 } from "@/components/themes/masters";
 
 import {
@@ -15,7 +15,7 @@ import {
   DefaultPlayerCard,
   DefaultPrizeCard,
   DefaultContestRules,
-  DefaultFooter
+  DefaultFooter,
 } from "@/components/themes/default";
 
 import {
@@ -25,7 +25,7 @@ import {
   TourTechPlayerCard,
   TourTechPrizeCard,
   TourTechContestRules,
-  TourTechFooter
+  TourTechFooter,
 } from "@/components/themes/tourtech";
 
 export const themeComponents = {

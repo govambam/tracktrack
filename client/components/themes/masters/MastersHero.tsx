@@ -1,6 +1,6 @@
-import React from 'react';
-import { Calendar, ChevronRight, Users } from 'lucide-react';
-import { MastersHeaderCard } from './MastersHeaderCard';
+import React from "react";
+import { Calendar, ChevronRight, Users } from "lucide-react";
+import { MastersHeaderCard } from "./MastersHeaderCard";
 
 interface MastersHeroProps {
   eventData: {
@@ -23,15 +23,15 @@ export const MastersHero: React.FC<MastersHeroProps> = ({
   courses,
   formatDateRange,
   getDuration,
-  getScoringFormat
+  getScoringFormat,
 }) => {
   const renderTitle = () => {
-    if (eventData.name.split(' ').length >= 3) {
-      const words = eventData.name.split(' ');
+    if (eventData.name.split(" ").length >= 3) {
+      const words = eventData.name.split(" ");
       const midPoint = Math.ceil(words.length / 2);
-      const firstLine = words.slice(0, midPoint).join(' ');
-      const secondLine = words.slice(midPoint).join(' ');
-      
+      const firstLine = words.slice(0, midPoint).join(" ");
+      const secondLine = words.slice(midPoint).join(" ");
+
       return (
         <>
           <span className="block text-green-900">{firstLine}</span>
@@ -95,7 +95,10 @@ export const MastersHero: React.FC<MastersHeroProps> = ({
               { label: "Courses", value: courses.length.toString() },
               { label: "Players", value: players.length.toString() },
               { label: "Format", value: getScoringFormat() },
-              { label: "Duration", value: getDuration(eventData.start_date, eventData.end_date) },
+              {
+                label: "Duration",
+                value: getDuration(eventData.start_date, eventData.end_date),
+              },
             ].map((stat, index) => (
               <div key={index} className="text-center py-4">
                 <div className="font-serif text-2xl font-semibold text-yellow-600 mb-1">

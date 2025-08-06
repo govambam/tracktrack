@@ -1,6 +1,6 @@
-import React from 'react';
-import { Calendar, ChevronRight, Users } from 'lucide-react';
-import { TourTechHeaderCard } from './TourTechHeaderCard';
+import React from "react";
+import { Calendar, ChevronRight, Users } from "lucide-react";
+import { TourTechHeaderCard } from "./TourTechHeaderCard";
 
 interface TourTechHeroProps {
   eventData: {
@@ -23,7 +23,7 @@ export const TourTechHero: React.FC<TourTechHeroProps> = ({
   courses,
   formatDateRange,
   getDuration,
-  getScoringFormat
+  getScoringFormat,
 }) => {
   return (
     <section id="overview" className="bg-white border-b border-slate-200">
@@ -70,7 +70,10 @@ export const TourTechHero: React.FC<TourTechHeroProps> = ({
               { label: "Courses", value: courses.length.toString() },
               { label: "Players", value: players.length.toString() },
               { label: "Format", value: getScoringFormat() },
-              { label: "Duration", value: getDuration(eventData.start_date, eventData.end_date) },
+              {
+                label: "Duration",
+                value: getDuration(eventData.start_date, eventData.end_date),
+              },
             ].map((stat, index) => (
               <div key={index} className="text-center py-3">
                 <div className="font-mono text-xl font-semibold text-orange-600">

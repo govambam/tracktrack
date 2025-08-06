@@ -1533,7 +1533,7 @@ export default function PublicEventHome() {
   const theme = getThemeStyles(eventData?.theme);
 
   // Get theme components
-  const themeName = (eventData?.theme as ThemeName) || 'default';
+  const themeName = (eventData?.theme as ThemeName) || "default";
   const components = themeComponents[themeName] || themeComponents.default;
 
   return (

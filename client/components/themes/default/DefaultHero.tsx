@@ -1,7 +1,7 @@
-import React from 'react';
-import { Calendar, ChevronRight, Users } from 'lucide-react';
-import { DefaultHeaderCard } from './DefaultHeaderCard';
-import { CountdownTimer } from './CountdownTimer';
+import React from "react";
+import { Calendar, ChevronRight, Users } from "lucide-react";
+import { DefaultHeaderCard } from "./DefaultHeaderCard";
+import { CountdownTimer } from "./CountdownTimer";
 
 interface DefaultHeroProps {
   eventData: {
@@ -24,7 +24,7 @@ export const DefaultHero: React.FC<DefaultHeroProps> = ({
   courses,
   formatDateRange,
   getDuration,
-  getScoringFormat
+  getScoringFormat,
 }) => {
   return (
     <section id="overview" className="relative overflow-hidden">

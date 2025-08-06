@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Clock } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Clock } from "lucide-react";
 
 interface CountdownTimerProps {
   targetDate: string;
 }
 
-export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
+export const CountdownTimer: React.FC<CountdownTimerProps> = ({
+  targetDate,
+}) => {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
