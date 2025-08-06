@@ -240,14 +240,22 @@ export default function PlayersEdit() {
         const playersData = players.map((player) => {
           const profileImage = player.image?.trim();
           const bio = player.bio?.trim();
+          const email = player.email?.trim();
+
           return {
             event_id: eventId,
             full_name: player.name.trim(),
-            email: player.email?.trim() || null,
+            email: email || null,
             handicap: player.handicap || null,
             profile_image:
               profileImage && profileImage.length > 0 ? profileImage : null,
             bio: bio && bio.length > 0 ? bio : null,
+            // Set invited_email to satisfy check constraint
+            // For players created through the edit interface, we use invited_email
+            invited_email: email || null,
+            // New invitation system fields
+            role: 'player',
+            status: 'accepted'
           };
         });
 
