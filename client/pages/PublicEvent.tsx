@@ -515,6 +515,7 @@ function HomeTab({
                     )}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4 text-sm text-gray-500">
+                        {course.holes && <span>{course.holes} holes</span>}
                         {course.par && <span>Par {course.par}</span>}
                         {course.yardage && (
                           <span>{course.yardage.toLocaleString()} yards</span>
