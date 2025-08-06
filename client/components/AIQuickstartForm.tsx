@@ -65,6 +65,27 @@ const OCCASIONS = [
   'Other'
 ];
 
+const AVAILABLE_THEMES = [
+  {
+    id: 'GolfOS',
+    name: 'GolfOS',
+    description: 'Colorful, playful design with bright accents and rounded elements - perfect for casual golf trips.',
+    colors: ['bg-gradient-to-r from-green-400 to-green-600', 'bg-gradient-to-r from-blue-400 to-blue-600', 'bg-gradient-to-r from-purple-400 to-orange-400']
+  },
+  {
+    id: 'TourTech',
+    name: 'Tour Tech',
+    description: 'Professional, enterprise-ready design with compact layout and bold orange accents for serious tournaments.',
+    colors: ['bg-slate-900', 'bg-slate-600', 'bg-orange-600']
+  },
+  {
+    id: 'Masters',
+    name: 'Masters',
+    description: 'Prestigious, traditional design inspired by Augusta National with elegant green and gold styling.',
+    colors: ['bg-green-800', 'bg-green-600', 'bg-yellow-600']
+  }
+];
+
 export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
   isOpen,
   onClose,
