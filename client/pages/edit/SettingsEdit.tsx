@@ -630,7 +630,7 @@ export default function SettingsEdit() {
               </div>
               <Button
                 onClick={updateClubhousePassword}
-                disabled={updatingClubhouse || clubhousePassword === (eventInfo?.clubhouse_password || "")}
+                disabled={!clubhouseFeatureAvailable || updatingClubhouse || clubhousePassword === (eventInfo?.clubhouse_password || "")}
                 className="bg-purple-600 hover:bg-purple-700 text-white"
               >
                 {updatingClubhouse ? "Updating..." : "Update"}
