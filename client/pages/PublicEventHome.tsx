@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
+import { themeComponents, ThemeName } from "@/lib/themeComponents";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
