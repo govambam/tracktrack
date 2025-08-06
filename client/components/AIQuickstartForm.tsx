@@ -176,14 +176,36 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
 
   const generateAIContent = async () => {
     setCurrentStep('generating');
-    
+
     try {
+      console.log('Starting AI content generation...');
+      console.log('Form data:', formData);
+
+      // Validate form data
+      if (!formData.courses.length) {
+        throw new Error('No courses selected');
+      }
+      if (!formData.startDate || !formData.endDate) {
+        throw new Error('Missing start or end date');
+      }
+      if (!formData.players.length) {
+        throw new Error('No players added');
+      }
+      if (!formData.occasion) {
+        throw new Error('No occasion selected');
+      }
+
       // Simulate AI generation delay
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       // Get selected courses data
       const selectedCourses = courses.filter(c => formData.courses.includes(c.id));
-      
+      console.log('Selected courses:', selectedCourses);
+
+      if (selectedCourses.length === 0) {
+        throw new Error('Selected courses not found in database');
+      }
+
       // Generate event data
       const eventName = generateEventName(formData.occasion, selectedCourses);
       const eventDescription = generateEventDescription(formData.occasion, selectedCourses, {
@@ -191,7 +213,12 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
         end: formData.endDate
       });
 
+      const slug = eventName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') + '-' + Date.now().toString(36);
+
+      console.log('Generated event data:', { eventName, eventDescription, slug });
+
       // Create event in database
+      console.log('Creating event in database...');
       const { data: eventData, error: eventError } = await supabase
         .from('events')
         .insert({
@@ -203,12 +230,17 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
           is_published: true,
           is_private: false,
           theme: 'GolfOS',
-          slug: eventName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') + '-' + Date.now().toString(36)
+          slug: slug
         })
         .select()
         .single();
 
-      if (eventError) throw eventError;
+      if (eventError) {
+        console.error('Event creation error:', eventError);
+        throw new Error(`Failed to create event: ${eventError.message || JSON.stringify(eventError)}`);
+      }
+
+      console.log('Event created successfully:', eventData);
 
       // Add courses to event
       if (selectedCourses.length > 0) {
