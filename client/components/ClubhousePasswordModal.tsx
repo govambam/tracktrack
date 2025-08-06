@@ -43,6 +43,12 @@ export function ClubhousePasswordModal({
     setError("");
 
     try {
+      console.log("Clubhouse password verification request:", {
+        eventId,
+        password,
+        passwordLength: password.length
+      });
+
       // Verify password with the backend
       const response = await fetch("/api/clubhouse/verify-password", {
         method: "POST",
