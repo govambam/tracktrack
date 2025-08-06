@@ -425,7 +425,7 @@ export default function PublicLeaderboard({
             const playerRoundScores = roundScores.filter(
               (score) => score.event_player_id === player.id,
             );
-            const holeScores = roundHoles.map((hole) => {
+            const holeScores = holes.map((hole) => {
               const holeScore = playerRoundScores.find(
                 (score) => score.hole_number === hole.hole_number,
               );
@@ -440,11 +440,11 @@ export default function PublicLeaderboard({
               (sum, hole) => sum + (hole.strokes || 0),
               0,
             );
-            const totalPar = roundHoles.reduce(
-              (sum, hole) => sum + hole.par,
+            const totalPar = hasParData ? holes.reduce(
+              (sum, hole) => sum + (hole.par || 0),
               0,
-            );
-            const scoreToPar = totalStrokes > 0 ? totalStrokes - totalPar : 0;
+            ) : 0;
+            const scoreToPar = totalStrokes > 0 && hasParData ? totalStrokes - totalPar : null;
 
             return {
               ...player,
