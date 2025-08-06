@@ -1,5 +1,10 @@
 import React from 'react';
-import { useFeatureFlag, useFeatureEnabled } from '@/contexts/GrowthBookContext';
+import {
+  useNewUIDesign,
+  useButtonColor,
+  useMaxUsersLimit,
+  useWelcomeMessage
+} from '@/hooks/useFeatureFlags';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
