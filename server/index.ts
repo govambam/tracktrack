@@ -109,6 +109,15 @@ export function createServer() {
 
       // Get players with 'invited' status that have email addresses
       console.log('🔍 Looking for invited players...');
+
+      // First, let's see ALL players for this event
+      const { data: allPlayers, error: allPlayersError } = await supabase
+        .from('event_players')
+        .select('id, full_name, invited_email, status, email')
+        .eq('event_id', event_id);
+
+      console.log('👥 All players for event:', allPlayers);
+
       const { data: invitedPlayers, error: playersError } = await supabase
         .from('event_players')
         .select('id, full_name, invited_email, status')
