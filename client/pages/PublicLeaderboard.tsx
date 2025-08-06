@@ -584,13 +584,15 @@ export default function PublicLeaderboard({
                             {player.totalStrokes || "-"}
                           </td>
                           <td className="px-4 py-3 text-center font-bold text-green-600">
-                            {player.totalStrokes && player.scoreToPar !== 0
-                              ? player.scoreToPar > 0
-                                ? `+${player.scoreToPar}`
-                                : player.scoreToPar
-                              : player.totalStrokes
-                                ? "E"
-                                : "-"}
+                            {!hasParData
+                              ? "-"
+                              : player.totalStrokes && player.scoreToPar !== null && player.scoreToPar !== 0
+                                ? player.scoreToPar > 0
+                                  ? `+${player.scoreToPar}`
+                                  : player.scoreToPar
+                                : player.totalStrokes
+                                  ? "E"
+                                  : "-"}
                           </td>
                         </tr>
                       ))}
