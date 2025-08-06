@@ -3,13 +3,16 @@
 
 class EmailService {
   constructor() {
-    this.provider = process.env.EMAIL_PROVIDER || 'console'; // 'console', 'sendgrid', 'resend', etc.
+    this.provider = process.env.EMAIL_PROVIDER || 'console'; // 'console', 'sendgrid', 'resend', 'mailgun'
     this.fromEmail = process.env.FROM_EMAIL || 'noreply@golfevents.com';
-    
+
     if (this.provider === 'sendgrid') {
       this.apiKey = process.env.SENDGRID_API_KEY;
     } else if (this.provider === 'resend') {
       this.apiKey = process.env.RESEND_API_KEY;
+    } else if (this.provider === 'mailgun') {
+      this.apiKey = process.env.MAILGUN_API_KEY;
+      this.domain = process.env.MAILGUN_DOMAIN;
     }
   }
 
