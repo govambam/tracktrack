@@ -435,6 +435,27 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
         console.log('Players added successfully');
       }
 
+      // Create prizes if there's an entry fee
+      if (formData.hasEntryFee && formData.entryFeeAmount > 0) {
+        console.log('Creating prize structure...');
+        const payouts = calculatePayouts(formData.entryFeeAmount, formData.players.length, selectedCourses.length);
+
+        const { error: prizesError } = await supabase
+          .from('event_prizes')
+          .insert(payouts.map(payout => ({
+            event_id: eventData.id,
+            category: payout.category,
+            amount: payout.amount,
+            description: payout.description
+          })));
+
+        if (prizesError) {
+          console.error('Prizes creation error:', prizesError);
+          throw new Error(`Failed to create prizes: ${prizesError.message || JSON.stringify(prizesError)}`);
+        }
+        console.log('Prizes created successfully');
+      }
+
       // Add default travel information
       console.log('Adding travel information...');
       const travelData = {
