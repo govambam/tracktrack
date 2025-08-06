@@ -12,6 +12,7 @@ import {
   Star,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { FeatureFlagDemo } from "@/components/FeatureFlagDemo";
 
 export default function Index() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
