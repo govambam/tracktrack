@@ -39,14 +39,18 @@ export const FeatureFlagAdmin: React.FC = () => {
     setError(null);
     try {
       const flagsData = await growthbookApi.getFeatures();
-      setFlags(flagsData);
+      // Ensure flagsData is an array
+      const validFlags = Array.isArray(flagsData) ? flagsData : [];
+      setFlags(validFlags);
       toast({
         title: "Success",
-        description: `Loaded ${flagsData.length} feature flags`,
+        description: `Loaded ${validFlags.length} feature flags`,
       });
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load flags';
       setError(errorMessage);
+      // Ensure flags is still an array even on error
+      setFlags([]);
       toast({
         title: "Error",
         description: errorMessage,
@@ -61,15 +65,17 @@ export const FeatureFlagAdmin: React.FC = () => {
     setLoading(true);
     try {
       const createdFlags = await featureFlagUtils.setupDemoFlags();
+      const validCreatedFlags = Array.isArray(createdFlags) ? createdFlags : [];
       toast({
         title: "Demo Flags Created",
-        description: `Created ${createdFlags.length} demo feature flags`,
+        description: `Created ${validCreatedFlags.length} demo feature flags`,
       });
       await loadFlags();
     } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to create demo flags';
       toast({
         title: "Error",
-        description: "Failed to create demo flags",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -275,7 +281,7 @@ export const FeatureFlagAdmin: React.FC = () => {
           )}
 
           <div className="space-y-4">
-            {flags.map((flag) => {
+            {Array.isArray(flags) && flags.map((flag) => {
               const isEnabled = flag.environments.production?.enabled || false;
               
               return (
