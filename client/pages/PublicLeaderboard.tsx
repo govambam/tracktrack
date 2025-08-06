@@ -111,33 +111,26 @@ export default function PublicLeaderboard({
     { name: "Leaderboard", href: `/events/${slug}/leaderboard` },
   ];
 
-  // Mock data for demonstration
-  const mockPlayers = [
-    {
-      name: "Patrick",
-      position: 1,
-      points: 8,
-      badge: "Current Leader",
-      money: 120,
-    },
-    { name: "Ivan", position: 2, points: 6, money: 80 },
-    { name: "Marshall", position: 3, points: 4, money: 60 },
-    { name: "Jack", position: 4, points: 3, money: 40 },
+  // Mock data for demonstration - will be replaced with real data
+  const mockPlayers = players.length > 0 ? players : [
+    { id: "1", name: "No players yet", points: 0, money: 0 }
   ];
 
-  const mockCourses = [
-    { name: "Scarecrow", holes: 18, format: "Individual Stroke Play" },
-    { name: "Gamble Sands", holes: 18, format: "Individual Stroke Play" },
-    { name: "Quicksands", holes: 14, format: "Team Scramble" },
+  const mockCourses = rounds.length > 0 ? rounds.map(round => ({
+    name: round.course_name,
+    holes: 18,
+    format: round.scoring_type
+  })) : [
+    { name: "No rounds yet", holes: 18, format: "No data" }
   ];
 
   const mockScorecard = [
-    { hole: 1, par: 4, scores: { Patrick: 3, Ivan: 3, Marshall: 4, Jack: 5 } },
-    { hole: 2, par: 3, scores: { Patrick: 2, Ivan: 3, Marshall: 3, Jack: 3 } },
-    { hole: 3, par: 5, scores: { Patrick: 5, Ivan: 3, Marshall: 3, Jack: 4 } },
-    { hole: 4, par: 4, scores: { Patrick: 4, Ivan: 4, Marshall: 4, Jack: 4 } },
-    { hole: 5, par: 4, scores: { Patrick: 3, Ivan: 4, Marshall: 4, Jack: 4 } },
-    { hole: 6, par: 3, scores: { Patrick: 3, Ivan: 3, Marshall: 3, Jack: 3 } },
+    { hole: 1, par: 4, scores: {} },
+    { hole: 2, par: 3, scores: {} },
+    { hole: 3, par: 5, scores: {} },
+    { hole: 4, par: 4, scores: {} },
+    { hole: 5, par: 4, scores: {} },
+    { hole: 6, par: 3, scores: {} },
   ];
 
   const contestIcons = {
