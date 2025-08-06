@@ -319,8 +319,16 @@ export default function PlayersEdit() {
 
           if (!response.ok) {
             console.error("Invitation API error:", response.status, response.statusText);
-            const errorText = await response.text();
-            console.error("Error response:", errorText);
+            let errorText = '';
+            try {
+              // Try to read response body only if not already consumed
+              if (!response.bodyUsed) {
+                errorText = await response.text();
+                console.error("Error response:", errorText);
+              }
+            } catch (readError) {
+              console.error("Could not read error response:", readError);
+            }
             throw new Error(`API request failed: ${response.status} ${response.statusText}`);
           }
 
