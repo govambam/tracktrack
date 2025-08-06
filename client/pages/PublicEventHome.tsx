@@ -1650,13 +1650,15 @@ export default function PublicEventHome({
 
   return (
     <div className={`min-h-screen ${theme.heroContainer}`}>
-      <StickyNavigation
-        eventName={eventData.name}
-        slug={slug!}
-        theme={currentTheme}
-        handleClubhouseAccess={handleClubhouseAccess}
-        hasClubhouse={hasClubhouse}
-      />
+      {!hideNavigation && (
+        <StickyNavigation
+          eventName={eventData.name}
+          slug={slug!}
+          theme={currentTheme}
+          handleClubhouseAccess={handleClubhouseAccess}
+          hasClubhouse={hasClubhouse}
+        />
+      )}
 
       {/* Hero Section */}
       <components.Hero
