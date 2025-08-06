@@ -70,6 +70,8 @@ export function ClubhousePasswordModal({
       });
 
       if (!response.ok) {
+        // Temporary debugging alert
+        alert(`API Error: ${response.status} - ${result.error || "Invalid password"}`);
         setError(result.error || "Invalid password");
         return;
       }
