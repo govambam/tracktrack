@@ -43,7 +43,27 @@ class GrowthBookAPI {
 
   // Get all feature flags
   async getFeatures(): Promise<FeatureFlag[]> {
-    return this.request('/api/v1/features');
+    try {
+      const response = await this.request('/api/v1/features');
+      // Handle different response formats from GrowthBook API
+      if (Array.isArray(response)) {
+        return response;
+      }
+      // If response has a features property (common API pattern)
+      if (response && Array.isArray(response.features)) {
+        return response.features;
+      }
+      // If response has a data property
+      if (response && Array.isArray(response.data)) {
+        return response.data;
+      }
+      // Default to empty array if response format is unexpected
+      console.warn('Unexpected API response format:', response);
+      return [];
+    } catch (error) {
+      console.error('Failed to fetch feature flags:', error);
+      return []; // Return empty array instead of throwing
+    }
   }
 
   // Get a specific feature flag
