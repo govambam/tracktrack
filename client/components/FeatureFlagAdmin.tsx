@@ -173,7 +173,16 @@ export const FeatureFlagAdmin: React.FC = () => {
   };
 
   useEffect(() => {
-    loadFlags();
+    // Only load flags on component mount if not already loading
+    if (!loading) {
+      loadFlags().catch((error) => {
+        console.error('Failed to load flags on mount:', error);
+        // Ensure we have a safe state even if initial load fails
+        setFlags([]);
+        setError('Failed to connect to GrowthBook API');
+        setLoading(false);
+      });
+    }
   }, []);
 
   return (
