@@ -540,7 +540,7 @@ export default function PublicLeaderboard({
                           {player.holeScores.slice(0, 18).map((holeScore) => {
                             const strokes = holeScore.strokes;
                             const par = holeScore.par;
-                            const diff = strokes > 0 ? strokes - par : 0;
+                            const diff = strokes > 0 && hasParData && par ? strokes - par : 0;
 
                             let cellStyle = "px-3 py-3 text-center relative";
                             let scoreStyle =
@@ -548,6 +548,9 @@ export default function PublicLeaderboard({
 
                             if (strokes === 0) {
                               scoreStyle += " text-slate-400";
+                            } else if (!hasParData || !par) {
+                              // No par data: just show basic styling
+                              scoreStyle += " text-slate-900";
                             } else if (diff <= -2) {
                               // Eagle or better: double circle
                               scoreStyle +=
