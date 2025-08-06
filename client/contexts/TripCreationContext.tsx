@@ -552,7 +552,13 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         .order("created_at");
 
       if (playersError) {
-        console.error("Error loading players:", playersError);
+        console.error("Error loading players:", {
+          message: playersError.message,
+          details: playersError.details,
+          hint: playersError.hint,
+          code: playersError.code
+        });
+        console.error("Full error object:", JSON.stringify(playersError, null, 2));
         return { success: false, error: playersError.message };
       }
 
