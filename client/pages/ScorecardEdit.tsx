@@ -1121,7 +1121,7 @@ export default function ScorecardEdit() {
             <div className="space-y-4">
               <div className="text-center">
                 <div className="text-sm text-gray-500 mb-4">
-                  Par {editingPlayerScore.par} ��� Tap to select score
+                  {editingPlayerScore.par ? `Par ${editingPlayerScore.par} • ` : ''}Tap to select score
                 </div>
 
                 {/* Score Numbers Grid */}
@@ -1129,7 +1129,7 @@ export default function ScorecardEdit() {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((score) => {
                     const isSelected =
                       editingPlayerScore.currentScore === score;
-                    const isPar = score === editingPlayerScore.par;
+                    const isPar = editingPlayerScore.par && score === editingPlayerScore.par;
 
                     return (
                       <button
