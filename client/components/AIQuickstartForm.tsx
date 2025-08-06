@@ -386,6 +386,31 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
           throw new Error(`Failed to add courses: ${coursesError.message || JSON.stringify(coursesError)}`);
         }
         console.log('Courses added successfully');
+
+        // Create rounds with Stableford scoring for each course
+        console.log('Creating rounds for each course...');
+        const eventRounds = selectedCourses.map((course, index) => {
+          const roundDate = new Date(formData.startDate);
+          roundDate.setDate(roundDate.getDate() + index);
+
+          return {
+            event_id: eventData.id,
+            course_name: course.name,
+            round_date: roundDate.toISOString().split('T')[0],
+            holes: 18,
+            scoring_type: 'stableford'
+          };
+        });
+
+        const { error: roundsError } = await supabase
+          .from('event_rounds')
+          .insert(eventRounds);
+
+        if (roundsError) {
+          console.error('Rounds creation error:', roundsError);
+          throw new Error(`Failed to create rounds: ${roundsError.message || JSON.stringify(roundsError)}`);
+        }
+        console.log('Rounds created successfully');
       }
 
       // Add players to event
