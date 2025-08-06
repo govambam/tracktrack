@@ -5,6 +5,7 @@ This guide explains how to test the complete event invitations user experience t
 ## Overview
 
 The system now supports:
+
 - ✅ **Auto-acceptance**: When invited users log in, they automatically accept pending invitations
 - ✅ **Mixed Event View**: "My Events" shows both owned and invited events
 - ✅ **Role-based Buttons**: Different button sets based on user role (owner/admin/player)
@@ -15,16 +16,19 @@ The system now supports:
 ### My Events Page Changes
 
 1. **Page Title & Description**
-   - Title: "My Events" 
+
+   - Title: "My Events"
    - Description: "Manage your events and participate in tournaments you've been invited to"
 
 2. **Event Cards Now Show**
+
    - **Role Badge**: Owner/Admin/Player badge next to event name
    - **Role-based Buttons**:
      - **Owners/Admins**: "View Site", "Enter Scores", "Edit Details"
      - **Players**: "View Site", "Enter Scores"
 
 3. **Updated Stats**
+
    - Total Events shows: "X owned, Y invited"
 
 4. **Auto-invitation Acceptance**
@@ -36,12 +40,14 @@ The system now supports:
 ### Step 1: Create Test Events and Invitations
 
 1. **Create a test event** (as User A):
+
    ```bash
    # Use the AI quickstart or manual creation flow
    # This user becomes the "owner"
    ```
 
 2. **Invite a player** (still as User A):
+
    ```bash
    curl -X POST http://localhost:3000/api/events/EVENT_ID/invite \
      -H "Authorization: Bearer USER_A_TOKEN" \
@@ -58,7 +64,7 @@ The system now supports:
      -H "Authorization: Bearer USER_A_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{
-       "email": "testadmin@example.com", 
+       "email": "testadmin@example.com",
        "role": "admin"
      }'
    ```
@@ -102,6 +108,7 @@ The system now supports:
 ## Expected Behavior
 
 ### Auto-acceptance Flow
+
 ```
 1. User receives invitation email → invited_email stored in event_players
 2. User creates account with same email → user_id linked to profiles
@@ -115,7 +122,7 @@ The system now supports:
 
 ```sql
 -- Check invitations were processed correctly
-SELECT 
+SELECT
   e.name as event_name,
   ep.full_name,
   ep.role,
@@ -130,19 +137,25 @@ ORDER BY e.name, ep.role;
 ## Troubleshooting
 
 ### Issue: Invited events don't show up
-**Check**: 
+
+**Check**:
+
 1. RPC function `accept_event_invitation_by_user` exists
 2. User's email matches the invited_email exactly
 3. Console logs in browser show auto-acceptance running
 
 ### Issue: Wrong buttons showing
+
 **Check**:
+
 1. User role is correctly set in database
 2. Event has correct `created_by` field
 3. Browser console for any JavaScript errors
 
 ### Issue: Auto-acceptance not working
+
 **Check**:
+
 1. profiles table has correct email for user
 2. event_players has matching invited_email
 3. RPC function permissions are correct
@@ -165,6 +178,6 @@ SELECT accept_event_invitation_by_user('USER_UUID');
 ✅ Button sets match user permissions  
 ✅ Stats accurately reflect owned vs invited events  
 ✅ All button actions work correctly  
-✅ No duplicate events for users with multiple roles  
+✅ No duplicate events for users with multiple roles
 
 The invitation system creates a seamless experience where invited players just need to create an account and their events automatically appear in "My Events" with appropriate permissions.

@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle, Calendar, MapPin, Users, Mail } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -32,7 +38,7 @@ export default function Invitation() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { toast } = useToast();
-  
+
   const [event, setEvent] = useState<EventDetails | null>(null);
   const [invitation, setInvitation] = useState<InvitationDetails | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,7 +47,7 @@ export default function Invitation() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
-  const invitedEmail = searchParams.get('email');
+  const invitedEmail = searchParams.get("email");
 
   useEffect(() => {
     checkAuthAndLoadInvitation();
@@ -53,7 +59,9 @@ export default function Invitation() {
       setError(null);
 
       // Check authentication
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       setIsAuthenticated(!!session);
       setUserEmail(session?.user?.email || null);
 
@@ -64,9 +72,11 @@ export default function Invitation() {
 
       // Load event details
       const { data: eventData, error: eventError } = await supabase
-        .from('events')
-        .select('id, name, description, start_date, end_date, location, logo_url, is_published, slug')
-        .eq('id', eventId)
+        .from("events")
+        .select(
+          "id, name, description, start_date, end_date, location, logo_url, is_published, slug",
+        )
+        .eq("id", eventId)
         .single();
 
       if (eventError || !eventData) {
@@ -78,10 +88,10 @@ export default function Invitation() {
 
       // Load invitation details
       const { data: invitationData, error: invitationError } = await supabase
-        .from('event_players')
-        .select('id, full_name, invited_email, role, status')
-        .eq('event_id', eventId)
-        .eq('invited_email', invitedEmail)
+        .from("event_players")
+        .select("id, full_name, invited_email, role, status")
+        .eq("event_id", eventId)
+        .eq("invited_email", invitedEmail)
         .single();
 
       if (invitationError || !invitationData) {
@@ -94,15 +104,18 @@ export default function Invitation() {
         full_name: invitationData.full_name,
         invited_email: invitationData.invited_email,
         role: invitationData.role,
-        status: invitationData.status
+        status: invitationData.status,
       });
 
       // If user is authenticated and email matches, auto-accept
-      if (session && session.user.email === invitedEmail && invitationData.status === 'invited') {
+      if (
+        session &&
+        session.user.email === invitedEmail &&
+        invitationData.status === "invited"
+      ) {
         console.log("Auto-accepting invitation for authenticated user");
         await acceptInvitation();
       }
-
     } catch (error) {
       console.error("Error loading invitation:", error);
       setError("Failed to load invitation details");
@@ -117,23 +130,22 @@ export default function Invitation() {
 
       if (!isAuthenticated) {
         // Redirect to auth with return URL
-        const returnUrl = `/invitation/${eventId}?email=${encodeURIComponent(invitedEmail || '')}`;
+        const returnUrl = `/invitation/${eventId}?email=${encodeURIComponent(invitedEmail || "")}`;
         navigate(`/auth?returnUrl=${encodeURIComponent(returnUrl)}`);
         return;
       }
 
       // Call the accept invitation RPC
-      const { data, error } = await supabase
-        .rpc('accept_event_invitation', {
-          p_event_id: eventId
-        });
+      const { data, error } = await supabase.rpc("accept_event_invitation", {
+        p_event_id: eventId,
+      });
 
       if (error) {
         console.error("Error accepting invitation:", error);
         toast({
           title: "Error",
           description: "Failed to accept invitation. Please try again.",
-          variant: "destructive"
+          variant: "destructive",
         });
         return;
       }
@@ -142,7 +154,7 @@ export default function Invitation() {
         toast({
           title: "Error",
           description: data.error || "Failed to accept invitation",
-          variant: "destructive"
+          variant: "destructive",
         });
         return;
       }
@@ -153,14 +165,13 @@ export default function Invitation() {
       });
 
       // Redirect to My Events or the event page
-      navigate('/app/my-trips');
-
+      navigate("/app/my-trips");
     } catch (error) {
       console.error("Error accepting invitation:", error);
       toast({
         title: "Error",
         description: "Failed to accept invitation. Please try again.",
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setAccepting(false);
@@ -171,12 +182,12 @@ export default function Invitation() {
     const start = new Date(startDate).toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
-      year: "numeric"
+      year: "numeric",
     });
     const end = new Date(endDate).toLocaleDateString("en-US", {
-      month: "long", 
+      month: "long",
       day: "numeric",
-      year: "numeric"
+      year: "numeric",
     });
     return start === end ? start : `${start} - ${end}`;
   };
@@ -203,8 +214,8 @@ export default function Invitation() {
             <Alert variant="destructive">
               <AlertDescription>{error}</AlertDescription>
             </Alert>
-            <Button 
-              onClick={() => navigate('/')} 
+            <Button
+              onClick={() => navigate("/")}
               className="w-full mt-4"
               variant="outline"
             >
@@ -224,8 +235,14 @@ export default function Invitation() {
             <CardTitle className="text-red-600">Invitation Not Found</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-600 mb-4">The invitation you're looking for could not be found.</p>
-            <Button onClick={() => navigate('/')} className="w-full" variant="outline">
+            <p className="text-gray-600 mb-4">
+              The invitation you're looking for could not be found.
+            </p>
+            <Button
+              onClick={() => navigate("/")}
+              className="w-full"
+              variant="outline"
+            >
               Go to Homepage
             </Button>
           </CardContent>
@@ -238,8 +255,7 @@ export default function Invitation() {
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          
-          {invitation.status === 'accepted' ? (
+          {invitation.status === "accepted" ? (
             // Already accepted invitation
             <Card className="border-green-200">
               <CardHeader className="text-center">
@@ -267,15 +283,17 @@ export default function Invitation() {
                 </div>
 
                 <div className="flex space-x-3">
-                  <Button 
-                    onClick={() => navigate('/app/my-trips')} 
+                  <Button
+                    onClick={() => navigate("/app/my-trips")}
                     className="flex-1 bg-emerald-600 hover:bg-emerald-700"
                   >
                     View My Events
                   </Button>
                   {event.is_published && event.slug && (
-                    <Button 
-                      onClick={() => window.open(`/events/${event.slug}`, '_blank')} 
+                    <Button
+                      onClick={() =>
+                        window.open(`/events/${event.slug}`, "_blank")
+                      }
                       variant="outline"
                       className="flex-1"
                     >
@@ -294,7 +312,8 @@ export default function Invitation() {
                   You're Invited!
                 </CardTitle>
                 <CardDescription className="text-green-700">
-                  {invitation.full_name}, you've been invited to join this golf event
+                  {invitation.full_name}, you've been invited to join this golf
+                  event
                 </CardDescription>
               </CardHeader>
 
@@ -304,11 +323,11 @@ export default function Invitation() {
                   <h3 className="text-xl font-semibold text-green-900 mb-3">
                     {event.name}
                   </h3>
-                  
+
                   {event.description && (
                     <p className="text-green-700 mb-3">{event.description}</p>
                   )}
-                  
+
                   <div className="space-y-2">
                     <div className="flex items-center text-green-700">
                       <Calendar className="h-4 w-4 mr-2 text-emerald-600" />
@@ -320,7 +339,8 @@ export default function Invitation() {
                     </div>
                     <div className="flex items-center text-green-700">
                       <Users className="h-4 w-4 mr-2 text-emerald-600" />
-                      Role: {invitation.role === 'admin' ? 'Administrator' : 'Player'}
+                      Role:{" "}
+                      {invitation.role === "admin" ? "Administrator" : "Player"}
                     </div>
                   </div>
                 </div>
@@ -329,14 +349,16 @@ export default function Invitation() {
                 {!isAuthenticated ? (
                   <Alert>
                     <AlertDescription>
-                      You'll need to create an account or sign in to accept this invitation.
+                      You'll need to create an account or sign in to accept this
+                      invitation.
                     </AlertDescription>
                   </Alert>
                 ) : userEmail !== invitedEmail ? (
                   <Alert variant="destructive">
                     <AlertDescription>
-                      You're signed in as {userEmail}, but this invitation is for {invitedEmail}.
-                      Please sign in with the correct email address.
+                      You're signed in as {userEmail}, but this invitation is
+                      for {invitedEmail}. Please sign in with the correct email
+                      address.
                     </AlertDescription>
                   </Alert>
                 ) : (
@@ -351,14 +373,21 @@ export default function Invitation() {
                 <div className="flex space-x-3">
                   <Button
                     onClick={acceptInvitation}
-                    disabled={accepting || (isAuthenticated && userEmail !== invitedEmail)}
+                    disabled={
+                      accepting ||
+                      (isAuthenticated && userEmail !== invitedEmail)
+                    }
                     className="flex-1 bg-emerald-600 hover:bg-emerald-700"
                   >
-                    {accepting ? "Accepting..." : isAuthenticated ? "Accept Invitation" : "Sign In & Accept"}
+                    {accepting
+                      ? "Accepting..."
+                      : isAuthenticated
+                        ? "Accept Invitation"
+                        : "Sign In & Accept"}
                   </Button>
-                  
-                  <Button 
-                    onClick={() => navigate('/')} 
+
+                  <Button
+                    onClick={() => navigate("/")}
                     variant="outline"
                     className="flex-1"
                   >

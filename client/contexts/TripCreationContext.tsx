@@ -556,9 +556,12 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
           message: playersError.message,
           details: playersError.details,
           hint: playersError.hint,
-          code: playersError.code
+          code: playersError.code,
         });
-        console.error("Full error object:", JSON.stringify(playersError, null, 2));
+        console.error(
+          "Full error object:",
+          JSON.stringify(playersError, null, 2),
+        );
         return { success: false, error: playersError.message };
       }
 
@@ -948,9 +951,11 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
             profile_image: player.image || null,
             // Invitation system fields - satisfy check constraint
             user_id: null, // Players created via trip creation are not linked to users
-            invited_email: email || `${player.name.toLowerCase().replace(/\s+/g, '_')}@placeholder.local`,
-            role: 'player',
-            status: email ? 'invited' : 'pending' // Only mark as invited if there's an email to send to
+            invited_email:
+              email ||
+              `${player.name.toLowerCase().replace(/\s+/g, "_")}@placeholder.local`,
+            role: "player",
+            status: email ? "invited" : "pending", // Only mark as invited if there's an email to send to
           };
         });
 

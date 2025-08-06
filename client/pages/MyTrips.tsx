@@ -41,9 +41,9 @@ interface Event {
   created_at: string;
   updated_at: string;
   // Role information for the current user
-  user_role?: 'owner' | 'admin' | 'player';
+  user_role?: "owner" | "admin" | "player";
   created_by?: string;
-  invitation_status?: 'invited' | 'accepted' | 'declined' | 'pending';
+  invitation_status?: "invited" | "accepted" | "declined" | "pending";
 }
 
 export default function MyTrips() {
@@ -123,13 +123,18 @@ export default function MyTrips() {
 
       // Auto-accept any pending invitations for the current user
       console.log("Auto-accepting pending invitations...");
-      const { error: acceptError } = await supabase
-        .rpc('accept_event_invitation_by_user', {
-          p_user_id: session.user.id
-        });
+      const { error: acceptError } = await supabase.rpc(
+        "accept_event_invitation_by_user",
+        {
+          p_user_id: session.user.id,
+        },
+      );
 
       if (acceptError) {
-        console.log("No pending invitations or error auto-accepting:", acceptError.message);
+        console.log(
+          "No pending invitations or error auto-accepting:",
+          acceptError.message,
+        );
       }
 
       // Fetch owned events
@@ -156,14 +161,16 @@ export default function MyTrips() {
       console.log("Loading invited events for user:", session.user.id);
       const { data: invitedEventsRaw, error: invitedError } = await supabase
         .from("event_players")
-        .select(`
+        .select(
+          `
           role,
           status,
           events:event_id (
             id, name, description, start_date, end_date, location, logo_url,
             is_private, is_published, slug, created_at, updated_at, created_by
           )
-        `)
+        `,
+        )
         .eq("user_id", session.user.id)
         .eq("status", "accepted")
         .order("created_at", { ascending: false });
@@ -173,18 +180,23 @@ export default function MyTrips() {
           message: invitedError.message,
           details: invitedError.details,
           hint: invitedError.hint,
-          code: invitedError.code
+          code: invitedError.code,
         });
-        console.error("Full error object:", JSON.stringify(invitedError, null, 2));
+        console.error(
+          "Full error object:",
+          JSON.stringify(invitedError, null, 2),
+        );
         // Continue with owned events only
       } else {
         console.log("Invited events query result:", {
           count: invitedEventsRaw?.length || 0,
-          data: invitedEventsRaw
+          data: invitedEventsRaw,
         });
 
         if (!invitedEventsRaw || invitedEventsRaw.length === 0) {
-          console.log("No invited events found - this is normal if user hasn't been invited or invitations haven't been auto-accepted yet");
+          console.log(
+            "No invited events found - this is normal if user hasn't been invited or invitations haven't been auto-accepted yet",
+          );
         }
       }
 
@@ -193,26 +205,26 @@ export default function MyTrips() {
 
       // Add owned events with owner role
       if (ownedEvents) {
-        ownedEvents.forEach(event => {
+        ownedEvents.forEach((event) => {
           allEvents.push({
             ...event,
-            user_role: 'owner',
-            invitation_status: 'accepted'
+            user_role: "owner",
+            invitation_status: "accepted",
           });
         });
       }
 
       // Add invited events with their roles
       if (invitedEventsRaw) {
-        invitedEventsRaw.forEach(invitation => {
+        invitedEventsRaw.forEach((invitation) => {
           if (invitation.events) {
             const event = invitation.events as any;
             // Only add if not already in owned events
-            if (!allEvents.find(e => e.id === event.id)) {
+            if (!allEvents.find((e) => e.id === event.id)) {
               allEvents.push({
                 ...event,
-                user_role: invitation.role === 'admin' ? 'admin' : 'player',
-                invitation_status: invitation.status
+                user_role: invitation.role === "admin" ? "admin" : "player",
+                invitation_status: invitation.status,
               });
             }
           }
@@ -220,7 +232,10 @@ export default function MyTrips() {
       }
 
       // Sort by start_date descending
-      allEvents.sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime());
+      allEvents.sort(
+        (a, b) =>
+          new Date(b.start_date).getTime() - new Date(a.start_date).getTime(),
+      );
 
       console.log("Successfully loaded all events, count:", allEvents.length);
       setEvents(allEvents);
@@ -332,7 +347,8 @@ export default function MyTrips() {
         <div>
           <h1 className="text-3xl font-bold text-green-900">My Events</h1>
           <p className="text-green-600 mt-1">
-            Manage your events and participate in tournaments you've been invited to
+            Manage your events and participate in tournaments you've been
+            invited to
           </p>
         </div>
         <div className="mt-4 sm:mt-0">
@@ -359,7 +375,8 @@ export default function MyTrips() {
               {events.length}
             </div>
             <p className="text-xs text-green-600">
-              {events.filter(e => e.user_role === 'owner').length} owned, {events.filter(e => e.user_role !== 'owner').length} invited
+              {events.filter((e) => e.user_role === "owner").length} owned,{" "}
+              {events.filter((e) => e.user_role !== "owner").length} invited
             </p>
           </CardContent>
         </Card>
@@ -425,16 +442,25 @@ export default function MyTrips() {
                       <CardTitle className="text-xl text-green-900">
                         {event.name}
                       </CardTitle>
-                      {event.user_role === 'owner' ? (
-                        <Badge variant="outline" className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200">
+                      {event.user_role === "owner" ? (
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200"
+                        >
                           Owner
                         </Badge>
-                      ) : event.user_role === 'admin' ? (
-                        <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                      ) : event.user_role === "admin" ? (
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-blue-50 text-blue-700 border-blue-200"
+                        >
                           Admin
                         </Badge>
                       ) : (
-                        <Badge variant="outline" className="text-xs bg-gray-50 text-gray-700 border-gray-200">
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-gray-50 text-gray-700 border-gray-200"
+                        >
                           Player
                         </Badge>
                       )}
@@ -492,7 +518,9 @@ export default function MyTrips() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => navigate(`/events/${event.slug || event.id}/leaderboard`)}
+                    onClick={() =>
+                      navigate(`/events/${event.slug || event.id}/leaderboard`)
+                    }
                     className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
                   >
                     <Users className="h-4 w-4 mr-1" />
@@ -500,7 +528,8 @@ export default function MyTrips() {
                   </Button>
 
                   {/* Edit Details button - only for owners and admins */}
-                  {(event.user_role === 'owner' || event.user_role === 'admin') && (
+                  {(event.user_role === "owner" ||
+                    event.user_role === "admin") && (
                     <Button
                       variant="outline"
                       size="sm"
@@ -526,7 +555,8 @@ export default function MyTrips() {
             No events yet
           </h3>
           <p className="text-green-600 mb-6">
-            Create your first golf event or wait for an invitation from other organizers
+            Create your first golf event or wait for an invitation from other
+            organizers
           </p>
           <Button
             onClick={handleCreateNew}

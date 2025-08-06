@@ -68,7 +68,7 @@ export default function PlayersEdit() {
           message: error.message,
           details: error.details,
           hint: error.hint,
-          code: error.code
+          code: error.code,
         });
         console.error("Full error object:", JSON.stringify(error, null, 2));
         // Fall back to one empty player if no data exists
@@ -229,14 +229,15 @@ export default function PlayersEdit() {
         console.error("Error loading existing players:", existingError);
         toast({
           title: "Save Failed",
-          description: existingError.message || "Failed to load existing players",
+          description:
+            existingError.message || "Failed to load existing players",
           variant: "destructive",
         });
         return;
       }
 
       const existingPlayerMap = new Map();
-      (existingPlayers || []).forEach(player => {
+      (existingPlayers || []).forEach((player) => {
         existingPlayerMap.set(player.id, player);
       });
 
@@ -261,40 +262,47 @@ export default function PlayersEdit() {
           bio: bio && bio.length > 0 ? bio : null,
           // Invitation system fields - satisfy check constraint
           user_id: null, // Players created via edit interface are not linked to users
-          invited_email: email || `${player.name.trim().toLowerCase().replace(/\s+/g, '_')}@placeholder.local`,
-          role: 'player',
-          status: email ? (
-            // If this is a new player with email, or existing player with new/changed email
-            !existingPlayer ||
-            (existingPlayer.invited_email !== email && email && !email.includes('@placeholder.local')) ?
-            'invited' : existingPlayer.status
-          ) : 'pending'
+          invited_email:
+            email ||
+            `${player.name.trim().toLowerCase().replace(/\s+/g, "_")}@placeholder.local`,
+          role: "player",
+          status: email
+            ? // If this is a new player with email, or existing player with new/changed email
+              !existingPlayer ||
+              (existingPlayer.invited_email !== email &&
+                email &&
+                !email.includes("@placeholder.local"))
+              ? "invited"
+              : existingPlayer.status
+            : "pending",
         };
 
         // Track if this player needs an invitation email
-        if (email &&
-            !email.includes('@placeholder.local') &&
-            !email.includes('@example.com') &&
-            (!existingPlayer ||
-             existingPlayer.invited_email !== email ||
-             existingPlayer.status !== 'invited')) {
+        if (
+          email &&
+          !email.includes("@placeholder.local") &&
+          !email.includes("@example.com") &&
+          (!existingPlayer ||
+            existingPlayer.invited_email !== email ||
+            existingPlayer.status !== "invited")
+        ) {
           playersNeedingInvites.push({
             id: player.id,
             name: player.name.trim(),
-            email: email
+            email: email,
           });
         }
 
         return supabase
           .from("event_players")
-          .upsert(playerData, { onConflict: 'id' });
+          .upsert(playerData, { onConflict: "id" });
       });
 
       // Execute all upserts
       const results = await Promise.all(upsertPromises);
 
       // Check for any errors
-      const errors = results.filter(result => result.error);
+      const errors = results.filter((result) => result.error);
       if (errors.length > 0) {
         console.error("Error saving players:", errors);
         toast({
@@ -306,16 +314,19 @@ export default function PlayersEdit() {
       }
 
       // Remove players that were deleted
-      const currentPlayerIds = players.map(p => p.id);
-      const playersToDelete = (existingPlayers || []).filter(existing =>
-        !currentPlayerIds.includes(existing.id)
+      const currentPlayerIds = players.map((p) => p.id);
+      const playersToDelete = (existingPlayers || []).filter(
+        (existing) => !currentPlayerIds.includes(existing.id),
       );
 
       if (playersToDelete.length > 0) {
         const { error: deleteError } = await supabase
           .from("event_players")
           .delete()
-          .in('id', playersToDelete.map(p => p.id));
+          .in(
+            "id",
+            playersToDelete.map((p) => p.id),
+          );
 
         if (deleteError) {
           console.error("Error deleting removed players:", deleteError);
@@ -328,12 +339,15 @@ export default function PlayersEdit() {
       const playersWithEmails = playersNeedingInvites;
 
       if (playersWithEmails.length > 0) {
-        console.log("Sending invitation emails to:", playersWithEmails.map(p => p.email));
+        console.log(
+          "Sending invitation emails to:",
+          playersWithEmails.map((p) => p.email),
+        );
 
         // First test if the API endpoint is available
         try {
           console.log("🔍 Testing invitations API availability...");
-          const debugResponse = await fetch('/api/invitations/debug');
+          const debugResponse = await fetch("/api/invitations/debug");
           console.log("🔍 Debug response status:", debugResponse.status);
 
           if (debugResponse.ok) {
@@ -341,14 +355,18 @@ export default function PlayersEdit() {
             console.log("🔍 Debug response:", debugResult);
           }
 
-          const testResponse = await fetch('/api/invitations/test');
+          const testResponse = await fetch("/api/invitations/test");
           console.log("📧 Test response status:", testResponse.status);
 
           if (!testResponse.ok) {
-            console.error("Invitations API not available:", testResponse.status);
+            console.error(
+              "Invitations API not available:",
+              testResponse.status,
+            );
             toast({
               title: "Players Updated",
-              description: "Players saved. Invitation emails are not available right now.",
+              description:
+                "Players saved. Invitation emails are not available right now.",
             });
             return;
           }
@@ -359,7 +377,8 @@ export default function PlayersEdit() {
           console.error("Cannot reach invitations API:", testError);
           toast({
             title: "Players Updated",
-            description: "Players saved. Could not send invitation emails (API unavailable).",
+            description:
+              "Players saved. Could not send invitation emails (API unavailable).",
           });
           return;
         }
@@ -367,23 +386,31 @@ export default function PlayersEdit() {
         try {
           // Try to refresh session first to ensure we have a valid token
           console.log("🔄 Refreshing session...");
-          const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
+          const { data: refreshData, error: refreshError } =
+            await supabase.auth.refreshSession();
 
           if (refreshError) {
-            console.warn("⚠️ Session refresh failed, trying with existing session:", refreshError);
+            console.warn(
+              "⚠️ Session refresh failed, trying with existing session:",
+              refreshError,
+            );
           } else {
             console.log("✅ Session refreshed successfully");
           }
 
           // Get session token
           console.log("🔍 Getting session from Supabase...");
-          const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+          const {
+            data: { session },
+            error: sessionError,
+          } = await supabase.auth.getSession();
 
           if (sessionError) {
             console.error("❌ Session error:", sessionError);
             toast({
               title: "Players Updated",
-              description: "Players saved, but couldn't get authentication session.",
+              description:
+                "Players saved, but couldn't get authentication session.",
             });
             return;
           }
@@ -397,22 +424,26 @@ export default function PlayersEdit() {
             console.error("❌ No access token available in session");
             toast({
               title: "Players Updated",
-              description: "Players saved, but couldn't send invitations (not authenticated).",
+              description:
+                "Players saved, but couldn't send invitations (not authenticated).",
             });
             return;
           }
 
           console.log("🔑 Token length:", accessToken.length);
-          console.log("🔑 Token starts with:", accessToken.substring(0, 20) + '...');
+          console.log(
+            "🔑 Token starts with:",
+            accessToken.substring(0, 20) + "...",
+          );
           console.log("🔑 Sending invitation request with token");
 
-          const response = await fetch('/api/invitations/send', {
-            method: 'POST',
+          const response = await fetch("/api/invitations/send", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${accessToken}`
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
             },
-            body: JSON.stringify({ event_id: eventId })
+            body: JSON.stringify({ event_id: eventId }),
           });
 
           console.log("📧 Invitation API response status:", response.status);
@@ -423,7 +454,7 @@ export default function PlayersEdit() {
             toast({
               title: "Players Updated",
               description: `Players saved, but invitation sending failed (${response.status}).`,
-              variant: "destructive"
+              variant: "destructive",
             });
             return;
           }
@@ -439,14 +470,15 @@ export default function PlayersEdit() {
           } else if (result.success) {
             toast({
               title: "Players Updated",
-              description: "Player list has been saved successfully. No invitation emails were needed.",
+              description:
+                "Player list has been saved successfully. No invitation emails were needed.",
             });
           } else {
             console.error("Invitation send failed:", result.error);
             toast({
               title: "Players Updated",
-              description: `Players saved, but invitation sending failed: ${result.error || 'Unknown error'}`,
-              variant: "destructive"
+              description: `Players saved, but invitation sending failed: ${result.error || "Unknown error"}`,
+              variant: "destructive",
             });
           }
         } catch (emailError) {
@@ -454,7 +486,7 @@ export default function PlayersEdit() {
           toast({
             title: "Players Updated",
             description: `Players saved, but there was an issue sending invitation emails: ${emailError.message}`,
-            variant: "destructive"
+            variant: "destructive",
           });
         }
       } else {
