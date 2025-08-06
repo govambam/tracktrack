@@ -350,6 +350,93 @@ export default function ScorecardEdit() {
     }
   };
 
+  const openHoleEdit = (holeNumber: number) => {
+    if (!eventData || !round) return;
+
+    const holeIndex = holeNumber - 1;
+    const playerScores: { [playerId: string]: number } = {};
+
+    players.forEach(player => {
+      playerScores[player.id] = player.scores[holeIndex]?.strokes || 0;
+    });
+
+    const holeContests = skillsContests.filter(contest => contest.hole === holeNumber);
+    const contestWinners: { [contestId: string]: string } = {};
+
+    // Initialize contest winners (would need to load from database if we had a winners table)
+    holeContests.forEach(contest => {
+      contestWinners[contest.id] = "";
+    });
+
+    setEditingHole({
+      holeNumber,
+      playerScores,
+      contests: holeContests,
+      contestWinners
+    });
+    setIsHoleEditOpen(true);
+  };
+
+  const updateHoleScore = (playerId: string, strokes: number) => {
+    if (!editingHole) return;
+
+    setEditingHole(prev => prev ? {
+      ...prev,
+      playerScores: {
+        ...prev.playerScores,
+        [playerId]: Math.max(0, Math.min(15, strokes))
+      }
+    } : null);
+  };
+
+  const updateContestWinner = (contestId: string, winnerId: string) => {
+    if (!editingHole) return;
+
+    setEditingHole(prev => prev ? {
+      ...prev,
+      contestWinners: {
+        ...prev.contestWinners,
+        [contestId]: winnerId
+      }
+    } : null);
+  };
+
+  const saveHoleEdit = async () => {
+    if (!editingHole || !eventData || !round) return;
+
+    try {
+      // Update player scores
+      const updatedPlayers = players.map(player => {
+        const newScores = [...player.scores];
+        const holeIndex = editingHole.holeNumber - 1;
+        const newStrokes = editingHole.playerScores[player.id] || 0;
+
+        newScores[holeIndex] = { ...newScores[holeIndex], strokes: newStrokes };
+
+        const totalStrokes = newScores.reduce((sum, hole) => sum + hole.strokes, 0);
+        const totalPar = newScores.reduce((sum, hole) => sum + hole.par, 0);
+
+        return {
+          ...player,
+          scores: newScores,
+          totalStrokes,
+          totalPar,
+          scoreRelativeToPar: totalStrokes - totalPar,
+        };
+      });
+
+      setPlayers(updatedPlayers);
+
+      // TODO: Save contest winners to database when we have a winners table
+
+      setIsHoleEditOpen(false);
+      setEditingHole(null);
+    } catch (error) {
+      console.error("Error saving hole edit:", error);
+      alert("Failed to save hole changes. Please try again.");
+    }
+  };
+
   const handleSave = async () => {
     if (!eventData || !round || !session || players.length === 0) return;
 
