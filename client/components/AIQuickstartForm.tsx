@@ -682,6 +682,7 @@ Format as markdown with headers. Include each course as a separate day. Limit re
           theme: formData.theme,
           slug: slug,
           user_id: user.id,
+          created_by: user.id,
           buy_in: formData.hasEntryFee ? formData.entryFeeAmount : null,
         })
         .select()
