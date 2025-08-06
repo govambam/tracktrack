@@ -450,16 +450,11 @@ export default function SettingsEdit() {
               <div className="flex items-center space-x-3 flex-wrap gap-y-3">
                 <Button
                   variant="outline"
-                  onClick={() =>
-                    window.open(
-                      `${window.location.origin}/app/${eventId}/draft`,
-                      "_blank",
-                    )
-                  }
+                  onClick={() => setShowDraftPreview(true)}
                   className="border-green-200 text-green-700 hover:bg-green-50"
                 >
                   <Edit className="h-4 w-4 mr-2" />
-                  Edit Draft Site
+                  Preview Draft Site
                 </Button>
 
                 {eventInfo?.is_published && eventInfo?.slug && (
