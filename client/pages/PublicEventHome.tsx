@@ -1272,38 +1272,38 @@ export default function PublicEventHome({
         contestsResult,
         stablefordResult,
       ] = await Promise.all([
-        supabase.from("event_players").select("*").eq("event_id", event.id),
+        supabase.from("event_players").select("*").eq("event_id", eventId),
         supabase
           .from("event_courses")
           .select("*")
-          .eq("event_id", event.id)
+          .eq("event_id", eventId)
           .order("display_order"),
         supabase
           .from("event_rounds")
           .select("*")
-          .eq("event_id", event.id)
+          .eq("event_id", eventId)
           .order("round_date"),
-        supabase.from("event_prizes").select("*").eq("event_id", event.id),
+        supabase.from("event_prizes").select("*").eq("event_id", eventId),
         supabase
           .from("event_travel")
           .select("*")
-          .eq("event_id", event.id)
+          .eq("event_id", eventId)
           .maybeSingle(),
         supabase
           .from("event_customization")
           .select("*")
-          .eq("event_id", event.id)
+          .eq("event_id", eventId)
           .maybeSingle(),
         supabase
           .from("event_rules")
           .select("*")
-          .eq("event_id", event.id)
+          .eq("event_id", eventId)
           .order("created_at"),
-        supabase.from("skills_contests").select("*").eq("event_id", event.id),
+        supabase.from("skills_contests").select("*").eq("event_id", eventId),
         supabase
           .from("stableford_scoring")
           .select("*")
-          .eq("event_id", event.id)
+          .eq("event_id", eventId)
           .maybeSingle(),
       ]);
 
