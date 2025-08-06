@@ -605,15 +605,7 @@ export default function ScorecardEdit() {
     return classes;
   };
 
-  const getScoreColor = (strokes: number, par: number) => {
-    if (strokes === 0) return "text-gray-400";
-    const diff = strokes - par;
-    if (diff <= -2) return "text-yellow-600 font-bold"; // Eagle
-    if (diff === -1) return "text-green-600 font-bold"; // Birdie
-    if (diff === 0) return "text-blue-600"; // Par
-    if (diff === 1) return "text-orange-600"; // Bogey
-    return "text-red-600"; // Double bogey+
-  };
+  // Removed getScoreColor - using getScoreStyle instead for visual indicators
 
   if (loading) {
     return (
