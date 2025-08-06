@@ -440,6 +440,24 @@ export default function MyTrips() {
         onClose={() => setShowAIQuickstart(false)}
         onSuccess={handleAISuccess}
       />
+
+      {/* Draft Preview Modal */}
+      {draftEventId && (
+        <DraftPreviewModal
+          isOpen={showDraftPreview}
+          onClose={() => {
+            setShowDraftPreview(false);
+            setDraftEventId(null);
+          }}
+          eventId={draftEventId}
+          onEditMode={() => {
+            setShowDraftPreview(false);
+            setDraftEventId(null);
+            // Navigate to event edit page
+            window.location.href = `/app/${draftEventId}/settings`;
+          }}
+        />
+      )}
     </div>
   );
 }
