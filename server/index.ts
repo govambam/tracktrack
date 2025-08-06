@@ -6,13 +6,10 @@ import { handleSupabaseTest } from "./routes/supabase-test";
 import { handleAuthTest } from "./routes/auth-test";
 import { generateDescription } from "./routes/openai";
 import eventsRouter from "./routes/events";
-<<<<<<< HEAD
 import clubhouseRouter from "./routes/clubhouse";
-=======
 import { supabase } from "./lib/supabase.js";
 import { EmailService } from "./lib/emailService.js";
 // import invitationsRouter from "./routes/invitations.js";
->>>>>>> ad93eac5babd11bc27d797e0f1f198fdf72734e1
 
 export function createServer() {
   const app = express();
@@ -46,13 +43,12 @@ export function createServer() {
   // Events API routes
   app.use("/api", eventsRouter);
 
-<<<<<<< HEAD
   // Clubhouse API routes
   app.use("/api/clubhouse", clubhouseRouter);
-=======
+
   // Invitations API routes (embedded for debugging)
   app.get("/api/invitations/test", (req, res) => {
-    console.log("��� Invitations test endpoint hit");
+    console.log("🔍 Invitations test endpoint hit");
     res.json({ success: true, message: "Invitations API is working" });
   });
 
@@ -96,7 +92,7 @@ export function createServer() {
         });
       }
 
-      console.log("�� User authenticated:", user.id);
+      console.log("✅ User authenticated:", user.id);
 
       // Validate required fields
       if (!event_id) {
@@ -255,7 +251,6 @@ export function createServer() {
       res.status(500).json({ error: "Internal server error" });
     }
   });
->>>>>>> ad93eac5babd11bc27d797e0f1f198fdf72734e1
 
   return app;
 }
