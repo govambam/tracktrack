@@ -2353,13 +2353,7 @@ export default function PublicEventHome() {
                       <div className="flex flex-wrap gap-4">
                         {closestToPinPrize > 0 && (
                           <div className="flex items-center space-x-2">
-                            <span
-                              className="text-lg"
-                              role="img"
-                              aria-label="target"
-                            >
-                              ����
-                            </span>
+                            <Target className="h-5 w-5 text-green-600" />
                             <span
                               className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-green-700"}`}
                             >
@@ -2369,13 +2363,7 @@ export default function PublicEventHome() {
                         )}
                         {longestDrivePrize > 0 && (
                           <div className="flex items-center space-x-2">
-                            <span
-                              className="text-lg"
-                              role="img"
-                              aria-label="golf swing"
-                            >
-                              🏌️�����️
-                            </span>
+                            <Flag className="h-5 w-5 text-orange-600" />
                             <span
                               className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-orange-700"}`}
                             >
@@ -2470,9 +2458,7 @@ export default function PublicEventHome() {
                             <li>• Ball must come to rest on putting surface</li>
                             <li>
                               <span className="inline-flex items-center space-x-1">
-                                <span role="img" aria-label="trophy">
-                                  🏆
-                                </span>
+                                <Trophy className="h-5 w-5 text-yellow-600" />
                                 <span>Winner takes the full prize amount</span>
                               </span>
                             </li>
@@ -2539,8 +2525,8 @@ export default function PublicEventHome() {
                             • In case of disputes, tournament organizer has
                             final say
                           </li>
-                          <li>��� Prizes paid out after round completion</li>
-                          <li>�� Have fun and play with integrity!</li>
+                          <li>• Prizes paid out after round completion</li>
+                          <li>• Have fun and play with integrity!</li>
                         </ul>
                       </div>
                     </div>
