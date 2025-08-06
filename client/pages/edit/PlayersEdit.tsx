@@ -326,9 +326,18 @@ export default function PlayersEdit() {
       const errors = results.filter((result) => result.error);
       if (errors.length > 0) {
         console.error("Error saving players:", errors);
+        errors.forEach((errorResult, index) => {
+          console.error(`Player ${index} error details:`, {
+            error: errorResult.error,
+            message: errorResult.error?.message,
+            details: errorResult.error?.details,
+            hint: errorResult.error?.hint,
+            code: errorResult.error?.code
+          });
+        });
         toast({
           title: "Save Failed",
-          description: "Failed to save some players",
+          description: `Failed to save some players: ${errors[0].error?.message || 'Unknown error'}`,
           variant: "destructive",
         });
         return;
@@ -427,7 +436,7 @@ export default function PlayersEdit() {
           } = await supabase.auth.getSession();
 
           if (sessionError) {
-            console.error("�� Session error:", sessionError);
+            console.error("❌ Session error:", sessionError);
             toast({
               title: "Players Updated",
               description:
