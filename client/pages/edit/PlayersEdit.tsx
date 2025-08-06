@@ -252,7 +252,11 @@ export default function PlayersEdit() {
         const existingPlayer = existingPlayerMap.get(player.id);
 
         // Check if this is a new player (non-UUID ID means it was generated locally)
-        const isNewPlayer = !existingPlayer && !player.id.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+        const isNewPlayer =
+          !existingPlayer &&
+          !player.id.match(
+            /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
+          );
 
         // Create a safe invited_email that satisfies the constraint
         const safeInvitedEmail =
@@ -261,10 +265,7 @@ export default function PlayersEdit() {
             .trim()
             .toLowerCase()
             .replace(/\s+/g, "_")
-            .replace(
-              /[^a-z0-9_]/g,
-              "",
-            )}_${Date.now()}@placeholder.local`;
+            .replace(/[^a-z0-9_]/g, "")}_${Date.now()}@placeholder.local`;
 
         const playerData = {
           ...(isNewPlayer ? {} : { id: player.id }), // Let DB generate ID for new players
@@ -312,7 +313,7 @@ export default function PlayersEdit() {
             existingPlayer.status !== "invited")
         ) {
           playersNeedingInvites.push({
-            id: isNewPlayer ? 'new_player' : player.id,
+            id: isNewPlayer ? "new_player" : player.id,
             name: player.name.trim(),
             email: email,
           });
@@ -320,9 +321,7 @@ export default function PlayersEdit() {
 
         // For new players, use insert; for existing players, use upsert
         if (isNewPlayer) {
-          return supabase
-            .from("event_players")
-            .insert(playerData);
+          return supabase.from("event_players").insert(playerData);
         } else {
           return supabase
             .from("event_players")
