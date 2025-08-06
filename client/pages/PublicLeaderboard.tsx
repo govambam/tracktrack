@@ -405,15 +405,15 @@ export default function PublicLeaderboard({
             .filter((hole) => hole.course_name === courseName)
             .sort((a, b) => a.hole_number - b.hole_number);
 
-          if (roundHoles.length === 0) {
-            return (
-              <div key={round.id} className="text-center py-8">
-                <p className="text-slate-600">
-                  No hole data available for {courseName}
-                </p>
-              </div>
-            );
-          }
+          // If no course hole data, create basic hole structure
+          const holes = roundHoles.length > 0 ? roundHoles :
+            Array.from({ length: 18 }, (_, i) => ({
+              hole_number: i + 1,
+              par: null,
+              course_name: courseName
+            }));
+
+          const hasParData = roundHoles.length > 0;
 
           // Get scores for this round
           const roundScores = scores.filter(
