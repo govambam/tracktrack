@@ -67,9 +67,9 @@ interface EventPlayer {
 interface HoleScore {
   hole: number;
   strokes: number;
-  par: number;
-  yardage?: number;
-  handicap?: number;
+  par: number | null;
+  yardage?: number | null;
+  handicap?: number | null;
 }
 
 interface Player {
