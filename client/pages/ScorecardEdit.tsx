@@ -107,6 +107,7 @@ interface EditingPlayerScore {
 export default function ScorecardEdit() {
   const { slug, roundId } = useParams();
   const navigate = useNavigate();
+  const { currentTheme, theme, loading: themeLoading } = useEventTheme(slug);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [eventData, setEventData] = useState<EventData | null>(null);
