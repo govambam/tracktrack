@@ -902,6 +902,22 @@ export default function ScorecardEdit() {
                                 </div>
                               )}
 
+                              {/* Clear score button */}
+                              <button
+                                onClick={() => updateHoleScore(player.id, 0)}
+                                className={`
+                                  w-16 h-12 rounded border flex items-center justify-center
+                                  transition-all duration-200 font-bold text-sm
+                                  ${currentScore === 0
+                                    ? 'border-blue-500 bg-blue-50 shadow-lg'
+                                    : 'border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100'
+                                  }
+                                  text-gray-600
+                                `}
+                              >
+                                Clear
+                              </button>
+
                               {/* More button for higher scores */}
                               <button
                                 onClick={() => {
