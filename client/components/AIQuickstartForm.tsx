@@ -392,6 +392,14 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
               <span>Loading courses...</span>
             </div>
+          ) : courses.length === 0 ? (
+            <div className="text-center py-8">
+              <div className="text-slate-500 mb-3">No courses found</div>
+              <Button onClick={loadCourses} variant="outline" size="sm">
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Retry Loading Courses
+              </Button>
+            </div>
           ) : (
             courses.map((course) => (
               <div key={course.id} className="flex items-center space-x-2">
