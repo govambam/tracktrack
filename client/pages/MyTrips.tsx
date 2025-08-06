@@ -317,7 +317,7 @@ export default function MyTrips() {
         <div>
           <h1 className="text-3xl font-bold text-green-900">My Events</h1>
           <p className="text-green-600 mt-1">
-            Manage and track your golf trips and tournaments
+            Manage your events and participate in tournaments you've been invited to
           </p>
         </div>
         <div className="mt-4 sm:mt-0">
