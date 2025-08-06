@@ -52,6 +52,7 @@ interface ClubhouseSession {
 export default function Clubhouse() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { currentTheme, theme, loading: themeLoading } = useEventTheme(slug);
   const [loading, setLoading] = useState(true);
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [rounds, setRounds] = useState<EventRound[]>([]);
