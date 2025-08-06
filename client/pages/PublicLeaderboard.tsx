@@ -292,10 +292,10 @@ export default function PublicLeaderboard({
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 text-lg">
-                    {player.name}
+                    {player.full_name}
                   </span>
                   <div className="text-sm text-slate-500">
-                    {player.name === "Ivan"
+                    {player.full_name === "Ivan"
                       ? "Scarecrow holes 2"
                       : "No prizes yet"}
                   </div>
@@ -306,7 +306,7 @@ export default function PublicLeaderboard({
                   ${player.money}
                 </div>
                 <div className="text-sm text-slate-500">
-                  {player.name === "Ivan"
+                  {player.full_name === "Ivan"
                     ? "1 contests won"
                     : "No contests won yet"}
                 </div>
@@ -528,7 +528,7 @@ export default function PublicLeaderboard({
                           className="border-b border-slate-100 hover:bg-slate-50"
                         >
                           <td className="px-4 py-3 font-semibold text-slate-900">
-                            {player.name}
+                            {player.full_name}
                           </td>
                           {player.holeScores.slice(0, 18).map((holeScore) => {
                             const strokes = holeScore.strokes;
