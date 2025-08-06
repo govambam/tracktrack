@@ -75,9 +75,7 @@ export function ClubhousePasswordModal({
       setError("");
     } catch (error) {
       console.error("Error verifying password:", error);
-      setError(
-        "Clubhouse feature is not available yet. The API endpoint needs to be deployed.",
-      );
+      setError("Failed to verify password. Please try again.");
     } finally {
       setLoading(false);
     }
