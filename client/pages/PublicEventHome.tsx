@@ -1637,6 +1637,54 @@ export default function PublicEventHome({
         getScoringFormat={getScoringFormat}
       />
 
+      {/* Clubhouse Call-to-Action */}
+      {hasClubhouse && (
+        <section className="py-16 px-6 sm:px-8 lg:px-12 relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"></div>
+          <div className="relative max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center space-x-2 bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+              <Users className="h-4 w-4 text-blue-600" />
+              <span className="text-sm font-medium text-blue-800">Player Zone</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-900 tracking-tight mb-6">
+              Join the Clubhouse
+            </h2>
+
+            <p className="text-xl text-blue-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+              Access your personal scorecard, chat with other players, and stay connected throughout the tournament.
+            </p>
+
+            <Button
+              onClick={handleClubhouseAccess}
+              size="lg"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <Users className="h-5 w-5 mr-2" />
+              Enter Clubhouse
+            </Button>
+
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+              <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-blue-200/50">
+                <BarChart3 className="h-6 w-6 text-blue-600 mx-auto mb-2" />
+                <h3 className="font-semibold text-blue-900 mb-1">Score Tracking</h3>
+                <p className="text-sm text-blue-600">Edit your scorecards for each round</p>
+              </div>
+              <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-blue-200/50">
+                <MessageCircle className="h-6 w-6 text-blue-600 mx-auto mb-2" />
+                <h3 className="font-semibold text-blue-900 mb-1">Live Chat</h3>
+                <p className="text-sm text-blue-600">Connect with other players</p>
+              </div>
+              <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-blue-200/50">
+                <Trophy className="h-6 w-6 text-blue-600 mx-auto mb-2" />
+                <h3 className="font-semibold text-blue-900 mb-1">Updates</h3>
+                <p className="text-sm text-blue-600">Get tournament announcements</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Summary Cards Section */}
       {currentTheme !== "TourTech" && currentTheme !== "Masters" && (
         <section className="py-24 px-6 sm:px-8 lg:px-12 relative">
