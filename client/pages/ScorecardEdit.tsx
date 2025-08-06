@@ -184,6 +184,9 @@ export default function ScorecardEdit() {
 
       // Load all existing event players and their scores
       await loadEventPlayersAndScores(event.id, roundId, holes);
+
+      // Load skills contests for this event and round
+      await loadSkillsContests(event.id, roundId);
     } catch (error) {
       console.error("Error loading data:", error);
       setError("Failed to load scorecard data");
