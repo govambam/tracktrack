@@ -36,8 +36,29 @@ export function createServer() {
   // Events API routes
   app.use("/api", eventsRouter);
 
-  // Invitations API routes
-  app.use("/api", invitationsRouter);
+  // Invitations API routes (embedded for debugging)
+  app.get("/api/invitations/test", (req, res) => {
+    console.log("📧 Invitations test endpoint hit");
+    res.json({ success: true, message: "Invitations API is working" });
+  });
+
+  app.post("/api/invitations/send", async (req, res) => {
+    console.log("📧 Invitations send endpoint hit");
+    console.log("Request body:", req.body);
+
+    try {
+      // For now, just return a success response for testing
+      res.json({
+        success: true,
+        message: "Invitations endpoint is working (test mode)",
+        sent_count: 0,
+        debug: true
+      });
+    } catch (error) {
+      console.error("Error in invitations send:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
 
   return app;
 }
