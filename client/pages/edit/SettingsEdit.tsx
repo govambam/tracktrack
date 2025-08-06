@@ -55,6 +55,8 @@ export default function SettingsEdit() {
   const [publishing, setPublishing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showDraftPreview, setShowDraftPreview] = useState(false);
+  const [clubhousePassword, setClubhousePassword] = useState("");
+  const [updatingClubhouse, setUpdatingClubhouse] = useState(false);
 
   const eventName = tripData?.tripName || "this event";
 
