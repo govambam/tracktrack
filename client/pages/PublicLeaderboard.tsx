@@ -35,6 +35,71 @@ export default function PublicLeaderboard({
   const [courseHoles, setCourseHoles] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (slug) {
+      loadEventData();
+    }
+  }, [slug]);
+
+  const loadEventData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Load event data
+      const { data: event, error: eventError } = await supabase
+        .from("events")
+        .select("*")
+        .eq("slug", slug)
+        .eq("is_published", true)
+        .single();
+
+      if (eventError || !event) {
+        setError("Event not found");
+        setLoading(false);
+        return;
+      }
+
+      setEventData(event);
+
+      // Load rounds, players, scores, and course holes in parallel
+      const [roundsResult, playersResult, scoresResult, courseHolesResult] = await Promise.all([
+        supabase
+          .from("event_rounds")
+          .select("*")
+          .eq("event_id", event.id)
+          .order("round_number"),
+
+        supabase
+          .from("event_players")
+          .select("*")
+          .eq("event_id", event.id)
+          .order("name"),
+
+        supabase
+          .from("scorecards")
+          .select("*")
+          .eq("event_id", event.id),
+
+        supabase
+          .from("course_holes")
+          .select("*")
+          .order("course_name, hole_number")
+      ]);
+
+      setRounds(roundsResult.data || []);
+      setPlayers(playersResult.data || []);
+      setScores(scoresResult.data || []);
+      setCourseHoles(courseHolesResult.data || []);
+
+      setLoading(false);
+    } catch (err) {
+      console.error("Error loading event data:", err);
+      setError("Failed to load event data");
+      setLoading(false);
+    }
+  };
+
   // Navigation items for consistency with home page
   const navItems = [
     { name: "Overview", href: `/events/${slug}#overview` },
