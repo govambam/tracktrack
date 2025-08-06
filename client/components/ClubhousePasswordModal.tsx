@@ -108,7 +108,16 @@ export function ClubhousePasswordModal({
       const result = await response.json();
 
       if (!response.ok) {
-        setError(result.error || "Failed to create session");
+        // Handle specific error cases with more detail
+        if (response.status === 503) {
+          setError(
+            "Clubhouse feature not available. Database migration required. Please contact support.",
+          );
+        } else if (result.details) {
+          setError(`${result.error}: ${result.details}`);
+        } else {
+          setError(result.error || "Failed to create session");
+        }
         return;
       }
 
