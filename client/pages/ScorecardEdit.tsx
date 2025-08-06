@@ -978,6 +978,9 @@ export default function ScorecardEdit() {
               <Edit className="h-5 w-5" />
               {editingPlayerScore?.playerName} - Hole {editingHole?.holeNumber}
             </DialogTitle>
+            <DialogDescription>
+              Select a score for this hole. Your selection will be saved automatically.
+            </DialogDescription>
           </DialogHeader>
 
           {editingPlayerScore && (
