@@ -79,12 +79,33 @@ router.post("/create-session", async (req, res) => {
       return res.status(400).json({ error: "Display name must be 50 characters or less" });
     }
 
-    // Check if event exists and clubhouse is enabled
-    const { data: event, error: eventError } = await supabase
-      .from("events")
-      .select("id, clubhouse_password, is_published")
-      .eq("id", eventId)
-      .single();
+    // Check if event exists and clubhouse is enabled (handle missing column gracefully)
+    let event;
+    let eventError;
+
+    try {
+      const result = await supabase
+        .from("events")
+        .select("id, clubhouse_password, is_published")
+        .eq("id", eventId)
+        .single();
+
+      event = result.data;
+      eventError = result.error;
+    } catch (dbError) {
+      // If clubhouse_password column doesn't exist, try without it
+      const fallbackResult = await supabase
+        .from("events")
+        .select("id, is_published")
+        .eq("id", eventId)
+        .single();
+
+      if (fallbackResult.error || !fallbackResult.data) {
+        return res.status(404).json({ error: "Event not found" });
+      }
+
+      return res.status(403).json({ error: "Clubhouse feature not available (database migration required)" });
+    }
 
     if (eventError || !event) {
       return res.status(404).json({ error: "Event not found" });
