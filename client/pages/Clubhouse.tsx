@@ -241,45 +241,107 @@ export default function Clubhouse() {
     <div
       className={`min-h-screen ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}
     >
-      {/* Header */}
-      <div
-        className={`bg-white shadow-sm ${currentTheme === "Masters" ? "border-b border-green-200" : currentTheme === "TourTech" ? "border-b border-gray-200" : "border-b border-blue-200"}`}
+      {/* Navigation - Same as Public Event Home */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 ${currentTheme === "Masters" ? "bg-white/98 backdrop-blur-sm border-b border-green-800/20 shadow-sm" : "bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg"}`}
       >
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div
-                className={`w-12 h-12 rounded-xl flex items-center justify-center ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-600 to-amber-600" : currentTheme === "TourTech" ? "bg-gradient-to-br from-gray-500 to-gray-600" : "bg-gradient-to-br from-blue-500 to-indigo-600"}`}
-              >
-                <Users className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1
-                  className={`text-2xl font-bold ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
-                >
-                  {eventData.name} Clubhouse
-                </h1>
-                <p
-                  className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
-                >
-                  Welcome back, {session.displayName}
-                </p>
-              </div>
-            </div>
-            <Button
-              onClick={() => window.history.back()}
-              variant="outline"
-              className={`${currentTheme === "Masters" ? "border-green-200 text-green-700 hover:bg-green-50" : currentTheme === "TourTech" ? "border-gray-200 text-gray-700 hover:bg-gray-50" : "border-blue-200 text-blue-700 hover:bg-blue-50"}`}
+            <div
+              className={`font-bold ${currentTheme === "Masters" ? "text-green-900 font-serif text-lg" : "text-slate-900"}`}
             >
-              <Home className="h-4 w-4 mr-2" />
-              Back to Event
-            </Button>
+              {eventData.name}
+            </div>
+            <div className="hidden md:flex items-center space-x-8">
+              <a
+                href={`/events/${eventSlug}#overview`}
+                className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
+              >
+                Overview
+              </a>
+              <a
+                href={`/events/${eventSlug}#courses`}
+                className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
+              >
+                Courses
+              </a>
+              <a
+                href={`/events/${eventSlug}#scoring`}
+                className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
+              >
+                Scoring Format
+              </a>
+              <a
+                href={`/events/${eventSlug}#players`}
+                className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
+              >
+                Players
+              </a>
+              <a
+                href={`/events/${eventSlug}#prizes`}
+                className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
+              >
+                Prizes
+              </a>
+              <a
+                href={`/events/${eventSlug}#travel`}
+                className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
+              >
+                Travel
+              </a>
+              <span
+                className={`text-sm font-medium ${currentTheme === "Masters" ? "text-yellow-600 font-serif" : "text-green-600"}`}
+              >
+                Clubhouse
+              </span>
+              <a
+                href={`/events/${eventSlug}/leaderboard`}
+                className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
+              >
+                Leaderboard
+              </a>
+              <Button
+                onClick={() => {
+                  localStorage.removeItem(`clubhouse_session_${eventSlug}`);
+                  navigate(`/events/${eventSlug}`);
+                }}
+                variant="outline"
+                size="sm"
+                className={`${currentTheme === "Masters" ? "border-green-200 text-green-700 hover:bg-green-50" : currentTheme === "TourTech" ? "border-gray-200 text-gray-700 hover:bg-gray-50" : "border-blue-200 text-blue-700 hover:bg-blue-50"}`}
+              >
+                <Home className="h-4 w-4 mr-2" />
+                Exit
+              </Button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Welcome Header */}
+      <div className="pt-20 pb-8">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center">
+            <div
+              className={`w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-600 to-amber-600" : currentTheme === "TourTech" ? "bg-gradient-to-br from-gray-500 to-gray-600" : "bg-gradient-to-br from-blue-500 to-indigo-600"}`}
+            >
+              <Users className="h-8 w-8 text-white" />
+            </div>
+            <h1
+              className={`text-3xl font-bold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+            >
+              Welcome to the Clubhouse
+            </h1>
+            <p
+              className={`text-lg ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+            >
+              Welcome back, {session.displayName}
+            </p>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="max-w-6xl mx-auto px-6 pb-8">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
