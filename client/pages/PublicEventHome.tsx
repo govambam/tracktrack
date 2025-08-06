@@ -1469,7 +1469,7 @@ export default function PublicEventHome() {
         const contests = roundContests.map((contest) => ({
           hole: contest.hole,
           type: contest.contest_type,
-          icon: contest.contest_type === "closest_to_pin" ? Target : Flag,
+          icon: getContestIcon(contest.contest_type),
         }));
 
         return {
