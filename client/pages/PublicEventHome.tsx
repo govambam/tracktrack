@@ -1240,6 +1240,8 @@ export default function PublicEventHome({
   const [stablefordScoring, setStablefordScoring] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [showClubhouseModal, setShowClubhouseModal] = useState(false);
+  const [clubhouseSession, setClubhouseSession] = useState<any>(null);
+  const [activeClubhouseTab, setActiveClubhouseTab] = useState("scores");
   const navigate = useNavigate();
 
   useEffect(() => {
