@@ -71,9 +71,7 @@ export default function ScorecardEdit() {
   const [session, setSession] = useState<any>(null);
   const [courseHoles, setCourseHoles] = useState<HoleScore[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
-  const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
-  const [currentEventPlayer, setCurrentEventPlayer] =
-    useState<EventPlayer | null>(null);
+  // Remove currentPlayer and currentEventPlayer - any clubhouse user can edit any player
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
