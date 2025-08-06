@@ -839,7 +839,9 @@ export default function ScorecardEdit() {
                         <div className="flex gap-6">
                           {/* Score Numbers Grid */}
                           <div>
-                            <div className="text-sm font-medium text-gray-700 mb-2">Score</div>
+                            <div className="text-sm font-medium text-gray-700 mb-2">
+                              Score
+                            </div>
                             <div className="grid grid-cols-3 gap-2">
                               {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((score) => {
                                 const isSelected = currentScore === score;
@@ -849,20 +851,25 @@ export default function ScorecardEdit() {
                                 return (
                                   <button
                                     key={score}
-                                    onClick={() => updateHoleScore(player.id, score)}
+                                    onClick={() =>
+                                      updateHoleScore(player.id, score)
+                                    }
                                     className={`
                                       w-16 h-16 rounded-full border-2 flex flex-col items-center justify-center
                                       transition-all duration-200 font-bold text-lg
-                                      ${isSelected
-                                        ? 'border-blue-500 bg-blue-50 shadow-lg scale-105'
-                                        : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
+                                      ${
+                                        isSelected
+                                          ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
+                                          : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
                                       }
                                       ${scoreColor}
                                     `}
                                   >
                                     <span>{score}</span>
                                     {isPar && (
-                                      <span className="text-xs text-gray-500 font-normal">Par</span>
+                                      <span className="text-xs text-gray-500 font-normal">
+                                        Par
+                                      </span>
                                     )}
                                   </button>
                                 );
@@ -872,20 +879,25 @@ export default function ScorecardEdit() {
 
                           {/* Others Section for 10+ */}
                           <div>
-                            <div className="text-sm font-medium text-blue-600 mb-2">Others</div>
+                            <div className="text-sm font-medium text-blue-600 mb-2">
+                              Others
+                            </div>
                             <div className="space-y-2">
                               {[10, 11, 12].map((score) => {
                                 const isSelected = currentScore === score;
                                 return (
                                   <button
                                     key={score}
-                                    onClick={() => updateHoleScore(player.id, score)}
+                                    onClick={() =>
+                                      updateHoleScore(player.id, score)
+                                    }
                                     className={`
                                       w-16 h-12 rounded border flex items-center justify-center
                                       transition-all duration-200 font-bold text-base
-                                      ${isSelected
-                                        ? 'border-blue-500 bg-blue-50 shadow-lg'
-                                        : 'border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100'
+                                      ${
+                                        isSelected
+                                          ? "border-blue-500 bg-blue-50 shadow-lg"
+                                          : "border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100"
                                       }
                                       text-red-600
                                     `}
@@ -908,9 +920,10 @@ export default function ScorecardEdit() {
                                 className={`
                                   w-16 h-12 rounded border flex items-center justify-center
                                   transition-all duration-200 font-bold text-sm
-                                  ${currentScore === 0
-                                    ? 'border-blue-500 bg-blue-50 shadow-lg'
-                                    : 'border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100'
+                                  ${
+                                    currentScore === 0
+                                      ? "border-blue-500 bg-blue-50 shadow-lg"
+                                      : "border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100"
                                   }
                                   text-gray-600
                                 `}
@@ -921,7 +934,15 @@ export default function ScorecardEdit() {
                               {/* More button for higher scores */}
                               <button
                                 onClick={() => {
-                                  const newScore = Math.min(15, Math.max(13, currentScore === 0 ? 13 : currentScore + 1));
+                                  const newScore = Math.min(
+                                    15,
+                                    Math.max(
+                                      13,
+                                      currentScore === 0
+                                        ? 13
+                                        : currentScore + 1,
+                                    ),
+                                  );
                                   updateHoleScore(player.id, newScore);
                                 }}
                                 className="w-16 h-12 rounded border border-dashed border-gray-400 bg-gray-50 hover:bg-gray-100 flex items-center justify-center font-bold text-sm text-gray-600 transition-all duration-200"
