@@ -244,32 +244,46 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
 
       // Add courses to event
       if (selectedCourses.length > 0) {
+        console.log('Adding courses to event...');
         const eventCourses = selectedCourses.map((course, index) => ({
           event_id: eventData.id,
           course_id: course.id,
           display_order: index + 1
         }));
 
+        console.log('Event courses data:', eventCourses);
+
         const { error: coursesError } = await supabase
           .from('event_courses')
           .insert(eventCourses);
 
-        if (coursesError) throw coursesError;
+        if (coursesError) {
+          console.error('Courses insertion error:', coursesError);
+          throw new Error(`Failed to add courses: ${coursesError.message || JSON.stringify(coursesError)}`);
+        }
+        console.log('Courses added successfully');
       }
 
       // Add players to event
       if (formData.players.length > 0) {
+        console.log('Adding players to event...');
         const eventPlayers = formData.players.map(playerName => ({
           event_id: eventData.id,
           full_name: playerName,
           email: `${playerName.toLowerCase().replace(/\s+/g, '.')}@example.com` // Placeholder email
         }));
 
+        console.log('Event players data:', eventPlayers);
+
         const { error: playersError } = await supabase
           .from('event_players')
           .insert(eventPlayers);
 
-        if (playersError) throw playersError;
+        if (playersError) {
+          console.error('Players insertion error:', playersError);
+          throw new Error(`Failed to add players: ${playersError.message || JSON.stringify(playersError)}`);
+        }
+        console.log('Players added successfully');
       }
 
       // Add default travel information
