@@ -278,6 +278,12 @@ export default function CoursesEdit() {
     setSaving(true);
 
     try {
+      console.log("Saving rounds with skills contests:", rounds.map(r => ({
+        id: r.id,
+        courseName: r.courseName,
+        skillsContests: r.skillsContests
+      })));
+
       const result = await saveRounds(rounds);
 
       if (result.success) {
@@ -286,6 +292,8 @@ export default function CoursesEdit() {
           description:
             "Golf rounds and skills contests have been saved successfully",
         });
+        // Reload data to ensure UI shows saved state
+        await loadRoundsData();
       } else {
         toast({
           title: "Save Failed",
