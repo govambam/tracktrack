@@ -40,6 +40,7 @@ import {
   Edit,
   Users,
   Lock,
+  AlertTriangle,
 } from "lucide-react";
 
 export default function SettingsEdit() {
