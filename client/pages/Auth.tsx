@@ -19,6 +19,10 @@ export default function Auth() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Get return URL from search params
+  const searchParams = new URLSearchParams(location.search);
+  const returnUrl = searchParams.get('returnUrl');
+
   // Set initial mode based on URL
   useState(() => {
     if (location.pathname === "/signup") {
