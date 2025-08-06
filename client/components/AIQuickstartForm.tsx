@@ -500,7 +500,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
             // Add one longest drive contest (typically hole 1 or a long par 4/5)
             skillsContests.push({
               event_id: eventData.id,
-              round_id: `round_${roundIndex + 1}`,
+              round_id: round.id, // Use actual round ID from database
               hole: 1, // Default to hole 1 for longest drive
               contest_type: "longest_drive",
             });
@@ -508,7 +508,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
             // Add one closest to pin contest (typically a par 3)
             skillsContests.push({
               event_id: eventData.id,
-              round_id: `round_${roundIndex + 1}`,
+              round_id: round.id, // Use actual round ID from database
               hole: 3, // Default to hole 3 for closest to pin
               contest_type: "closest_to_pin",
             });
