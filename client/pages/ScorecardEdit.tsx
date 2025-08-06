@@ -492,7 +492,7 @@ export default function ScorecardEdit() {
 
       // Create maps for quick lookup
       const existingScoreMap = new Map();
-      (existingScores || []).forEach(score => {
+      (existingScores || []).forEach((score) => {
         const key = `${score.event_player_id}-${score.hole_number}`;
         existingScoreMap.set(key, score);
       });
@@ -501,8 +501,8 @@ export default function ScorecardEdit() {
       const toUpdate = [];
       const toInsert = [];
 
-      players.forEach(player => {
-        player.scores.forEach(holeScore => {
+      players.forEach((player) => {
+        player.scores.forEach((holeScore) => {
           const key = `${player.id}-${holeScore.hole}`;
           const existingScore = existingScoreMap.get(key);
 
@@ -536,24 +536,18 @@ export default function ScorecardEdit() {
       if (toUpdate.length > 0) {
         // Batch updates using upsert
         promises.push(
-          supabase
-            .from("scorecards")
-            .upsert(toUpdate, { onConflict: "id" })
+          supabase.from("scorecards").upsert(toUpdate, { onConflict: "id" }),
         );
       }
 
       if (toInsert.length > 0) {
         // Batch inserts
-        promises.push(
-          supabase
-            .from("scorecards")
-            .insert(toInsert)
-        );
+        promises.push(supabase.from("scorecards").insert(toInsert));
       }
 
       if (promises.length > 0) {
         const results = await Promise.all(promises);
-        const errors = results.filter(result => result.error);
+        const errors = results.filter((result) => result.error);
 
         if (errors.length > 0) {
           console.error("Batch save errors:", errors);
@@ -580,15 +574,19 @@ export default function ScorecardEdit() {
     const diff = strokes - par;
 
     // Base styles
-    let classes = "font-bold text-sm min-w-[20px] flex items-center justify-center relative ";
+    let classes =
+      "font-bold text-sm min-w-[20px] flex items-center justify-center relative ";
 
     if (diff <= -2) {
       // Eagle: double circle
-      classes += "text-yellow-600 rounded-full border-2 border-yellow-600 bg-yellow-50 shadow-lg";
-      classes += " before:content-[''] before:absolute before:inset-[-3px] before:rounded-full before:border-2 before:border-yellow-600";
+      classes +=
+        "text-yellow-600 rounded-full border-2 border-yellow-600 bg-yellow-50 shadow-lg";
+      classes +=
+        " before:content-[''] before:absolute before:inset-[-3px] before:rounded-full before:border-2 before:border-yellow-600";
     } else if (diff === -1) {
       // Birdie: single circle
-      classes += "text-green-600 rounded-full border-2 border-green-600 bg-green-50";
+      classes +=
+        "text-green-600 rounded-full border-2 border-green-600 bg-green-50";
     } else if (diff === 0) {
       // Par: no special styling
       classes += "text-blue-600";
@@ -598,7 +596,8 @@ export default function ScorecardEdit() {
     } else if (diff === 2) {
       // Double bogey: double square
       classes += "text-red-600 border-2 border-red-600 bg-red-50 shadow-lg";
-      classes += " before:content-[''] before:absolute before:inset-[-3px] before:border-2 before:border-red-600";
+      classes +=
+        " before:content-[''] before:absolute before:inset-[-3px] before:border-2 before:border-red-600";
     } else {
       // Worse than double bogey
       classes += "text-red-600 font-extrabold";
@@ -611,10 +610,18 @@ export default function ScorecardEdit() {
 
   if (loading || themeLoading) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}>
+      <div
+        className={`min-h-screen flex items-center justify-center ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}
+      >
         <div className="text-center">
-          <Loader2 className={`h-8 w-8 animate-spin mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`} />
-          <p className={`${currentTheme === "Masters" ? "text-green-700 font-serif" : currentTheme === "TourTech" ? "text-gray-700" : "text-blue-700"}`}>Loading scorecard...</p>
+          <Loader2
+            className={`h-8 w-8 animate-spin mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+          />
+          <p
+            className={`${currentTheme === "Masters" ? "text-green-700 font-serif" : currentTheme === "TourTech" ? "text-gray-700" : "text-blue-700"}`}
+          >
+            Loading scorecard...
+          </p>
         </div>
       </div>
     );
@@ -622,13 +629,23 @@ export default function ScorecardEdit() {
 
   if (error || !eventData || !round) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}>
+      <div
+        className={`min-h-screen flex items-center justify-center ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}
+      >
         <div className="text-center max-w-2xl mx-auto p-6">
-          <AlertCircle className={`h-16 w-16 mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-400" : currentTheme === "TourTech" ? "text-gray-400" : "text-blue-400"}`} />
-          <h1 className={`text-2xl font-bold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}>
+          <AlertCircle
+            className={`h-16 w-16 mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-400" : currentTheme === "TourTech" ? "text-gray-400" : "text-blue-400"}`}
+          />
+          <h1
+            className={`text-2xl font-bold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+          >
             Scorecard Unavailable
           </h1>
-          <p className={`mb-4 ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}>{error}</p>
+          <p
+            className={`mb-4 ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+          >
+            {error}
+          </p>
           <Button
             onClick={() => navigate(`/events/${slug}/clubhouse`)}
             variant="outline"
@@ -643,9 +660,13 @@ export default function ScorecardEdit() {
   }
 
   return (
-    <div className={`min-h-screen ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}>
+    <div
+      className={`min-h-screen ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}
+    >
       {/* Header */}
-      <div className={`bg-white shadow-sm ${currentTheme === "Masters" ? "border-b border-green-200" : currentTheme === "TourTech" ? "border-b border-gray-200" : "border-b border-blue-200"}`}>
+      <div
+        className={`bg-white shadow-sm ${currentTheme === "Masters" ? "border-b border-green-200" : currentTheme === "TourTech" ? "border-b border-gray-200" : "border-b border-blue-200"}`}
+      >
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -659,10 +680,14 @@ export default function ScorecardEdit() {
                 Back
               </Button>
               <div>
-                <h1 className={`text-2xl font-bold ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}>
+                <h1
+                  className={`text-2xl font-bold ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                >
                   Round {round.round_number} Scorecard
                 </h1>
-                <p className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}>
+                <p
+                  className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                >
                   {round.course_name} • {session?.displayName}
                 </p>
               </div>
@@ -960,7 +985,9 @@ export default function ScorecardEdit() {
                           {currentScore === 0 ? (
                             "Add"
                           ) : (
-                            <div className={`inline-flex ${getScoreStyle(currentScore, par)}`}>
+                            <div
+                              className={`inline-flex ${getScoreStyle(currentScore, par)}`}
+                            >
                               {formatScore(currentScore, par)}
                             </div>
                           )}
@@ -1080,7 +1107,9 @@ export default function ScorecardEdit() {
                           }
                         `}
                       >
-                        <div className={`${getScoreStyle(score, editingPlayerScore.par)}`}>
+                        <div
+                          className={`${getScoreStyle(score, editingPlayerScore.par)}`}
+                        >
                           {score}
                         </div>
                         {isPar && (
