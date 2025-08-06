@@ -489,7 +489,7 @@ export default function PublicLeaderboard({
                         <th className="px-4 py-3 text-left text-sm font-semibold text-slate-900">
                           Hole
                         </th>
-                        {roundHoles.slice(0, 18).map((hole) => (
+                        {holes.slice(0, 18).map((hole) => (
                           <th
                             key={hole.hole_number}
                             className="px-3 py-3 text-center text-sm font-semibold text-slate-900"
