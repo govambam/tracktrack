@@ -46,6 +46,9 @@ interface QuickstartData {
   endDate: string;
   players: string[];
   occasion: string;
+  theme: string;
+  hasEntryFee: boolean;
+  entryFeeAmount: number;
 }
 
 const OCCASIONS = [
