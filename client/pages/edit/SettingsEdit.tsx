@@ -52,6 +52,7 @@ export default function SettingsEdit() {
   const [eventInfo, setEventInfo] = useState<any>(null);
   const [publishing, setPublishing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showDraftPreview, setShowDraftPreview] = useState(false);
 
   const eventName = tripData?.tripName || "this event";
 
