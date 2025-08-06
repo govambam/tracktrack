@@ -783,14 +783,25 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
                 />
               </div>
 
-              {formData.entryFeeAmount > 0 && formData.players.length > 0 && (
+              {formData.entryFeeAmount > 0 && formData.players.length > 0 && formData.courses.length > 0 && (
                 <div className="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg">
                   <div className="font-medium mb-2">Prize Pool Preview:</div>
                   <div className="space-y-1">
                     <div>Total Prize Pool: ${(formData.entryFeeAmount * formData.players.length).toLocaleString()}</div>
                     <div>Winner: ${(formData.entryFeeAmount * 2).toLocaleString()} (200% of buy-in)</div>
                     <div>Runner-up: ${formData.entryFeeAmount.toLocaleString()} (100% of buy-in)</div>
-                    <div>Contest Prizes: ${((formData.entryFeeAmount * formData.players.length - formData.entryFeeAmount * 3) / (formData.courses.length * 2)).toLocaleString()} each</div>
+                    {formData.courses.length > 0 && (
+                      <>
+                        <div>Longest Drive: ${((formData.entryFeeAmount * formData.players.length - formData.entryFeeAmount * 3) / 2).toLocaleString()}</div>
+                        <div>Closest to Pin: ${((formData.entryFeeAmount * formData.players.length - formData.entryFeeAmount * 3) / 2).toLocaleString()}</div>
+                        <div className="text-xs text-slate-500 mt-2">
+                          • {formData.courses.length} Longest Drive contest{formData.courses.length !== 1 ? 's' : ''} (1 per round)
+                        </div>
+                        <div className="text-xs text-slate-500">
+                          • {formData.courses.length} Closest to Pin contest{formData.courses.length !== 1 ? 's' : ''} (1 per round)
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               )}
