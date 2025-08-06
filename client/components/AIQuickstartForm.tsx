@@ -408,7 +408,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
           <MapPin className="h-4 w-4 text-emerald-600" />
           <span>Courses to Play</span>
         </Label>
-        <div className="space-y-2 max-h-48 overflow-y-auto border rounded-lg p-3">
+        <div className="space-y-3 max-h-64 overflow-y-auto border rounded-lg p-3">
           {loadingCourses ? (
             <div className="flex items-center justify-center py-4">
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
