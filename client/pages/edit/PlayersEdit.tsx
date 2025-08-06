@@ -252,8 +252,16 @@ export default function PlayersEdit() {
         const existingPlayer = existingPlayerMap.get(player.id);
 
         // Create a safe invited_email that satisfies the constraint
-        const safeInvitedEmail = email ||
-          `${player.name.trim().toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "")}_${player.id.slice(0, 8)}@placeholder.local`;
+        const safeInvitedEmail =
+          email ||
+          `${player.name
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, "_")
+            .replace(
+              /[^a-z0-9_]/g,
+              "",
+            )}_${player.id.slice(0, 8)}@placeholder.local`;
 
         const playerData = {
           id: player.id,
