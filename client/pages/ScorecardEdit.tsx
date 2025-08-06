@@ -257,7 +257,7 @@ export default function ScorecardEdit() {
           (sum, hole) => sum + hole.strokes,
           0,
         );
-        const totalPar = playerHoles.reduce((sum, hole) => sum + hole.par, 0);
+        const totalPar = playerHoles.reduce((sum, hole) => sum + (hole.par || 0), 0);
 
         playersData.push({
           id: eventPlayer.id,
@@ -265,7 +265,7 @@ export default function ScorecardEdit() {
           scores: playerHoles,
           totalStrokes,
           totalPar,
-          scoreRelativeToPar: totalStrokes - totalPar,
+          scoreRelativeToPar: courseHasParData ? totalStrokes - totalPar : 0,
         });
       }
 
