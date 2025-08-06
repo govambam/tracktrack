@@ -21,6 +21,11 @@ export default function Admin() {
           </p>
         </div>
 
+        {/* Debug Section - Remove in production */}
+        <div className="mb-8">
+          <DebugFeatureFlags />
+        </div>
+
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           {/* Admin Panel */}
           <div className="space-y-6">
