@@ -26,6 +26,13 @@ export default function PublicLeaderboard({
 }: PublicLeaderboardProps = {}) {
   const { slug } = useParams();
   const [activeTab, setActiveTab] = useState("leaderboard");
+  const [loading, setLoading] = useState(true);
+  const [eventData, setEventData] = useState<any>(null);
+  const [rounds, setRounds] = useState<any[]>([]);
+  const [players, setPlayers] = useState<any[]>([]);
+  const [scores, setScores] = useState<any[]>([]);
+  const [courseHoles, setCourseHoles] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   // Navigation items for consistency with home page
   const navItems = [
