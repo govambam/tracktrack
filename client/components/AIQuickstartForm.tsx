@@ -468,7 +468,7 @@ Write a "Getting There" section with:
 - Practical travel tips for golf trips
 - Friendly and helpful tone
 
-Format as markdown with headers. Keep it informative but not overly long:`;
+Format as markdown with headers. Keep it informative and limit response to 100 words or less:`;
 
     try {
       const response = await fetch("/api/generate-description", {
