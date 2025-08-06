@@ -95,4 +95,4 @@ The Golf Event Team
   }
 }
 
-module.exports = { EmailService };
+export { EmailService };
