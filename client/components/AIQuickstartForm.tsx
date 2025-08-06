@@ -203,6 +203,8 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
     }
     if (formData.players.length === 0) errors.push('Add at least one player');
     if (!formData.occasion) errors.push('Select an occasion');
+    if (!formData.theme) errors.push('Select a theme');
+    if (formData.hasEntryFee && formData.entryFeeAmount <= 0) errors.push('Enter a valid entry fee amount');
     return errors;
   };
 
