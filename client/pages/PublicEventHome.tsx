@@ -1177,7 +1177,12 @@ const AnimatedTravelCard = ({
   );
 };
 
-export default function PublicEventHome() {
+interface PublicEventHomeProps {
+  slug?: string;
+  forceTheme?: string;
+}
+
+export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEventHomeProps = {}) {
   // Add smooth scrolling to page
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -1185,7 +1190,8 @@ export default function PublicEventHome() {
       document.documentElement.style.scrollBehavior = "auto";
     };
   }, []);
-  const { slug } = useParams();
+  const { slug: urlSlug } = useParams();
+  const slug = propSlug || urlSlug;
   const [loading, setLoading] = useState(true);
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [players, setPlayers] = useState<EventPlayer[]>([]);
