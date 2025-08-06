@@ -288,17 +288,17 @@ export default function Clubhouse() {
                 {rounds.map((round, index) => (
                   <Card
                     key={round.id}
-                    className="border-blue-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300"
+                    className={`transition-all duration-300 hover:shadow-lg ${currentTheme === "Masters" ? "border-green-200 hover:border-green-300" : currentTheme === "TourTech" ? "border-gray-200 hover:border-gray-300" : "border-blue-200 hover:border-blue-300"}`}
                   >
                     <CardHeader>
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-blue-900 flex items-center">
-                          <Trophy className="h-5 w-5 mr-2 text-blue-600" />
+                        <CardTitle className={`flex items-center ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}>
+                          <Trophy className={`h-5 w-5 mr-2 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`} />
                           Round {index + 1}
                         </CardTitle>
                         <Badge
                           variant="outline"
-                          className="border-blue-200 text-blue-700"
+                          className={`${currentTheme === "Masters" ? "border-green-200 text-green-700" : currentTheme === "TourTech" ? "border-gray-200 text-gray-700" : "border-blue-200 text-blue-700"}`}
                         >
                           {getScoringFormatDisplay(round.scoring_type)}
                         </Badge>
@@ -306,30 +306,30 @@ export default function Clubhouse() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
-                        <h4 className="font-semibold text-blue-900 mb-2">
+                        <h4 className={`font-semibold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}>
                           {round.course_name}
                         </h4>
                         <div className="space-y-2">
                           {round.round_date && (
-                            <div className="flex items-center space-x-2 text-sm text-blue-600">
+                            <div className={`flex items-center space-x-2 text-sm ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}>
                               <Calendar className="h-4 w-4" />
                               <span>{formatDate(round.round_date)}</span>
                             </div>
                           )}
                           {round.tee_time && (
-                            <div className="flex items-center space-x-2 text-sm text-blue-600">
+                            <div className={`flex items-center space-x-2 text-sm ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}>
                               <Clock className="h-4 w-4" />
                               <span>Tee Time: {round.tee_time}</span>
                             </div>
                           )}
-                          <div className="flex items-center space-x-2 text-sm text-blue-600">
+                          <div className={`flex items-center space-x-2 text-sm ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}>
                             <Target className="h-4 w-4" />
                             <span>{round.holes} holes</span>
                           </div>
                         </div>
                       </div>
                       <Button
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                        className={`w-full text-white ${currentTheme === "Masters" ? "bg-green-600 hover:bg-green-700" : currentTheme === "TourTech" ? "bg-gray-600 hover:bg-gray-700" : "bg-blue-600 hover:bg-blue-700"}`}
                         onClick={() => {
                           navigate(
                             `/events/${slug}/clubhouse/scorecard/${round.id}`,
