@@ -1629,6 +1629,8 @@ export default function PublicEventHome({
         eventName={eventData.name}
         slug={slug!}
         theme={currentTheme}
+        handleClubhouseAccess={handleClubhouseAccess}
+        hasClubhouse={hasClubhouse}
       />
 
       {/* Hero Section */}
