@@ -1258,17 +1258,7 @@ export default function PublicEventHome({
     }
   }, [slug, preloadedEventData]);
 
-<<<<<<< HEAD
   const loadRelatedData = async (eventId: string) => {
-=======
-  useEffect(() => {
-    if (eventData) {
-      checkClubhouseSession();
-    }
-  }, [eventData]);
-
-  const loadEventData = async () => {
->>>>>>> f104a34300e95db482ef9c6ae20898d4268043db
     try {
       // Load all related data in parallel
       const [
