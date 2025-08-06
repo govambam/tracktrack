@@ -454,7 +454,7 @@ export default function PublicLeaderboard({
             };
           });
 
-          const totalPar = roundHoles.reduce((sum, hole) => sum + hole.par, 0);
+          const totalPar = hasParData ? holes.reduce((sum, hole) => sum + (hole.par || 0), 0) : 0;
 
           return (
             <div key={round.id}>
@@ -465,10 +465,15 @@ export default function PublicLeaderboard({
                 </h3>
               </div>
               <p className="text-slate-600 mb-6">
-                {roundHoles.length} holes •{" "}
+                {holes.length} holes •{" "}
                 {round.scoring_type === "stroke_play"
                   ? "Stroke Play"
                   : "Stableford"}
+                {!hasParData && (
+                  <span className="ml-2 text-amber-600">
+                    • Course data pending
+                  </span>
+                )}
                 {round.round_date && (
                   <span className="ml-2">
                     • {new Date(round.round_date).toLocaleDateString()}
