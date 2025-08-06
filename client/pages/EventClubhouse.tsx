@@ -142,7 +142,7 @@ export default function EventClubhouse() {
           <p
             className={`${
               currentTheme === "Masters"
-                ? "text-green-700 font-serif"
+                ? "text-green-800 font-serif"
                 : currentTheme === "TourTech"
                   ? "text-gray-700"
                   : "text-blue-700"
