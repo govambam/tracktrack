@@ -25,8 +25,8 @@ interface OutletContext {
 
 export default function EventHome() {
   const { eventData } = useOutletContext<OutletContext>();
-  
+
   // Pass the eventData to the existing PublicEventHome component
-  // We'll modify PublicEventHome to accept props instead of loading data itself
-  return <PublicEventHome preloadedEventData={eventData} />;
+  // Hide navigation since it's provided by the shell
+  return <PublicEventHome preloadedEventData={eventData} hideNavigation={true} />;
 }
