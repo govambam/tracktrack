@@ -1559,7 +1559,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
   const theme = getThemeStyles(currentTheme);
 
   // Get theme components
-  const themeName = (eventData?.theme as ThemeName) || "default";
+  const themeName = (currentTheme as ThemeName) || "default";
   const components = themeComponents[themeName] || themeComponents.default;
 
   return (
