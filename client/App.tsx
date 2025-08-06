@@ -66,6 +66,7 @@ const App = () => (
               <Route path="/signup" element={<Auth />} />
               <Route path="/events/:slug" element={<PublicEventHome />} />
               <Route path="/events/:slug/clubhouse" element={<Clubhouse />} />
+              <Route path="/events/:slug/clubhouse/scorecard/:roundId" element={<ScorecardEdit />} />
               <Route
                 path="/events/:slug/leaderboard"
                 element={<PublicLeaderboard />}
