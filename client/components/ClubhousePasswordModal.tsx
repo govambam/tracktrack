@@ -43,12 +43,6 @@ export function ClubhousePasswordModal({
     setError("");
 
     try {
-      console.log("Clubhouse password verification request:", {
-        eventId,
-        password,
-        passwordLength: password.length
-      });
-
       // Verify password with the backend
       const response = await fetch("/api/clubhouse/verify-password", {
         method: "POST",
@@ -61,17 +55,15 @@ export function ClubhousePasswordModal({
         }),
       });
 
+      // Handle case where API endpoint doesn't exist yet (404)
+      if (response.status === 404) {
+        setError("Clubhouse feature not deployed yet. Please contact support or try again later.");
+        return;
+      }
+
       const result = await response.json();
 
-      console.log("Clubhouse password verification response:", {
-        status: response.status,
-        ok: response.ok,
-        result
-      });
-
       if (!response.ok) {
-        // Temporary debugging alert
-        alert(`API Error: ${response.status} - ${result.error || "Invalid password"}`);
         setError(result.error || "Invalid password");
         return;
       }
