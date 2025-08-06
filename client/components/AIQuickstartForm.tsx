@@ -92,9 +92,15 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
       setCourses(coursesData || []);
     } catch (error) {
       console.error('Error loading courses:', error);
+
+      let errorMessage = 'Failed to load courses';
+      if (error && typeof error === 'object' && 'message' in error) {
+        errorMessage = `Failed to load courses: ${error.message}`;
+      }
+
       toast({
-        title: 'Error',
-        description: 'Failed to load courses',
+        title: 'Database Error',
+        description: errorMessage,
         variant: 'destructive',
       });
     } finally {
