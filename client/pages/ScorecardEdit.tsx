@@ -117,6 +117,7 @@ export default function ScorecardEdit() {
   const [isHoleEditOpen, setIsHoleEditOpen] = useState(false);
   const [editingHole, setEditingHole] = useState<HoleEditData | null>(null);
   const [skillsContests, setSkillsContests] = useState<SkillsContest[]>([]);
+  const [editingPlayerScore, setEditingPlayerScore] = useState<EditingPlayerScore | null>(null);
 
   useEffect(() => {
     if (slug && roundId) {
