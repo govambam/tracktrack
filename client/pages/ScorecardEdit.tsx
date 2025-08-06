@@ -819,25 +819,27 @@ export default function ScorecardEdit() {
 
                 {/* Par Row */}
                 <tbody>
-                  <tr className="bg-blue-50 border-b border-blue-200">
-                    <td className="font-semibold p-3 text-blue-800">PAR</td>
-                    {courseHoles.map((hole) => (
-                      <td
-                        key={`par-${hole.hole}`}
-                        className="text-center p-2 font-semibold text-blue-800"
-                      >
-                        {hole.par}
+                  {hasParData && (
+                    <tr className="bg-blue-50 border-b border-blue-200">
+                      <td className="font-semibold p-3 text-blue-800">PAR</td>
+                      {courseHoles.map((hole) => (
+                        <td
+                          key={`par-${hole.hole}`}
+                          className="text-center p-2 font-semibold text-blue-800"
+                        >
+                          {hole.par}
+                        </td>
+                      ))}
+                      <td className="text-center p-3 font-semibold text-blue-800">
+                        {courseHoles
+                          .slice(0, 9)
+                          .reduce((sum, hole) => sum + (hole.par || 0), 0)}
                       </td>
-                    ))}
-                    <td className="text-center p-3 font-semibold text-blue-800">
-                      {courseHoles
-                        .slice(0, 9)
-                        .reduce((sum, hole) => sum + hole.par, 0)}
-                    </td>
-                    <td className="text-center p-3 font-semibold text-blue-800">
-                      {courseHoles.reduce((sum, hole) => sum + hole.par, 0)}
-                    </td>
-                  </tr>
+                      <td className="text-center p-3 font-semibold text-blue-800">
+                        {courseHoles.reduce((sum, hole) => sum + (hole.par || 0), 0)}
+                      </td>
+                    </tr>
+                  )}
 
                   {/* Yardage Row (if available) */}
                   {courseHoles.some((hole) => hole.yardage) && (
