@@ -140,8 +140,22 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
       formData.startDate &&
       formData.endDate &&
       formData.players.length > 0 &&
-      formData.occasion
+      formData.occasion &&
+      new Date(formData.endDate) >= new Date(formData.startDate)
     );
+  };
+
+  const getValidationErrors = () => {
+    const errors = [];
+    if (formData.courses.length === 0) errors.push('Select at least one course');
+    if (!formData.startDate) errors.push('Select a start date');
+    if (!formData.endDate) errors.push('Select an end date');
+    if (formData.startDate && formData.endDate && new Date(formData.endDate) < new Date(formData.startDate)) {
+      errors.push('End date must be after start date');
+    }
+    if (formData.players.length === 0) errors.push('Add at least one player');
+    if (!formData.occasion) errors.push('Select an occasion');
+    return errors;
   };
 
   const generateEventName = (occasion: string, courses: Course[]) => {
