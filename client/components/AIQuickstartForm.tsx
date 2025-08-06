@@ -263,17 +263,17 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
       }
     ];
 
-    // Add contest prizes
-    for (let i = 0; i < courseCount; i++) {
+    // Add general contest prizes (not per round)
+    if (contestAmount > 0) {
       payouts.push({
         category: 'longest_drive',
         amount: contestAmount,
-        description: `Longest Drive - Round ${i + 1}`
+        description: 'Longest Drive'
       });
       payouts.push({
         category: 'closest_to_pin',
         amount: contestAmount,
-        description: `Closest to Pin - Round ${i + 1}`
+        description: 'Closest to Pin'
       });
     }
 
