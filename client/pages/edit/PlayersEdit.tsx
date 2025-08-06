@@ -284,10 +284,52 @@ export default function PlayersEdit() {
         console.log("Players saved successfully to database");
       }
 
-      toast({
-        title: "Players Updated",
-        description: "Player list has been saved successfully",
-      });
+      // Send invitation emails for players with real email addresses
+      const playersWithEmails = players.filter(p =>
+        p.email &&
+        p.email.trim() &&
+        !p.email.includes('@placeholder.local') &&
+        !p.email.includes('@example.com')
+      );
+
+      if (playersWithEmails.length > 0) {
+        console.log("Sending invitation emails...");
+        try {
+          const response = await fetch('/api/invitations/send', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+            },
+            body: JSON.stringify({ event_id: eventId })
+          });
+
+          const result = await response.json();
+
+          if (result.success && result.sent_count > 0) {
+            toast({
+              title: "Players Saved & Invitations Sent",
+              description: `Player information updated and ${result.sent_count} invitation emails sent.`,
+            });
+          } else {
+            toast({
+              title: "Players Updated",
+              description: "Player list has been saved successfully",
+            });
+          }
+        } catch (emailError) {
+          console.error("Error sending invitation emails:", emailError);
+          toast({
+            title: "Players Updated",
+            description: "Players saved, but there was an issue sending invitation emails.",
+          });
+        }
+      } else {
+        toast({
+          title: "Players Updated",
+          description: "Player list has been saved successfully",
+        });
+      }
     } catch (error) {
       console.error("Error saving players:", error);
       toast({
