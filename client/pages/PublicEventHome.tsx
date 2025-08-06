@@ -1208,11 +1208,15 @@ const AnimatedTravelCard = ({
 interface PublicEventHomeProps {
   slug?: string;
   forceTheme?: string;
+  preloadedEventData?: EventData;
+  hideNavigation?: boolean;
 }
 
 export default function PublicEventHome({
   slug: propSlug,
   forceTheme,
+  preloadedEventData,
+  hideNavigation = false,
 }: PublicEventHomeProps = {}) {
   // Add smooth scrolling to page
   useEffect(() => {
@@ -1245,10 +1249,14 @@ export default function PublicEventHome({
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (slug) {
+    if (preloadedEventData) {
+      // Use preloaded data
+      setEventData(preloadedEventData);
+      loadRelatedData(preloadedEventData.id);
+    } else if (slug) {
       loadEventData();
     }
-  }, [slug]);
+  }, [slug, preloadedEventData]);
 
   const loadEventData = async () => {
     try {
