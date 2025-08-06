@@ -11,6 +11,19 @@ While the starter comes with a express server, only create endpoint when strictl
 - **Testing**: Vitest
 - **UI**: Radix UI + TailwindCSS 3 + Lucide React icons
 
+## Important Guidelines
+
+### Emoji Safety
+**Always use Lucide React icons instead of emojis for UI elements.** Complex emojis (especially those with modifiers like skin tone, gender, or compound emojis like 🏌️‍♂️) can break across different systems, rendering as broken characters (����).
+
+**Safe alternatives:**
+- 🎯 → `<Target className="h-4 w-4" />`
+- 🏌️‍♂️ → `<Flag className="h-4 w-4" />` (for golf)
+- 🏆 → `<Trophy className="h-4 w-4" />`
+- ⚡ → `<Zap className="h-4 w-4" />`
+
+Use the `getContestIcon()` utility function for contest types to maintain consistency.
+
 ## Project Structure
 
 ```
