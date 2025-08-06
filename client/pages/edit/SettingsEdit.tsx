@@ -601,6 +601,15 @@ export default function SettingsEdit() {
         </CardHeader>
 
         <CardContent className="space-y-4">
+          {!clubhouseFeatureAvailable && (
+            <Alert className="border-yellow-200 bg-yellow-50">
+              <AlertTriangle className="h-4 w-4 text-yellow-600" />
+              <AlertDescription className="text-yellow-700">
+                <strong>Feature Not Available:</strong> The clubhouse feature requires a database migration. Please run the SQL migration file <code>add_clubhouse_features.sql</code> in your Supabase SQL Editor to enable this feature.
+              </AlertDescription>
+            </Alert>
+          )}
+
           <div className="space-y-3">
             <Label htmlFor="clubhousePassword" className="text-purple-800 font-medium">
               Clubhouse Password
