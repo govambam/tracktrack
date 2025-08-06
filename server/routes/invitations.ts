@@ -17,11 +17,16 @@ router.post('/invitations/send', async (req, res) => {
     }
 
     const token = authHeader.replace('Bearer ', '');
+    console.log('🔑 Authenticating user with token length:', token.length);
+
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
 
     if (authError || !user) {
+      console.error('❌ Authentication failed:', authError);
       return res.status(401).json({ error: 'Invalid token' });
     }
+
+    console.log('✅ User authenticated:', user.id);
 
     // Validate required fields
     if (!event_id) {
