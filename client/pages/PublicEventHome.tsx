@@ -1605,7 +1605,20 @@ export default function PublicEventHome({
 
   const handleClubhouseSuccess = (displayName: string) => {
     setShowClubhouseModal(false);
-    navigate(`/events/${slug}/clubhouse`);
+
+    // Set the clubhouse session
+    const sessionData = {
+      displayName,
+      sessionId: `session_${Date.now()}`,
+      eventId: eventData!.id,
+    };
+    setClubhouseSession(sessionData);
+
+    // Scroll to the clubhouse section
+    document.getElementById('clubhouse')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
 
   if (loading) {
