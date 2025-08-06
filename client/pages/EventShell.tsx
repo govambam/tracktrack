@@ -269,69 +269,63 @@ export default function EventShell() {
             </div>
 
             {/* Navigation Tabs */}
-            <div className="flex items-center space-x-1">
-              <Button
-                variant={currentTab === "home" ? "default" : "ghost"}
-                size="sm"
+            <div className="flex items-center space-x-8">
+              <button
                 onClick={() => navigateToTab("home")}
-                className={`flex items-center space-x-2 ${
+                className={`flex items-center space-x-2 text-sm font-medium transition-colors cursor-pointer ${
                   currentTab === "home"
                     ? currentTheme === "Masters"
-                      ? "bg-green-600 hover:bg-green-700 text-white"
+                      ? "text-amber-600 font-serif"
                       : currentTheme === "TourTech"
-                        ? "bg-gray-600 hover:bg-gray-700 text-white"
-                        : "bg-blue-600 hover:bg-blue-700 text-white"
+                        ? "text-orange-600"
+                        : "text-blue-600"
                     : currentTheme === "Masters"
-                      ? "text-green-800 hover:text-green-600 hover:bg-green-50 font-serif"
-                      : "text-slate-600 hover:text-slate-800 hover:bg-slate-50"
+                      ? "text-green-800 hover:text-amber-600 font-serif"
+                      : "text-slate-600 hover:text-slate-800"
                 }`}
               >
                 <Home className="h-4 w-4" />
                 <span>Home</span>
-              </Button>
+              </button>
 
-              <Button
-                variant={currentTab === "leaderboard" ? "default" : "ghost"}
-                size="sm"
+              <button
                 onClick={() => navigateToTab("leaderboard")}
-                className={`flex items-center space-x-2 ${
+                className={`flex items-center space-x-2 text-sm font-medium transition-colors cursor-pointer ${
                   currentTab === "leaderboard"
                     ? currentTheme === "Masters"
-                      ? "bg-green-600 hover:bg-green-700 text-white"
+                      ? "text-amber-600 font-serif"
                       : currentTheme === "TourTech"
-                        ? "bg-gray-600 hover:bg-gray-700 text-white"
-                        : "bg-blue-600 hover:bg-blue-700 text-white"
+                        ? "text-orange-600"
+                        : "text-blue-600"
                     : currentTheme === "Masters"
-                      ? "text-green-800 hover:text-green-600 hover:bg-green-50 font-serif"
-                      : "text-slate-600 hover:text-slate-800 hover:bg-slate-50"
+                      ? "text-green-800 hover:text-amber-600 font-serif"
+                      : "text-slate-600 hover:text-slate-800"
                 }`}
               >
                 <BarChart3 className="h-4 w-4" />
                 <span>Leaderboard</span>
-              </Button>
+              </button>
 
-              <Button
-                variant={currentTab === "clubhouse" ? "default" : "ghost"}
-                size="sm"
+              <button
                 onClick={() => navigateToTab("clubhouse")}
                 disabled={!eventData.clubhouse_password}
-                className={`flex items-center space-x-2 ${
+                className={`flex items-center space-x-2 text-sm font-medium transition-colors cursor-pointer ${
                   !eventData.clubhouse_password
                     ? "opacity-50 cursor-not-allowed"
                     : currentTab === "clubhouse"
                       ? currentTheme === "Masters"
-                        ? "bg-green-600 hover:bg-green-700 text-white"
+                        ? "text-amber-600 font-serif"
                         : currentTheme === "TourTech"
-                          ? "bg-gray-600 hover:bg-gray-700 text-white"
-                          : "bg-blue-600 hover:bg-blue-700 text-white"
+                          ? "text-orange-600"
+                          : "text-blue-600"
                       : currentTheme === "Masters"
-                        ? "text-green-800 hover:text-green-600 hover:bg-green-50 font-serif"
-                        : "text-slate-600 hover:text-slate-800 hover:bg-slate-50"
+                        ? "text-green-800 hover:text-amber-600 font-serif"
+                        : "text-slate-600 hover:text-slate-800"
                 }`}
               >
                 <Users className="h-4 w-4" />
                 <span>Clubhouse</span>
-              </Button>
+              </button>
             </div>
           </div>
         </div>
