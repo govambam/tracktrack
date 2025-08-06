@@ -28,6 +28,10 @@ interface Course {
   name: string;
   location?: string;
   par?: number;
+  yardage?: number;
+  description?: string;
+  image_url?: string;
+  holes?: number;
 }
 
 interface AIQuickstartFormProps {
