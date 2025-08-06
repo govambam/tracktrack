@@ -419,6 +419,21 @@ export default function MyTrips() {
           </Button>
         </div>
       )}
+
+      {/* Create Event Modal - shows choice between AI and manual */}
+      <CreateEventModal
+        isOpen={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onQuickStart={handleQuickStart}
+        onManualCreate={handleManualCreate}
+      />
+
+      {/* AI Quickstart Form */}
+      <AIQuickstartForm
+        isOpen={showAIQuickstart}
+        onClose={() => setShowAIQuickstart(false)}
+        onSuccess={handleAISuccess}
+      />
     </div>
   );
 }
