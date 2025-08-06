@@ -161,12 +161,13 @@ export default function ScorecardEdit() {
     holes: HoleScore[],
   ) => {
     try {
-      // Load all event players
+      // Load all existing event players (don't create new ones)
       const { data: eventPlayers, error: playersError } = await supabase
         .from("event_players")
         .select("*")
         .eq("event_id", eventId)
-        .eq("status", "accepted");
+        .in("status", ["accepted", "invited"]) // Include both accepted and invited players
+        .order("full_name");
 
       if (playersError) {
         console.error("Error loading players:", playersError);
