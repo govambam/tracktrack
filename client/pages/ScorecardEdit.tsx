@@ -702,6 +702,11 @@ export default function ScorecardEdit() {
                   className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
                 >
                   {round.course_name} • {session?.displayName}
+                  {!hasParData && (
+                    <span className="ml-2 text-amber-600">
+                      • Course data pending
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
@@ -1116,7 +1121,7 @@ export default function ScorecardEdit() {
             <div className="space-y-4">
               <div className="text-center">
                 <div className="text-sm text-gray-500 mb-4">
-                  Par {editingPlayerScore.par} • Tap to select score
+                  Par {editingPlayerScore.par} ��� Tap to select score
                 </div>
 
                 {/* Score Numbers Grid */}
