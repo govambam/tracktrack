@@ -173,7 +173,9 @@ export default function ScorecardEdit() {
         .order("hole_number");
 
       let holes: HoleScore[] = [];
-      if (holesData && holesData.length > 0) {
+      const hasParData = holesData && holesData.length > 0;
+
+      if (hasParData) {
         holes = holesData.map((hole) => ({
           hole: hole.hole_number,
           strokes: 0,
@@ -182,12 +184,14 @@ export default function ScorecardEdit() {
           handicap: hole.handicap,
         }));
       } else {
-        // Fallback: create default holes if no course data
+        // Fallback: create holes without par data when course info not available
         for (let i = 1; i <= roundData.holes; i++) {
           holes.push({
             hole: i,
             strokes: 0,
-            par: i <= 4 ? 4 : i <= 14 ? (i % 2 === 0 ? 4 : 3) : 5,
+            par: null, // No par data available
+            yardage: null,
+            handicap: null,
           });
         }
       }
