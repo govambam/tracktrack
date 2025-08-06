@@ -7,6 +7,7 @@ import { handleAuthTest } from "./routes/auth-test";
 import { generateDescription } from "./routes/openai";
 import eventsRouter from "./routes/events";
 import { supabase } from "./lib/supabase.js";
+import { EmailService } from "./lib/emailService.js";
 // import invitationsRouter from "./routes/invitations.js";
 
 export function createServer() {
@@ -39,7 +40,7 @@ export function createServer() {
 
   // Invitations API routes (embedded for debugging)
   app.get("/api/invitations/test", (req, res) => {
-    console.log("📧 Invitations test endpoint hit");
+    console.log("��� Invitations test endpoint hit");
     res.json({ success: true, message: "Invitations API is working" });
   });
 
@@ -77,7 +78,7 @@ export function createServer() {
         });
       }
 
-      console.log('✅ User authenticated:', user.id);
+      console.log('�� User authenticated:', user.id);
 
       // Validate required fields
       if (!event_id) {
