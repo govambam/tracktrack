@@ -172,6 +172,12 @@ class GrowthBookAPI {
         valueType: 'boolean',
         defaultValue: false,
       },
+      {
+        key: 'ai_quickstart_create_flow',
+        description: 'Enable AI-powered quickstart flow for creating golf events',
+        valueType: 'boolean',
+        defaultValue: false,
+      },
     ];
 
     const createdFlags: FeatureFlag[] = [];
