@@ -1522,6 +1522,41 @@ export default function PublicEventHome({
   const longestDrivePrize =
     prizes.find((p) => p.category === "longest_drive")?.amount || 0;
 
+  // Check if event has clubhouse enabled
+  const hasClubhouse = eventData?.clubhouse_password;
+
+  // Handle clubhouse access
+  const handleClubhouseAccess = () => {
+    if (!hasClubhouse) return;
+
+    // Check if user already has a valid session
+    const sessionData = localStorage.getItem(`clubhouse_session_${eventData.id}`);
+    if (sessionData) {
+      try {
+        const session = JSON.parse(sessionData);
+        // Verify session is still valid (created within last 24 hours)
+        const sessionAge = new Date().getTime() - new Date(session.createdAt).getTime();
+        if (sessionAge < 24 * 60 * 60 * 1000) { // 24 hours
+          navigate(`/events/${slug}/clubhouse`);
+          return;
+        } else {
+          // Remove expired session
+          localStorage.removeItem(`clubhouse_session_${eventData.id}`);
+        }
+      } catch (error) {
+        localStorage.removeItem(`clubhouse_session_${eventData.id}`);
+      }
+    }
+
+    // Show password modal for new users or expired sessions
+    setShowClubhouseModal(true);
+  };
+
+  const handleClubhouseSuccess = (displayName: string) => {
+    setShowClubhouseModal(false);
+    navigate(`/events/${slug}/clubhouse`);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
