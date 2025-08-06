@@ -251,7 +251,9 @@ export default function ScorecardEdit() {
               full_name: parsedSession.displayName,
               status: "accepted", // Clubhouse users are considered accepted
               role: "player",
-              // No user_id since this is a clubhouse-only user
+              // Use sessionId as invited_email to satisfy the constraint
+              // (clubhouse users don't have real emails, but the constraint requires either user_id OR invited_email)
+              invited_email: `clubhouse-${parsedSession.sessionId}@tracktrack.local`,
             })
             .select("*")
             .single();
