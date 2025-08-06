@@ -1247,9 +1247,14 @@ export default function PublicEventHome({
   useEffect(() => {
     if (slug) {
       loadEventData();
-      checkClubhouseSession();
     }
   }, [slug]);
+
+  useEffect(() => {
+    if (eventData) {
+      checkClubhouseSession();
+    }
+  }, [eventData]);
 
   const loadEventData = async () => {
     try {
