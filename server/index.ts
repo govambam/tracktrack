@@ -129,11 +129,9 @@ export function createServer() {
           .single();
 
         if (!adminCheck) {
-          return res
-            .status(403)
-            .json({
-              error: "Only event creators and admins can send invitations",
-            });
+          return res.status(403).json({
+            error: "Only event creators and admins can send invitations",
+          });
         }
       }
 
