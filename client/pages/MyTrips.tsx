@@ -185,10 +185,13 @@ export default function MyTrips() {
     navigate("/app/create");
   };
 
-  const handleAISuccess = (eventSlug: string) => {
+  const handleAISuccess = (eventId: string, eventSlug: string) => {
     setShowAIQuickstart(false);
-    // Navigate to the public event page
-    window.location.href = `/events/${eventSlug}`;
+    // Open draft preview modal
+    setDraftEventId(eventId);
+    setShowDraftPreview(true);
+    // Reload events to show the new event in the list
+    loadEvents();
   };
 
   const formatDateRange = (startDate: string, endDate: string) => {
