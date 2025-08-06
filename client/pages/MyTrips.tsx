@@ -405,10 +405,25 @@ export default function MyTrips() {
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-xl text-green-900">
-                      {event.name}
-                    </CardTitle>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <CardTitle className="text-xl text-green-900">
+                        {event.name}
+                      </CardTitle>
+                      {event.user_role === 'owner' ? (
+                        <Badge variant="outline" className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200">
+                          Owner
+                        </Badge>
+                      ) : event.user_role === 'admin' ? (
+                        <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                          Admin
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="text-xs bg-gray-50 text-gray-700 border-gray-200">
+                          Player
+                        </Badge>
+                      )}
+                    </div>
                     <CardDescription className="text-green-600 line-clamp-2">
                       {event.description || "Golf event"}
                     </CardDescription>
