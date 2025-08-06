@@ -9,13 +9,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 import { growthbookApi, featureFlagUtils, FeatureFlag, CreateFeatureFlagRequest } from '@/lib/growthbookApi';
-import { 
-  Settings, 
-  Plus, 
-  Refresh, 
-  Save, 
-  Trash2, 
-  Eye, 
+import {
+  Settings,
+  Plus,
+  RotateCcw,
+  Save,
+  Trash2,
+  Eye,
   EyeOff,
   Zap,
   AlertCircle,
