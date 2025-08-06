@@ -246,6 +246,17 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
 
       console.log('Generated event data:', { eventName, eventDescription, slug });
 
+      // Get current user for event creation
+      console.log('Getting current user...');
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        console.error('User authentication error:', userError);
+        throw new Error('You must be logged in to create events');
+      }
+
+      console.log('Current user:', user.id);
+
       // Create event in database
       console.log('Creating event in database...');
       const { data: eventData, error: eventError } = await supabase
@@ -259,7 +270,8 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
           is_published: true,
           is_private: false,
           theme: 'GolfOS',
-          slug: slug
+          slug: slug,
+          user_id: user.id
         })
         .select()
         .single();
