@@ -95,9 +95,19 @@ export default function EventShell() {
     }
   };
 
-  const handleClubhouseAuth = (session: ClubhouseSession) => {
-    setClubhouseSession(session);
+  const handleClubhouseAuth = (displayName: string) => {
     setShowClubhouseModal(false);
+
+    // Set the clubhouse session
+    const sessionData = {
+      displayName,
+      sessionId: `session_${Date.now()}`,
+      eventId: eventData!.id,
+    };
+
+    // Store session data
+    localStorage.setItem(`clubhouse_session_${slug}`, JSON.stringify(sessionData));
+    setClubhouseSession(sessionData);
     navigate(`/events/${slug}/clubhouse`);
   };
 
