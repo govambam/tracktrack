@@ -346,9 +346,10 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
           location: selectedCourses[0]?.location || 'TBD',
           is_published: true,
           is_private: false,
-          theme: 'GolfOS',
+          theme: formData.theme,
           slug: slug,
-          user_id: user.id
+          user_id: user.id,
+          buy_in: formData.hasEntryFee ? formData.entryFeeAmount : null
         })
         .select()
         .single();
