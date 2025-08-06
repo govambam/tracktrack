@@ -56,12 +56,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(404).json({ error: "Event not found" });
       }
 
-      return res
-        .status(403)
-        .json({
-          error:
-            "Clubhouse feature not available (database migration required)",
-        });
+      return res.status(403).json({
+        error: "Clubhouse feature not available (database migration required)",
+      });
     }
 
     if (eventError || !event) {
@@ -105,17 +102,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.error("Database error during session creation:", dbError);
 
       // Check if this is a missing table error
-      if (dbError?.message?.includes('relation "clubhouse_sessions" does not exist')) {
+      if (
+        dbError?.message?.includes(
+          'relation "clubhouse_sessions" does not exist',
+        )
+      ) {
         return res.status(503).json({
-          error: "Clubhouse feature not available (database migration required)",
-          details: "The clubhouse_sessions table does not exist. Please run the database migration."
+          error:
+            "Clubhouse feature not available (database migration required)",
+          details:
+            "The clubhouse_sessions table does not exist. Please run the database migration.",
         });
       }
 
       // Other database errors
       return res.status(500).json({
         error: "Database error",
-        details: dbError?.message || "Unknown database error"
+        details: dbError?.message || "Unknown database error",
       });
     }
 
@@ -123,7 +126,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.error("Error creating session:", sessionError);
       return res.status(500).json({
         error: "Failed to create session",
-        details: sessionError.message
+        details: sessionError.message,
       });
     }
 
