@@ -69,13 +69,13 @@ export default function PublicLeaderboard({
             .from("event_rounds")
             .select("*")
             .eq("event_id", event.id)
-            .order("round_number"),
+            .order("created_at"),
 
           supabase
             .from("event_players")
             .select("*")
             .eq("event_id", event.id)
-            .order("name"),
+            .order("full_name"),
 
           supabase.from("scorecards").select("*").eq("event_id", event.id),
 
