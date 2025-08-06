@@ -83,7 +83,21 @@ export default function SettingsEdit() {
       }
 
       setEventInfo(data);
-      setClubhousePassword(data?.clubhouse_password || "");
+
+      // Try to load clubhouse_password separately to handle cases where column doesn't exist yet
+      try {
+        const { data: clubhouseData } = await supabase
+          .from("events")
+          .select("clubhouse_password")
+          .eq("id", eventId)
+          .single();
+
+        setClubhousePassword(clubhouseData?.clubhouse_password || "");
+      } catch (clubhouseError) {
+        // Column doesn't exist yet, that's okay - feature is disabled
+        console.log("Clubhouse feature not available (database migration needed)");
+        setClubhousePassword("");
+      }
     } catch (error) {
       console.error("Error loading event info:", error instanceof Error ? error.message : error);
     } finally {
