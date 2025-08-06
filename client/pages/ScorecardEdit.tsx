@@ -461,7 +461,7 @@ export default function ScorecardEdit() {
           (sum, hole) => sum + hole.strokes,
           0,
         );
-        const totalPar = newScores.reduce((sum, hole) => sum + hole.par, 0);
+        const totalPar = newScores.reduce((sum, hole) => sum + (hole.par || 0), 0);
 
         return {
           ...player,
