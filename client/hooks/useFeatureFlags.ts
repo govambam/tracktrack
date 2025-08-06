@@ -1,7 +1,7 @@
 import { useFeatureFlag, useFeatureEnabled } from '@/contexts/GrowthBookContext';
 
 // Define your feature flag keys here for type safety
-export type FeatureFlagKey = 
+export type FeatureFlagKey =
   | 'new-ui-design'
   | 'button-color'
   | 'max-users-limit'
@@ -9,7 +9,8 @@ export type FeatureFlagKey =
   | 'enable-dark-mode'
   | 'show-advanced-features'
   | 'beta-leaderboard'
-  | 'enhanced-scoring';
+  | 'enhanced-scoring'
+  | 'ai_quickstart_create_flow';
 
 // Type-safe feature flag hooks
 export const useTypedFeatureFlag = <T>(key: FeatureFlagKey, fallback: T): T => {
