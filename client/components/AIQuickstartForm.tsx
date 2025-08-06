@@ -894,9 +894,9 @@ Format as markdown with headers. Include each course as a separate day. Limit re
         description: "Your golf event has been created with AI magic!",
       });
 
-      // Redirect after a brief delay
+      // Open draft preview after a brief delay
       setTimeout(() => {
-        onSuccess(eventData.slug);
+        onSuccess(eventData.id, eventData.slug);
       }, 1500);
     } catch (error) {
       console.error("Error generating event:", error);
