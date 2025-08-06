@@ -26,7 +26,6 @@ interface OutletContext {
 export default function EventLeaderboard() {
   const { eventData } = useOutletContext<OutletContext>();
 
-  // The PublicLeaderboard component can remain as-is since it loads its own data
-  // based on the slug from useParams
-  return <PublicLeaderboard />;
+  // Hide the navigation since it's provided by the EventShell
+  return <PublicLeaderboard hideNavigation={true} />;
 }
