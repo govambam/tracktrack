@@ -113,7 +113,7 @@ export default function PublicLeaderboard({
   const mockPlayers =
     players.length > 0
       ? players
-      : [{ id: "1", name: "No players yet", points: 0, money: 0 }];
+      : [{ id: "1", full_name: "No players yet", points: 0, money: 0 }];
 
   const mockCourses =
     rounds.length > 0
@@ -157,7 +157,7 @@ export default function PublicLeaderboard({
         <div className="space-y-4">
           {mockPlayers.map((player, index) => (
             <div
-              key={player.name}
+              key={player.full_name}
               className={`bg-white rounded-2xl p-6 border-2 transition-all duration-300 hover:shadow-lg ${
                 index === 0
                   ? "border-yellow-300 bg-gradient-to-r from-yellow-50 to-amber-50"
@@ -178,7 +178,7 @@ export default function PublicLeaderboard({
                   <div>
                     <div className="flex items-center space-x-2">
                       <span className="font-bold text-slate-900 text-lg">
-                        {player.name}
+                        {player.full_name}
                       </span>
                       {player.badge && (
                         <Badge className="bg-yellow-500 text-white text-xs">
@@ -282,7 +282,7 @@ export default function PublicLeaderboard({
       <div className="space-y-4">
         {mockPlayers.map((player, index) => (
           <div
-            key={player.name}
+            key={player.full_name}
             className="bg-white rounded-2xl p-6 border-2 border-slate-200"
           >
             <div className="flex items-center justify-between">
