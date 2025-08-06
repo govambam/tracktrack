@@ -1298,7 +1298,7 @@ export default function PublicEventHome() {
     if (startMonth === endMonth) {
       return `${startMonth} ${startDay}–${endDay}, ${year}`;
     } else {
-      return `${startMonth} ${startDay} ���� ${endMonth} ${endDay}, ${year}`;
+      return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${year}`;
     }
   };
 
@@ -1455,7 +1455,7 @@ export default function PublicEventHome() {
         const contests = roundContests.map((contest) => ({
           hole: contest.hole,
           type: contest.contest_type,
-          emoji: contest.contest_type === "closest_to_pin" ? "����" : "🏌️‍♂️",
+          icon: contest.contest_type === "closest_to_pin" ? Target : Flag,
         }));
 
         return {
@@ -1882,7 +1882,7 @@ export default function PublicEventHome() {
                       <ul
                         className={`${eventData?.theme === "TourTech" ? "text-xs text-slate-600 space-y-0.5" : eventData?.theme === "Masters" ? "text-sm text-green-800 space-y-1 font-serif" : "text-sm text-emerald-700 space-y-1"}`}
                       >
-                        <li>��� Encourages aggressive, exciting play</li>
+                        <li>• Encourages aggressive, exciting play</li>
                         <li>
                           • Keeps all players engaged throughout the round
                         </li>
@@ -2226,7 +2226,7 @@ export default function PublicEventHome() {
                         <div className="mt-4">
                           <ul className="text-sm text-green-800 space-y-1 font-serif">
                             <li>• Must hit on the green to win</li>
-                            <li>��� Measured to the inch for ties</li>
+                            <li>• Measured to the inch for ties</li>
                             <li>• Multiple opportunities to win</li>
                           </ul>
                         </div>
