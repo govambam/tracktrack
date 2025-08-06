@@ -514,7 +514,7 @@ Write a "Where to Stay" section with:
 - Budget considerations
 - Location recommendations
 
-Format as markdown with headers. Keep it helpful and practical:`;
+Format as markdown with headers. Keep it helpful and practical. Limit response to 100 words or less:`;
 
     try {
       const response = await fetch("/api/generate-description", {
