@@ -440,7 +440,8 @@ export default function MyTrips() {
                   </div>
                 </div>
 
-                <div className="flex space-x-2 pt-2">
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {/* View Site button - available for all published events */}
                   {event.is_published && event.slug ? (
                     <Button
                       variant="outline"
@@ -454,15 +455,30 @@ export default function MyTrips() {
                       View Site
                     </Button>
                   ) : null}
+
+                  {/* Enter Scores button - available for all users */}
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => handleEditEvent(event)}
-                    className="border-green-200 text-green-700 hover:bg-green-50"
+                    onClick={() => navigate(`/events/${event.slug || event.id}/leaderboard`)}
+                    className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
                   >
-                    <Edit className="h-4 w-4 mr-1" />
-                    Edit Details
+                    <Users className="h-4 w-4 mr-1" />
+                    Enter Scores
                   </Button>
+
+                  {/* Edit Details button - only for owners and admins */}
+                  {(event.user_role === 'owner' || event.user_role === 'admin') && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleEditEvent(event)}
+                      className="border-green-200 text-green-700 hover:bg-green-50"
+                    >
+                      <Edit className="h-4 w-4 mr-1" />
+                      Edit Details
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>
