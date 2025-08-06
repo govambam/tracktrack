@@ -378,145 +378,197 @@ export default function PublicLeaderboard({
     </div>
   );
 
-  const renderScorecardsTab = () => (
-    <div className="space-y-8">
-      {mockCourses.map((course, courseIndex) => (
-        <div key={course.name}>
-          <div className="flex items-center space-x-2 mb-6">
-            <Target className="h-5 w-5 text-green-600" />
-            <h3 className="text-2xl font-bold text-slate-900">{course.name}</h3>
-          </div>
-          <p className="text-slate-600 mb-6">
-            {course.holes} holes • {course.format}
-          </p>
-
-          <div className="bg-white rounded-2xl overflow-hidden border-2 border-slate-200">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-slate-50">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-slate-900">
-                      Hole
-                    </th>
-                    {Array.from(
-                      { length: Math.min(6, course.holes) },
-                      (_, i) => (
-                        <th
-                          key={i + 1}
-                          className="px-3 py-3 text-center text-sm font-semibold text-slate-900"
-                        >
-                          {i + 1}
-                        </th>
-                      ),
-                    )}
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-slate-900">
-                      Total
-                    </th>
-                    <th className="px-4 py-3 text-center text-sm font-semibold text-slate-900">
-                      Stableford
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr className="border-b border-slate-200">
-                    <td className="px-4 py-3 font-semibold text-slate-900">
-                      Par
-                    </td>
-                    {mockScorecard.map((hole) => (
-                      <td
-                        key={hole.hole}
-                        className="px-3 py-3 text-center font-semibold text-slate-600"
-                      >
-                        {hole.par}
-                      </td>
-                    ))}
-                    <td className="px-4 py-3 text-center font-bold text-slate-900">
-                      72
-                    </td>
-                    <td className="px-4 py-3 text-center font-bold text-slate-900">
-                      36
-                    </td>
-                  </tr>
-
-                  {mockPlayers.map((player) => (
-                    <tr
-                      key={player.name}
-                      className="border-b border-slate-100 hover:bg-slate-50"
-                    >
-                      <td className="px-4 py-3 font-semibold text-slate-900">
-                        {player.name}
-                      </td>
-                      {mockScorecard.map((hole) => {
-                        const score =
-                          hole.scores[player.name as keyof typeof hole.scores];
-                        const par = hole.par;
-                        const isGoodScore = score < par;
-                        const isBadScore = score > par;
-
-                        return (
-                          <td
-                            key={hole.hole}
-                            className="px-3 py-3 text-center relative"
-                          >
-                            <span
-                              className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold ${
-                                isGoodScore
-                                  ? "bg-green-100 text-green-800 border-2 border-green-400"
-                                  : isBadScore
-                                    ? "bg-red-100 text-red-800"
-                                    : "text-slate-700"
-                              }`}
-                            >
-                              {score}
-                            </span>
-                            {hole.hole === 2 && player.name === "Ivan" && (
-                              <span className="absolute -top-1 -right-1 text-red-500 text-xs">
-                                ♥
-                              </span>
-                            )}
-                          </td>
-                        );
-                      })}
-                      <td className="px-4 py-3 text-center font-bold text-slate-900">
-                        {courseIndex === 0
-                          ? player.name === "Patrick"
-                            ? "72"
-                            : player.name === "Ivan"
-                              ? "73"
-                              : "75"
-                          : "-"}
-                      </td>
-                      <td className="px-4 py-3 text-center font-bold text-green-600">
-                        {courseIndex === 0 ? player.points : "-"}
-                      </td>
-                    </tr>
-                  ))}
-
-                  <tr className="bg-slate-50">
-                    <td className="px-4 py-3 font-semibold text-slate-900">
-                      Contest
-                    </td>
-                    {mockScorecard.map((hole, index) => (
-                      <td key={hole.hole} className="px-3 py-3 text-center">
-                        {index === 1 ? (
-                          <span className="text-red-500">♥</span>
-                        ) : (
-                          "-"
-                        )}
-                      </td>
-                    ))}
-                    <td className="px-4 py-3"></td>
-                    <td className="px-4 py-3"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+  const renderScorecardsTab = () => {
+    if (loading) {
+      return (
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-4"></div>
+            <p className="text-slate-600">Loading scorecards...</p>
           </div>
         </div>
-      ))}
-    </div>
-  );
+      );
+    }
+
+    if (rounds.length === 0) {
+      return (
+        <div className="text-center py-12">
+          <Target className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-slate-900 mb-2">No Rounds Available</h3>
+          <p className="text-slate-600">No tournament rounds have been set up yet.</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-8">
+        {rounds.map((round) => {
+          const courseName = round.course_name;
+          const roundHoles = courseHoles.filter(hole => hole.course_name === courseName).sort((a, b) => a.hole_number - b.hole_number);
+
+          if (roundHoles.length === 0) {
+            return (
+              <div key={round.id} className="text-center py-8">
+                <p className="text-slate-600">No hole data available for {courseName}</p>
+              </div>
+            );
+          }
+
+          // Get scores for this round
+          const roundScores = scores.filter(score => score.event_round_id === round.id);
+
+          // Calculate totals and organize scores by player
+          const playerScores = players.map(player => {
+            const playerRoundScores = roundScores.filter(score => score.event_player_id === player.id);
+            const holeScores = roundHoles.map(hole => {
+              const holeScore = playerRoundScores.find(score => score.hole_number === hole.hole_number);
+              return {
+                hole: hole.hole_number,
+                par: hole.par,
+                strokes: holeScore ? holeScore.strokes : 0
+              };
+            });
+
+            const totalStrokes = holeScores.reduce((sum, hole) => sum + (hole.strokes || 0), 0);
+            const totalPar = roundHoles.reduce((sum, hole) => sum + hole.par, 0);
+            const scoreToPar = totalStrokes > 0 ? totalStrokes - totalPar : 0;
+
+            return {
+              ...player,
+              holeScores,
+              totalStrokes: totalStrokes > 0 ? totalStrokes : null,
+              scoreToPar
+            };
+          });
+
+          const totalPar = roundHoles.reduce((sum, hole) => sum + hole.par, 0);
+
+          return (
+            <div key={round.id}>
+              <div className="flex items-center space-x-2 mb-6">
+                <Target className="h-5 w-5 text-green-600" />
+                <h3 className="text-2xl font-bold text-slate-900">
+                  Round {round.round_number}: {courseName}
+                </h3>
+              </div>
+              <p className="text-slate-600 mb-6">
+                {roundHoles.length} holes • {round.scoring_type === 'stroke_play' ? 'Stroke Play' : 'Stableford'}
+                {round.round_date && (
+                  <span className="ml-2">• {new Date(round.round_date).toLocaleDateString()}</span>
+                )}
+              </p>
+
+              <div className="bg-white rounded-2xl overflow-hidden border-2 border-slate-200">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-slate-50">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-slate-900">
+                          Hole
+                        </th>
+                        {roundHoles.slice(0, 18).map((hole) => (
+                          <th
+                            key={hole.hole_number}
+                            className="px-3 py-3 text-center text-sm font-semibold text-slate-900"
+                          >
+                            {hole.hole_number}
+                          </th>
+                        ))}
+                        <th className="px-4 py-3 text-center text-sm font-semibold text-slate-900">
+                          Total
+                        </th>
+                        <th className="px-4 py-3 text-center text-sm font-semibold text-slate-900">
+                          +/-
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr className="border-b border-slate-200">
+                        <td className="px-4 py-3 font-semibold text-slate-900">
+                          Par
+                        </td>
+                        {roundHoles.slice(0, 18).map((hole) => (
+                          <td
+                            key={hole.hole_number}
+                            className="px-3 py-3 text-center font-semibold text-slate-600"
+                          >
+                            {hole.par}
+                          </td>
+                        ))}
+                        <td className="px-4 py-3 text-center font-bold text-slate-900">
+                          {totalPar}
+                        </td>
+                        <td className="px-4 py-3 text-center font-bold text-slate-900">
+                          E
+                        </td>
+                      </tr>
+
+                      {playerScores.map((player) => (
+                        <tr
+                          key={player.id}
+                          className="border-b border-slate-100 hover:bg-slate-50"
+                        >
+                          <td className="px-4 py-3 font-semibold text-slate-900">
+                            {player.name}
+                          </td>
+                          {player.holeScores.slice(0, 18).map((holeScore) => {
+                            const strokes = holeScore.strokes;
+                            const par = holeScore.par;
+                            const diff = strokes > 0 ? strokes - par : 0;
+
+                            let cellStyle = "px-3 py-3 text-center relative";
+                            let scoreStyle = "inline-flex items-center justify-center w-8 h-8 text-sm font-semibold";
+
+                            if (strokes === 0) {
+                              scoreStyle += " text-slate-400";
+                            } else if (diff <= -2) {
+                              // Eagle or better: double circle
+                              scoreStyle += " text-yellow-600 rounded-full border-2 border-yellow-600 bg-yellow-50 shadow-lg";
+                            } else if (diff === -1) {
+                              // Birdie: single circle
+                              scoreStyle += " text-green-600 rounded-full border-2 border-green-600 bg-green-50";
+                            } else if (diff === 0) {
+                              // Par: no special styling
+                              scoreStyle += " text-blue-600";
+                            } else if (diff === 1) {
+                              // Bogey: square
+                              scoreStyle += " text-orange-600 border-2 border-orange-600 bg-orange-50";
+                            } else if (diff >= 2) {
+                              // Double bogey or worse: double square
+                              scoreStyle += " text-red-600 border-2 border-red-600 bg-red-50 shadow-lg";
+                            }
+
+                            return (
+                              <td key={holeScore.hole} className={cellStyle}>
+                                <span className={scoreStyle}>
+                                  {strokes > 0 ? strokes : "-"}
+                                </span>
+                              </td>
+                            );
+                          })}
+                          <td className="px-4 py-3 text-center font-bold text-slate-900">
+                            {player.totalStrokes || "-"}
+                          </td>
+                          <td className="px-4 py-3 text-center font-bold text-green-600">
+                            {player.totalStrokes && player.scoreToPar !== 0
+                              ? (player.scoreToPar > 0 ? `+${player.scoreToPar}` : player.scoreToPar)
+                              : player.totalStrokes
+                                ? "E"
+                                : "-"}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50/30">
