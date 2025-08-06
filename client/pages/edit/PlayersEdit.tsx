@@ -250,10 +250,9 @@ export default function PlayersEdit() {
             profile_image:
               profileImage && profileImage.length > 0 ? profileImage : null,
             bio: bio && bio.length > 0 ? bio : null,
-            // Set invited_email to satisfy check constraint
-            // For players created through the edit interface, we use invited_email
-            invited_email: email || null,
-            // New invitation system fields
+            // Invitation system fields - satisfy check constraint
+            user_id: null, // Players created via edit interface are not linked to users
+            invited_email: email || `${player.name.trim().toLowerCase().replace(/\s+/g, '_')}@placeholder.local`,
             role: 'player',
             status: 'accepted'
           };
