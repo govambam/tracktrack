@@ -43,6 +43,7 @@ import TestCourseSync from "./pages/edit/TestCourseSync";
 import SettingsEdit from "./pages/edit/SettingsEdit";
 import PublicEventHome from "./pages/PublicEventHome";
 import PublicLeaderboard from "./pages/PublicLeaderboard";
+import Clubhouse from "./pages/Clubhouse";
 import DraftMode from "./pages/DraftMode";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
