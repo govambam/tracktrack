@@ -11,11 +11,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Zap, Eye, Palette } from 'lucide-react';
 
 export const FeatureFlagDemo: React.FC = () => {
-  // Example feature flags
-  const isNewUIEnabled = useFeatureEnabled('new-ui-design');
-  const buttonColor = useFeatureFlag('button-color', 'default');
-  const maxUsers = useFeatureFlag('max-users-limit', 100);
-  const welcomeMessage = useFeatureFlag('welcome-message', 'Welcome to GolfOS!');
+  // Example feature flags using typed hooks
+  const isNewUIEnabled = useNewUIDesign();
+  const buttonColor = useButtonColor();
+  const maxUsers = useMaxUsersLimit();
+  const welcomeMessage = useWelcomeMessage();
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
