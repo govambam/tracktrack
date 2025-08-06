@@ -931,7 +931,7 @@ export default function ScorecardEdit() {
                             <SelectValue placeholder="Select winner" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="">No winner selected</SelectItem>
+                            <SelectItem value="none">No winner selected</SelectItem>
                             {players.map((player) => (
                               <SelectItem key={player.id} value={player.id}>
                                 {player.name}
