@@ -49,7 +49,7 @@ interface Course {
 interface AIQuickstartFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: (eventSlug: string) => void;
+  onSuccess: (eventId: string, eventSlug: string) => void;
 }
 
 interface QuickstartData {
