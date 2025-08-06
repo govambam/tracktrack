@@ -857,7 +857,8 @@ export default function ScorecardEdit() {
               )}
             </DialogTitle>
             <DialogDescription>
-              Click on a player's score to edit it. Skills contest winners can be selected below.
+              Click on a player's score to edit it. Skills contest winners can
+              be selected below.
             </DialogDescription>
           </DialogHeader>
 
@@ -926,16 +927,23 @@ export default function ScorecardEdit() {
                             .replace(/\b\w/g, (l) => l.toUpperCase())}
                         </Label>
                         <Select
-                          value={editingHole.contestWinners[contest.id] || "none"}
+                          value={
+                            editingHole.contestWinners[contest.id] || "none"
+                          }
                           onValueChange={(value) =>
-                            updateContestWinner(contest.id, value === "none" ? "" : value)
+                            updateContestWinner(
+                              contest.id,
+                              value === "none" ? "" : value,
+                            )
                           }
                         >
                           <SelectTrigger>
                             <SelectValue placeholder="Select winner" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="none">No winner selected</SelectItem>
+                            <SelectItem value="none">
+                              No winner selected
+                            </SelectItem>
                             {players.map((player) => (
                               <SelectItem key={player.id} value={player.id}>
                                 {player.name}
@@ -979,7 +987,8 @@ export default function ScorecardEdit() {
               {editingPlayerScore?.playerName} - Hole {editingHole?.holeNumber}
             </DialogTitle>
             <DialogDescription>
-              Select a score for this hole. Your selection will be saved automatically.
+              Select a score for this hole. Your selection will be saved
+              automatically.
             </DialogDescription>
           </DialogHeader>
 
