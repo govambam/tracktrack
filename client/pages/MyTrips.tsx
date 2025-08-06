@@ -161,9 +161,31 @@ export default function MyTrips() {
   };
 
   const handleCreateNew = () => {
-    // Reset the trip creation context for a new event
+    if (isAIQuickstartEnabled) {
+      // Show the choice modal when AI quickstart is enabled
+      setShowCreateModal(true);
+    } else {
+      // Use the original flow when feature flag is disabled
+      resetTrip();
+      navigate("/app/create");
+    }
+  };
+
+  const handleQuickStart = () => {
+    setShowCreateModal(false);
+    setShowAIQuickstart(true);
+  };
+
+  const handleManualCreate = () => {
+    setShowCreateModal(false);
     resetTrip();
     navigate("/app/create");
+  };
+
+  const handleAISuccess = (eventSlug: string) => {
+    setShowAIQuickstart(false);
+    // Navigate to the public event page
+    window.location.href = `/events/${eventSlug}`;
   };
 
   const formatDateRange = (startDate: string, endDate: string) => {
