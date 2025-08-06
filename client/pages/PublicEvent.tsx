@@ -579,6 +579,14 @@ function CoursesTab({ courses }: { courses: EventCourse[] }) {
 
                 {/* Course Stats */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                  {course.holes && (
+                    <div className="text-center p-3 bg-green-50 rounded-lg">
+                      <div className="text-2xl font-bold text-green-900">
+                        {course.holes}
+                      </div>
+                      <div className="text-sm text-green-600">Holes</div>
+                    </div>
+                  )}
                   {course.par && (
                     <div className="text-center p-3 bg-green-50 rounded-lg">
                       <div className="text-2xl font-bold text-green-900">
