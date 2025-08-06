@@ -287,6 +287,17 @@ export default function PlayersEdit() {
             : "accepted", // Change from "pending" to "accepted" for placeholder emails
         };
 
+        console.log("Player data being sent to Supabase:", {
+          player_name: player.name,
+          player_data: playerData,
+          safe_invited_email: safeInvitedEmail,
+          constraint_check: {
+            user_id_is_null: playerData.user_id === null,
+            invited_email_is_not_null: playerData.invited_email !== null,
+            invited_email_value: playerData.invited_email
+          }
+        });
+
         // Track if this player needs an invitation email
         if (
           email &&
@@ -416,7 +427,7 @@ export default function PlayersEdit() {
           } = await supabase.auth.getSession();
 
           if (sessionError) {
-            console.error("❌ Session error:", sessionError);
+            console.error("�� Session error:", sessionError);
             toast({
               title: "Players Updated",
               description:
