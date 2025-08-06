@@ -1555,7 +1555,8 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
   }
 
   // Get theme styling - use forced theme for draft preview or event's theme
-  const theme = getThemeStyles(forceTheme || eventData?.theme);
+  const currentTheme = forceTheme || eventData?.theme || 'GolfOS';
+  const theme = getThemeStyles(currentTheme);
 
   // Get theme components
   const themeName = (eventData?.theme as ThemeName) || "default";
