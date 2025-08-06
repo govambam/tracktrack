@@ -63,29 +63,27 @@ export default function PublicLeaderboard({
       setEventData(event);
 
       // Load rounds, players, scores, and course holes in parallel
-      const [roundsResult, playersResult, scoresResult, courseHolesResult] = await Promise.all([
-        supabase
-          .from("event_rounds")
-          .select("*")
-          .eq("event_id", event.id)
-          .order("round_number"),
+      const [roundsResult, playersResult, scoresResult, courseHolesResult] =
+        await Promise.all([
+          supabase
+            .from("event_rounds")
+            .select("*")
+            .eq("event_id", event.id)
+            .order("round_number"),
 
-        supabase
-          .from("event_players")
-          .select("*")
-          .eq("event_id", event.id)
-          .order("name"),
+          supabase
+            .from("event_players")
+            .select("*")
+            .eq("event_id", event.id)
+            .order("name"),
 
-        supabase
-          .from("scorecards")
-          .select("*")
-          .eq("event_id", event.id),
+          supabase.from("scorecards").select("*").eq("event_id", event.id),
 
-        supabase
-          .from("course_holes")
-          .select("*")
-          .order("course_name, hole_number")
-      ]);
+          supabase
+            .from("course_holes")
+            .select("*")
+            .order("course_name, hole_number"),
+        ]);
 
       setRounds(roundsResult.data || []);
       setPlayers(playersResult.data || []);
@@ -112,17 +110,19 @@ export default function PublicLeaderboard({
   ];
 
   // Mock data for demonstration - will be replaced with real data
-  const mockPlayers = players.length > 0 ? players : [
-    { id: "1", name: "No players yet", points: 0, money: 0 }
-  ];
+  const mockPlayers =
+    players.length > 0
+      ? players
+      : [{ id: "1", name: "No players yet", points: 0, money: 0 }];
 
-  const mockCourses = rounds.length > 0 ? rounds.map(round => ({
-    name: round.course_name,
-    holes: 18,
-    format: round.scoring_type
-  })) : [
-    { name: "No rounds yet", holes: 18, format: "No data" }
-  ];
+  const mockCourses =
+    rounds.length > 0
+      ? rounds.map((round) => ({
+          name: round.course_name,
+          holes: 18,
+          format: round.scoring_type,
+        }))
+      : [{ name: "No rounds yet", holes: 18, format: "No data" }];
 
   const mockScorecard = [
     { hole: 1, par: 4, scores: {} },
@@ -387,8 +387,12 @@ export default function PublicLeaderboard({
       return (
         <div className="text-center py-12">
           <Target className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-slate-900 mb-2">No Rounds Available</h3>
-          <p className="text-slate-600">No tournament rounds have been set up yet.</p>
+          <h3 className="text-xl font-semibold text-slate-900 mb-2">
+            No Rounds Available
+          </h3>
+          <p className="text-slate-600">
+            No tournament rounds have been set up yet.
+          </p>
         </div>
       );
     }
@@ -397,40 +401,56 @@ export default function PublicLeaderboard({
       <div className="space-y-8">
         {rounds.map((round) => {
           const courseName = round.course_name;
-          const roundHoles = courseHoles.filter(hole => hole.course_name === courseName).sort((a, b) => a.hole_number - b.hole_number);
+          const roundHoles = courseHoles
+            .filter((hole) => hole.course_name === courseName)
+            .sort((a, b) => a.hole_number - b.hole_number);
 
           if (roundHoles.length === 0) {
             return (
               <div key={round.id} className="text-center py-8">
-                <p className="text-slate-600">No hole data available for {courseName}</p>
+                <p className="text-slate-600">
+                  No hole data available for {courseName}
+                </p>
               </div>
             );
           }
 
           // Get scores for this round
-          const roundScores = scores.filter(score => score.event_round_id === round.id);
+          const roundScores = scores.filter(
+            (score) => score.event_round_id === round.id,
+          );
 
           // Calculate totals and organize scores by player
-          const playerScores = players.map(player => {
-            const playerRoundScores = roundScores.filter(score => score.event_player_id === player.id);
-            const holeScores = roundHoles.map(hole => {
-              const holeScore = playerRoundScores.find(score => score.hole_number === hole.hole_number);
+          const playerScores = players.map((player) => {
+            const playerRoundScores = roundScores.filter(
+              (score) => score.event_player_id === player.id,
+            );
+            const holeScores = roundHoles.map((hole) => {
+              const holeScore = playerRoundScores.find(
+                (score) => score.hole_number === hole.hole_number,
+              );
               return {
                 hole: hole.hole_number,
                 par: hole.par,
-                strokes: holeScore ? holeScore.strokes : 0
+                strokes: holeScore ? holeScore.strokes : 0,
               };
             });
 
-            const totalStrokes = holeScores.reduce((sum, hole) => sum + (hole.strokes || 0), 0);
-            const totalPar = roundHoles.reduce((sum, hole) => sum + hole.par, 0);
+            const totalStrokes = holeScores.reduce(
+              (sum, hole) => sum + (hole.strokes || 0),
+              0,
+            );
+            const totalPar = roundHoles.reduce(
+              (sum, hole) => sum + hole.par,
+              0,
+            );
             const scoreToPar = totalStrokes > 0 ? totalStrokes - totalPar : 0;
 
             return {
               ...player,
               holeScores,
               totalStrokes: totalStrokes > 0 ? totalStrokes : null,
-              scoreToPar
+              scoreToPar,
             };
           });
 
@@ -445,9 +465,14 @@ export default function PublicLeaderboard({
                 </h3>
               </div>
               <p className="text-slate-600 mb-6">
-                {roundHoles.length} holes • {round.scoring_type === 'stroke_play' ? 'Stroke Play' : 'Stableford'}
+                {roundHoles.length} holes •{" "}
+                {round.scoring_type === "stroke_play"
+                  ? "Stroke Play"
+                  : "Stableford"}
                 {round.round_date && (
-                  <span className="ml-2">• {new Date(round.round_date).toLocaleDateString()}</span>
+                  <span className="ml-2">
+                    • {new Date(round.round_date).toLocaleDateString()}
+                  </span>
                 )}
               </p>
 
@@ -511,25 +536,30 @@ export default function PublicLeaderboard({
                             const diff = strokes > 0 ? strokes - par : 0;
 
                             let cellStyle = "px-3 py-3 text-center relative";
-                            let scoreStyle = "inline-flex items-center justify-center w-8 h-8 text-sm font-semibold";
+                            let scoreStyle =
+                              "inline-flex items-center justify-center w-8 h-8 text-sm font-semibold";
 
                             if (strokes === 0) {
                               scoreStyle += " text-slate-400";
                             } else if (diff <= -2) {
                               // Eagle or better: double circle
-                              scoreStyle += " text-yellow-600 rounded-full border-2 border-yellow-600 bg-yellow-50 shadow-lg";
+                              scoreStyle +=
+                                " text-yellow-600 rounded-full border-2 border-yellow-600 bg-yellow-50 shadow-lg";
                             } else if (diff === -1) {
                               // Birdie: single circle
-                              scoreStyle += " text-green-600 rounded-full border-2 border-green-600 bg-green-50";
+                              scoreStyle +=
+                                " text-green-600 rounded-full border-2 border-green-600 bg-green-50";
                             } else if (diff === 0) {
                               // Par: no special styling
                               scoreStyle += " text-blue-600";
                             } else if (diff === 1) {
                               // Bogey: square
-                              scoreStyle += " text-orange-600 border-2 border-orange-600 bg-orange-50";
+                              scoreStyle +=
+                                " text-orange-600 border-2 border-orange-600 bg-orange-50";
                             } else if (diff >= 2) {
                               // Double bogey or worse: double square
-                              scoreStyle += " text-red-600 border-2 border-red-600 bg-red-50 shadow-lg";
+                              scoreStyle +=
+                                " text-red-600 border-2 border-red-600 bg-red-50 shadow-lg";
                             }
 
                             return (
@@ -545,7 +575,9 @@ export default function PublicLeaderboard({
                           </td>
                           <td className="px-4 py-3 text-center font-bold text-green-600">
                             {player.totalStrokes && player.scoreToPar !== 0
-                              ? (player.scoreToPar > 0 ? `+${player.scoreToPar}` : player.scoreToPar)
+                              ? player.scoreToPar > 0
+                                ? `+${player.scoreToPar}`
+                                : player.scoreToPar
                               : player.totalStrokes
                                 ? "E"
                                 : "-"}
@@ -579,7 +611,9 @@ export default function PublicLeaderboard({
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50/30 flex items-center justify-center">
         <div className="text-center">
           <Target className="h-16 w-16 text-slate-400 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">Unable to Load Tournament</h1>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">
+            Unable to Load Tournament
+          </h1>
           <p className="text-slate-600">{error}</p>
         </div>
       </div>
