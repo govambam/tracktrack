@@ -294,8 +294,8 @@ export default function PlayersEdit() {
           constraint_check: {
             user_id_is_null: playerData.user_id === null,
             invited_email_is_not_null: playerData.invited_email !== null,
-            invited_email_value: playerData.invited_email
-          }
+            invited_email_value: playerData.invited_email,
+          },
         });
 
         // Track if this player needs an invitation email
@@ -332,12 +332,12 @@ export default function PlayersEdit() {
             message: errorResult.error?.message,
             details: errorResult.error?.details,
             hint: errorResult.error?.hint,
-            code: errorResult.error?.code
+            code: errorResult.error?.code,
           });
         });
         toast({
           title: "Save Failed",
-          description: `Failed to save some players: ${errors[0].error?.message || 'Unknown error'}`,
+          description: `Failed to save some players: ${errors[0].error?.message || "Unknown error"}`,
           variant: "destructive",
         });
         return;
