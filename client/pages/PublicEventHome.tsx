@@ -1554,8 +1554,8 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
     );
   }
 
-  // Get theme styling
-  const theme = getThemeStyles(eventData?.theme);
+  // Get theme styling - use forced theme for draft preview or event's theme
+  const theme = getThemeStyles(forceTheme || eventData?.theme);
 
   // Get theme components
   const themeName = (eventData?.theme as ThemeName) || "default";
