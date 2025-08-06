@@ -485,20 +485,34 @@ export default function Clubhouse() {
 
             <div className="grid gap-6 lg:grid-cols-2">
               {/* Announcements Channel */}
-              <Card className="border-blue-200">
+              <Card
+                className={`${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}
+              >
                 <CardHeader>
-                  <CardTitle className="text-blue-900 flex items-center">
-                    <Megaphone className="h-5 w-5 mr-2 text-blue-600" />
+                  <CardTitle
+                    className={`flex items-center ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                  >
+                    <Megaphone
+                      className={`h-5 w-5 mr-2 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                    />
                     Announcements
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="bg-blue-50 rounded-lg p-6 text-center">
-                    <Megaphone className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                  <div
+                    className={`rounded-lg p-6 text-center ${currentTheme === "Masters" ? "bg-green-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-blue-50"}`}
+                  >
+                    <Megaphone
+                      className={`h-12 w-12 mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-400" : currentTheme === "TourTech" ? "text-gray-400" : "text-blue-400"}`}
+                    />
+                    <h3
+                      className={`text-lg font-semibold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                    >
                       Coming Soon
                     </h3>
-                    <p className="text-blue-600">
+                    <p
+                      className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                    >
                       Tournament announcements and updates will appear here.
                     </p>
                   </div>
@@ -506,20 +520,34 @@ export default function Clubhouse() {
               </Card>
 
               {/* General Chat Channel */}
-              <Card className="border-blue-200">
+              <Card
+                className={`${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}
+              >
                 <CardHeader>
-                  <CardTitle className="text-blue-900 flex items-center">
-                    <MessageCircle className="h-5 w-5 mr-2 text-blue-600" />
+                  <CardTitle
+                    className={`flex items-center ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                  >
+                    <MessageCircle
+                      className={`h-5 w-5 mr-2 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                    />
                     General Chat
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="bg-blue-50 rounded-lg p-6 text-center">
-                    <MessageCircle className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                  <div
+                    className={`rounded-lg p-6 text-center ${currentTheme === "Masters" ? "bg-green-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-blue-50"}`}
+                  >
+                    <MessageCircle
+                      className={`h-12 w-12 mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-400" : currentTheme === "TourTech" ? "text-gray-400" : "text-blue-400"}`}
+                    />
+                    <h3
+                      className={`text-lg font-semibold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                    >
                       Coming Soon
                     </h3>
-                    <p className="text-blue-600">
+                    <p
+                      className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                    >
                       Chat with other players during the tournament.
                     </p>
                   </div>
@@ -527,9 +555,15 @@ export default function Clubhouse() {
               </Card>
             </div>
 
-            <Alert className="border-blue-200 bg-blue-50">
-              <MessageCircle className="h-4 w-4 text-blue-600" />
-              <AlertDescription className="text-blue-700">
+            <Alert
+              className={`${currentTheme === "Masters" ? "border-green-200 bg-green-50" : currentTheme === "TourTech" ? "border-gray-200 bg-gray-50" : "border-blue-200 bg-blue-50"}`}
+            >
+              <MessageCircle
+                className={`h-4 w-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+              />
+              <AlertDescription
+                className={`${currentTheme === "Masters" ? "text-green-700 font-serif" : currentTheme === "TourTech" ? "text-gray-700" : "text-blue-700"}`}
+              >
                 <strong>Live Chat Coming Soon:</strong> We're working on
                 bringing you real-time chat functionality to enhance your
                 tournament experience. Stay tuned for updates!
