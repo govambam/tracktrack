@@ -58,7 +58,7 @@ export default function EventClubhouse() {
   const navigate = useNavigate();
   const { eventData, clubhouseSession } = useOutletContext<OutletContext>();
   const { currentTheme } = useEventTheme(slug);
-  
+
   const [loading, setLoading] = useState(true);
   const [rounds, setRounds] = useState<EventRound[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -135,8 +135,8 @@ export default function EventClubhouse() {
               currentTheme === "Masters"
                 ? "text-green-600"
                 : currentTheme === "TourTech"
-                ? "text-gray-600"
-                : "text-blue-600"
+                  ? "text-gray-600"
+                  : "text-blue-600"
             }`}
           />
           <p
@@ -144,8 +144,8 @@ export default function EventClubhouse() {
               currentTheme === "Masters"
                 ? "text-green-700 font-serif"
                 : currentTheme === "TourTech"
-                ? "text-gray-700"
-                : "text-blue-700"
+                  ? "text-gray-700"
+                  : "text-blue-700"
             }`}
           >
             Loading clubhouse...
@@ -166,8 +166,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "bg-gradient-to-br from-green-600 to-amber-600"
                   : currentTheme === "TourTech"
-                  ? "bg-gradient-to-br from-gray-500 to-gray-600"
-                  : "bg-gradient-to-br from-blue-500 to-indigo-600"
+                    ? "bg-gradient-to-br from-gray-500 to-gray-600"
+                    : "bg-gradient-to-br from-blue-500 to-indigo-600"
               }`}
             >
               <Users className="h-8 w-8 text-white" />
@@ -177,8 +177,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "text-green-900 font-serif"
                   : currentTheme === "TourTech"
-                  ? "text-gray-900"
-                  : "text-blue-900"
+                    ? "text-gray-900"
+                    : "text-blue-900"
               }`}
             >
               Welcome to the Clubhouse
@@ -188,8 +188,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "text-green-600 font-serif"
                   : currentTheme === "TourTech"
-                  ? "text-gray-600"
-                  : "text-blue-600"
+                    ? "text-gray-600"
+                    : "text-blue-600"
               }`}
             >
               Welcome back, {clubhouseSession.displayName}
@@ -208,8 +208,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "text-green-900 font-serif"
                   : currentTheme === "TourTech"
-                  ? "text-gray-900"
-                  : "text-blue-900"
+                    ? "text-gray-900"
+                    : "text-blue-900"
               }`}
             >
               Round Scorecards
@@ -219,8 +219,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "text-green-600 font-serif"
                   : currentTheme === "TourTech"
-                  ? "text-gray-600"
-                  : "text-blue-600"
+                    ? "text-gray-600"
+                    : "text-blue-600"
               }`}
             >
               Select a round to enter or edit scores
@@ -233,8 +233,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "border-green-200"
                   : currentTheme === "TourTech"
-                  ? "border-gray-200"
-                  : "border-blue-200"
+                    ? "border-gray-200"
+                    : "border-blue-200"
               }`}
             >
               <CardContent className="p-8 text-center">
@@ -243,8 +243,8 @@ export default function EventClubhouse() {
                     currentTheme === "Masters"
                       ? "text-green-400"
                       : currentTheme === "TourTech"
-                      ? "text-gray-400"
-                      : "text-blue-400"
+                        ? "text-gray-400"
+                        : "text-blue-400"
                   }`}
                 />
                 <h3
@@ -252,8 +252,8 @@ export default function EventClubhouse() {
                     currentTheme === "Masters"
                       ? "text-green-900 font-serif"
                       : currentTheme === "TourTech"
-                      ? "text-gray-900"
-                      : "text-blue-900"
+                        ? "text-gray-900"
+                        : "text-blue-900"
                   }`}
                 >
                   No Rounds Available
@@ -263,11 +263,12 @@ export default function EventClubhouse() {
                     currentTheme === "Masters"
                       ? "text-green-600 font-serif"
                       : currentTheme === "TourTech"
-                      ? "text-gray-600"
-                      : "text-blue-600"
+                        ? "text-gray-600"
+                        : "text-blue-600"
                   }`}
                 >
-                  No tournament rounds have been set up yet. Check back later for scoring opportunities.
+                  No tournament rounds have been set up yet. Check back later
+                  for scoring opportunities.
                 </p>
               </CardContent>
             </Card>
@@ -280,10 +281,12 @@ export default function EventClubhouse() {
                     currentTheme === "Masters"
                       ? "border-green-200 hover:border-green-300"
                       : currentTheme === "TourTech"
-                      ? "border-gray-200 hover:border-gray-300"
-                      : "border-blue-200 hover:border-blue-300"
+                        ? "border-gray-200 hover:border-gray-300"
+                        : "border-blue-200 hover:border-blue-300"
                   }`}
-                  onClick={() => navigate(`/events/${slug}/clubhouse/scorecard/${round.id}`)}
+                  onClick={() =>
+                    navigate(`/events/${slug}/clubhouse/scorecard/${round.id}`)
+                  }
                 >
                   <CardHeader>
                     <CardTitle
@@ -291,8 +294,8 @@ export default function EventClubhouse() {
                         currentTheme === "Masters"
                           ? "text-green-900 font-serif"
                           : currentTheme === "TourTech"
-                          ? "text-gray-900"
-                          : "text-blue-900"
+                            ? "text-gray-900"
+                            : "text-blue-900"
                       }`}
                     >
                       <span>Round {round.round_number}</span>
@@ -301,8 +304,8 @@ export default function EventClubhouse() {
                           currentTheme === "Masters"
                             ? "text-green-600"
                             : currentTheme === "TourTech"
-                            ? "text-gray-600"
-                            : "text-blue-600"
+                              ? "text-gray-600"
+                              : "text-blue-600"
                         }`}
                       />
                     </CardTitle>
@@ -314,24 +317,26 @@ export default function EventClubhouse() {
                           currentTheme === "Masters"
                             ? "text-green-600"
                             : currentTheme === "TourTech"
-                            ? "text-gray-600"
-                            : "text-blue-600"
+                              ? "text-gray-600"
+                              : "text-blue-600"
                         }`}
                       />
                       <span className="font-medium">{round.course_name}</span>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Calendar
                         className={`h-4 w-4 ${
                           currentTheme === "Masters"
                             ? "text-green-600"
                             : currentTheme === "TourTech"
-                            ? "text-gray-600"
-                            : "text-blue-600"
+                              ? "text-gray-600"
+                              : "text-blue-600"
                         }`}
                       />
-                      <span className="text-sm">{formatDate(round.round_date)}</span>
+                      <span className="text-sm">
+                        {formatDate(round.round_date)}
+                      </span>
                     </div>
 
                     {round.tee_time && (
@@ -341,11 +346,13 @@ export default function EventClubhouse() {
                             currentTheme === "Masters"
                               ? "text-green-600"
                               : currentTheme === "TourTech"
-                              ? "text-gray-600"
-                              : "text-blue-600"
+                                ? "text-gray-600"
+                                : "text-blue-600"
                           }`}
                         />
-                        <span className="text-sm">{formatTime(round.tee_time)}</span>
+                        <span className="text-sm">
+                          {formatTime(round.tee_time)}
+                        </span>
                       </div>
                     )}
 
@@ -356,13 +363,15 @@ export default function EventClubhouse() {
                           currentTheme === "Masters"
                             ? "bg-green-100 text-green-800"
                             : currentTheme === "TourTech"
-                            ? "bg-gray-100 text-gray-800"
-                            : "bg-blue-100 text-blue-800"
+                              ? "bg-gray-100 text-gray-800"
+                              : "bg-blue-100 text-blue-800"
                         }`}
                       >
                         {round.scoring_type}
                       </Badge>
-                      <span className="text-sm text-gray-500">{round.holes} holes</span>
+                      <span className="text-sm text-gray-500">
+                        {round.holes} holes
+                      </span>
                     </div>
                   </CardContent>
                 </Card>
@@ -379,8 +388,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "text-green-900 font-serif"
                   : currentTheme === "TourTech"
-                  ? "text-gray-900"
-                  : "text-blue-900"
+                    ? "text-gray-900"
+                    : "text-blue-900"
               }`}
             >
               Event Chat
@@ -390,8 +399,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "text-green-600 font-serif"
                   : currentTheme === "TourTech"
-                  ? "text-gray-600"
-                  : "text-blue-600"
+                    ? "text-gray-600"
+                    : "text-blue-600"
               }`}
             >
               Stay connected with other players throughout the tournament
@@ -405,8 +414,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "border-green-200"
                   : currentTheme === "TourTech"
-                  ? "border-gray-200"
-                  : "border-blue-200"
+                    ? "border-gray-200"
+                    : "border-blue-200"
               }`}
             >
               <CardHeader>
@@ -415,8 +424,8 @@ export default function EventClubhouse() {
                     currentTheme === "Masters"
                       ? "text-green-900 font-serif"
                       : currentTheme === "TourTech"
-                      ? "text-gray-900"
-                      : "text-blue-900"
+                        ? "text-gray-900"
+                        : "text-blue-900"
                   }`}
                 >
                   <Megaphone
@@ -424,8 +433,8 @@ export default function EventClubhouse() {
                       currentTheme === "Masters"
                         ? "text-green-600"
                         : currentTheme === "TourTech"
-                        ? "text-gray-600"
-                        : "text-blue-600"
+                          ? "text-gray-600"
+                          : "text-blue-600"
                     }`}
                   />
                   Announcements
@@ -437,8 +446,8 @@ export default function EventClubhouse() {
                     currentTheme === "Masters"
                       ? "bg-green-50"
                       : currentTheme === "TourTech"
-                      ? "bg-gray-50"
-                      : "bg-blue-50"
+                        ? "bg-gray-50"
+                        : "bg-blue-50"
                   }`}
                 >
                   <Megaphone
@@ -446,8 +455,8 @@ export default function EventClubhouse() {
                       currentTheme === "Masters"
                         ? "text-green-400"
                         : currentTheme === "TourTech"
-                        ? "text-gray-400"
-                        : "text-blue-400"
+                          ? "text-gray-400"
+                          : "text-blue-400"
                     }`}
                   />
                   <h3
@@ -455,8 +464,8 @@ export default function EventClubhouse() {
                       currentTheme === "Masters"
                         ? "text-green-900 font-serif"
                         : currentTheme === "TourTech"
-                        ? "text-gray-900"
-                        : "text-blue-900"
+                          ? "text-gray-900"
+                          : "text-blue-900"
                     }`}
                   >
                     Coming Soon
@@ -466,8 +475,8 @@ export default function EventClubhouse() {
                       currentTheme === "Masters"
                         ? "text-green-600 font-serif"
                         : currentTheme === "TourTech"
-                        ? "text-gray-600"
-                        : "text-blue-600"
+                          ? "text-gray-600"
+                          : "text-blue-600"
                     }`}
                   >
                     Tournament announcements and updates will appear here.
@@ -482,8 +491,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "border-green-200"
                   : currentTheme === "TourTech"
-                  ? "border-gray-200"
-                  : "border-blue-200"
+                    ? "border-gray-200"
+                    : "border-blue-200"
               }`}
             >
               <CardHeader>
@@ -492,8 +501,8 @@ export default function EventClubhouse() {
                     currentTheme === "Masters"
                       ? "text-green-900 font-serif"
                       : currentTheme === "TourTech"
-                      ? "text-gray-900"
-                      : "text-blue-900"
+                        ? "text-gray-900"
+                        : "text-blue-900"
                   }`}
                 >
                   <MessageCircle
@@ -501,8 +510,8 @@ export default function EventClubhouse() {
                       currentTheme === "Masters"
                         ? "text-green-600"
                         : currentTheme === "TourTech"
-                        ? "text-gray-600"
-                        : "text-blue-600"
+                          ? "text-gray-600"
+                          : "text-blue-600"
                     }`}
                   />
                   General Chat
@@ -514,8 +523,8 @@ export default function EventClubhouse() {
                     currentTheme === "Masters"
                       ? "bg-green-50"
                       : currentTheme === "TourTech"
-                      ? "bg-gray-50"
-                      : "bg-blue-50"
+                        ? "bg-gray-50"
+                        : "bg-blue-50"
                   }`}
                 >
                   <MessageCircle
@@ -523,8 +532,8 @@ export default function EventClubhouse() {
                       currentTheme === "Masters"
                         ? "text-green-400"
                         : currentTheme === "TourTech"
-                        ? "text-gray-400"
-                        : "text-blue-400"
+                          ? "text-gray-400"
+                          : "text-blue-400"
                     }`}
                   />
                   <h3
@@ -532,8 +541,8 @@ export default function EventClubhouse() {
                       currentTheme === "Masters"
                         ? "text-green-900 font-serif"
                         : currentTheme === "TourTech"
-                        ? "text-gray-900"
-                        : "text-blue-900"
+                          ? "text-gray-900"
+                          : "text-blue-900"
                     }`}
                   >
                     Coming Soon
@@ -543,8 +552,8 @@ export default function EventClubhouse() {
                       currentTheme === "Masters"
                         ? "text-green-600 font-serif"
                         : currentTheme === "TourTech"
-                        ? "text-gray-600"
-                        : "text-blue-600"
+                          ? "text-gray-600"
+                          : "text-blue-600"
                     }`}
                   >
                     Chat with other players during the tournament.
@@ -559,8 +568,8 @@ export default function EventClubhouse() {
               currentTheme === "Masters"
                 ? "border-green-200 bg-green-50"
                 : currentTheme === "TourTech"
-                ? "border-gray-200 bg-gray-50"
-                : "border-blue-200 bg-blue-50"
+                  ? "border-gray-200 bg-gray-50"
+                  : "border-blue-200 bg-blue-50"
             }`}
           >
             <MessageCircle
@@ -568,8 +577,8 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "text-green-600"
                   : currentTheme === "TourTech"
-                  ? "text-gray-600"
-                  : "text-blue-600"
+                    ? "text-gray-600"
+                    : "text-blue-600"
               }`}
             />
             <AlertDescription
@@ -577,11 +586,13 @@ export default function EventClubhouse() {
                 currentTheme === "Masters"
                   ? "text-green-700 font-serif"
                   : currentTheme === "TourTech"
-                  ? "text-gray-700"
-                  : "text-blue-700"
+                    ? "text-gray-700"
+                    : "text-blue-700"
               }`}
             >
-              <strong>Live Chat Coming Soon:</strong> We're working on bringing you real-time chat functionality to enhance your tournament experience. Stay tuned for updates!
+              <strong>Live Chat Coming Soon:</strong> We're working on bringing
+              you real-time chat functionality to enhance your tournament
+              experience. Stay tuned for updates!
             </AlertDescription>
           </Alert>
         </section>

@@ -28,12 +28,13 @@ export default function EventShell() {
   const navigate = useNavigate();
   const location = useLocation();
   const { currentTheme } = useEventTheme(slug);
-  
+
   const [loading, setLoading] = useState(true);
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showClubhouseModal, setShowClubhouseModal] = useState(false);
-  const [clubhouseSession, setClubhouseSession] = useState<ClubhouseSession | null>(null);
+  const [clubhouseSession, setClubhouseSession] =
+    useState<ClubhouseSession | null>(null);
 
   useEffect(() => {
     if (slug) {
@@ -103,20 +104,20 @@ export default function EventShell() {
   // Determine current tab based on pathname
   const getCurrentTab = () => {
     const path = location.pathname;
-    if (path.includes('/clubhouse')) return 'clubhouse';
-    if (path.includes('/leaderboard')) return 'leaderboard';
-    return 'home';
+    if (path.includes("/clubhouse")) return "clubhouse";
+    if (path.includes("/leaderboard")) return "leaderboard";
+    return "home";
   };
 
   const navigateToTab = (tab: string) => {
     switch (tab) {
-      case 'home':
+      case "home":
         navigate(`/events/${slug}`);
         break;
-      case 'leaderboard':
+      case "leaderboard":
         navigate(`/events/${slug}/leaderboard`);
         break;
-      case 'clubhouse':
+      case "clubhouse":
         handleClubhouseAccess();
         break;
     }
@@ -129,8 +130,8 @@ export default function EventShell() {
           currentTheme === "Masters"
             ? "bg-gradient-to-br from-green-50 to-amber-50"
             : currentTheme === "TourTech"
-            ? "bg-gray-50"
-            : "bg-gradient-to-br from-blue-50 to-indigo-100"
+              ? "bg-gray-50"
+              : "bg-gradient-to-br from-blue-50 to-indigo-100"
         }`}
       >
         <div className="text-center">
@@ -139,8 +140,8 @@ export default function EventShell() {
               currentTheme === "Masters"
                 ? "text-green-600"
                 : currentTheme === "TourTech"
-                ? "text-gray-600"
-                : "text-blue-600"
+                  ? "text-gray-600"
+                  : "text-blue-600"
             }`}
           />
           <p
@@ -148,8 +149,8 @@ export default function EventShell() {
               currentTheme === "Masters"
                 ? "text-green-700 font-serif"
                 : currentTheme === "TourTech"
-                ? "text-gray-700"
-                : "text-blue-700"
+                  ? "text-gray-700"
+                  : "text-blue-700"
             }`}
           >
             Loading event...
@@ -166,8 +167,8 @@ export default function EventShell() {
           currentTheme === "Masters"
             ? "bg-gradient-to-br from-green-50 to-amber-50"
             : currentTheme === "TourTech"
-            ? "bg-gray-50"
-            : "bg-gradient-to-br from-blue-50 to-indigo-100"
+              ? "bg-gray-50"
+              : "bg-gradient-to-br from-blue-50 to-indigo-100"
         }`}
       >
         <div className="text-center max-w-md mx-auto px-6">
@@ -176,8 +177,8 @@ export default function EventShell() {
               currentTheme === "Masters"
                 ? "text-green-400"
                 : currentTheme === "TourTech"
-                ? "text-gray-400"
-                : "text-blue-400"
+                  ? "text-gray-400"
+                  : "text-blue-400"
             }`}
           />
           <h1
@@ -185,8 +186,8 @@ export default function EventShell() {
               currentTheme === "Masters"
                 ? "text-green-900 font-serif"
                 : currentTheme === "TourTech"
-                ? "text-gray-900"
-                : "text-blue-900"
+                  ? "text-gray-900"
+                  : "text-blue-900"
             }`}
           >
             Event Not Found
@@ -196,8 +197,8 @@ export default function EventShell() {
               currentTheme === "Masters"
                 ? "text-green-600 font-serif"
                 : currentTheme === "TourTech"
-                ? "text-gray-600"
-                : "text-blue-600"
+                  ? "text-gray-600"
+                  : "text-blue-600"
             }`}
           >
             {error}
@@ -209,8 +210,8 @@ export default function EventShell() {
               currentTheme === "Masters"
                 ? "border-green-200 text-green-700 hover:bg-green-50"
                 : currentTheme === "TourTech"
-                ? "border-gray-200 text-gray-700 hover:bg-gray-50"
-                : "border-blue-200 text-blue-700 hover:bg-blue-50"
+                  ? "border-gray-200 text-gray-700 hover:bg-gray-50"
+                  : "border-blue-200 text-blue-700 hover:bg-blue-50"
             }`}
           >
             <Home className="h-4 w-4 mr-2" />
@@ -229,8 +230,8 @@ export default function EventShell() {
         currentTheme === "Masters"
           ? "bg-gradient-to-br from-green-50 to-amber-50"
           : currentTheme === "TourTech"
-          ? "bg-gray-50"
-          : "bg-gradient-to-br from-blue-50 to-indigo-100"
+            ? "bg-gray-50"
+            : "bg-gradient-to-br from-blue-50 to-indigo-100"
       }`}
     >
       {/* Persistent Top Navigation */}
@@ -257,19 +258,19 @@ export default function EventShell() {
             {/* Navigation Tabs */}
             <div className="flex items-center space-x-1">
               <Button
-                variant={currentTab === 'home' ? 'default' : 'ghost'}
+                variant={currentTab === "home" ? "default" : "ghost"}
                 size="sm"
-                onClick={() => navigateToTab('home')}
+                onClick={() => navigateToTab("home")}
                 className={`flex items-center space-x-2 ${
-                  currentTab === 'home'
+                  currentTab === "home"
                     ? currentTheme === "Masters"
                       ? "bg-green-600 hover:bg-green-700 text-white"
                       : currentTheme === "TourTech"
-                      ? "bg-gray-600 hover:bg-gray-700 text-white"
-                      : "bg-blue-600 hover:bg-blue-700 text-white"
+                        ? "bg-gray-600 hover:bg-gray-700 text-white"
+                        : "bg-blue-600 hover:bg-blue-700 text-white"
                     : currentTheme === "Masters"
-                    ? "text-green-800 hover:text-green-600 hover:bg-green-50 font-serif"
-                    : "text-slate-600 hover:text-slate-800 hover:bg-slate-50"
+                      ? "text-green-800 hover:text-green-600 hover:bg-green-50 font-serif"
+                      : "text-slate-600 hover:text-slate-800 hover:bg-slate-50"
                 }`}
               >
                 <Home className="h-4 w-4" />
@@ -277,19 +278,19 @@ export default function EventShell() {
               </Button>
 
               <Button
-                variant={currentTab === 'leaderboard' ? 'default' : 'ghost'}
+                variant={currentTab === "leaderboard" ? "default" : "ghost"}
                 size="sm"
-                onClick={() => navigateToTab('leaderboard')}
+                onClick={() => navigateToTab("leaderboard")}
                 className={`flex items-center space-x-2 ${
-                  currentTab === 'leaderboard'
+                  currentTab === "leaderboard"
                     ? currentTheme === "Masters"
                       ? "bg-green-600 hover:bg-green-700 text-white"
                       : currentTheme === "TourTech"
-                      ? "bg-gray-600 hover:bg-gray-700 text-white"
-                      : "bg-blue-600 hover:bg-blue-700 text-white"
+                        ? "bg-gray-600 hover:bg-gray-700 text-white"
+                        : "bg-blue-600 hover:bg-blue-700 text-white"
                     : currentTheme === "Masters"
-                    ? "text-green-800 hover:text-green-600 hover:bg-green-50 font-serif"
-                    : "text-slate-600 hover:text-slate-800 hover:bg-slate-50"
+                      ? "text-green-800 hover:text-green-600 hover:bg-green-50 font-serif"
+                      : "text-slate-600 hover:text-slate-800 hover:bg-slate-50"
                 }`}
               >
                 <BarChart3 className="h-4 w-4" />
@@ -297,22 +298,22 @@ export default function EventShell() {
               </Button>
 
               <Button
-                variant={currentTab === 'clubhouse' ? 'default' : 'ghost'}
+                variant={currentTab === "clubhouse" ? "default" : "ghost"}
                 size="sm"
-                onClick={() => navigateToTab('clubhouse')}
+                onClick={() => navigateToTab("clubhouse")}
                 disabled={!eventData.clubhouse_password}
                 className={`flex items-center space-x-2 ${
                   !eventData.clubhouse_password
                     ? "opacity-50 cursor-not-allowed"
-                    : currentTab === 'clubhouse'
-                    ? currentTheme === "Masters"
-                      ? "bg-green-600 hover:bg-green-700 text-white"
-                      : currentTheme === "TourTech"
-                      ? "bg-gray-600 hover:bg-gray-700 text-white"
-                      : "bg-blue-600 hover:bg-blue-700 text-white"
-                    : currentTheme === "Masters"
-                    ? "text-green-800 hover:text-green-600 hover:bg-green-50 font-serif"
-                    : "text-slate-600 hover:text-slate-800 hover:bg-slate-50"
+                    : currentTab === "clubhouse"
+                      ? currentTheme === "Masters"
+                        ? "bg-green-600 hover:bg-green-700 text-white"
+                        : currentTheme === "TourTech"
+                          ? "bg-gray-600 hover:bg-gray-700 text-white"
+                          : "bg-blue-600 hover:bg-blue-700 text-white"
+                      : currentTheme === "Masters"
+                        ? "text-green-800 hover:text-green-600 hover:bg-green-50 font-serif"
+                        : "text-slate-600 hover:text-slate-800 hover:bg-slate-50"
                 }`}
               >
                 <Users className="h-4 w-4" />

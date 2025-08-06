@@ -28,5 +28,7 @@ export default function EventHome() {
 
   // Pass the eventData to the existing PublicEventHome component
   // Hide navigation since it's provided by the shell
-  return <PublicEventHome preloadedEventData={eventData} hideNavigation={true} />;
+  return (
+    <PublicEventHome preloadedEventData={eventData} hideNavigation={true} />
+  );
 }
