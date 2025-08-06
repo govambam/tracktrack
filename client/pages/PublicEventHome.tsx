@@ -1555,7 +1555,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
   }
 
   // Get theme styling - use forced theme for draft preview or event's theme
-  const currentTheme = forceTheme || eventData?.theme || 'GolfOS';
+  const currentTheme = forceTheme || currentTheme || 'GolfOS';
   const theme = getThemeStyles(currentTheme);
 
   // Get theme components
@@ -1567,7 +1567,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
       <StickyNavigation
         eventName={eventData.name}
         slug={slug!}
-        theme={eventData?.theme}
+        theme={currentTheme}
       />
 
       {/* Hero Section */}
@@ -1581,7 +1581,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
       />
 
       {/* Summary Cards Section */}
-      {eventData?.theme !== "TourTech" && eventData?.theme !== "Masters" && (
+      {currentTheme !== "TourTech" && currentTheme !== "Masters" && (
         <section className="py-24 px-6 sm:px-8 lg:px-12 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white"></div>
           <div className="relative max-w-5xl mx-auto">
@@ -1623,10 +1623,10 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
       {courses.length > 0 && (
         <section
           id="courses"
-          className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : eventData?.theme === "Masters" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding} relative overflow-hidden` : "py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"}`}
+          className={`${currentTheme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : currentTheme === "Masters" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding} relative overflow-hidden` : "py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"}`}
         >
           {/* Background decoration */}
-          {eventData?.theme === "TourTech" ? null : eventData?.theme ===
+          {currentTheme === "TourTech" ? null : currentTheme ===
             "Masters" ? (
             <>
               <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
@@ -1640,44 +1640,44 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
           )}
 
           <div
-            className={`relative ${eventData?.theme === "TourTech" ? theme.maxContentWidth : eventData?.theme === "Masters" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}
+            className={`relative ${currentTheme === "TourTech" ? theme.maxContentWidth : currentTheme === "Masters" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}
           >
             <div
-              className={`text-center ${eventData?.theme === "TourTech" ? theme.headerSpacing : eventData?.theme === "Masters" ? theme.headerSpacing : "mb-20"}`}
+              className={`text-center ${currentTheme === "TourTech" ? theme.headerSpacing : currentTheme === "Masters" ? theme.headerSpacing : "mb-20"}`}
             >
               <div
-                className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg px-4 py-2 shadow-sm" : "bg-green-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${eventData?.theme === "TourTech" ? "4" : eventData?.theme === "Masters" ? "4" : "8"}`}
+                className={`inline-flex items-center space-x-2 ${currentTheme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : currentTheme === "Masters" ? "bg-white border border-green-800/20 rounded-lg px-4 py-2 shadow-sm" : "bg-green-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${currentTheme === "TourTech" ? "4" : currentTheme === "Masters" ? "4" : "8"}`}
               >
                 <Sparkles
-                  className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.orangeText : eventData?.theme === "Masters" ? "text-yellow-600" : "text-green-600"}`}
+                  className={`h-4 w-4 ${currentTheme === "TourTech" ? theme.orangeText : currentTheme === "Masters" ? "text-yellow-600" : "text-green-600"}`}
                 />
                 <span
-                  className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-green-800"}`}
+                  className={`text-sm font-medium ${currentTheme === "TourTech" ? theme.monoLabel : currentTheme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-green-800"}`}
                 >
-                  {eventData?.theme === "TourTech"
+                  {currentTheme === "TourTech"
                     ? "VENUES"
-                    : eventData?.theme === "Masters"
+                    : currentTheme === "Masters"
                       ? "Championship Venues"
                       : "Championship Venues"}
                 </span>
               </div>
 
               <h2
-                className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : eventData?.theme === "Masters" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : eventData?.theme === "Masters" ? theme.headerSpacing : "8"}`}
+                className={`${currentTheme === "TourTech" ? theme.sectionTitle : currentTheme === "Masters" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${currentTheme === "TourTech" ? theme.headerSpacing : currentTheme === "Masters" ? theme.headerSpacing : "8"}`}
               >
                 {courses.length > 1 ? "Golf Courses" : "Golf Course"}
               </h2>
 
               <p
-                className={`${eventData?.theme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : eventData?.theme === "Masters" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-4xl font-light"} mx-auto leading-relaxed`}
+                className={`${currentTheme === "TourTech" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : currentTheme === "Masters" ? `${theme.heroSubtitle} ${theme.textMaxWidth}` : "text-xl sm:text-2xl text-slate-600 max-w-4xl font-light"} mx-auto leading-relaxed`}
               >
                 {rounds.reduce(
                   (total, round) => total + (round.holes || 18),
                   0,
                 )}{" "}
-                {eventData?.theme === "TourTech"
+                {currentTheme === "TourTech"
                   ? "holes"
-                  : eventData?.theme === "Masters"
+                  : currentTheme === "Masters"
                     ? "championship holes"
                     : "world class holes"}{" "}
                 played over{" "}
@@ -1709,8 +1709,8 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                       round={round}
                       index={index}
                       theme={theme}
-                      isTourTech={eventData?.theme === "TourTech"}
-                      isMasters={eventData?.theme === "Masters"}
+                      isTourTech={currentTheme === "TourTech"}
+                      isMasters={currentTheme === "Masters"}
                       onOpenModal={() => {
                         setSelectedCourse({ course, round });
                         setIsModalOpen(true);
@@ -1728,46 +1728,46 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
       {rounds.length > 0 && (
         <section
           id="scoring"
-          className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : eventData?.theme === "Masters" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding} relative` : "py-28 px-6 sm:px-8 lg:px-12 relative"}`}
+          className={`${currentTheme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : currentTheme === "Masters" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding} relative` : "py-28 px-6 sm:px-8 lg:px-12 relative"}`}
         >
           {/* Background decoration */}
-          {eventData?.theme === "TourTech" ? null : eventData?.theme ===
+          {currentTheme === "TourTech" ? null : currentTheme ===
             "Masters" ? (
             <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-slate-50/30"></div>
           )}
           <div
-            className={`relative ${eventData?.theme === "TourTech" ? theme.maxContentWidth : eventData?.theme === "Masters" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}
+            className={`relative ${currentTheme === "TourTech" ? theme.maxContentWidth : currentTheme === "Masters" ? theme.maxContentWidth : "max-w-6xl"} mx-auto`}
           >
             <div
-              className={`text-center ${eventData?.theme === "TourTech" ? theme.headerSpacing : eventData?.theme === "Masters" ? theme.headerSpacing : "mb-20"}`}
+              className={`text-center ${currentTheme === "TourTech" ? theme.headerSpacing : currentTheme === "Masters" ? theme.headerSpacing : "mb-20"}`}
             >
               <div
-                className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg px-4 py-2 shadow-sm" : "bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${eventData?.theme === "TourTech" ? "4" : eventData?.theme === "Masters" ? "4" : "8"}`}
+                className={`inline-flex items-center space-x-2 ${currentTheme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow}` : currentTheme === "Masters" ? "bg-white border border-green-800/20 rounded-lg px-4 py-2 shadow-sm" : "bg-blue-100/80 backdrop-blur-sm rounded-full px-4 py-2"} mb-${currentTheme === "TourTech" ? "4" : currentTheme === "Masters" ? "4" : "8"}`}
               >
                 <Target
-                  className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.accentColor : eventData?.theme === "Masters" ? "text-yellow-600" : "text-blue-600"}`}
+                  className={`h-4 w-4 ${currentTheme === "TourTech" ? theme.accentColor : currentTheme === "Masters" ? "text-yellow-600" : "text-blue-600"}`}
                 />
                 <span
-                  className={`text-sm font-medium ${eventData?.theme === "TourTech" ? theme.tableHeader : eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-blue-800"}`}
+                  className={`text-sm font-medium ${currentTheme === "TourTech" ? theme.tableHeader : currentTheme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-blue-800"}`}
                 >
-                  {eventData?.theme === "TourTech"
+                  {currentTheme === "TourTech"
                     ? "SCORING"
-                    : eventData?.theme === "Masters"
+                    : currentTheme === "Masters"
                       ? "Competition Rules"
                       : "Competition Rules"}
                 </span>
               </div>
 
               <h2
-                className={`${eventData?.theme === "TourTech" ? theme.sectionTitle : eventData?.theme === "Masters" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${eventData?.theme === "TourTech" ? theme.headerSpacing : eventData?.theme === "Masters" ? theme.headerSpacing : "8"}`}
+                className={`${currentTheme === "TourTech" ? theme.sectionTitle : currentTheme === "Masters" ? theme.sectionTitle : "text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight"} mb-${currentTheme === "TourTech" ? theme.headerSpacing : currentTheme === "Masters" ? theme.headerSpacing : "8"}`}
               >
                 Scoring Format
               </h2>
 
               {/* Masters theme - 2-column layout with more vertical space above */}
-              {eventData?.theme === "Masters" ? (
+              {currentTheme === "Masters" ? (
                 <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
                   {/* Modified Stableford Card */}
                   <div className="bg-white border border-green-800/20 rounded-xl p-8 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
@@ -1807,29 +1807,29 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
               ) : (
                 /* Other themes - single card layout */
                 <div
-                  className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl"} mx-auto mb-${eventData?.theme === "TourTech" ? "8" : "16"}`}
+                  className={`${currentTheme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${theme.textMaxWidth}` : "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-200/50 max-w-2xl"} mx-auto mb-${currentTheme === "TourTech" ? "8" : "16"}`}
                 >
                   <div
-                    className={`${eventData?.theme === "TourTech" ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners}` : "w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl"} flex items-center justify-center mx-auto mb-${eventData?.theme === "TourTech" ? "4" : "6"}`}
+                    className={`${currentTheme === "TourTech" ? `w-12 h-12 ${theme.accentBackground} ${theme.roundedCorners}` : "w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl"} flex items-center justify-center mx-auto mb-${currentTheme === "TourTech" ? "4" : "6"}`}
                   >
                     <Target
-                      className={`${eventData?.theme === "TourTech" ? "h-5 w-5 text-white" : "h-8 w-8 text-green-600"}`}
+                      className={`${currentTheme === "TourTech" ? "h-5 w-5 text-white" : "h-8 w-8 text-green-600"}`}
                     />
                   </div>
 
                   <h3
-                    className={`${eventData?.theme === "TourTech" ? theme.cardTitle : "text-2xl sm:text-3xl font-bold text-slate-900"} mb-${eventData?.theme === "TourTech" ? "2" : "4"}`}
+                    className={`${currentTheme === "TourTech" ? theme.cardTitle : "text-2xl sm:text-3xl font-bold text-slate-900"} mb-${currentTheme === "TourTech" ? "2" : "4"}`}
                   >
                     {getScoringFormat()}
                   </h3>
                   <p
-                    className={`${eventData?.theme === "TourTech" ? theme.cardText : "text-lg text-slate-600 font-light"} leading-relaxed`}
+                    className={`${currentTheme === "TourTech" ? theme.cardText : "text-lg text-slate-600 font-light"} leading-relaxed`}
                   >
                     {getScoringFormat().includes("Stableford")
-                      ? eventData?.theme === "TourTech"
+                      ? currentTheme === "TourTech"
                         ? "Modified Stableford scoring system with preset competition and team scramble format."
                         : "Modified Stableford scoring system with preset competition and a team scramble format for added excitement."
-                      : eventData?.theme === "TourTech"
+                      : currentTheme === "TourTech"
                         ? "Traditional stroke play format where every shot counts. Lowest total score wins."
                         : "Traditional stroke play format where every shot counts. Lowest total score wins the championship."}
                   </p>
@@ -1842,12 +1842,12 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
               <div className="mb-8">
                 <div className={`text-center ${theme.headerSpacing}`}>
                   <h3
-                    className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl tracking-tight" : theme.sectionTitle} mb-2`}
+                    className={`${currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl tracking-tight" : theme.sectionTitle} mb-2`}
                   >
                     Point Values
                   </h3>
                   <p
-                    className={`${eventData?.theme === "Masters" ? "font-serif text-green-800/70" : theme.cardText}`}
+                    className={`${currentTheme === "Masters" ? "font-serif text-green-800/70" : theme.cardText}`}
                   >
                     Points awarded based on performance relative to par
                   </p>
@@ -1859,40 +1859,40 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                     return (
                       <div
                         key={scoring.score}
-                        className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder}` : eventData?.theme === "Masters" ? "bg-white border border-green-800/20" : `${scoring.bgColor} border-2 border-opacity-20`} ${eventData?.theme === "Masters" ? "rounded-lg" : theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${eventData?.theme === "TourTech" ? theme.cardHover : eventData?.theme === "Masters" ? "hover:border-yellow-600 hover:shadow-lg transition-all duration-300" : "hover:scale-105 transition-transform duration-200"}`}
+                        className={`${currentTheme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder}` : currentTheme === "Masters" ? "bg-white border border-green-800/20" : `${scoring.bgColor} border-2 border-opacity-20`} ${currentTheme === "Masters" ? "rounded-lg" : theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow} ${currentTheme === "TourTech" ? theme.cardHover : currentTheme === "Masters" ? "hover:border-yellow-600 hover:shadow-lg transition-all duration-300" : "hover:scale-105 transition-transform duration-200"}`}
                       >
                         <div className="flex items-center justify-between mb-3">
                           <div
-                            className={`${eventData?.theme === "TourTech" ? `w-8 h-8 ${theme.accentBackground} flex items-center justify-center ${theme.roundedCorners}` : eventData?.theme === "Masters" ? "w-10 h-10 rounded-lg bg-yellow-600 flex items-center justify-center shadow-sm" : `w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}`}
+                            className={`${currentTheme === "TourTech" ? `w-8 h-8 ${theme.accentBackground} flex items-center justify-center ${theme.roundedCorners}` : currentTheme === "Masters" ? "w-10 h-10 rounded-lg bg-yellow-600 flex items-center justify-center shadow-sm" : `w-12 h-12 rounded-full bg-gradient-to-r ${scoring.color} flex items-center justify-center shadow-lg`}`}
                           >
                             <span
-                              className={`${eventData?.theme === "TourTech" ? `${theme.scoreFont} text-sm text-white` : eventData?.theme === "Masters" ? "font-serif text-lg font-semibold text-white" : "text-2xl font-bold text-white"}`}
+                              className={`${currentTheme === "TourTech" ? `${theme.scoreFont} text-sm text-white` : currentTheme === "Masters" ? "font-serif text-lg font-semibold text-white" : "text-2xl font-bold text-white"}`}
                             >
                               {scoring.points}
                             </span>
                           </div>
                           <IconComponent
-                            className={`h-4 w-4 ${eventData?.theme === "TourTech" ? theme.accentColor : eventData?.theme === "Masters" ? "text-green-800" : scoring.iconColor}`}
+                            className={`h-4 w-4 ${currentTheme === "TourTech" ? theme.accentColor : currentTheme === "Masters" ? "text-green-800" : scoring.iconColor}`}
                           />
                         </div>
 
                         <div className="space-y-2">
                           <div className="flex items-center justify-between mb-2">
                             <h4
-                              className={`${eventData?.theme === "TourTech" ? theme.cardTitle : eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-lg" : `text-lg font-bold ${scoring.textColor}`}`}
+                              className={`${currentTheme === "TourTech" ? theme.cardTitle : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-lg" : `text-lg font-bold ${scoring.textColor}`}`}
                             >
                               {scoring.score}
                             </h4>
                             <Badge
                               variant="outline"
-                              className={`${eventData?.theme === "TourTech" ? `${theme.cardText} border-slate-300` : eventData?.theme === "Masters" ? "text-green-800 border-green-800/30 font-serif" : `${scoring.textColor} border-current`} text-xs`}
+                              className={`${currentTheme === "TourTech" ? `${theme.cardText} border-slate-300` : currentTheme === "Masters" ? "text-green-800 border-green-800/30 font-serif" : `${scoring.textColor} border-current`} text-xs`}
                             >
                               {scoring.description}
                             </Badge>
                           </div>
 
                           <p
-                            className={`${eventData?.theme === "TourTech" ? theme.cardText : eventData?.theme === "Masters" ? "text-sm text-green-800/70 font-serif" : `text-sm ${scoring.textColor} opacity-80`} leading-relaxed`}
+                            className={`${currentTheme === "TourTech" ? theme.cardText : currentTheme === "Masters" ? "text-sm text-green-800/70 font-serif" : `text-sm ${scoring.textColor} opacity-80`} leading-relaxed`}
                           >
                             {scoring.detail}
                           </p>
@@ -1903,24 +1903,24 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                 </div>
 
                 <div
-                  className={`mt-6 ${eventData?.theme === "Masters" ? "hidden" : eventData?.theme === "TourTech" ? "bg-gray-50 border border-gray-200 rounded-md p-4" : "bg-emerald-50 border border-emerald-200 rounded-2xl p-6"}`}
+                  className={`mt-6 ${currentTheme === "Masters" ? "hidden" : currentTheme === "TourTech" ? "bg-gray-50 border border-gray-200 rounded-md p-4" : "bg-emerald-50 border border-emerald-200 rounded-2xl p-6"}`}
                 >
                   <div
-                    className={`${eventData?.theme === "TourTech" ? "space-y-2" : eventData?.theme === "Masters" ? "flex items-start space-x-3" : "flex items-start space-x-3"}`}
+                    className={`${currentTheme === "TourTech" ? "space-y-2" : currentTheme === "Masters" ? "flex items-start space-x-3" : "flex items-start space-x-3"}`}
                   >
-                    {eventData?.theme !== "TourTech" && (
+                    {currentTheme !== "TourTech" && (
                       <Target
-                        className={`h-5 w-5 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-emerald-600"} mt-0.5`}
+                        className={`h-5 w-5 ${currentTheme === "Masters" ? "text-yellow-600" : "text-emerald-600"} mt-0.5`}
                       />
                     )}
                     <div>
                       <div
-                        className={`${eventData?.theme === "TourTech" ? "font-semibold text-slate-900 text-sm mb-1" : eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 mb-2" : "font-semibold text-emerald-900 mb-2"}`}
+                        className={`${currentTheme === "TourTech" ? "font-semibold text-slate-900 text-sm mb-1" : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 mb-2" : "font-semibold text-emerald-900 mb-2"}`}
                       >
                         Why Stableford?
                       </div>
                       <ul
-                        className={`${eventData?.theme === "TourTech" ? "text-xs text-slate-600 space-y-0.5" : eventData?.theme === "Masters" ? "text-sm text-green-800 space-y-1 font-serif" : "text-sm text-emerald-700 space-y-1"}`}
+                        className={`${currentTheme === "TourTech" ? "text-xs text-slate-600 space-y-0.5" : currentTheme === "Masters" ? "text-sm text-green-800 space-y-1 font-serif" : "text-sm text-emerald-700 space-y-1"}`}
                       >
                         <li>• Encourages aggressive, exciting play</li>
                         <li>
@@ -1938,23 +1938,23 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
             {/* Custom Rules Section */}
             {customRules.length > 0 && (
               <div
-                className={`${eventData?.theme === "Masters" ? "mt-16" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200"}`}
+                className={`${currentTheme === "Masters" ? "mt-16" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200"}`}
               >
                 <div className="text-center mb-8">
                   <div
-                    className={`inline-flex items-center space-x-2 ${eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
+                    className={`inline-flex items-center space-x-2 ${currentTheme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
                   >
                     <FileText
-                      className={`h-4 w-4 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-600"}`}
+                      className={`h-4 w-4 ${currentTheme === "Masters" ? "text-yellow-600" : "text-slate-600"}`}
                     />
                     <span
-                      className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-slate-700"}`}
+                      className={`text-sm font-medium ${currentTheme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-slate-700"}`}
                     >
                       Tournament Guidelines
                     </span>
                   </div>
                   <h3
-                    className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
+                    className={`${currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
                   >
                     Custom Rules
                   </h3>
@@ -1964,11 +1964,11 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                   {customRules.map((rule, index) => (
                     <div
                       key={rule.id}
-                      className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow}` : eventData?.theme === "Masters" ? "bg-white rounded-xl p-8 border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300" : "bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"}`}
+                      className={`${currentTheme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${theme.cardPadding} ${theme.cardShadow}` : currentTheme === "Masters" ? "bg-white rounded-xl p-8 border border-green-800/20 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300" : "bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"}`}
                     >
                       {rule.rule_title && (
                         <h4
-                          className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-yellow-600 text-xl" : "font-semibold text-slate-900"} mb-3 text-lg`}
+                          className={`${currentTheme === "Masters" ? "font-serif font-semibold text-yellow-600 text-xl" : "font-semibold text-slate-900"} mb-3 text-lg`}
                         >
                           {rule.rule_title}
                         </h4>
@@ -1980,42 +1980,42 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                           components={{
                             h1: ({ children }) => (
                               <h1
-                                className={`text-lg font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-2`}
+                                className={`text-lg font-bold ${currentTheme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-2`}
                               >
                                 {children}
                               </h1>
                             ),
                             h2: ({ children }) => (
                               <h2
-                                className={`text-base font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-2`}
+                                className={`text-base font-bold ${currentTheme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-2`}
                               >
                                 {children}
                               </h2>
                             ),
                             h3: ({ children }) => (
                               <h3
-                                className={`text-sm font-bold ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-1`}
+                                className={`text-sm font-bold ${currentTheme === "Masters" ? "text-yellow-600 font-serif" : "text-slate-800"} mb-1`}
                               >
                                 {children}
                               </h3>
                             ),
                             p: ({ children }) => (
                               <p
-                                className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} mb-2 last:mb-0 leading-relaxed`}
+                                className={`${currentTheme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} mb-2 last:mb-0 leading-relaxed`}
                               >
                                 {children}
                               </p>
                             ),
                             ul: ({ children }) => (
                               <ul
-                                className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} ml-6 mb-2 last:mb-0 list-disc`}
+                                className={`${currentTheme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} ml-6 mb-2 last:mb-0 list-disc`}
                               >
                                 {children}
                               </ul>
                             ),
                             ol: ({ children }) => (
                               <ol
-                                className={`${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} ml-6 mb-2 last:mb-0 list-decimal`}
+                                className={`${currentTheme === "Masters" ? "text-green-800 font-serif" : "text-slate-700"} ml-6 mb-2 last:mb-0 list-decimal`}
                               >
                                 {children}
                               </ol>
@@ -2025,7 +2025,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                             ),
                             strong: ({ children }) => (
                               <strong
-                                className={`font-bold ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-800"}`}
+                                className={`font-bold ${currentTheme === "Masters" ? "text-yellow-600" : "text-slate-800"}`}
                               >
                                 {children}
                               </strong>
@@ -2051,16 +2051,16 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
       {players.length > 0 && (
         <section
           id="players"
-          className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : "relative overflow-hidden"} ${theme.sectionPadding} ${theme.containerPadding}`}
+          className={`${currentTheme === "TourTech" ? theme.sectionBackground : "relative overflow-hidden"} ${theme.sectionPadding} ${theme.containerPadding}`}
         >
           {/* Background decoration */}
-          {eventData?.theme === "GolfOS" && (
+          {currentTheme === "GolfOS" && (
             <>
               <div className="absolute inset-0 bg-gradient-to-br from-green-50/20 via-white to-emerald-50/10"></div>
               <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-green-100/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
             </>
           )}
-          {eventData?.theme === "Masters" && (
+          {currentTheme === "Masters" && (
             <>
               <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
               <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-yellow-100/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
@@ -2074,11 +2074,11 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
               >
                 <Users className={`h-3.5 w-3.5 ${theme.accentColor}`} />
                 <span
-                  className={`${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-green-800"}`}
+                  className={`${currentTheme === "TourTech" ? theme.monoLabel : currentTheme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-green-800"}`}
                 >
-                  {eventData?.theme === "TourTech"
+                  {currentTheme === "TourTech"
                     ? "PLAYERS"
-                    : eventData?.theme === "Masters"
+                    : currentTheme === "Masters"
                       ? "Competitors"
                       : "Competitors"}
                 </span>
@@ -2100,7 +2100,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
             </div>
 
             {/* Theme-specific player cards */}
-            {eventData?.theme === "Masters" ? (
+            {currentTheme === "Masters" ? (
               <components.PlayerCard players={players} />
             ) : (
               /* Other themes - original layout */
@@ -2122,7 +2122,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                       player={player}
                       index={index}
                       theme={theme}
-                      isTourTech={eventData?.theme === "TourTech"}
+                      isTourTech={currentTheme === "TourTech"}
                       onOpenModal={() => {
                         setSelectedPlayer(player);
                         setIsPlayerModalOpen(true);
@@ -2140,17 +2140,17 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
       {(prizes.length > 0 || skillsContests.length > 0) && (
         <section
           id="prizes"
-          className={`${eventData?.theme === "TourTech" ? theme.sectionBackground : eventData?.theme === "Masters" ? `${theme.sectionBackground} relative` : "relative"} ${theme.sectionPadding} ${theme.containerPadding}`}
+          className={`${currentTheme === "TourTech" ? theme.sectionBackground : currentTheme === "Masters" ? `${theme.sectionBackground} relative` : "relative"} ${theme.sectionPadding} ${theme.containerPadding}`}
         >
           {/* Background decoration */}
-          {eventData?.theme === "GolfOS" && (
+          {currentTheme === "GolfOS" && (
             <div className="absolute inset-0 bg-gradient-to-b from-slate-50/30 via-white to-slate-50/50"></div>
           )}
-          {eventData?.theme === "Masters" && (
+          {currentTheme === "Masters" && (
             <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
           )}
           <div
-            className={`relative ${theme.maxContentWidth} mx-auto space-y-${eventData?.theme === "TourTech" ? "12" : eventData?.theme === "Masters" ? "16" : "20"}`}
+            className={`relative ${theme.maxContentWidth} mx-auto space-y-${currentTheme === "TourTech" ? "12" : currentTheme === "Masters" ? "16" : "20"}`}
           >
             {/* Header and Buy-in */}
             <div className={`text-center ${theme.headerSpacing}`}>
@@ -2158,30 +2158,30 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                 className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}
               >
                 <Trophy
-                  className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : eventData?.theme === "Masters" ? "text-yellow-600" : "text-amber-600"}`}
+                  className={`h-3.5 w-3.5 ${currentTheme === "TourTech" ? theme.orangeText : currentTheme === "Masters" ? "text-yellow-600" : "text-amber-600"}`}
                 />
                 <span
-                  className={`${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-amber-800"}`}
+                  className={`${currentTheme === "TourTech" ? theme.monoLabel : currentTheme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-amber-800"}`}
                 >
-                  {eventData?.theme === "TourTech"
+                  {currentTheme === "TourTech"
                     ? "PRIZES"
-                    : eventData?.theme === "Masters"
+                    : currentTheme === "Masters"
                       ? "Prize Pool"
                       : "Prize Pool"}
                 </span>
               </div>
 
               <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
-                {eventData?.theme === "TourTech"
+                {currentTheme === "TourTech"
                   ? "Tournament Prizes"
-                  : eventData?.theme === "Masters"
+                  : currentTheme === "Masters"
                     ? "High Stakes, Higher Handicaps"
                     : "High Stakes, Higher Handicaps"}
               </h2>
 
               {eventData.buy_in &&
                 eventData.buy_in > 0 &&
-                eventData?.theme === "Masters" && (
+                currentTheme === "Masters" && (
                   <p className="font-serif text-green-800/70 text-lg mb-8">
                     Tournament Buy-in:{" "}
                     <span className="font-serif font-semibold text-yellow-600 text-xl">
@@ -2192,15 +2192,15 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
 
               {eventData.buy_in &&
                 eventData.buy_in > 0 &&
-                eventData?.theme !== "Masters" && (
+                currentTheme !== "Masters" && (
                   <div
-                    className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${eventData?.theme === "TourTech" ? theme.cardPadding : "p-4"} ${theme.cardShadow} ${eventData?.theme === "TourTech" ? theme.textMaxWidth : "max-w-xs"} mx-auto mb-12`}
+                    className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${currentTheme === "TourTech" ? theme.cardPadding : "p-4"} ${theme.cardShadow} ${currentTheme === "TourTech" ? theme.textMaxWidth : "max-w-xs"} mx-auto mb-12`}
                   >
                     <p className={`${theme.cardText} mb-2 text-center`}>
                       Tournament Buy-in
                     </p>
                     <div
-                      className={`text-center ${eventData?.theme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
+                      className={`text-center ${currentTheme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
                     >
                       ${eventData.buy_in}
                     </div>
@@ -2213,7 +2213,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
               <div className="w-full">
                 <div
                   className={`grid gap-4 ${
-                    eventData?.theme === "Masters"
+                    currentTheme === "Masters"
                       ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto"
                       : prizes.length === 1
                         ? "grid-cols-1 max-w-sm"
@@ -2222,7 +2222,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                           : prizes.length === 3
                             ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl"
                             : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl"
-                  } ${eventData?.theme !== "Masters" ? "mx-auto" : ""}`}
+                  } ${currentTheme !== "Masters" ? "mx-auto" : ""}`}
                 >
                   {prizes.map((prize, index) => (
                     <AnimatedPrizeCard
@@ -2230,8 +2230,8 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                       prize={prize}
                       index={index}
                       theme={theme}
-                      isTourTech={eventData?.theme === "TourTech"}
-                      isMasters={eventData?.theme === "Masters"}
+                      isTourTech={currentTheme === "TourTech"}
+                      isMasters={currentTheme === "Masters"}
                     />
                   ))}
                 </div>
@@ -2239,7 +2239,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
             )}
 
             {/* Contest Rules - Clean 2-column layout directly below prizes for Masters theme */}
-            {eventData?.theme === "Masters" &&
+            {currentTheme === "Masters" &&
               (closestToPinGroups.length > 0 ||
                 longestDriveGroups.length > 0) && (
                 <div className="mt-8">
@@ -2308,34 +2308,34 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
               )}
 
             {/* Hole Contests Summary */}
-            {skillsContests.length > 0 && eventData?.theme !== "Masters" && (
+            {skillsContests.length > 0 && currentTheme !== "Masters" && (
               <div
-                className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : "bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200 mt-16"}`}
+                className={`${currentTheme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : "bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200 mt-16"}`}
               >
                 <div className="text-center mb-8">
                   <div
-                    className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : eventData?.theme === "Masters" ? "bg-green-50 border border-green-800/20 rounded-lg" : "bg-indigo-200 rounded-full"} px-4 py-2 mb-4`}
+                    className={`inline-flex items-center space-x-2 ${currentTheme === "TourTech" ? "bg-gray-200 rounded-md" : currentTheme === "Masters" ? "bg-green-50 border border-green-800/20 rounded-lg" : "bg-indigo-200 rounded-full"} px-4 py-2 mb-4`}
                   >
                     <Target
-                      className={`h-4 w-4 ${eventData?.theme === "TourTech" ? "text-gray-600" : eventData?.theme === "Masters" ? "text-yellow-600" : "text-indigo-600"}`}
+                      className={`h-4 w-4 ${currentTheme === "TourTech" ? "text-gray-600" : currentTheme === "Masters" ? "text-yellow-600" : "text-indigo-600"}`}
                     />
                     <span
-                      className={`text-sm font-medium ${eventData?.theme === "TourTech" ? "text-gray-700" : eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-indigo-700"}`}
+                      className={`text-sm font-medium ${currentTheme === "TourTech" ? "text-gray-700" : currentTheme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-indigo-700"}`}
                     >
-                      {eventData?.theme === "TourTech"
+                      {currentTheme === "TourTech"
                         ? "SKILLS CONTESTS"
-                        : eventData?.theme === "Masters"
+                        : currentTheme === "Masters"
                           ? "Skills Contests"
                           : "Skills Contests"}
                     </span>
                   </div>
                   <h3
-                    className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-indigo-900"}`}
+                    className={`${currentTheme === "TourTech" ? "text-xl font-semibold text-slate-900" : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-indigo-900"}`}
                   >
                     Hole Contests
                   </h3>
                   <p
-                    className={`${eventData?.theme === "TourTech" ? "text-sm text-slate-600" : eventData?.theme === "Masters" ? "text-sm text-green-800/70 font-serif" : "text-lg text-indigo-600 font-light"}`}
+                    className={`${currentTheme === "TourTech" ? "text-sm text-slate-600" : currentTheme === "Masters" ? "text-sm text-green-800/70 font-serif" : "text-lg text-indigo-600 font-light"}`}
                   >
                     Extra prizes on designated holes
                   </p>
@@ -2345,10 +2345,10 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                   {getContestsByRound().map((round, index) => (
                     <div
                       key={index}
-                      className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : eventData?.theme === "Masters" ? "bg-green-50/30 rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
+                      className={`${currentTheme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : currentTheme === "Masters" ? "bg-green-50/30 rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
                     >
                       <h4
-                        className={`${eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900" : "font-bold text-indigo-900"} text-xl mb-4`}
+                        className={`${currentTheme === "Masters" ? "font-serif font-semibold text-green-900" : "font-bold text-indigo-900"} text-xl mb-4`}
                       >
                         Round {round.roundNumber} ({round.courseName})
                       </h4>
@@ -2356,13 +2356,13 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                         {round.contests.map((contest, contestIndex) => (
                           <div
                             key={contestIndex}
-                            className={`flex items-center space-x-2 ${eventData?.theme === "Masters" ? "bg-white border border-yellow-600/30" : "bg-indigo-50"} rounded-lg px-3 py-2`}
+                            className={`flex items-center space-x-2 ${currentTheme === "Masters" ? "bg-white border border-yellow-600/30" : "bg-indigo-50"} rounded-lg px-3 py-2`}
                           >
                             <contest.icon
                               className={`h-4 w-4 ${contest.type === "closest_to_pin" ? "text-green-600" : "text-orange-600"}`}
                             />
                             <span
-                              className={`font-medium text-sm ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-indigo-900"}`}
+                              className={`font-medium text-sm ${currentTheme === "Masters" ? "text-green-800 font-serif" : "text-indigo-900"}`}
                             >
                               Hole {contest.hole}
                             </span>
@@ -2375,10 +2375,10 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                   {/* Prize Information */}
                   {(closestToPinPrize > 0 || longestDrivePrize > 0) && (
                     <div
-                      className={`${eventData?.theme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : eventData?.theme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
+                      className={`${currentTheme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : currentTheme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
                     >
                       <h4
-                        className={`text-lg font-semibold mb-4 ${eventData?.theme === "Masters" ? "text-green-900 font-serif" : "text-indigo-900"}`}
+                        className={`text-lg font-semibold mb-4 ${currentTheme === "Masters" ? "text-green-900 font-serif" : "text-indigo-900"}`}
                       >
                         Prize Information
                       </h4>
@@ -2387,7 +2387,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                           <div className="flex items-center space-x-2">
                             <Target className="h-5 w-5 text-green-600" />
                             <span
-                              className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-green-700"}`}
+                              className={`text-sm font-medium ${currentTheme === "Masters" ? "text-green-800 font-serif" : "text-green-700"}`}
                             >
                               Closest to Pin: ${closestToPinPrize} per hole
                             </span>
@@ -2397,7 +2397,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                           <div className="flex items-center space-x-2">
                             <Flag className="h-5 w-5 text-orange-600" />
                             <span
-                              className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-orange-700"}`}
+                              className={`text-sm font-medium ${currentTheme === "Masters" ? "text-yellow-600 font-serif" : "text-orange-700"}`}
                             >
                               Long Drive: ${longestDrivePrize} per hole
                             </span>
@@ -2412,29 +2412,29 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
 
             {/* Contest Rules */}
             {(closestToPinGroups.length > 0 || longestDriveGroups.length > 0) &&
-              eventData?.theme !== "Masters" && (
+              currentTheme !== "Masters" && (
                 <div
-                  className={`${eventData?.theme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : eventData?.theme === "Masters" ? "bg-green-50/20 rounded-lg p-8 sm:p-12 border border-green-800/20 mt-20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}
+                  className={`${currentTheme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : currentTheme === "Masters" ? "bg-green-50/20 rounded-lg p-8 sm:p-12 border border-green-800/20 mt-20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}
                 >
                   <div className="text-center mb-8">
                     <div
-                      className={`inline-flex items-center space-x-2 ${eventData?.theme === "TourTech" ? "bg-gray-200 rounded-md" : eventData?.theme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
+                      className={`inline-flex items-center space-x-2 ${currentTheme === "TourTech" ? "bg-gray-200 rounded-md" : currentTheme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
                     >
                       <Info
-                        className={`h-4 w-4 ${eventData?.theme === "Masters" ? "text-yellow-600" : "text-slate-600"}`}
+                        className={`h-4 w-4 ${currentTheme === "Masters" ? "text-yellow-600" : "text-slate-600"}`}
                       />
                       <span
-                        className={`text-sm font-medium ${eventData?.theme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-slate-700"}`}
+                        className={`text-sm font-medium ${currentTheme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-slate-700"}`}
                       >
-                        {eventData?.theme === "TourTech"
+                        {currentTheme === "TourTech"
                           ? "CONTEST RULES"
-                          : eventData?.theme === "Masters"
+                          : currentTheme === "Masters"
                             ? "Contest Rules"
                             : "Official Guidelines"}
                       </span>
                     </div>
                     <h3
-                      className={`${eventData?.theme === "TourTech" ? "text-xl font-semibold text-slate-900" : eventData?.theme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
+                      className={`${currentTheme === "TourTech" ? "text-xl font-semibold text-slate-900" : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
                     >
                       Contest Rules
                     </h3>
@@ -2444,25 +2444,25 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                     {/* Closest to Pin Rules */}
                     {closestToPinGroups.length > 0 && (
                       <div
-                        className={`${eventData?.theme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border-2 border-green-200 shadow-sm"}`}
+                        className={`${currentTheme === "Masters" ? "bg-white rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border-2 border-green-200 shadow-sm"}`}
                       >
                         <div className="flex items-center space-x-3 mb-6">
                           <div
-                            className={`w-12 h-12 ${eventData?.theme === "Masters" ? "bg-yellow-600" : "bg-green-100"} ${eventData?.theme === "Masters" ? "rounded-lg" : "rounded-full"} flex items-center justify-center`}
+                            className={`w-12 h-12 ${currentTheme === "Masters" ? "bg-yellow-600" : "bg-green-100"} ${currentTheme === "Masters" ? "rounded-lg" : "rounded-full"} flex items-center justify-center`}
                           >
                             <Crosshair
-                              className={`h-6 w-6 ${eventData?.theme === "Masters" ? "text-white" : "text-green-600"}`}
+                              className={`h-6 w-6 ${currentTheme === "Masters" ? "text-white" : "text-green-600"}`}
                             />
                           </div>
                           <div>
                             <h4
-                              className={`text-xl font-bold ${eventData?.theme === "Masters" ? "text-green-900 font-serif" : "text-green-900"}`}
+                              className={`text-xl font-bold ${currentTheme === "Masters" ? "text-green-900 font-serif" : "text-green-900"}`}
                             >
                               Closest to the Pin
                             </h4>
                             {closestToPinPrize > 0 && (
                               <p
-                                className={`text-sm ${eventData?.theme === "Masters" ? "text-yellow-600 font-serif" : "text-green-600"}`}
+                                className={`text-sm ${currentTheme === "Masters" ? "text-yellow-600 font-serif" : "text-green-600"}`}
                               >
                                 ${closestToPinPrize} per hole
                               </p>
@@ -2471,15 +2471,15 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                         </div>
 
                         <div
-                          className={`${eventData?.theme === "Masters" ? "bg-green-50/30 border border-green-800/20" : "bg-green-50"} rounded-lg p-4`}
+                          className={`${currentTheme === "Masters" ? "bg-green-50/30 border border-green-800/20" : "bg-green-50"} rounded-lg p-4`}
                         >
                           <h5
-                            className={`font-semibold text-green-900 text-sm mb-3 ${eventData?.theme === "Masters" ? "font-serif" : ""}`}
+                            className={`font-semibold text-green-900 text-sm mb-3 ${currentTheme === "Masters" ? "font-serif" : ""}`}
                           >
                             Rules
                           </h5>
                           <ul
-                            className={`text-sm text-green-700 space-y-2 ${eventData?.theme === "Masters" ? "font-serif" : ""}`}
+                            className={`text-sm text-green-700 space-y-2 ${currentTheme === "Masters" ? "font-serif" : ""}`}
                           >
                             <li>
                               • Must be <strong>ON THE GREEN</strong> to win
@@ -2576,16 +2576,16 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
           travel.daily_schedule) && (
           <section
             id="travel"
-            className={`${eventData?.theme === "TourTech" ? `${theme.sectionBackground} pt-16 pb-8` : eventData?.theme === "Masters" ? "bg-amber-50/20 relative overflow-hidden py-20" : "relative overflow-hidden"} ${eventData?.theme === "TourTech" ? "" : eventData?.theme === "Masters" ? "" : theme.sectionPadding} ${theme.containerPadding}`}
+            className={`${currentTheme === "TourTech" ? `${theme.sectionBackground} pt-16 pb-8` : currentTheme === "Masters" ? "bg-amber-50/20 relative overflow-hidden py-20" : "relative overflow-hidden"} ${currentTheme === "TourTech" ? "" : currentTheme === "Masters" ? "" : theme.sectionPadding} ${theme.containerPadding}`}
           >
             {/* Background decoration */}
-            {eventData?.theme === "GolfOS" && (
+            {currentTheme === "GolfOS" && (
               <>
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-white to-slate-50/30"></div>
                 <div className="absolute top-0 left-0 w-80 h-80 bg-blue-100/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
               </>
             )}
-            {eventData?.theme === "Masters" && (
+            {currentTheme === "Masters" && (
               <>
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
                 <div className="absolute top-0 left-0 w-80 h-80 bg-yellow-100/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
@@ -2598,14 +2598,14 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                   className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}
                 >
                   <Plane
-                    className={`h-3.5 w-3.5 ${eventData?.theme === "TourTech" ? theme.orangeText : eventData?.theme === "Masters" ? "text-yellow-600" : "text-blue-600"}`}
+                    className={`h-3.5 w-3.5 ${currentTheme === "TourTech" ? theme.orangeText : currentTheme === "Masters" ? "text-yellow-600" : "text-blue-600"}`}
                   />
                   <span
-                    className={`${eventData?.theme === "TourTech" ? theme.monoLabel : eventData?.theme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-blue-800"}`}
+                    className={`${currentTheme === "TourTech" ? theme.monoLabel : currentTheme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-blue-800"}`}
                   >
-                    {eventData?.theme === "TourTech"
+                    {currentTheme === "TourTech"
                       ? "TRAVEL"
-                      : eventData?.theme === "Masters"
+                      : currentTheme === "Masters"
                         ? "Travel"
                         : "Logistics"}
                   </span>
@@ -2621,7 +2621,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                 </p>
               </div>
 
-              {eventData?.theme === "Masters" ? (
+              {currentTheme === "Masters" ? (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                   {[
                     {
@@ -2650,8 +2650,8 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                         item={item}
                         index={index}
                         theme={theme}
-                        isTourTech={eventData?.theme === "TourTech"}
-                        isMasters={eventData?.theme === "Masters"}
+                        isTourTech={currentTheme === "TourTech"}
+                        isMasters={currentTheme === "Masters"}
                       />
                     ))}
                 </div>
@@ -2684,8 +2684,8 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
                         item={item}
                         index={index}
                         theme={theme}
-                        isTourTech={eventData?.theme === "TourTech"}
-                        isMasters={eventData?.theme === "Masters"}
+                        isTourTech={currentTheme === "TourTech"}
+                        isMasters={currentTheme === "Masters"}
                       />
                     ))}
                 </div>
@@ -2696,10 +2696,10 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
 
       {/* Footer */}
       <footer
-        className={`relative ${eventData?.theme === "TourTech" ? "pt-16 pb-12 px-6 sm:px-8 lg:px-12 bg-gray-50 border-t border-gray-200 mt-12" : eventData?.theme === "Masters" ? "py-16 px-6 sm:px-8 lg:px-12 bg-green-900 mt-12" : "py-20 px-6 sm:px-8 lg:px-12 overflow-hidden"}`}
+        className={`relative ${currentTheme === "TourTech" ? "pt-16 pb-12 px-6 sm:px-8 lg:px-12 bg-gray-50 border-t border-gray-200 mt-12" : currentTheme === "Masters" ? "py-16 px-6 sm:px-8 lg:px-12 bg-green-900 mt-12" : "py-20 px-6 sm:px-8 lg:px-12 overflow-hidden"}`}
       >
         {/* Background decoration */}
-        {eventData?.theme === "GolfOS" && (
+        {currentTheme === "GolfOS" && (
           <>
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900"></div>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(34,197,94,0.1),_transparent_70%)]"></div>
@@ -2711,31 +2711,31 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
           className={`relative ${theme.maxContentWidth} mx-auto text-center`}
         >
           <div
-            className={`${eventData?.theme === "TourTech" ? `w-16 h-16 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-6` : eventData?.theme === "Masters" ? "w-16 h-16 bg-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-6" : "w-24 h-24 bg-white/10 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/20"}`}
+            className={`${currentTheme === "TourTech" ? `w-16 h-16 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-6` : currentTheme === "Masters" ? "w-16 h-16 bg-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-6" : "w-24 h-24 bg-white/10 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/20"}`}
           >
             <Target
-              className={`${eventData?.theme === "TourTech" ? "h-8 w-8 text-white" : eventData?.theme === "Masters" ? "h-8 w-8 text-white" : "h-12 w-12 text-white"}`}
+              className={`${currentTheme === "TourTech" ? "h-8 w-8 text-white" : currentTheme === "Masters" ? "h-8 w-8 text-white" : "h-12 w-12 text-white"}`}
             />
           </div>
 
           <h3
-            className={`${eventData?.theme === "TourTech" ? `${theme.sectionTitle} text-slate-900 mb-3` : eventData?.theme === "Masters" ? "font-serif font-semibold text-amber-50 text-2xl mb-4" : "text-3xl sm:text-4xl font-bold mb-6 text-white"}`}
+            className={`${currentTheme === "TourTech" ? `${theme.sectionTitle} text-slate-900 mb-3` : currentTheme === "Masters" ? "font-serif font-semibold text-amber-50 text-2xl mb-4" : "text-3xl sm:text-4xl font-bold mb-6 text-white"}`}
           >
             {eventData.name}
           </h3>
 
           <p
-            className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-slate-600 mb-6` : eventData?.theme === "Masters" ? "font-serif text-green-200 mb-8" : "text-xl text-green-200 mb-12 font-light"}`}
+            className={`${currentTheme === "TourTech" ? `${theme.monoText} text-slate-600 mb-6` : currentTheme === "Masters" ? "font-serif text-green-200 mb-8" : "text-xl text-green-200 mb-12 font-light"}`}
           >
             {eventData.location} •{" "}
             {formatDateRange(eventData.start_date, eventData.end_date)}
           </p>
 
           <div
-            className={`${eventData?.theme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} p-4` : eventData?.theme === "Masters" ? "bg-green-800/50 backdrop-blur-sm rounded-lg p-6 border border-yellow-600/20" : "bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"}`}
+            className={`${currentTheme === "TourTech" ? `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} p-4` : currentTheme === "Masters" ? "bg-green-800/50 backdrop-blur-sm rounded-lg p-6 border border-yellow-600/20" : "bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"}`}
           >
             <p
-              className={`${eventData?.theme === "TourTech" ? `${theme.monoText} text-slate-500 text-sm` : eventData?.theme === "Masters" ? "font-serif text-green-200 text-sm" : "text-green-200 text-lg font-medium"}`}
+              className={`${currentTheme === "TourTech" ? `${theme.monoText} text-slate-500 text-sm` : currentTheme === "Masters" ? "font-serif text-green-200 text-sm" : "text-green-200 text-lg font-medium"}`}
             >
               Powered by TrackTrack Golf
             </p>
