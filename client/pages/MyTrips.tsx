@@ -22,6 +22,9 @@ import {
 import { supabase } from "@/lib/supabase";
 import { useTripCreation } from "@/contexts/TripCreationContext";
 import { useToast } from "@/hooks/use-toast";
+import { CreateEventModal } from "@/components/CreateEventModal";
+import { AIQuickstartForm } from "@/components/AIQuickstartForm";
+import { useFeatureEnabled } from "@/contexts/GrowthBookContext";
 
 interface Event {
   id: string;
