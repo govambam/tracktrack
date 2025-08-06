@@ -241,27 +241,69 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
     return errors;
   };
 
-  const generateEventName = (occasion: string, courses: Course[]) => {
-    const courseNames = courses.map((c) => c.name);
-    const mainCourse = courseNames[0];
+  const generateEventName = async (occasion: string, courses: Course[], dates: { start: string, end: string }, playerCount: number) => {
+    const courseNames = courses.map(c => c.name);
+    const courseLocations = courses.map(c => c.location).filter(Boolean);
+    const startDate = new Date(dates.start).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+    const endDate = new Date(dates.end).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 
-    const templates = {
-      Birthday: [`Birthday Golf Getaway`, `${occasion} Golf Celebration`],
-      "Bachelor Party": [`Bachelor Golf Weekend`, `Last Swing Before the Ring`],
-      "Annual Trip": [
-        `Annual Golf Adventure`,
-        `${new Date().getFullYear()} Golf Trip`,
-      ],
-      "Guys Trip": [`Guys Golf Weekend`, `The Boys Golf Getaway`],
-      "Family Reunion": [`Family Golf Reunion`, `Family Links & Laughs`],
-      "Work Trip": [`Company Golf Outing`, `Team Golf Retreat`],
-      Tournament: [`Golf Tournament`, `${mainCourse} Tournament`],
-      default: [`Golf Adventure`, `Weekend Golf Trip`],
-    };
+    const prompt = `Generate a creative and engaging golf event name for a ${occasion.toLowerCase()} golf trip.
 
-    const names =
-      templates[occasion as keyof typeof templates] || templates.default;
-    return names[Math.floor(Math.random() * names.length)];
+Event Details:
+- Occasion: ${occasion}
+- Dates: ${startDate} to ${endDate}, ${new Date(dates.start).getFullYear()}
+- Courses: ${courseNames.join(', ')}
+- Locations: ${courseLocations.length > 0 ? courseLocations.join(', ') : 'Various locations'}
+- Players: ${playerCount} golfers
+
+Requirements:
+- Should be catchy and memorable
+- Appropriate for a ${occasion.toLowerCase()}
+- Golf-themed but not overly serious
+- Between 2-6 words
+- No quotes or punctuation
+- Consider the course names and locations for inspiration
+
+Examples for reference:
+- Birthday: "Birthday Golf Getaway"
+- Bachelor Party: "Last Swing Before the Ring"
+- Guys Trip: "The Boys Golf Weekend"
+- Annual Trip: "Annual Golf Adventure"
+- Tournament: "Championship Golf Classic"
+
+Generate ONE event name only:`;
+
+    try {
+      const response = await fetch('/api/generate-description', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate event name');
+      }
+
+      const data = await response.json();
+      return data.description.trim().replace(/['"]/g, ''); // Remove any quotes
+    } catch (error) {
+      console.error('Error generating event name:', error);
+      // Fallback to template-based generation
+      const templates = {
+        'Birthday': ['Birthday Golf Getaway', 'Golf Birthday Celebration'],
+        'Bachelor Party': ['Bachelor Golf Weekend', 'Last Swing Before the Ring'],
+        'Annual Trip': ['Annual Golf Adventure', `${new Date().getFullYear()} Golf Trip`],
+        'Guys Trip': ['Guys Golf Weekend', 'The Boys Golf Getaway'],
+        'Family Reunion': ['Family Golf Reunion', 'Family Links & Laughs'],
+        'Work Trip': ['Company Golf Outing', 'Team Golf Retreat'],
+        'Tournament': ['Golf Tournament', 'Championship Golf Classic'],
+        'default': ['Golf Adventure', 'Weekend Golf Trip']
+      };
+      const names = templates[occasion as keyof typeof templates] || templates.default;
+      return names[Math.floor(Math.random() * names.length)];
+    }
   };
 
   const generateEventDescription = (
