@@ -1,3 +1,4 @@
+import React from "react";
 import "./global.css";
 
 import { Toaster } from "@/components/ui/toaster";
@@ -70,35 +71,20 @@ const App = () => (
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/login" element={<Auth />} />
                 <Route path="/signup" element={<Auth />} />
-<<<<<<< HEAD
-
+                
                 {/* New EventShell structure with persistent navigation */}
                 <Route path="/events/:slug" element={<EventShell />}>
                   <Route index element={<EventHome />} />
                   <Route path="leaderboard" element={<EventLeaderboard />} />
                   <Route path="clubhouse" element={<EventClubhouse />} />
-                  <Route
-                    path="clubhouse/scorecard/:roundId"
-                    element={<ScorecardEdit />}
-                  />
+                  <Route path="clubhouse/scorecard/:roundId" element={<ScorecardEdit />} />
                 </Route>
-
+                
                 {/* Legacy routes for backward compatibility */}
-=======
-                <Route path="/events/:slug" element={<PublicEventHome />} />
->>>>>>> f104a34300e95db482ef9c6ae20898d4268043db
-                <Route
-                  path="/events/:slug/legacy"
-                  element={<PublicEventHome />}
-                />
-                <Route
-                  path="/events/:slug/legacy/clubhouse"
-                  element={<Clubhouse />}
-                />
-                <Route
-                  path="/events/:slug/legacy/leaderboard"
-                  element={<PublicLeaderboard />}
-                />
+                <Route path="/events/:slug/legacy" element={<PublicEventHome />} />
+                <Route path="/events/:slug/legacy/clubhouse" element={<Clubhouse />} />
+                <Route path="/events/:slug/legacy/leaderboard" element={<PublicLeaderboard />} />
+                
                 <Route path="/app/:eventId/draft" element={<DraftMode />} />
                 <Route path="/invitation/:eventId" element={<Invitation />} />
                 <Route path="/admin" element={<Admin />} />
