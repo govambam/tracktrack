@@ -257,6 +257,26 @@ export default function ScorecardEdit() {
     }
   };
 
+  const loadSkillsContests = async (eventId: string, roundId: string) => {
+    try {
+      const { data: contests, error } = await supabase
+        .from("skills_contests")
+        .select("*")
+        .eq("event_id", eventId)
+        .eq("round_id", roundId)
+        .order("hole");
+
+      if (error) {
+        console.error("Error loading skills contests:", error);
+        return;
+      }
+
+      setSkillsContests(contests || []);
+    } catch (error) {
+      console.error("Error loading skills contests:", error);
+    }
+  };
+
   const checkSession = async () => {
     // Get event ID from slug first
     const { data: event } = await supabase
