@@ -3,6 +3,12 @@ import { supabase } from '../lib/supabase.js';
 
 const router = Router();
 
+// Test endpoint to verify router is working
+router.get('/invitations/test', (req, res) => {
+  console.log('📧 Invitations router test endpoint hit');
+  res.json({ success: true, message: 'Invitations router is working' });
+});
+
 // Send invitation emails to players
 router.post('/invitations/send', async (req, res) => {
   try {
