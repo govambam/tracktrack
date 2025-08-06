@@ -274,6 +274,14 @@ export default function Index() {
             <p className="text-lg text-green-600">
               See how feature flags enable dynamic configuration and A/B testing
             </p>
+            <div className="mt-4">
+              <Link
+                to="/admin"
+                className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer"
+              >
+                🔧 Manage Feature Flags
+              </Link>
+            </div>
           </div>
           <FeatureFlagDemo />
         </div>
