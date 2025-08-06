@@ -575,13 +575,20 @@ export default function ScorecardEdit() {
     return strokes.toString(); // Always show the actual score
   };
 
-  const getScoreStyle = (strokes: number, par: number) => {
+  const getScoreStyle = (strokes: number, par: number | null) => {
     if (strokes === 0) return "";
-    const diff = strokes - par;
 
     // Base styles
     let classes =
       "font-bold text-sm min-w-[20px] flex items-center justify-center relative ";
+
+    // If no par data, just show basic styling
+    if (!hasParData || par === null) {
+      classes += "text-slate-900";
+      return classes;
+    }
+
+    const diff = strokes - par;
 
     if (diff <= -2) {
       // Eagle: double circle
