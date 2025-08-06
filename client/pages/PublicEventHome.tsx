@@ -41,6 +41,9 @@ import {
   Medal,
   CheckCircle,
   MessageCircle,
+  Edit,
+  Megaphone,
+  AlertCircle,
 } from "lucide-react";
 
 // Emoji Safety Utility
