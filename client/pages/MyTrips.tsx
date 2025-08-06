@@ -40,6 +40,10 @@ interface Event {
   slug?: string;
   created_at: string;
   updated_at: string;
+  // Role information for the current user
+  user_role?: 'owner' | 'admin' | 'player';
+  created_by?: string;
+  invitation_status?: 'invited' | 'accepted' | 'declined' | 'pending';
 }
 
 export default function MyTrips() {
