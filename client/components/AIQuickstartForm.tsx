@@ -559,7 +559,7 @@ Write a "Daily Itinerary" section with:
 - Flexibility for weather/preferences
 - Fun and appropriate tone for ${occasion.toLowerCase()}
 
-Format as markdown with headers. Include each course as a separate day:`;
+Format as markdown with headers. Include each course as a separate day. Limit response to 100 words or less:`;
 
     try {
       const response = await fetch("/api/generate-description", {
