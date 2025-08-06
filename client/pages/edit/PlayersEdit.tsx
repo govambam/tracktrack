@@ -64,7 +64,13 @@ export default function PlayersEdit() {
         .order("created_at");
 
       if (error) {
-        console.error("Error loading players:", error);
+        console.error("Error loading players:", {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
+        console.error("Full error object:", JSON.stringify(error, null, 2));
         // Fall back to one empty player if no data exists
         setPlayers([
           {
