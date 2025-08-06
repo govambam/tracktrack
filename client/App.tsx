@@ -66,6 +66,7 @@ const App = () => (
                 element={<PublicLeaderboard />}
               />
               <Route path="/app/:eventId/draft" element={<DraftMode />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="/app" element={<AppShell />}>
                 <Route index element={<MyTrips />} />
                 <Route path="create" element={<CreateTrip />} />
