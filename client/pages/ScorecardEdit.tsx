@@ -257,7 +257,10 @@ export default function ScorecardEdit() {
           (sum, hole) => sum + hole.strokes,
           0,
         );
-        const totalPar = playerHoles.reduce((sum, hole) => sum + (hole.par || 0), 0);
+        const totalPar = playerHoles.reduce(
+          (sum, hole) => sum + (hole.par || 0),
+          0,
+        );
 
         playersData.push({
           id: eventPlayer.id,
@@ -334,7 +337,10 @@ export default function ScorecardEdit() {
           (sum, hole) => sum + hole.strokes,
           0,
         );
-        const totalPar = newScores.reduce((sum, hole) => sum + (hole.par || 0), 0);
+        const totalPar = newScores.reduce(
+          (sum, hole) => sum + (hole.par || 0),
+          0,
+        );
 
         return {
           ...player,
@@ -461,7 +467,10 @@ export default function ScorecardEdit() {
           (sum, hole) => sum + hole.strokes,
           0,
         );
-        const totalPar = newScores.reduce((sum, hole) => sum + (hole.par || 0), 0);
+        const totalPar = newScores.reduce(
+          (sum, hole) => sum + (hole.par || 0),
+          0,
+        );
 
         return {
           ...player,
@@ -848,7 +857,10 @@ export default function ScorecardEdit() {
                           .reduce((sum, hole) => sum + (hole.par || 0), 0)}
                       </td>
                       <td className="text-center p-3 font-semibold text-blue-800">
-                        {courseHoles.reduce((sum, hole) => sum + (hole.par || 0), 0)}
+                        {courseHoles.reduce(
+                          (sum, hole) => sum + (hole.par || 0),
+                          0,
+                        )}
                       </td>
                     </tr>
                   )}
@@ -1121,7 +1133,10 @@ export default function ScorecardEdit() {
             <div className="space-y-4">
               <div className="text-center">
                 <div className="text-sm text-gray-500 mb-4">
-                  {editingPlayerScore.par ? `Par ${editingPlayerScore.par} • ` : ''}Tap to select score
+                  {editingPlayerScore.par
+                    ? `Par ${editingPlayerScore.par} • `
+                    : ""}
+                  Tap to select score
                 </div>
 
                 {/* Score Numbers Grid */}
@@ -1129,7 +1144,9 @@ export default function ScorecardEdit() {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((score) => {
                     const isSelected =
                       editingPlayerScore.currentScore === score;
-                    const isPar = editingPlayerScore.par && score === editingPlayerScore.par;
+                    const isPar =
+                      editingPlayerScore.par &&
+                      score === editingPlayerScore.par;
 
                     return (
                       <button
