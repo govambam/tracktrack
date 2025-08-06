@@ -2332,11 +2332,9 @@ export default function PublicEventHome() {
                             key={contestIndex}
                             className={`flex items-center space-x-2 ${eventData?.theme === "Masters" ? "bg-white border border-yellow-600/30" : "bg-indigo-50"} rounded-lg px-3 py-2`}
                           >
-                            {contest.type === "closest_to_pin" ? (
-                              <Target className="h-4 w-4 text-green-600" />
-                            ) : (
-                              <Flag className="h-4 w-4 text-orange-600" />
-                            )}
+                            <contest.icon
+                              className={`h-4 w-4 ${contest.type === "closest_to_pin" ? "text-green-600" : "text-orange-600"}`}
+                            />
                             <span
                               className={`font-medium text-sm ${eventData?.theme === "Masters" ? "text-green-800 font-serif" : "text-indigo-900"}`}
                             >
