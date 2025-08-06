@@ -52,18 +52,29 @@ export function createServer() {
 
       // Get user from auth header
       const authHeader = req.headers.authorization;
+      console.log('🔍 Authorization header received:', authHeader ? 'Yes' : 'No');
+
       if (!authHeader) {
+        console.error('❌ No authorization header provided');
         return res.status(401).json({ error: 'No authorization header' });
       }
 
       const token = authHeader.replace('Bearer ', '');
-      console.log('🔑 Authenticating user with token length:', token.length);
+      console.log('🔑 Token length:', token.length);
+      console.log('🔑 Token starts with:', token.substring(0, 20) + '...');
 
       const { data: { user }, error: authError } = await supabase.auth.getUser(token);
 
       if (authError || !user) {
-        console.error('❌ Authentication failed:', authError);
-        return res.status(401).json({ error: 'Invalid token' });
+        console.error('❌ Authentication failed:', {
+          error: authError?.message,
+          code: authError?.code,
+          status: authError?.status
+        });
+        return res.status(401).json({
+          error: 'Invalid token',
+          details: authError?.message
+        });
       }
 
       console.log('✅ User authenticated:', user.id);
