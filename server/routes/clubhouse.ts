@@ -40,6 +40,14 @@ router.post("/verify-password", async (req, res) => {
       return res.status(403).json({ error: "Clubhouse feature not available (database migration required)" });
     }
 
+    console.log("Event retrieval debug:", {
+      eventFound: !!event,
+      error: error?.message,
+      eventId,
+      isPublished: event?.is_published,
+      hasPassword: !!event?.clubhouse_password
+    });
+
     if (error || !event) {
       return res.status(404).json({ error: "Event not found" });
     }
