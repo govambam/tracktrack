@@ -19,7 +19,25 @@ import {
   Plus,
   Minus,
   Users,
+  Edit,
+  X,
+  Award,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 interface EventRound {
   id: string;
@@ -61,6 +79,22 @@ interface Player {
   scoreRelativeToPar: number;
 }
 
+interface SkillsContest {
+  id: string;
+  event_id: string;
+  round_id: string;
+  hole: number;
+  contest_type: 'longest_drive' | 'closest_to_pin';
+  winner_id?: string;
+}
+
+interface HoleEditData {
+  holeNumber: number;
+  playerScores: { [playerId: string]: number };
+  contests: SkillsContest[];
+  contestWinners: { [contestId: string]: string };
+}
+
 export default function ScorecardEdit() {
   const { slug, roundId } = useParams();
   const navigate = useNavigate();
@@ -73,6 +107,9 @@ export default function ScorecardEdit() {
   const [players, setPlayers] = useState<Player[]>([]);
   // Remove currentPlayer and currentEventPlayer - any clubhouse user can edit any player
   const [error, setError] = useState<string | null>(null);
+  const [isHoleEditOpen, setIsHoleEditOpen] = useState(false);
+  const [editingHole, setEditingHole] = useState<HoleEditData | null>(null);
+  const [skillsContests, setSkillsContests] = useState<SkillsContest[]>([]);
 
   useEffect(() => {
     if (slug && roundId) {
