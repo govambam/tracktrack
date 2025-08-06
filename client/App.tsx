@@ -9,6 +9,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { TripCreationProvider } from "@/contexts/TripCreationContext";
 import { GrowthBookProvider } from "@/contexts/GrowthBookContext";
 import ErrorBoundary from "@/components/ErrorBoundary";
+// Import demo utilities for console access
+import "@/utils/setupDemoFlags";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import AppShell from "./pages/App";
