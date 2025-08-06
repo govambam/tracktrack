@@ -254,7 +254,7 @@ export default function PlayersEdit() {
             user_id: null, // Players created via edit interface are not linked to users
             invited_email: email || `${player.name.trim().toLowerCase().replace(/\s+/g, '_')}@placeholder.local`,
             role: 'player',
-            status: 'accepted'
+            status: email ? 'invited' : 'pending' // Only mark as invited if there's an email to send to
           };
         });
 
