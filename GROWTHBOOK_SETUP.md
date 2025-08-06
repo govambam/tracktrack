@@ -117,13 +117,49 @@ return (
 
 ## Managing Flags
 
-1. **GrowthBook Dashboard**: Use your GrowthBook dashboard to:
-   - Create new feature flags
-   - Set targeting rules
-   - Run A/B tests
-   - Monitor flag usage
+1. **Admin Interface** (`/admin`): Manage flags directly from your app:
+   - Create/update/delete feature flags
+   - Enable/disable flags instantly
+   - Change flag values in real-time
+   - Live preview of changes
 
-2. **Environment Variables**:
+2. **Programmatic API**:
+   ```typescript
+   import { growthbookApi, featureFlagUtils } from '@/lib/growthbookApi';
+
+   // Create a flag
+   await growthbookApi.createFeature({
+     key: 'my-feature',
+     description: 'My awesome feature',
+     valueType: 'boolean',
+     defaultValue: false
+   });
+
+   // Enable/disable
+   await featureFlagUtils.enable('my-feature');
+   await featureFlagUtils.disable('my-feature');
+
+   // Set values
+   await featureFlagUtils.setBooleanFlag('my-feature', true);
+   await featureFlagUtils.setStringFlag('button-color', 'blue');
+   ```
+
+3. **Console Utilities**: Available in browser console:
+   ```javascript
+   // Setup demo flags
+   await setupGrowthBookDemo();
+
+   // Reset all demo flags
+   await resetDemoFlags();
+   ```
+
+4. **GrowthBook Dashboard**: Use your GrowthBook dashboard to:
+   - Set advanced targeting rules
+   - Run A/B tests and experiments
+   - Monitor flag usage analytics
+   - Configure environments
+
+5. **Environment Variables**:
    ```env
    VITE_GROWTHBOOK_CLIENT_KEY=sdk-w1E948s82nX7yJ5u
    VITE_GROWTHBOOK_API_HOST=https://cdn.growthbook.io
