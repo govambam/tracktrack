@@ -341,7 +341,7 @@ export default function ScorecardEdit() {
           scores: newScores,
           totalStrokes,
           totalPar,
-          scoreRelativeToPar: totalStrokes - totalPar,
+          scoreRelativeToPar: hasParData ? totalStrokes - totalPar : 0,
         };
       }),
     );
