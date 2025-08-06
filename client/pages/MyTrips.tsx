@@ -45,9 +45,14 @@ export default function MyTrips() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [isLoadingEvents, setIsLoadingEvents] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showAIQuickstart, setShowAIQuickstart] = useState(false);
   const { loadEvent, loadCompleteEvent, resetTrip } = useTripCreation();
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  // Feature flag for AI quickstart flow
+  const isAIQuickstartEnabled = useFeatureEnabled('ai_quickstart_create_flow');
 
   useEffect(() => {
     loadEvents();
