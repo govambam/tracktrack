@@ -317,6 +317,13 @@ export default function PlayersEdit() {
             body: JSON.stringify({ event_id: eventId })
           });
 
+          if (!response.ok) {
+            console.error("Invitation API error:", response.status, response.statusText);
+            const errorText = await response.text();
+            console.error("Error response:", errorText);
+            throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+          }
+
           const result = await response.json();
 
           if (result.success && result.sent_count > 0) {
@@ -324,17 +331,25 @@ export default function PlayersEdit() {
               title: "Players Saved & Invitations Sent",
               description: `Player information updated and ${result.sent_count} invitation emails sent.`,
             });
-          } else {
+          } else if (result.success) {
             toast({
               title: "Players Updated",
-              description: "Player list has been saved successfully",
+              description: "Player list has been saved successfully. No invitation emails were needed.",
+            });
+          } else {
+            console.error("Invitation send failed:", result.error);
+            toast({
+              title: "Players Updated",
+              description: `Players saved, but invitation sending failed: ${result.error || 'Unknown error'}`,
+              variant: "destructive"
             });
           }
         } catch (emailError) {
           console.error("Error sending invitation emails:", emailError);
           toast({
             title: "Players Updated",
-            description: "Players saved, but there was an issue sending invitation emails.",
+            description: `Players saved, but there was an issue sending invitation emails: ${emailError.message}`,
+            variant: "destructive"
           });
         }
       } else {
