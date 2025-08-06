@@ -334,7 +334,8 @@ export default function EventShell() {
         <ClubhousePasswordModal
           isOpen={showClubhouseModal}
           onClose={() => setShowClubhouseModal(false)}
-          eventData={eventData}
+          eventName={eventData.name}
+          eventId={eventData.id}
           onSuccess={handleClubhouseAuth}
         />
       )}
