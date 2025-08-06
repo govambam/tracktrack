@@ -424,22 +424,35 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
             </div>
           ) : (
             courses.map((course) => (
-              <div key={course.id} className="flex items-center space-x-2">
+              <div key={course.id} className="flex items-start space-x-3 p-3 border rounded-lg hover:bg-slate-50">
                 <Checkbox
                   id={course.id}
                   checked={formData.courses.includes(course.id)}
                   onCheckedChange={() => toggleCourse(course.id)}
+                  className="mt-1"
                 />
                 <Label htmlFor={course.id} className="flex-1 cursor-pointer">
-                  <div>
+                  <div className="space-y-1">
                     <div className="font-medium">{course.name}</div>
                     {course.location && (
                       <div className="text-sm text-slate-500">{course.location}</div>
                     )}
+                    {course.description && (
+                      <div className="text-sm text-slate-600 line-clamp-2">{course.description}</div>
+                    )}
+                    <div className="flex items-center space-x-3 text-xs text-slate-500">
+                      {course.holes && <span>{course.holes} holes</span>}
+                      {course.par && <span>Par {course.par}</span>}
+                      {course.yardage && <span>{course.yardage} yards</span>}
+                    </div>
                   </div>
                 </Label>
-                {course.par && (
-                  <Badge variant="outline">Par {course.par}</Badge>
+                {course.image_url && (
+                  <img
+                    src={course.image_url}
+                    alt={course.name}
+                    className="w-16 h-12 rounded object-cover"
+                  />
                 )}
               </div>
             ))
