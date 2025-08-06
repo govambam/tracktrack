@@ -453,9 +453,9 @@ export default function EventClubhouse() {
                   <Megaphone
                     className={`h-12 w-12 mx-auto mb-4 ${
                       currentTheme === "Masters"
-                        ? "text-green-400"
+                        ? "text-yellow-600"
                         : currentTheme === "TourTech"
-                          ? "text-gray-400"
+                          ? "text-orange-600"
                           : "text-blue-400"
                     }`}
                   />
