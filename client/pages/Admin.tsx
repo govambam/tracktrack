@@ -1,6 +1,7 @@
 import React from 'react';
 import { FeatureFlagAdmin } from '@/components/FeatureFlagAdmin';
 import { FeatureFlagDemo } from '@/components/FeatureFlagDemo';
+import { DebugFeatureFlags } from '@/components/DebugFeatureFlags';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Zap, Eye } from 'lucide-react';
 
