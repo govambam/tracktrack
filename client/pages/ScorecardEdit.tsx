@@ -84,7 +84,7 @@ interface SkillsContest {
   event_id: string;
   round_id: string;
   hole: number;
-  contest_type: 'longest_drive' | 'closest_to_pin';
+  contest_type: "longest_drive" | "closest_to_pin";
   winner_id?: string;
 }
 
@@ -335,15 +335,17 @@ export default function ScorecardEdit() {
     const holeIndex = holeNumber - 1;
     const playerScores: { [playerId: string]: number } = {};
 
-    players.forEach(player => {
+    players.forEach((player) => {
       playerScores[player.id] = player.scores[holeIndex]?.strokes || 0;
     });
 
-    const holeContests = skillsContests.filter(contest => contest.hole === holeNumber);
+    const holeContests = skillsContests.filter(
+      (contest) => contest.hole === holeNumber,
+    );
     const contestWinners: { [contestId: string]: string } = {};
 
     // Initialize contest winners (would need to load from database if we had a winners table)
-    holeContests.forEach(contest => {
+    holeContests.forEach((contest) => {
       contestWinners[contest.id] = "";
     });
 
@@ -351,7 +353,7 @@ export default function ScorecardEdit() {
       holeNumber,
       playerScores,
       contests: holeContests,
-      contestWinners
+      contestWinners,
     });
     setIsHoleEditOpen(true);
   };
@@ -359,25 +361,33 @@ export default function ScorecardEdit() {
   const updateHoleScore = (playerId: string, strokes: number) => {
     if (!editingHole) return;
 
-    setEditingHole(prev => prev ? {
-      ...prev,
-      playerScores: {
-        ...prev.playerScores,
-        [playerId]: Math.max(0, Math.min(15, strokes))
-      }
-    } : null);
+    setEditingHole((prev) =>
+      prev
+        ? {
+            ...prev,
+            playerScores: {
+              ...prev.playerScores,
+              [playerId]: Math.max(0, Math.min(15, strokes)),
+            },
+          }
+        : null,
+    );
   };
 
   const updateContestWinner = (contestId: string, winnerId: string) => {
     if (!editingHole) return;
 
-    setEditingHole(prev => prev ? {
-      ...prev,
-      contestWinners: {
-        ...prev.contestWinners,
-        [contestId]: winnerId
-      }
-    } : null);
+    setEditingHole((prev) =>
+      prev
+        ? {
+            ...prev,
+            contestWinners: {
+              ...prev.contestWinners,
+              [contestId]: winnerId,
+            },
+          }
+        : null,
+    );
   };
 
   const saveHoleEdit = async () => {
@@ -385,14 +395,17 @@ export default function ScorecardEdit() {
 
     try {
       // Update player scores
-      const updatedPlayers = players.map(player => {
+      const updatedPlayers = players.map((player) => {
         const newScores = [...player.scores];
         const holeIndex = editingHole.holeNumber - 1;
         const newStrokes = editingHole.playerScores[player.id] || 0;
 
         newScores[holeIndex] = { ...newScores[holeIndex], strokes: newStrokes };
 
-        const totalStrokes = newScores.reduce((sum, hole) => sum + hole.strokes, 0);
+        const totalStrokes = newScores.reduce(
+          (sum, hole) => sum + hole.strokes,
+          0,
+        );
         const totalPar = newScores.reduce((sum, hole) => sum + hole.par, 0);
 
         return {
@@ -609,23 +622,28 @@ export default function ScorecardEdit() {
                       Player
                     </th>
                     {courseHoles.map((hole) => {
-                      const holeContests = skillsContests.filter(contest => contest.hole === hole.hole);
+                      const holeContests = skillsContests.filter(
+                        (contest) => contest.hole === hole.hole,
+                      );
                       return (
                         <th
                           key={hole.hole}
                           className="text-center p-2 font-semibold text-green-800 w-12 cursor-pointer hover:bg-green-100 transition-colors relative"
                           onClick={() => openHoleEdit(hole.hole)}
-                          title={`Click to edit hole ${hole.hole}${holeContests.length > 0 ? ' (has contests)' : ''}`}
+                          title={`Click to edit hole ${hole.hole}${holeContests.length > 0 ? " (has contests)" : ""}`}
                         >
                           <div className="flex flex-col items-center">
                             <span>{hole.hole}</span>
                             {holeContests.length > 0 && (
                               <div className="flex gap-1 mt-1">
-                                {holeContests.map(contest => (
+                                {holeContests.map((contest) => (
                                   <div
                                     key={contest.id}
                                     className="w-2 h-2 rounded-full bg-orange-500"
-                                    title={contest.contest_type.replace('_', ' ')}
+                                    title={contest.contest_type.replace(
+                                      "_",
+                                      " ",
+                                    )}
                                   />
                                 ))}
                               </div>
@@ -786,7 +804,8 @@ export default function ScorecardEdit() {
               Hole {editingHole?.holeNumber} - Edit Scores
               {editingHole?.contests && editingHole.contests.length > 0 && (
                 <Badge variant="outline" className="ml-2">
-                  {editingHole.contests.length} Contest{editingHole.contests.length !== 1 ? 's' : ''}
+                  {editingHole.contests.length} Contest
+                  {editingHole.contests.length !== 1 ? "s" : ""}
                 </Badge>
               )}
             </DialogTitle>
@@ -796,24 +815,34 @@ export default function ScorecardEdit() {
             <div className="space-y-6">
               {/* Player Scores */}
               <div>
-                <Label className="text-base font-semibold mb-3 block">Player Scores</Label>
+                <Label className="text-base font-semibold mb-3 block">
+                  Player Scores
+                </Label>
                 <div className="space-y-3">
                   {players.map((player) => {
-                    const currentScore = editingHole.playerScores[player.id] || 0;
+                    const currentScore =
+                      editingHole.playerScores[player.id] || 0;
                     const holeData = player.scores[editingHole.holeNumber - 1];
                     const par = holeData?.par || 4;
 
                     return (
-                      <div key={player.id} className="flex items-center justify-between p-3 border rounded-lg">
+                      <div
+                        key={player.id}
+                        className="flex items-center justify-between p-3 border rounded-lg"
+                      >
                         <div className="flex items-center gap-3">
                           <span className="font-medium">{player.name}</span>
-                          <span className="text-sm text-gray-500">Par {par}</span>
+                          <span className="text-sm text-gray-500">
+                            Par {par}
+                          </span>
                         </div>
                         <div className="flex items-center gap-3">
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => updateHoleScore(player.id, currentScore - 1)}
+                            onClick={() =>
+                              updateHoleScore(player.id, currentScore - 1)
+                            }
                             disabled={currentScore <= 0}
                             className="h-8 w-8 p-0"
                           >
@@ -826,18 +855,30 @@ export default function ScorecardEdit() {
                               min="0"
                               max="15"
                               value={currentScore || ""}
-                              onChange={(e) => updateHoleScore(player.id, parseInt(e.target.value) || 0)}
+                              onChange={(e) =>
+                                updateHoleScore(
+                                  player.id,
+                                  parseInt(e.target.value) || 0,
+                                )
+                              }
                               className="text-center w-16 h-8"
                             />
-                            <div className={`text-xs mt-1 ${getScoreColor(currentScore, par)}`}>
-                              {formatScore(currentScore, par) && currentScore > 0 ? formatScore(currentScore, par) : ""}
+                            <div
+                              className={`text-xs mt-1 ${getScoreColor(currentScore, par)}`}
+                            >
+                              {formatScore(currentScore, par) &&
+                              currentScore > 0
+                                ? formatScore(currentScore, par)
+                                : ""}
                             </div>
                           </div>
 
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => updateHoleScore(player.id, currentScore + 1)}
+                            onClick={() =>
+                              updateHoleScore(player.id, currentScore + 1)
+                            }
                             disabled={currentScore >= 15}
                             className="h-8 w-8 p-0"
                           >
@@ -861,11 +902,15 @@ export default function ScorecardEdit() {
                     {editingHole.contests.map((contest) => (
                       <div key={contest.id} className="p-3 border rounded-lg">
                         <Label className="text-sm font-medium mb-2 block">
-                          {contest.contest_type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                          {contest.contest_type
+                            .replace("_", " ")
+                            .replace(/\b\w/g, (l) => l.toUpperCase())}
                         </Label>
                         <Select
                           value={editingHole.contestWinners[contest.id] || ""}
-                          onValueChange={(value) => updateContestWinner(contest.id, value)}
+                          onValueChange={(value) =>
+                            updateContestWinner(contest.id, value)
+                          }
                         >
                           <SelectTrigger>
                             <SelectValue placeholder="Select winner" />
@@ -892,7 +937,10 @@ export default function ScorecardEdit() {
               <X className="h-4 w-4 mr-2" />
               Cancel
             </Button>
-            <Button onClick={saveHoleEdit} className="bg-blue-600 hover:bg-blue-700">
+            <Button
+              onClick={saveHoleEdit}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
               <Save className="h-4 w-4 mr-2" />
               Save Changes
             </Button>
