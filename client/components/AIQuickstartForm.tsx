@@ -287,16 +287,25 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
       }
 
       // Add default travel information
+      console.log('Adding travel information...');
+      const travelData = {
+        event_id: eventData.id,
+        flight_info: `# Getting There\n\nYour golf adventure awaits! We recommend arriving at least one day before the first round to settle in and get excited for the golf ahead.\n\n## Transportation Options\n- **Fly:** Check nearby airports for the best deals\n- **Drive:** Perfect for bringing extra gear and snacks\n- **Charter:** Split the cost with the group for a fun ride`,
+        accommodations: `# Where to Stay\n\nWe've scouted some great accommodation options for your ${formData.occasion.toLowerCase()}:\n\n## Recommended Hotels\n- Local golf resorts with course access\n- Hotels with group rates and amenities\n- Vacation rentals for larger groups\n\n*Specific recommendations will be shared based on your group size and preferences.*`,
+        daily_schedule: `# Daily Itinerary\n\n## Day-by-Day Schedule\n\n${selectedCourses.map((course, index) => `**Day ${index + 1}:** ${course.name}\n- Morning: Arrival and check-in\n- Golf: 18 holes of championship golf\n- Evening: Group dinner and stories`).join('\n\n')}\n\n*Schedule subject to weather and group preferences. Flexibility is key to a great golf trip!*`
+      };
+
+      console.log('Travel data:', travelData);
+
       const { error: travelError } = await supabase
         .from('event_travel')
-        .insert({
-          event_id: eventData.id,
-          flight_info: `# Getting There\n\nYour golf adventure awaits! We recommend arriving at least one day before the first round to settle in and get excited for the golf ahead.\n\n## Transportation Options\n- **Fly:** Check nearby airports for the best deals\n- **Drive:** Perfect for bringing extra gear and snacks\n- **Charter:** Split the cost with the group for a fun ride`,
-          accommodations: `# Where to Stay\n\nWe've scouted some great accommodation options for your ${formData.occasion.toLowerCase()}:\n\n## Recommended Hotels\n- Local golf resorts with course access\n- Hotels with group rates and amenities\n- Vacation rentals for larger groups\n\n*Specific recommendations will be shared based on your group size and preferences.*`,
-          daily_schedule: `# Daily Itinerary\n\n## Day-by-Day Schedule\n\n${selectedCourses.map((course, index) => `**Day ${index + 1}:** ${course.name}\n- Morning: Arrival and check-in\n- Golf: 18 holes of championship golf\n- Evening: Group dinner and stories`).join('\n\n')}\n\n*Schedule subject to weather and group preferences. Flexibility is key to a great golf trip!*`
-        });
+        .insert(travelData);
 
-      if (travelError) throw travelError;
+      if (travelError) {
+        console.error('Travel insertion error:', travelError);
+        throw new Error(`Failed to add travel information: ${travelError.message || JSON.stringify(travelError)}`);
+      }
+      console.log('Travel information added successfully');
 
       setCurrentStep('complete');
       
