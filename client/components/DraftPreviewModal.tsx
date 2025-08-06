@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { supabase } from '@/lib/supabase';
-import { useToast } from '@/hooks/use-toast';
+import React, { useState, useEffect } from "react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
-  ArrowLeft,
-  Eye,
-  Palette,
-  Settings,
-  Loader2
-} from 'lucide-react';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { supabase } from "@/lib/supabase";
+import { useToast } from "@/hooks/use-toast";
+import { ArrowLeft, Eye, Palette, Settings, Loader2 } from "lucide-react";
 
 // Import the public event component
-import PublicEventHome from '@/pages/PublicEventHome';
+import PublicEventHome from "@/pages/PublicEventHome";
 
 interface DraftPreviewModalProps {
   isOpen: boolean;
@@ -25,23 +25,23 @@ interface DraftPreviewModalProps {
 
 const AVAILABLE_THEMES = [
   {
-    id: 'GolfOS',
-    name: 'GolfOS',
-    description: 'Colorful, playful design with bright accents',
-    colors: ['#10b981', '#3b82f6', '#8b5cf6']
+    id: "GolfOS",
+    name: "GolfOS",
+    description: "Colorful, playful design with bright accents",
+    colors: ["#10b981", "#3b82f6", "#8b5cf6"],
   },
   {
-    id: 'TourTech',
-    name: 'Tour Tech',
-    description: 'Professional, enterprise-ready design',
-    colors: ['#1e293b', '#64748b', '#ea580c']
+    id: "TourTech",
+    name: "Tour Tech",
+    description: "Professional, enterprise-ready design",
+    colors: ["#1e293b", "#64748b", "#ea580c"],
   },
   {
-    id: 'Masters',
-    name: 'Masters',
-    description: 'Prestigious, traditional design',
-    colors: ['#166534', '#15803d', '#ca8a04']
-  }
+    id: "Masters",
+    name: "Masters",
+    description: "Prestigious, traditional design",
+    colors: ["#166534", "#15803d", "#ca8a04"],
+  },
 ];
 
 export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
@@ -50,8 +50,8 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
   eventId,
   onEditMode,
 }) => {
-  const [currentTheme, setCurrentTheme] = useState('GolfOS');
-  const [originalTheme, setOriginalTheme] = useState('GolfOS');
+  const [currentTheme, setCurrentTheme] = useState("GolfOS");
+  const [originalTheme, setOriginalTheme] = useState("GolfOS");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [eventSlug, setEventSlug] = useState<string | null>(null);
@@ -67,24 +67,24 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
     setLoading(true);
     try {
       const { data: eventData, error } = await supabase
-        .from('events')
-        .select('theme, slug')
-        .eq('id', eventId)
+        .from("events")
+        .select("theme, slug")
+        .eq("id", eventId)
         .single();
 
       if (error) throw error;
 
       if (eventData) {
-        setOriginalTheme(eventData.theme || 'GolfOS');
-        setCurrentTheme(eventData.theme || 'GolfOS');
+        setOriginalTheme(eventData.theme || "GolfOS");
+        setCurrentTheme(eventData.theme || "GolfOS");
         setEventSlug(eventData.slug);
       }
     } catch (error) {
-      console.error('Error loading event data:', error);
+      console.error("Error loading event data:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to load event data',
-        variant: 'destructive',
+        title: "Error",
+        description: "Failed to load event data",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -94,26 +94,26 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
   const handleThemeChange = async (newTheme: string) => {
     setCurrentTheme(newTheme);
     setSaving(true);
-    
+
     try {
       const { error } = await supabase
-        .from('events')
+        .from("events")
         .update({ theme: newTheme })
-        .eq('id', eventId);
+        .eq("id", eventId);
 
       if (error) throw error;
 
       setOriginalTheme(newTheme);
       toast({
-        title: 'Theme Updated',
+        title: "Theme Updated",
         description: `Successfully changed theme to ${newTheme}`,
       });
     } catch (error) {
-      console.error('Error updating theme:', error);
+      console.error("Error updating theme:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to update theme',
-        variant: 'destructive',
+        title: "Error",
+        description: "Failed to update theme",
+        variant: "destructive",
       });
       // Revert theme on error
       setCurrentTheme(originalTheme);
@@ -127,7 +127,7 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
     onEditMode();
   };
 
-  const selectedTheme = AVAILABLE_THEMES.find(t => t.id === currentTheme);
+  const selectedTheme = AVAILABLE_THEMES.find((t) => t.id === currentTheme);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -144,9 +144,12 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Edit</span>
             </Button>
-            
+
             <div className="flex items-center space-x-2">
-              <Badge variant="secondary" className="bg-orange-100 text-orange-700 border-orange-200">
+              <Badge
+                variant="secondary"
+                className="bg-orange-100 text-orange-700 border-orange-200"
+              >
                 <Eye className="h-3 w-3 mr-1" />
                 Draft Preview
               </Badge>
@@ -197,14 +200,18 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
                         </div>
                         <div>
                           <div className="font-medium">{theme.name}</div>
-                          <div className="text-xs text-slate-500">{theme.description}</div>
+                          <div className="text-xs text-slate-500">
+                            {theme.description}
+                          </div>
                         </div>
                       </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              {saving && <Loader2 className="h-4 w-4 animate-spin text-slate-600" />}
+              {saving && (
+                <Loader2 className="h-4 w-4 animate-spin text-slate-600" />
+              )}
             </div>
 
             <Button
@@ -232,15 +239,15 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
             <div className="relative">
               {/* Draft Mode Overlay Indicator */}
               <div className="absolute top-4 right-4 z-[80]">
-                <Badge 
-                  variant="secondary" 
+                <Badge
+                  variant="secondary"
                   className="bg-orange-100 text-orange-700 border-orange-200 shadow-lg"
                 >
                   <Eye className="h-3 w-3 mr-1" />
                   Preview Mode
                 </Badge>
               </div>
-              
+
               {/* Render the actual public event site */}
               <PublicEventHome slug={eventSlug} forceTheme={currentTheme} />
             </div>

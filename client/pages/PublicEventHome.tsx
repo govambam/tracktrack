@@ -1182,7 +1182,10 @@ interface PublicEventHomeProps {
   forceTheme?: string;
 }
 
-export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEventHomeProps = {}) {
+export default function PublicEventHome({
+  slug: propSlug,
+  forceTheme,
+}: PublicEventHomeProps = {}) {
   // Add smooth scrolling to page
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -1555,7 +1558,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
   }
 
   // Get theme styling - use forced theme for draft preview or event's theme
-  const currentTheme = forceTheme || eventData?.theme || 'GolfOS';
+  const currentTheme = forceTheme || eventData?.theme || "GolfOS";
   const theme = getThemeStyles(currentTheme);
 
   // Get theme components
@@ -1626,8 +1629,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
           className={`${currentTheme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : currentTheme === "Masters" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding} relative overflow-hidden` : "py-28 px-6 sm:px-8 lg:px-12 relative overflow-hidden"}`}
         >
           {/* Background decoration */}
-          {currentTheme === "TourTech" ? null : currentTheme ===
-            "Masters" ? (
+          {currentTheme === "TourTech" ? null : currentTheme === "Masters" ? (
             <>
               <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
               <div className="absolute top-20 right-0 w-72 h-72 bg-yellow-100/10 rounded-full blur-3xl"></div>
@@ -1731,8 +1733,7 @@ export default function PublicEventHome({ slug: propSlug, forceTheme }: PublicEv
           className={`${currentTheme === "TourTech" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding}` : currentTheme === "Masters" ? `${theme.sectionBackground} ${theme.sectionPadding} ${theme.containerPadding} relative` : "py-28 px-6 sm:px-8 lg:px-12 relative"}`}
         >
           {/* Background decoration */}
-          {currentTheme === "TourTech" ? null : currentTheme ===
-            "Masters" ? (
+          {currentTheme === "TourTech" ? null : currentTheme === "Masters" ? (
             <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-slate-50/30"></div>

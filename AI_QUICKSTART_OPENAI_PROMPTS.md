@@ -14,12 +14,14 @@ The AI Quickstart feature now uses actual OpenAI GPT-4 integration to generate p
 **Function**: `generateEventName()`
 
 **Context Provided**:
+
 - Occasion type
 - Course names and locations
 - Event dates
 - Number of players
 
 **Prompt Template**:
+
 ```
 Generate a creative and engaging golf event name for a {occasion} golf trip.
 
@@ -53,6 +55,7 @@ Generate ONE event name only:
 **Function**: `generateEventDescription()`
 
 **Context Provided**:
+
 - Occasion type
 - Course names and locations
 - Event dates
@@ -61,6 +64,7 @@ Generate ONE event name only:
 - Scoring format
 
 **Prompt Template**:
+
 ```
 Write an engaging event description for a golf event with these details:
 
@@ -89,6 +93,7 @@ Write the description:
 **Function**: `generateTravelInfo()`
 
 **Context Provided**:
+
 - Occasion type
 - Course locations
 - Event dates
@@ -96,6 +101,7 @@ Write the description:
 - Course names
 
 **Prompt Template**:
+
 ```
 Create helpful travel information for a {occasion} golf trip with these details:
 
@@ -120,12 +126,14 @@ Format as markdown with headers. Keep it informative but not overly long:
 **Function**: `generateAccommodations()`
 
 **Context Provided**:
+
 - Occasion type
 - Course locations
 - Number of players
 - Course names
 
 **Prompt Template**:
+
 ```
 Create accommodation recommendations for a {occasion} golf trip with these details:
 
@@ -149,12 +157,14 @@ Format as markdown with headers. Keep it helpful and practical:
 **Function**: `generateDailySchedule()`
 
 **Context Provided**:
+
 - Occasion type
 - Course names
 - Event duration
 - Number of players
 
 **Prompt Template**:
+
 ```
 Create a daily schedule for a {occasion} golf trip with these details:
 
@@ -185,14 +195,17 @@ Each OpenAI function includes robust error handling:
 ## Example Generated Content
 
 ### Event Name Examples:
+
 - **Birthday**: "Championship Birthday Classic"
 - **Bachelor Party**: "Final Fairway Freedom"
 - **Guys Trip**: "The Links Brothers Getaway"
 
 ### Event Description Examples:
+
 - "Join us for an unforgettable birthday golf experience from August 12 to August 14. We'll be playing Pebble Beach Golf Links and Spyglass Hill, creating memories and celebrating in style with 8 golfers in beautiful Monterey, California."
 
 ### Travel Information Examples:
+
 - AI generates location-specific travel advice
 - Includes real transportation options
 - Considers group size and occasion type

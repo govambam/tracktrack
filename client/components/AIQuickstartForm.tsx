@@ -241,19 +241,30 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
     return errors;
   };
 
-  const generateEventName = async (occasion: string, courses: Course[], dates: { start: string, end: string }, playerCount: number) => {
-    const courseNames = courses.map(c => c.name);
-    const courseLocations = courses.map(c => c.location).filter(Boolean);
-    const startDate = new Date(dates.start).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-    const endDate = new Date(dates.end).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+  const generateEventName = async (
+    occasion: string,
+    courses: Course[],
+    dates: { start: string; end: string },
+    playerCount: number,
+  ) => {
+    const courseNames = courses.map((c) => c.name);
+    const courseLocations = courses.map((c) => c.location).filter(Boolean);
+    const startDate = new Date(dates.start).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+    });
+    const endDate = new Date(dates.end).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+    });
 
     const prompt = `Generate a creative and engaging golf event name for a ${occasion.toLowerCase()} golf trip.
 
 Event Details:
 - Occasion: ${occasion}
 - Dates: ${startDate} to ${endDate}, ${new Date(dates.start).getFullYear()}
-- Courses: ${courseNames.join(', ')}
-- Locations: ${courseLocations.length > 0 ? courseLocations.join(', ') : 'Various locations'}
+- Courses: ${courseNames.join(", ")}
+- Locations: ${courseLocations.length > 0 ? courseLocations.join(", ") : "Various locations"}
 - Players: ${playerCount} golfers
 
 Requirements:
@@ -274,34 +285,41 @@ Examples for reference:
 Generate ONE event name only:`;
 
     try {
-      const response = await fetch('/api/generate-description', {
-        method: 'POST',
+      const response = await fetch("/api/generate-description", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ prompt }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to generate event name');
+        throw new Error("Failed to generate event name");
       }
 
       const data = await response.json();
-      return data.description.trim().replace(/['"]/g, ''); // Remove any quotes
+      return data.description.trim().replace(/['"]/g, ""); // Remove any quotes
     } catch (error) {
-      console.error('Error generating event name:', error);
+      console.error("Error generating event name:", error);
       // Fallback to template-based generation
       const templates = {
-        'Birthday': ['Birthday Golf Getaway', 'Golf Birthday Celebration'],
-        'Bachelor Party': ['Bachelor Golf Weekend', 'Last Swing Before the Ring'],
-        'Annual Trip': ['Annual Golf Adventure', `${new Date().getFullYear()} Golf Trip`],
-        'Guys Trip': ['Guys Golf Weekend', 'The Boys Golf Getaway'],
-        'Family Reunion': ['Family Golf Reunion', 'Family Links & Laughs'],
-        'Work Trip': ['Company Golf Outing', 'Team Golf Retreat'],
-        'Tournament': ['Golf Tournament', 'Championship Golf Classic'],
-        'default': ['Golf Adventure', 'Weekend Golf Trip']
+        Birthday: ["Birthday Golf Getaway", "Golf Birthday Celebration"],
+        "Bachelor Party": [
+          "Bachelor Golf Weekend",
+          "Last Swing Before the Ring",
+        ],
+        "Annual Trip": [
+          "Annual Golf Adventure",
+          `${new Date().getFullYear()} Golf Trip`,
+        ],
+        "Guys Trip": ["Guys Golf Weekend", "The Boys Golf Getaway"],
+        "Family Reunion": ["Family Golf Reunion", "Family Links & Laughs"],
+        "Work Trip": ["Company Golf Outing", "Team Golf Retreat"],
+        Tournament: ["Golf Tournament", "Championship Golf Classic"],
+        default: ["Golf Adventure", "Weekend Golf Trip"],
       };
-      const names = templates[occasion as keyof typeof templates] || templates.default;
+      const names =
+        templates[occasion as keyof typeof templates] || templates.default;
       return names[Math.floor(Math.random() * names.length)];
     }
   };
@@ -314,8 +332,8 @@ Generate ONE event name only:`;
     hasEntryFee: boolean,
     entryFee: number,
   ) => {
-    const courseNames = courses.map(c => c.name);
-    const courseLocations = courses.map(c => c.location).filter(Boolean);
+    const courseNames = courses.map((c) => c.name);
+    const courseLocations = courses.map((c) => c.location).filter(Boolean);
     const startDate = new Date(dates.start).toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
@@ -329,10 +347,10 @@ Generate ONE event name only:`;
 
 Event Type: ${occasion}
 Dates: ${startDate} to ${endDate}, ${new Date(dates.start).getFullYear()}
-Courses: ${courseNames.map(c => c).join(', ')}
-Locations: ${courseLocations.length > 0 ? courseLocations.join(', ') : 'Multiple locations'}
+Courses: ${courseNames.map((c) => c).join(", ")}
+Locations: ${courseLocations.length > 0 ? courseLocations.join(", ") : "Multiple locations"}
 Players: ${playerCount} golfers
-Entry Fee: ${hasEntryFee ? `$${entryFee} per player` : 'No entry fee'}
+Entry Fee: ${hasEntryFee ? `$${entryFee} per player` : "No entry fee"}
 Scoring: Stableford format with skills contests
 
 Requirements:
@@ -347,24 +365,27 @@ Requirements:
 Write the description:`;
 
     try {
-      const response = await fetch('/api/generate-description', {
-        method: 'POST',
+      const response = await fetch("/api/generate-description", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ prompt }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to generate event description');
+        throw new Error("Failed to generate event description");
       }
 
       const data = await response.json();
       return data.description.trim();
     } catch (error) {
-      console.error('Error generating event description:', error);
+      console.error("Error generating event description:", error);
       // Fallback to template-based generation
-      const coursesText = courses.length === 1 ? courses[0].name : `${courses.length} amazing courses`;
+      const coursesText =
+        courses.length === 1
+          ? courses[0].name
+          : `${courses.length} amazing courses`;
       return `Join us for an unforgettable ${occasion.toLowerCase()} golf experience from ${startDate} to ${endDate}. We'll be playing ${coursesText} and creating memories that will last a lifetime.`;
     }
   };
@@ -421,8 +442,8 @@ Write the description:`;
     dates: { start: string; end: string },
     playerCount: number,
   ) => {
-    const courseLocations = courses.map(c => c.location).filter(Boolean);
-    const primaryLocation = courseLocations[0] || 'your golf destination';
+    const courseLocations = courses.map((c) => c.location).filter(Boolean);
+    const primaryLocation = courseLocations[0] || "your golf destination";
     const startDate = new Date(dates.start).toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
@@ -438,7 +459,7 @@ Event: ${occasion}
 Dates: ${startDate} to ${endDate}, ${new Date(dates.start).getFullYear()}
 Location: ${primaryLocation}
 Players: ${playerCount} golfers
-Courses: ${courses.map(c => c.name).join(', ')}
+Courses: ${courses.map((c) => c.name).join(", ")}
 
 Write a "Getting There" section with:
 - Travel recommendations and timing
@@ -450,22 +471,22 @@ Write a "Getting There" section with:
 Format as markdown with headers. Keep it informative but not overly long:`;
 
     try {
-      const response = await fetch('/api/generate-description', {
-        method: 'POST',
+      const response = await fetch("/api/generate-description", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ prompt }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to generate travel info');
+        throw new Error("Failed to generate travel info");
       }
 
       const data = await response.json();
       return data.description.trim();
     } catch (error) {
-      console.error('Error generating travel info:', error);
+      console.error("Error generating travel info:", error);
       return `# Getting There\n\nYour golf adventure awaits! We recommend arriving at least one day before the first round to settle in and get excited for the golf ahead.\n\n## Transportation Options\n- **Fly:** Check nearby airports for the best deals\n- **Drive:** Perfect for bringing extra gear and snacks\n- **Charter:** Split the cost with the group for a fun ride`;
     }
   };
@@ -476,15 +497,15 @@ Format as markdown with headers. Keep it informative but not overly long:`;
     dates: { start: string; end: string },
     playerCount: number,
   ) => {
-    const courseLocations = courses.map(c => c.location).filter(Boolean);
-    const primaryLocation = courseLocations[0] || 'your golf destination';
+    const courseLocations = courses.map((c) => c.location).filter(Boolean);
+    const primaryLocation = courseLocations[0] || "your golf destination";
 
     const prompt = `Create accommodation recommendations for a ${occasion.toLowerCase()} golf trip with these details:
 
 Event: ${occasion}
 Location: ${primaryLocation}
 Players: ${playerCount} golfers
-Courses: ${courses.map(c => c.name).join(', ')}
+Courses: ${courses.map((c) => c.name).join(", ")}
 
 Write a "Where to Stay" section with:
 - Types of accommodation options
@@ -496,22 +517,22 @@ Write a "Where to Stay" section with:
 Format as markdown with headers. Keep it helpful and practical:`;
 
     try {
-      const response = await fetch('/api/generate-description', {
-        method: 'POST',
+      const response = await fetch("/api/generate-description", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ prompt }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to generate accommodations');
+        throw new Error("Failed to generate accommodations");
       }
 
       const data = await response.json();
       return data.description.trim();
     } catch (error) {
-      console.error('Error generating accommodations:', error);
+      console.error("Error generating accommodations:", error);
       return `# Where to Stay\n\nWe've scouted some great accommodation options for your ${occasion.toLowerCase()}:\n\n## Recommended Hotels\n- Local golf resorts with course access\n- Hotels with group rates and amenities\n- Vacation rentals for larger groups\n\n*Specific recommendations will be shared based on your group size and preferences.*`;
     }
   };
@@ -522,14 +543,14 @@ Format as markdown with headers. Keep it helpful and practical:`;
     dates: { start: string; end: string },
     playerCount: number,
   ) => {
-    const courseNames = courses.map(c => c.name);
+    const courseNames = courses.map((c) => c.name);
 
     const prompt = `Create a daily schedule for a ${occasion.toLowerCase()} golf trip with these details:
 
 Event: ${occasion}
 Duration: ${courses.length} days
 Players: ${playerCount} golfers
-Courses: ${courseNames.join(', ')}
+Courses: ${courseNames.join(", ")}
 
 Write a "Daily Itinerary" section with:
 - Day-by-day breakdown for each course
@@ -541,23 +562,23 @@ Write a "Daily Itinerary" section with:
 Format as markdown with headers. Include each course as a separate day:`;
 
     try {
-      const response = await fetch('/api/generate-description', {
-        method: 'POST',
+      const response = await fetch("/api/generate-description", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ prompt }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to generate daily schedule');
+        throw new Error("Failed to generate daily schedule");
       }
 
       const data = await response.json();
       return data.description.trim();
     } catch (error) {
-      console.error('Error generating daily schedule:', error);
-      return `# Daily Itinerary\n\n## Day-by-Day Schedule\n\n${courseNames.map((course, index) => `**Day ${index + 1}:** ${course}\n- Morning: Arrival and check-in\n- Golf: 18 holes of championship golf\n- Evening: Group dinner and stories`).join('\n\n')}\n\n*Schedule subject to weather and group preferences. Flexibility is key to a great golf trip!*`;
+      console.error("Error generating daily schedule:", error);
+      return `# Daily Itinerary\n\n## Day-by-Day Schedule\n\n${courseNames.map((course, index) => `**Day ${index + 1}:** ${course}\n- Morning: Arrival and check-in\n- Golf: 18 holes of championship golf\n- Evening: Group dinner and stories`).join("\n\n")}\n\n*Schedule subject to weather and group preferences. Flexibility is key to a great golf trip!*`;
     }
   };
 
@@ -601,7 +622,7 @@ Format as markdown with headers. Include each course as a separate day:`;
           start: formData.startDate,
           end: formData.endDate,
         },
-        formData.players.length
+        formData.players.length,
       );
 
       console.log("Generating event description with AI...");
@@ -614,7 +635,7 @@ Format as markdown with headers. Include each course as a separate day:`;
         },
         formData.players.length,
         formData.hasEntryFee,
-        formData.entryFeeAmount
+        formData.entryFeeAmount,
       );
 
       const slug =
@@ -829,20 +850,20 @@ Format as markdown with headers. Include each course as a separate day:`;
           formData.occasion,
           selectedCourses,
           { start: formData.startDate, end: formData.endDate },
-          formData.players.length
+          formData.players.length,
         ),
         generateAccommodations(
           formData.occasion,
           selectedCourses,
           { start: formData.startDate, end: formData.endDate },
-          formData.players.length
+          formData.players.length,
         ),
         generateDailySchedule(
           formData.occasion,
           selectedCourses,
           { start: formData.startDate, end: formData.endDate },
-          formData.players.length
-        )
+          formData.players.length,
+        ),
       ]);
 
       const travelData = {
