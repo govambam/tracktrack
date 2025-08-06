@@ -231,59 +231,7 @@ export default function ScorecardEdit() {
       try {
         const parsedSession = JSON.parse(sessionData);
         setSession(parsedSession);
-
-        // Find or create the event_player record for this session
-        let { data: eventPlayer } = await supabase
-          .from("event_players")
-          .select("*")
-          .eq("event_id", event.id)
-          .eq("full_name", parsedSession.displayName)
-          .single();
-
-        // If no event_player exists, create one for this clubhouse user
-        if (!eventPlayer) {
-          const { data: newEventPlayer, error: createError } = await supabase
-            .from("event_players")
-            .insert({
-              event_id: event.id,
-              full_name: parsedSession.displayName,
-              status: "accepted", // Clubhouse users are considered accepted
-              role: "player",
-              // Use sessionId as invited_email to satisfy the constraint
-              // (clubhouse users don't have real emails, but the constraint requires either user_id OR invited_email)
-              invited_email: `clubhouse-${parsedSession.sessionId}@tracktrack.local`,
-            })
-            .select("*")
-            .single();
-
-          if (createError) {
-            console.error("Error creating event player:", createError);
-            setError("Failed to register player. Please try again.");
-            return;
-          }
-
-          eventPlayer = newEventPlayer;
-        }
-
-        setCurrentEventPlayer(eventPlayer);
-
-        // Find or create current player
-        const existingPlayer = players.find((p) => p.id === eventPlayer.id);
-        if (existingPlayer) {
-          setCurrentPlayer(existingPlayer);
-        } else {
-          // Create new player with empty scores
-          const newPlayer: Player = {
-            id: eventPlayer.id,
-            name: eventPlayer.full_name,
-            scores: courseHoles.map((hole) => ({ ...hole, strokes: 0 })),
-            totalStrokes: 0,
-            totalPar: courseHoles.reduce((sum, hole) => sum + hole.par, 0),
-            scoreRelativeToPar: 0,
-          };
-          setCurrentPlayer(newPlayer);
-          setPlayers((prev) => [...prev, newPlayer]);
-        }
+        // No need to match with event_players - any clubhouse user can edit all scores
       } catch (error) {
         console.error("Error parsing session:", error);
         navigate(`/events/${slug}/clubhouse`);
