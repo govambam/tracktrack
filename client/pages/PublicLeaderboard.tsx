@@ -507,25 +507,27 @@ export default function PublicLeaderboard({
                     </thead>
 
                     <tbody>
-                      <tr className="border-b border-slate-200">
-                        <td className="px-4 py-3 font-semibold text-slate-900">
-                          Par
-                        </td>
-                        {roundHoles.slice(0, 18).map((hole) => (
-                          <td
-                            key={hole.hole_number}
-                            className="px-3 py-3 text-center font-semibold text-slate-600"
-                          >
-                            {hole.par}
+                      {hasParData && (
+                        <tr className="border-b border-slate-200">
+                          <td className="px-4 py-3 font-semibold text-slate-900">
+                            Par
                           </td>
-                        ))}
-                        <td className="px-4 py-3 text-center font-bold text-slate-900">
-                          {totalPar}
-                        </td>
-                        <td className="px-4 py-3 text-center font-bold text-slate-900">
-                          E
-                        </td>
-                      </tr>
+                          {holes.slice(0, 18).map((hole) => (
+                            <td
+                              key={hole.hole_number}
+                              className="px-3 py-3 text-center font-semibold text-slate-600"
+                            >
+                              {hole.par}
+                            </td>
+                          ))}
+                          <td className="px-4 py-3 text-center font-bold text-slate-900">
+                            {totalPar}
+                          </td>
+                          <td className="px-4 py-3 text-center font-bold text-slate-900">
+                            E
+                          </td>
+                        </tr>
+                      )}
 
                       {playerScores.map((player) => (
                         <tr
