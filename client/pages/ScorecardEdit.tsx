@@ -856,6 +856,9 @@ export default function ScorecardEdit() {
                 </Badge>
               )}
             </DialogTitle>
+            <DialogDescription>
+              Click on a player's score to edit it. Skills contest winners can be selected below.
+            </DialogDescription>
           </DialogHeader>
 
           {editingHole && (
