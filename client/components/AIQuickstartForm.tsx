@@ -91,7 +91,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
       console.log('Loading courses from database...');
       const { data: coursesData, error } = await supabase
         .from('courses')
-        .select('id, name, location, par')
+        .select('id, name, location, par, yardage, description, image_url, holes')
         .order('name');
 
       console.log('Courses query result:', { coursesData, error });
