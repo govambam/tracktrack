@@ -52,6 +52,7 @@ interface EventCourse {
   image_url?: string;
   weather_note?: string;
   display_order?: number;
+  holes?: number;
 }
 
 interface EventCustomization {
