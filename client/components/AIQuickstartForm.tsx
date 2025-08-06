@@ -490,13 +490,28 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
         </Select>
       </div>
 
+      {/* Validation Errors */}
+      {!canSubmit() && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <h4 className="font-medium text-amber-800 mb-2">Please complete the following:</h4>
+          <ul className="text-sm text-amber-700 space-y-1">
+            {getValidationErrors().map((error, index) => (
+              <li key={index} className="flex items-center space-x-2">
+                <div className="w-1 h-1 bg-amber-600 rounded-full"></div>
+                <span>{error}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="flex space-x-3 pt-4">
         <Button variant="outline" onClick={onClose}>
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back
         </Button>
-        <Button 
-          className="flex-1 bg-emerald-600 hover:bg-emerald-700" 
+        <Button
+          className="flex-1 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50"
           onClick={generateAIContent}
           disabled={!canSubmit()}
         >
