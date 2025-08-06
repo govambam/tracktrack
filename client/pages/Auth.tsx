@@ -72,7 +72,8 @@ export default function Auth() {
           localStorage.setItem("isAuthenticated", "true");
           localStorage.setItem("userEmail", data.user.email || "");
           localStorage.setItem("userId", data.user.id);
-          navigate("/app");
+          // Navigate to return URL if provided, otherwise go to app
+          navigate(returnUrl || "/app");
         }
       } else {
         // Sign up new user
