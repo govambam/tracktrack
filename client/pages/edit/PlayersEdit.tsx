@@ -297,7 +297,18 @@ export default function PlayersEdit() {
 
         // First test if the API endpoint is available
         try {
+          console.log("🔍 Testing invitations API availability...");
+          const debugResponse = await fetch('/api/invitations/debug');
+          console.log("🔍 Debug response status:", debugResponse.status);
+
+          if (debugResponse.ok) {
+            const debugResult = await debugResponse.json();
+            console.log("🔍 Debug response:", debugResult);
+          }
+
           const testResponse = await fetch('/api/invitations/test');
+          console.log("📧 Test response status:", testResponse.status);
+
           if (!testResponse.ok) {
             console.error("Invitations API not available:", testResponse.status);
             toast({
@@ -306,7 +317,9 @@ export default function PlayersEdit() {
             });
             return;
           }
-          console.log("✅ Invitations API is available");
+
+          const testResult = await testResponse.json();
+          console.log("✅ Invitations API is available:", testResult);
         } catch (testError) {
           console.error("Cannot reach invitations API:", testError);
           toast({
