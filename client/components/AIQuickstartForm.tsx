@@ -306,16 +306,16 @@ Generate ONE event name only:`;
     }
   };
 
-  const generateEventDescription = (
+  const generateEventDescription = async (
     occasion: string,
     courses: Course[],
     dates: { start: string; end: string },
+    playerCount: number,
+    hasEntryFee: boolean,
+    entryFee: number,
   ) => {
-    const coursesText =
-      courses.length === 1
-        ? courses[0].name
-        : `${courses.length} amazing courses`;
-
+    const courseNames = courses.map(c => c.name);
+    const courseLocations = courses.map(c => c.location).filter(Boolean);
     const startDate = new Date(dates.start).toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
@@ -325,7 +325,48 @@ Generate ONE event name only:`;
       day: "numeric",
     });
 
-    return `Join us for an unforgettable ${occasion.toLowerCase()} golf experience from ${startDate} to ${endDate}. We'll be playing ${coursesText} and creating memories that will last a lifetime.`;
+    const prompt = `Write an engaging event description for a golf event with these details:
+
+Event Type: ${occasion}
+Dates: ${startDate} to ${endDate}, ${new Date(dates.start).getFullYear()}
+Courses: ${courseNames.map(c => c).join(', ')}
+Locations: ${courseLocations.length > 0 ? courseLocations.join(', ') : 'Multiple locations'}
+Players: ${playerCount} golfers
+Entry Fee: ${hasEntryFee ? `$${entryFee} per player` : 'No entry fee'}
+Scoring: Stableford format with skills contests
+
+Requirements:
+- Warm and inviting tone
+- Mention the occasion and dates
+- Reference the courses being played
+- 2-3 sentences maximum
+- Exciting but not overly promotional
+- Include anticipation about the experience
+- Professional but friendly
+
+Write the description:`;
+
+    try {
+      const response = await fetch('/api/generate-description', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate event description');
+      }
+
+      const data = await response.json();
+      return data.description.trim();
+    } catch (error) {
+      console.error('Error generating event description:', error);
+      // Fallback to template-based generation
+      const coursesText = courses.length === 1 ? courses[0].name : `${courses.length} amazing courses`;
+      return `Join us for an unforgettable ${occasion.toLowerCase()} golf experience from ${startDate} to ${endDate}. We'll be playing ${coursesText} and creating memories that will last a lifetime.`;
+    }
   };
 
   const calculatePayouts = (
