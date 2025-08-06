@@ -48,6 +48,8 @@ export default function MyTrips() {
   const [isLoadingEvents, setIsLoadingEvents] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showAIQuickstart, setShowAIQuickstart] = useState(false);
+  const [showDraftPreview, setShowDraftPreview] = useState(false);
+  const [draftEventId, setDraftEventId] = useState<string | null>(null);
   const { loadEvent, loadCompleteEvent, resetTrip } = useTripCreation();
   const { toast } = useToast();
   const navigate = useNavigate();
