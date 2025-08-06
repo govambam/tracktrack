@@ -406,12 +406,14 @@ export default function PublicLeaderboard({
             .sort((a, b) => a.hole_number - b.hole_number);
 
           // If no course hole data, create basic hole structure
-          const holes = roundHoles.length > 0 ? roundHoles :
-            Array.from({ length: 18 }, (_, i) => ({
-              hole_number: i + 1,
-              par: null,
-              course_name: courseName
-            }));
+          const holes =
+            roundHoles.length > 0
+              ? roundHoles
+              : Array.from({ length: 18 }, (_, i) => ({
+                  hole_number: i + 1,
+                  par: null,
+                  course_name: courseName,
+                }));
 
           const hasParData = roundHoles.length > 0;
 
@@ -440,11 +442,11 @@ export default function PublicLeaderboard({
               (sum, hole) => sum + (hole.strokes || 0),
               0,
             );
-            const totalPar = hasParData ? holes.reduce(
-              (sum, hole) => sum + (hole.par || 0),
-              0,
-            ) : 0;
-            const scoreToPar = totalStrokes > 0 && hasParData ? totalStrokes - totalPar : null;
+            const totalPar = hasParData
+              ? holes.reduce((sum, hole) => sum + (hole.par || 0), 0)
+              : 0;
+            const scoreToPar =
+              totalStrokes > 0 && hasParData ? totalStrokes - totalPar : null;
 
             return {
               ...player,
@@ -454,7 +456,9 @@ export default function PublicLeaderboard({
             };
           });
 
-          const totalPar = hasParData ? holes.reduce((sum, hole) => sum + (hole.par || 0), 0) : 0;
+          const totalPar = hasParData
+            ? holes.reduce((sum, hole) => sum + (hole.par || 0), 0)
+            : 0;
 
           return (
             <div key={round.id}>
@@ -540,7 +544,10 @@ export default function PublicLeaderboard({
                           {player.holeScores.slice(0, 18).map((holeScore) => {
                             const strokes = holeScore.strokes;
                             const par = holeScore.par;
-                            const diff = strokes > 0 && hasParData && par ? strokes - par : 0;
+                            const diff =
+                              strokes > 0 && hasParData && par
+                                ? strokes - par
+                                : 0;
 
                             let cellStyle = "px-3 py-3 text-center relative";
                             let scoreStyle =
@@ -586,7 +593,9 @@ export default function PublicLeaderboard({
                           <td className="px-4 py-3 text-center font-bold text-green-600">
                             {!hasParData
                               ? "-"
-                              : player.totalStrokes && player.scoreToPar !== null && player.scoreToPar !== 0
+                              : player.totalStrokes &&
+                                  player.scoreToPar !== null &&
+                                  player.scoreToPar !== 0
                                 ? player.scoreToPar > 0
                                   ? `+${player.scoreToPar}`
                                   : player.scoreToPar
