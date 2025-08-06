@@ -73,7 +73,7 @@ export default function SettingsEdit() {
       setLoading(true);
       const { data, error } = await supabase
         .from("events")
-        .select("is_published, is_private, slug, created_at, clubhouse_password")
+        .select("is_published, is_private, slug, created_at")
         .eq("id", eventId)
         .single();
 
