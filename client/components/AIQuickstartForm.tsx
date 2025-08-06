@@ -187,7 +187,9 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
       formData.endDate &&
       formData.players.length > 0 &&
       formData.occasion &&
-      new Date(formData.endDate) >= new Date(formData.startDate)
+      formData.theme &&
+      new Date(formData.endDate) >= new Date(formData.startDate) &&
+      (!formData.hasEntryFee || (formData.hasEntryFee && formData.entryFeeAmount > 0))
     );
   };
 
