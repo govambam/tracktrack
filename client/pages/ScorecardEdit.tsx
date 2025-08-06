@@ -797,6 +797,129 @@ export default function ScorecardEdit() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Hole Edit Modal */}
+      <Dialog open={isHoleEditOpen} onOpenChange={setIsHoleEditOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Edit className="h-5 w-5" />
+              Hole {editingHole?.holeNumber} - Edit Scores
+              {editingHole?.contests && editingHole.contests.length > 0 && (
+                <Badge variant="outline" className="ml-2">
+                  {editingHole.contests.length} Contest{editingHole.contests.length !== 1 ? 's' : ''}
+                </Badge>
+              )}
+            </DialogTitle>
+          </DialogHeader>
+
+          {editingHole && (
+            <div className="space-y-6">
+              {/* Player Scores */}
+              <div>
+                <Label className="text-base font-semibold mb-3 block">Player Scores</Label>
+                <div className="space-y-3">
+                  {players.map((player) => {
+                    const currentScore = editingHole.playerScores[player.id] || 0;
+                    const holeData = player.scores[editingHole.holeNumber - 1];
+                    const par = holeData?.par || 4;
+
+                    return (
+                      <div key={player.id} className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <span className="font-medium">{player.name}</span>
+                          <span className="text-sm text-gray-500">Par {par}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => updateHoleScore(player.id, currentScore - 1)}
+                            disabled={currentScore <= 0}
+                            className="h-8 w-8 p-0"
+                          >
+                            <Minus className="h-4 w-4" />
+                          </Button>
+
+                          <div className="text-center min-w-[60px]">
+                            <Input
+                              type="number"
+                              min="0"
+                              max="15"
+                              value={currentScore || ""}
+                              onChange={(e) => updateHoleScore(player.id, parseInt(e.target.value) || 0)}
+                              className="text-center w-16 h-8"
+                            />
+                            <div className={`text-xs mt-1 ${getScoreColor(currentScore, par)}`}>
+                              {formatScore(currentScore, par) && currentScore > 0 ? formatScore(currentScore, par) : ""}
+                            </div>
+                          </div>
+
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => updateHoleScore(player.id, currentScore + 1)}
+                            disabled={currentScore >= 15}
+                            className="h-8 w-8 p-0"
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Skills Contests */}
+              {editingHole.contests.length > 0 && (
+                <div>
+                  <Label className="text-base font-semibold mb-3 block flex items-center gap-2">
+                    <Award className="h-4 w-4" />
+                    Skills Contests
+                  </Label>
+                  <div className="space-y-3">
+                    {editingHole.contests.map((contest) => (
+                      <div key={contest.id} className="p-3 border rounded-lg">
+                        <Label className="text-sm font-medium mb-2 block">
+                          {contest.contest_type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        </Label>
+                        <Select
+                          value={editingHole.contestWinners[contest.id] || ""}
+                          onValueChange={(value) => updateContestWinner(contest.id, value)}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select winner" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="">No winner selected</SelectItem>
+                            {players.map((player) => (
+                              <SelectItem key={player.id} value={player.id}>
+                                {player.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsHoleEditOpen(false)}>
+              <X className="h-4 w-4 mr-2" />
+              Cancel
+            </Button>
+            <Button onClick={saveHoleEdit} className="bg-blue-600 hover:bg-blue-700">
+              <Save className="h-4 w-4 mr-2" />
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
