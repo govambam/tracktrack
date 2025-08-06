@@ -38,6 +38,8 @@ import {
   EyeOff,
   Share,
   Edit,
+  Users,
+  Lock,
 } from "lucide-react";
 
 export default function SettingsEdit() {
