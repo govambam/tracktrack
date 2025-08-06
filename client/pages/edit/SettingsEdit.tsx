@@ -229,11 +229,21 @@ export default function SettingsEdit() {
 
       if (error) {
         console.error("Error updating clubhouse password:", error);
-        toast({
-          title: "Update Failed",
-          description: error.message || "Failed to update clubhouse password",
-          variant: "destructive",
-        });
+
+        // Check if it's a column doesn't exist error
+        if (error.message?.includes("clubhouse_password") && error.message?.includes("does not exist")) {
+          toast({
+            title: "Feature Not Available",
+            description: "Clubhouse feature requires database migration. Please contact support.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Update Failed",
+            description: error.message || "Failed to update clubhouse password",
+            variant: "destructive",
+          });
+        }
         return;
       }
 
