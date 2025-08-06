@@ -50,10 +50,11 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <ErrorBoundary>
-        <TripCreationProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
+        <GrowthBookProvider>
+          <TripCreationProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Auth />} />
@@ -126,7 +127,8 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
-        </TripCreationProvider>
+            </TripCreationProvider>
+        </GrowthBookProvider>
       </ErrorBoundary>
     </TooltipProvider>
   </QueryClientProvider>
