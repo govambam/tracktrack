@@ -792,11 +792,19 @@ Format as markdown with headers. Include each course as a separate day. Limit re
       // Add players to event
       if (formData.players.length > 0) {
         console.log("Adding players to event...");
-        const eventPlayers = formData.players.map((playerName) => ({
-          event_id: eventData.id,
-          full_name: playerName,
-          email: `${playerName.toLowerCase().replace(/\s+/g, ".")}@example.com`, // Placeholder email
-        }));
+        const eventPlayers = formData.players.map((playerName) => {
+          const placeholderEmail = `${playerName.toLowerCase().replace(/\s+/g, ".")}@example.com`;
+          return {
+            event_id: eventData.id,
+            full_name: playerName,
+            email: placeholderEmail,
+            // Invitation system fields - satisfy check constraint
+            user_id: null, // Players created via AI quickstart are not linked to users
+            invited_email: placeholderEmail,
+            role: 'player',
+            status: 'accepted'
+          };
+        });
 
         console.log("Event players data:", eventPlayers);
 
