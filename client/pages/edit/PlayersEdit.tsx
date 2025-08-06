@@ -295,11 +295,24 @@ export default function PlayersEdit() {
       if (playersWithEmails.length > 0) {
         console.log("Sending invitation emails...");
         try {
+          // Get session token first
+          const { data: { session } } = await supabase.auth.getSession();
+          const accessToken = session?.access_token;
+
+          if (!accessToken) {
+            console.error("No access token available for sending invitations");
+            toast({
+              title: "Players Updated",
+              description: "Players saved, but couldn't send invitations (not authenticated).",
+            });
+            return;
+          }
+
           const response = await fetch('/api/invitations/send', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+              'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify({ event_id: eventId })
           });
