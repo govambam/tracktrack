@@ -197,7 +197,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
           is_published: true,
           is_private: false,
           theme: 'GolfOS',
-          slug: eventName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
+          slug: eventName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') + '-' + Date.now().toString(36)
         })
         .select()
         .single();
