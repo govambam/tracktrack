@@ -11,7 +11,13 @@ This project includes GrowthBook for feature flag management and A/B testing.
 
 2. **Configuration**: ✅ Already configured
    - Client Key: `sdk-w1E948s82nX7yJ5u`
+   - Secret Key: `secret_user_btmV7USvLUv7ZqSYYy4IqTLbhzbIIKGgFJYGgkRPX4U`
    - API Host: `https://cdn.growthbook.io`
+
+3. **Admin Interface**: ✅ Available at `/admin`
+   - Create/update/delete feature flags
+   - Enable/disable flags in real-time
+   - Live preview of changes
 
 ## Usage
 
