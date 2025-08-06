@@ -288,7 +288,12 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
         console.log('Adding courses to event...');
         const eventCourses = selectedCourses.map((course, index) => ({
           event_id: eventData.id,
-          course_id: course.id,
+          name: course.name,
+          par: course.par || null,
+          yardage: null, // Will be filled in later during customization
+          description: null, // Will be filled in later during customization
+          image_url: null, // Will be filled in later during customization
+          weather_note: null,
           display_order: index + 1
         }));
 
