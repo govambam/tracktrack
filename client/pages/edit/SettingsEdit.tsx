@@ -85,7 +85,7 @@ export default function SettingsEdit() {
       setEventInfo(data);
       setClubhousePassword(data?.clubhouse_password || "");
     } catch (error) {
-      console.error("Error loading event info:", error);
+      console.error("Error loading event info:", error instanceof Error ? error.message : error);
     } finally {
       setLoading(false);
     }
