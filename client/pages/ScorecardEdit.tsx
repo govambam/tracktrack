@@ -559,11 +559,6 @@ export default function ScorecardEdit() {
                     >
                       <td className="font-semibold p-3 text-gray-900">
                         {player.name}
-                        {player.id === currentEventPlayer?.id && (
-                          <span className="text-blue-600 text-sm ml-2">
-                            (You)
-                          </span>
-                        )}
                       </td>
                       {player.scores.map((hole, holeIndex) => (
                         <td
