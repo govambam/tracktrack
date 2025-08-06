@@ -167,19 +167,53 @@ export function createServer() {
           // Create invitation link
           const invitationLink = `${baseUrl}/invitation/${event_id}?email=${encodeURIComponent(player.invited_email)}`;
 
-          // For now, log the email details (in production, integrate with email service)
+          // Create email content
+          const emailSubject = `You're invited to ${event.name}`;
+          const emailContent = `
+Hi ${player.full_name},
+
+You've been invited to participate in the golf event "${event.name}".
+
+Click the link below to accept your invitation and create your account:
+${invitationLink}
+
+Event Details:
+- Event: ${event.name}
+- Start Date: ${event.start_date ? new Date(event.start_date).toLocaleDateString() : 'TBD'}
+- Location: ${event.location || 'TBD'}
+
+We look forward to seeing you on the course!
+
+Best regards,
+The Golf Event Team
+          `;
+
+          // For now, log the email details (in production, integrate with email service like SendGrid, Resend, etc.)
           console.log('📧 INVITATION EMAIL TO SEND:');
           console.log('To:', player.invited_email);
-          console.log('Player:', player.full_name);
-          console.log('Event:', event.name);
+          console.log('Subject:', emailSubject);
+          console.log('Content:');
+          console.log(emailContent);
           console.log('Link:', invitationLink);
           console.log('---');
+
+          // TODO: Replace with actual email service
+          // Example with SendGrid:
+          // const msg = {
+          //   to: player.invited_email,
+          //   from: process.env.FROM_EMAIL,
+          //   subject: emailSubject,
+          //   text: emailContent,
+          //   html: emailContent.replace(/\n/g, '<br>')
+          // };
+          // await sgMail.send(msg);
 
           emailResults.push({
             player_id: player.id,
             email: player.invited_email,
             status: 'sent', // In production, this would be the actual send result
-            invitation_link: invitationLink
+            invitation_link: invitationLink,
+            subject: emailSubject
           });
 
         } catch (emailError) {
