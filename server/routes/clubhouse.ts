@@ -52,6 +52,14 @@ router.post("/verify-password", async (req, res) => {
       return res.status(403).json({ error: "Clubhouse is not enabled for this event" });
     }
 
+    console.log("Password verification debug:", {
+      providedPassword: password,
+      storedPassword: event.clubhouse_password,
+      providedLength: password?.length,
+      storedLength: event.clubhouse_password?.length,
+      match: event.clubhouse_password === password
+    });
+
     if (event.clubhouse_password !== password) {
       return res.status(401).json({ error: "Invalid password" });
     }
