@@ -349,7 +349,7 @@ export const FeatureFlagAdmin: React.FC = () => {
             })}
           </div>
 
-          {flags.length === 0 && !loading && (
+          {flags.length === 0 && !loading && !error && (
             <div className="text-center py-12">
               <div className="mx-auto w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                 <Settings className="h-8 w-8 text-slate-400" />
@@ -360,6 +360,26 @@ export const FeatureFlagAdmin: React.FC = () => {
                 <Zap className="h-4 w-4 mr-2" />
                 Create Demo Flags
               </Button>
+            </div>
+          )}
+
+          {flags.length === 0 && !loading && error && (
+            <div className="text-center py-12">
+              <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                <AlertCircle className="h-8 w-8 text-red-400" />
+              </div>
+              <h3 className="text-lg font-medium text-slate-900 mb-2">Failed to load feature flags</h3>
+              <p className="text-slate-600 mb-4">There was an error connecting to the GrowthBook API</p>
+              <div className="space-x-3">
+                <Button onClick={loadFlags} variant="outline">
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Try Again
+                </Button>
+                <Button onClick={createDemoFlags}>
+                  <Zap className="h-4 w-4 mr-2" />
+                  Create Demo Flags
+                </Button>
+              </div>
             </div>
           )}
         </CardContent>
