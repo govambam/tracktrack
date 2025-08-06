@@ -152,7 +152,8 @@ export function createServer() {
         });
       }
 
-      // Send emails (for now, we'll use a simple email service)
+      // Initialize email service and send emails
+      const emailService = new EmailService();
       const emailResults = [];
       const baseUrl = process.env.BASE_URL || req.get('host') ? `${req.protocol}://${req.get('host')}` : 'http://localhost:3000';
 
@@ -168,53 +169,23 @@ export function createServer() {
           // Create invitation link
           const invitationLink = `${baseUrl}/invitation/${event_id}?email=${encodeURIComponent(player.invited_email)}`;
 
-          // Create email content
-          const emailSubject = `You're invited to ${event.name}`;
-          const emailContent = `
-Hi ${player.full_name},
-
-You've been invited to participate in the golf event "${event.name}".
-
-Click the link below to accept your invitation and create your account:
-${invitationLink}
-
-Event Details:
-- Event: ${event.name}
-- Start Date: ${event.start_date ? new Date(event.start_date).toLocaleDateString() : 'TBD'}
-- Location: ${event.location || 'TBD'}
-
-We look forward to seeing you on the course!
-
-Best regards,
-The Golf Event Team
-          `;
-
-          // For now, log the email details (in production, integrate with email service like SendGrid, Resend, etc.)
-          console.log('📧 INVITATION EMAIL TO SEND:');
-          console.log('To:', player.invited_email);
-          console.log('Subject:', emailSubject);
-          console.log('Content:');
-          console.log(emailContent);
-          console.log('Link:', invitationLink);
-          console.log('---');
-
-          // TODO: Replace with actual email service
-          // Example with SendGrid:
-          // const msg = {
-          //   to: player.invited_email,
-          //   from: process.env.FROM_EMAIL,
-          //   subject: emailSubject,
-          //   text: emailContent,
-          //   html: emailContent.replace(/\n/g, '<br>')
-          // };
-          // await sgMail.send(msg);
+          // Send invitation email using email service
+          const emailResult = await emailService.sendInvitationEmail({
+            to: player.invited_email,
+            playerName: player.full_name,
+            eventName: event.name,
+            eventStartDate: event.start_date,
+            eventLocation: event.location,
+            invitationLink
+          });
 
           emailResults.push({
             player_id: player.id,
             email: player.invited_email,
-            status: 'sent', // In production, this would be the actual send result
+            status: emailResult.success ? 'sent' : 'failed',
             invitation_link: invitationLink,
-            subject: emailSubject
+            message_id: emailResult.messageId,
+            error: emailResult.error
           });
 
         } catch (emailError) {
