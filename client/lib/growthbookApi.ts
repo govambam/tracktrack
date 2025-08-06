@@ -174,14 +174,17 @@ class GrowthBookAPI {
       },
     ];
 
-    const createdFlags = [];
+    const createdFlags: FeatureFlag[] = [];
     for (const flag of demoFlags) {
       try {
         const created = await this.createFeature(flag);
-        createdFlags.push(created);
-        console.log(`Created feature flag: ${flag.key}`);
+        if (created) {
+          createdFlags.push(created);
+          console.log(`Created feature flag: ${flag.key}`);
+        }
       } catch (error) {
         console.error(`Failed to create feature flag ${flag.key}:`, error);
+        // Continue with other flags even if one fails
       }
     }
 
