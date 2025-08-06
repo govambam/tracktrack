@@ -6,6 +6,7 @@ import { handleSupabaseTest } from "./routes/supabase-test";
 import { handleAuthTest } from "./routes/auth-test";
 import { generateDescription } from "./routes/openai";
 import eventsRouter from "./routes/events";
+import clubhouseRouter from "./routes/clubhouse";
 
 export function createServer() {
   const app = express();
