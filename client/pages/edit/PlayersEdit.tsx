@@ -331,11 +331,25 @@ export default function PlayersEdit() {
 
         try {
           // Get session token
-          const { data: { session } } = await supabase.auth.getSession();
+          console.log("🔍 Getting session from Supabase...");
+          const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+          if (sessionError) {
+            console.error("❌ Session error:", sessionError);
+            toast({
+              title: "Players Updated",
+              description: "Players saved, but couldn't get authentication session.",
+            });
+            return;
+          }
+
+          console.log("🔍 Session exists:", !!session);
+          console.log("🔍 Session user:", session?.user?.email);
+
           const accessToken = session?.access_token;
 
           if (!accessToken) {
-            console.error("No access token available");
+            console.error("❌ No access token available in session");
             toast({
               title: "Players Updated",
               description: "Players saved, but couldn't send invitations (not authenticated).",
@@ -343,6 +357,8 @@ export default function PlayersEdit() {
             return;
           }
 
+          console.log("🔑 Token length:", accessToken.length);
+          console.log("🔑 Token starts with:", accessToken.substring(0, 20) + '...');
           console.log("🔑 Sending invitation request with token");
 
           const response = await fetch('/api/invitations/send', {
