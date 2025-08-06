@@ -343,7 +343,9 @@ export default function MyTrips() {
             <div className="text-2xl font-bold text-green-900">
               {events.length}
             </div>
-            <p className="text-xs text-green-600">Created events</p>
+            <p className="text-xs text-green-600">
+              {events.filter(e => e.user_role === 'owner').length} owned, {events.filter(e => e.user_role !== 'owner').length} invited
+            </p>
           </CardContent>
         </Card>
 
