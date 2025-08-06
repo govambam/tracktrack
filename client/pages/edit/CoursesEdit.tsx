@@ -90,13 +90,16 @@ export default function CoursesEdit() {
         // Convert database format to component format
         const formattedRounds = roundsData.map((r) => {
           // Find skills contests for this round
-          const roundSkillsContests = skillsContestsData
-            ?.filter((contest) => contest.round_id === r.id)
-            ?.map((contest) => ({
-              id: contest.id,
-              hole: contest.hole,
-              type: contest.contest_type as "longest_drive" | "closest_to_pin",
-            })) || [];
+          const roundSkillsContests =
+            skillsContestsData
+              ?.filter((contest) => contest.round_id === r.id)
+              ?.map((contest) => ({
+                id: contest.id,
+                hole: contest.hole,
+                type: contest.contest_type as
+                  | "longest_drive"
+                  | "closest_to_pin",
+              })) || [];
 
           return {
             id: r.id,
@@ -278,11 +281,14 @@ export default function CoursesEdit() {
     setSaving(true);
 
     try {
-      console.log("Saving rounds with skills contests:", rounds.map(r => ({
-        id: r.id,
-        courseName: r.courseName,
-        skillsContests: r.skillsContests
-      })));
+      console.log(
+        "Saving rounds with skills contests:",
+        rounds.map((r) => ({
+          id: r.id,
+          courseName: r.courseName,
+          skillsContests: r.skillsContests,
+        })),
+      );
 
       const result = await saveRounds(rounds);
 

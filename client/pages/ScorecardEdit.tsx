@@ -117,7 +117,8 @@ export default function ScorecardEdit() {
   const [isHoleEditOpen, setIsHoleEditOpen] = useState(false);
   const [editingHole, setEditingHole] = useState<HoleEditData | null>(null);
   const [skillsContests, setSkillsContests] = useState<SkillsContest[]>([]);
-  const [editingPlayerScore, setEditingPlayerScore] = useState<EditingPlayerScore | null>(null);
+  const [editingPlayerScore, setEditingPlayerScore] =
+    useState<EditingPlayerScore | null>(null);
 
   useEffect(() => {
     if (slug && roundId) {
@@ -401,7 +402,7 @@ export default function ScorecardEdit() {
   const openPlayerScoreEdit = (playerId: string) => {
     if (!editingHole) return;
 
-    const player = players.find(p => p.id === playerId);
+    const player = players.find((p) => p.id === playerId);
     if (!player) return;
 
     const holeIndex = editingHole.holeNumber - 1;
@@ -411,7 +412,7 @@ export default function ScorecardEdit() {
       playerId,
       playerName: player.name,
       currentScore: editingHole.playerScores[playerId] || 0,
-      par: holeData?.par || 4
+      par: holeData?.par || 4,
     });
   };
 
@@ -419,13 +420,17 @@ export default function ScorecardEdit() {
     if (!editingPlayerScore || !editingHole) return;
 
     // Update the hole edit data
-    setEditingHole(prev => prev ? {
-      ...prev,
-      playerScores: {
-        ...prev.playerScores,
-        [editingPlayerScore.playerId]: score
-      }
-    } : null);
+    setEditingHole((prev) =>
+      prev
+        ? {
+            ...prev,
+            playerScores: {
+              ...prev.playerScores,
+              [editingPlayerScore.playerId]: score,
+            },
+          }
+        : null,
+    );
 
     // Close the individual score picker
     setEditingPlayerScore(null);
@@ -861,7 +866,8 @@ export default function ScorecardEdit() {
                 </Label>
                 <div className="space-y-2">
                   {players.map((player) => {
-                    const currentScore = editingHole.playerScores[player.id] || 0;
+                    const currentScore =
+                      editingHole.playerScores[player.id] || 0;
                     const holeData = player.scores[editingHole.holeNumber - 1];
                     const par = holeData?.par || 4;
 
@@ -872,7 +878,9 @@ export default function ScorecardEdit() {
                       >
                         <div className="flex items-center gap-3">
                           <span className="font-medium">{player.name}</span>
-                          <span className="text-sm text-gray-500">Par {par}</span>
+                          <span className="text-sm text-gray-500">
+                            Par {par}
+                          </span>
                         </div>
 
                         <button
@@ -881,13 +889,16 @@ export default function ScorecardEdit() {
                             px-4 py-2 rounded-lg border-2 min-w-[80px] font-bold text-lg
                             transition-all duration-200 hover:shadow-md
                             ${getScoreColor(currentScore, par)}
-                            ${currentScore === 0
-                              ? 'border-gray-300 bg-gray-100 text-gray-500'
-                              : 'border-blue-200 bg-blue-50 hover:border-blue-300'
+                            ${
+                              currentScore === 0
+                                ? "border-gray-300 bg-gray-100 text-gray-500"
+                                : "border-blue-200 bg-blue-50 hover:border-blue-300"
                             }
                           `}
                         >
-                          {currentScore === 0 ? 'Add' : (formatScore(currentScore, par) || currentScore)}
+                          {currentScore === 0
+                            ? "Add"
+                            : formatScore(currentScore, par) || currentScore}
                         </button>
                       </div>
                     );
@@ -953,7 +964,10 @@ export default function ScorecardEdit() {
       </Dialog>
 
       {/* Individual Player Score Picker */}
-      <Dialog open={!!editingPlayerScore} onOpenChange={() => setEditingPlayerScore(null)}>
+      <Dialog
+        open={!!editingPlayerScore}
+        onOpenChange={() => setEditingPlayerScore(null)}
+      >
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
@@ -972,9 +986,13 @@ export default function ScorecardEdit() {
                 {/* Score Numbers Grid */}
                 <div className="grid grid-cols-3 gap-3 mb-6">
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((score) => {
-                    const isSelected = editingPlayerScore.currentScore === score;
+                    const isSelected =
+                      editingPlayerScore.currentScore === score;
                     const isPar = score === editingPlayerScore.par;
-                    const scoreColor = getScoreColor(score, editingPlayerScore.par);
+                    const scoreColor = getScoreColor(
+                      score,
+                      editingPlayerScore.par,
+                    );
 
                     return (
                       <button
@@ -983,16 +1001,19 @@ export default function ScorecardEdit() {
                         className={`
                           w-16 h-16 rounded-full border-2 flex flex-col items-center justify-center
                           transition-all duration-200 font-bold text-lg
-                          ${isSelected
-                            ? 'border-blue-500 bg-blue-50 shadow-lg scale-105'
-                            : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
+                          ${
+                            isSelected
+                              ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
+                              : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
                           }
                           ${scoreColor}
                         `}
                       >
                         <span>{score}</span>
                         {isPar && (
-                          <span className="text-xs text-gray-500 font-normal">Par</span>
+                          <span className="text-xs text-gray-500 font-normal">
+                            Par
+                          </span>
                         )}
                       </button>
                     );
@@ -1002,7 +1023,8 @@ export default function ScorecardEdit() {
                 {/* Others Section */}
                 <div className="flex justify-center gap-2 mb-4">
                   {[10, 11, 12].map((score) => {
-                    const isSelected = editingPlayerScore.currentScore === score;
+                    const isSelected =
+                      editingPlayerScore.currentScore === score;
                     return (
                       <button
                         key={score}
@@ -1010,9 +1032,10 @@ export default function ScorecardEdit() {
                         className={`
                           w-16 h-12 rounded border flex items-center justify-center
                           transition-all duration-200 font-bold text-base
-                          ${isSelected
-                            ? 'border-blue-500 bg-blue-50 shadow-lg'
-                            : 'border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100'
+                          ${
+                            isSelected
+                              ? "border-blue-500 bg-blue-50 shadow-lg"
+                              : "border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100"
                           }
                           text-red-600
                         `}
@@ -1030,9 +1053,10 @@ export default function ScorecardEdit() {
                     className={`
                       px-4 py-2 rounded border flex items-center justify-center
                       transition-all duration-200 font-bold text-sm
-                      ${editingPlayerScore.currentScore === 0
-                        ? 'border-blue-500 bg-blue-50 shadow-lg'
-                        : 'border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100'
+                      ${
+                        editingPlayerScore.currentScore === 0
+                          ? "border-blue-500 bg-blue-50 shadow-lg"
+                          : "border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100"
                       }
                       text-gray-600
                     `}
@@ -1042,7 +1066,15 @@ export default function ScorecardEdit() {
 
                   <button
                     onClick={() => {
-                      const newScore = Math.min(15, Math.max(13, editingPlayerScore.currentScore === 0 ? 13 : editingPlayerScore.currentScore + 1));
+                      const newScore = Math.min(
+                        15,
+                        Math.max(
+                          13,
+                          editingPlayerScore.currentScore === 0
+                            ? 13
+                            : editingPlayerScore.currentScore + 1,
+                        ),
+                      );
                       savePlayerScore(newScore);
                     }}
                     className="px-4 py-2 rounded border border-dashed border-gray-400 bg-gray-50 hover:bg-gray-100 font-bold text-sm text-gray-600 transition-all duration-200"
