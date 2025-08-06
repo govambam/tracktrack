@@ -182,6 +182,10 @@ export default function MyTrips() {
           count: invitedEventsRaw?.length || 0,
           data: invitedEventsRaw
         });
+
+        if (!invitedEventsRaw || invitedEventsRaw.length === 0) {
+          console.log("No invited events found - this is normal if user hasn't been invited or invitations haven't been auto-accepted yet");
+        }
       }
 
       // Combine and format events
