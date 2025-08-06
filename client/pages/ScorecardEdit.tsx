@@ -951,6 +951,110 @@ export default function ScorecardEdit() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Individual Player Score Picker */}
+      <Dialog open={!!editingPlayerScore} onOpenChange={() => setEditingPlayerScore(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Edit className="h-5 w-5" />
+              {editingPlayerScore?.playerName} - Hole {editingHole?.holeNumber}
+            </DialogTitle>
+          </DialogHeader>
+
+          {editingPlayerScore && (
+            <div className="space-y-4">
+              <div className="text-center">
+                <div className="text-sm text-gray-500 mb-4">
+                  Par {editingPlayerScore.par} • Tap to select score
+                </div>
+
+                {/* Score Numbers Grid */}
+                <div className="grid grid-cols-3 gap-3 mb-6">
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((score) => {
+                    const isSelected = editingPlayerScore.currentScore === score;
+                    const isPar = score === editingPlayerScore.par;
+                    const scoreColor = getScoreColor(score, editingPlayerScore.par);
+
+                    return (
+                      <button
+                        key={score}
+                        onClick={() => savePlayerScore(score)}
+                        className={`
+                          w-16 h-16 rounded-full border-2 flex flex-col items-center justify-center
+                          transition-all duration-200 font-bold text-lg
+                          ${isSelected
+                            ? 'border-blue-500 bg-blue-50 shadow-lg scale-105'
+                            : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
+                          }
+                          ${scoreColor}
+                        `}
+                      >
+                        <span>{score}</span>
+                        {isPar && (
+                          <span className="text-xs text-gray-500 font-normal">Par</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Others Section */}
+                <div className="flex justify-center gap-2 mb-4">
+                  {[10, 11, 12].map((score) => {
+                    const isSelected = editingPlayerScore.currentScore === score;
+                    return (
+                      <button
+                        key={score}
+                        onClick={() => savePlayerScore(score)}
+                        className={`
+                          w-16 h-12 rounded border flex items-center justify-center
+                          transition-all duration-200 font-bold text-base
+                          ${isSelected
+                            ? 'border-blue-500 bg-blue-50 shadow-lg'
+                            : 'border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100'
+                          }
+                          text-red-600
+                        `}
+                      >
+                        {score}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Additional Options */}
+                <div className="flex justify-center gap-2">
+                  <button
+                    onClick={() => savePlayerScore(0)}
+                    className={`
+                      px-4 py-2 rounded border flex items-center justify-center
+                      transition-all duration-200 font-bold text-sm
+                      ${editingPlayerScore.currentScore === 0
+                        ? 'border-blue-500 bg-blue-50 shadow-lg'
+                        : 'border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100'
+                      }
+                      text-gray-600
+                    `}
+                  >
+                    Clear
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      const newScore = Math.min(15, Math.max(13, editingPlayerScore.currentScore === 0 ? 13 : editingPlayerScore.currentScore + 1));
+                      savePlayerScore(newScore);
+                    }}
+                    className="px-4 py-2 rounded border border-dashed border-gray-400 bg-gray-50 hover:bg-gray-100 font-bold text-sm text-gray-600 transition-all duration-200"
+                  >
+                    13+
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
