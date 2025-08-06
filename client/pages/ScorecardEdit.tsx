@@ -570,7 +570,7 @@ export default function ScorecardEdit() {
     }
   };
 
-  const formatScore = (strokes: number, par: number) => {
+  const formatScore = (strokes: number, par: number | null) => {
     if (strokes === 0) return "";
     return strokes.toString(); // Always show the actual score
   };
