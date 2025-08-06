@@ -43,6 +43,7 @@ router.post('/events', async (req, res) => {
       .from('events')
       .insert({
         user_id: user.id,
+        created_by: user.id,
         name,
         start_date,
         end_date,
