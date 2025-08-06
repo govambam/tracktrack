@@ -260,9 +260,29 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
 
     } catch (error) {
       console.error('Error generating event:', error);
+
+      // Extract meaningful error message
+      let errorMessage = 'Failed to create event. Please try again.';
+
+      if (error && typeof error === 'object') {
+        if ('message' in error && typeof error.message === 'string') {
+          errorMessage = error.message;
+        } else if ('details' in error && typeof error.details === 'string') {
+          errorMessage = error.details;
+        } else if ('description' in error && typeof error.description === 'string') {
+          errorMessage = error.description;
+        } else {
+          // Log the full error object for debugging
+          console.error('Full error object:', JSON.stringify(error, null, 2));
+          errorMessage = `Database error: ${JSON.stringify(error)}`;
+        }
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      }
+
       toast({
-        title: 'Error',
-        description: 'Failed to create event. Please try again.',
+        title: 'Error Creating Event',
+        description: errorMessage,
         variant: 'destructive',
       });
       setCurrentStep('form');
