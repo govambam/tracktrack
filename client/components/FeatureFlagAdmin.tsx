@@ -185,7 +185,7 @@ export const FeatureFlagAdmin: React.FC = () => {
         <CardContent>
           <div className="flex flex-wrap gap-3 mb-6">
             <Button onClick={loadFlags} disabled={loading} variant="outline">
-              <Refresh className="h-4 w-4 mr-2" />
+              <RotateCcw className="h-4 w-4 mr-2" />
               Refresh Flags
             </Button>
             <Button onClick={createDemoFlags} disabled={loading}>
