@@ -12,12 +12,33 @@ router.post("/verify-password", async (req, res) => {
       return res.status(400).json({ error: "Event ID and password are required" });
     }
 
-    // Get event with clubhouse password
-    const { data: event, error } = await supabase
-      .from("events")
-      .select("clubhouse_password, is_published")
-      .eq("id", eventId)
-      .single();
+    // Get event with clubhouse password (handle missing column gracefully)
+    let event;
+    let error;
+
+    try {
+      const result = await supabase
+        .from("events")
+        .select("clubhouse_password, is_published")
+        .eq("id", eventId)
+        .single();
+
+      event = result.data;
+      error = result.error;
+    } catch (dbError) {
+      // If clubhouse_password column doesn't exist, try without it
+      const fallbackResult = await supabase
+        .from("events")
+        .select("is_published")
+        .eq("id", eventId)
+        .single();
+
+      if (fallbackResult.error || !fallbackResult.data) {
+        return res.status(404).json({ error: "Event not found" });
+      }
+
+      return res.status(403).json({ error: "Clubhouse feature not available (database migration required)" });
+    }
 
     if (error || !event) {
       return res.status(404).json({ error: "Event not found" });
