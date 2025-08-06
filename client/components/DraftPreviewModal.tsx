@@ -231,7 +231,7 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
           ) : eventSlug ? (
             <div className="relative">
               {/* Draft Mode Overlay Indicator */}
-              <div className="absolute top-4 right-4 z-40">
+              <div className="absolute top-4 right-4 z-[80]">
                 <Badge 
                   variant="secondary" 
                   className="bg-orange-100 text-orange-700 border-orange-200 shadow-lg"
