@@ -629,14 +629,32 @@ export default function ScorecardEdit() {
                     <th className="text-left p-3 font-semibold text-green-800 min-w-[120px]">
                       Player
                     </th>
-                    {courseHoles.map((hole) => (
-                      <th
-                        key={hole.hole}
-                        className="text-center p-2 font-semibold text-green-800 w-12"
-                      >
-                        {hole.hole}
-                      </th>
-                    ))}
+                    {courseHoles.map((hole) => {
+                      const holeContests = skillsContests.filter(contest => contest.hole === hole.hole);
+                      return (
+                        <th
+                          key={hole.hole}
+                          className="text-center p-2 font-semibold text-green-800 w-12 cursor-pointer hover:bg-green-100 transition-colors relative"
+                          onClick={() => openHoleEdit(hole.hole)}
+                          title={`Click to edit hole ${hole.hole}${holeContests.length > 0 ? ' (has contests)' : ''}`}
+                        >
+                          <div className="flex flex-col items-center">
+                            <span>{hole.hole}</span>
+                            {holeContests.length > 0 && (
+                              <div className="flex gap-1 mt-1">
+                                {holeContests.map(contest => (
+                                  <div
+                                    key={contest.id}
+                                    className="w-2 h-2 rounded-full bg-orange-500"
+                                    title={contest.contest_type.replace('_', ' ')}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </th>
+                      );
+                    })}
                     <th className="text-center p-3 font-semibold text-green-800 min-w-[60px]">
                       OUT
                     </th>
