@@ -114,6 +114,7 @@ export default function ScorecardEdit() {
   const [round, setRound] = useState<EventRound | null>(null);
   const [session, setSession] = useState<any>(null);
   const [courseHoles, setCourseHoles] = useState<HoleScore[]>([]);
+  const [hasParData, setHasParData] = useState(true);
   const [players, setPlayers] = useState<Player[]>([]);
   // Remove currentPlayer and currentEventPlayer - any clubhouse user can edit any player
   const [error, setError] = useState<string | null>(null);
@@ -173,9 +174,10 @@ export default function ScorecardEdit() {
         .order("hole_number");
 
       let holes: HoleScore[] = [];
-      const hasParData = holesData && holesData.length > 0;
+      const courseHasParData = holesData && holesData.length > 0;
+      setHasParData(courseHasParData);
 
-      if (hasParData) {
+      if (courseHasParData) {
         holes = holesData.map((hole) => ({
           hole: hole.hole_number,
           strokes: 0,
