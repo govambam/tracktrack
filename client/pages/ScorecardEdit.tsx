@@ -653,16 +653,16 @@ export default function ScorecardEdit() {
                 onClick={() => navigate(`/events/${slug}/clubhouse`)}
                 variant="outline"
                 size="sm"
-                className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                className={`${currentTheme === "Masters" ? "border-green-200 text-green-700 hover:bg-green-50" : currentTheme === "TourTech" ? "border-gray-200 text-gray-700 hover:bg-gray-50" : "border-blue-200 text-blue-700 hover:bg-blue-50"}`}
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back
               </Button>
               <div>
-                <h1 className="text-2xl font-bold text-blue-900">
+                <h1 className={`text-2xl font-bold ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}>
                   Round {round.round_number} Scorecard
                 </h1>
-                <p className="text-blue-600">
+                <p className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}>
                   {round.course_name} • {session?.displayName}
                 </p>
               </div>
@@ -670,7 +670,7 @@ export default function ScorecardEdit() {
             <Button
               onClick={handleSave}
               disabled={saving || players.length === 0}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className={`text-white ${currentTheme === "Masters" ? "bg-green-600 hover:bg-green-700" : currentTheme === "TourTech" ? "bg-gray-600 hover:bg-gray-700" : "bg-blue-600 hover:bg-blue-700"}`}
             >
               {saving ? (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
