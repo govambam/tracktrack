@@ -421,7 +421,7 @@ export default function ScorecardEdit() {
       playerId,
       playerName: player.name,
       currentScore: editingHole.playerScores[playerId] || 0,
-      par: holeData?.par || 4,
+      par: holeData?.par || null,
     });
   };
 
