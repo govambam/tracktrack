@@ -386,10 +386,14 @@ const StickyNavigation = ({
   eventName,
   slug,
   theme,
+  handleClubhouseAccess,
+  hasClubhouse,
 }: {
   eventName: string;
   slug: string;
   theme?: string;
+  handleClubhouseAccess?: () => void;
+  hasClubhouse?: boolean;
 }) => {
   const navItems = [
     { name: "Overview", href: "#overview" },
