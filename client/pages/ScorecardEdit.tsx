@@ -859,140 +859,36 @@ export default function ScorecardEdit() {
                 <Label className="text-base font-semibold mb-3 block">
                   Player Scores
                 </Label>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {players.map((player) => {
-                    const currentScore =
-                      editingHole.playerScores[player.id] || 0;
+                    const currentScore = editingHole.playerScores[player.id] || 0;
                     const holeData = player.scores[editingHole.holeNumber - 1];
                     const par = holeData?.par || 4;
 
                     return (
                       <div
                         key={player.id}
-                        className="flex items-center justify-between p-3 border rounded-lg"
+                        className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors"
                       >
                         <div className="flex items-center gap-3">
                           <span className="font-medium">{player.name}</span>
-                          <span className="text-sm text-gray-500">
-                            Par {par}
-                          </span>
+                          <span className="text-sm text-gray-500">Par {par}</span>
                         </div>
-                        <div className="flex gap-6">
-                          {/* Score Numbers Grid */}
-                          <div>
-                            <div className="text-sm font-medium text-gray-700 mb-2">
-                              Score
-                            </div>
-                            <div className="grid grid-cols-3 gap-2">
-                              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((score) => {
-                                const isSelected = currentScore === score;
-                                const isPar = score === par;
-                                const scoreColor = getScoreColor(score, par);
 
-                                return (
-                                  <button
-                                    key={score}
-                                    onClick={() =>
-                                      updateHoleScore(player.id, score)
-                                    }
-                                    className={`
-                                      w-16 h-16 rounded-full border-2 flex flex-col items-center justify-center
-                                      transition-all duration-200 font-bold text-lg
-                                      ${
-                                        isSelected
-                                          ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
-                                          : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
-                                      }
-                                      ${scoreColor}
-                                    `}
-                                  >
-                                    <span>{score}</span>
-                                    {isPar && (
-                                      <span className="text-xs text-gray-500 font-normal">
-                                        Par
-                                      </span>
-                                    )}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          </div>
-
-                          {/* Others Section for 10+ */}
-                          <div>
-                            <div className="text-sm font-medium text-blue-600 mb-2">
-                              Others
-                            </div>
-                            <div className="space-y-2">
-                              {[10, 11, 12].map((score) => {
-                                const isSelected = currentScore === score;
-                                return (
-                                  <button
-                                    key={score}
-                                    onClick={() =>
-                                      updateHoleScore(player.id, score)
-                                    }
-                                    className={`
-                                      w-16 h-12 rounded border flex items-center justify-center
-                                      transition-all duration-200 font-bold text-base
-                                      ${
-                                        isSelected
-                                          ? "border-blue-500 bg-blue-50 shadow-lg"
-                                          : "border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100"
-                                      }
-                                      text-red-600
-                                    `}
-                                  >
-                                    {score}
-                                  </button>
-                                );
-                              })}
-
-                              {/* Custom score input for 13+ */}
-                              {currentScore > 12 && (
-                                <div className="w-16 h-12 rounded border-2 border-blue-500 bg-blue-50 flex items-center justify-center font-bold text-base text-red-600">
-                                  {currentScore}
-                                </div>
-                              )}
-
-                              {/* Clear score button */}
-                              <button
-                                onClick={() => updateHoleScore(player.id, 0)}
-                                className={`
-                                  w-16 h-12 rounded border flex items-center justify-center
-                                  transition-all duration-200 font-bold text-sm
-                                  ${
-                                    currentScore === 0
-                                      ? "border-blue-500 bg-blue-50 shadow-lg"
-                                      : "border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100"
-                                  }
-                                  text-gray-600
-                                `}
-                              >
-                                Clear
-                              </button>
-
-                              {/* More button for higher scores */}
-                              <button
-                                onClick={() => {
-                                  const newScore = Math.min(
-                                    15,
-                                    Math.max(
-                                      13,
-                                      currentScore === 0
-                                        ? 13
-                                        : currentScore + 1,
-                                    ),
-                                  );
-                                  updateHoleScore(player.id, newScore);
-                                }}
-                                className="w-16 h-12 rounded border border-dashed border-gray-400 bg-gray-50 hover:bg-gray-100 flex items-center justify-center font-bold text-sm text-gray-600 transition-all duration-200"
-                              >
-                                13+
-                              </button>
-                            </div>
-                          </div>
-                        </div>
+                        <button
+                          onClick={() => openPlayerScoreEdit(player.id)}
+                          className={`
+                            px-4 py-2 rounded-lg border-2 min-w-[80px] font-bold text-lg
+                            transition-all duration-200 hover:shadow-md
+                            ${getScoreColor(currentScore, par)}
+                            ${currentScore === 0
+                              ? 'border-gray-300 bg-gray-100 text-gray-500'
+                              : 'border-blue-200 bg-blue-50 hover:border-blue-300'
+                            }
+                          `}
+                        >
+                          {currentScore === 0 ? 'Add' : (formatScore(currentScore, par) || currentScore)}
+                        </button>
                       </div>
                     );
                   })}
