@@ -1063,29 +1063,26 @@ export default function ScorecardEdit() {
                     const isSelected =
                       editingPlayerScore.currentScore === score;
                     const isPar = score === editingPlayerScore.par;
-                    const scoreColor = getScoreColor(
-                      score,
-                      editingPlayerScore.par,
-                    );
 
                     return (
                       <button
                         key={score}
                         onClick={() => savePlayerScore(score)}
                         className={`
-                          w-16 h-16 rounded-full border-2 flex flex-col items-center justify-center
-                          transition-all duration-200 font-bold text-lg
+                          w-16 h-16 border-2 flex flex-col items-center justify-center
+                          transition-all duration-200 font-bold text-lg relative
                           ${
                             isSelected
                               ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
                               : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
                           }
-                          ${scoreColor}
                         `}
                       >
-                        <span>{score}</span>
+                        <div className={`${getScoreStyle(score, editingPlayerScore.par)}`}>
+                          {score}
+                        </div>
                         {isPar && (
-                          <span className="text-xs text-gray-500 font-normal">
+                          <span className="text-xs text-gray-500 font-normal absolute bottom-1">
                             Par
                           </span>
                         )}
