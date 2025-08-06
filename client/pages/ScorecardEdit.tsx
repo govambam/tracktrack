@@ -398,6 +398,39 @@ export default function ScorecardEdit() {
     );
   };
 
+  const openPlayerScoreEdit = (playerId: string) => {
+    if (!editingHole) return;
+
+    const player = players.find(p => p.id === playerId);
+    if (!player) return;
+
+    const holeIndex = editingHole.holeNumber - 1;
+    const holeData = player.scores[holeIndex];
+
+    setEditingPlayerScore({
+      playerId,
+      playerName: player.name,
+      currentScore: editingHole.playerScores[playerId] || 0,
+      par: holeData?.par || 4
+    });
+  };
+
+  const savePlayerScore = async (score: number) => {
+    if (!editingPlayerScore || !editingHole) return;
+
+    // Update the hole edit data
+    setEditingHole(prev => prev ? {
+      ...prev,
+      playerScores: {
+        ...prev.playerScores,
+        [editingPlayerScore.playerId]: score
+      }
+    } : null);
+
+    // Close the individual score picker
+    setEditingPlayerScore(null);
+  };
+
   const saveHoleEdit = async () => {
     if (!editingHole || !eventData || !round) return;
 
