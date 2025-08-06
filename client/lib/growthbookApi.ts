@@ -1,24 +1,27 @@
 // GrowthBook API Client for managing feature flags programmatically
-const GROWTHBOOK_API_HOST = 'https://api.growthbook.io';
-const SECRET_KEY = 'secret_user_btmV7USvLUv7ZqSYYy4IqTLbhzbIIKGgFJYGgkRPX4U';
+const GROWTHBOOK_API_HOST = "https://api.growthbook.io";
+const SECRET_KEY = "secret_user_btmV7USvLUv7ZqSYYy4IqTLbhzbIIKGgFJYGgkRPX4U";
 
 export interface FeatureFlag {
   id: string;
   key: string;
   description: string;
   project: string;
-  valueType: 'boolean' | 'string' | 'number' | 'json';
+  valueType: "boolean" | "string" | "number" | "json";
   defaultValue: any;
-  environments: Record<string, {
-    enabled: boolean;
-    rules: any[];
-  }>;
+  environments: Record<
+    string,
+    {
+      enabled: boolean;
+      rules: any[];
+    }
+  >;
 }
 
 export interface CreateFeatureFlagRequest {
   key: string;
   description: string;
-  valueType: 'boolean' | 'string' | 'number' | 'json';
+  valueType: "boolean" | "string" | "number" | "json";
   defaultValue: any;
 }
 
@@ -27,8 +30,8 @@ class GrowthBookAPI {
     const response = await fetch(`${GROWTHBOOK_API_HOST}${endpoint}`, {
       ...options,
       headers: {
-        'Authorization': `Bearer ${SECRET_KEY}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${SECRET_KEY}`,
+        "Content-Type": "application/json",
         ...options.headers,
       },
     });
@@ -44,7 +47,7 @@ class GrowthBookAPI {
   // Get all feature flags
   async getFeatures(): Promise<FeatureFlag[]> {
     try {
-      const response = await this.request('/api/v1/features');
+      const response = await this.request("/api/v1/features");
       // Handle different response formats from GrowthBook API
       if (Array.isArray(response)) {
         return response;
@@ -58,10 +61,10 @@ class GrowthBookAPI {
         return response.data;
       }
       // Default to empty array if response format is unexpected
-      console.warn('Unexpected API response format:', response);
+      console.warn("Unexpected API response format:", response);
       return [];
     } catch (error) {
-      console.error('Failed to fetch feature flags:', error);
+      console.error("Failed to fetch feature flags:", error);
       return []; // Return empty array instead of throwing
     }
   }
@@ -73,16 +76,19 @@ class GrowthBookAPI {
 
   // Create a new feature flag
   async createFeature(data: CreateFeatureFlagRequest): Promise<FeatureFlag> {
-    return this.request('/api/v1/features', {
-      method: 'POST',
+    return this.request("/api/v1/features", {
+      method: "POST",
       body: JSON.stringify(data),
     });
   }
 
   // Update a feature flag
-  async updateFeature(id: string, data: Partial<FeatureFlag>): Promise<FeatureFlag> {
+  async updateFeature(
+    id: string,
+    data: Partial<FeatureFlag>,
+  ): Promise<FeatureFlag> {
     return this.request(`/api/v1/features/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(data),
     });
   }
@@ -90,14 +96,18 @@ class GrowthBookAPI {
   // Delete a feature flag
   async deleteFeature(id: string): Promise<void> {
     return this.request(`/api/v1/features/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
   // Enable/disable a feature flag in a specific environment
-  async toggleFeature(id: string, environment: string = 'production', enabled: boolean): Promise<FeatureFlag> {
+  async toggleFeature(
+    id: string,
+    environment: string = "production",
+    enabled: boolean,
+  ): Promise<FeatureFlag> {
     const feature = await this.getFeature(id);
-    
+
     if (!feature.environments[environment]) {
       feature.environments[environment] = {
         enabled: false,
@@ -113,9 +123,13 @@ class GrowthBookAPI {
   }
 
   // Set feature flag value in a specific environment
-  async setFeatureValue(id: string, value: any, environment: string = 'production'): Promise<FeatureFlag> {
+  async setFeatureValue(
+    id: string,
+    value: any,
+    environment: string = "production",
+  ): Promise<FeatureFlag> {
     const feature = await this.getFeature(id);
-    
+
     if (!feature.environments[environment]) {
       feature.environments[environment] = {
         enabled: true,
@@ -137,45 +151,46 @@ class GrowthBookAPI {
   async createDemoFlags(): Promise<FeatureFlag[]> {
     const demoFlags: CreateFeatureFlagRequest[] = [
       {
-        key: 'new-ui-design',
-        description: 'Enable new UI design elements',
-        valueType: 'boolean',
+        key: "new-ui-design",
+        description: "Enable new UI design elements",
+        valueType: "boolean",
         defaultValue: false,
       },
       {
-        key: 'button-color',
-        description: 'Dynamic button color theme',
-        valueType: 'string',
-        defaultValue: 'default',
+        key: "button-color",
+        description: "Dynamic button color theme",
+        valueType: "string",
+        defaultValue: "default",
       },
       {
-        key: 'max-users-limit',
-        description: 'Maximum number of users allowed',
-        valueType: 'number',
+        key: "max-users-limit",
+        description: "Maximum number of users allowed",
+        valueType: "number",
         defaultValue: 100,
       },
       {
-        key: 'welcome-message',
-        description: 'Custom welcome message for users',
-        valueType: 'string',
-        defaultValue: 'Welcome to GolfOS!',
+        key: "welcome-message",
+        description: "Custom welcome message for users",
+        valueType: "string",
+        defaultValue: "Welcome to GolfOS!",
       },
       {
-        key: 'enable-dark-mode',
-        description: 'Enable dark mode theme',
-        valueType: 'boolean',
+        key: "enable-dark-mode",
+        description: "Enable dark mode theme",
+        valueType: "boolean",
         defaultValue: false,
       },
       {
-        key: 'beta-leaderboard',
-        description: 'Enable beta leaderboard features',
-        valueType: 'boolean',
+        key: "beta-leaderboard",
+        description: "Enable beta leaderboard features",
+        valueType: "boolean",
         defaultValue: false,
       },
       {
-        key: 'ai_quickstart_create_flow',
-        description: 'Enable AI-powered quickstart flow for creating golf events',
-        valueType: 'boolean',
+        key: "ai_quickstart_create_flow",
+        description:
+          "Enable AI-powered quickstart flow for creating golf events",
+        valueType: "boolean",
         defaultValue: false,
       },
     ];
@@ -203,22 +218,22 @@ export const growthbookApi = new GrowthBookAPI();
 // Utility functions for common operations
 export const featureFlagUtils = {
   // Quick enable/disable
-  enable: (id: string, environment?: string) => 
+  enable: (id: string, environment?: string) =>
     growthbookApi.toggleFeature(id, environment, true),
-  
-  disable: (id: string, environment?: string) => 
+
+  disable: (id: string, environment?: string) =>
     growthbookApi.toggleFeature(id, environment, false),
-  
+
   // Quick value setters
   setBooleanFlag: (id: string, value: boolean, environment?: string) =>
     growthbookApi.setFeatureValue(id, value, environment),
-  
+
   setStringFlag: (id: string, value: string, environment?: string) =>
     growthbookApi.setFeatureValue(id, value, environment),
-  
+
   setNumberFlag: (id: string, value: number, environment?: string) =>
     growthbookApi.setFeatureValue(id, value, environment),
-  
+
   // Create all demo flags at once
   setupDemoFlags: () => growthbookApi.createDemoFlags(),
 };

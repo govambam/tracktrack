@@ -52,7 +52,7 @@ export default function MyTrips() {
   const navigate = useNavigate();
 
   // Feature flag for AI quickstart flow
-  const isAIQuickstartEnabled = useFeatureEnabled('ai_quickstart_create_flow');
+  const isAIQuickstartEnabled = useFeatureEnabled("ai_quickstart_create_flow");
 
   useEffect(() => {
     loadEvents();
