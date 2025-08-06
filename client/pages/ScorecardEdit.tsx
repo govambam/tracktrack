@@ -896,7 +896,7 @@ export default function ScorecardEdit() {
         </Card>
 
         {/* Legend */}
-        <Card className="border-blue-200 mt-6">
+        <Card className={`mt-6 ${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}>
           <CardContent className="p-4">
             <div className="flex flex-wrap gap-4 justify-center text-sm">
               <div className="flex items-center space-x-2">
