@@ -251,6 +251,9 @@ export default function PlayersEdit() {
         const email = player.email?.trim();
         const existingPlayer = existingPlayerMap.get(player.id);
 
+        // Check if this is a new player (non-UUID ID means it was generated locally)
+        const isNewPlayer = !existingPlayer && !player.id.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+
         // Create a safe invited_email that satisfies the constraint
         const safeInvitedEmail =
           email ||
@@ -261,10 +264,10 @@ export default function PlayersEdit() {
             .replace(
               /[^a-z0-9_]/g,
               "",
-            )}_${player.id.slice(0, 8)}@placeholder.local`;
+            )}_${Date.now()}@placeholder.local`;
 
         const playerData = {
-          id: player.id,
+          ...(isNewPlayer ? {} : { id: player.id }), // Let DB generate ID for new players
           event_id: eventId,
           full_name: player.name.trim(),
           email: email || null,
@@ -289,6 +292,7 @@ export default function PlayersEdit() {
 
         console.log("Player data being sent to Supabase:", {
           player_name: player.name,
+          is_new_player: isNewPlayer,
           player_data: playerData,
           safe_invited_email: safeInvitedEmail,
           constraint_check: {
@@ -308,15 +312,22 @@ export default function PlayersEdit() {
             existingPlayer.status !== "invited")
         ) {
           playersNeedingInvites.push({
-            id: player.id,
+            id: isNewPlayer ? 'new_player' : player.id,
             name: player.name.trim(),
             email: email,
           });
         }
 
-        return supabase
-          .from("event_players")
-          .upsert(playerData, { onConflict: "id" });
+        // For new players, use insert; for existing players, use upsert
+        if (isNewPlayer) {
+          return supabase
+            .from("event_players")
+            .insert(playerData);
+        } else {
+          return supabase
+            .from("event_players")
+            .upsert(playerData, { onConflict: "id" });
+        }
       });
 
       // Execute all upserts
