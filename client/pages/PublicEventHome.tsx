@@ -1492,6 +1492,21 @@ export default function PublicEventHome({
     ];
   };
 
+  const checkClubhouseSession = async () => {
+    if (!eventData?.id) return;
+
+    const sessionData = localStorage.getItem(`clubhouse_session_${eventData.id}`);
+    if (sessionData) {
+      try {
+        const parsedSession = JSON.parse(sessionData);
+        setClubhouseSession(parsedSession);
+      } catch (error) {
+        console.error("Error parsing clubhouse session data:", error);
+        localStorage.removeItem(`clubhouse_session_${eventData.id}`);
+      }
+    }
+  };
+
   // Helper functions for contests
   const getContestsByType = (type: string) => {
     return skillsContests
