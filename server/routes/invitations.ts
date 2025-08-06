@@ -6,6 +6,8 @@ const router = Router();
 // Send invitation emails to players
 router.post('/invitations/send', async (req, res) => {
   try {
+    console.log('📧 Invitation send request received');
+    console.log('Request body:', req.body);
     const { event_id } = req.body;
 
     // Get user from auth header
