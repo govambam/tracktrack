@@ -110,11 +110,19 @@ export default function Clubhouse() {
     }
   };
 
-  const checkExistingSession = () => {
-    if (!eventData?.id) return;
+  const checkExistingSession = async () => {
+    // First get the event ID from the slug
+    const { data: event, error: eventError } = await supabase
+      .from("events")
+      .select("id")
+      .eq("slug", slug)
+      .eq("is_published", true)
+      .single();
+
+    if (eventError || !event) return;
 
     const sessionData = localStorage.getItem(
-      `clubhouse_session_${eventData.id}`,
+      `clubhouse_session_${event.id}`,
     );
     if (sessionData) {
       try {
@@ -122,7 +130,7 @@ export default function Clubhouse() {
         setSession(parsedSession);
       } catch (error) {
         console.error("Error parsing session data:", error);
-        localStorage.removeItem(`clubhouse_session_${eventData.id}`);
+        localStorage.removeItem(`clubhouse_session_${event.id}`);
       }
     }
   };
