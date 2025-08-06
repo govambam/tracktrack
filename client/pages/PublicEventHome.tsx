@@ -1518,6 +1518,10 @@ export default function PublicEventHome() {
   // Get theme styling
   const theme = getThemeStyles(eventData?.theme);
 
+  // Get theme components
+  const themeName = (eventData?.theme as ThemeName) || 'default';
+  const components = themeComponents[themeName] || themeComponents.default;
+
   return (
     <div className={`min-h-screen ${theme.heroContainer}`}>
       <StickyNavigation
