@@ -422,7 +422,7 @@ const StickyNavigation = ({
               item.name === "Clubhouse" ? (
                 <button
                   key={item.name}
-                  onClick={handleClubhouseAccess}
+                  onClick={handleClubhouseAccess || (() => {})}
                   disabled={!hasClubhouse}
                   className={`text-sm font-medium transition-colors ${
                     hasClubhouse
