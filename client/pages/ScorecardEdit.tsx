@@ -745,7 +745,7 @@ export default function ScorecardEdit() {
         </Card>
 
         {/* Traditional Golf Scorecard */}
-        <Card className="border-blue-200">
+        <Card className={`${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}>
           <CardContent className="p-0 overflow-x-auto">
             <div className="min-w-[800px]">
               <table className="w-full">
