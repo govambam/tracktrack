@@ -667,6 +667,103 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
         </Select>
       </div>
 
+      {/* Theme Selection */}
+      <div>
+        <Label className="text-base font-medium flex items-center space-x-2 mb-3">
+          <div className="w-4 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded"></div>
+          <span>Event Theme</span>
+        </Label>
+        <div className="grid grid-cols-1 gap-3">
+          {AVAILABLE_THEMES.map((theme) => (
+            <div
+              key={theme.id}
+              className={`p-4 border rounded-lg cursor-pointer transition-all ${
+                formData.theme === theme.id
+                  ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-200'
+                  : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+              }`}
+              onClick={() => setFormData(prev => ({ ...prev, theme: theme.id }))}
+            >
+              <div className="flex items-start space-x-3">
+                <div className="flex space-x-1 mt-1">
+                  {theme.colors.map((color, index) => (
+                    <div key={index} className={`w-3 h-3 rounded-full ${color}`}></div>
+                  ))}
+                </div>
+                <div className="flex-1">
+                  <div className="font-medium text-slate-900 mb-1">{theme.name}</div>
+                  <div className="text-sm text-slate-600">{theme.description}</div>
+                </div>
+                {formData.theme === theme.id && (
+                  <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Entry Fee */}
+      <div>
+        <Label className="text-base font-medium flex items-center space-x-2 mb-3">
+          <div className="w-4 h-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded"></div>
+          <span>Entry Fee</span>
+        </Label>
+        <div className="space-y-3">
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="hasEntryFee"
+              checked={formData.hasEntryFee}
+              onCheckedChange={(checked) => setFormData(prev => ({
+                ...prev,
+                hasEntryFee: checked as boolean,
+                entryFeeAmount: checked ? prev.entryFeeAmount : 0
+              }))}
+            />
+            <Label htmlFor="hasEntryFee" className="cursor-pointer">
+              This event has an entry fee
+            </Label>
+          </div>
+
+          {formData.hasEntryFee && (
+            <div className="ml-6 space-y-2">
+              <Label htmlFor="entryAmount" className="text-sm font-medium">
+                Amount per player
+              </Label>
+              <div className="flex items-center space-x-2">
+                <span className="text-slate-600">$</span>
+                <Input
+                  id="entryAmount"
+                  type="number"
+                  min="1"
+                  value={formData.entryFeeAmount || ''}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    entryFeeAmount: parseInt(e.target.value) || 0
+                  }))}
+                  placeholder="0"
+                  className="w-32"
+                />
+              </div>
+
+              {formData.entryFeeAmount > 0 && formData.players.length > 0 && (
+                <div className="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg">
+                  <div className="font-medium mb-2">Prize Pool Preview:</div>
+                  <div className="space-y-1">
+                    <div>Total Prize Pool: ${(formData.entryFeeAmount * formData.players.length).toLocaleString()}</div>
+                    <div>Winner: ${(formData.entryFeeAmount * 2).toLocaleString()} (200% of buy-in)</div>
+                    <div>Runner-up: ${formData.entryFeeAmount.toLocaleString()} (100% of buy-in)</div>
+                    <div>Contest Prizes: ${((formData.entryFeeAmount * formData.players.length - formData.entryFeeAmount * 3) / (formData.courses.length * 2)).toLocaleString()} each</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Validation Errors */}
       {!canSubmit() && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
