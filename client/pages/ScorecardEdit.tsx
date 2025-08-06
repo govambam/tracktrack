@@ -481,32 +481,42 @@ export default function ScorecardEdit() {
 
     setSaving(true);
     try {
-      // Save all players' scores
-      for (const player of players) {
-        for (const holeScore of player.scores) {
-          // Check if score already exists
-          const { data: existingScore } = await supabase
-            .from("scorecards")
-            .select("id")
-            .eq("event_id", eventData.id)
-            .eq("event_round_id", round.id)
-            .eq("event_player_id", player.id)
-            .eq("hole_number", holeScore.hole)
-            .single();
+      // First, load all existing scores in one query
+      const { data: existingScores } = await supabase
+        .from("scorecards")
+        .select("id, event_player_id, hole_number, strokes")
+        .eq("event_id", eventData.id)
+        .eq("event_round_id", round.id);
+
+      // Create maps for quick lookup
+      const existingScoreMap = new Map();
+      (existingScores || []).forEach(score => {
+        const key = `${score.event_player_id}-${score.hole_number}`;
+        existingScoreMap.set(key, score);
+      });
+
+      // Prepare batch operations
+      const toUpdate = [];
+      const toInsert = [];
+
+      players.forEach(player => {
+        player.scores.forEach(holeScore => {
+          const key = `${player.id}-${holeScore.hole}`;
+          const existingScore = existingScoreMap.get(key);
 
           if (existingScore) {
-            // Update existing score
-            await supabase
-              .from("scorecards")
-              .update({
+            // Only update if score has changed
+            if (existingScore.strokes !== holeScore.strokes) {
+              toUpdate.push({
+                id: existingScore.id,
                 strokes: holeScore.strokes,
                 updated_at: new Date().toISOString(),
-              })
-              .eq("id", existingScore.id);
+              });
+            }
           } else {
-            // Insert new score (only if strokes > 0 to avoid empty records)
+            // Insert new score (only if strokes > 0)
             if (holeScore.strokes > 0) {
-              await supabase.from("scorecards").insert({
+              toInsert.push({
                 event_id: eventData.id,
                 event_round_id: round.id,
                 event_player_id: player.id,
@@ -515,6 +525,37 @@ export default function ScorecardEdit() {
               });
             }
           }
+        });
+      });
+
+      // Execute batch operations
+      const promises = [];
+
+      if (toUpdate.length > 0) {
+        // Batch updates using upsert
+        promises.push(
+          supabase
+            .from("scorecards")
+            .upsert(toUpdate, { onConflict: "id" })
+        );
+      }
+
+      if (toInsert.length > 0) {
+        // Batch inserts
+        promises.push(
+          supabase
+            .from("scorecards")
+            .insert(toInsert)
+        );
+      }
+
+      if (promises.length > 0) {
+        const results = await Promise.all(promises);
+        const errors = results.filter(result => result.error);
+
+        if (errors.length > 0) {
+          console.error("Batch save errors:", errors);
+          throw new Error("Some scores failed to save");
         }
       }
 
