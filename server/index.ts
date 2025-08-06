@@ -27,6 +27,12 @@ export function createServer() {
   app.post("/api/auth-test", handleAuthTest);
   app.post("/api/generate-description", generateDescription);
 
+  // Debug route to test invitations API
+  app.get("/api/invitations/debug", (req, res) => {
+    console.log("🔍 Debug invitations route hit");
+    res.json({ success: true, message: "Debug route is working", timestamp: new Date().toISOString() });
+  });
+
   // Events API routes
   app.use("/api", eventsRouter);
 
