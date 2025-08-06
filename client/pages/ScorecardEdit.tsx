@@ -421,7 +421,7 @@ export default function ScorecardEdit() {
             </div>
             <Button
               onClick={handleSave}
-              disabled={saving || !currentPlayer}
+              disabled={saving || players.length === 0}
               className="bg-blue-600 hover:bg-blue-700 text-white"
             >
               {saving ? (
