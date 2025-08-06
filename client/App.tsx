@@ -70,6 +70,7 @@ const App = () => (
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/login" element={<Auth />} />
                 <Route path="/signup" element={<Auth />} />
+<<<<<<< HEAD
 
                 {/* New EventShell structure with persistent navigation */}
                 <Route path="/events/:slug" element={<EventShell />}>
@@ -83,6 +84,9 @@ const App = () => (
                 </Route>
 
                 {/* Legacy routes for backward compatibility */}
+=======
+                <Route path="/events/:slug" element={<PublicEventHome />} />
+>>>>>>> f104a34300e95db482ef9c6ae20898d4268043db
                 <Route
                   path="/events/:slug/legacy"
                   element={<PublicEventHome />}

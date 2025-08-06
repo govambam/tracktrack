@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   MapPin,
   Users,
@@ -41,6 +43,9 @@ import {
   Medal,
   CheckCircle,
   MessageCircle,
+  Edit,
+  Megaphone,
+  AlertCircle,
 } from "lucide-react";
 
 // Emoji Safety Utility
@@ -403,7 +408,7 @@ const StickyNavigation = ({
     { name: "Players", href: "#players" },
     { name: "Prizes", href: "#prizes" },
     { name: "Travel", href: "#travel" },
-    { name: "Clubhouse", href: `/events/${slug}/clubhouse`, isExternal: true },
+    { name: "Clubhouse", href: "#clubhouse" },
     {
       name: "Leaderboard",
       href: `/events/${slug}/leaderboard`,
@@ -424,21 +429,14 @@ const StickyNavigation = ({
           </div>
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) =>
-              item.name === "Clubhouse" ? (
-                <button
+              item.isExternal ? (
+                <a
                   key={item.name}
-                  onClick={handleClubhouseAccess || (() => {})}
-                  disabled={!hasClubhouse}
-                  className={`text-sm font-medium transition-colors ${
-                    hasClubhouse
-                      ? theme === "Masters"
-                        ? "text-green-800 hover:text-yellow-600 font-serif"
-                        : "text-slate-600 hover:text-green-600"
-                      : "text-slate-400 cursor-not-allowed"
-                  }`}
+                  href={item.href}
+                  className={`text-sm font-medium transition-colors ${theme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
                 >
                   {item.name}
-                </button>
+                </a>
               ) : (
                 <a
                   key={item.name}
@@ -1246,6 +1244,8 @@ export default function PublicEventHome({
   const [stablefordScoring, setStablefordScoring] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [showClubhouseModal, setShowClubhouseModal] = useState(false);
+  const [clubhouseSession, setClubhouseSession] = useState<any>(null);
+  const [activeClubhouseTab, setActiveClubhouseTab] = useState("scores");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -1258,7 +1258,17 @@ export default function PublicEventHome({
     }
   }, [slug, preloadedEventData]);
 
+<<<<<<< HEAD
   const loadRelatedData = async (eventId: string) => {
+=======
+  useEffect(() => {
+    if (eventData) {
+      checkClubhouseSession();
+    }
+  }, [eventData]);
+
+  const loadEventData = async () => {
+>>>>>>> f104a34300e95db482ef9c6ae20898d4268043db
     try {
       // Load all related data in parallel
       const [
@@ -1505,6 +1515,23 @@ export default function PublicEventHome({
     ];
   };
 
+  const checkClubhouseSession = async () => {
+    if (!eventData?.id) return;
+
+    const sessionData = localStorage.getItem(
+      `clubhouse_session_${eventData.id}`,
+    );
+    if (sessionData) {
+      try {
+        const parsedSession = JSON.parse(sessionData);
+        setClubhouseSession(parsedSession);
+      } catch (error) {
+        console.error("Error parsing clubhouse session data:", error);
+        localStorage.removeItem(`clubhouse_session_${eventData.id}`);
+      }
+    }
+  };
+
   // Helper functions for contests
   const getContestsByType = (type: string) => {
     return skillsContests
@@ -1598,7 +1625,20 @@ export default function PublicEventHome({
 
   const handleClubhouseSuccess = (displayName: string) => {
     setShowClubhouseModal(false);
-    navigate(`/events/${slug}/clubhouse`);
+
+    // Set the clubhouse session
+    const sessionData = {
+      displayName,
+      sessionId: `session_${Date.now()}`,
+      eventId: eventData!.id,
+    };
+    setClubhouseSession(sessionData);
+
+    // Scroll to the clubhouse section
+    document.getElementById("clubhouse")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   if (loading) {
@@ -2781,6 +2821,313 @@ export default function PublicEventHome({
             </div>
           </section>
         )}
+
+      {/* Clubhouse Section */}
+      {hasClubhouse && (
+        <section
+          id="clubhouse"
+          className={`relative ${currentTheme === "TourTech" ? "py-16 px-6 sm:px-8 lg:px-12 bg-white border-t border-gray-200" : currentTheme === "Masters" ? "py-20 px-6 sm:px-8 lg:px-12 bg-green-50/30" : "py-24 px-6 sm:px-8 lg:px-12 overflow-hidden"}`}
+        >
+          {/* Background decoration for GolfOS theme */}
+          {currentTheme === "GolfOS" && (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100"></div>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.1),_transparent_70%)]"></div>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(168,85,247,0.1),_transparent_70%)]"></div>
+            </>
+          )}
+
+          <div className={`relative ${theme.maxContentWidth} mx-auto`}>
+            {/* Section Header */}
+            <div className="text-center mb-12">
+              <div
+                className={`${currentTheme === "TourTech" ? `w-16 h-16 ${theme.accentBackground} ${theme.roundedCorners} flex items-center justify-center mx-auto mb-6` : currentTheme === "Masters" ? "w-20 h-20 bg-gradient-to-br from-green-600 to-amber-600 rounded-xl flex items-center justify-center mx-auto mb-6" : "w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-8"}`}
+              >
+                <Users
+                  className={`${currentTheme === "TourTech" ? "h-8 w-8 text-white" : currentTheme === "Masters" ? "h-10 w-10 text-white" : "h-12 w-12 text-white"}`}
+                />
+              </div>
+              <h2
+                className={`${currentTheme === "TourTech" ? `${theme.sectionTitle} text-slate-900 mb-4` : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-4xl mb-6" : "text-4xl sm:text-5xl font-bold text-slate-900 mb-6"}`}
+              >
+                Clubhouse
+              </h2>
+              <p
+                className={`${currentTheme === "TourTech" ? `${theme.sectionDescription} text-slate-600` : currentTheme === "Masters" ? "text-lg text-green-800/70 font-serif max-w-2xl mx-auto" : "text-xl text-slate-600 font-light max-w-3xl mx-auto"}`}
+              >
+                {clubhouseSession
+                  ? `Welcome back, ${clubhouseSession.displayName}! Manage scorecards and connect with other players.`
+                  : "Access exclusive tournament features with your clubhouse credentials."}
+              </p>
+            </div>
+
+            {clubhouseSession ? (
+              /* Authenticated Clubhouse Content */
+              <div className="space-y-8">
+                <Tabs
+                  value={activeClubhouseTab}
+                  onValueChange={setActiveClubhouseTab}
+                  className="w-full"
+                >
+                  <TabsList
+                    className={`grid w-full grid-cols-2 mb-8 ${currentTheme === "Masters" ? "bg-green-100/50" : ""}`}
+                  >
+                    <TabsTrigger
+                      value="scores"
+                      className={`flex items-center space-x-2 ${currentTheme === "Masters" ? "data-[state=active]:bg-green-600 data-[state=active]:text-white" : ""}`}
+                    >
+                      <BarChart3 className="h-4 w-4" />
+                      <span>Scores</span>
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="chat"
+                      className={`flex items-center space-x-2 ${currentTheme === "Masters" ? "data-[state=active]:bg-green-600 data-[state=active]:text-white" : ""}`}
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      <span>Chat</span>
+                    </TabsTrigger>
+                  </TabsList>
+
+                  {/* Scores Tab */}
+                  <TabsContent value="scores" className="space-y-6">
+                    <div className="text-center mb-8">
+                      <h3
+                        className={`text-3xl font-bold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                      >
+                        Round Scorecards
+                      </h3>
+                      <p
+                        className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                      >
+                        View and edit scorecards for each round of the
+                        tournament
+                      </p>
+                    </div>
+
+                    {rounds.length === 0 ? (
+                      <Card
+                        className={`${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}
+                      >
+                        <CardContent className="p-8 text-center">
+                          <Target
+                            className={`h-12 w-12 mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-400" : currentTheme === "TourTech" ? "text-gray-400" : "text-blue-400"}`}
+                          />
+                          <h3
+                            className={`text-xl font-semibold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                          >
+                            No Rounds Available
+                          </h3>
+                          <p
+                            className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                          >
+                            Rounds will appear here once they are configured.
+                          </p>
+                        </CardContent>
+                      </Card>
+                    ) : (
+                      <div className="grid gap-6 md:grid-cols-2">
+                        {rounds.map((round, index) => (
+                          <Card
+                            key={round.id}
+                            className={`${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}
+                          >
+                            <CardHeader>
+                              <CardTitle
+                                className={`flex items-center ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                              >
+                                <Target
+                                  className={`h-5 w-5 mr-2 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                                />
+                                Round {index + 1}
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <div
+                                className={`flex items-center space-x-2 text-sm ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                              >
+                                <MapPin className="h-4 w-4" />
+                                <span>{round.course_name}</span>
+                              </div>
+                              <div
+                                className={`flex items-center space-x-2 text-sm ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                              >
+                                <Calendar className="h-4 w-4" />
+                                <span>
+                                  {new Date(
+                                    round.round_date,
+                                  ).toLocaleDateString()}
+                                </span>
+                              </div>
+                              {round.tee_time && (
+                                <div
+                                  className={`flex items-center space-x-2 text-sm ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                                >
+                                  <Clock className="h-4 w-4" />
+                                  <span>{round.tee_time}</span>
+                                </div>
+                              )}
+                              <Button
+                                onClick={() =>
+                                  window.open(
+                                    `/events/${slug}/clubhouse/scorecard/${round.id}`,
+                                    "_blank",
+                                  )
+                                }
+                                className={`w-full ${currentTheme === "Masters" ? "bg-green-600 hover:bg-green-700" : currentTheme === "TourTech" ? "bg-gray-600 hover:bg-gray-700" : "bg-blue-600 hover:bg-blue-700"}`}
+                              >
+                                <Edit className="h-4 w-4 mr-2" />
+                                Edit Scorecard
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    )}
+                  </TabsContent>
+
+                  {/* Chat Tab */}
+                  <TabsContent value="chat" className="space-y-6">
+                    <div className="text-center mb-8">
+                      <h3
+                        className={`text-3xl font-bold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                      >
+                        Event Chat
+                      </h3>
+                      <p
+                        className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                      >
+                        Stay connected with other players throughout the
+                        tournament
+                      </p>
+                    </div>
+
+                    <div className="grid gap-6 lg:grid-cols-2">
+                      {/* Announcements Channel */}
+                      <Card
+                        className={`${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}
+                      >
+                        <CardHeader>
+                          <CardTitle
+                            className={`flex items-center ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                          >
+                            <Megaphone
+                              className={`h-5 w-5 mr-2 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                            />
+                            Announcements
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div
+                            className={`rounded-lg p-6 text-center ${currentTheme === "Masters" ? "bg-green-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-blue-50"}`}
+                          >
+                            <Megaphone
+                              className={`h-12 w-12 mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-400" : currentTheme === "TourTech" ? "text-gray-400" : "text-blue-400"}`}
+                            />
+                            <h3
+                              className={`text-lg font-semibold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                            >
+                              Coming Soon
+                            </h3>
+                            <p
+                              className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                            >
+                              Tournament announcements and updates will appear
+                              here.
+                            </p>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* General Chat Channel */}
+                      <Card
+                        className={`${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}
+                      >
+                        <CardHeader>
+                          <CardTitle
+                            className={`flex items-center ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                          >
+                            <MessageCircle
+                              className={`h-5 w-5 mr-2 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                            />
+                            General Chat
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div
+                            className={`rounded-lg p-6 text-center ${currentTheme === "Masters" ? "bg-green-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-blue-50"}`}
+                          >
+                            <MessageCircle
+                              className={`h-12 w-12 mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-400" : currentTheme === "TourTech" ? "text-gray-400" : "text-blue-400"}`}
+                            />
+                            <h3
+                              className={`text-lg font-semibold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                            >
+                              Coming Soon
+                            </h3>
+                            <p
+                              className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                            >
+                              Chat with other players during the tournament.
+                            </p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    <Alert
+                      className={`${currentTheme === "Masters" ? "border-green-200 bg-green-50" : currentTheme === "TourTech" ? "border-gray-200 bg-gray-50" : "border-blue-200 bg-blue-50"}`}
+                    >
+                      <MessageCircle
+                        className={`h-4 w-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                      />
+                      <AlertDescription
+                        className={`${currentTheme === "Masters" ? "text-green-700 font-serif" : currentTheme === "TourTech" ? "text-gray-700" : "text-blue-700"}`}
+                      >
+                        <strong>Live Chat Coming Soon:</strong> We're working on
+                        bringing you real-time chat functionality to enhance
+                        your tournament experience. Stay tuned for updates!
+                      </AlertDescription>
+                    </Alert>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            ) : (
+              /* Unauthenticated Clubhouse Content */
+              <div className="text-center">
+                <Card
+                  className={`max-w-md mx-auto ${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}
+                >
+                  <CardContent className="p-8">
+                    <div
+                      className={`w-20 h-20 rounded-xl flex items-center justify-center mx-auto mb-6 ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-600 to-amber-600" : currentTheme === "TourTech" ? "bg-gradient-to-br from-gray-500 to-gray-600" : "bg-gradient-to-br from-blue-500 to-indigo-600"}`}
+                    >
+                      <Users className="h-10 w-10 text-white" />
+                    </div>
+                    <h3
+                      className={`text-2xl font-bold mb-4 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+                    >
+                      Access Required
+                    </h3>
+                    <p
+                      className={`mb-6 ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+                    >
+                      Enter your clubhouse credentials to access scorecards,
+                      chat, and exclusive tournament features.
+                    </p>
+                    <Button
+                      onClick={() => setShowClubhouseModal(true)}
+                      className={`w-full ${currentTheme === "Masters" ? "bg-green-600 hover:bg-green-700" : currentTheme === "TourTech" ? "bg-gray-600 hover:bg-gray-700" : "bg-blue-600 hover:bg-blue-700"}`}
+                    >
+                      <Users className="h-4 w-4 mr-2" />
+                      Enter Clubhouse
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <footer
