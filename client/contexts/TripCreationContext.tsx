@@ -552,7 +552,16 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
         .order("created_at");
 
       if (playersError) {
-        console.error("Error loading players:", playersError);
+        console.error("Error loading players:", {
+          message: playersError.message,
+          details: playersError.details,
+          hint: playersError.hint,
+          code: playersError.code,
+        });
+        console.error(
+          "Full error object:",
+          JSON.stringify(playersError, null, 2),
+        );
         return { success: false, error: playersError.message };
       }
 
@@ -932,13 +941,23 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
       // Insert new players
       if (tripData.players && tripData.players.length > 0) {
-        const playersData = tripData.players.map((player) => ({
-          event_id: tripData.id,
-          full_name: player.name,
-          email: player.email || null,
-          handicap: player.handicap || null,
-          profile_image: player.image || null,
-        }));
+        const playersData = tripData.players.map((player) => {
+          const email = player.email || null;
+          return {
+            event_id: tripData.id,
+            full_name: player.name,
+            email: email,
+            handicap: player.handicap || null,
+            profile_image: player.image || null,
+            // Invitation system fields - satisfy check constraint
+            user_id: null, // Players created via trip creation are not linked to users
+            invited_email:
+              email ||
+              `${player.name.toLowerCase().replace(/\s+/g, "_")}@placeholder.local`,
+            role: "player",
+            status: email ? "invited" : "pending", // Only mark as invited if there's an email to send to
+          };
+        });
 
         const { error: insertError } = await supabase
           .from("event_players")

@@ -40,6 +40,10 @@ interface Event {
   slug?: string;
   created_at: string;
   updated_at: string;
+  // Role information for the current user
+  user_role?: "owner" | "admin" | "player";
+  created_by?: string;
+  invitation_status?: "invited" | "accepted" | "declined" | "pending";
 }
 
 export default function MyTrips() {
@@ -117,34 +121,124 @@ export default function MyTrips() {
 
       console.log("Events table accessible, total count:", count);
 
-      // Use direct Supabase calls instead of server routes
-      const { data, error } = await supabase
+      // Auto-accept any pending invitations for the current user
+      console.log("Auto-accepting pending invitations...");
+      const { error: acceptError } = await supabase.rpc(
+        "accept_event_invitation_by_user",
+        {
+          p_user_id: session.user.id,
+        },
+      );
+
+      if (acceptError) {
+        console.log(
+          "No pending invitations or error auto-accepting:",
+          acceptError.message,
+        );
+      }
+
+      // Fetch owned events
+      console.log("Loading owned events...");
+      const { data: ownedEvents, error: ownedError } = await supabase
         .from("events")
         .select(
-          "id, name, description, start_date, end_date, location, logo_url, is_private, is_published, slug, created_at, updated_at",
+          "id, name, description, start_date, end_date, location, logo_url, is_private, is_published, slug, created_at, updated_at, created_by",
         )
-        .eq("user_id", session.user.id)
+        .eq("created_by", session.user.id)
         .order("start_date", { ascending: false });
 
-      if (error) {
-        console.error("Supabase error loading events:", {
-          message: error.message,
-          details: error.details,
-          hint: error.hint,
-          code: error.code,
-        });
-        console.error("Full error object:", JSON.stringify(error, null, 2));
+      if (ownedError) {
+        console.error("Error loading owned events:", ownedError);
         toast({
           title: "Error",
-          description:
-            error.message || error.details || "Failed to load events",
+          description: "Failed to load owned events",
           variant: "destructive",
         });
         return;
       }
 
-      console.log("Successfully loaded events, count:", data?.length || 0);
-      setEvents(data || []);
+      // Fetch invited events where user_id matches current user
+      console.log("Loading invited events for user:", session.user.id);
+      const { data: invitedEventsRaw, error: invitedError } = await supabase
+        .from("event_players")
+        .select(
+          `
+          role,
+          status,
+          events:event_id (
+            id, name, description, start_date, end_date, location, logo_url,
+            is_private, is_published, slug, created_at, updated_at, created_by
+          )
+        `,
+        )
+        .eq("user_id", session.user.id)
+        .eq("status", "accepted")
+        .order("created_at", { ascending: false });
+
+      if (invitedError) {
+        console.error("Error loading invited events:", {
+          message: invitedError.message,
+          details: invitedError.details,
+          hint: invitedError.hint,
+          code: invitedError.code,
+        });
+        console.error(
+          "Full error object:",
+          JSON.stringify(invitedError, null, 2),
+        );
+        // Continue with owned events only
+      } else {
+        console.log("Invited events query result:", {
+          count: invitedEventsRaw?.length || 0,
+          data: invitedEventsRaw,
+        });
+
+        if (!invitedEventsRaw || invitedEventsRaw.length === 0) {
+          console.log(
+            "No invited events found - this is normal if user hasn't been invited or invitations haven't been auto-accepted yet",
+          );
+        }
+      }
+
+      // Combine and format events
+      const allEvents: Event[] = [];
+
+      // Add owned events with owner role
+      if (ownedEvents) {
+        ownedEvents.forEach((event) => {
+          allEvents.push({
+            ...event,
+            user_role: "owner",
+            invitation_status: "accepted",
+          });
+        });
+      }
+
+      // Add invited events with their roles
+      if (invitedEventsRaw) {
+        invitedEventsRaw.forEach((invitation) => {
+          if (invitation.events) {
+            const event = invitation.events as any;
+            // Only add if not already in owned events
+            if (!allEvents.find((e) => e.id === event.id)) {
+              allEvents.push({
+                ...event,
+                user_role: invitation.role === "admin" ? "admin" : "player",
+                invitation_status: invitation.status,
+              });
+            }
+          }
+        });
+      }
+
+      // Sort by start_date descending
+      allEvents.sort(
+        (a, b) =>
+          new Date(b.start_date).getTime() - new Date(a.start_date).getTime(),
+      );
+
+      console.log("Successfully loaded all events, count:", allEvents.length);
+      setEvents(allEvents);
     } catch (error) {
       console.error("Error loading events:", error);
       toast({
@@ -253,7 +347,8 @@ export default function MyTrips() {
         <div>
           <h1 className="text-3xl font-bold text-green-900">My Events</h1>
           <p className="text-green-600 mt-1">
-            Manage and track your golf trips and tournaments
+            Manage your events and participate in tournaments you've been
+            invited to
           </p>
         </div>
         <div className="mt-4 sm:mt-0">
@@ -279,7 +374,10 @@ export default function MyTrips() {
             <div className="text-2xl font-bold text-green-900">
               {events.length}
             </div>
-            <p className="text-xs text-green-600">Created events</p>
+            <p className="text-xs text-green-600">
+              {events.filter((e) => e.user_role === "owner").length} owned,{" "}
+              {events.filter((e) => e.user_role !== "owner").length} invited
+            </p>
           </CardContent>
         </Card>
 
@@ -339,10 +437,34 @@ export default function MyTrips() {
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-xl text-green-900">
-                      {event.name}
-                    </CardTitle>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <CardTitle className="text-xl text-green-900">
+                        {event.name}
+                      </CardTitle>
+                      {event.user_role === "owner" ? (
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200"
+                        >
+                          Owner
+                        </Badge>
+                      ) : event.user_role === "admin" ? (
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-blue-50 text-blue-700 border-blue-200"
+                        >
+                          Admin
+                        </Badge>
+                      ) : (
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-gray-50 text-gray-700 border-gray-200"
+                        >
+                          Player
+                        </Badge>
+                      )}
+                    </div>
                     <CardDescription className="text-green-600 line-clamp-2">
                       {event.description || "Golf event"}
                     </CardDescription>
@@ -376,7 +498,8 @@ export default function MyTrips() {
                   </div>
                 </div>
 
-                <div className="flex space-x-2 pt-2">
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {/* View Site button - available for all published events */}
                   {event.is_published && event.slug ? (
                     <Button
                       variant="outline"
@@ -390,15 +513,33 @@ export default function MyTrips() {
                       View Site
                     </Button>
                   ) : null}
+
+                  {/* Enter Scores button - available for all users */}
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => handleEditEvent(event)}
-                    className="border-green-200 text-green-700 hover:bg-green-50"
+                    onClick={() =>
+                      navigate(`/events/${event.slug || event.id}/leaderboard`)
+                    }
+                    className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
                   >
-                    <Edit className="h-4 w-4 mr-1" />
-                    Edit Details
+                    <Users className="h-4 w-4 mr-1" />
+                    Enter Scores
                   </Button>
+
+                  {/* Edit Details button - only for owners and admins */}
+                  {(event.user_role === "owner" ||
+                    event.user_role === "admin") && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleEditEvent(event)}
+                      className="border-green-200 text-green-700 hover:bg-green-50"
+                    >
+                      <Edit className="h-4 w-4 mr-1" />
+                      Edit Details
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -414,7 +555,8 @@ export default function MyTrips() {
             No events yet
           </h3>
           <p className="text-green-600 mb-6">
-            Create your first golf event to get started
+            Create your first golf event or wait for an invitation from other
+            organizers
           </p>
           <Button
             onClick={handleCreateNew}

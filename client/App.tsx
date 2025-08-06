@@ -47,6 +47,7 @@ import Clubhouse from "./pages/Clubhouse";
 import ScorecardEdit from "./pages/ScorecardEdit";
 import DraftMode from "./pages/DraftMode";
 import Admin from "./pages/Admin";
+import Invitation from "./pages/Invitation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -62,6 +63,7 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
+<<<<<<< HEAD
                 <Route path="/login" element={<Auth />} />
                 <Route path="/signup" element={<Auth />} />
                 <Route path="/events/:slug" element={<PublicEventHome />} />
@@ -75,6 +77,18 @@ const App = () => (
                   element={<PublicLeaderboard />}
                 />
                 <Route path="/app/:eventId/draft" element={<DraftMode />} />
+=======
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/login" element={<Auth />} />
+                <Route path="/signup" element={<Auth />} />
+                <Route path="/events/:slug" element={<PublicEventHome />} />
+                <Route
+                  path="/events/:slug/leaderboard"
+                  element={<PublicLeaderboard />}
+                />
+                <Route path="/app/:eventId/draft" element={<DraftMode />} />
+                <Route path="/invitation/:eventId" element={<Invitation />} />
+>>>>>>> ad93eac5babd11bc27d797e0f1f198fdf72734e1
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/app" element={<AppShell />}>
                   <Route index element={<MyTrips />} />

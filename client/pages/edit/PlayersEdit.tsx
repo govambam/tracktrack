@@ -64,7 +64,13 @@ export default function PlayersEdit() {
         .order("created_at");
 
       if (error) {
-        console.error("Error loading players:", error);
+        console.error("Error loading players:", {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code,
+        });
+        console.error("Full error object:", JSON.stringify(error, null, 2));
         // Fall back to one empty player if no data exists
         setPlayers([
           {
@@ -110,6 +116,7 @@ export default function PlayersEdit() {
       }
     } catch (error) {
       console.error("Error loading players data:", error);
+      console.error("Full error details:", JSON.stringify(error, null, 2));
       setPlayers([
         {
           id: generateId(),
@@ -212,68 +219,282 @@ export default function PlayersEdit() {
     setSaving(true);
 
     try {
-      // Delete existing players
-      const { error: deleteError } = await supabase
+      // Load existing players to compare
+      const { data: existingPlayers, error: existingError } = await supabase
         .from("event_players")
-        .delete()
+        .select("*")
         .eq("event_id", eventId);
 
-      if (deleteError) {
-        console.error("Error deleting existing players:", deleteError);
+      if (existingError) {
+        console.error("Error loading existing players:", existingError);
         toast({
           title: "Save Failed",
-          description: deleteError.message || "Failed to update players",
+          description:
+            existingError.message || "Failed to load existing players",
           variant: "destructive",
         });
         return;
       }
 
-      // Insert new players
-      if (players.length > 0) {
-        const playersData = players.map((player) => {
-          const profileImage = player.image?.trim();
-          const bio = player.bio?.trim();
-          return {
-            event_id: eventId,
-            full_name: player.name.trim(),
-            email: player.email?.trim() || null,
-            handicap: player.handicap || null,
-            profile_image:
-              profileImage && profileImage.length > 0 ? profileImage : null,
-            bio: bio && bio.length > 0 ? bio : null,
-          };
-        });
+      const existingPlayerMap = new Map();
+      (existingPlayers || []).forEach((player) => {
+        existingPlayerMap.set(player.id, player);
+      });
 
-        console.log("Saving players data:", playersData);
+      // Track which players are new or have email changes
+      const playersNeedingInvites = [];
+
+      // Process each player - update existing or insert new
+      const upsertPromises = players.map(async (player) => {
+        const profileImage = player.image?.trim();
+        const bio = player.bio?.trim();
+        const email = player.email?.trim();
+        const existingPlayer = existingPlayerMap.get(player.id);
+
+        const playerData = {
+          id: player.id,
+          event_id: eventId,
+          full_name: player.name.trim(),
+          email: email || null,
+          handicap: player.handicap || null,
+          profile_image:
+            profileImage && profileImage.length > 0 ? profileImage : null,
+          bio: bio && bio.length > 0 ? bio : null,
+          // Invitation system fields - satisfy check constraint
+          user_id: null, // Players created via edit interface are not linked to users
+          invited_email:
+            email ||
+            `${player.name.trim().toLowerCase().replace(/\s+/g, "_")}@placeholder.local`,
+          role: "player",
+          status: email
+            ? // If this is a new player with email, or existing player with new/changed email
+              !existingPlayer ||
+              (existingPlayer.invited_email !== email &&
+                email &&
+                !email.includes("@placeholder.local"))
+              ? "invited"
+              : existingPlayer.status
+            : "pending",
+        };
+
+        // Track if this player needs an invitation email
+        if (
+          email &&
+          !email.includes("@placeholder.local") &&
+          !email.includes("@example.com") &&
+          (!existingPlayer ||
+            existingPlayer.invited_email !== email ||
+            existingPlayer.status !== "invited")
+        ) {
+          playersNeedingInvites.push({
+            id: player.id,
+            name: player.name.trim(),
+            email: email,
+          });
+        }
+
+        return supabase
+          .from("event_players")
+          .upsert(playerData, { onConflict: "id" });
+      });
+
+      // Execute all upserts
+      const results = await Promise.all(upsertPromises);
+
+      // Check for any errors
+      const errors = results.filter((result) => result.error);
+      if (errors.length > 0) {
+        console.error("Error saving players:", errors);
+        toast({
+          title: "Save Failed",
+          description: "Failed to save some players",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Remove players that were deleted
+      const currentPlayerIds = players.map((p) => p.id);
+      const playersToDelete = (existingPlayers || []).filter(
+        (existing) => !currentPlayerIds.includes(existing.id),
+      );
+
+      if (playersToDelete.length > 0) {
+        const { error: deleteError } = await supabase
+          .from("event_players")
+          .delete()
+          .in(
+            "id",
+            playersToDelete.map((p) => p.id),
+          );
+
+        if (deleteError) {
+          console.error("Error deleting removed players:", deleteError);
+        }
+      }
+
+      console.log("Players saved successfully to database");
+
+      // Send invitation emails only to players who need them
+      const playersWithEmails = playersNeedingInvites;
+
+      if (playersWithEmails.length > 0) {
         console.log(
-          "Profile images being saved:",
-          playersData.map((p) => ({
-            name: p.full_name,
-            profile_image: p.profile_image,
-          })),
+          "Sending invitation emails to:",
+          playersWithEmails.map((p) => p.email),
         );
 
-        const { error: insertError } = await supabase
-          .from("event_players")
-          .insert(playersData);
+        // First test if the API endpoint is available
+        try {
+          console.log("🔍 Testing invitations API availability...");
+          const debugResponse = await fetch("/api/invitations/debug");
+          console.log("🔍 Debug response status:", debugResponse.status);
 
-        if (insertError) {
-          console.error("Error inserting players:", insertError);
+          if (debugResponse.ok) {
+            const debugResult = await debugResponse.json();
+            console.log("🔍 Debug response:", debugResult);
+          }
+
+          const testResponse = await fetch("/api/invitations/test");
+          console.log("📧 Test response status:", testResponse.status);
+
+          if (!testResponse.ok) {
+            console.error(
+              "Invitations API not available:",
+              testResponse.status,
+            );
+            toast({
+              title: "Players Updated",
+              description:
+                "Players saved. Invitation emails are not available right now.",
+            });
+            return;
+          }
+
+          const testResult = await testResponse.json();
+          console.log("✅ Invitations API is available:", testResult);
+        } catch (testError) {
+          console.error("Cannot reach invitations API:", testError);
           toast({
-            title: "Save Failed",
-            description: insertError.message || "Failed to save players",
-            variant: "destructive",
+            title: "Players Updated",
+            description:
+              "Players saved. Could not send invitation emails (API unavailable).",
           });
           return;
         }
 
-        console.log("Players saved successfully to database");
-      }
+        try {
+          // Try to refresh session first to ensure we have a valid token
+          console.log("🔄 Refreshing session...");
+          const { data: refreshData, error: refreshError } =
+            await supabase.auth.refreshSession();
 
-      toast({
-        title: "Players Updated",
-        description: "Player list has been saved successfully",
-      });
+          if (refreshError) {
+            console.warn(
+              "⚠️ Session refresh failed, trying with existing session:",
+              refreshError,
+            );
+          } else {
+            console.log("✅ Session refreshed successfully");
+          }
+
+          // Get session token
+          console.log("🔍 Getting session from Supabase...");
+          const {
+            data: { session },
+            error: sessionError,
+          } = await supabase.auth.getSession();
+
+          if (sessionError) {
+            console.error("❌ Session error:", sessionError);
+            toast({
+              title: "Players Updated",
+              description:
+                "Players saved, but couldn't get authentication session.",
+            });
+            return;
+          }
+
+          console.log("🔍 Session exists:", !!session);
+          console.log("🔍 Session user:", session?.user?.email);
+
+          const accessToken = session?.access_token;
+
+          if (!accessToken) {
+            console.error("❌ No access token available in session");
+            toast({
+              title: "Players Updated",
+              description:
+                "Players saved, but couldn't send invitations (not authenticated).",
+            });
+            return;
+          }
+
+          console.log("🔑 Token length:", accessToken.length);
+          console.log(
+            "🔑 Token starts with:",
+            accessToken.substring(0, 20) + "...",
+          );
+          console.log("🔑 Sending invitation request with token");
+
+          const response = await fetch("/api/invitations/send", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({ event_id: eventId }),
+          });
+
+          console.log("📧 Invitation API response status:", response.status);
+
+          if (!response.ok) {
+            const errorMsg = `API request failed: ${response.status} ${response.statusText}`;
+            console.error("Invitation API error:", errorMsg);
+            toast({
+              title: "Players Updated",
+              description: `Players saved, but invitation sending failed (${response.status}).`,
+              variant: "destructive",
+            });
+            return;
+          }
+
+          const result = await response.json();
+          console.log("📧 Invitation API result:", result);
+
+          if (result.success && result.sent_count > 0) {
+            toast({
+              title: "Players Saved & Invitations Sent",
+              description: `Player information updated and ${result.sent_count} invitation emails sent.`,
+            });
+          } else if (result.success) {
+            toast({
+              title: "Players Updated",
+              description:
+                "Player list has been saved successfully. No invitation emails were needed.",
+            });
+          } else {
+            console.error("Invitation send failed:", result.error);
+            toast({
+              title: "Players Updated",
+              description: `Players saved, but invitation sending failed: ${result.error || "Unknown error"}`,
+              variant: "destructive",
+            });
+          }
+        } catch (emailError) {
+          console.error("Error sending invitation emails:", emailError);
+          toast({
+            title: "Players Updated",
+            description: `Players saved, but there was an issue sending invitation emails: ${emailError.message}`,
+            variant: "destructive",
+          });
+        }
+      } else {
+        toast({
+          title: "Players Updated",
+          description: "Player list has been saved successfully",
+        });
+      }
     } catch (error) {
       console.error("Error saving players:", error);
       toast({

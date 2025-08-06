@@ -2,7 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
@@ -18,6 +24,10 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Get return URL from search params
+  const searchParams = new URLSearchParams(location.search);
+  const returnUrl = searchParams.get("returnUrl");
 
   // Set initial mode based on URL
   useState(() => {
@@ -68,48 +78,52 @@ export default function Auth() {
           localStorage.setItem("isAuthenticated", "true");
           localStorage.setItem("userEmail", data.user.email || "");
           localStorage.setItem("userId", data.user.id);
-          navigate("/app");
+          // Navigate to return URL if provided, otherwise go to app
+          navigate(returnUrl || "/app");
         }
       } else {
         // Sign up new user
-        console.log('Attempting to sign up user with email:', email);
+        console.log("Attempting to sign up user with email:", email);
 
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
         });
 
-        console.log('Signup response:', { data, error });
+        console.log("Signup response:", { data, error });
 
         if (error) {
-          console.error('Signup error:', error);
+          console.error("Signup error:", error);
           setError(`Signup failed: ${error.message}`);
           setLoading(false);
           return;
         }
 
         if (data.user) {
-          console.log('User created successfully:', data.user);
+          console.log("User created successfully:", data.user);
 
           // Check if email confirmation is required
           if (data.user.email_confirmed_at) {
-            console.log('User email is confirmed');
+            console.log("User email is confirmed");
           } else {
-            console.log('User email needs confirmation');
+            console.log("User email needs confirmation");
           }
 
           // For now, since email verification is disabled, sign them in automatically
           localStorage.setItem("isAuthenticated", "true");
           localStorage.setItem("userEmail", data.user.email || "");
           localStorage.setItem("userId", data.user.id);
-          navigate("/app");
+          // Navigate to return URL if provided, otherwise go to app
+          navigate(returnUrl || "/app");
         } else {
-          console.log('No user returned from signup');
+          console.log("No user returned from signup");
           setError("Account creation failed - no user data returned");
         }
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : "An unexpected error occurred");
+      setError(
+        error instanceof Error ? error.message : "An unexpected error occurred",
+      );
     } finally {
       setLoading(false);
     }
@@ -118,8 +132,8 @@ export default function Auth() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <Link 
-          to="/" 
+        <Link
+          to="/"
           className="inline-flex items-center text-green-600 hover:text-green-700 mb-8 transition-colors"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
@@ -134,15 +148,16 @@ export default function Auth() {
             <CardDescription className="text-green-600">
               {isLogin
                 ? "Sign in to manage your golf events"
-                : "Join us to start creating amazing golf experiences"
-              }
+                : "Join us to start creating amazing golf experiences"}
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-green-800">Email</Label>
+                <Label htmlFor="email" className="text-green-800">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -153,9 +168,11 @@ export default function Auth() {
                   placeholder="Enter your email"
                 />
               </div>
-              
+
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-green-800">Password</Label>
+                <Label htmlFor="password" className="text-green-800">
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -171,14 +188,20 @@ export default function Auth() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600 hover:text-green-700"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
               </div>
 
               {!isLogin && (
                 <div className="space-y-2">
-                  <Label htmlFor="confirmPassword" className="text-green-800">Confirm Password</Label>
+                  <Label htmlFor="confirmPassword" className="text-green-800">
+                    Confirm Password
+                  </Label>
                   <Input
                     id="confirmPassword"
                     type="password"
@@ -207,18 +230,24 @@ export default function Auth() {
                 </Alert>
               )}
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
                 disabled={loading}
               >
-                {loading ? "Please wait..." : isLogin ? "Sign In" : "Create Account"}
+                {loading
+                  ? "Please wait..."
+                  : isLogin
+                    ? "Sign In"
+                    : "Create Account"}
               </Button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-green-600">
-                {isLogin ? "Don't have an account?" : "Already have an account?"}
+                {isLogin
+                  ? "Don't have an account?"
+                  : "Already have an account?"}
                 <button
                   onClick={() => {
                     setIsLogin(!isLogin);
