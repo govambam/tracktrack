@@ -212,20 +212,20 @@ export default function Clubhouse() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className={`min-h-screen ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}>
       {/* Header */}
-      <div className="bg-white border-b border-blue-200 shadow-sm">
+      <div className={`bg-white shadow-sm ${currentTheme === "Masters" ? "border-b border-green-200" : currentTheme === "TourTech" ? "border-b border-gray-200" : "border-b border-blue-200"}`}>
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-600 to-amber-600" : currentTheme === "TourTech" ? "bg-gradient-to-br from-gray-500 to-gray-600" : "bg-gradient-to-br from-blue-500 to-indigo-600"}`}>
                 <Users className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-blue-900">
+                <h1 className={`text-2xl font-bold ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}>
                   {eventData.name} Clubhouse
                 </h1>
-                <p className="text-blue-600">
+                <p className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}>
                   Welcome back, {session.displayName}
                 </p>
               </div>
@@ -233,7 +233,7 @@ export default function Clubhouse() {
             <Button
               onClick={() => window.history.back()}
               variant="outline"
-              className="border-blue-200 text-blue-700 hover:bg-blue-50"
+              className={`${currentTheme === "Masters" ? "border-green-200 text-green-700 hover:bg-green-50" : currentTheme === "TourTech" ? "border-gray-200 text-gray-700 hover:bg-gray-50" : "border-blue-200 text-blue-700 hover:bg-blue-50"}`}
             >
               <Home className="h-4 w-4 mr-2" />
               Back to Event
