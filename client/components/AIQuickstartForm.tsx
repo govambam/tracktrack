@@ -402,15 +402,50 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
           };
         });
 
-        const { error: roundsError } = await supabase
+        const { data: createdRounds, error: roundsError } = await supabase
           .from('event_rounds')
-          .insert(eventRounds);
+          .insert(eventRounds)
+          .select();
 
         if (roundsError) {
           console.error('Rounds creation error:', roundsError);
           throw new Error(`Failed to create rounds: ${roundsError.message || JSON.stringify(roundsError)}`);
         }
         console.log('Rounds created successfully');
+
+        // Create skills contests for each round
+        if (createdRounds && createdRounds.length > 0) {
+          console.log('Creating skills contests...');
+          const skillsContests = [];
+
+          createdRounds.forEach((round, roundIndex) => {
+            // Add one longest drive contest (typically hole 1 or a long par 4/5)
+            skillsContests.push({
+              event_id: eventData.id,
+              round_id: `round_${roundIndex + 1}`,
+              hole: 1, // Default to hole 1 for longest drive
+              contest_type: 'longest_drive'
+            });
+
+            // Add one closest to pin contest (typically a par 3)
+            skillsContests.push({
+              event_id: eventData.id,
+              round_id: `round_${roundIndex + 1}`,
+              hole: 3, // Default to hole 3 for closest to pin
+              contest_type: 'closest_to_pin'
+            });
+          });
+
+          const { error: skillsError } = await supabase
+            .from('skills_contests')
+            .insert(skillsContests);
+
+          if (skillsError) {
+            console.error('Skills contests creation error:', skillsError);
+            throw new Error(`Failed to create skills contests: ${skillsError.message || JSON.stringify(skillsError)}`);
+          }
+          console.log('Skills contests created successfully');
+        }
       }
 
       // Add players to event
