@@ -121,34 +121,94 @@ export default function MyTrips() {
 
       console.log("Events table accessible, total count:", count);
 
-      // Use direct Supabase calls instead of server routes
-      const { data, error } = await supabase
+      // Auto-accept any pending invitations for the current user
+      console.log("Auto-accepting pending invitations...");
+      const { error: acceptError } = await supabase
+        .rpc('accept_event_invitation_by_user', {
+          p_user_id: session.user.id
+        });
+
+      if (acceptError) {
+        console.log("No pending invitations or error auto-accepting:", acceptError.message);
+      }
+
+      // Fetch owned events
+      console.log("Loading owned events...");
+      const { data: ownedEvents, error: ownedError } = await supabase
         .from("events")
         .select(
-          "id, name, description, start_date, end_date, location, logo_url, is_private, is_published, slug, created_at, updated_at",
+          "id, name, description, start_date, end_date, location, logo_url, is_private, is_published, slug, created_at, updated_at, created_by",
         )
-        .eq("user_id", session.user.id)
+        .eq("created_by", session.user.id)
         .order("start_date", { ascending: false });
 
-      if (error) {
-        console.error("Supabase error loading events:", {
-          message: error.message,
-          details: error.details,
-          hint: error.hint,
-          code: error.code,
-        });
-        console.error("Full error object:", JSON.stringify(error, null, 2));
+      if (ownedError) {
+        console.error("Error loading owned events:", ownedError);
         toast({
           title: "Error",
-          description:
-            error.message || error.details || "Failed to load events",
+          description: "Failed to load owned events",
           variant: "destructive",
         });
         return;
       }
 
-      console.log("Successfully loaded events, count:", data?.length || 0);
-      setEvents(data || []);
+      // Fetch invited events
+      console.log("Loading invited events...");
+      const { data: invitedEventsRaw, error: invitedError } = await supabase
+        .from("event_players")
+        .select(`
+          role,
+          status,
+          events:event_id (
+            id, name, description, start_date, end_date, location, logo_url,
+            is_private, is_published, slug, created_at, updated_at, created_by
+          )
+        `)
+        .eq("user_id", session.user.id)
+        .eq("status", "accepted")
+        .order("created_at", { ascending: false });
+
+      if (invitedError) {
+        console.error("Error loading invited events:", invitedError);
+        // Don't return here, just log the error and continue with owned events
+      }
+
+      // Combine and format events
+      const allEvents: Event[] = [];
+
+      // Add owned events with owner role
+      if (ownedEvents) {
+        ownedEvents.forEach(event => {
+          allEvents.push({
+            ...event,
+            user_role: 'owner',
+            invitation_status: 'accepted'
+          });
+        });
+      }
+
+      // Add invited events with their roles
+      if (invitedEventsRaw) {
+        invitedEventsRaw.forEach(invitation => {
+          if (invitation.events) {
+            const event = invitation.events as any;
+            // Only add if not already in owned events
+            if (!allEvents.find(e => e.id === event.id)) {
+              allEvents.push({
+                ...event,
+                user_role: invitation.role === 'admin' ? 'admin' : 'player',
+                invitation_status: invitation.status
+              });
+            }
+          }
+        });
+      }
+
+      // Sort by start_date descending
+      allEvents.sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime());
+
+      console.log("Successfully loaded all events, count:", allEvents.length);
+      setEvents(allEvents);
     } catch (error) {
       console.error("Error loading events:", error);
       toast({
