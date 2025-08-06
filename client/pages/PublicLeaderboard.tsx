@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +17,11 @@ import {
   Users,
 } from "lucide-react";
 
-export default function PublicLeaderboard() {
+interface PublicLeaderboardProps {
+  hideNavigation?: boolean;
+}
+
+export default function PublicLeaderboard({ hideNavigation = false }: PublicLeaderboardProps = {}) {
   const { slug } = useParams();
   const [activeTab, setActiveTab] = useState("leaderboard");
 
@@ -441,7 +446,8 @@ export default function PublicLeaderboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50/30">
       {/* Header Navigation */}
-      <nav className="bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg sticky top-0 z-50">
+      {!hideNavigation && (
+        <nav className="bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="font-bold text-slate-900">
@@ -464,7 +470,8 @@ export default function PublicLeaderboard() {
             </div>
           </div>
         </div>
-      </nav>
+        </nav>
+      )}
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-6 pt-8 pb-12">
