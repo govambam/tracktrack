@@ -403,7 +403,7 @@ const StickyNavigation = ({
     { name: "Players", href: "#players" },
     { name: "Prizes", href: "#prizes" },
     { name: "Travel", href: "#travel" },
-    { name: "Clubhouse", href: `/events/${slug}/clubhouse`, isExternal: true },
+    { name: "Clubhouse", href: "#clubhouse" },
     {
       name: "Leaderboard",
       href: `/events/${slug}/leaderboard`,
