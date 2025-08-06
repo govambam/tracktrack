@@ -582,9 +582,6 @@ Format as markdown with headers. Include each course as a separate day:`;
         throw new Error("No occasion selected");
       }
 
-      // Simulate AI generation delay
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
       // Get selected courses data
       const selectedCourses = courses.filter((c) =>
         formData.courses.includes(c.id),
@@ -595,15 +592,29 @@ Format as markdown with headers. Include each course as a separate day:`;
         throw new Error("Selected courses not found in database");
       }
 
-      // Generate event data
-      const eventName = generateEventName(formData.occasion, selectedCourses);
-      const eventDescription = generateEventDescription(
+      // Generate event data with AI
+      console.log("Generating event name with AI...");
+      const eventName = await generateEventName(
         formData.occasion,
         selectedCourses,
         {
           start: formData.startDate,
           end: formData.endDate,
         },
+        formData.players.length
+      );
+
+      console.log("Generating event description with AI...");
+      const eventDescription = await generateEventDescription(
+        formData.occasion,
+        selectedCourses,
+        {
+          start: formData.startDate,
+          end: formData.endDate,
+        },
+        formData.players.length,
+        formData.hasEntryFee,
+        formData.entryFeeAmount
       );
 
       const slug =
