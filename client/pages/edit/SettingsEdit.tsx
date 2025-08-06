@@ -670,6 +670,19 @@ export default function SettingsEdit() {
           </AlertDialog>
         </CardContent>
       </Card>
+
+      {/* Draft Preview Modal */}
+      {eventId && (
+        <DraftPreviewModal
+          isOpen={showDraftPreview}
+          onClose={() => setShowDraftPreview(false)}
+          eventId={eventId}
+          onEditMode={() => {
+            // Stay on the current edit page
+            setShowDraftPreview(false);
+          }}
+        />
+      )}
     </div>
   );
 }
