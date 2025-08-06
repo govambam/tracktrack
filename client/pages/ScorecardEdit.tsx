@@ -145,7 +145,7 @@ export default function ScorecardEdit() {
 
       setCourseHoles(holes);
 
-      // Load event players and their scores
+      // Load all existing event players and their scores
       await loadEventPlayersAndScores(event.id, roundId, holes);
     } catch (error) {
       console.error("Error loading data:", error);
