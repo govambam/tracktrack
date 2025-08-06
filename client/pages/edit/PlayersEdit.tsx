@@ -330,6 +330,16 @@ export default function PlayersEdit() {
         }
 
         try {
+          // Try to refresh session first to ensure we have a valid token
+          console.log("🔄 Refreshing session...");
+          const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
+
+          if (refreshError) {
+            console.warn("⚠️ Session refresh failed, trying with existing session:", refreshError);
+          } else {
+            console.log("✅ Session refreshed successfully");
+          }
+
           // Get session token
           console.log("🔍 Getting session from Supabase...");
           const { data: { session }, error: sessionError } = await supabase.auth.getSession();
