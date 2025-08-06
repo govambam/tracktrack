@@ -154,12 +154,12 @@ export default function Clubhouse() {
     }
   };
 
-  if (loading) {
+  if (loading || themeLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className={`min-h-screen flex items-center justify-center ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}>
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600 mx-auto mb-4" />
-          <p className="text-blue-700">Loading clubhouse...</p>
+          <Loader2 className={`h-8 w-8 animate-spin mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`} />
+          <p className={`${currentTheme === "Masters" ? "text-green-700 font-serif" : currentTheme === "TourTech" ? "text-gray-700" : "text-blue-700"}`}>Loading clubhouse...</p>
         </div>
       </div>
     );
@@ -167,17 +167,17 @@ export default function Clubhouse() {
 
   if (error || !eventData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className={`min-h-screen flex items-center justify-center ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}>
         <div className="text-center max-w-2xl mx-auto p-6">
-          <AlertCircle className="h-16 w-16 text-blue-400 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-blue-900 mb-2">
+          <AlertCircle className={`h-16 w-16 mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-400" : currentTheme === "TourTech" ? "text-gray-400" : "text-blue-400"}`} />
+          <h1 className={`text-2xl font-bold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}>
             Clubhouse Unavailable
           </h1>
-          <p className="text-blue-600 mb-4">{error}</p>
+          <p className={`mb-4 ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}>{error}</p>
           <Button
             onClick={() => window.history.back()}
             variant="outline"
-            className="border-blue-200 text-blue-700 hover:bg-blue-50"
+            className={`${currentTheme === "Masters" ? "border-green-200 text-green-700 hover:bg-green-50" : currentTheme === "TourTech" ? "border-gray-200 text-gray-700 hover:bg-gray-50" : "border-blue-200 text-blue-700 hover:bg-blue-50"}`}
           >
             <Home className="h-4 w-4 mr-2" />
             Go Back
