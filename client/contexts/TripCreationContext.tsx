@@ -950,7 +950,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
             user_id: null, // Players created via trip creation are not linked to users
             invited_email: email || `${player.name.toLowerCase().replace(/\s+/g, '_')}@placeholder.local`,
             role: 'player',
-            status: 'accepted'
+            status: email ? 'invited' : 'pending' // Only mark as invited if there's an email to send to
           };
         });
 
