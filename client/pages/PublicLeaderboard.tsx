@@ -21,7 +21,9 @@ interface PublicLeaderboardProps {
   hideNavigation?: boolean;
 }
 
-export default function PublicLeaderboard({ hideNavigation = false }: PublicLeaderboardProps = {}) {
+export default function PublicLeaderboard({
+  hideNavigation = false,
+}: PublicLeaderboardProps = {}) {
   const { slug } = useParams();
   const [activeTab, setActiveTab] = useState("leaderboard");
 
@@ -448,28 +450,28 @@ export default function PublicLeaderboard({ hideNavigation = false }: PublicLead
       {/* Header Navigation */}
       {!hideNavigation && (
         <nav className="bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="font-bold text-slate-900">
-              Tournament Leaderboard
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className={`text-sm font-medium transition-colors ${
-                    item.name === "Leaderboard"
-                      ? "text-green-600 font-semibold"
-                      : "text-slate-600 hover:text-green-600"
-                  }`}
-                >
-                  {item.name}
-                </a>
-              ))}
+          <div className="max-w-6xl mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="font-bold text-slate-900">
+                Tournament Leaderboard
+              </div>
+              <div className="hidden md:flex items-center space-x-8">
+                {navItems.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={`text-sm font-medium transition-colors ${
+                      item.name === "Leaderboard"
+                        ? "text-green-600 font-semibold"
+                        : "text-slate-600 hover:text-green-600"
+                    }`}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
         </nav>
       )}
 

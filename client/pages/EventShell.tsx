@@ -106,7 +106,10 @@ export default function EventShell() {
     };
 
     // Store session data
-    localStorage.setItem(`clubhouse_session_${slug}`, JSON.stringify(sessionData));
+    localStorage.setItem(
+      `clubhouse_session_${slug}`,
+      JSON.stringify(sessionData),
+    );
     setClubhouseSession(sessionData);
     navigate(`/events/${slug}/clubhouse`);
   };
