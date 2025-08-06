@@ -802,7 +802,7 @@ Format as markdown with headers. Include each course as a separate day. Limit re
             user_id: null, // Players created via AI quickstart are not linked to users
             invited_email: placeholderEmail,
             role: 'player',
-            status: 'accepted'
+            status: 'invited' // AI quickstart creates placeholder emails, so mark as invited
           };
         });
 
