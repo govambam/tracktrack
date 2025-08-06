@@ -152,8 +152,8 @@ export default function MyTrips() {
         return;
       }
 
-      // Fetch invited events
-      console.log("Loading invited events...");
+      // Fetch invited events where user_id matches current user
+      console.log("Loading invited events for user:", session.user.id);
       const { data: invitedEventsRaw, error: invitedError } = await supabase
         .from("event_players")
         .select(`
@@ -176,7 +176,12 @@ export default function MyTrips() {
           code: invitedError.code
         });
         console.error("Full error object:", JSON.stringify(invitedError, null, 2));
-        // Don't return here, just log the error and continue with owned events
+        // Continue with owned events only
+      } else {
+        console.log("Invited events query result:", {
+          count: invitedEventsRaw?.length || 0,
+          data: invitedEventsRaw
+        });
       }
 
       // Combine and format events
