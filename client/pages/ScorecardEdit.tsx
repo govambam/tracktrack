@@ -643,9 +643,9 @@ export default function ScorecardEdit() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className={`min-h-screen ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}>
       {/* Header */}
-      <div className="bg-white border-b border-blue-200 shadow-sm">
+      <div className={`bg-white shadow-sm ${currentTheme === "Masters" ? "border-b border-green-200" : currentTheme === "TourTech" ? "border-b border-gray-200" : "border-b border-blue-200"}`}>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
