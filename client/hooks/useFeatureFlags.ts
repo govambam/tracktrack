@@ -30,6 +30,7 @@ export const useDarkModeEnabled = () => useFeatureEnabled('enable-dark-mode');
 export const useAdvancedFeaturesEnabled = () => useFeatureEnabled('show-advanced-features');
 export const useBetaLeaderboard = () => useFeatureEnabled('beta-leaderboard');
 export const useEnhancedScoring = () => useFeatureEnabled('enhanced-scoring');
+export const useAIQuickstartFlow = () => useFeatureEnabled('ai_quickstart_create_flow');
 
 // Utility for checking multiple flags at once
 export const useMultipleFeatureFlags = (flags: FeatureFlagKey[]) => {
