@@ -41,6 +41,20 @@ import {
   CheckCircle,
 } from "lucide-react";
 
+// Emoji Safety Utility
+// Note: Complex emojis (especially those with modifiers like skin tone or gender)
+// can break across different systems. We use Lucide React icons instead for reliability.
+const getContestIcon = (contestType: string) => {
+  switch (contestType) {
+    case "closest_to_pin":
+      return Target;
+    case "longest_drive":
+      return Flag;
+    default:
+      return Target;
+  }
+};
+
 interface EventData {
   id: string;
   name: string;
