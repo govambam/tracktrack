@@ -116,6 +116,7 @@ export default function PlayersEdit() {
       }
     } catch (error) {
       console.error("Error loading players data:", error);
+      console.error("Full error details:", JSON.stringify(error, null, 2));
       setPlayers([
         {
           id: generateId(),
