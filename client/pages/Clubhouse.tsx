@@ -316,8 +316,7 @@ export default function Clubhouse() {
                       <Button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                         onClick={() => {
-                          // TODO: Navigate to scorecard editing
-                          console.log("Edit scorecard for round:", round.id);
+                          navigate(`/events/${slug}/clubhouse/scorecard/${round.id}`);
                         }}
                       >
                         <Edit className="h-4 w-4 mr-2" />
