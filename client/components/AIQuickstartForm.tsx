@@ -10,16 +10,17 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/supabase';
 import { toast } from '@/hooks/use-toast';
-import { 
-  Sparkles, 
-  Calendar, 
-  MapPin, 
-  Users, 
+import {
+  Sparkles,
+  Calendar,
+  MapPin,
+  Users,
   PartyPopper,
   ArrowLeft,
   Loader2,
   CheckCircle,
-  Wand2
+  Wand2,
+  RotateCcw
 } from 'lucide-react';
 
 interface Course {
