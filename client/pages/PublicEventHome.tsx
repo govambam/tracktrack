@@ -1215,6 +1215,8 @@ export default function PublicEventHome({
   const [skillsContests, setSkillsContests] = useState<any[]>([]);
   const [stablefordScoring, setStablefordScoring] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showClubhouseModal, setShowClubhouseModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (slug) {
