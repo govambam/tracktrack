@@ -471,10 +471,14 @@ export default function Clubhouse() {
           {/* Chat Tab */}
           <TabsContent value="chat" className="space-y-6">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-blue-900 mb-2">
+              <h2
+                className={`text-3xl font-bold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}
+              >
                 Event Chat
               </h2>
-              <p className="text-blue-600">
+              <p
+                className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
+              >
                 Stay connected with other players throughout the tournament
               </p>
             </div>
