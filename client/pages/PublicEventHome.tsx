@@ -424,21 +424,14 @@ const StickyNavigation = ({
           </div>
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) =>
-              item.name === "Clubhouse" ? (
-                <button
+              item.isExternal ? (
+                <a
                   key={item.name}
-                  onClick={handleClubhouseAccess || (() => {})}
-                  disabled={!hasClubhouse}
-                  className={`text-sm font-medium transition-colors ${
-                    hasClubhouse
-                      ? theme === "Masters"
-                        ? "text-green-800 hover:text-yellow-600 font-serif"
-                        : "text-slate-600 hover:text-green-600"
-                      : "text-slate-400 cursor-not-allowed"
-                  }`}
+                  href={item.href}
+                  className={`text-sm font-medium transition-colors ${theme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
                 >
                   {item.name}
-                </button>
+                </a>
               ) : (
                 <a
                   key={item.name}
