@@ -30,5 +30,8 @@ export function createServer() {
   // Events API routes
   app.use("/api", eventsRouter);
 
+  // Clubhouse API routes
+  app.use("/api/clubhouse", clubhouseRouter);
+
   return app;
 }
