@@ -251,6 +251,10 @@ export default function PlayersEdit() {
         const email = player.email?.trim();
         const existingPlayer = existingPlayerMap.get(player.id);
 
+        // Create a safe invited_email that satisfies the constraint
+        const safeInvitedEmail = email ||
+          `${player.name.trim().toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "")}_${player.id.slice(0, 8)}@placeholder.local`;
+
         const playerData = {
           id: player.id,
           event_id: eventId,
@@ -262,9 +266,7 @@ export default function PlayersEdit() {
           bio: bio && bio.length > 0 ? bio : null,
           // Invitation system fields - satisfy check constraint
           user_id: null, // Players created via edit interface are not linked to users
-          invited_email:
-            email ||
-            `${player.name.trim().toLowerCase().replace(/\s+/g, "_")}@placeholder.local`,
+          invited_email: safeInvitedEmail, // Always provide a valid email
           role: "player",
           status: email
             ? // If this is a new player with email, or existing player with new/changed email
@@ -274,7 +276,7 @@ export default function PlayersEdit() {
                 !email.includes("@placeholder.local"))
               ? "invited"
               : existingPlayer.status
-            : "pending",
+            : "accepted", // Change from "pending" to "accepted" for placeholder emails
         };
 
         // Track if this player needs an invitation email
