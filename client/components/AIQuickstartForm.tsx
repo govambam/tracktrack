@@ -294,9 +294,9 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
           event_id: eventData.id,
           name: course.name,
           par: course.par || null,
-          yardage: null, // Will be filled in later during customization
-          description: null, // Will be filled in later during customization
-          image_url: null, // Will be filled in later during customization
+          yardage: course.yardage || null,
+          description: course.description || null,
+          image_url: course.image_url || null,
           weather_note: null,
           display_order: index + 1
         }));
