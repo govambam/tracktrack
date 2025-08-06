@@ -219,78 +219,113 @@ export default function PlayersEdit() {
     setSaving(true);
 
     try {
-      // Delete existing players
-      const { error: deleteError } = await supabase
+      // Load existing players to compare
+      const { data: existingPlayers, error: existingError } = await supabase
         .from("event_players")
-        .delete()
+        .select("*")
         .eq("event_id", eventId);
 
-      if (deleteError) {
-        console.error("Error deleting existing players:", deleteError);
+      if (existingError) {
+        console.error("Error loading existing players:", existingError);
         toast({
           title: "Save Failed",
-          description: deleteError.message || "Failed to update players",
+          description: existingError.message || "Failed to load existing players",
           variant: "destructive",
         });
         return;
       }
 
-      // Insert new players
-      if (players.length > 0) {
-        const playersData = players.map((player) => {
-          const profileImage = player.image?.trim();
-          const bio = player.bio?.trim();
-          const email = player.email?.trim();
+      const existingPlayerMap = new Map();
+      (existingPlayers || []).forEach(player => {
+        existingPlayerMap.set(player.id, player);
+      });
 
-          return {
-            event_id: eventId,
-            full_name: player.name.trim(),
-            email: email || null,
-            handicap: player.handicap || null,
-            profile_image:
-              profileImage && profileImage.length > 0 ? profileImage : null,
-            bio: bio && bio.length > 0 ? bio : null,
-            // Invitation system fields - satisfy check constraint
-            user_id: null, // Players created via edit interface are not linked to users
-            invited_email: email || `${player.name.trim().toLowerCase().replace(/\s+/g, '_')}@placeholder.local`,
-            role: 'player',
-            status: email ? 'invited' : 'pending' // Only mark as invited if there's an email to send to
-          };
-        });
+      // Track which players are new or have email changes
+      const playersNeedingInvites = [];
 
-        console.log("Saving players data:", playersData);
-        console.log(
-          "Profile images being saved:",
-          playersData.map((p) => ({
-            name: p.full_name,
-            profile_image: p.profile_image,
-          })),
-        );
+      // Process each player - update existing or insert new
+      const upsertPromises = players.map(async (player) => {
+        const profileImage = player.image?.trim();
+        const bio = player.bio?.trim();
+        const email = player.email?.trim();
+        const existingPlayer = existingPlayerMap.get(player.id);
 
-        const { error: insertError } = await supabase
-          .from("event_players")
-          .insert(playersData);
+        const playerData = {
+          id: player.id,
+          event_id: eventId,
+          full_name: player.name.trim(),
+          email: email || null,
+          handicap: player.handicap || null,
+          profile_image:
+            profileImage && profileImage.length > 0 ? profileImage : null,
+          bio: bio && bio.length > 0 ? bio : null,
+          // Invitation system fields - satisfy check constraint
+          user_id: null, // Players created via edit interface are not linked to users
+          invited_email: email || `${player.name.trim().toLowerCase().replace(/\s+/g, '_')}@placeholder.local`,
+          role: 'player',
+          status: email ? (
+            // If this is a new player with email, or existing player with new/changed email
+            !existingPlayer ||
+            (existingPlayer.invited_email !== email && email && !email.includes('@placeholder.local')) ?
+            'invited' : existingPlayer.status
+          ) : 'pending'
+        };
 
-        if (insertError) {
-          console.error("Error inserting players:", insertError);
-          toast({
-            title: "Save Failed",
-            description: insertError.message || "Failed to save players",
-            variant: "destructive",
+        // Track if this player needs an invitation email
+        if (email &&
+            !email.includes('@placeholder.local') &&
+            !email.includes('@example.com') &&
+            (!existingPlayer ||
+             existingPlayer.invited_email !== email ||
+             existingPlayer.status !== 'invited')) {
+          playersNeedingInvites.push({
+            id: player.id,
+            name: player.name.trim(),
+            email: email
           });
-          return;
         }
 
-        console.log("Players saved successfully to database");
+        return supabase
+          .from("event_players")
+          .upsert(playerData, { onConflict: 'id' });
+      });
+
+      // Execute all upserts
+      const results = await Promise.all(upsertPromises);
+
+      // Check for any errors
+      const errors = results.filter(result => result.error);
+      if (errors.length > 0) {
+        console.error("Error saving players:", errors);
+        toast({
+          title: "Save Failed",
+          description: "Failed to save some players",
+          variant: "destructive",
+        });
+        return;
       }
 
-      // Send invitation emails for players with real email addresses
-      const playersWithEmails = players.filter(p =>
-        p.email &&
-        p.email.trim() &&
-        !p.email.includes('@placeholder.local') &&
-        !p.email.includes('@example.com')
+      // Remove players that were deleted
+      const currentPlayerIds = players.map(p => p.id);
+      const playersToDelete = (existingPlayers || []).filter(existing =>
+        !currentPlayerIds.includes(existing.id)
       );
+
+      if (playersToDelete.length > 0) {
+        const { error: deleteError } = await supabase
+          .from("event_players")
+          .delete()
+          .in('id', playersToDelete.map(p => p.id));
+
+        if (deleteError) {
+          console.error("Error deleting removed players:", deleteError);
+        }
+      }
+
+      console.log("Players saved successfully to database");
+
+      // Send invitation emails only to players who need them
+      const playersWithEmails = playersNeedingInvites;
 
       if (playersWithEmails.length > 0) {
         console.log("Sending invitation emails to:", playersWithEmails.map(p => p.email));
