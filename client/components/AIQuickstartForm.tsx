@@ -101,6 +101,9 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
     endDate: '',
     players: [],
     occasion: '',
+    theme: 'GolfOS',
+    hasEntryFee: false,
+    entryFeeAmount: 0,
   });
 
   useEffect(() => {
