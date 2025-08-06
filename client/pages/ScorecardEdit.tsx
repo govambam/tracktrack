@@ -609,12 +609,12 @@ export default function ScorecardEdit() {
 
   // Removed getScoreColor - using getScoreStyle instead for visual indicators
 
-  if (loading) {
+  if (loading || themeLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className={`min-h-screen flex items-center justify-center ${currentTheme === "Masters" ? "bg-gradient-to-br from-green-50 to-amber-50" : currentTheme === "TourTech" ? "bg-gray-50" : "bg-gradient-to-br from-blue-50 to-indigo-100"}`}>
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600 mx-auto mb-4" />
-          <p className="text-blue-700">Loading scorecard...</p>
+          <Loader2 className={`h-8 w-8 animate-spin mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`} />
+          <p className={`${currentTheme === "Masters" ? "text-green-700 font-serif" : currentTheme === "TourTech" ? "text-gray-700" : "text-blue-700"}`}>Loading scorecard...</p>
         </div>
       </div>
     );
