@@ -76,7 +76,7 @@ The Golf Event Team
         // Resend implementation
         const { Resend } = require('resend');
         const resend = new Resend(this.apiKey);
-        
+
         const response = await resend.emails.send({
           from: this.fromEmail,
           to,
@@ -84,10 +84,32 @@ The Golf Event Team
           text: textContent,
           html: htmlContent
         });
-        
+
         return { success: true, messageId: response.id };
       }
-      
+
+      else if (this.provider === 'mailgun') {
+        // Mailgun implementation
+        const formData = require('form-data');
+        const Mailgun = require('mailgun.js');
+
+        const mailgun = new Mailgun(formData);
+        const mg = mailgun.client({
+          username: 'api',
+          key: this.apiKey
+        });
+
+        const response = await mg.messages.create(this.domain, {
+          from: this.fromEmail,
+          to,
+          subject,
+          text: textContent,
+          html: htmlContent
+        });
+
+        return { success: true, messageId: response.id };
+      }
+
       else {
         throw new Error(`Unsupported email provider: ${this.provider}`);
       }
