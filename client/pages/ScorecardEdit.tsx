@@ -95,6 +95,13 @@ interface HoleEditData {
   contestWinners: { [contestId: string]: string };
 }
 
+interface EditingPlayerScore {
+  playerId: string;
+  playerName: string;
+  currentScore: number;
+  par: number;
+}
+
 export default function ScorecardEdit() {
   const { slug, roundId } = useParams();
   const navigate = useNavigate();
