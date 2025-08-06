@@ -30,5 +30,8 @@ export function createServer() {
   // Events API routes
   app.use("/api", eventsRouter);
 
+  // Invitations API routes
+  app.use("/api", invitationsRouter);
+
   return app;
 }
