@@ -254,37 +254,37 @@ export default function Clubhouse() {
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <a
-                href={`/events/${eventSlug}#overview`}
+                href={`/events/${slug}#overview`}
                 className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
               >
                 Overview
               </a>
               <a
-                href={`/events/${eventSlug}#courses`}
+                href={`/events/${slug}#courses`}
                 className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
               >
                 Courses
               </a>
               <a
-                href={`/events/${eventSlug}#scoring`}
+                href={`/events/${slug}#scoring`}
                 className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
               >
                 Scoring Format
               </a>
               <a
-                href={`/events/${eventSlug}#players`}
+                href={`/events/${slug}#players`}
                 className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
               >
                 Players
               </a>
               <a
-                href={`/events/${eventSlug}#prizes`}
+                href={`/events/${slug}#prizes`}
                 className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
               >
                 Prizes
               </a>
               <a
-                href={`/events/${eventSlug}#travel`}
+                href={`/events/${slug}#travel`}
                 className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
               >
                 Travel
@@ -295,15 +295,15 @@ export default function Clubhouse() {
                 Clubhouse
               </span>
               <a
-                href={`/events/${eventSlug}/leaderboard`}
+                href={`/events/${slug}/leaderboard`}
                 className={`text-sm font-medium transition-colors ${currentTheme === "Masters" ? "text-green-800 hover:text-yellow-600 font-serif" : "text-slate-600 hover:text-green-600"}`}
               >
                 Leaderboard
               </a>
               <Button
                 onClick={() => {
-                  localStorage.removeItem(`clubhouse_session_${eventSlug}`);
-                  navigate(`/events/${eventSlug}`);
+                  localStorage.removeItem(`clubhouse_session_${slug}`);
+                  navigate(`/events/${slug}`);
                 }}
                 variant="outline"
                 size="sm"
