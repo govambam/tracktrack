@@ -833,16 +833,11 @@ export default function ScorecardEdit() {
                           title={`Click to edit hole ${hole.hole} scores`}
                         >
                           <div className="flex items-center justify-center min-h-[32px]">
-                            <span
-                              className={`font-bold text-sm min-w-[20px] ${getScoreColor(
-                                hole.strokes,
-                                hole.par,
-                              )}`}
+                            <div
+                              className={`w-8 h-8 ${getScoreStyle(hole.strokes, hole.par)}`}
                             >
-                              {formatScore(hole.strokes, hole.par) ||
-                                hole.strokes ||
-                                ""}
-                            </span>
+                              {formatScore(hole.strokes, hole.par)}
+                            </div>
                           </div>
                         </td>
                       ))}
