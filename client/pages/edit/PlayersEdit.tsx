@@ -132,7 +132,7 @@ export default function PlayersEdit() {
     }
   };
 
-  const generateId = () => Math.random().toString(36).substr(2, 9);
+  const generateId = () => crypto.randomUUID();
 
   const addPlayer = () => {
     const newPlayer: Player = {
