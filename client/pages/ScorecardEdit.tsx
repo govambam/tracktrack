@@ -922,9 +922,9 @@ export default function ScorecardEdit() {
                             .replace(/\b\w/g, (l) => l.toUpperCase())}
                         </Label>
                         <Select
-                          value={editingHole.contestWinners[contest.id] || ""}
+                          value={editingHole.contestWinners[contest.id] || "none"}
                           onValueChange={(value) =>
-                            updateContestWinner(contest.id, value)
+                            updateContestWinner(contest.id, value === "none" ? "" : value)
                           }
                         >
                           <SelectTrigger>
