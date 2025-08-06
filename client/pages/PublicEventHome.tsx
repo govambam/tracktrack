@@ -1654,7 +1654,6 @@ export default function PublicEventHome({
         getScoringFormat={getScoringFormat}
       />
 
-
       {/* Summary Cards Section */}
       {currentTheme !== "TourTech" && currentTheme !== "Masters" && (
         <section className="py-24 px-6 sm:px-8 lg:px-12 relative">
