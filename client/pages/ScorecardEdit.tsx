@@ -570,12 +570,39 @@ export default function ScorecardEdit() {
 
   const formatScore = (strokes: number, par: number) => {
     if (strokes === 0) return "";
+    return strokes.toString(); // Always show the actual score
+  };
+
+  const getScoreStyle = (strokes: number, par: number) => {
+    if (strokes === 0) return "";
     const diff = strokes - par;
-    if (diff <= -2) return "E"; // Eagle or better
-    if (diff === -1) return "B"; // Birdie
-    if (diff === 0) return "P"; // Par
-    if (diff === 1) return "+"; // Bogey
-    return strokes.toString(); // Double bogey or worse, show actual strokes
+
+    // Base styles
+    let classes = "font-bold text-sm min-w-[20px] flex items-center justify-center relative ";
+
+    if (diff <= -2) {
+      // Eagle: double circle
+      classes += "text-yellow-600 rounded-full border-2 border-yellow-600 bg-yellow-50 shadow-lg";
+      classes += " before:content-[''] before:absolute before:inset-[-3px] before:rounded-full before:border-2 before:border-yellow-600";
+    } else if (diff === -1) {
+      // Birdie: single circle
+      classes += "text-green-600 rounded-full border-2 border-green-600 bg-green-50";
+    } else if (diff === 0) {
+      // Par: no special styling
+      classes += "text-blue-600";
+    } else if (diff === 1) {
+      // Bogey: square
+      classes += "text-orange-600 border-2 border-orange-600 bg-orange-50";
+    } else if (diff === 2) {
+      // Double bogey: double square
+      classes += "text-red-600 border-2 border-red-600 bg-red-50 shadow-lg";
+      classes += " before:content-[''] before:absolute before:inset-[-3px] before:border-2 before:border-red-600";
+    } else {
+      // Worse than double bogey
+      classes += "text-red-600 font-extrabold";
+    }
+
+    return classes;
   };
 
   const getScoreColor = (strokes: number, par: number) => {
