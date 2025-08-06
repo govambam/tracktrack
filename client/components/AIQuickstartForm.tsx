@@ -228,14 +228,56 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
   };
 
   const generateEventDescription = (occasion: string, courses: Course[], dates: { start: string, end: string }) => {
-    const coursesText = courses.length === 1 
-      ? courses[0].name 
+    const coursesText = courses.length === 1
+      ? courses[0].name
       : `${courses.length} amazing courses`;
-    
+
     const startDate = new Date(dates.start).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
     const endDate = new Date(dates.end).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-    
+
     return `Join us for an unforgettable ${occasion.toLowerCase()} golf experience from ${startDate} to ${endDate}. We'll be playing ${coursesText} and creating memories that will last a lifetime.`;
+  };
+
+  const calculatePayouts = (entryFee: number, playerCount: number, courseCount: number) => {
+    if (!entryFee || !playerCount) return [];
+
+    const totalPrizePool = entryFee * playerCount;
+    const winnerAmount = entryFee * 2; // 200% of buy-in
+    const runnerUpAmount = entryFee * 1; // 100% of buy-in
+
+    // Remaining amount for contests: 1 long drive + 1 closest to pin per round
+    const remainingAmount = totalPrizePool - winnerAmount - runnerUpAmount;
+    const contestCount = courseCount * 2; // 2 contests per round
+    const contestAmount = contestCount > 0 ? remainingAmount / contestCount : 0;
+
+    const payouts = [
+      {
+        category: 'overall_champion',
+        amount: winnerAmount,
+        description: 'Overall Champion'
+      },
+      {
+        category: 'runner_up',
+        amount: runnerUpAmount,
+        description: 'Runner Up'
+      }
+    ];
+
+    // Add contest prizes
+    for (let i = 0; i < courseCount; i++) {
+      payouts.push({
+        category: 'longest_drive',
+        amount: contestAmount,
+        description: `Longest Drive - Round ${i + 1}`
+      });
+      payouts.push({
+        category: 'closest_to_pin',
+        amount: contestAmount,
+        description: `Closest to Pin - Round ${i + 1}`
+      });
+    }
+
+    return payouts;
   };
 
   const generateAIContent = async () => {
