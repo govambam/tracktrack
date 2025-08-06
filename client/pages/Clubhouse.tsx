@@ -272,13 +272,13 @@ export default function Clubhouse() {
             </div>
 
             {rounds.length === 0 ? (
-              <Card className="border-blue-200">
+              <Card className={`${currentTheme === "Masters" ? "border-green-200" : currentTheme === "TourTech" ? "border-gray-200" : "border-blue-200"}`}>
                 <CardContent className="p-8 text-center">
-                  <Target className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-blue-900 mb-2">
+                  <Target className={`h-12 w-12 mx-auto mb-4 ${currentTheme === "Masters" ? "text-green-400" : currentTheme === "TourTech" ? "text-gray-400" : "text-blue-400"}`} />
+                  <h3 className={`text-xl font-semibold mb-2 ${currentTheme === "Masters" ? "text-green-900 font-serif" : currentTheme === "TourTech" ? "text-gray-900" : "text-blue-900"}`}>
                     No Rounds Available
                   </h3>
-                  <p className="text-blue-600">
+                  <p className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}>
                     Rounds will appear here once they are added to the event.
                   </p>
                 </CardContent>
