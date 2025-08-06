@@ -2822,6 +2822,17 @@ export default function PublicEventHome({
           }}
         />
       )}
+
+      {/* Clubhouse Password Modal */}
+      {eventData && (
+        <ClubhousePasswordModal
+          isOpen={showClubhouseModal}
+          onClose={() => setShowClubhouseModal(false)}
+          onSuccess={handleClubhouseSuccess}
+          eventName={eventData.name}
+          eventId={eventData.id}
+        />
+      )}
     </div>
   );
 }
