@@ -1183,6 +1183,69 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Course management functions
+  const searchCourses = async (query: string): Promise<Course[]> => {
+    try {
+      const { data, error } = await supabase
+        .from("courses")
+        .select("*")
+        .ilike("name", `%${query}%`)
+        .order("is_official", { ascending: false })
+        .order("name", { ascending: true })
+        .limit(20);
+
+      if (error) {
+        console.error("Error searching courses:", error);
+        return [];
+      }
+
+      return data || [];
+    } catch (error) {
+      console.error("Error searching courses:", error);
+      return [];
+    }
+  };
+
+  const createCourse = async (courseData: Omit<Course, "id">) => {
+    try {
+      const { data, error } = await supabase
+        .from("courses")
+        .insert([{ ...courseData, is_official: false }])
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Error creating course:", error);
+        return { success: false, error: error.message };
+      }
+
+      return { success: true, course: data };
+    } catch (error) {
+      console.error("Error creating course:", error);
+      return { success: false, error: "Failed to create course" };
+    }
+  };
+
+  const getCourseById = async (courseId: string): Promise<Course | null> => {
+    try {
+      const { data, error } = await supabase
+        .from("courses")
+        .select("*")
+        .eq("id", courseId)
+        .single();
+
+      if (error) {
+        console.error("Error getting course:", error);
+        return null;
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error getting course:", error);
+      return null;
+    }
+  };
+
   const contextValue: TripCreationContextType = {
     state,
     updateBasicInfo: (data) =>
