@@ -26,6 +26,10 @@ CREATE TABLE IF NOT EXISTS courses (
 CREATE INDEX IF NOT EXISTS idx_courses_name ON courses(name);
 CREATE INDEX IF NOT EXISTS idx_courses_official ON courses(is_official);
 
+-- Add index for course_holes.course_id for better performance
+CREATE INDEX IF NOT EXISTS idx_course_holes_course_id ON course_holes(course_id);
+CREATE INDEX IF NOT EXISTS idx_event_rounds_course_id ON event_rounds(course_id);
+
 -- Enable RLS
 ALTER TABLE courses ENABLE ROW LEVEL SECURITY;
 
