@@ -48,6 +48,7 @@ interface EventRound {
   tee_time?: string;
   scoring_type: string;
   holes: number;
+  round_number?: number; // Calculated field
 }
 
 interface EventData {
