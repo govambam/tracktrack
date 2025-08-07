@@ -1811,7 +1811,7 @@ export default function PublicEventHome({
       ) : (
         /* Normal Navigation - Hidden in draft mode */
         !hideNavigation && (
-          <div style={{ display: isDraftMode ? 'none' : 'block' }}>
+          <div style={{ display: isDraftMode ? "none" : "block" }}>
             <StickyNavigation
               eventName={eventData.name}
               slug={slug!}
