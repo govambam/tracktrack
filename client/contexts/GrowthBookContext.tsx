@@ -277,6 +277,7 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
         setIsLoaded(true);
       } catch (error) {
         console.error("Failed to load GrowthBook features:", error);
+        setLoadingError(error instanceof Error ? error.message : "Unknown error");
         console.log("Continuing without GrowthBook features...");
         setIsLoaded(true); // Continue even if features fail to load
       }
