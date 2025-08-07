@@ -617,10 +617,7 @@ Format as markdown with headers. Include each course as a separate day. Limit re
         throw new Error("No occasion selected");
       }
 
-      // Get selected courses data
-      const selectedCourses = courses.filter((c) =>
-        formData.courses.includes(c.id),
-      );
+      // Use the selectedCourses state directly
       console.log("Selected courses:", selectedCourses);
 
       if (selectedCourses.length === 0) {
