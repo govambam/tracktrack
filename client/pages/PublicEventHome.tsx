@@ -1964,7 +1964,7 @@ export default function PublicEventHome({
               >
                 {courses.map((course, index) => {
                   const round = rounds.find(
-                    (r) => r.course_name === course.name,
+                    (r) => (r.courses?.name || r.course_name) === course.name,
                   );
                   return (
                     <AnimatedCourseCard
