@@ -67,7 +67,7 @@ export default function PublicLeaderboard({
         await Promise.all([
           supabase
             .from("event_rounds")
-            .select("*, courses(id, name, location, total_holes, total_par, is_official)")
+            .select("*, courses(id, name, location, holes, par, is_official)")
             .eq("event_id", event.id)
             .order("created_at"),
 
