@@ -1190,7 +1190,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       const { data, error } = await supabase
         .from("courses")
         .select("*")
-        .ilike("name", `%${query}%`)
+        .or(`name.ilike.%${query}%,location.ilike.%${query}%`)
         .order("is_official", { ascending: false })
         .order("name", { ascending: true })
         .limit(20);
