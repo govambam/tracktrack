@@ -117,8 +117,8 @@ interface EventRound {
     id: string;
     name: string;
     location?: string;
-    total_holes?: number;
-    total_par?: number;
+    holes?: number;
+    par?: number;
     is_official: boolean;
   };
 }
