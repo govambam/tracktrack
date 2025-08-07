@@ -216,7 +216,9 @@ interface TripCreationContextType {
   saveCustomization: () => Promise<{ success: boolean; error?: string }>;
   // Course management functions
   searchCourses: (query: string) => Promise<Course[]>;
-  createCourse: (courseData: Omit<Course, "id">) => Promise<{ success: boolean; course?: Course; error?: string }>;
+  createCourse: (
+    courseData: Omit<Course, "id">,
+  ) => Promise<{ success: boolean; course?: Course; error?: string }>;
   getCourseById: (courseId: string) => Promise<Course | null>;
 }
 
@@ -1205,7 +1207,9 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const createCourse = async (courseData: Omit<Course, "id" | "created_at">) => {
+  const createCourse = async (
+    courseData: Omit<Course, "id" | "created_at">,
+  ) => {
     try {
       const { data, error } = await supabase
         .from("courses")

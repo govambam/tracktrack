@@ -63,32 +63,34 @@ export default function PublicLeaderboard({
       setEventData(event);
 
       // Load rounds, players, scores, and course holes in parallel
-      const [roundsResult, playersResult, scoresResult, courseHolesResult, coursesResult] =
-        await Promise.all([
-          supabase
-            .from("event_rounds")
-            .select("*, courses(id, name, location, holes, par, is_official)")
-            .eq("event_id", event.id)
-            .order("created_at"),
+      const [
+        roundsResult,
+        playersResult,
+        scoresResult,
+        courseHolesResult,
+        coursesResult,
+      ] = await Promise.all([
+        supabase
+          .from("event_rounds")
+          .select("*, courses(id, name, location, holes, par, is_official)")
+          .eq("event_id", event.id)
+          .order("created_at"),
 
-          supabase
-            .from("event_players")
-            .select("*")
-            .eq("event_id", event.id)
-            .order("full_name"),
+        supabase
+          .from("event_players")
+          .select("*")
+          .eq("event_id", event.id)
+          .order("full_name"),
 
-          supabase.from("scorecards").select("*").eq("event_id", event.id),
+        supabase.from("scorecards").select("*").eq("event_id", event.id),
 
-          supabase
-            .from("course_holes")
-            .select("*")
-            .order("course_name, hole_number"),
+        supabase
+          .from("course_holes")
+          .select("*")
+          .order("course_name, hole_number"),
 
-          supabase
-            .from("courses")
-            .select("*")
-            .order("name"),
-        ]);
+        supabase.from("courses").select("*").order("name"),
+      ]);
 
       setRounds(roundsResult.data || []);
       setPlayers(playersResult.data || []);
@@ -414,10 +416,11 @@ export default function PublicLeaderboard({
           const courseName = course?.name || round.course_name;
 
           const roundHoles = courseHoles
-            .filter((hole) =>
-              // Try to match by course ID first, then fall back to name
-              (course && hole.course_id === course.id) ||
-              hole.course_name === courseName
+            .filter(
+              (hole) =>
+                // Try to match by course ID first, then fall back to name
+                (course && hole.course_id === course.id) ||
+                hole.course_name === courseName,
             )
             .sort((a, b) => a.hole_number - b.hole_number);
 
@@ -490,7 +493,9 @@ export default function PublicLeaderboard({
                 )}
               </div>
               {course?.location && (
-                <p className="text-slate-500 text-sm mb-2">📍 {course.location}</p>
+                <p className="text-slate-500 text-sm mb-2">
+                  📍 {course.location}
+                </p>
               )}
               <p className="text-slate-600 mb-6">
                 {holes.length} holes •{" "}

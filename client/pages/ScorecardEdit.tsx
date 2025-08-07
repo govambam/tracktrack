@@ -753,7 +753,8 @@ export default function ScorecardEdit() {
                 <p
                   className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
                 >
-                  {round.courses?.name || round.course_name} • {session?.displayName}
+                  {round.courses?.name || round.course_name} •{" "}
+                  {session?.displayName}
                   {!hasParData && (
                     <span className="ml-2 text-amber-600">
                       • Course data pending
@@ -791,7 +792,8 @@ export default function ScorecardEdit() {
               <Target
                 className={`h-5 w-5 mr-2 ${currentTheme === "Masters" ? "text-green-600" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
               />
-              {round.courses?.name || round.course_name} - Round {round.round_number}
+              {round.courses?.name || round.course_name} - Round{" "}
+              {round.round_number}
             </CardTitle>
           </CardHeader>
           <CardContent>

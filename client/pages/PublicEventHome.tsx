@@ -1578,9 +1578,7 @@ export default function PublicEventHome({
           const round = rounds.find((r) => r.id === contest.round_id);
           if (round) {
             const courseName = round.courses?.name || round.course_name;
-            const existing = acc.find(
-              (item) => item.roundName === courseName,
-            );
+            const existing = acc.find((item) => item.roundName === courseName);
             if (existing) {
               existing.holes.push(contest.hole);
             } else {
@@ -3081,7 +3079,9 @@ export default function PublicEventHome({
                                 className={`flex items-center space-x-2 text-sm ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
                               >
                                 <MapPin className="h-4 w-4" />
-                                <span>{round.courses?.name || round.course_name}</span>
+                                <span>
+                                  {round.courses?.name || round.course_name}
+                                </span>
                               </div>
                               <div
                                 className={`flex items-center space-x-2 text-sm ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}

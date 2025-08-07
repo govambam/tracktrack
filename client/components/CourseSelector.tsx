@@ -28,7 +28,9 @@ interface CourseSelectorProps {
   value?: string; // courseId
   courseName?: string; // for backward compatibility
   onCourseSelect: (course: Course | null, courseName?: string) => void;
-  onCourseCreate?: (courseData: Omit<Course, "id">) => Promise<{ success: boolean; course?: Course; error?: string }>;
+  onCourseCreate?: (
+    courseData: Omit<Course, "id">,
+  ) => Promise<{ success: boolean; course?: Course; error?: string }>;
   searchCourses: (query: string) => Promise<Course[]>;
   placeholder?: string;
   className?: string;
@@ -106,7 +108,10 @@ export function CourseSelector({
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
@@ -276,7 +281,8 @@ export function CourseSelector({
           <DialogHeader>
             <DialogTitle>Add New Golf Course</DialogTitle>
             <DialogDescription>
-              Add course details to our database. This course will be available for future events.
+              Add course details to our database. This course will be available
+              for future events.
             </DialogDescription>
           </DialogHeader>
 
@@ -286,7 +292,9 @@ export function CourseSelector({
               <Input
                 id="course-name"
                 value={createForm.name}
-                onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
+                onChange={(e) =>
+                  setCreateForm({ ...createForm, name: e.target.value })
+                }
                 placeholder="Enter course name"
               />
             </div>
@@ -296,7 +304,9 @@ export function CourseSelector({
               <Input
                 id="course-location"
                 value={createForm.location}
-                onChange={(e) => setCreateForm({ ...createForm, location: e.target.value })}
+                onChange={(e) =>
+                  setCreateForm({ ...createForm, location: e.target.value })
+                }
                 placeholder="City, State/Country"
               />
             </div>
@@ -310,7 +320,12 @@ export function CourseSelector({
                   min="9"
                   max="36"
                   value={createForm.holes}
-                  onChange={(e) => setCreateForm({ ...createForm, holes: parseInt(e.target.value) || 18 })}
+                  onChange={(e) =>
+                    setCreateForm({
+                      ...createForm,
+                      holes: parseInt(e.target.value) || 18,
+                    })
+                  }
                 />
               </div>
               <div>
@@ -321,7 +336,12 @@ export function CourseSelector({
                   min="27"
                   max="108"
                   value={createForm.par}
-                  onChange={(e) => setCreateForm({ ...createForm, par: parseInt(e.target.value) || 72 })}
+                  onChange={(e) =>
+                    setCreateForm({
+                      ...createForm,
+                      par: parseInt(e.target.value) || 72,
+                    })
+                  }
                   placeholder="72"
                 />
               </div>
@@ -333,7 +353,12 @@ export function CourseSelector({
                   min="1000"
                   max="9000"
                   value={createForm.yardage}
-                  onChange={(e) => setCreateForm({ ...createForm, yardage: parseInt(e.target.value) || 6800 })}
+                  onChange={(e) =>
+                    setCreateForm({
+                      ...createForm,
+                      yardage: parseInt(e.target.value) || 6800,
+                    })
+                  }
                   placeholder="6800"
                 />
               </div>
@@ -345,7 +370,9 @@ export function CourseSelector({
                 id="course-image"
                 type="url"
                 value={createForm.image_url}
-                onChange={(e) => setCreateForm({ ...createForm, image_url: e.target.value })}
+                onChange={(e) =>
+                  setCreateForm({ ...createForm, image_url: e.target.value })
+                }
                 placeholder="https://..."
               />
             </div>
@@ -355,7 +382,9 @@ export function CourseSelector({
               <Input
                 id="course-description"
                 value={createForm.description}
-                onChange={(e) => setCreateForm({ ...createForm, description: e.target.value })}
+                onChange={(e) =>
+                  setCreateForm({ ...createForm, description: e.target.value })
+                }
                 placeholder="Brief course description (optional)"
               />
             </div>
