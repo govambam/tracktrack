@@ -111,6 +111,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
   const [loadingCourses, setLoadingCourses] = useState(false);
   const [selectedCourses, setSelectedCourses] = useState<Course[]>([]);
   const [courseSearchQuery, setCourseSearchQuery] = useState("");
+  const { searchCourses, createCourse } = useTripCreation();
   const [newPlayerInput, setNewPlayerInput] = useState("");
   const [formData, setFormData] = useState<QuickstartData>({
     courses: [],
