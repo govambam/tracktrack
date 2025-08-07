@@ -16,7 +16,8 @@ export interface SkillsContest {
 
 export interface Round {
   id: string;
-  courseName: string;
+  courseName: string; // Keep for backward compatibility
+  courseId?: string; // New field for centralized courses
   courseUrl?: string;
   date: string;
   time: string;
