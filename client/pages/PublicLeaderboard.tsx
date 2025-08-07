@@ -425,7 +425,7 @@ export default function PublicLeaderboard({
           const holes =
             roundHoles.length > 0
               ? roundHoles
-              : Array.from({ length: course?.total_holes || 18 }, (_, i) => ({
+              : Array.from({ length: course?.holes || 18 }, (_, i) => ({
                   hole_number: i + 1,
                   par: null,
                   course_name: courseName,
