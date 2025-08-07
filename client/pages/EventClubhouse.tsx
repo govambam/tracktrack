@@ -39,7 +39,6 @@ interface EventRound {
   tee_time?: string;
   scoring_type: string;
   holes: number;
-  round_number: number;
 }
 
 interface ClubhouseSession {
@@ -298,7 +297,7 @@ export default function EventClubhouse() {
                             : "text-blue-900"
                       }`}
                     >
-                      <span>Round {round.round_number}</span>
+                      <span>Round {rounds.indexOf(round) + 1}</span>
                       <Edit
                         className={`h-4 w-4 ${
                           currentTheme === "Masters"
