@@ -1822,6 +1822,13 @@ export default function PublicEventHome({
         )
       )}
 
+      {/* Debug info */}
+      {isDraftMode && (
+        <div className="fixed top-20 left-4 bg-red-500 text-white p-2 text-xs z-50">
+          Draft Mode: {isDraftMode.toString()}
+        </div>
+      )}
+
       {/* Hero Section */}
       <div className={isDraftMode ? "pt-20" : ""}>
         <components.Hero
