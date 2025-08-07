@@ -378,7 +378,8 @@ export const useFeatureFlag = (key: string, fallback: any = false) => {
 // Hook to check if feature is enabled (boolean features)
 export const useFeatureEnabled = (key: string) => {
   const growthbook = useGrowthBook();
-  return growthbook.isOn(key);
+  // Use getFeatureValue with false fallback instead of isOn for better error handling
+  return growthbook.getFeatureValue(key, false);
 };
 
 // Hook to access user attributes
