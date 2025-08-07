@@ -86,7 +86,7 @@ export default function EventClubhouse() {
         .from("event_rounds")
         .select("*")
         .eq("event_id", eventData.id)
-        .order("round_number");
+        .order("created_at");
 
       if (roundsError) {
         console.error("Error loading rounds:", roundsError);
