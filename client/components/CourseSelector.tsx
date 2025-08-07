@@ -216,37 +216,63 @@ export function CourseSelector({
                 {searchResults.length > 0 && (
                   <div className="border-b">
                     <div className="p-2 text-xs font-medium text-gray-600 bg-gray-50">
-                      Found Courses
+                      Found Courses (Click to select/deselect)
                     </div>
-                    {searchResults.map((course) => (
-                      <button
-                        key={course.id}
-                        onClick={() => handleCourseSelect(course)}
-                        className="w-full p-3 text-left hover:bg-gray-50 border-b last:border-b-0 flex items-center justify-between"
-                      >
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2">
-                            <span className="font-medium">{course.name}</span>
-                            {course.is_official && (
-                              <Badge variant="secondary" className="text-xs">
-                                Official
-                              </Badge>
+                    {searchResults.map((course) => {
+                      const isSelected = selectedCourses.find(c => c.id === course.id);
+                      return (
+                        <div
+                          key={course.id}
+                          onClick={() => handleCourseToggle(course)}
+                          className={`p-3 border-b last:border-b-0 cursor-pointer hover:bg-gray-50 transition-colors ${
+                            isSelected ? 'bg-emerald-50 border-emerald-200' : ''
+                          }`}
+                        >
+                          <div className="flex items-start space-x-3">
+                            <Checkbox
+                              checked={!!isSelected}
+                              onChange={() => {}} // Controlled by parent click
+                              className="mt-1 flex-shrink-0"
+                            />
+                            <div className="flex-1 space-y-1">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-2">
+                                  <span className="font-medium">{course.name}</span>
+                                  {course.is_official && (
+                                    <Badge variant="secondary" className="text-xs">
+                                      Official
+                                    </Badge>
+                                  )}
+                                </div>
+                              </div>
+                              {course.location && (
+                                <div className="flex items-center space-x-1 text-sm text-gray-500">
+                                  <MapPin className="h-3 w-3" />
+                                  <span>{course.location}</span>
+                                </div>
+                              )}
+                              {course.description && (
+                                <div className="text-sm text-gray-600 line-clamp-2">
+                                  {course.description}
+                                </div>
+                              )}
+                              <div className="flex items-center space-x-3 text-xs text-gray-500">
+                                {course.holes && <span>{course.holes} holes</span>}
+                                {course.par && <span>Par {course.par}</span>}
+                                {course.yardage && <span>{course.yardage} yards</span>}
+                              </div>
+                            </div>
+                            {course.image_url && (
+                              <img
+                                src={course.image_url}
+                                alt={course.name}
+                                className="w-16 h-12 rounded object-cover flex-shrink-0"
+                              />
                             )}
                           </div>
-                          {course.location && (
-                            <div className="flex items-center space-x-1 text-sm text-gray-500 mt-1">
-                              <MapPin className="h-3 w-3" />
-                              <span>{course.location}</span>
-                            </div>
-                          )}
-                          {course.holes && course.par && (
-                            <div className="text-xs text-gray-400 mt-1">
-                              {course.holes} holes • Par {course.par}
-                            </div>
-                          )}
                         </div>
-                      </button>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
 
