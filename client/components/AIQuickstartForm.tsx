@@ -1184,104 +1184,90 @@ Format as markdown with headers. Include each course as a separate day. Limit re
           <span>Entry Fee</span>
         </Label>
         <div className="space-y-3">
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="hasEntryFee"
-              checked={formData.hasEntryFee}
-              onCheckedChange={(checked) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  hasEntryFee: checked as boolean,
-                  entryFeeAmount: checked ? prev.entryFeeAmount : 0,
-                }))
-              }
-            />
-            <Label htmlFor="hasEntryFee" className="cursor-pointer">
-              This event has an entry fee
+          <div>
+            <Label htmlFor="entryAmount" className="text-sm font-medium mb-2 block">
+              Amount per player (leave blank for no entry fee)
             </Label>
+            <div className="flex items-center space-x-2">
+              <span className="text-slate-600 text-lg">$</span>
+              <Input
+                id="entryAmount"
+                type="number"
+                min="0"
+                value={formData.entryFeeAmount || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    entryFeeAmount: parseInt(e.target.value) || 0,
+                  }))
+                }
+                placeholder="0"
+                className="w-40 text-base sm:text-sm h-12 sm:h-10"
+              />
+            </div>
+            {formData.entryFeeAmount === 0 && (
+              <div className="text-sm text-slate-500 mt-2">
+                No entry fee - this will be a casual event
+              </div>
+            )}
           </div>
 
-          {formData.hasEntryFee && (
-            <div className="ml-6 space-y-2">
-              <Label htmlFor="entryAmount" className="text-sm font-medium">
-                Amount per player
-              </Label>
-              <div className="flex items-center space-x-2">
-                <span className="text-slate-600">$</span>
-                <Input
-                  id="entryAmount"
-                  type="number"
-                  min="1"
-                  value={formData.entryFeeAmount || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      entryFeeAmount: parseInt(e.target.value) || 0,
-                    }))
-                  }
-                  placeholder="0"
-                  className="w-32"
-                />
-              </div>
-
-              {formData.entryFeeAmount > 0 &&
-                formData.players.length > 0 &&
-                formData.courses.length > 0 && (
-                  <div className="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg">
-                    <div className="font-medium mb-2">Prize Pool Preview:</div>
-                    <div className="space-y-1">
+          {formData.entryFeeAmount > 0 &&
+            formData.players.length > 0 &&
+            formData.courses.length > 0 && (
+              <div className="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg">
+                <div className="font-medium mb-2">Prize Pool Preview:</div>
+                <div className="space-y-1">
+                  <div>
+                    Total Prize Pool: $
+                    {(
+                      formData.entryFeeAmount * formData.players.length
+                    ).toLocaleString()}
+                  </div>
+                  <div>
+                    Winner: $
+                    {(formData.entryFeeAmount * 2).toLocaleString()} (200%
+                    of buy-in)
+                  </div>
+                  <div>
+                    Runner-up: ${formData.entryFeeAmount.toLocaleString()}{" "}
+                    (100% of buy-in)
+                  </div>
+                  {formData.courses.length > 0 && (
+                    <>
                       <div>
-                        Total Prize Pool: $
+                        Longest Drive: $
                         {(
-                          formData.entryFeeAmount * formData.players.length
+                          (formData.entryFeeAmount *
+                            formData.players.length -
+                            formData.entryFeeAmount * 3) /
+                          2
                         ).toLocaleString()}
                       </div>
                       <div>
-                        Winner: $
-                        {(formData.entryFeeAmount * 2).toLocaleString()} (200%
-                        of buy-in)
+                        Closest to Pin: $
+                        {(
+                          (formData.entryFeeAmount *
+                            formData.players.length -
+                            formData.entryFeeAmount * 3) /
+                          2
+                        ).toLocaleString()}
                       </div>
-                      <div>
-                        Runner-up: ${formData.entryFeeAmount.toLocaleString()}{" "}
-                        (100% of buy-in)
+                      <div className="text-xs text-slate-500 mt-2">
+                        • {formData.courses.length} Longest Drive contest
+                        {formData.courses.length !== 1 ? "s" : ""} (1 per
+                        round)
                       </div>
-                      {formData.courses.length > 0 && (
-                        <>
-                          <div>
-                            Longest Drive: $
-                            {(
-                              (formData.entryFeeAmount *
-                                formData.players.length -
-                                formData.entryFeeAmount * 3) /
-                              2
-                            ).toLocaleString()}
-                          </div>
-                          <div>
-                            Closest to Pin: $
-                            {(
-                              (formData.entryFeeAmount *
-                                formData.players.length -
-                                formData.entryFeeAmount * 3) /
-                              2
-                            ).toLocaleString()}
-                          </div>
-                          <div className="text-xs text-slate-500 mt-2">
-                            • {formData.courses.length} Longest Drive contest
-                            {formData.courses.length !== 1 ? "s" : ""} (1 per
-                            round)
-                          </div>
-                          <div className="text-xs text-slate-500">
-                            • {formData.courses.length} Closest to Pin contest
-                            {formData.courses.length !== 1 ? "s" : ""} (1 per
-                            round)
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                )}
-            </div>
-          )}
+                      <div className="text-xs text-slate-500">
+                        • {formData.courses.length} Closest to Pin contest
+                        {formData.courses.length !== 1 ? "s" : ""} (1 per
+                        round)
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
         </div>
       </div>
 
