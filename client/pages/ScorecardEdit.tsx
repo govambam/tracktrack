@@ -212,7 +212,7 @@ export default function ScorecardEdit() {
       setCourseHoles(holes);
 
       // Load all existing event players and their scores
-      await loadEventPlayersAndScores(event.id, roundId, holes);
+      await loadEventPlayersAndScores(event.id, roundId, holes, courseHasParData);
 
       // Load skills contests for this event and round
       await loadSkillsContests(event.id, roundId);
@@ -228,6 +228,7 @@ export default function ScorecardEdit() {
     eventId: string,
     roundId: string,
     holes: HoleScore[],
+    courseHasParData: boolean,
   ) => {
     try {
       // Load all existing event players (don't create new ones)
