@@ -242,13 +242,33 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     // Initialize attributes and load features
     const initializeGrowthBook = async () => {
-      await updateUserAttributes();
+      console.log("Initializing GrowthBook...");
 
       try {
-        await growthbook.loadFeatures();
+        await updateUserAttributes();
+        console.log("User attributes updated successfully");
+      } catch (error) {
+        console.error("Failed to update user attributes:", error);
+      }
+
+      try {
+        console.log("Loading GrowthBook features...");
+
+        // Add a timeout to prevent hanging indefinitely
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("GrowthBook load timeout")), 10000)
+        );
+
+        await Promise.race([
+          growthbook.loadFeatures(),
+          timeoutPromise
+        ]);
+
+        console.log("GrowthBook features loaded successfully");
         setIsLoaded(true);
       } catch (error) {
         console.error("Failed to load GrowthBook features:", error);
+        console.log("Continuing without GrowthBook features...");
         setIsLoaded(true); // Continue even if features fail to load
       }
     };
