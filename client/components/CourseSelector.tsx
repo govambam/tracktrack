@@ -64,13 +64,6 @@ export function CourseSelector({
   const searchRef = useRef<HTMLDivElement>(null);
   const searchTimeoutRef = useRef<NodeJS.Timeout>();
 
-  // Initialize with current course name for backward compatibility
-  useEffect(() => {
-    if (courseName && !value) {
-      setSearchQuery(courseName);
-    }
-  }, [courseName, value]);
-
   // Search courses with debouncing
   useEffect(() => {
     if (searchTimeoutRef.current) {
