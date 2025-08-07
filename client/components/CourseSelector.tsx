@@ -160,8 +160,11 @@ export function CourseSelector({
       });
 
       if (result.success && result.course) {
-        handleCourseSelect(result.course);
+        // Add the new course to selection
+        const newSelection = [...selectedCourses, result.course];
+        onCoursesChange(newSelection);
         setShowCreateDialog(false);
+        setSearchQuery("");
         setCreateForm({
           name: "",
           location: "",
