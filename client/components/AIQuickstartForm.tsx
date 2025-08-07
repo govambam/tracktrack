@@ -151,7 +151,6 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
     }));
   };
 
-
   const handleCourseSearch = async (query: string) => {
     if (query.length < 2) return [];
     return await searchCourses(query);
@@ -897,9 +896,9 @@ Format as markdown with headers. Include each course as a separate day. Limit re
             selectedCourses={selectedCourses}
             onCoursesChange={(courses) => {
               setSelectedCourses(courses);
-              setFormData(prev => ({
+              setFormData((prev) => ({
                 ...prev,
-                courses: courses.map(c => c.id)
+                courses: courses.map((c) => c.id),
               }));
             }}
             onCourseCreate={createCourse}
@@ -930,11 +929,13 @@ Format as markdown with headers. Include each course as a separate day. Limit re
                       variant="ghost"
                       size="sm"
                       onClick={() => {
-                        const newSelection = selectedCourses.filter(c => c.id !== course.id);
+                        const newSelection = selectedCourses.filter(
+                          (c) => c.id !== course.id,
+                        );
                         setSelectedCourses(newSelection);
-                        setFormData(prev => ({
+                        setFormData((prev) => ({
                           ...prev,
-                          courses: newSelection.map(c => c.id)
+                          courses: newSelection.map((c) => c.id),
                         }));
                       }}
                       className="h-6 w-6 p-0 text-slate-500 hover:text-red-600"
