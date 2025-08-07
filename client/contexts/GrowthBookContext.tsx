@@ -105,8 +105,8 @@ const localFeatures = {
   "show-advanced-features": false,
   "beta-leaderboard": false,
   "enhanced-scoring": false,
-  "ai_quickstart_create_flow": false,
-  "delete_projects": false,
+  ai_quickstart_create_flow: false,
+  delete_projects: false,
 };
 
 // Create GrowthBook instance with fallback configuration
