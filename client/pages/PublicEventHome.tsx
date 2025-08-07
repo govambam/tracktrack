@@ -1327,7 +1327,7 @@ export default function PublicEventHome({
           .order("display_order"),
         supabase
           .from("event_rounds")
-          .select("*")
+          .select("*, courses(id, name, location, total_holes, total_par, is_official)")
           .eq("event_id", eventId)
           .order("round_date"),
         supabase.from("event_prizes").select("*").eq("event_id", eventId),
