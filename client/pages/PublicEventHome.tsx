@@ -1585,7 +1585,7 @@ export default function PublicEventHome({
               existing.holes.push(contest.hole);
             } else {
               acc.push({
-                roundName: round.course_name,
+                roundName: courseName,
                 holes: [contest.hole],
               });
             }
