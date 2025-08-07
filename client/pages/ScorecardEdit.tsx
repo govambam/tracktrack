@@ -235,8 +235,10 @@ export default function ScorecardEdit() {
         .from("event_players")
         .select("*")
         .eq("event_id", eventId)
-        .in("status", ["accepted", "invited"]) // Include both accepted and invited players
         .order("full_name");
+
+      console.log("All event players for scorecard edit:", eventPlayers);
+      console.log("Event ID:", eventId, "Round ID:", roundId);
 
       if (playersError) {
         console.error("Error loading players:", playersError);
