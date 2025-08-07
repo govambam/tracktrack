@@ -130,10 +130,11 @@ export function CourseSelector({
       const result = await onCourseCreate({
         name: createForm.name.trim(),
         location: createForm.location.trim() || undefined,
-        website_url: createForm.website_url.trim() || undefined,
-        phone: createForm.phone.trim() || undefined,
-        total_holes: createForm.total_holes,
+        par: createForm.par || undefined,
+        yardage: createForm.yardage || undefined,
+        holes: createForm.holes,
         description: createForm.description.trim() || undefined,
+        image_url: createForm.image_url.trim() || undefined,
         is_official: false,
       });
 
