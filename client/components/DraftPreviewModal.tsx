@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/select";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Eye, Palette, Settings, Loader2 } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { ArrowLeft, Eye, Palette, Settings, Loader2, ExternalLink } from "lucide-react";
 
 // Import the public event component
 import PublicEventHome from "@/pages/PublicEventHome";
@@ -56,6 +57,7 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
   const [saving, setSaving] = useState(false);
   const [eventSlug, setEventSlug] = useState<string | null>(null);
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isOpen && eventId) {
@@ -125,6 +127,12 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
   const handleBackToEdit = () => {
     onClose();
     onEditMode();
+  };
+
+  const handleOpenFullScreen = () => {
+    if (eventSlug) {
+      window.open(`/events/${eventSlug}?draft=true&theme=${currentTheme}`, '_blank');
+    }
   };
 
   const selectedTheme = AVAILABLE_THEMES.find((t) => t.id === currentTheme);
