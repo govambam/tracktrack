@@ -262,9 +262,9 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         console.log("Loading GrowthBook features...");
 
-        // Add a timeout to prevent hanging indefinitely
+        // Add a timeout to prevent hanging indefinitely (reduced to 5 seconds)
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error("GrowthBook load timeout")), 10000)
+          setTimeout(() => reject(new Error("GrowthBook load timeout")), 5000)
         );
 
         await Promise.race([
