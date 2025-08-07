@@ -110,11 +110,37 @@ export function CourseSelector({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleCourseSelect = (course: Course) => {
-    setSelectedCourse(course);
-    setSearchQuery(course.name);
-    setIsOpen(false);
-    onCourseSelect(course);
+  const handleCourseToggle = (course: Course) => {
+    const isSelected = selectedCourses.find(c => c.id === course.id);
+    let newSelection: Course[];
+
+    if (isSelected) {
+      // Remove from selection
+      newSelection = selectedCourses.filter(c => c.id !== course.id);
+    } else {
+      // Add to selection
+      newSelection = [...selectedCourses, course];
+    }
+
+    onCoursesChange(newSelection);
+    // Keep the dropdown open for multi-select
+  };
+
+  const handleManualCourseAdd = () => {
+    if (searchQuery.trim()) {
+      // Create a temporary course object for manual entry
+      const tempCourse: Course = {
+        id: `temp-${Date.now()}`,
+        name: searchQuery.trim(),
+        holes: 18,
+        is_official: false
+      };
+
+      const newSelection = [...selectedCourses, tempCourse];
+      onCoursesChange(newSelection);
+      setSearchQuery("");
+      setIsOpen(false);
+    }
   };
 
   const handleCreateCourse = async () => {
