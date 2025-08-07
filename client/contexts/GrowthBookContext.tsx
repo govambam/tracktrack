@@ -293,3 +293,12 @@ export const useFeatureEnabled = (key: string) => {
   const growthbook = useGrowthBook();
   return growthbook.isOn(key);
 };
+
+// Hook to access user attributes
+export const useUserAttributes = () => {
+  const context = useContext(UserAttributesContext);
+  if (!context) {
+    throw new Error('useUserAttributes must be used within a GrowthBookProvider');
+  }
+  return context;
+};
