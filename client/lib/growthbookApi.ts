@@ -195,7 +195,8 @@ class GrowthBookAPI {
       },
       {
         key: "delete_projects",
-        description: "Enable delete all projects functionality in user settings",
+        description:
+          "Enable delete all projects functionality in user settings",
         valueType: "boolean",
         defaultValue: false,
       },
