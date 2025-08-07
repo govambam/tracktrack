@@ -188,6 +188,9 @@ export const FeatureFlagAdmin: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* User Attributes Debug */}
+      <UserAttributesDebug />
+
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
