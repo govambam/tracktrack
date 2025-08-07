@@ -1205,7 +1205,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const createCourse = async (courseData: Omit<Course, "id">) => {
+  const createCourse = async (courseData: Omit<Course, "id" | "created_at">) => {
     try {
       const { data, error } = await supabase
         .from("courses")
