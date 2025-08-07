@@ -171,7 +171,9 @@ export default function ScorecardEdit() {
         .eq("event_id", event.id)
         .order("created_at");
 
-      const roundNumber = allRoundsData ? allRoundsData.findIndex(r => r.id === roundId) + 1 : 1;
+      const roundNumber = allRoundsData
+        ? allRoundsData.findIndex((r) => r.id === roundId) + 1
+        : 1;
 
       setRound({ ...roundData, round_number: roundNumber });
 
