@@ -174,6 +174,7 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           id: session.user.id,
           email: session.user.email,
           emailDomain: session.user.email?.split('@')[1] || '',
+          isAuthenticated: true,
 
           // Profile data
           name: profile?.full_name || '',
