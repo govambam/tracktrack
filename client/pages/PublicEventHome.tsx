@@ -1611,7 +1611,7 @@ export default function PublicEventHome({
 
         return {
           roundNumber: index + 1,
-          courseName: round.course_name,
+          courseName: round.courses?.name || round.course_name,
           contests: contests.sort((a, b) => a.hole - b.hole),
         };
       })
