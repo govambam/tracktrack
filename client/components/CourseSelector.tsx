@@ -205,7 +205,7 @@ export function CourseSelector({
       </div>
 
       {isOpen && searchQuery.length >= 2 && (
-        <Card className="absolute z-50 w-full mt-1 max-h-64 overflow-y-auto border shadow-lg">
+        <Card className="absolute z-50 w-full mt-1 max-h-96 overflow-y-auto border shadow-lg">
           <CardContent className="p-0">
             {isSearching ? (
               <div className="p-4 text-center text-gray-500">
