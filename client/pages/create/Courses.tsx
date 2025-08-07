@@ -309,9 +309,8 @@ export default function Courses() {
                         if (course) {
                           updateRound(round.id, "courseId", course.id);
                           updateRound(round.id, "courseName", course.name);
-                          if (course.website_url) {
-                            updateRound(round.id, "courseUrl", course.website_url);
-                          }
+                          // Note: existing courses table doesn't have website_url field
+                          // so we don't auto-populate courseUrl
                         } else if (courseName) {
                           updateRound(round.id, "courseId", undefined);
                           updateRound(round.id, "courseName", courseName);
