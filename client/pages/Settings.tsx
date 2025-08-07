@@ -9,8 +9,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { User, Mail, Calendar, Bell, Shield, CreditCard, Edit, Save, X } from "lucide-react";
+import { User, Mail, Calendar, Bell, Shield, CreditCard, Edit, Save, X, Trash2, AlertTriangle } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { useFeatureEnabled } from "@/contexts/GrowthBookContext";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface ProfileData {
   id: string;
