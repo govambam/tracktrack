@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { GrowthBook } from "@growthbook-react";
+import { GrowthBook } from "@growthbook/growthbook-react";
 import { supabase } from "@/lib/supabase";
 
 // Helper functions to detect user attributes
