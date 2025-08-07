@@ -17,6 +17,13 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   MapPin,
   Users,
   Target,
@@ -46,6 +53,9 @@ import {
   Edit,
   Megaphone,
   AlertCircle,
+  ArrowLeft,
+  Palette,
+  Settings,
 } from "lucide-react";
 
 // Emoji Safety Utility
