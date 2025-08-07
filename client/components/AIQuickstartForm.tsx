@@ -929,7 +929,14 @@ Format as markdown with headers. Include each course as a separate day. Limit re
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => removeCourseFromSelection(course.id)}
+                      onClick={() => {
+                        const newSelection = selectedCourses.filter(c => c.id !== course.id);
+                        setSelectedCourses(newSelection);
+                        setFormData(prev => ({
+                          ...prev,
+                          courses: newSelection.map(c => c.id)
+                        }));
+                      }}
                       className="h-6 w-6 p-0 text-slate-500 hover:text-red-600"
                     >
                       ×
