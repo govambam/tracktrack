@@ -1184,7 +1184,10 @@ Format as markdown with headers. Include each course as a separate day. Limit re
         </Label>
         <div className="space-y-3">
           <div>
-            <Label htmlFor="entryAmount" className="text-sm font-medium mb-2 block">
+            <Label
+              htmlFor="entryAmount"
+              className="text-sm font-medium mb-2 block"
+            >
               Amount per player (leave blank for no entry fee)
             </Label>
             <div className="flex items-center space-x-2">
@@ -1224,21 +1227,19 @@ Format as markdown with headers. Include each course as a separate day. Limit re
                     ).toLocaleString()}
                   </div>
                   <div>
-                    Winner: $
-                    {(formData.entryFeeAmount * 2).toLocaleString()} (200%
-                    of buy-in)
+                    Winner: ${(formData.entryFeeAmount * 2).toLocaleString()}{" "}
+                    (200% of buy-in)
                   </div>
                   <div>
-                    Runner-up: ${formData.entryFeeAmount.toLocaleString()}{" "}
-                    (100% of buy-in)
+                    Runner-up: ${formData.entryFeeAmount.toLocaleString()} (100%
+                    of buy-in)
                   </div>
                   {formData.courses.length > 0 && (
                     <>
                       <div>
                         Longest Drive: $
                         {(
-                          (formData.entryFeeAmount *
-                            formData.players.length -
+                          (formData.entryFeeAmount * formData.players.length -
                             formData.entryFeeAmount * 3) /
                           2
                         ).toLocaleString()}
@@ -1246,21 +1247,18 @@ Format as markdown with headers. Include each course as a separate day. Limit re
                       <div>
                         Closest to Pin: $
                         {(
-                          (formData.entryFeeAmount *
-                            formData.players.length -
+                          (formData.entryFeeAmount * formData.players.length -
                             formData.entryFeeAmount * 3) /
                           2
                         ).toLocaleString()}
                       </div>
                       <div className="text-xs text-slate-500 mt-2">
                         • {formData.courses.length} Longest Drive contest
-                        {formData.courses.length !== 1 ? "s" : ""} (1 per
-                        round)
+                        {formData.courses.length !== 1 ? "s" : ""} (1 per round)
                       </div>
                       <div className="text-xs text-slate-500">
                         • {formData.courses.length} Closest to Pin contest
-                        {formData.courses.length !== 1 ? "s" : ""} (1 per
-                        round)
+                        {formData.courses.length !== 1 ? "s" : ""} (1 per round)
                       </div>
                     </>
                   )}
