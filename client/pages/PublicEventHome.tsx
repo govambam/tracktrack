@@ -1722,7 +1722,7 @@ export default function PublicEventHome({
       {/* Navigation - Normal or Preview Mode */}
       {isDraftMode ? (
         /* Preview Mode Header */
-        <div className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+        <div className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200 shadow-sm">
           <div className="flex items-center justify-between p-4">
             <div className="flex items-center space-x-3">
               <Button
@@ -1809,8 +1809,8 @@ export default function PublicEventHome({
           </div>
         </div>
       ) : (
-        /* Normal Navigation */
-        !hideNavigation && (
+        /* Normal Navigation - Hidden in draft mode */
+        !hideNavigation && !isDraftMode && (
           <StickyNavigation
             eventName={eventData.name}
             slug={slug!}
@@ -1822,14 +1822,16 @@ export default function PublicEventHome({
       )}
 
       {/* Hero Section */}
-      <components.Hero
+      <div className={isDraftMode ? "pt-20" : ""}>
+        <components.Hero
         eventData={eventData}
         players={players}
         courses={courses}
         formatDateRange={formatDateRange}
         getDuration={getDuration}
         getScoringFormat={getScoringFormat}
-      />
+        />
+      </div>
 
       {/* Summary Cards Section */}
       {currentTheme !== "TourTech" && currentTheme !== "Masters" && (
