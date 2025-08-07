@@ -409,16 +409,23 @@ export default function PublicLeaderboard({
     return (
       <div className="space-y-8">
         {rounds.map((round) => {
-          const courseName = round.course_name;
+          // Get course data from centralized source if available
+          const course = round.courses || null;
+          const courseName = course?.name || round.course_name;
+
           const roundHoles = courseHoles
-            .filter((hole) => hole.course_name === courseName)
+            .filter((hole) =>
+              // Try to match by course ID first, then fall back to name
+              (course && hole.course_id === course.id) ||
+              hole.course_name === courseName
+            )
             .sort((a, b) => a.hole_number - b.hole_number);
 
           // If no course hole data, create basic hole structure
           const holes =
             roundHoles.length > 0
               ? roundHoles
-              : Array.from({ length: 18 }, (_, i) => ({
+              : Array.from({ length: course?.total_holes || 18 }, (_, i) => ({
                   hole_number: i + 1,
                   par: null,
                   course_name: courseName,
