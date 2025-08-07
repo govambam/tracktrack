@@ -1709,7 +1709,8 @@ export default function PublicEventHome({
   }
 
   // Get theme styling - prioritize preview theme state, then URL theme, then forced theme, then event's theme
-  const currentTheme = previewTheme || draftTheme || forceTheme || eventData?.theme || "GolfOS";
+  const currentTheme =
+    previewTheme || draftTheme || forceTheme || eventData?.theme || "GolfOS";
   const theme = getThemeStyles(currentTheme);
 
   // Get theme components
@@ -1748,17 +1749,18 @@ export default function PublicEventHome({
               {/* Theme Selector */}
               <div className="flex items-center space-x-2">
                 <Palette className="h-4 w-4 text-slate-600 hidden sm:block" />
-                <Select
-                  value={currentTheme}
-                  onValueChange={setPreviewTheme}
-                >
+                <Select value={currentTheme} onValueChange={setPreviewTheme}>
                   <SelectTrigger className="w-32 sm:w-40">
                     <SelectValue>
                       <div className="flex items-center space-x-2">
-                        {AVAILABLE_THEMES.find(t => t.id === currentTheme) && (
+                        {AVAILABLE_THEMES.find(
+                          (t) => t.id === currentTheme,
+                        ) && (
                           <>
                             <div className="flex space-x-1">
-                              {AVAILABLE_THEMES.find(t => t.id === currentTheme)!.colors.map((color, index) => (
+                              {AVAILABLE_THEMES.find(
+                                (t) => t.id === currentTheme,
+                              )!.colors.map((color, index) => (
                                 <div
                                   key={index}
                                   className="w-3 h-3 rounded-full"
@@ -1766,7 +1768,13 @@ export default function PublicEventHome({
                                 />
                               ))}
                             </div>
-                            <span className="hidden sm:inline">{AVAILABLE_THEMES.find(t => t.id === currentTheme)!.name}</span>
+                            <span className="hidden sm:inline">
+                              {
+                                AVAILABLE_THEMES.find(
+                                  (t) => t.id === currentTheme,
+                                )!.name
+                              }
+                            </span>
                           </>
                         )}
                       </div>
