@@ -1022,14 +1022,14 @@ Format as markdown with headers. Include each course as a separate day. Limit re
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, startDate: e.target.value }))
               }
-              className="text-base sm:text-sm h-12 sm:h-10 px-4 pr-12 border-2 border-slate-200 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+              className="text-base sm:text-sm h-12 sm:h-10 px-4 pr-12 border-2 border-slate-200 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-slate-700 placeholder:text-slate-400"
               placeholder="Select start date"
             />
             <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none" />
           </div>
           {formData.startDate && (
             <div className="text-sm text-emerald-600 mt-1 font-medium">
-              {new Date(formData.startDate).toLocaleDateString("en-US", {
+              {new Date(formData.startDate + 'T00:00:00').toLocaleDateString("en-US", {
                 weekday: "short",
                 month: "short",
                 day: "numeric",
@@ -1051,14 +1051,14 @@ Format as markdown with headers. Include each course as a separate day. Limit re
                 setFormData((prev) => ({ ...prev, endDate: e.target.value }))
               }
               min={formData.startDate}
-              className="text-base sm:text-sm h-12 sm:h-10 px-4 pr-12 border-2 border-slate-200 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+              className="text-base sm:text-sm h-12 sm:h-10 px-4 pr-12 border-2 border-slate-200 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-slate-700 placeholder:text-slate-400"
               placeholder="Select end date"
             />
             <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none" />
           </div>
           {formData.endDate && (
             <div className="text-sm text-emerald-600 mt-1 font-medium">
-              {new Date(formData.endDate).toLocaleDateString("en-US", {
+              {new Date(formData.endDate + 'T00:00:00').toLocaleDateString("en-US", {
                 weekday: "short",
                 month: "short",
                 day: "numeric",
