@@ -123,7 +123,6 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
 
   // Courses are now loaded on-demand through search
 
-
   const addPlayer = () => {
     if (
       newPlayerInput.trim() &&
@@ -154,20 +153,20 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
   };
 
   const addCourseToSelection = (course: Course) => {
-    if (!selectedCourses.find(c => c.id === course.id)) {
-      setSelectedCourses(prev => [...prev, course]);
-      setFormData(prev => ({
+    if (!selectedCourses.find((c) => c.id === course.id)) {
+      setSelectedCourses((prev) => [...prev, course]);
+      setFormData((prev) => ({
         ...prev,
-        courses: [...prev.courses, course.id]
+        courses: [...prev.courses, course.id],
       }));
     }
   };
 
   const removeCourseFromSelection = (courseId: string) => {
-    setSelectedCourses(prev => prev.filter(c => c.id !== courseId));
-    setFormData(prev => ({
+    setSelectedCourses((prev) => prev.filter((c) => c.id !== courseId));
+    setFormData((prev) => ({
       ...prev,
-      courses: prev.courses.filter(id => id !== courseId)
+      courses: prev.courses.filter((id) => id !== courseId),
     }));
   };
 
@@ -190,8 +189,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
 
   const getValidationErrors = () => {
     const errors = [];
-    if (selectedCourses.length === 0)
-      errors.push("Select at least one course");
+    if (selectedCourses.length === 0) errors.push("Select at least one course");
     if (!formData.startDate) errors.push("Select a start date");
     if (!formData.endDate) errors.push("Select an end date");
     if (
@@ -924,7 +922,7 @@ Format as markdown with headers. Include each course as a separate day. Limit re
                   id: `temp-${Date.now()}`,
                   name: courseName,
                   holes: 18,
-                  is_official: false
+                  is_official: false,
                 };
                 addCourseToSelection(tempCourse);
               }
@@ -957,7 +955,9 @@ Format as markdown with headers. Include each course as a separate day. Limit re
                 <CheckCircle className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center justify-between">
-                    <div className="font-medium text-emerald-900">{course.name}</div>
+                    <div className="font-medium text-emerald-900">
+                      {course.name}
+                    </div>
                     <Button
                       variant="ghost"
                       size="sm"
