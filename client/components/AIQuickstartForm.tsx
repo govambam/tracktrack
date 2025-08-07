@@ -1312,12 +1312,12 @@ Format as markdown with headers. Include each course as a separate day. Limit re
                         ).toLocaleString()}
                       </div>
                       <div className="text-xs text-slate-500 mt-2">
-                        • {formData.courses.length} Longest Drive contest
-                        {formData.courses.length !== 1 ? "s" : ""} (1 per round)
+                        • {selectedCourses.length} Longest Drive contest
+                        {selectedCourses.length !== 1 ? "s" : ""} (1 per round)
                       </div>
                       <div className="text-xs text-slate-500">
-                        • {formData.courses.length} Closest to Pin contest
-                        {formData.courses.length !== 1 ? "s" : ""} (1 per round)
+                        • {selectedCourses.length} Closest to Pin contest
+                        {selectedCourses.length !== 1 ? "s" : ""} (1 per round)
                       </div>
                     </>
                   )}
