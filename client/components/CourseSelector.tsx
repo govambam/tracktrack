@@ -184,13 +184,8 @@ export function CourseSelector({
     }
   };
 
-  const handleManualEntry = () => {
-    setSelectedCourse(null);
-    setIsOpen(false);
-    onCourseSelect(null, searchQuery);
-  };
-
-  const displayValue = selectedCourse?.name || searchQuery || "";
+  const displayValue = searchQuery ||
+    (selectedCourses.length > 0 ? `${selectedCourses.length} course${selectedCourses.length !== 1 ? 's' : ''} selected` : "");
 
   return (
     <div className={`relative ${className}`} ref={searchRef}>
