@@ -45,6 +45,7 @@ export async function resetDemoFlags() {
     await featureFlagUtils.setStringFlag('welcome-message', 'Welcome to GolfOS!');
     await featureFlagUtils.setBooleanFlag('beta-leaderboard', false);
     await featureFlagUtils.setBooleanFlag('enable-dark-mode', false);
+    await featureFlagUtils.setBooleanFlag('delete_projects', false);
     
     console.log('✅ Demo flags reset successfully!');
     return { success: true, message: 'Demo flags reset to defaults' };
