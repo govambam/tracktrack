@@ -76,18 +76,138 @@ const GrowthBookContext = createContext<GrowthBook>(growthbook);
 // Provider component
 export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [userAttributes, setUserAttributes] = useState<any>({});
+
+  // Function to set user attributes
+  const updateUserAttributes = async () => {
+    try {
+      // Get current user session
+      const { data: { session } } = await supabase.auth.getSession();
+
+      // Base attributes (always available)
+      const baseAttributes = {
+        // Auto-detected attributes
+        deviceType: getDeviceType(),
+        browser: getBrowser(),
+        os: getOperatingSystem(),
+        timezone: getTimezone(),
+        country: getCountryFromTimezone(getTimezone()),
+        url: window.location.href,
+        path: window.location.pathname,
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        // Date/time attributes
+        dayOfWeek: new Date().getDay(), // 0-6 (Sunday-Saturday)
+        hourOfDay: new Date().getHours(), // 0-23
+        // Screen attributes
+        screenWidth: window.screen.width,
+        screenHeight: window.screen.height,
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+      };
+
+      let attributes = { ...baseAttributes };
+
+      if (session?.user) {
+        // Get user profile data
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', session.user.id)
+          .single();
+
+        // Get user's event count and other stats
+        const { count: eventCount } = await supabase
+          .from('events')
+          .select('*', { count: 'exact', head: true })
+          .eq('created_by', session.user.id);
+
+        // Calculate account age in days
+        const accountAge = session.user.created_at
+          ? Math.floor((Date.now() - new Date(session.user.created_at).getTime()) / (1000 * 60 * 60 * 24))
+          : 0;
+
+        // User-specific attributes
+        const userSpecificAttributes = {
+          // Core user data
+          id: session.user.id,
+          email: session.user.email,
+          emailDomain: session.user.email?.split('@')[1] || '',
+
+          // Profile data
+          name: profile?.full_name || '',
+          fullName: profile?.full_name || '',
+          handicap: profile?.handicap || null,
+          hasHandicap: !!(profile?.handicap),
+          handicapRange: profile?.handicap ? getHandicapRange(profile.handicap) : null,
+          location: profile?.location || '',
+          bio: profile?.bio || '',
+          hasProfileImage: !!(profile?.avatar_url),
+
+          // Account metadata
+          isEmailConfirmed: !!(session.user.email_confirmed_at),
+          accountAgeInDays: accountAge,
+          accountAgeCategory: getAccountAgeCategory(accountAge),
+          createdAt: session.user.created_at,
+
+          // Activity data
+          totalEvents: eventCount || 0,
+          hasCreatedEvents: (eventCount || 0) > 0,
+          userType: getUserType(eventCount || 0, accountAge),
+          engagementLevel: getEngagementLevel(eventCount || 0, accountAge),
+        };
+
+        attributes = { ...attributes, ...userSpecificAttributes };
+      } else {
+        // Anonymous user attributes
+        attributes.id = 'anonymous';
+        attributes.userType = 'anonymous';
+        attributes.isAuthenticated = false;
+      }
+
+      setUserAttributes(attributes);
+      growthbook.setAttributes(attributes);
+
+      console.log('GrowthBook attributes set:', attributes);
+
+    } catch (error) {
+      console.error('Error setting GrowthBook attributes:', error);
+      // Set minimal attributes on error
+      const minimalAttributes = {
+        deviceType: getDeviceType(),
+        browser: getBrowser(),
+        isAuthenticated: false,
+      };
+      setUserAttributes(minimalAttributes);
+      growthbook.setAttributes(minimalAttributes);
+    }
+  };
 
   useEffect(() => {
-    // Load feature definitions from GrowthBook
-    growthbook.loadFeatures().then(() => {
-      setIsLoaded(true);
-    }).catch((error) => {
-      console.error('Failed to load GrowthBook features:', error);
-      setIsLoaded(true); // Continue even if features fail to load
+    // Initialize attributes and load features
+    const initializeGrowthBook = async () => {
+      await updateUserAttributes();
+
+      try {
+        await growthbook.loadFeatures();
+        setIsLoaded(true);
+      } catch (error) {
+        console.error('Failed to load GrowthBook features:', error);
+        setIsLoaded(true); // Continue even if features fail to load
+      }
+    };
+
+    initializeGrowthBook();
+
+    // Listen for auth state changes to update user attributes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event);
+      await updateUserAttributes();
     });
 
     // Cleanup on unmount
     return () => {
+      subscription?.unsubscribe();
       growthbook.destroy();
     };
   }, []);
