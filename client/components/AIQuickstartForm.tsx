@@ -239,7 +239,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
 
   const getValidationErrors = () => {
     const errors = [];
-    if (formData.courses.length === 0)
+    if (selectedCourses.length === 0)
       errors.push("Select at least one course");
     if (!formData.startDate) errors.push("Select a start date");
     if (!formData.endDate) errors.push("Select an end date");
