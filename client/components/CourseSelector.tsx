@@ -280,11 +280,11 @@ export function CourseSelector({
                 <div className="p-2 border-t bg-gray-50">
                   <div className="space-y-2">
                     <button
-                      onClick={handleManualEntry}
+                      onClick={handleManualCourseAdd}
                       className="w-full p-2 text-left text-sm text-gray-600 hover:bg-gray-100 rounded flex items-center space-x-2"
                     >
                       <Target className="h-4 w-4" />
-                      <span>Use "{searchQuery}" as course name</span>
+                      <span>Add "{searchQuery}" as course name</span>
                     </button>
                     {onCourseCreate && (
                       <button
@@ -296,7 +296,7 @@ export function CourseSelector({
                         className="w-full p-2 text-left text-sm text-blue-600 hover:bg-blue-50 rounded flex items-center space-x-2"
                       >
                         <Plus className="h-4 w-4" />
-                        <span>Add "{searchQuery}" as new course</span>
+                        <span>Create new course "{searchQuery}"</span>
                       </button>
                     )}
                   </div>
