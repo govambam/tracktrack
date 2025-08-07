@@ -3081,7 +3081,7 @@ export default function PublicEventHome({
                                 className={`flex items-center space-x-2 text-sm ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
                               >
                                 <MapPin className="h-4 w-4" />
-                                <span>{round.course_name}</span>
+                                <span>{round.courses?.name || round.course_name}</span>
                               </div>
                               <div
                                 className={`flex items-center space-x-2 text-sm ${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
