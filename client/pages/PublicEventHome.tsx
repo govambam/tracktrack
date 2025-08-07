@@ -1577,8 +1577,9 @@ export default function PublicEventHome({
         (acc, contest) => {
           const round = rounds.find((r) => r.id === contest.round_id);
           if (round) {
+            const courseName = round.courses?.name || round.course_name;
             const existing = acc.find(
-              (item) => item.roundName === round.course_name,
+              (item) => item.roundName === courseName,
             );
             if (existing) {
               existing.holes.push(contest.hole);
