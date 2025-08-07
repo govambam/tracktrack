@@ -1017,30 +1017,63 @@ Format as markdown with headers. Include each course as a separate day. Limit re
       </div>
 
       {/* Dates */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <Label className="text-base font-medium flex items-center space-x-2 mb-2">
             <Calendar className="h-4 w-4 text-emerald-600" />
             <span>Start Date</span>
           </Label>
-          <Input
-            type="date"
-            value={formData.startDate}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, startDate: e.target.value }))
-            }
-          />
+          <div className="relative">
+            <Input
+              type="date"
+              value={formData.startDate}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, startDate: e.target.value }))
+              }
+              className="text-base sm:text-sm h-12 sm:h-10 px-4 pr-12 border-2 border-slate-200 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+              placeholder="Select start date"
+            />
+            <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none" />
+          </div>
+          {formData.startDate && (
+            <div className="text-sm text-emerald-600 mt-1 font-medium">
+              {new Date(formData.startDate).toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+              })}
+            </div>
+          )}
         </div>
         <div>
-          <Label className="text-base font-medium mb-2">End Date</Label>
-          <Input
-            type="date"
-            value={formData.endDate}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, endDate: e.target.value }))
-            }
-            min={formData.startDate}
-          />
+          <Label className="text-base font-medium flex items-center space-x-2 mb-2">
+            <Calendar className="h-4 w-4 text-emerald-600" />
+            <span>End Date</span>
+          </Label>
+          <div className="relative">
+            <Input
+              type="date"
+              value={formData.endDate}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, endDate: e.target.value }))
+              }
+              min={formData.startDate}
+              className="text-base sm:text-sm h-12 sm:h-10 px-4 pr-12 border-2 border-slate-200 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+              placeholder="Select end date"
+            />
+            <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none" />
+          </div>
+          {formData.endDate && (
+            <div className="text-sm text-emerald-600 mt-1 font-medium">
+              {new Date(formData.endDate).toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+              })}
+            </div>
+          )}
         </div>
       </div>
 
