@@ -95,6 +95,20 @@ const getEngagementLevel = (eventCount: number, accountAge: number): string => {
   return "low";
 };
 
+// Local feature definitions as fallback
+const localFeatures = {
+  "new-ui-design": false,
+  "button-color": "default",
+  "max-users-limit": 100,
+  "welcome-message": "Welcome to GolfOS!",
+  "enable-dark-mode": false,
+  "show-advanced-features": false,
+  "beta-leaderboard": false,
+  "enhanced-scoring": false,
+  "ai_quickstart_create_flow": false,
+  "delete_projects": false,
+};
+
 // Create GrowthBook instance with fallback configuration
 const createGrowthBookInstance = () => {
   const apiHost =
@@ -104,7 +118,7 @@ const createGrowthBookInstance = () => {
 
   console.log("Creating GrowthBook instance with:", { apiHost, clientKey });
 
-  return new GrowthBook({
+  const gb = new GrowthBook({
     apiHost,
     clientKey,
     enableDevMode: import.meta.env.DEV,
@@ -113,7 +127,11 @@ const createGrowthBookInstance = () => {
     },
     // Add some additional options for better error handling
     subscribeToChanges: false, // Disable real-time updates for now
+    // Set local features as fallback
+    features: localFeatures,
   });
+
+  return gb;
 };
 
 const growthbook = createGrowthBookInstance();
