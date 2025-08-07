@@ -178,11 +178,34 @@ export default function ScorecardEdit() {
       setRound({ ...roundData, round_number: roundNumber });
 
       // Load course holes with par information
-      const { data: holesData, error: holesError } = await supabase
-        .from("course_holes")
-        .select("*")
-        .eq("course_name", roundData.course_name)
-        .order("hole_number");
+      // Try to load by course_id first, then fall back to course_name
+      const courseId = roundData.course_id || roundData.courses?.id;
+      const courseName = roundData.courses?.name || roundData.course_name;
+
+      let holesData = null;
+      let holesError = null;
+
+      if (courseId) {
+        // Try loading by course_id first
+        const result = await supabase
+          .from("course_holes")
+          .select("*")
+          .eq("course_id", courseId)
+          .order("hole_number");
+        holesData = result.data;
+        holesError = result.error;
+      }
+
+      if (!holesData || holesData.length === 0) {
+        // Fall back to course_name if no data found by course_id
+        const result = await supabase
+          .from("course_holes")
+          .select("*")
+          .eq("course_name", courseName)
+          .order("hole_number");
+        holesData = result.data;
+        holesError = result.error;
+      }
 
       let holes: HoleScore[] = [];
       const courseHasParData = holesData && holesData.length > 0;
