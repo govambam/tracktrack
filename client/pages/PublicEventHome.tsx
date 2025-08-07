@@ -1695,6 +1695,19 @@ export default function PublicEventHome({
         />
       )}
 
+      {/* Draft Mode Indicator */}
+      {isDraftMode && (
+        <div className="fixed top-4 right-4 z-50">
+          <Badge
+            variant="secondary"
+            className="bg-orange-100 text-orange-700 border-orange-200 shadow-lg"
+          >
+            <Sparkles className="h-3 w-3 mr-1" />
+            Draft Preview
+          </Badge>
+        </div>
+      )}
+
       {/* Hero Section */}
       <components.Hero
         eventData={eventData}
