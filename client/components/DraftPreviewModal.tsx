@@ -137,6 +137,126 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
 
   const selectedTheme = AVAILABLE_THEMES.find((t) => t.id === currentTheme);
 
+  // On mobile, show a simpler interface that opens full screen
+  if (isMobile) {
+    return (
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="max-w-[95vw] max-h-[95vh] p-6 z-[70]">
+          <DialogTitle className="text-xl font-bold mb-4">Preview Your Event</DialogTitle>
+
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="flex items-center space-x-2">
+                <Loader2 className="h-6 w-6 animate-spin" />
+                <span>Loading preview...</span>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <div className="text-center">
+                <div className="mb-4">
+                  <Badge
+                    variant="secondary"
+                    className="bg-orange-100 text-orange-700 border-orange-200"
+                  >
+                    <Eye className="h-3 w-3 mr-1" />
+                    Draft Preview
+                  </Badge>
+                </div>
+                <p className="text-slate-600 mb-6">
+                  For the best mobile preview experience, open your event in a new tab.
+                </p>
+
+                {/* Theme Selector */}
+                <div className="mb-6">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">
+                    Choose Theme
+                  </label>
+                  <Select
+                    value={currentTheme}
+                    onValueChange={handleThemeChange}
+                    disabled={saving}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue>
+                        <div className="flex items-center space-x-2">
+                          {selectedTheme && (
+                            <>
+                              <div className="flex space-x-1">
+                                {selectedTheme.colors.map((color, index) => (
+                                  <div
+                                    key={index}
+                                    className="w-3 h-3 rounded-full"
+                                    style={{ backgroundColor: color }}
+                                  />
+                                ))}
+                              </div>
+                              <span>{selectedTheme.name}</span>
+                            </>
+                          )}
+                        </div>
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {AVAILABLE_THEMES.map((theme) => (
+                        <SelectItem key={theme.id} value={theme.id}>
+                          <div className="flex items-center space-x-2">
+                            <div className="flex space-x-1">
+                              {theme.colors.map((color, index) => (
+                                <div
+                                  key={index}
+                                  className="w-3 h-3 rounded-full"
+                                  style={{ backgroundColor: color }}
+                                />
+                              ))}
+                            </div>
+                            <div>
+                              <div className="font-medium">{theme.name}</div>
+                              <div className="text-xs text-slate-500">
+                                {theme.description}
+                              </div>
+                            </div>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {saving && (
+                    <div className="flex items-center justify-center mt-2">
+                      <Loader2 className="h-4 w-4 animate-spin text-slate-600 mr-2" />
+                      <span className="text-sm text-slate-600">Updating theme...</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <Button
+                  onClick={handleOpenFullScreen}
+                  className="w-full h-12 text-base"
+                  disabled={!eventSlug}
+                >
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Open Full Screen Preview
+                </Button>
+
+                <Button
+                  variant="outline"
+                  onClick={handleBackToEdit}
+                  className="w-full h-12 text-base"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back to Edit
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  // Desktop experience with iframe-like modal
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 overflow-hidden z-[70]">
