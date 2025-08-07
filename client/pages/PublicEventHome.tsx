@@ -108,10 +108,19 @@ interface EventCourse {
 interface EventRound {
   id: string;
   course_name: string;
+  course_id?: string;
   round_date: string;
   tee_time?: string;
   scoring_type: string;
   holes: number;
+  courses?: {
+    id: string;
+    name: string;
+    location?: string;
+    total_holes?: number;
+    total_par?: number;
+    is_official: boolean;
+  };
 }
 
 interface EventPrize {
