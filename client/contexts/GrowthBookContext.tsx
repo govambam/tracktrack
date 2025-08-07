@@ -95,18 +95,26 @@ const getEngagementLevel = (eventCount: number, accountAge: number): string => {
   return "low";
 };
 
-// Create GrowthBook instance
-const growthbook = new GrowthBook({
-  apiHost:
-    import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io",
-  clientKey:
-    import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u",
-  enableDevMode: import.meta.env.DEV,
-  trackingCallback: (experiment, result) => {
-    // Optional: Add analytics tracking here
-    console.log("GrowthBook Experiment:", experiment.key, result);
-  },
-});
+// Create GrowthBook instance with fallback configuration
+const createGrowthBookInstance = () => {
+  const apiHost = import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io";
+  const clientKey = import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u";
+
+  console.log("Creating GrowthBook instance with:", { apiHost, clientKey });
+
+  return new GrowthBook({
+    apiHost,
+    clientKey,
+    enableDevMode: import.meta.env.DEV,
+    trackingCallback: (experiment, result) => {
+      console.log("GrowthBook Experiment:", experiment.key, result);
+    },
+    // Add some additional options for better error handling
+    subscribeToChanges: false, // Disable real-time updates for now
+  });
+};
+
+const growthbook = createGrowthBookInstance();
 
 // Create context
 const GrowthBookContext = createContext<GrowthBook>(growthbook);
