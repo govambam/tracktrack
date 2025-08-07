@@ -38,16 +38,8 @@ import {
   RotateCcw,
 } from "lucide-react";
 
-interface Course {
-  id: string;
-  name: string;
-  location?: string;
-  par?: number;
-  yardage?: number;
-  description?: string;
-  image_url?: string;
-  holes?: number;
-}
+// Use the centralized Course interface
+type Course = ContextCourse;
 
 interface AIQuickstartFormProps {
   isOpen: boolean;
