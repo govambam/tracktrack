@@ -221,7 +221,7 @@ export default function ScorecardEdit() {
         }));
       } else {
         // Fallback: create holes without par data when course info not available
-        const totalHoles = roundData.courses?.total_holes || roundData.holes || 18;
+        const totalHoles = roundData.courses?.holes || roundData.holes || 18;
         for (let i = 1; i <= totalHoles; i++) {
           holes.push({
             hole: i,
