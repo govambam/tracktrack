@@ -1,6 +1,63 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { GrowthBook } from '@growthbook/growthbook-react';
+import { GrowthBook } from '@growthbook-react';
 import { supabase } from '@/lib/supabase';
+
+// Helper functions to detect user attributes
+const getDeviceType = (): string => {
+  const ua = navigator.userAgent;
+  if (/tablet|ipad|playbook|silk/i.test(ua)) {
+    return 'tablet';
+  }
+  if (/mobile|iphone|ipod|android|blackberry|opera|mini|windows\sce|palm|smartphone|iemobile/i.test(ua)) {
+    return 'mobile';
+  }
+  return 'desktop';
+};
+
+const getBrowser = (): string => {
+  const ua = navigator.userAgent;
+  if (ua.includes('Chrome')) return 'chrome';
+  if (ua.includes('Firefox')) return 'firefox';
+  if (ua.includes('Safari')) return 'safari';
+  if (ua.includes('Edge')) return 'edge';
+  return 'other';
+};
+
+const getOperatingSystem = (): string => {
+  const ua = navigator.userAgent;
+  if (ua.includes('Mac')) return 'macos';
+  if (ua.includes('Windows')) return 'windows';
+  if (ua.includes('Linux')) return 'linux';
+  if (ua.includes('Android')) return 'android';
+  if (ua.includes('iOS')) return 'ios';
+  return 'other';
+};
+
+const getTimezone = (): string => {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  } catch (e) {
+    return 'unknown';
+  }
+};
+
+const getCountryFromTimezone = (timezone: string): string => {
+  // Extract country from timezone (e.g., "America/New_York" -> "US")
+  const timezoneToCountry: { [key: string]: string } = {
+    'America/New_York': 'US',
+    'America/Los_Angeles': 'US',
+    'America/Chicago': 'US',
+    'America/Denver': 'US',
+    'Europe/London': 'GB',
+    'Europe/Paris': 'FR',
+    'Europe/Berlin': 'DE',
+    'Asia/Tokyo': 'JP',
+    'Australia/Sydney': 'AU',
+    // Add more as needed
+  };
+
+  return timezoneToCountry[timezone] || 'unknown';
+};
 
 // Create GrowthBook instance
 const growthbook = new GrowthBook({
