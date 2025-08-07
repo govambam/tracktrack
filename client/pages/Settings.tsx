@@ -40,7 +40,11 @@ export default function Settings() {
   const [loading, setLoading] = useState(true);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [deletingProjects, setDeletingProjects] = useState(false);
   const { toast } = useToast();
+
+  // Feature flag for delete projects functionality
+  const deleteProjectsEnabled = useFeatureEnabled('delete_projects');
   
   // Edit form state
   const [editForm, setEditForm] = useState({
