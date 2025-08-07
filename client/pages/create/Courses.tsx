@@ -30,7 +30,7 @@ import {
 
 export default function Courses() {
   const navigate = useNavigate();
-  const { state, updateCourses, saveRounds } = useTripCreation();
+  const { state, updateCourses, saveRounds, searchCourses, createCourse } = useTripCreation();
   const { tripData } = state;
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
