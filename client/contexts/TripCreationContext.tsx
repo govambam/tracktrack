@@ -14,6 +14,21 @@ export interface SkillsContest {
   type: "longest_drive" | "closest_to_pin";
 }
 
+export interface Course {
+  id: string;
+  name: string;
+  location?: string;
+  description?: string;
+  website_url?: string;
+  phone?: string;
+  total_holes?: number;
+  total_par?: number;
+  total_yardage?: number;
+  course_rating?: number;
+  slope_rating?: number;
+  is_official: boolean;
+}
+
 export interface Round {
   id: string;
   courseName: string; // Keep for backward compatibility
