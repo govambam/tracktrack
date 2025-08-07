@@ -604,7 +604,7 @@ Format as markdown with headers. Include each course as a separate day. Limit re
       console.log("Form data:", formData);
 
       // Validate form data
-      if (!formData.courses.length) {
+      if (!selectedCourses.length) {
         throw new Error("No courses selected");
       }
       if (!formData.startDate || !formData.endDate) {
