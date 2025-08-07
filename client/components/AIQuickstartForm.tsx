@@ -227,7 +227,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
 
   const canSubmit = () => {
     return (
-      formData.courses.length > 0 &&
+      selectedCourses.length > 0 &&
       formData.startDate &&
       formData.endDate &&
       formData.players.length > 0 &&
