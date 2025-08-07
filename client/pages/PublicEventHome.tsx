@@ -1718,27 +1718,99 @@ export default function PublicEventHome({
 
   return (
     <div className={`min-h-screen ${theme.heroContainer}`}>
-      {!hideNavigation && (
-        <StickyNavigation
-          eventName={eventData.name}
-          slug={slug!}
-          theme={currentTheme}
-          handleClubhouseAccess={handleClubhouseAccess}
-          hasClubhouse={hasClubhouse}
-        />
-      )}
+      {/* Navigation - Normal or Preview Mode */}
+      {isDraftMode ? (
+        /* Preview Mode Header */
+        <div className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+          <div className="flex items-center justify-between p-4">
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => window.close()}
+                className="flex items-center space-x-2"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span className="hidden sm:inline">Back</span>
+              </Button>
 
-      {/* Draft Mode Indicator */}
-      {isDraftMode && (
-        <div className="fixed top-4 right-4 z-50">
-          <Badge
-            variant="secondary"
-            className="bg-orange-100 text-orange-700 border-orange-200 shadow-lg"
-          >
-            <Sparkles className="h-3 w-3 mr-1" />
-            Draft Preview
-          </Badge>
+              <Badge
+                variant="secondary"
+                className="bg-orange-100 text-orange-700 border-orange-200"
+              >
+                <Sparkles className="h-3 w-3 mr-1" />
+                <span className="hidden sm:inline">Draft Preview</span>
+                <span className="sm:hidden">Draft</span>
+              </Badge>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              {/* Theme Selector */}
+              <div className="flex items-center space-x-2">
+                <Palette className="h-4 w-4 text-slate-600 hidden sm:block" />
+                <Select
+                  value={currentTheme}
+                  onValueChange={setPreviewTheme}
+                >
+                  <SelectTrigger className="w-32 sm:w-40">
+                    <SelectValue>
+                      <div className="flex items-center space-x-2">
+                        {AVAILABLE_THEMES.find(t => t.id === currentTheme) && (
+                          <>
+                            <div className="flex space-x-1">
+                              {AVAILABLE_THEMES.find(t => t.id === currentTheme)!.colors.map((color, index) => (
+                                <div
+                                  key={index}
+                                  className="w-3 h-3 rounded-full"
+                                  style={{ backgroundColor: color }}
+                                />
+                              ))}
+                            </div>
+                            <span className="hidden sm:inline">{AVAILABLE_THEMES.find(t => t.id === currentTheme)!.name}</span>
+                          </>
+                        )}
+                      </div>
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {AVAILABLE_THEMES.map((theme) => (
+                      <SelectItem key={theme.id} value={theme.id}>
+                        <div className="flex items-center space-x-2">
+                          <div className="flex space-x-1">
+                            {theme.colors.map((color, index) => (
+                              <div
+                                key={index}
+                                className="w-3 h-3 rounded-full"
+                                style={{ backgroundColor: color }}
+                              />
+                            ))}
+                          </div>
+                          <div>
+                            <div className="font-medium">{theme.name}</div>
+                            <div className="text-xs text-slate-500 hidden sm:block">
+                              {theme.description}
+                            </div>
+                          </div>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
         </div>
+      ) : (
+        /* Normal Navigation */
+        !hideNavigation && (
+          <StickyNavigation
+            eventName={eventData.name}
+            slug={slug!}
+            theme={currentTheme}
+            handleClubhouseAccess={handleClubhouseAccess}
+            hasClubhouse={hasClubhouse}
+          />
+        )
       )}
 
       {/* Hero Section */}
