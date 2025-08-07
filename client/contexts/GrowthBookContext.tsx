@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { GrowthBook } from '@growthbook/growthbook-react';
+import { supabase } from '@/lib/supabase';
 
 // Create GrowthBook instance
 const growthbook = new GrowthBook({
