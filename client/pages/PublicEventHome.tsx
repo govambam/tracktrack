@@ -1261,7 +1261,30 @@ export default function PublicEventHome({
   const [showClubhouseModal, setShowClubhouseModal] = useState(false);
   const [clubhouseSession, setClubhouseSession] = useState<any>(null);
   const [activeClubhouseTab, setActiveClubhouseTab] = useState("scores");
+  const [previewTheme, setPreviewTheme] = useState<string | null>(draftTheme);
   const navigate = useNavigate();
+
+  // Available themes for preview mode
+  const AVAILABLE_THEMES = [
+    {
+      id: "GolfOS",
+      name: "GolfOS",
+      description: "Colorful, playful design with bright accents",
+      colors: ["#10b981", "#3b82f6", "#8b5cf6"],
+    },
+    {
+      id: "TourTech",
+      name: "Tour Tech",
+      description: "Professional, enterprise-ready design",
+      colors: ["#1e293b", "#64748b", "#ea580c"],
+    },
+    {
+      id: "Masters",
+      name: "Masters",
+      description: "Prestigious, traditional design",
+      colors: ["#166534", "#15803d", "#ca8a04"],
+    },
+  ];
 
   useEffect(() => {
     if (preloadedEventData) {
@@ -1685,8 +1708,8 @@ export default function PublicEventHome({
     );
   }
 
-  // Get theme styling - prioritize URL theme (for full-screen preview), then forced theme, then event's theme
-  const currentTheme = draftTheme || forceTheme || eventData?.theme || "GolfOS";
+  // Get theme styling - prioritize preview theme state, then URL theme, then forced theme, then event's theme
+  const currentTheme = previewTheme || draftTheme || forceTheme || eventData?.theme || "GolfOS";
   const theme = getThemeStyles(currentTheme);
 
   // Get theme components
