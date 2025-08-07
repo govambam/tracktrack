@@ -912,29 +912,15 @@ Format as markdown with headers. Include each course as a separate day. Limit re
         {/* Course Search Input */}
         <div className="mb-4">
           <CourseSelector
-            value=""
-            onCourseSelect={(course, courseName) => {
-              if (course) {
-                addCourseToSelection(course);
-              } else if (courseName) {
-                // Handle manual course entry - create a temporary course object
-                const tempCourse: Course = {
-                  id: `temp-${Date.now()}`,
-                  name: courseName,
-                  holes: 18,
-                  is_official: false,
-                };
-                addCourseToSelection(tempCourse);
-              }
-              setCourseSearchQuery("");
+            selectedCourses={selectedCourses}
+            onCoursesChange={(courses) => {
+              setSelectedCourses(courses);
+              setFormData(prev => ({
+                ...prev,
+                courses: courses.map(c => c.id)
+              }));
             }}
-            onCourseCreate={async (courseData) => {
-              const result = await createCourse(courseData);
-              if (result.success && result.course) {
-                addCourseToSelection(result.course);
-              }
-              return result;
-            }}
+            onCourseCreate={createCourse}
             searchCourses={handleCourseSearch}
             placeholder="Search for golf courses by name or location..."
             className="w-full"
