@@ -95,6 +95,10 @@ export default function PublicLeaderboard({
       setScores(scoresResult.data || []);
       setCourseHoles(courseHolesResult.data || []);
 
+      // Store courses data for reference
+      const courses = coursesResult.data || [];
+      console.log("Loaded courses:", courses);
+
       setLoading(false);
     } catch (err) {
       console.error("Error loading event data:", err);
