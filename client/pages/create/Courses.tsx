@@ -302,13 +302,25 @@ export default function Courses() {
                     <Label className="text-green-800 font-medium">
                       Course Name *
                     </Label>
-                    <Input
-                      value={round.courseName}
-                      onChange={(e) =>
-                        updateRound(round.id, "courseName", e.target.value)
-                      }
-                      placeholder="e.g., Pebble Beach Golf Links"
-                      className={`border-green-200 focus:border-emerald-500 bg-white ${errors[round.id]?.courseName ? "border-red-300" : ""}`}
+                    <CourseSelector
+                      value={round.courseId}
+                      courseName={round.courseName}
+                      onCourseSelect={(course, courseName) => {
+                        if (course) {
+                          updateRound(round.id, "courseId", course.id);
+                          updateRound(round.id, "courseName", course.name);
+                          if (course.website_url) {
+                            updateRound(round.id, "courseUrl", course.website_url);
+                          }
+                        } else if (courseName) {
+                          updateRound(round.id, "courseId", undefined);
+                          updateRound(round.id, "courseName", courseName);
+                        }
+                      }}
+                      onCourseCreate={createCourse}
+                      searchCourses={searchCourses}
+                      placeholder="Search for a golf course or enter manually..."
+                      className={`${errors[round.id]?.courseName ? "border-red-300" : ""}`}
                     />
                     {errors[round.id]?.courseName && (
                       <p className="text-sm text-red-600">
