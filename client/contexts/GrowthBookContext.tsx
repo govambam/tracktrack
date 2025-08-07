@@ -257,7 +257,9 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   return (
     <GrowthBookContext.Provider value={growthbook}>
-      {children}
+      <UserAttributesContext.Provider value={{ attributes: userAttributes, updateAttributes: updateUserAttributes }}>
+        {children}
+      </UserAttributesContext.Provider>
     </GrowthBookContext.Provider>
   );
 };
