@@ -1293,7 +1293,7 @@ Format as markdown with headers. Include each course as a separate day. Limit re
                     Runner-up: ${formData.entryFeeAmount.toLocaleString()} (100%
                     of buy-in)
                   </div>
-                  {formData.courses.length > 0 && (
+                  {selectedCourses.length > 0 && (
                     <>
                       <div>
                         Longest Drive: $
