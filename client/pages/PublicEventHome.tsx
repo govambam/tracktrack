@@ -1228,8 +1228,8 @@ export default function PublicEventHome({
 
   // Check for draft theme in URL parameters
   const urlParams = new URLSearchParams(window.location.search);
-  const draftTheme = urlParams.get('theme');
-  const isDraftMode = urlParams.get('draft') === 'true';
+  const draftTheme = urlParams.get("theme");
+  const isDraftMode = urlParams.get("draft") === "true";
   const [loading, setLoading] = useState(true);
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [players, setPlayers] = useState<EventPlayer[]>([]);

@@ -12,7 +12,14 @@ import {
 import { supabase } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { ArrowLeft, Eye, Palette, Settings, Loader2, ExternalLink } from "lucide-react";
+import {
+  ArrowLeft,
+  Eye,
+  Palette,
+  Settings,
+  Loader2,
+  ExternalLink,
+} from "lucide-react";
 
 // Import the public event component
 import PublicEventHome from "@/pages/PublicEventHome";
@@ -131,7 +138,10 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
 
   const handleOpenFullScreen = () => {
     if (eventSlug) {
-      window.open(`/events/${eventSlug}?draft=true&theme=${currentTheme}`, '_blank');
+      window.open(
+        `/events/${eventSlug}?draft=true&theme=${currentTheme}`,
+        "_blank",
+      );
     }
   };
 
@@ -142,7 +152,9 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-[95vw] max-h-[95vh] p-6 z-[70]">
-          <DialogTitle className="text-xl font-bold mb-4">Preview Your Event</DialogTitle>
+          <DialogTitle className="text-xl font-bold mb-4">
+            Preview Your Event
+          </DialogTitle>
 
           {loading ? (
             <div className="flex items-center justify-center py-12">
@@ -164,7 +176,8 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
                   </Badge>
                 </div>
                 <p className="text-slate-600 mb-6">
-                  For the best mobile preview experience, open your event in a new tab.
+                  For the best mobile preview experience, open your event in a
+                  new tab.
                 </p>
 
                 {/* Theme Selector */}
@@ -224,7 +237,9 @@ export const DraftPreviewModal: React.FC<DraftPreviewModalProps> = ({
                   {saving && (
                     <div className="flex items-center justify-center mt-2">
                       <Loader2 className="h-4 w-4 animate-spin text-slate-600 mr-2" />
-                      <span className="text-sm text-slate-600">Updating theme...</span>
+                      <span className="text-sm text-slate-600">
+                        Updating theme...
+                      </span>
                     </div>
                   )}
                 </div>
