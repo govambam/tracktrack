@@ -1029,12 +1029,15 @@ Format as markdown with headers. Include each course as a separate day. Limit re
           </div>
           {formData.startDate && (
             <div className="text-sm text-emerald-600 mt-1 font-medium">
-              {new Date(formData.startDate + 'T00:00:00').toLocaleDateString("en-US", {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
+              {new Date(formData.startDate + "T00:00:00").toLocaleDateString(
+                "en-US",
+                {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                },
+              )}
             </div>
           )}
         </div>
@@ -1058,12 +1061,15 @@ Format as markdown with headers. Include each course as a separate day. Limit re
           </div>
           {formData.endDate && (
             <div className="text-sm text-emerald-600 mt-1 font-medium">
-              {new Date(formData.endDate + 'T00:00:00').toLocaleDateString("en-US", {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
+              {new Date(formData.endDate + "T00:00:00").toLocaleDateString(
+                "en-US",
+                {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                },
+              )}
             </div>
           )}
         </div>
