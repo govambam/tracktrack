@@ -134,6 +134,7 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [userAttributes, setUserAttributes] = useState<any>({});
+  const [loadingError, setLoadingError] = useState<string | null>(null);
 
   // Function to set user attributes
   const updateUserAttributes = async () => {
