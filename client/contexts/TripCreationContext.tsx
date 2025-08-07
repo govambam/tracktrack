@@ -18,15 +18,13 @@ export interface Course {
   id: string;
   name: string;
   location?: string;
+  par?: number;
+  yardage?: number;
   description?: string;
-  website_url?: string;
-  phone?: string;
-  total_holes?: number;
-  total_par?: number;
-  total_yardage?: number;
-  course_rating?: number;
-  slope_rating?: number;
+  image_url?: string;
+  holes: number;
   is_official: boolean;
+  created_at?: string;
 }
 
 export interface Round {
