@@ -960,54 +960,86 @@ Format as markdown with headers. Include each course as a separate day. Limit re
       <div>
         <Label className="text-base font-medium flex items-center space-x-2 mb-3">
           <MapPin className="h-4 w-4 text-emerald-600" />
-          <span>Courses to Play</span>
+          <span>Add Courses to Play</span>
         </Label>
-        <div className="space-y-3 max-h-64 overflow-y-auto border rounded-lg p-3">
-          {loadingCourses ? (
-            <div className="flex items-center justify-center py-4">
-              <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              <span>Loading courses...</span>
+
+        {/* Course Search Input */}
+        <div className="mb-4">
+          <CourseSelector
+            value=""
+            onCourseSelect={(course, courseName) => {
+              if (course) {
+                addCourseToSelection(course);
+              } else if (courseName) {
+                // Handle manual course entry - create a temporary course object
+                const tempCourse: Course = {
+                  id: `temp-${Date.now()}`,
+                  name: courseName,
+                  holes: 18,
+                  is_official: false
+                };
+                addCourseToSelection(tempCourse);
+              }
+              setCourseSearchQuery("");
+            }}
+            onCourseCreate={async (courseData) => {
+              const result = await createCourse(courseData);
+              if (result.success && result.course) {
+                addCourseToSelection(result.course);
+              }
+              return result;
+            }}
+            searchCourses={handleCourseSearch}
+            placeholder="Search for golf courses by name or location..."
+            className="w-full"
+          />
+        </div>
+
+        {/* Selected Courses Display */}
+        {selectedCourses.length > 0 && (
+          <div className="space-y-3 max-h-64 overflow-y-auto border rounded-lg p-3">
+            <div className="text-sm font-medium text-slate-700 mb-2">
+              Selected Courses ({selectedCourses.length})
             </div>
-          ) : courses.length === 0 ? (
-            <div className="text-center py-8">
-              <div className="text-slate-500 mb-3">No courses found</div>
-              <Button onClick={loadCourses} variant="outline" size="sm">
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Retry Loading Courses
-              </Button>
-            </div>
-          ) : (
-            courses.map((course) => (
+            {selectedCourses.map((course) => (
               <div
                 key={course.id}
-                className="flex items-start space-x-3 p-3 border rounded-lg hover:bg-slate-50"
+                className="flex items-start space-x-3 p-3 border rounded-lg bg-emerald-50 border-emerald-200"
               >
-                <Checkbox
-                  id={course.id}
-                  checked={formData.courses.includes(course.id)}
-                  onCheckedChange={() => toggleCourse(course.id)}
-                  className="mt-1"
-                />
-                <Label htmlFor={course.id} className="flex-1 cursor-pointer">
-                  <div className="space-y-1">
-                    <div className="font-medium">{course.name}</div>
-                    {course.location && (
-                      <div className="text-sm text-slate-500">
-                        {course.location}
-                      </div>
-                    )}
-                    {course.description && (
-                      <div className="text-sm text-slate-600 line-clamp-2">
-                        {course.description}
-                      </div>
-                    )}
-                    <div className="flex items-center space-x-3 text-xs text-slate-500">
-                      {course.holes && <span>{course.holes} holes</span>}
-                      {course.par && <span>Par {course.par}</span>}
-                      {course.yardage && <span>{course.yardage} yards</span>}
-                    </div>
+                <CheckCircle className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                <div className="flex-1 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <div className="font-medium text-emerald-900">{course.name}</div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => removeCourseFromSelection(course.id)}
+                      className="h-6 w-6 p-0 text-slate-500 hover:text-red-600"
+                    >
+                      ×
+                    </Button>
                   </div>
-                </Label>
+                  {course.location && (
+                    <div className="text-sm text-emerald-700">
+                      {course.location}
+                    </div>
+                  )}
+                  {course.description && (
+                    <div className="text-sm text-slate-600 line-clamp-2">
+                      {course.description}
+                    </div>
+                  )}
+                  <div className="flex items-center space-x-3 text-xs text-slate-500">
+                    {course.holes && <span>{course.holes} holes</span>}
+                    {course.par && <span>Par {course.par}</span>}
+                    {course.yardage && <span>{course.yardage} yards</span>}
+                    {course.is_official && (
+                      <Badge variant="secondary" className="text-xs">
+                        Official
+                      </Badge>
+                    )}
+                  </div>
+                </div>
                 {course.image_url && (
                   <img
                     src={course.image_url}
@@ -1016,15 +1048,17 @@ Format as markdown with headers. Include each course as a separate day. Limit re
                   />
                 )}
               </div>
-            ))
-          )}
-        </div>
-        {formData.courses.length > 0 && (
-          <div className="mt-2">
-            <span className="text-sm text-slate-600">
-              Selected {formData.courses.length} course
-              {formData.courses.length !== 1 ? "s" : ""}
-            </span>
+            ))}
+          </div>
+        )}
+
+        {selectedCourses.length === 0 && (
+          <div className="text-center py-8 border rounded-lg border-dashed border-slate-300">
+            <MapPin className="h-8 w-8 text-slate-400 mx-auto mb-2" />
+            <div className="text-slate-500 mb-1">No courses selected</div>
+            <div className="text-sm text-slate-400">
+              Search and add courses using the field above
+            </div>
           </div>
         )}
       </div>
