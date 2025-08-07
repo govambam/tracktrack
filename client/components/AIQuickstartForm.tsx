@@ -59,7 +59,6 @@ interface QuickstartData {
   players: string[];
   occasion: string;
   theme: string;
-  hasEntryFee: boolean;
   entryFeeAmount: number;
 }
 
@@ -123,7 +122,6 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
     players: [],
     occasion: "",
     theme: "GolfOS",
-    hasEntryFee: false,
     entryFeeAmount: 0,
   });
 
@@ -214,9 +212,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
       formData.players.length > 0 &&
       formData.occasion &&
       formData.theme &&
-      new Date(formData.endDate) >= new Date(formData.startDate) &&
-      (!formData.hasEntryFee ||
-        (formData.hasEntryFee && formData.entryFeeAmount > 0))
+      new Date(formData.endDate) >= new Date(formData.startDate)
     );
   };
 
@@ -236,8 +232,6 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
     if (formData.players.length === 0) errors.push("Add at least one player");
     if (!formData.occasion) errors.push("Select an occasion");
     if (!formData.theme) errors.push("Select a theme");
-    if (formData.hasEntryFee && formData.entryFeeAmount <= 0)
-      errors.push("Enter a valid entry fee amount");
     return errors;
   };
 
@@ -329,7 +323,6 @@ Generate ONE event name only:`;
     courses: Course[],
     dates: { start: string; end: string },
     playerCount: number,
-    hasEntryFee: boolean,
     entryFee: number,
   ) => {
     const courseNames = courses.map((c) => c.name);
@@ -350,7 +343,7 @@ Dates: ${startDate} to ${endDate}, ${new Date(dates.start).getFullYear()}
 Courses: ${courseNames.map((c) => c).join(", ")}
 Locations: ${courseLocations.length > 0 ? courseLocations.join(", ") : "Multiple locations"}
 Players: ${playerCount} golfers
-Entry Fee: ${hasEntryFee ? `$${entryFee} per player` : "No entry fee"}
+Entry Fee: ${entryFee > 0 ? `$${entryFee} per player` : "No entry fee"}
 Scoring: Stableford format with skills contests
 
 Requirements:
@@ -634,7 +627,6 @@ Format as markdown with headers. Include each course as a separate day. Limit re
           end: formData.endDate,
         },
         formData.players.length,
-        formData.hasEntryFee,
         formData.entryFeeAmount,
       );
 
@@ -683,7 +675,7 @@ Format as markdown with headers. Include each course as a separate day. Limit re
           slug: slug,
           user_id: user.id,
           created_by: user.id,
-          buy_in: formData.hasEntryFee ? formData.entryFeeAmount : null,
+          buy_in: formData.entryFeeAmount > 0 ? formData.entryFeeAmount : null,
         })
         .select()
         .single();
@@ -823,7 +815,7 @@ Format as markdown with headers. Include each course as a separate day. Limit re
       }
 
       // Create prizes if there's an entry fee
-      if (formData.hasEntryFee && formData.entryFeeAmount > 0) {
+      if (formData.entryFeeAmount > 0) {
         console.log("Creating prize structure...");
         const payouts = calculatePayouts(
           formData.entryFeeAmount,
