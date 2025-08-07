@@ -97,8 +97,10 @@ const getEngagementLevel = (eventCount: number, accountAge: number): string => {
 
 // Create GrowthBook instance with fallback configuration
 const createGrowthBookInstance = () => {
-  const apiHost = import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io";
-  const clientKey = import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u";
+  const apiHost =
+    import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io";
+  const clientKey =
+    import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u";
 
   console.log("Creating GrowthBook instance with:", { apiHost, clientKey });
 
@@ -265,19 +267,18 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
 
         // Add a timeout to prevent hanging indefinitely (reduced to 5 seconds)
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error("GrowthBook load timeout")), 5000)
+          setTimeout(() => reject(new Error("GrowthBook load timeout")), 5000),
         );
 
-        await Promise.race([
-          growthbook.loadFeatures(),
-          timeoutPromise
-        ]);
+        await Promise.race([growthbook.loadFeatures(), timeoutPromise]);
 
         console.log("GrowthBook features loaded successfully");
         setIsLoaded(true);
       } catch (error) {
         console.error("Failed to load GrowthBook features:", error);
-        setLoadingError(error instanceof Error ? error.message : "Unknown error");
+        setLoadingError(
+          error instanceof Error ? error.message : "Unknown error",
+        );
         console.log("Continuing without GrowthBook features...");
         setIsLoaded(true); // Continue even if features fail to load
       }
