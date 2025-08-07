@@ -107,8 +107,6 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
   const [currentStep, setCurrentStep] = useState<
     "form" | "generating" | "complete"
   >("form");
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [loadingCourses, setLoadingCourses] = useState(false);
   const [selectedCourses, setSelectedCourses] = useState<Course[]>([]);
   const [courseSearchQuery, setCourseSearchQuery] = useState("");
   const { searchCourses, createCourse } = useTripCreation();
