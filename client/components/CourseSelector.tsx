@@ -195,10 +195,6 @@ export function CourseSelector({
           onChange={(e) => {
             setSearchQuery(e.target.value);
             setIsOpen(true);
-            if (selectedCourse) {
-              setSelectedCourse(null);
-              onCourseSelect(null, e.target.value);
-            }
           }}
           onFocus={() => setIsOpen(true)}
           placeholder={placeholder}
@@ -206,11 +202,6 @@ export function CourseSelector({
           className="pr-10"
         />
         <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-        {selectedCourse && (
-          <div className="absolute right-8 top-1/2 transform -translate-y-1/2">
-            <CheckCircle className="h-4 w-4 text-green-500" />
-          </div>
-        )}
       </div>
 
       {isOpen && searchQuery.length >= 2 && (
