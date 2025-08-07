@@ -63,11 +63,11 @@ export default function PublicLeaderboard({
       setEventData(event);
 
       // Load rounds, players, scores, and course holes in parallel
-      const [roundsResult, playersResult, scoresResult, courseHolesResult] =
+      const [roundsResult, playersResult, scoresResult, courseHolesResult, coursesResult] =
         await Promise.all([
           supabase
             .from("event_rounds")
-            .select("*")
+            .select("*, courses(id, name, location, total_holes, total_par, is_official)")
             .eq("event_id", event.id)
             .order("created_at"),
 
@@ -83,6 +83,11 @@ export default function PublicLeaderboard({
             .from("course_holes")
             .select("*")
             .order("course_name, hole_number"),
+
+          supabase
+            .from("courses")
+            .select("*")
+            .order("name"),
         ]);
 
       setRounds(roundsResult.data || []);
