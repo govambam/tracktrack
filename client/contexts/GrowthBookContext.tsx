@@ -59,6 +59,38 @@ const getCountryFromTimezone = (timezone: string): string => {
   return timezoneToCountry[timezone] || 'unknown';
 };
 
+const getHandicapRange = (handicap: number): string => {
+  if (handicap <= 5) return 'low'; // Low handicap (scratch to 5)
+  if (handicap <= 15) return 'mid'; // Mid handicap (6-15)
+  if (handicap <= 25) return 'high'; // High handicap (16-25)
+  return 'beginner'; // Beginner (25+)
+};
+
+const getAccountAgeCategory = (ageInDays: number): string => {
+  if (ageInDays <= 1) return 'new'; // New user (within 24 hours)
+  if (ageInDays <= 7) return 'recent'; // Recent (within a week)
+  if (ageInDays <= 30) return 'established'; // Established (within a month)
+  return 'veteran'; // Long-time user
+};
+
+const getUserType = (eventCount: number, accountAge: number): string => {
+  if (eventCount === 0) {
+    return accountAge <= 7 ? 'new_user' : 'inactive_user';
+  }
+  if (eventCount >= 10) return 'power_user';
+  if (eventCount >= 3) return 'active_user';
+  return 'casual_user';
+};
+
+const getEngagementLevel = (eventCount: number, accountAge: number): string => {
+  if (accountAge === 0) return 'new';
+
+  const eventsPerDay = eventCount / accountAge;
+  if (eventsPerDay >= 0.1) return 'high'; // More than 1 event per 10 days
+  if (eventsPerDay >= 0.03) return 'medium'; // More than 1 event per month
+  return 'low';
+};
+
 // Create GrowthBook instance
 const growthbook = new GrowthBook({
   apiHost: import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io",
