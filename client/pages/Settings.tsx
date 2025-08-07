@@ -197,7 +197,20 @@ export default function Settings() {
         throw new Error('No user found');
       }
 
+      // First, get count of events to delete for confirmation
+      const { count, error: countError } = await supabase
+        .from('events')
+        .select('*', { count: 'exact', head: true })
+        .eq('created_by', user.id);
+
+      if (countError) {
+        throw countError;
+      }
+
+      console.log(`Deleting ${count} events for user ${user.id}`);
+
       // Delete all events for the current user
+      // This will cascade delete all related data (rounds, players, scorecards, etc.)
       const { error } = await supabase
         .from('events')
         .delete()
@@ -209,7 +222,7 @@ export default function Settings() {
 
       toast({
         title: "Projects Deleted",
-        description: "All your projects have been successfully deleted.",
+        description: `Successfully deleted ${count} project${count !== 1 ? 's' : ''} and all associated data.`,
         variant: "default",
       });
 
@@ -217,7 +230,7 @@ export default function Settings() {
       console.error('Error deleting projects:', error);
       toast({
         title: "Error",
-        description: "Failed to delete projects. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to delete projects. Please try again.",
         variant: "destructive",
       });
     } finally {
