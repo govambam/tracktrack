@@ -22,6 +22,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
+import { CourseSelector } from "@/components/CourseSelector";
+import { useTripCreation } from "@/contexts/TripCreationContext";
+import { Course as ContextCourse } from "@/contexts/TripCreationContext";
 import {
   Sparkles,
   Calendar,
