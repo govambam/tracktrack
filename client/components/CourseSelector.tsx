@@ -37,12 +37,11 @@ interface CourseSelectorProps {
 }
 
 export function CourseSelector({
-  value,
-  courseName,
-  onCourseSelect,
+  selectedCourses,
+  onCoursesChange,
   onCourseCreate,
   searchCourses,
-  placeholder = "Search for a golf course...",
+  placeholder = "Search for golf courses by name or location...",
   className = "",
   disabled = false,
 }: CourseSelectorProps) {
@@ -50,7 +49,6 @@ export function CourseSelector({
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Course[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [createForm, setCreateForm] = useState({
