@@ -14,6 +14,7 @@ export async function setupGrowthBookDemo() {
     await featureFlagUtils.setNumberFlag('max-users-limit', 250);
     await featureFlagUtils.setStringFlag('welcome-message', 'Welcome to the future of golf events! 🏌️‍♂️');
     await featureFlagUtils.setBooleanFlag('beta-leaderboard', true);
+    await featureFlagUtils.setBooleanFlag('delete_projects', false);
     
     console.log('✅ Demo flags created and configured successfully!');
     console.log('🎯 Created flags:', flags.map(f => f.key));
