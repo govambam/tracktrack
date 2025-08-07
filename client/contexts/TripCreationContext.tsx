@@ -858,6 +858,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       if (rounds && rounds.length > 0) {
         const roundsDataForDB = rounds.map((round) => ({
           event_id: tripData.id,
+          course_id: round.courseId || null,
           course_name: round.courseName,
           course_url: round.courseUrl || null,
           round_date: round.date,
