@@ -1810,7 +1810,8 @@ export default function PublicEventHome({
         </div>
       ) : (
         /* Normal Navigation - Hidden in draft mode */
-        !hideNavigation && !isDraftMode && (
+        !hideNavigation &&
+        !isDraftMode && (
           <StickyNavigation
             eventName={eventData.name}
             slug={slug!}
@@ -1824,12 +1825,12 @@ export default function PublicEventHome({
       {/* Hero Section */}
       <div className={isDraftMode ? "pt-20" : ""}>
         <components.Hero
-        eventData={eventData}
-        players={players}
-        courses={courses}
-        formatDateRange={formatDateRange}
-        getDuration={getDuration}
-        getScoringFormat={getScoringFormat}
+          eventData={eventData}
+          players={players}
+          courses={courses}
+          formatDateRange={formatDateRange}
+          getDuration={getDuration}
+          getScoringFormat={getScoringFormat}
         />
       </div>
 
