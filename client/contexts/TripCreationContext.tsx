@@ -1270,6 +1270,10 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
     savePrizes,
     saveTravel,
     saveCustomization,
+    // Course management functions
+    searchCourses,
+    createCourse,
+    getCourseById,
   };
 
   return (
