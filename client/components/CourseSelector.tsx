@@ -25,9 +25,8 @@ import {
 } from "lucide-react";
 
 interface CourseSelectorProps {
-  value?: string; // courseId
-  courseName?: string; // for backward compatibility
-  onCourseSelect: (course: Course | null, courseName?: string) => void;
+  selectedCourses: Course[]; // Array of selected courses
+  onCoursesChange: (courses: Course[]) => void; // Callback when selection changes
   onCourseCreate?: (
     courseData: Omit<Course, "id">,
   ) => Promise<{ success: boolean; course?: Course; error?: string }>;
