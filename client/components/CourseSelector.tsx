@@ -229,9 +229,9 @@ export function CourseSelector({
                               <span>{course.location}</span>
                             </div>
                           )}
-                          {course.total_holes && course.total_par && (
+                          {course.holes && course.par && (
                             <div className="text-xs text-gray-400 mt-1">
-                              {course.total_holes} holes • Par {course.total_par}
+                              {course.holes} holes • Par {course.par}
                             </div>
                           )}
                         </div>
