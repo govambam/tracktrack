@@ -483,7 +483,15 @@ export default function PublicLeaderboard({
                 <h3 className="text-2xl font-bold text-slate-900">
                   Round {round.round_number}: {courseName}
                 </h3>
+                {course?.is_official && (
+                  <span className="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded">
+                    Official Course
+                  </span>
+                )}
               </div>
+              {course?.location && (
+                <p className="text-slate-500 text-sm mb-2">📍 {course.location}</p>
+              )}
               <p className="text-slate-600 mb-6">
                 {holes.length} holes •{" "}
                 {round.scoring_type === "stroke_play"
