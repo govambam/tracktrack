@@ -1275,7 +1275,7 @@ Format as markdown with headers. Include each course as a separate day. Limit re
 
           {formData.entryFeeAmount > 0 &&
             formData.players.length > 0 &&
-            formData.courses.length > 0 && (
+            selectedCourses.length > 0 && (
               <div className="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg">
                 <div className="font-medium mb-2">Prize Pool Preview:</div>
                 <div className="space-y-1">
