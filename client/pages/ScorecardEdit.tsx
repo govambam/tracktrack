@@ -753,7 +753,7 @@ export default function ScorecardEdit() {
                 <p
                   className={`${currentTheme === "Masters" ? "text-green-600 font-serif" : currentTheme === "TourTech" ? "text-gray-600" : "text-blue-600"}`}
                 >
-                  {round.course_name} • {session?.displayName}
+                  {round.courses?.name || round.course_name} • {session?.displayName}
                   {!hasParData && (
                     <span className="ml-2 text-amber-600">
                       • Course data pending
