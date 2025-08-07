@@ -1225,6 +1225,11 @@ export default function PublicEventHome({
   }, []);
   const { slug: urlSlug } = useParams();
   const slug = propSlug || urlSlug;
+
+  // Check for draft theme in URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const draftTheme = urlParams.get('theme');
+  const isDraftMode = urlParams.get('draft') === 'true';
   const [loading, setLoading] = useState(true);
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [players, setPlayers] = useState<EventPlayer[]>([]);
@@ -1670,8 +1675,8 @@ export default function PublicEventHome({
     );
   }
 
-  // Get theme styling - use forced theme for draft preview or event's theme
-  const currentTheme = forceTheme || eventData?.theme || "GolfOS";
+  // Get theme styling - prioritize URL theme (for full-screen preview), then forced theme, then event's theme
+  const currentTheme = draftTheme || forceTheme || eventData?.theme || "GolfOS";
   const theme = getThemeStyles(currentTheme);
 
   // Get theme components
