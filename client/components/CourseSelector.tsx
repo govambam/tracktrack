@@ -301,36 +301,51 @@ export function CourseSelector({
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               <div>
-                <Label htmlFor="course-holes">Total Holes</Label>
+                <Label htmlFor="course-holes">Holes</Label>
                 <Input
                   id="course-holes"
                   type="number"
                   min="9"
                   max="36"
-                  value={createForm.total_holes}
-                  onChange={(e) => setCreateForm({ ...createForm, total_holes: parseInt(e.target.value) || 18 })}
+                  value={createForm.holes}
+                  onChange={(e) => setCreateForm({ ...createForm, holes: parseInt(e.target.value) || 18 })}
                 />
               </div>
               <div>
-                <Label htmlFor="course-phone">Phone</Label>
+                <Label htmlFor="course-par">Total Par</Label>
                 <Input
-                  id="course-phone"
-                  value={createForm.phone}
-                  onChange={(e) => setCreateForm({ ...createForm, phone: e.target.value })}
-                  placeholder="Phone number"
+                  id="course-par"
+                  type="number"
+                  min="27"
+                  max="108"
+                  value={createForm.par}
+                  onChange={(e) => setCreateForm({ ...createForm, par: parseInt(e.target.value) || 72 })}
+                  placeholder="72"
+                />
+              </div>
+              <div>
+                <Label htmlFor="course-yardage">Yardage</Label>
+                <Input
+                  id="course-yardage"
+                  type="number"
+                  min="1000"
+                  max="9000"
+                  value={createForm.yardage}
+                  onChange={(e) => setCreateForm({ ...createForm, yardage: parseInt(e.target.value) || 6800 })}
+                  placeholder="6800"
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="course-website">Website</Label>
+              <Label htmlFor="course-image">Image URL</Label>
               <Input
-                id="course-website"
+                id="course-image"
                 type="url"
-                value={createForm.website_url}
-                onChange={(e) => setCreateForm({ ...createForm, website_url: e.target.value })}
+                value={createForm.image_url}
+                onChange={(e) => setCreateForm({ ...createForm, image_url: e.target.value })}
                 placeholder="https://..."
               />
             </div>
