@@ -188,6 +188,43 @@ export default function Settings() {
     }
   };
 
+  const handleDeleteAllProjects = async () => {
+    try {
+      setDeletingProjects(true);
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('No user found');
+      }
+
+      // Delete all events for the current user
+      const { error } = await supabase
+        .from('events')
+        .delete()
+        .eq('created_by', user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Projects Deleted",
+        description: "All your projects have been successfully deleted.",
+        variant: "default",
+      });
+
+    } catch (error) {
+      console.error('Error deleting projects:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete projects. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setDeletingProjects(false);
+    }
+  };
+
   const formatJoinDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
