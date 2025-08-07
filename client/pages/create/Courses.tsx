@@ -15,7 +15,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { TripCreationStepper } from "@/components/TripCreationStepper";
 import { useTripCreation } from "@/contexts/TripCreationContext";
-import { Round, SkillsContest } from "@/contexts/TripCreationContext";
+import { Round, SkillsContest, Course } from "@/contexts/TripCreationContext";
+import { CourseSelector } from "@/components/CourseSelector";
 import { useToast } from "@/hooks/use-toast";
 import {
   MapPin,
