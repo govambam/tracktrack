@@ -1810,23 +1810,17 @@ export default function PublicEventHome({
         </div>
       ) : (
         /* Normal Navigation - Hidden in draft mode */
-        !hideNavigation &&
-        !isDraftMode && (
-          <StickyNavigation
-            eventName={eventData.name}
-            slug={slug!}
-            theme={currentTheme}
-            handleClubhouseAccess={handleClubhouseAccess}
-            hasClubhouse={hasClubhouse}
-          />
+        !hideNavigation && (
+          <div style={{ display: isDraftMode ? 'none' : 'block' }}>
+            <StickyNavigation
+              eventName={eventData.name}
+              slug={slug!}
+              theme={currentTheme}
+              handleClubhouseAccess={handleClubhouseAccess}
+              hasClubhouse={hasClubhouse}
+            />
+          </div>
         )
-      )}
-
-      {/* Debug info */}
-      {isDraftMode && (
-        <div className="fixed top-20 left-4 bg-red-500 text-white p-2 text-xs z-50">
-          Draft Mode: {isDraftMode.toString()}
-        </div>
       )}
 
       {/* Hero Section */}
