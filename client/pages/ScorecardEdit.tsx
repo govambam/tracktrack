@@ -151,10 +151,10 @@ export default function ScorecardEdit() {
 
       setEventData(event);
 
-      // Load round data
+      // Load round data with course information
       const { data: roundData, error: roundError } = await supabase
         .from("event_rounds")
-        .select("*")
+        .select("*, courses(id, name, location, total_holes, total_par, is_official)")
         .eq("id", roundId)
         .eq("event_id", event.id)
         .single();
