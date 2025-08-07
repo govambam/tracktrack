@@ -216,6 +216,10 @@ interface TripCreationContextType {
   savePrizes: () => Promise<{ success: boolean; error?: string }>;
   saveTravel: () => Promise<{ success: boolean; error?: string }>;
   saveCustomization: () => Promise<{ success: boolean; error?: string }>;
+  // Course management functions
+  searchCourses: (query: string) => Promise<Course[]>;
+  createCourse: (courseData: Omit<Course, "id">) => Promise<{ success: boolean; course?: Course; error?: string }>;
+  getCourseById: (courseId: string) => Promise<Course | null>;
 }
 
 const TripCreationContext = createContext<TripCreationContextType | undefined>(
