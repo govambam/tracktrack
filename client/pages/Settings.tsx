@@ -516,6 +516,62 @@ export default function Settings() {
             </CardContent>
           </Card>
 
+          {/* Delete All Projects - Feature Flag Controlled */}
+          {deleteProjectsEnabled && (
+            <Card className="border-red-200 bg-red-50">
+              <CardHeader>
+                <CardTitle className="text-lg text-red-900 flex items-center">
+                  <AlertTriangle className="h-5 w-5 mr-2 text-red-600" />
+                  Danger Zone
+                </CardTitle>
+                <CardDescription className="text-red-600">
+                  Irreversible actions that affect your account
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <h4 className="font-medium text-red-900 mb-2">Delete All Projects</h4>
+                  <p className="text-sm text-red-600 mb-4">
+                    This will permanently delete all your events, rounds, scorecards, and associated data. This action cannot be undone.
+                  </p>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="w-full"
+                        disabled={deletingProjects}
+                      >
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        {deletingProjects ? 'Deleting...' : 'Delete All Projects'}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-red-900">Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription className="text-red-600">
+                          This action cannot be undone. This will permanently delete all your projects, events,
+                          rounds, scorecards, and all associated data. All participants will lose access to
+                          these events immediately.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={handleDeleteAllProjects}
+                          className="bg-red-600 hover:bg-red-700"
+                          disabled={deletingProjects}
+                        >
+                          {deletingProjects ? 'Deleting...' : 'Yes, delete all projects'}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           <Card className="border-gray-200">
             <CardContent className="p-4">
               <h3 className="font-semibold text-gray-900 mb-2">Need Help?</h3>
