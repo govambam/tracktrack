@@ -123,11 +123,7 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
     entryFeeAmount: 0,
   });
 
-  useEffect(() => {
-    if (isOpen) {
-      loadCourses();
-    }
-  }, [isOpen]);
+  // Courses are now loaded on-demand through search
 
   const loadCourses = async () => {
     setLoadingCourses(true);
