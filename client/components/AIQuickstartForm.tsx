@@ -202,6 +202,29 @@ export const AIQuickstartForm: React.FC<AIQuickstartFormProps> = ({
     }));
   };
 
+  const addCourseToSelection = (course: Course) => {
+    if (!selectedCourses.find(c => c.id === course.id)) {
+      setSelectedCourses(prev => [...prev, course]);
+      setFormData(prev => ({
+        ...prev,
+        courses: [...prev.courses, course.id]
+      }));
+    }
+  };
+
+  const removeCourseFromSelection = (courseId: string) => {
+    setSelectedCourses(prev => prev.filter(c => c.id !== courseId));
+    setFormData(prev => ({
+      ...prev,
+      courses: prev.courses.filter(id => id !== courseId)
+    }));
+  };
+
+  const handleCourseSearch = async (query: string) => {
+    if (query.length < 2) return [];
+    return await searchCourses(query);
+  };
+
   const canSubmit = () => {
     return (
       formData.courses.length > 0 &&
