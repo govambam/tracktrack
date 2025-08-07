@@ -144,10 +144,11 @@ export function CourseSelector({
         setCreateForm({
           name: "",
           location: "",
-          website_url: "",
-          phone: "",
-          total_holes: 18,
+          par: 72,
+          yardage: 6800,
+          holes: 18,
           description: "",
+          image_url: "",
         });
       } else {
         console.error("Failed to create course:", result.error);
