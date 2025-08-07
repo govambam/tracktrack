@@ -163,7 +163,16 @@ export default function ScorecardEdit() {
         return;
       }
 
-      setRound(roundData);
+      // Load all rounds to calculate round number
+      const { data: allRoundsData } = await supabase
+        .from("event_rounds")
+        .select("id, created_at")
+        .eq("event_id", event.id)
+        .order("created_at");
+
+      const roundNumber = allRoundsData ? allRoundsData.findIndex(r => r.id === roundId) + 1 : 1;
+
+      setRound({ ...roundData, round_number: roundNumber });
 
       // Load course holes with par information
       const { data: holesData, error: holesError } = await supabase
