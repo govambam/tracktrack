@@ -105,6 +105,15 @@ const growthbook = new GrowthBook({
 // Create context
 const GrowthBookContext = createContext<GrowthBook>(growthbook);
 
+// Create a context for user attributes
+const UserAttributesContext = createContext<{
+  attributes: any;
+  updateAttributes: () => Promise<void>;
+}>({
+  attributes: {},
+  updateAttributes: async () => {},
+});
+
 // Provider component
 export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
