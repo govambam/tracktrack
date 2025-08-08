@@ -345,80 +345,22 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Theme Showcase Section */}
-      <section
-        id="themes"
-        className="py-20 bg-gradient-to-br from-purple-100 via-blue-50 to-cyan-100"
-      >
+      {/* Theme Features Summary */}
+      <section id="themes" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-              Dynamic Themes That Wow
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Beautiful Themes for Every Golf Trip
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose from professional themes that look amazing on both desktop
-              and mobile. Each theme creates a unique experience for your golf
-              trip.
+              Professional designs that make your golf trips look amazing and work perfectly on all devices.
             </p>
           </div>
 
-          {/* Embla Carousel */}
-          <div className="relative">
-            <div className="overflow-hidden" ref={emblaRef}>
-              <div className="flex">
-                {themes.map((theme, index) => (
-                  <div key={index} className="flex-[0_0_100%] min-w-0">
-                    <div className="px-4">
-                      {/* Desktop & Mobile Showcase */}
-                      <div className="relative max-w-6xl mx-auto">
-                        <div className="flex items-start justify-center">
-                          {/* Desktop Preview */}
-                          <div className="relative z-10 mt-8 lg:mt-12">
-                            <img
-                              src={theme.desktopImage}
-                              alt={`${theme.name} desktop theme preview`}
-                              className="w-full max-w-lg lg:max-w-2xl h-auto"
-                              style={{ backgroundColor: "transparent" }}
-                            />
-                          </div>
-
-                          {/* Mobile Preview - Overlapping and positioned higher */}
-                          <div className="relative z-20 -ml-12 sm:-ml-16 lg:-ml-24">
-                            <img
-                              src={theme.mobileImage}
-                              alt={`${theme.name} mobile theme preview`}
-                              className="w-full max-w-32 sm:max-w-40 lg:max-w-48 h-auto"
-                              style={{ backgroundColor: "transparent" }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Theme Navigation Dots */}
-            <div className="flex justify-center mt-12 space-x-3">
-              {themes.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => scrollTo(index)}
-                  className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                    index === selectedIndex
-                      ? "bg-emerald-600 scale-110 shadow-lg"
-                      : "bg-white/70 hover:bg-white/90 backdrop-blur-sm"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-
           {/* Features Grid */}
-          <div className="mt-20 grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 mx-auto">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4 mx-auto">
                 <Sparkles className="h-8 w-8 text-emerald-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -430,7 +372,7 @@ export default function Index() {
             </div>
 
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 mx-auto">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4 mx-auto">
                 <Smartphone className="h-8 w-8 text-emerald-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -442,7 +384,7 @@ export default function Index() {
             </div>
 
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 mx-auto">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4 mx-auto">
                 <Star className="h-8 w-8 text-emerald-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
