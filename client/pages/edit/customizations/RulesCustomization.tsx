@@ -693,7 +693,7 @@ Make it fun while keeping it clear! Use markdown formatting with bold titles and
                                   [rule.id]: rule.rule_text,
                                 }));
                               }}
-                              className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                              className="border-purple-200 text-purple-700 hover:bg-purple-50"
                             >
                               <Edit className="h-4 w-4 mr-1" />
                               Edit
@@ -776,7 +776,7 @@ Make it fun while keeping it clear! Use markdown formatting with bold titles and
                                     return rest;
                                   });
                                 }}
-                                className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                                className="border-purple-200 text-purple-700 hover:bg-purple-50"
                               >
                                 <Save className="h-4 w-4 mr-1" />
                                 Save
@@ -881,7 +881,7 @@ Make it fun while keeping it clear! Use markdown formatting with bold titles and
                             double_bogey: stablefordScoring.double_bogey,
                           });
                         }}
-                        className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                        className="border-purple-200 text-purple-700 hover:bg-purple-50"
                       >
                         <Edit className="h-4 w-4 mr-1" />
                         Edit
@@ -965,7 +965,7 @@ Make it fun while keeping it clear! Use markdown formatting with bold titles and
                             await saveStablefordScoring();
                             setEditingStableford(false);
                           }}
-                          className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                          className="border-purple-200 text-purple-700 hover:bg-purple-50"
                         >
                           <Save className="h-4 w-4 mr-1" />
                           Save
