@@ -159,24 +159,16 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
   const [userAttributes, setUserAttributes] = useState<any>({});
   const [loadingError, setLoadingError] = useState<string | null>(null);
 
-  // Function to set user attributes
+  // Function to set user attributes (simplified)
   const updateUserAttributes = async () => {
     try {
-      console.log("Getting user session...");
-      // Get current user session with timeout
-      const sessionPromise = supabase.auth.getSession();
-      const sessionTimeout = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Session timeout")), 5000),
-      );
-
+      // Get current user session
       const {
         data: { session },
-      } = await Promise.race([sessionPromise, sessionTimeout]);
-      console.log("Session retrieved:", !!session?.user);
+      } = await supabase.auth.getSession();
 
       // Base attributes (always available)
       const baseAttributes = {
-        // Auto-detected attributes
         deviceType: getDeviceType(),
         browser: getBrowser(),
         os: getOperatingSystem(),
@@ -186,10 +178,8 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
         path: window.location.pathname,
         userAgent: navigator.userAgent,
         language: navigator.language,
-        // Date/time attributes
-        dayOfWeek: new Date().getDay(), // 0-6 (Sunday-Saturday)
-        hourOfDay: new Date().getHours(), // 0-23
-        // Screen attributes
+        dayOfWeek: new Date().getDay(),
+        hourOfDay: new Date().getHours(),
         screenWidth: window.screen.width,
         screenHeight: window.screen.height,
         viewportWidth: window.innerWidth,
@@ -199,99 +189,25 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
       let attributes = { ...baseAttributes };
 
       if (session?.user) {
-        try {
-          console.log("Fetching user profile and stats...");
-
-          // Add timeouts to database queries
-          const profilePromise = supabase
-            .from("profiles")
-            .select("*")
-            .eq("id", session.user.id)
-            .single();
-
-          const eventCountPromise = supabase
-            .from("events")
-            .select("*", { count: "exact", head: true })
-            .eq("created_by", session.user.id);
-
-          const dbTimeout = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("Database query timeout")), 2000),
-          );
-
-          // Execute both queries with timeout
-          const [profileResult, eventCountResult] = await Promise.race([
-            Promise.all([profilePromise, eventCountPromise]),
-            dbTimeout,
-          ]);
-
-          const profile = profileResult.data;
-          const eventCount = eventCountResult.count;
-
-          console.log("Database queries completed");
-
-          // Calculate account age in days
-          const accountAge = session.user.created_at
-            ? Math.floor(
-                (Date.now() - new Date(session.user.created_at).getTime()) /
-                  (1000 * 60 * 60 * 24),
-              )
-            : 0;
-
-          // User-specific attributes
-          const userSpecificAttributes = {
-            // Core user data
-            id: session.user.id,
-            email: session.user.email,
-            emailDomain: session.user.email?.split("@")[1] || "",
-            isAuthenticated: true,
-
-            // Profile data
-            name: profile?.full_name || "",
-            fullName: profile?.full_name || "",
-            handicap: profile?.handicap || null,
-            hasHandicap: !!profile?.handicap,
-            handicapRange: profile?.handicap
-              ? getHandicapRange(profile.handicap)
-              : null,
-            location: profile?.location || "",
-            bio: profile?.bio || "",
-            hasProfileImage: !!profile?.avatar_url,
-
-            // Account metadata
-            isEmailConfirmed: !!session.user.email_confirmed_at,
-            accountAgeInDays: accountAge,
-            accountAgeCategory: getAccountAgeCategory(accountAge),
-            createdAt: session.user.created_at,
-
-            // Activity data
-            totalEvents: eventCount || 0,
-            hasCreatedEvents: (eventCount || 0) > 0,
-            userType: getUserType(eventCount || 0, accountAge),
-            engagementLevel: getEngagementLevel(eventCount || 0, accountAge),
-          };
-
-          attributes = { ...attributes, ...userSpecificAttributes };
-        } catch (dbError) {
-          console.warn(
-            "Database queries failed, using basic authenticated attributes:",
-            dbError,
-          );
-          // Use basic authenticated attributes without profile data
-          attributes = {
-            ...baseAttributes,
-            id: session.user.id,
-            email: session.user.email,
-            isAuthenticated: true,
-            userType: "authenticated",
-            totalEvents: 0,
-            hasCreatedEvents: false,
-          };
-        }
+        // Simple authenticated user attributes (no database queries)
+        attributes = {
+          ...baseAttributes,
+          id: session.user.id,
+          email: session.user.email,
+          emailDomain: session.user.email?.split("@")[1] || "",
+          isAuthenticated: true,
+          userType: "authenticated",
+          isEmailConfirmed: !!session.user.email_confirmed_at,
+          createdAt: session.user.created_at,
+        };
       } else {
         // Anonymous user attributes
-        attributes.id = "anonymous";
-        attributes.userType = "anonymous";
-        attributes.isAuthenticated = false;
+        attributes = {
+          ...baseAttributes,
+          id: "anonymous",
+          userType: "anonymous",
+          isAuthenticated: false,
+        };
       }
 
       setUserAttributes(attributes);
