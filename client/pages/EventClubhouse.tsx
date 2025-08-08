@@ -326,7 +326,9 @@ export default function EventClubhouse() {
                       ? "border-green-200 hover:border-green-300"
                       : currentTheme === "TourTech"
                         ? "border-gray-200 hover:border-gray-300"
-                        : "border-blue-200 hover:border-blue-300"
+                        : currentTheme === "TrackTrack"
+                          ? "bg-white/90 backdrop-blur-sm border-purple-200 hover:border-purple-300 hover:shadow-purple-100/50"
+                          : "border-blue-200 hover:border-blue-300"
                   }`}
                   onClick={() =>
                     navigate(`/events/${slug}/clubhouse/scorecard/${round.id}`)
