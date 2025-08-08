@@ -73,6 +73,8 @@ const App = () => (
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/login" element={<Auth />} />
                 <Route path="/signup" element={<Auth />} />
+                <Route path="/features" element={<Features />} />
+                <Route path="/pricing" element={<Pricing />} />
 
                 {/* New EventShell structure with persistent navigation */}
                 <Route path="/events/:slug" element={<EventShell />}>
