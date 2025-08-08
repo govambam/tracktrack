@@ -494,33 +494,9 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
       console.log("New courses to add:", newCourses);
 
-      if (newCourses.length > 0) {
-        console.log("Inserting new courses:", newCourses);
-
-        const { data: insertData, error: insertError } = await supabase
-          .from("event_courses")
-          .insert(
-            newCourses.map((course) => ({
-              event_id: eventId,
-              name: course.name,
-              display_order: course.display_order,
-            })),
-          )
-          .select();
-
-        if (insertError) {
-          console.error("Error inserting courses:", {
-            message: insertError.message,
-            details: insertError.details,
-            hint: insertError.hint,
-            code: insertError.code,
-          });
-        } else {
-          console.log("Successfully inserted new courses:", insertData);
-        }
-      } else {
-        console.log("No new courses to insert");
-      }
+      // Courses are now managed directly via event_rounds table
+      // No need for separate course sync since course info is stored on rounds
+      console.log("Course sync no longer needed - courses managed via event_rounds");
     } catch (error) {
       console.error("Error syncing courses to event_courses:", error);
     }
