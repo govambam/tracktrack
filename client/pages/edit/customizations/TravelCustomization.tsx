@@ -257,21 +257,21 @@ export default function TravelCustomization() {
 
   return (
     <div className="space-y-6">
-      <Card className="border-green-100">
+      <Card className="border-purple-100">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-lg text-green-900 flex items-center">
-                <Plane className="h-5 w-5 mr-2 text-emerald-600" />
+              <CardTitle className="text-lg text-purple-900 flex items-center">
+                <Plane className="h-5 w-5 mr-2 text-purple-600" />
                 Travel Information
               </CardTitle>
-              <CardDescription className="text-green-600">
+              <CardDescription className="text-purple-600">
                 Provide travel and accommodation details for your event
                 attendees
               </CardDescription>
             </div>
             <div className="flex items-center space-x-2">
-              <Label htmlFor="travel-toggle" className="text-sm text-green-700">
+              <Label htmlFor="travel-toggle" className="text-sm text-purple-700">
                 Enable Travel Page
               </Label>
               <Switch
