@@ -481,15 +481,6 @@ export default function MyTrips() {
                   <div className="flex items-center text-gray-700">
                     <Eye className="h-4 w-4 mr-2 text-blue-600" />
                     {event.is_private ? "Private" : "Public"}
-                    {event.is_published && (
-                      <Globe
-                        className="h-3 w-3 ml-1 text-blue-600"
-                        title="Published"
-                      />
-                    )}
-                  </div>
-                  <div className="flex items-center text-green-700 text-xs">
-                    Created: {new Date(event.created_at).toLocaleDateString()}
                   </div>
                 </div>
 
