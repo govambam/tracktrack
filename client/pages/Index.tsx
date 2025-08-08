@@ -37,15 +37,6 @@ export default function Index() {
   // Theme showcase data
   const themes = [
     {
-      name: "Masters",
-      description: "Classic & Elegant",
-      mobileImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.22.15%20AM-portrait.png",
-      desktopImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%201.25.32%20AM-front.png",
-      colors: { primary: "amber", accent: "green" },
-    },
-    {
       name: "TourTech",
       description: "Modern & Sleek",
       mobileImage:
@@ -53,6 +44,15 @@ export default function Index() {
       desktopImage:
         "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%201.24.36%20AM-front.png",
       colors: { primary: "orange", accent: "slate" },
+    },
+    {
+      name: "Masters",
+      description: "Classic & Elegant",
+      mobileImage:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.22.15%20AM-portrait.png",
+      desktopImage:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%201.25.32%20AM-front.png",
+      colors: { primary: "amber", accent: "green" },
     },
     {
       name: "GolfOS",
