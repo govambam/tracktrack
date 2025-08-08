@@ -35,6 +35,7 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentLeaderboardSlide, setCurrentLeaderboardSlide] = useState(0);
+  const [selectedTheme, setSelectedTheme] = useState(0);
   const navigate = useNavigate();
 
   // Leaderboard carousel data
