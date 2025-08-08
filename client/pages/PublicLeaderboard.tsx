@@ -391,7 +391,7 @@ export default function PublicLeaderboard({
       return (
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-4"></div>
+            <div className={`animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-4 ${currentTheme === "TourTech" ? "border-orange-600" : "border-green-600"}`}></div>
             <p className="text-slate-600">Loading scorecards...</p>
           </div>
         </div>
