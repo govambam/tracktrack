@@ -44,7 +44,7 @@ export default function CustomizationsEdit() {
           </Alert>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="border-purple-100 bg-purple-50">
+            <Card className="border-purple-100 bg-purple-50/30">
               <CardContent className="p-4">
                 <div className="flex items-center space-x-3 mb-3">
                   <Home className="h-5 w-5 text-purple-600" />
@@ -57,7 +57,7 @@ export default function CustomizationsEdit() {
               </CardContent>
             </Card>
 
-            <Card className="border-purple-100 bg-purple-50">
+            <Card className="border-purple-100 bg-purple-50/30">
               <CardContent className="p-4">
                 <div className="flex items-center space-x-3 mb-3">
                   <MapPin className="h-5 w-5 text-purple-600" />
@@ -70,7 +70,7 @@ export default function CustomizationsEdit() {
               </CardContent>
             </Card>
 
-            <Card className="border-purple-100 bg-purple-50">
+            <Card className="border-purple-100 bg-purple-50/30">
               <CardContent className="p-4">
                 <div className="flex items-center space-x-3 mb-3">
                   <Target className="h-5 w-5 text-purple-600" />
@@ -83,7 +83,7 @@ export default function CustomizationsEdit() {
               </CardContent>
             </Card>
 
-            <Card className="border-purple-100 bg-purple-50">
+            <Card className="border-purple-100 bg-purple-50/30">
               <CardContent className="p-4">
                 <div className="flex items-center space-x-3 mb-3">
                   <Trophy className="h-5 w-5 text-purple-600" />
@@ -96,7 +96,7 @@ export default function CustomizationsEdit() {
               </CardContent>
             </Card>
 
-            <Card className="border-purple-100 bg-purple-50">
+            <Card className="border-purple-100 bg-purple-50/30">
               <CardContent className="p-4">
                 <div className="flex items-center space-x-3 mb-3">
                   <Plane className="h-5 w-5 text-purple-600" />
