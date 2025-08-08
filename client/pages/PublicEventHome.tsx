@@ -2895,7 +2895,13 @@ export default function PublicEventHome({
                 </p>
               </div>
 
-              {currentTheme === "Masters" ? (
+              {currentTheme === "TrackTrack" ? (
+                <components.TravelCard
+                  travelData={travel}
+                  eventData={eventData}
+                  formatDateRange={formatDateRange}
+                />
+              ) : currentTheme === "Masters" ? (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                   {[
                     {
