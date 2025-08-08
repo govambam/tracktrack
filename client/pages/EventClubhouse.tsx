@@ -447,10 +447,21 @@ export default function EventClubhouse() {
                   ? "text-green-900 font-serif"
                   : currentTheme === "TourTech"
                     ? "text-gray-900"
-                    : "text-blue-900"
+                    : currentTheme === "TrackTrack"
+                      ? "text-gray-900"
+                      : "text-blue-900"
               }`}
             >
-              Event Chat
+              {currentTheme === "TrackTrack" ? (
+                <>
+                  Event{" "}
+                  <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    Chat
+                  </span>
+                </>
+              ) : (
+                "Event Chat"
+              )}
             </h2>
             <p
               className={`${
@@ -458,7 +469,9 @@ export default function EventClubhouse() {
                   ? "text-green-800/70 font-serif"
                   : currentTheme === "TourTech"
                     ? "text-gray-600"
-                    : "text-blue-600"
+                    : currentTheme === "TrackTrack"
+                      ? "text-gray-600"
+                      : "text-blue-600"
               }`}
             >
               Stay connected with other players throughout the tournament
