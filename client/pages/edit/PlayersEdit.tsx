@@ -582,7 +582,7 @@ export default function PlayersEdit() {
             const isEditing = editingPlayerId === player.id;
 
             return (
-              <Card key={player.id} className="border-green-100 bg-green-50">
+              <Card key={player.id} className="border-purple-100 bg-purple-50">
                 <CardContent className="p-4">
                   {!isEditing ? (
                     // Collapsed view
@@ -592,7 +592,7 @@ export default function PlayersEdit() {
                           {player.image && (
                             <AvatarImage src={player.image} alt={player.name} />
                           )}
-                          <AvatarFallback className="bg-emerald-600 text-white">
+                          <AvatarFallback className="bg-purple-600 text-white">
                             {player.name ? (
                               getPlayerInitials(player.name)
                             ) : (
