@@ -2459,14 +2459,23 @@ export default function PublicEventHome({
                 </span>
               </div>
 
-              <h2 className={`${currentTheme === "TrackTrack" ? "text-4xl md:text-5xl font-bold text-gray-900 mb-6" : theme.sectionTitle} ${currentTheme === "TrackTrack" ? "" : theme.headerSpacing}`}>
-                {currentTheme === "TourTech"
-                  ? "Tournament Prizes"
-                  : currentTheme === "Masters"
-                    ? "High Stakes, Higher Handicaps"
-                    : currentTheme === "TrackTrack"
-                      ? (<>High Stakes, <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Higher Handicaps</span></>)
-                      : "High Stakes, Higher Handicaps"}
+              <h2
+                className={`${currentTheme === "TrackTrack" ? "text-4xl md:text-5xl font-bold text-gray-900 mb-6" : theme.sectionTitle} ${currentTheme === "TrackTrack" ? "" : theme.headerSpacing}`}
+              >
+                {currentTheme === "TourTech" ? (
+                  "Tournament Prizes"
+                ) : currentTheme === "Masters" ? (
+                  "High Stakes, Higher Handicaps"
+                ) : currentTheme === "TrackTrack" ? (
+                  <>
+                    High Stakes,{" "}
+                    <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                      Higher Handicaps
+                    </span>
+                  </>
+                ) : (
+                  "High Stakes, Higher Handicaps"
+                )}
               </h2>
 
               {eventData.buy_in &&
@@ -2497,7 +2506,9 @@ export default function PublicEventHome({
                   <div
                     className={`${currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm border border-purple-200 rounded-3xl p-6 shadow-lg" : `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${currentTheme === "TourTech" ? theme.cardPadding : "p-4"} ${theme.cardShadow}`} ${currentTheme === "TourTech" ? theme.textMaxWidth : currentTheme === "TrackTrack" ? "max-w-sm" : "max-w-xs"} mx-auto mb-12`}
                   >
-                    <p className={`${currentTheme === "TrackTrack" ? "text-gray-600 text-lg" : theme.cardText} mb-2 text-center`}>
+                    <p
+                      className={`${currentTheme === "TrackTrack" ? "text-gray-600 text-lg" : theme.cardText} mb-2 text-center`}
+                    >
                       Tournament Buy-in
                     </p>
                     <div
@@ -2637,7 +2648,12 @@ export default function PublicEventHome({
                     className={`${currentTheme === "TourTech" ? "text-xl font-semibold text-slate-900" : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : currentTheme === "TrackTrack" ? "text-3xl font-bold text-gray-900" : "text-2xl sm:text-3xl font-bold text-indigo-900"}`}
                   >
                     {currentTheme === "TrackTrack" ? (
-                      <>Hole <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Contests</span></>
+                      <>
+                        Hole{" "}
+                        <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                          Contests
+                        </span>
+                      </>
                     ) : (
                       "Hole Contests"
                     )}
@@ -2667,7 +2683,7 @@ export default function PublicEventHome({
                             className={`flex items-center space-x-2 ${currentTheme === "Masters" ? "bg-white border border-yellow-600/30" : currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200" : "bg-indigo-50"} rounded-lg px-3 py-2`}
                           >
                             <contest.icon
-                              className={`h-4 w-4 ${contest.type === "closest_to_pin" ? (currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600") : (currentTheme === "TrackTrack" ? "text-pink-600" : "text-orange-600")}`}
+                              className={`h-4 w-4 ${contest.type === "closest_to_pin" ? (currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600") : currentTheme === "TrackTrack" ? "text-pink-600" : "text-orange-600"}`}
                             />
                             <span
                               className={`font-medium text-sm ${currentTheme === "Masters" ? "text-green-800 font-serif" : currentTheme === "TrackTrack" ? "text-gray-800" : "text-indigo-900"}`}
@@ -2747,7 +2763,12 @@ export default function PublicEventHome({
                       className={`${currentTheme === "TourTech" ? "text-xl font-semibold text-slate-900" : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : currentTheme === "TrackTrack" ? "text-3xl font-bold text-gray-900" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
                     >
                       {currentTheme === "TrackTrack" ? (
-                        <>Contest <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Rules</span></>
+                        <>
+                          Contest{" "}
+                          <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            Rules
+                          </span>
+                        </>
                       ) : (
                         "Contest Rules"
                       )}

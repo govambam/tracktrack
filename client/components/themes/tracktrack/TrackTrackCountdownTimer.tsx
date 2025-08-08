@@ -5,9 +5,9 @@ interface TrackTrackCountdownTimerProps {
   targetDate: string;
 }
 
-export const TrackTrackCountdownTimer: React.FC<TrackTrackCountdownTimerProps> = ({
-  targetDate,
-}) => {
+export const TrackTrackCountdownTimer: React.FC<
+  TrackTrackCountdownTimerProps
+> = ({ targetDate }) => {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -52,34 +52,42 @@ export const TrackTrackCountdownTimer: React.FC<TrackTrackCountdownTimerProps> =
       <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center">
         <Clock className="h-6 w-6 text-white" />
       </div>
-      
+
       <div className="flex items-center space-x-4 text-sm font-medium">
         <div className="text-center">
           <div className="font-bold text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
             {timeLeft.days}
           </div>
-          <div className="text-xs text-gray-500 uppercase tracking-wide">days</div>
+          <div className="text-xs text-gray-500 uppercase tracking-wide">
+            days
+          </div>
         </div>
         <div className="text-purple-300 text-xl">:</div>
         <div className="text-center">
           <div className="font-bold text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
             {timeLeft.hours}
           </div>
-          <div className="text-xs text-gray-500 uppercase tracking-wide">hours</div>
+          <div className="text-xs text-gray-500 uppercase tracking-wide">
+            hours
+          </div>
         </div>
         <div className="text-purple-300 text-xl">:</div>
         <div className="text-center">
           <div className="font-bold text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
             {timeLeft.minutes}
           </div>
-          <div className="text-xs text-gray-500 uppercase tracking-wide">mins</div>
+          <div className="text-xs text-gray-500 uppercase tracking-wide">
+            mins
+          </div>
         </div>
         <div className="text-purple-300 text-xl">:</div>
         <div className="text-center">
           <div className="font-bold text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
             {timeLeft.seconds}
           </div>
-          <div className="text-xs text-gray-500 uppercase tracking-wide">secs</div>
+          <div className="text-xs text-gray-500 uppercase tracking-wide">
+            secs
+          </div>
         </div>
       </div>
     </div>

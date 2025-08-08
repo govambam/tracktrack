@@ -91,7 +91,7 @@ export const TrackTrackTravelCard: React.FC<TrackTrackTravelCardProps> = ({
                 <h3 className="text-2xl font-bold text-gray-900">
                   Daily Schedule
                 </h3>
-                </div>
+              </div>
               <div className="prose prose-gray max-w-none">
                 <div className="text-gray-700 leading-relaxed whitespace-pre-line">
                   {travelData.daily_schedule}
