@@ -615,7 +615,9 @@ export default function EventClubhouse() {
                       ? "bg-green-50"
                       : currentTheme === "TourTech"
                         ? "bg-gray-50"
-                        : "bg-blue-50"
+                        : currentTheme === "TrackTrack"
+                          ? "bg-purple-50"
+                          : "bg-blue-50"
                   }`}
                 >
                   <MessageCircle
@@ -624,7 +626,9 @@ export default function EventClubhouse() {
                         ? "text-yellow-600"
                         : currentTheme === "TourTech"
                           ? "text-orange-600"
-                          : "text-blue-400"
+                          : currentTheme === "TrackTrack"
+                            ? "text-purple-400"
+                            : "text-blue-400"
                     }`}
                   />
                   <h3
@@ -633,7 +637,9 @@ export default function EventClubhouse() {
                         ? "text-green-900 font-serif"
                         : currentTheme === "TourTech"
                           ? "text-gray-900"
-                          : "text-blue-900"
+                          : currentTheme === "TrackTrack"
+                            ? "text-gray-900"
+                            : "text-blue-900"
                     }`}
                   >
                     Coming Soon
@@ -644,7 +650,9 @@ export default function EventClubhouse() {
                         ? "text-green-800/70 font-serif"
                         : currentTheme === "TourTech"
                           ? "text-gray-600"
-                          : "text-blue-600"
+                          : currentTheme === "TrackTrack"
+                            ? "text-gray-600"
+                            : "text-blue-600"
                     }`}
                   >
                     Chat with other players during the tournament.
