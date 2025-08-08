@@ -560,7 +560,10 @@ ${formData.description}`;
 
           {/* Description (Optional) */}
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-purple-900 font-medium">
+            <Label
+              htmlFor="description"
+              className="text-purple-900 font-medium"
+            >
               Event Description (Optional)
             </Label>
             <Textarea
