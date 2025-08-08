@@ -453,7 +453,7 @@ export default function CoursesEdit() {
 
                 {/* Course URL */}
                 <div className="space-y-2">
-                  <Label className="text-green-800 font-medium">
+                  <Label className="text-purple-900 font-medium">
                     Course Website (Optional)
                   </Label>
                   <Input
@@ -462,15 +462,15 @@ export default function CoursesEdit() {
                       updateRound(round.id, "courseUrl", e.target.value)
                     }
                     placeholder="e.g., https://www.pebblebeach.com"
-                    className="border-green-200 focus:border-emerald-500"
+                    className="border-purple-200 focus:border-purple-500"
                   />
                 </div>
 
                 {/* Skills Contests */}
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <Label className="text-green-800 font-medium flex items-center">
-                      <Trophy className="h-4 w-4 mr-1 text-emerald-600" />
+                    <Label className="text-purple-900 font-medium flex items-center">
+                      <Trophy className="h-4 w-4 mr-1 text-purple-600" />
                       Skills Contests
                     </Label>
                     <Button
@@ -478,7 +478,7 @@ export default function CoursesEdit() {
                       variant="outline"
                       size="sm"
                       onClick={() => addSkillsContest(round.id)}
-                      className="border-green-200 text-green-700 hover:bg-green-50"
+                      className="border-purple-200 text-purple-700 hover:bg-purple-50"
                     >
                       <Plus className="h-4 w-4 mr-1" />
                       Add Contest
