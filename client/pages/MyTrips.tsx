@@ -475,16 +475,16 @@ export default function MyTrips() {
 
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center text-green-700">
-                    <Calendar className="h-4 w-4 mr-2 text-emerald-600" />
+                  <div className="flex items-center text-gray-700">
+                    <Calendar className="h-4 w-4 mr-2 text-purple-600" />
                     {formatDateRange(event.start_date, event.end_date)}
                   </div>
-                  <div className="flex items-center text-green-700">
-                    <MapPin className="h-4 w-4 mr-2 text-emerald-600" />
+                  <div className="flex items-center text-gray-700">
+                    <MapPin className="h-4 w-4 mr-2 text-pink-600" />
                     {event.location}
                   </div>
-                  <div className="flex items-center text-green-700">
-                    <Eye className="h-4 w-4 mr-2 text-emerald-600" />
+                  <div className="flex items-center text-gray-700">
+                    <Eye className="h-4 w-4 mr-2 text-blue-600" />
                     {event.is_private ? "Private" : "Public"}
                     {event.is_published && (
                       <Globe
