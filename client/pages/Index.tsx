@@ -276,12 +276,12 @@ export default function Index() {
               Golf trips made effortless
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-              It all starts with a{" "}
+              Every trip starts with a{" "}
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 suggestion
               </span>
               <span className="block text-3xl md:text-4xl lg:text-5xl mt-2 text-gray-600">
-                (and we'll help you build a very compelling one)
+                (we'll help you build a compelling one)
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-4xl mx-auto">
