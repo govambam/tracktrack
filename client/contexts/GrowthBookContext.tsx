@@ -288,7 +288,10 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
 
         // Create a more aggressive timeout (2 seconds)
         const timeoutPromise = new Promise<void>((_, reject) =>
-          setTimeout(() => reject(new Error("GrowthBook load timeout (2s)")), 2000),
+          setTimeout(
+            () => reject(new Error("GrowthBook load timeout (2s)")),
+            2000,
+          ),
         );
 
         // Wrap loadFeatures in a promise that resolves immediately if it takes too long
@@ -306,7 +309,9 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoadingError(
           error instanceof Error ? error.message : "Unknown error",
         );
-        console.log("Continuing without GrowthBook features (using local fallbacks)...");
+        console.log(
+          "Continuing without GrowthBook features (using local fallbacks)...",
+        );
         // Ensure local features are available
         growthbook.setFeatures(localFeatures);
         setIsLoaded(true); // Continue even if features fail to load
@@ -336,7 +341,9 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-4"></div>
           <p className="text-slate-600 mb-2">Loading features...</p>
-          <p className="text-xs text-slate-400 mb-4">This should only take a moment</p>
+          <p className="text-xs text-slate-400 mb-4">
+            This should only take a moment
+          </p>
           {loadingError && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md max-w-md mx-auto">
               <p className="text-red-700 text-sm">
