@@ -289,114 +289,137 @@ export default function Index() {
       </section>
 
       {/* Theme Showcase Section */}
-      <section id="themes" className="py-20 bg-gray-50">
+      <section id="themes" className="py-20 bg-gradient-to-br from-purple-100 via-blue-50 to-cyan-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
               Dynamic Themes That Wow
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose from professional themes that look amazing on both desktop
-              and mobile. Each theme creates a unique experience for your golf
-              trip.
+              Choose from professional themes that look amazing on both desktop and mobile.
+              Each theme creates a unique experience for your golf trip.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Theme Preview */}
-            <div className="relative">
-              {/* Embla Carousel */}
-              <div className="overflow-hidden" ref={emblaRef}>
-                <div className="flex">
-                  {themes.map((theme, index) => (
-                    <div key={index} className="flex-[0_0_100%] min-w-0">
-                      <div className="mx-auto max-w-sm px-4">
-                        <img
-                          src={theme.mobileImage}
-                          alt={`${theme.name} theme preview`}
-                          className="w-full h-auto drop-shadow-2xl"
-                          style={{ backgroundColor: "transparent" }}
-                        />
+          {/* Embla Carousel */}
+          <div className="relative">
+            <div className="overflow-hidden" ref={emblaRef}>
+              <div className="flex">
+                {themes.map((theme, index) => (
+                  <div key={index} className="flex-[0_0_100%] min-w-0">
+                    <div className="px-4">
+                      {/* Desktop & Mobile Showcase */}
+                      <div className="relative max-w-6xl mx-auto">
+                        <div className="flex items-end justify-center space-x-8 lg:space-x-16">
+                          {/* Desktop Preview */}
+                          <div className="relative z-10">
+                            <div className="relative">
+                              {/* Desktop Frame Shadow */}
+                              <div className="absolute -inset-4 bg-black/10 rounded-2xl blur-2xl"></div>
+                              <img
+                                src={theme.desktopImage}
+                                alt={`${theme.name} desktop theme preview`}
+                                className="relative w-full max-w-lg lg:max-w-2xl h-auto drop-shadow-2xl"
+                                style={{ backgroundColor: "transparent" }}
+                              />
+                            </div>
+                          </div>
+
+                          {/* Mobile Preview */}
+                          <div className="relative z-20 -ml-8 lg:-ml-16">
+                            <div className="relative">
+                              {/* Mobile Frame Shadow */}
+                              <div className="absolute -inset-2 bg-black/10 rounded-3xl blur-xl"></div>
+                              <img
+                                src={theme.mobileImage}
+                                alt={`${theme.name} mobile theme preview`}
+                                className="relative w-full max-w-32 sm:max-w-40 lg:max-w-48 h-auto drop-shadow-2xl"
+                                style={{ backgroundColor: "transparent" }}
+                              />
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Theme Navigation Dots */}
-              <div className="flex justify-center mt-8 space-x-3">
-                {themes.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => scrollTo(index)}
-                    className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                      index === selectedIndex
-                        ? "bg-emerald-600 scale-110"
-                        : "bg-gray-300 hover:bg-gray-400"
-                    }`}
-                  />
+                  </div>
                 ))}
-              </div>
-
-              {/* Theme Info */}
-              <div className="text-center mt-6 bg-white rounded-xl shadow-md px-6 py-4 border border-gray-100">
-                <h3 className="font-semibold text-gray-900 text-lg">
-                  {themes[selectedIndex].name}
-                </h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  {themes[selectedIndex].description}
-                </p>
               </div>
             </div>
 
-            {/* Theme Features */}
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Mobile & Desktop Friendly
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Every theme is designed to look stunning on all devices. Your
-                  golf trip website will provide an amazing experience whether
-                  your friends are browsing on their phone or computer.
-                </p>
-              </div>
+            {/* Theme Navigation Dots */}
+            <div className="flex justify-center mt-12 space-x-3">
+              {themes.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => scrollTo(index)}
+                  className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                    index === selectedIndex
+                      ? "bg-emerald-600 scale-110 shadow-lg"
+                      : "bg-white/70 hover:bg-white/90 backdrop-blur-sm"
+                  }`}
+                />
+              ))}
+            </div>
 
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <Check className="h-5 w-5 text-emerald-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">
-                      Instant Customization
-                    </h4>
-                    <p className="text-gray-600">
-                      Switch themes with one click - no coding required
-                    </p>
+            {/* Theme Info */}
+            <div className="text-center mt-8 max-w-md mx-auto">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg px-8 py-6 border border-white/20">
+                <h3 className="font-bold text-gray-900 text-xl mb-2">
+                  {themes[selectedIndex].name}
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {themes[selectedIndex].description}
+                </p>
+                <div className="flex items-center justify-center space-x-4 text-sm text-gray-500">
+                  <div className="flex items-center space-x-1">
+                    <Smartphone className="h-4 w-4" />
+                    <span>Mobile Ready</span>
                   </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <Check className="h-5 w-5 text-emerald-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">
-                      Responsive Design
-                    </h4>
-                    <p className="text-gray-600">
-                      Perfect experience on mobile, tablet, and desktop
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <Check className="h-5 w-5 text-emerald-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">
-                      Brand Your Trip
-                    </h4>
-                    <p className="text-gray-600">
-                      Add your logo, colors, and custom messaging
-                    </p>
+                  <div className="flex items-center space-x-1">
+                    <Globe className="h-4 w-4" />
+                    <span>Responsive</span>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Features Grid */}
+          <div className="mt-20 grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 mx-auto">
+                <Sparkles className="h-8 w-8 text-emerald-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Instant Customization
+              </h3>
+              <p className="text-gray-600">
+                Switch themes with one click - no coding required
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 mx-auto">
+                <Smartphone className="h-8 w-8 text-emerald-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Mobile & Desktop
+              </h3>
+              <p className="text-gray-600">
+                Perfect experience on every device and screen size
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 mx-auto">
+                <Star className="h-8 w-8 text-emerald-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Brand Your Trip
+              </h3>
+              <p className="text-gray-600">
+                Add your logo, colors, and custom messaging
+              </p>
             </div>
           </div>
         </div>
