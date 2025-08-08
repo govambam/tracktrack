@@ -383,9 +383,9 @@ export default function MyTrips() {
           </CardContent>
         </Card>
 
-        <Card className="border-0 bg-gradient-to-br from-blue-50 to-blue-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <Card className="border-0 bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-blue-700">
+            <CardTitle className="text-sm font-medium text-purple-700">
               Upcoming Events
             </CardTitle>
           </CardHeader>
@@ -403,9 +403,9 @@ export default function MyTrips() {
           </CardContent>
         </Card>
 
-        <Card className="border-0 bg-gradient-to-br from-green-50 to-green-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <Card className="border-0 bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-green-700">
+            <CardTitle className="text-sm font-medium text-purple-700">
               This Month
             </CardTitle>
           </CardHeader>
