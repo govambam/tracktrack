@@ -2616,28 +2616,34 @@ export default function PublicEventHome({
               >
                 <div className="text-center mb-8">
                   <div
-                    className={`inline-flex items-center space-x-2 ${currentTheme === "TourTech" ? "bg-gray-200 rounded-md" : currentTheme === "Masters" ? "bg-green-50 border border-green-800/20 rounded-lg" : "bg-indigo-200 rounded-full"} px-4 py-2 mb-4`}
+                    className={`inline-flex items-center space-x-2 ${currentTheme === "TourTech" ? "bg-gray-200 rounded-md" : currentTheme === "Masters" ? "bg-green-50 border border-green-800/20 rounded-lg" : currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200 rounded-full" : "bg-indigo-200 rounded-full"} px-4 py-2 mb-4`}
                   >
                     <Target
-                      className={`h-4 w-4 ${currentTheme === "TourTech" ? "text-gray-600" : currentTheme === "Masters" ? "text-yellow-600" : "text-indigo-600"}`}
+                      className={`h-4 w-4 ${currentTheme === "TourTech" ? "text-gray-600" : currentTheme === "Masters" ? "text-yellow-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-indigo-600"}`}
                     />
                     <span
-                      className={`text-sm font-medium ${currentTheme === "TourTech" ? "text-gray-700" : currentTheme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-indigo-700"}`}
+                      className={`text-sm font-medium ${currentTheme === "TourTech" ? "text-gray-700" : currentTheme === "Masters" ? "text-green-800 font-serif tracking-wide" : currentTheme === "TrackTrack" ? "text-purple-800" : "text-indigo-700"}`}
                     >
                       {currentTheme === "TourTech"
                         ? "SKILLS CONTESTS"
                         : currentTheme === "Masters"
                           ? "Skills Contests"
-                          : "Skills Contests"}
+                          : currentTheme === "TrackTrack"
+                            ? "Skills Contests"
+                            : "Skills Contests"}
                     </span>
                   </div>
                   <h3
-                    className={`${currentTheme === "TourTech" ? "text-xl font-semibold text-slate-900" : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-indigo-900"}`}
+                    className={`${currentTheme === "TourTech" ? "text-xl font-semibold text-slate-900" : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : currentTheme === "TrackTrack" ? "text-3xl font-bold text-gray-900" : "text-2xl sm:text-3xl font-bold text-indigo-900"}`}
                   >
-                    Hole Contests
+                    {currentTheme === "TrackTrack" ? (
+                      <>Hole <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Contests</span></>
+                    ) : (
+                      "Hole Contests"
+                    )}
                   </h3>
                   <p
-                    className={`${currentTheme === "TourTech" ? "text-sm text-slate-600" : currentTheme === "Masters" ? "text-sm text-green-800/70 font-serif" : "text-lg text-indigo-600 font-light"}`}
+                    className={`${currentTheme === "TourTech" ? "text-sm text-slate-600" : currentTheme === "Masters" ? "text-sm text-green-800/70 font-serif" : currentTheme === "TrackTrack" ? "text-xl text-gray-600 font-light" : "text-lg text-indigo-600 font-light"}`}
                   >
                     Extra prizes on designated holes
                   </p>
@@ -2647,10 +2653,10 @@ export default function PublicEventHome({
                   {getContestsByRound().map((round, index) => (
                     <div
                       key={index}
-                      className={`${currentTheme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : currentTheme === "Masters" ? "bg-green-50/30 rounded-lg p-6 border border-green-800/20 shadow-sm" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
+                      className={`${currentTheme === "TourTech" ? "bg-white rounded-md p-4 border border-gray-200 shadow-sm" : currentTheme === "Masters" ? "bg-green-50/30 rounded-lg p-6 border border-green-800/20 shadow-sm" : currentTheme === "TrackTrack" ? "bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-purple-100 shadow-sm hover:shadow-lg transition-all duration-300" : "bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm"}`}
                     >
                       <h4
-                        className={`${currentTheme === "Masters" ? "font-serif font-semibold text-green-900" : "font-bold text-indigo-900"} text-xl mb-4`}
+                        className={`${currentTheme === "Masters" ? "font-serif font-semibold text-green-900" : currentTheme === "TrackTrack" ? "font-bold text-gray-900" : "font-bold text-indigo-900"} text-xl mb-4`}
                       >
                         Round {round.roundNumber} ({round.courseName})
                       </h4>
@@ -2658,13 +2664,13 @@ export default function PublicEventHome({
                         {round.contests.map((contest, contestIndex) => (
                           <div
                             key={contestIndex}
-                            className={`flex items-center space-x-2 ${currentTheme === "Masters" ? "bg-white border border-yellow-600/30" : "bg-indigo-50"} rounded-lg px-3 py-2`}
+                            className={`flex items-center space-x-2 ${currentTheme === "Masters" ? "bg-white border border-yellow-600/30" : currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200" : "bg-indigo-50"} rounded-lg px-3 py-2`}
                           >
                             <contest.icon
-                              className={`h-4 w-4 ${contest.type === "closest_to_pin" ? "text-green-600" : "text-orange-600"}`}
+                              className={`h-4 w-4 ${contest.type === "closest_to_pin" ? (currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600") : (currentTheme === "TrackTrack" ? "text-pink-600" : "text-orange-600")}`}
                             />
                             <span
-                              className={`font-medium text-sm ${currentTheme === "Masters" ? "text-green-800 font-serif" : "text-indigo-900"}`}
+                              className={`font-medium text-sm ${currentTheme === "Masters" ? "text-green-800 font-serif" : currentTheme === "TrackTrack" ? "text-gray-800" : "text-indigo-900"}`}
                             >
                               Hole {contest.hole}
                             </span>
