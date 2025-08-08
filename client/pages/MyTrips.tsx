@@ -525,7 +525,7 @@ export default function MyTrips() {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEditEvent(event)}
-                      className="relative border-2 border-transparent bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-border text-purple-900 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 font-medium"
+                      className="relative border border-transparent text-purple-900 font-medium transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 hover:text-white"
                       style={{
                         background:
                           "linear-gradient(white, white) padding-box, linear-gradient(90deg, rgb(147 51 234), rgb(236 72 153)) border-box",
