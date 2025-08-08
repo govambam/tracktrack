@@ -475,7 +475,7 @@ export default function MyTrips() {
                     {formatDateRange(event.start_date, event.end_date)}
                   </div>
                   <div className="flex items-center text-gray-700">
-                    <MapPin className="h-4 w-4 mr-2 text-pink-600" />
+                    <MapPin className="h-4 w-4 mr-2 text-purple-600" />
                     {event.location}
                   </div>
                   <div className="flex items-center text-gray-700">
