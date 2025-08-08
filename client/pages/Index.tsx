@@ -38,21 +38,21 @@ export default function Index() {
       name: "Default",
       description: "Clean & Professional",
       mobileImage:
-        "https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2F9614a8c18e6f43ee9e0d8ba31058bff1?format=webp&width=800",
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.21.33%20AM-portrait.png",
       colors: { primary: "emerald", accent: "green" },
     },
     {
       name: "Masters",
       description: "Classic & Elegant",
       mobileImage:
-        "https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2Faa0b8ddd156c429cab55a4b869ebffb6?format=webp&width=800",
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.22.15%20AM-portrait.png",
       colors: { primary: "amber", accent: "green" },
     },
     {
       name: "TourTech",
       description: "Modern & Sleek",
       mobileImage:
-        "https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2F1ea2dabd46364acab87149b6f49b46f2?format=webp&width=800",
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.22.46%20AM-portrait.png",
       colors: { primary: "orange", accent: "slate" },
     },
   ];
