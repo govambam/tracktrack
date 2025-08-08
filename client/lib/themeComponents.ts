@@ -57,6 +57,15 @@ export const themeComponents = {
     ContestRules: TourTechContestRules,
     Footer: TourTechFooter,
   },
+  TrackTrack: {
+    Hero: TrackTrackHero,
+    HeaderCard: TrackTrackHeaderCard,
+    TravelCard: TrackTrackTravelCard,
+    PlayerCard: TrackTrackPlayerCard,
+    PrizeCard: TrackTrackPrizeCard,
+    ContestRules: TrackTrackContestRules,
+    Footer: TrackTrackFooter,
+  },
   GolfOS: {
     Hero: DefaultHero,
     HeaderCard: DefaultHeaderCard,
