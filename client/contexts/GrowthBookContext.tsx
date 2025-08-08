@@ -67,8 +67,13 @@ export const useFeatureEnabled = (key: string) => {
 
 // Simplified hook for user attributes (returns empty object for now)
 export const useUserAttributes = () => {
+  const attributes = {};
+  const updateAttributes = async () => {
+    console.log("useUserAttributes: updateAttributes called (no-op)");
+  };
+
   return {
-    attributes: {},
-    updateAttributes: async () => {},
+    attributes,
+    updateAttributes,
   };
 };
