@@ -525,11 +525,15 @@ export default function Index() {
       </section>
 
       {/* Leaderboard Carousel Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-50/50 to-pink-50/50">
+      <section className="py-20 bg-white/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 text-sm font-medium mb-6">
+              <Trophy className="w-4 h-4 mr-2" />
+              Competition & Scoring
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Competition that brings out your best 🏆
+              Competition that brings out your best
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Multiple scoring formats and real-time updates keep everyone
@@ -537,33 +541,22 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="relative">
-            <div className="relative h-96 rounded-3xl overflow-hidden shadow-2xl">
+          <div className="w-full">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               {leaderboardSlides.map((slide, index) => (
                 <div
                   key={index}
-                  className={`absolute inset-0 transition-all duration-500 ${
+                  className={`transition-all duration-500 ${
                     index === currentLeaderboardSlide
-                      ? "opacity-100 scale-100"
-                      : "opacity-0 scale-95"
+                      ? "opacity-100"
+                      : "opacity-0 absolute inset-0"
                   }`}
                 >
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${slide.color} opacity-90`}
-                  ></div>
-                  <div className="relative h-full flex items-center justify-between px-12">
-                    <div className="text-white max-w-md">
-                      <h3 className="text-3xl font-bold mb-4">{slide.title}</h3>
-                      <p className="text-xl opacity-90">{slide.description}</p>
-                    </div>
-                    <div className="flex-1 max-w-lg ml-8">
-                      <img
-                        src={slide.image}
-                        alt={slide.title}
-                        className="w-full h-auto rounded-xl shadow-xl"
-                      />
-                    </div>
-                  </div>
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="w-full h-auto"
+                  />
                 </div>
               ))}
             </div>
