@@ -2486,8 +2486,8 @@ export default function PublicEventHome({
             </div>
 
             {/* Prize Cards - Theme-specific layout */}
-            {prizes.length > 0 && (
-              currentTheme === "Masters" || currentTheme === "TrackTrack" ? (
+            {prizes.length > 0 &&
+              (currentTheme === "Masters" || currentTheme === "TrackTrack" ? (
                 <components.PrizeCard prizes={prizes} />
               ) : (
                 <div className="w-full">
@@ -2514,8 +2514,7 @@ export default function PublicEventHome({
                     ))}
                   </div>
                 </div>
-              )
-            )}
+              ))}
 
             {/* Contest Rules - Clean 2-column layout directly below prizes for Masters theme */}
             {currentTheme === "Masters" &&
