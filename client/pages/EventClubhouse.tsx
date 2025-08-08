@@ -155,9 +155,18 @@ export default function EventClubhouse() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className={`min-h-screen ${currentTheme === "TrackTrack" ? "bg-gradient-to-br from-purple-50/50 via-pink-50/50 to-orange-50/50" : ""}`}>
+      {/* Background elements for TrackTrack theme */}
+      {currentTheme === "TrackTrack" && (
+        <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-32 left-20 w-24 h-24 bg-gradient-to-br from-orange-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 left-1/3 w-28 h-28 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-xl"></div>
+        </div>
+      )}
+
       {/* Welcome Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-slate-200/50">
+      <div className={`${currentTheme === "TrackTrack" ? "bg-white/90" : "bg-white/80"} backdrop-blur-sm border-b ${currentTheme === "TrackTrack" ? "border-purple-200/50" : "border-slate-200/50"}`}>
         <div className="max-w-6xl mx-auto px-6 py-8">
           <div className="text-center">
             <div
@@ -166,7 +175,9 @@ export default function EventClubhouse() {
                   ? "bg-gradient-to-br from-green-600 to-amber-600"
                   : currentTheme === "TourTech"
                     ? "bg-gradient-to-br from-gray-500 to-gray-600"
-                    : "bg-gradient-to-br from-blue-500 to-indigo-600"
+                    : currentTheme === "TrackTrack"
+                      ? "bg-gradient-to-br from-purple-600 to-pink-600"
+                      : "bg-gradient-to-br from-blue-500 to-indigo-600"
               }`}
             >
               <Users className="h-8 w-8 text-white" />
@@ -177,10 +188,16 @@ export default function EventClubhouse() {
                   ? "text-green-900 font-serif"
                   : currentTheme === "TourTech"
                     ? "text-gray-900"
-                    : "text-blue-900"
+                    : currentTheme === "TrackTrack"
+                      ? "text-gray-900"
+                      : "text-blue-900"
               }`}
             >
-              Welcome to the Clubhouse
+              {currentTheme === "TrackTrack" ? (
+                <>Welcome to the <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Clubhouse</span></>
+              ) : (
+                "Welcome to the Clubhouse"
+              )}
             </h1>
             <p
               className={`text-lg ${
@@ -188,7 +205,9 @@ export default function EventClubhouse() {
                   ? "text-green-800/70 font-serif"
                   : currentTheme === "TourTech"
                     ? "text-gray-600"
-                    : "text-blue-600"
+                    : currentTheme === "TrackTrack"
+                      ? "text-gray-600"
+                      : "text-blue-600"
               }`}
             >
               Welcome back, {clubhouseSession.displayName}
@@ -198,7 +217,7 @@ export default function EventClubhouse() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 py-8 space-y-12">
+      <div className="max-w-6xl mx-auto px-6 py-8 space-y-12 relative">
         {/* Scorecard Section */}
         <section>
           <div className="text-center mb-8">
@@ -208,10 +227,16 @@ export default function EventClubhouse() {
                   ? "text-green-900 font-serif"
                   : currentTheme === "TourTech"
                     ? "text-gray-900"
-                    : "text-blue-900"
+                    : currentTheme === "TrackTrack"
+                      ? "text-gray-900"
+                      : "text-blue-900"
               }`}
             >
-              Round Scorecards
+              {currentTheme === "TrackTrack" ? (
+                <>Round <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Scorecards</span></>
+              ) : (
+                "Round Scorecards"
+              )}
             </h2>
             <p
               className={`${
@@ -219,7 +244,9 @@ export default function EventClubhouse() {
                   ? "text-green-800/70 font-serif"
                   : currentTheme === "TourTech"
                     ? "text-gray-600"
-                    : "text-blue-600"
+                    : currentTheme === "TrackTrack"
+                      ? "text-gray-600"
+                      : "text-blue-600"
               }`}
             >
               Select a round to enter or edit scores
