@@ -364,7 +364,7 @@ export default function CoursesEdit() {
               <CardContent className="space-y-4">
                 {/* Course Name */}
                 <div className="space-y-2">
-                  <Label className="text-green-800 font-medium">
+                  <Label className="text-purple-900 font-medium">
                     Course Name *
                   </Label>
                   <Input
@@ -373,7 +373,7 @@ export default function CoursesEdit() {
                       updateRound(round.id, "courseName", e.target.value)
                     }
                     placeholder="e.g., Pebble Beach Golf Links"
-                    className={`border-green-200 focus:border-emerald-500 ${
+                    className={`border-purple-200 focus:border-purple-500 ${
                       errors[round.id]?.courseName ? "border-red-300" : ""
                     }`}
                   />
