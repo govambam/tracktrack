@@ -433,13 +433,13 @@ export default function MyTrips() {
           return (
             <Card
               key={event.id}
-              className="border-green-100 hover:shadow-lg transition-shadow"
+              className="border-purple-100 hover:shadow-lg transition-shadow"
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <CardTitle className="text-xl text-green-900">
+                      <CardTitle className="text-xl text-purple-900">
                         {event.name}
                       </CardTitle>
                       {event.user_role === "owner" ? (
