@@ -42,8 +42,8 @@ export const TrackTrackTravelCard: React.FC<TrackTrackTravelCardProps> = ({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Flight Information */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Getting There */}
           {travelData.flight_info && (
             <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-orange-100 hover:shadow-lg hover:shadow-orange-100/50 transition-all duration-300">
               <div className="flex items-center mb-6">
@@ -51,7 +51,7 @@ export const TrackTrackTravelCard: React.FC<TrackTrackTravelCardProps> = ({
                   <Plane className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900">
-                  Flight Details
+                  Getting There
                 </h3>
               </div>
               <div className="prose prose-gray max-w-none">
@@ -83,20 +83,18 @@ export const TrackTrackTravelCard: React.FC<TrackTrackTravelCardProps> = ({
 
           {/* Daily Schedule */}
           {travelData.daily_schedule && (
-            <div className="lg:col-span-2">
-              <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-pink-100 hover:shadow-lg hover:shadow-pink-100/50 transition-all duration-300">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mr-4">
-                    <Calendar className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900">
-                    Daily Schedule
-                  </h3>
+            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-pink-100 hover:shadow-lg hover:shadow-pink-100/50 transition-all duration-300">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mr-4">
+                  <Calendar className="w-6 h-6 text-white" />
                 </div>
-                <div className="prose prose-gray max-w-none">
-                  <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-                    {travelData.daily_schedule}
-                  </div>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  Daily Schedule
+                </h3>
+                </div>
+              <div className="prose prose-gray max-w-none">
+                <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                  {travelData.daily_schedule}
                 </div>
               </div>
             </div>
