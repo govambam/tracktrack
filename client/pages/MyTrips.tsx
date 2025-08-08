@@ -433,39 +433,39 @@ export default function MyTrips() {
           return (
             <Card
               key={event.id}
-              className="border-green-100 hover:shadow-lg transition-shadow"
+              className="border-0 bg-white/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <CardTitle className="text-xl text-green-900">
+                      <CardTitle className="text-xl text-gray-900">
                         {event.name}
                       </CardTitle>
                       {event.user_role === "owner" ? (
                         <Badge
                           variant="outline"
-                          className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200"
+                          className="text-xs bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 border-purple-200"
                         >
                           Owner
                         </Badge>
                       ) : event.user_role === "admin" ? (
                         <Badge
                           variant="outline"
-                          className="text-xs bg-blue-50 text-blue-700 border-blue-200"
+                          className="text-xs bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 border-blue-200"
                         >
                           Admin
                         </Badge>
                       ) : (
                         <Badge
                           variant="outline"
-                          className="text-xs bg-gray-50 text-gray-700 border-gray-200"
+                          className="text-xs bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 border-gray-200"
                         >
                           Player
                         </Badge>
                       )}
                     </div>
-                    <CardDescription className="text-green-600 line-clamp-2">
+                    <CardDescription className="text-gray-600 line-clamp-2">
                       {event.description || "Golf event"}
                     </CardDescription>
                   </div>
