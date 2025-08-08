@@ -280,52 +280,38 @@ export default function Index() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Theme Preview */}
             <div className="relative">
-              <div className="bg-white rounded-2xl shadow-2xl p-8 relative overflow-hidden">
-                <div className="absolute top-4 left-4 flex space-x-2 z-10">
-                  <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                  <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                  <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                </div>
-
-                {/* Mobile Frame */}
-                <div className="mx-auto max-w-sm">
-                  <div className="relative bg-black rounded-[3rem] p-2 shadow-xl">
-                    <div className="bg-white rounded-[2.5rem] overflow-hidden">
-                      <img
-                        src={themes[currentTheme].mobileImage}
-                        alt={`${themes[currentTheme].name} theme preview`}
-                        className="w-full h-auto"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Theme Indicators */}
-                <div className="flex justify-center mt-8 space-x-2">
-                  {themes.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentTheme(index)}
-                      className={`w-3 h-3 rounded-full transition-colors ${
-                        index === currentTheme
-                          ? "bg-emerald-600"
-                          : "bg-gray-300"
-                      }`}
-                    />
-                  ))}
-                </div>
+              {/* Direct Image Display */}
+              <div className="mx-auto max-w-sm">
+                <img
+                  src={themes[currentTheme].mobileImage}
+                  alt={`${themes[currentTheme].name} theme preview`}
+                  className="w-full h-auto rounded-lg shadow-lg"
+                />
               </div>
 
-              {/* Floating theme info */}
-              <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-white rounded-xl shadow-lg px-6 py-4 border">
-                <div className="text-center">
-                  <h3 className="font-semibold text-gray-900">
-                    {themes[currentTheme].name}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {themes[currentTheme].description}
-                  </p>
-                </div>
+              {/* Theme Navigation */}
+              <div className="flex justify-center mt-8 space-x-3">
+                {themes.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentTheme(index)}
+                    className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                      index === currentTheme
+                        ? "bg-emerald-600 scale-110"
+                        : "bg-gray-300 hover:bg-gray-400"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Theme Info */}
+              <div className="text-center mt-6 bg-white rounded-xl shadow-md px-6 py-4 border border-gray-100">
+                <h3 className="font-semibold text-gray-900 text-lg">
+                  {themes[currentTheme].name}
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  {themes[currentTheme].description}
+                </p>
               </div>
             </div>
 
