@@ -28,6 +28,16 @@ import {
   TourTechFooter,
 } from "@/components/themes/tourtech";
 
+import {
+  TrackTrackHero,
+  TrackTrackHeaderCard,
+  TrackTrackTravelCard,
+  TrackTrackPlayerCard,
+  TrackTrackPrizeCard,
+  TrackTrackContestRules,
+  TrackTrackFooter,
+} from "@/components/themes/tracktrack";
+
 export const themeComponents = {
   Masters: {
     Hero: MastersHero,
