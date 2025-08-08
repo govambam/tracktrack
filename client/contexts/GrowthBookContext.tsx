@@ -1,99 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext } from "react";
 import { GrowthBook } from "@growthbook/growthbook-react";
-import { supabase } from "@/lib/supabase";
-
-// Helper functions to detect user attributes
-const getDeviceType = (): string => {
-  const ua = navigator.userAgent;
-  if (/tablet|ipad|playbook|silk/i.test(ua)) {
-    return "tablet";
-  }
-  if (
-    /mobile|iphone|ipod|android|blackberry|opera|mini|windows\sce|palm|smartphone|iemobile/i.test(
-      ua,
-    )
-  ) {
-    return "mobile";
-  }
-  return "desktop";
-};
-
-const getBrowser = (): string => {
-  const ua = navigator.userAgent;
-  if (ua.includes("Chrome")) return "chrome";
-  if (ua.includes("Firefox")) return "firefox";
-  if (ua.includes("Safari")) return "safari";
-  if (ua.includes("Edge")) return "edge";
-  return "other";
-};
-
-const getOperatingSystem = (): string => {
-  const ua = navigator.userAgent;
-  if (ua.includes("Mac")) return "macos";
-  if (ua.includes("Windows")) return "windows";
-  if (ua.includes("Linux")) return "linux";
-  if (ua.includes("Android")) return "android";
-  if (ua.includes("iOS")) return "ios";
-  return "other";
-};
-
-const getTimezone = (): string => {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone;
-  } catch (e) {
-    return "unknown";
-  }
-};
-
-const getCountryFromTimezone = (timezone: string): string => {
-  // Extract country from timezone (e.g., "America/New_York" -> "US")
-  const timezoneToCountry: { [key: string]: string } = {
-    "America/New_York": "US",
-    "America/Los_Angeles": "US",
-    "America/Chicago": "US",
-    "America/Denver": "US",
-    "Europe/London": "GB",
-    "Europe/Paris": "FR",
-    "Europe/Berlin": "DE",
-    "Asia/Tokyo": "JP",
-    "Australia/Sydney": "AU",
-    // Add more as needed
-  };
-
-  return timezoneToCountry[timezone] || "unknown";
-};
-
-const getHandicapRange = (handicap: number): string => {
-  if (handicap <= 5) return "low"; // Low handicap (scratch to 5)
-  if (handicap <= 15) return "mid"; // Mid handicap (6-15)
-  if (handicap <= 25) return "high"; // High handicap (16-25)
-  return "beginner"; // Beginner (25+)
-};
-
-const getAccountAgeCategory = (ageInDays: number): string => {
-  if (ageInDays <= 1) return "new"; // New user (within 24 hours)
-  if (ageInDays <= 7) return "recent"; // Recent (within a week)
-  if (ageInDays <= 30) return "established"; // Established (within a month)
-  return "veteran"; // Long-time user
-};
-
-const getUserType = (eventCount: number, accountAge: number): string => {
-  if (eventCount === 0) {
-    return accountAge <= 7 ? "new_user" : "inactive_user";
-  }
-  if (eventCount >= 10) return "power_user";
-  if (eventCount >= 3) return "active_user";
-  return "casual_user";
-};
-
-const getEngagementLevel = (eventCount: number, accountAge: number): string => {
-  if (accountAge === 0) return "new";
-
-  const eventsPerDay = eventCount / accountAge;
-  if (eventsPerDay >= 0.1) return "high"; // More than 1 event per 10 days
-  if (eventsPerDay >= 0.03) return "medium"; // More than 1 event per month
-  return "low";
-};
 
 // Local feature definitions as fallback
 const localFeatures = {
@@ -109,29 +15,14 @@ const localFeatures = {
   delete_projects: false,
 };
 
-// Create GrowthBook instance with fallback configuration
+// Create a simple GrowthBook instance with just local features
 const createGrowthBookInstance = () => {
-  const apiHost =
-    import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io";
-  const clientKey =
-    import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u";
-
-  console.log("Creating GrowthBook instance with:", { apiHost, clientKey });
+  console.log("Creating GrowthBook instance with local features only");
 
   const gb = new GrowthBook({
-    apiHost,
-    clientKey,
-    enableDevMode: import.meta.env.DEV,
-    trackingCallback: (experiment, result) => {
-      console.log("GrowthBook Experiment:", experiment.key, result);
-    },
-    // Add additional options for better error handling
-    subscribeToChanges: false, // Disable real-time updates
-    backgroundSync: false, // Disable background syncing
-    // Set local features as fallback
+    // Use only local features, no remote loading
     features: localFeatures,
-    // Add timeout for network requests
-    streamingHost: undefined, // Disable streaming
+    enableDevMode: import.meta.env.DEV,
   });
 
   return gb;
@@ -142,198 +33,13 @@ const growthbook = createGrowthBookInstance();
 // Create context
 const GrowthBookContext = createContext<GrowthBook>(growthbook);
 
-// Create a context for user attributes
-const UserAttributesContext = createContext<{
-  attributes: any;
-  updateAttributes: () => Promise<void>;
-}>({
-  attributes: {},
-  updateAttributes: async () => {},
-});
-
-// Provider component
+// Simple provider component that just provides the context
 export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [userAttributes, setUserAttributes] = useState<any>({});
-  const [loadingError, setLoadingError] = useState<string | null>(null);
-
-  // Function to set user attributes (simplified)
-  const updateUserAttributes = async () => {
-    try {
-      // Get current user session
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      // Base attributes (always available)
-      const baseAttributes = {
-        deviceType: getDeviceType(),
-        browser: getBrowser(),
-        os: getOperatingSystem(),
-        timezone: getTimezone(),
-        country: getCountryFromTimezone(getTimezone()),
-        url: window.location.href,
-        path: window.location.pathname,
-        userAgent: navigator.userAgent,
-        language: navigator.language,
-        dayOfWeek: new Date().getDay(),
-        hourOfDay: new Date().getHours(),
-        screenWidth: window.screen.width,
-        screenHeight: window.screen.height,
-        viewportWidth: window.innerWidth,
-        viewportHeight: window.innerHeight,
-      };
-
-      let attributes = { ...baseAttributes };
-
-      if (session?.user) {
-        // Simple authenticated user attributes (no database queries)
-        attributes = {
-          ...baseAttributes,
-          id: session.user.id,
-          email: session.user.email,
-          emailDomain: session.user.email?.split("@")[1] || "",
-          isAuthenticated: true,
-          userType: "authenticated",
-          isEmailConfirmed: !!session.user.email_confirmed_at,
-          createdAt: session.user.created_at,
-        };
-      } else {
-        // Anonymous user attributes
-        attributes = {
-          ...baseAttributes,
-          id: "anonymous",
-          userType: "anonymous",
-          isAuthenticated: false,
-        };
-      }
-
-      setUserAttributes(attributes);
-      growthbook.setAttributes(attributes);
-
-      console.log("GrowthBook attributes set:", attributes);
-    } catch (error) {
-      console.error("Error setting GrowthBook attributes:", error);
-      // Set minimal attributes on error
-      const minimalAttributes = {
-        deviceType: getDeviceType(),
-        browser: getBrowser(),
-        isAuthenticated: false,
-        userType: "anonymous",
-        id: "anonymous",
-      };
-      setUserAttributes(minimalAttributes);
-      growthbook.setAttributes(minimalAttributes);
-    }
-  };
-
-  useEffect(() => {
-    // Initialize attributes and load features
-    const initializeGrowthBook = async () => {
-      console.log("Initializing GrowthBook...");
-
-      try {
-        await updateUserAttributes();
-        console.log("User attributes updated successfully");
-      } catch (error) {
-        console.error("Failed to update user attributes:", error);
-      }
-
-      try {
-        console.log("Loading GrowthBook features...");
-
-        // Create a more aggressive timeout (2 seconds)
-        const timeoutPromise = new Promise<void>((_, reject) =>
-          setTimeout(
-            () => reject(new Error("GrowthBook load timeout (2s)")),
-            2000,
-          ),
-        );
-
-        // Wrap loadFeatures in a promise that resolves immediately if it takes too long
-        const loadFeaturesPromise = growthbook.loadFeatures().catch((error) => {
-          console.warn("GrowthBook loadFeatures failed:", error);
-          return Promise.resolve(); // Convert failure to success
-        });
-
-        await Promise.race([loadFeaturesPromise, timeoutPromise]);
-
-        console.log("GrowthBook features loaded successfully");
-        setIsLoaded(true);
-      } catch (error) {
-        console.error("Failed to load GrowthBook features:", error);
-        setLoadingError(
-          error instanceof Error ? error.message : "Unknown error",
-        );
-        console.log(
-          "Continuing without GrowthBook features (using local fallbacks)...",
-        );
-        // Ensure local features are available
-        growthbook.setFeatures(localFeatures);
-        setIsLoaded(true); // Continue even if features fail to load
-      }
-    };
-
-    initializeGrowthBook();
-
-    // Listen for auth state changes to update user attributes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log("Auth state changed:", event);
-      await updateUserAttributes();
-    });
-
-    // Cleanup on unmount
-    return () => {
-      subscription?.unsubscribe();
-      growthbook.destroy();
-    };
-  }, []);
-
-  if (!isLoaded) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-4"></div>
-          <p className="text-slate-600 mb-2">Loading features...</p>
-          <p className="text-xs text-slate-400 mb-4">
-            This should only take a moment
-          </p>
-          {loadingError && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md max-w-md mx-auto">
-              <p className="text-red-700 text-sm">
-                Failed to load features: {loadingError}
-              </p>
-            </div>
-          )}
-          <button
-            onClick={() => {
-              console.log("Manually skipping GrowthBook initialization");
-              growthbook.setFeatures(localFeatures);
-              setIsLoaded(true);
-            }}
-            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm"
-          >
-            Continue without remote features
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <GrowthBookContext.Provider value={growthbook}>
-      <UserAttributesContext.Provider
-        value={{
-          attributes: userAttributes,
-          updateAttributes: updateUserAttributes,
-        }}
-      >
-        {children}
-      </UserAttributesContext.Provider>
+      {children}
     </GrowthBookContext.Provider>
   );
 };
@@ -356,17 +62,13 @@ export const useFeatureFlag = (key: string, fallback: any = false) => {
 // Hook to check if feature is enabled (boolean features)
 export const useFeatureEnabled = (key: string) => {
   const growthbook = useGrowthBook();
-  // Use getFeatureValue with false fallback instead of isOn for better error handling
   return growthbook.getFeatureValue(key, false);
 };
 
-// Hook to access user attributes
+// Simplified hook for user attributes (returns empty object for now)
 export const useUserAttributes = () => {
-  const context = useContext(UserAttributesContext);
-  if (!context) {
-    throw new Error(
-      "useUserAttributes must be used within a GrowthBookProvider",
-    );
-  }
-  return context;
+  return {
+    attributes: {},
+    updateAttributes: async () => {},
+  };
 };
