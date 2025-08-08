@@ -161,15 +161,25 @@ export default function PublicLeaderboard({
           <Target
             className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600"}`}
           />
-          <h3 className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}>
+          <h3
+            className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+          >
             {currentTheme === "TrackTrack" ? (
-              <>Overall <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Stableford</span> Leaderboard</>
+              <>
+                Overall{" "}
+                <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Stableford
+                </span>{" "}
+                Leaderboard
+              </>
             ) : (
               "Overall Stableford Leaderboard"
             )}
           </h3>
         </div>
-        <p className={`mb-8 ${currentTheme === "TrackTrack" ? "text-gray-600" : "text-slate-600"}`}>
+        <p
+          className={`mb-8 ${currentTheme === "TrackTrack" ? "text-gray-600" : "text-slate-600"}`}
+        >
           Combined points from all rounds (individual + team)
         </p>
 
@@ -302,15 +312,24 @@ export default function PublicLeaderboard({
         <DollarSign
           className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-green-600" : "text-green-600"}`}
         />
-        <h3 className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}>
+        <h3
+          className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+        >
           {currentTheme === "TrackTrack" ? (
-            <>Money <span className="bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">Earned</span></>
+            <>
+              Money{" "}
+              <span className="bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">
+                Earned
+              </span>
+            </>
           ) : (
             "Money Earned"
           )}
         </h3>
       </div>
-      <p className={`mb-8 ${currentTheme === "TrackTrack" ? "text-gray-600" : "text-slate-600"}`}>
+      <p
+        className={`mb-8 ${currentTheme === "TrackTrack" ? "text-gray-600" : "text-slate-600"}`}
+      >
         Current winnings from skills contests ($10 each)
       </p>
 
@@ -707,7 +726,9 @@ export default function PublicLeaderboard({
   }
 
   return (
-    <div className={`min-h-screen ${currentTheme === "TrackTrack" ? "bg-gradient-to-br from-purple-50/50 via-pink-50/50 to-orange-50/50" : "bg-gradient-to-br from-slate-50 via-white to-green-50/30"}`}>
+    <div
+      className={`min-h-screen ${currentTheme === "TrackTrack" ? "bg-gradient-to-br from-purple-50/50 via-pink-50/50 to-orange-50/50" : "bg-gradient-to-br from-slate-50 via-white to-green-50/30"}`}
+    >
       {/* Background elements for TrackTrack theme */}
       {currentTheme === "TrackTrack" && (
         <div className="fixed inset-0 pointer-events-none">
@@ -719,10 +740,14 @@ export default function PublicLeaderboard({
 
       {/* Header Navigation */}
       {!hideNavigation && (
-        <nav className={`bg-white/95 backdrop-blur-sm border-b ${currentTheme === "TrackTrack" ? "border-purple-200/50" : "border-slate-200/50"} shadow-lg sticky top-0 z-50`}>
+        <nav
+          className={`bg-white/95 backdrop-blur-sm border-b ${currentTheme === "TrackTrack" ? "border-purple-200/50" : "border-slate-200/50"} shadow-lg sticky top-0 z-50`}
+        >
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
-              <div className={`font-bold ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" : "text-slate-900"}`}>
+              <div
+                className={`font-bold ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" : "text-slate-900"}`}
+              >
                 Tournament Leaderboard
               </div>
               <div className="hidden md:flex items-center space-x-8">
@@ -753,17 +778,28 @@ export default function PublicLeaderboard({
       <div className="max-w-6xl mx-auto px-6 pt-8 pb-12">
         {/* Title Section */}
         <div className="text-center mb-12">
-          <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}>
+          <h1
+            className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+          >
             {currentTheme === "TrackTrack" ? (
-              <>Live <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Scoring</span></>
+              <>
+                Live{" "}
+                <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Scoring
+                </span>
+              </>
             ) : (
               "Live Scoring"
             )}
           </h1>
-          <p className={`text-xl font-semibold mb-2 ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent" : "text-green-600"}`}>
+          <p
+            className={`text-xl font-semibold mb-2 ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent" : "text-green-600"}`}
+          >
             & Prize Tracker
           </p>
-          <p className={`${currentTheme === "TrackTrack" ? "text-gray-600 text-lg" : "text-slate-600"}`}>
+          <p
+            className={`${currentTheme === "TrackTrack" ? "text-gray-600 text-lg" : "text-slate-600"}`}
+          >
             Track scorecards, Stableford points, and prize money across all
             three rounds
           </p>
@@ -771,7 +807,9 @@ export default function PublicLeaderboard({
 
         {/* Tabs */}
         <div className="flex justify-center mb-12">
-          <div className={`inline-flex bg-white/80 backdrop-blur-sm rounded-2xl p-2 border ${currentTheme === "TrackTrack" ? "border-purple-200/50" : "border-slate-200/50"} shadow-lg`}>
+          <div
+            className={`inline-flex bg-white/80 backdrop-blur-sm rounded-2xl p-2 border ${currentTheme === "TrackTrack" ? "border-purple-200/50" : "border-slate-200/50"} shadow-lg`}
+          >
             {[
               { id: "leaderboard", label: "Stableford Board", icon: BarChart3 },
               { id: "money", label: "Money Leaders", icon: DollarSign },
@@ -807,8 +845,12 @@ export default function PublicLeaderboard({
         </div>
 
         {/* Footer */}
-        <div className={`text-center mt-16 pt-8 border-t ${currentTheme === "TrackTrack" ? "border-purple-200" : "border-slate-200"}`}>
-          <p className={`${currentTheme === "TrackTrack" ? "text-gray-500" : "text-slate-500"}`}>
+        <div
+          className={`text-center mt-16 pt-8 border-t ${currentTheme === "TrackTrack" ? "border-purple-200" : "border-slate-200"}`}
+        >
+          <p
+            className={`${currentTheme === "TrackTrack" ? "text-gray-500" : "text-slate-500"}`}
+          >
             Live tournament data powered by{" "}
             {currentTheme === "TrackTrack" ? (
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">

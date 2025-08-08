@@ -155,7 +155,9 @@ export default function EventClubhouse() {
   }
 
   return (
-    <div className={`min-h-screen ${currentTheme === "TrackTrack" ? "bg-gradient-to-br from-purple-50/50 via-pink-50/50 to-orange-50/50" : ""}`}>
+    <div
+      className={`min-h-screen ${currentTheme === "TrackTrack" ? "bg-gradient-to-br from-purple-50/50 via-pink-50/50 to-orange-50/50" : ""}`}
+    >
       {/* Background elements for TrackTrack theme */}
       {currentTheme === "TrackTrack" && (
         <div className="fixed inset-0 pointer-events-none">
@@ -166,7 +168,9 @@ export default function EventClubhouse() {
       )}
 
       {/* Welcome Header */}
-      <div className={`${currentTheme === "TrackTrack" ? "bg-white/90" : "bg-white/80"} backdrop-blur-sm border-b ${currentTheme === "TrackTrack" ? "border-purple-200/50" : "border-slate-200/50"}`}>
+      <div
+        className={`${currentTheme === "TrackTrack" ? "bg-white/90" : "bg-white/80"} backdrop-blur-sm border-b ${currentTheme === "TrackTrack" ? "border-purple-200/50" : "border-slate-200/50"}`}
+      >
         <div className="max-w-6xl mx-auto px-6 py-8">
           <div className="text-center">
             <div
@@ -194,7 +198,12 @@ export default function EventClubhouse() {
               }`}
             >
               {currentTheme === "TrackTrack" ? (
-                <>Welcome to the <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Clubhouse</span></>
+                <>
+                  Welcome to the{" "}
+                  <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    Clubhouse
+                  </span>
+                </>
               ) : (
                 "Welcome to the Clubhouse"
               )}
@@ -233,7 +242,12 @@ export default function EventClubhouse() {
               }`}
             >
               {currentTheme === "TrackTrack" ? (
-                <>Round <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Scorecards</span></>
+                <>
+                  Round{" "}
+                  <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    Scorecards
+                  </span>
+                </>
               ) : (
                 "Round Scorecards"
               )}
