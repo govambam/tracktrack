@@ -673,61 +673,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 bg-white/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-              From idea to unforgettable trip
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our streamlined process removes all the friction from organizing
-              golf trips with friends.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center group">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-2xl mb-6 mx-auto text-2xl font-bold group-hover:scale-110 transition-transform shadow-lg">
-                1
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
-                Plan with AI
-              </h3>
-              <p className="text-gray-600">
-                Tell our AI your dates, location preferences, and group size.
-                Get a complete itinerary with course recommendations in minutes.
-              </p>
-            </div>
-
-            <div className="text-center group">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl mb-6 mx-auto text-2xl font-bold group-hover:scale-110 transition-transform shadow-lg">
-                2
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
-                Create & Share
-              </h3>
-              <p className="text-gray-600">
-                Build a beautiful trip website, invite your friends, and let
-                them RSVP and see all the details in one place.
-              </p>
-            </div>
-
-            <div className="text-center group">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl mb-6 mx-auto text-2xl font-bold group-hover:scale-110 transition-transform shadow-lg">
-                3
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
-                Play & Celebrate
-              </h3>
-              <p className="text-gray-600">
-                Enjoy your trip with live scoring, leaderboards, and a private
-                clubhouse to share memories and stay connected.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 relative overflow-hidden">
