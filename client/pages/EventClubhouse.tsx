@@ -459,7 +459,9 @@ export default function EventClubhouse() {
                   ? "border-green-200"
                   : currentTheme === "TourTech"
                     ? "border-gray-200"
-                    : "border-blue-200"
+                    : currentTheme === "TrackTrack"
+                      ? "border-purple-200 bg-white/90 backdrop-blur-sm"
+                      : "border-blue-200"
               }`}
             >
               <CardHeader>
