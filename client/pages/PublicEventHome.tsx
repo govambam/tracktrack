@@ -2038,8 +2038,13 @@ export default function PublicEventHome({
                 Scoring Format
               </h2>
 
-              {/* Masters theme - 2-column layout with more vertical space above */}
-              {currentTheme === "Masters" ? (
+              {/* TrackTrack and Masters theme - use themed components */}
+              {currentTheme === "TrackTrack" ? (
+                <components.ContestRules
+                  rounds={rounds}
+                  getScoringFormat={getScoringFormat}
+                />
+              ) : currentTheme === "Masters" ? (
                 <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
                   {/* Modified Stableford Card */}
                   <div className="bg-white border border-green-800/20 rounded-xl p-8 shadow-sm hover:border-yellow-600 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
