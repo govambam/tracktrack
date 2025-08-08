@@ -287,7 +287,7 @@ export default function PublicLeaderboard({
   const renderMoneyTab = () => (
     <div className="space-y-8">
       <div className="flex items-center space-x-2 mb-6">
-        <DollarSign className="h-5 w-5 text-green-600" />
+        <DollarSign className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
         <h3 className="text-2xl font-bold text-slate-900">Money Earned</h3>
       </div>
       <p className="text-slate-600 mb-8">
