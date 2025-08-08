@@ -361,7 +361,7 @@ export default function PublicLeaderboard({
 
         <div>
           <h4 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
-            <Trophy className="h-5 w-5 mr-2 text-green-600" />
+            <Trophy className={`h-5 w-5 mr-2 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
             Final Prizes
           </h4>
           <div className="space-y-3">
