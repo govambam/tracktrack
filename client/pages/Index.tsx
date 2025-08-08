@@ -410,6 +410,32 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Clubhouse Section */}
+      <section className="py-20 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 text-orange-700 text-sm font-medium mb-6">
+              <MessageSquare className="w-4 h-4 mr-2" />
+              Stay Connected
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Your private clubhouse for trip memories
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Keep your group connected before, during, and after your trip.
+              Share updates, enter scores, and relive the best moments together.
+            </p>
+          </div>
+          <div className="w-full">
+            <img
+              src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_clubhouse.png"
+              alt="Private clubhouse showing group chat and score entry"
+              className="w-full h-auto rounded-2xl shadow-2xl"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Features Grid Section */}
       <section
         id="features"
