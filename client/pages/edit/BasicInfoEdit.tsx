@@ -465,13 +465,13 @@ ${formData.description}`;
 
   return (
     <div className="space-y-6">
-      <Card className="border-green-100">
+      <Card className="border-purple-100">
         <CardHeader>
-          <CardTitle className="text-lg text-green-900 flex items-center">
-            <FileText className="h-5 w-5 mr-2 text-emerald-600" />
+          <CardTitle className="text-lg text-purple-900 flex items-center">
+            <FileText className="h-5 w-5 mr-2 text-purple-600" />
             Event Details
           </CardTitle>
-          <CardDescription className="text-green-600">
+          <CardDescription className="text-purple-600">
             Update the basic information for your golf event
           </CardDescription>
         </CardHeader>
