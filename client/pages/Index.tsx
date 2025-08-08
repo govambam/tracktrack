@@ -644,7 +644,7 @@ export default function Index() {
         </div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Ready to plan your next golf adventure? 🚀
+            Ready to plan your next golf adventure?
           </h2>
           <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
             Join thousands of golfers who are already creating unforgettable
