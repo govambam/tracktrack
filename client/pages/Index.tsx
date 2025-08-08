@@ -678,7 +678,7 @@ export default function Index() {
               TrackTrack
             </div>
             <p className="text-gray-400 mb-8">
-              Making golf trips effortless and unforgettable. ⛳️✨
+              Making golf trips effortless and unforgettable.
             </p>
             <div className="flex justify-center space-x-8 text-sm text-gray-400">
               <Link
