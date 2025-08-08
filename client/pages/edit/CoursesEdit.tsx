@@ -410,8 +410,8 @@ export default function CoursesEdit() {
 
                   {/* Tee Time */}
                   <div className="space-y-2">
-                    <Label className="text-green-800 font-medium flex items-center">
-                      <Clock className="h-4 w-4 mr-1 text-emerald-600" />
+                    <Label className="text-purple-900 font-medium flex items-center">
+                      <Clock className="h-4 w-4 mr-1 text-purple-600" />
                       Tee Time
                     </Label>
                     <Input
@@ -420,13 +420,13 @@ export default function CoursesEdit() {
                       onChange={(e) =>
                         updateRound(round.id, "time", e.target.value)
                       }
-                      className="border-green-200 focus:border-emerald-500"
+                      className="border-purple-200 focus:border-purple-500"
                     />
                   </div>
 
                   {/* Holes */}
                   <div className="space-y-2">
-                    <Label className="text-green-800 font-medium">
+                    <Label className="text-purple-900 font-medium">
                       Holes *
                     </Label>
                     <Select
@@ -435,7 +435,7 @@ export default function CoursesEdit() {
                         updateRound(round.id, "holes", parseInt(value))
                       }
                     >
-                      <SelectTrigger className="border-green-200 focus:border-emerald-500">
+                      <SelectTrigger className="border-purple-200 focus:border-purple-500">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
