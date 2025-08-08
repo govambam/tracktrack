@@ -368,7 +368,9 @@ export default function EventClubhouse() {
                             ? "text-yellow-600"
                             : currentTheme === "TourTech"
                               ? "text-orange-600"
-                              : "text-blue-600"
+                              : currentTheme === "TrackTrack"
+                                ? "text-purple-600"
+                                : "text-blue-600"
                         }`}
                       />
                       <span className="font-medium">{round.course_name}</span>
@@ -381,7 +383,9 @@ export default function EventClubhouse() {
                             ? "text-yellow-600"
                             : currentTheme === "TourTech"
                               ? "text-orange-600"
-                              : "text-blue-600"
+                              : currentTheme === "TrackTrack"
+                                ? "text-purple-600"
+                                : "text-blue-600"
                         }`}
                       />
                       <span className="text-sm">
@@ -397,7 +401,9 @@ export default function EventClubhouse() {
                               ? "text-yellow-600"
                               : currentTheme === "TourTech"
                                 ? "text-orange-600"
-                                : "text-blue-600"
+                                : currentTheme === "TrackTrack"
+                                  ? "text-purple-600"
+                                  : "text-blue-600"
                           }`}
                         />
                         <span className="text-sm">
