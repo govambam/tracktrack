@@ -260,7 +260,7 @@ export default function EventShell() {
           <div className="flex items-center justify-between">
             {/* Event Name */}
             <div
-              className={`font-bold ${
+              className={`font-bold truncate ${
                 currentTheme === "Masters"
                   ? "text-green-900 font-serif text-lg"
                   : "text-slate-900"
@@ -269,8 +269,8 @@ export default function EventShell() {
               {eventData.name}
             </div>
 
-            {/* Navigation Tabs */}
-            <div className="flex items-center space-x-8">
+            {/* Desktop Navigation Tabs */}
+            <div className="hidden md:flex items-center space-x-8">
               <button
                 onClick={() => navigateToTab("home")}
                 className={`flex items-center space-x-2 text-sm font-medium transition-colors cursor-pointer ${
@@ -328,7 +328,96 @@ export default function EventShell() {
                 <span>Clubhouse</span>
               </button>
             </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`md:hidden p-2 rounded-md transition-colors ${
+                currentTheme === "Masters"
+                  ? "text-green-800 hover:bg-green-50"
+                  : "text-slate-600 hover:bg-slate-100"
+              }`}
+            >
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </button>
           </div>
+
+          {/* Mobile Navigation Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-4 pt-4 border-t border-slate-200">
+              <div className="space-y-3">
+                <button
+                  onClick={() => {
+                    navigateToTab("home");
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full flex items-center space-x-3 p-3 rounded-md text-left transition-colors ${
+                    currentTab === "home"
+                      ? currentTheme === "Masters"
+                        ? "bg-amber-50 text-amber-600 font-serif"
+                        : currentTheme === "TourTech"
+                          ? "bg-orange-50 text-orange-600"
+                          : "bg-blue-50 text-blue-600"
+                      : currentTheme === "Masters"
+                        ? "text-green-800 hover:bg-green-50 font-serif"
+                        : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  <Home className="h-5 w-5" />
+                  <span className="font-medium">Home</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    navigateToTab("leaderboard");
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full flex items-center space-x-3 p-3 rounded-md text-left transition-colors ${
+                    currentTab === "leaderboard"
+                      ? currentTheme === "Masters"
+                        ? "bg-amber-50 text-amber-600 font-serif"
+                        : currentTheme === "TourTech"
+                          ? "bg-orange-50 text-orange-600"
+                          : "bg-blue-50 text-blue-600"
+                      : currentTheme === "Masters"
+                        ? "text-green-800 hover:bg-green-50 font-serif"
+                        : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  <BarChart3 className="h-5 w-5" />
+                  <span className="font-medium">Leaderboard</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    navigateToTab("clubhouse");
+                    setMobileMenuOpen(false);
+                  }}
+                  disabled={!eventData.clubhouse_password}
+                  className={`w-full flex items-center space-x-3 p-3 rounded-md text-left transition-colors ${
+                    !eventData.clubhouse_password
+                      ? "opacity-50 cursor-not-allowed"
+                      : currentTab === "clubhouse"
+                        ? currentTheme === "Masters"
+                          ? "bg-amber-50 text-amber-600 font-serif"
+                          : currentTheme === "TourTech"
+                            ? "bg-orange-50 text-orange-600"
+                            : "bg-blue-50 text-blue-600"
+                        : currentTheme === "Masters"
+                          ? "text-green-800 hover:bg-green-50 font-serif"
+                          : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  <Users className="h-5 w-5" />
+                  <span className="font-medium">Clubhouse</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
