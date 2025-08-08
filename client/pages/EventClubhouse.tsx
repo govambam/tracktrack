@@ -668,7 +668,9 @@ export default function EventClubhouse() {
                 ? "border-green-200 bg-green-50"
                 : currentTheme === "TourTech"
                   ? "border-gray-200 bg-gray-50"
-                  : "border-blue-200 bg-blue-50"
+                  : currentTheme === "TrackTrack"
+                    ? "border-purple-200 bg-purple-50"
+                    : "border-blue-200 bg-blue-50"
             }`}
           >
             <MessageCircle
@@ -677,7 +679,9 @@ export default function EventClubhouse() {
                   ? "text-yellow-600"
                   : currentTheme === "TourTech"
                     ? "text-orange-600"
-                    : "text-blue-600"
+                    : currentTheme === "TrackTrack"
+                      ? "text-purple-600"
+                      : "text-blue-600"
               }`}
             />
             <AlertDescription
@@ -686,7 +690,9 @@ export default function EventClubhouse() {
                   ? "text-green-800 font-serif"
                   : currentTheme === "TourTech"
                     ? "text-gray-700"
-                    : "text-blue-700"
+                    : currentTheme === "TrackTrack"
+                      ? "text-gray-700"
+                      : "text-blue-700"
               }`}
             >
               <strong>Live Chat Coming Soon:</strong> We're working on bringing
