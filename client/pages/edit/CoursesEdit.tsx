@@ -322,20 +322,20 @@ export default function CoursesEdit() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <Card className="border-green-100">
+      <Card className="border-purple-100">
         <CardHeader>
-          <CardTitle className="text-lg text-green-900 flex items-center">
-            <MapPin className="h-5 w-5 mr-2 text-emerald-600" />
+          <CardTitle className="text-lg text-purple-900 flex items-center">
+            <MapPin className="h-5 w-5 mr-2 text-purple-600" />
             Golf Rounds
           </CardTitle>
-          <CardDescription className="text-green-600">
+          <CardDescription className="text-purple-600">
             Manage the golf courses and rounds for your event
           </CardDescription>
         </CardHeader>
