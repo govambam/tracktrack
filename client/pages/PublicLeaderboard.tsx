@@ -335,7 +335,7 @@ export default function PublicLeaderboard({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
           <h4 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
-            <Target className="h-5 w-5 mr-2 text-green-600" />
+            <Target className={`h-5 w-5 mr-2 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
             Skills Contests
           </h4>
           <div className="space-y-3">
