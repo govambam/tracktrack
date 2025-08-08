@@ -42,19 +42,22 @@ export default function Index() {
   const heroThemes = [
     {
       name: "Tour Tech",
-      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Tour_Tech_home.png",
-      gradient: "from-white to-orange-500"
+      image:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Tour_Tech_home.png",
+      gradient: "from-white to-orange-500",
     },
     {
       name: "GolfOS",
-      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/GolfOS_home.png",
-      gradient: "from-blue-500 to-purple-600"
+      image:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/GolfOS_home.png",
+      gradient: "from-blue-500 to-purple-600",
     },
     {
       name: "Masters",
-      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Masters_home.png",
-      gradient: "from-green-500 to-yellow-500"
-    }
+      image:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Masters_home.png",
+      gradient: "from-green-500 to-yellow-500",
+    },
   ];
 
   // Leaderboard carousel data
@@ -333,8 +336,8 @@ export default function Index() {
                       onClick={() => setSelectedTheme(index)}
                       className={`w-12 h-12 rounded-full bg-gradient-to-br ${theme.gradient} shadow-lg transition-all duration-300 border-2 ${
                         selectedTheme === index
-                          ? 'border-gray-800 scale-110'
-                          : 'border-gray-300 hover:border-gray-500 hover:scale-105'
+                          ? "border-gray-800 scale-110"
+                          : "border-gray-300 hover:border-gray-500 hover:scale-105"
                       }`}
                       title={`Switch to ${theme.name} theme`}
                     />
