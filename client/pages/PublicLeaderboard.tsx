@@ -300,11 +300,17 @@ export default function PublicLeaderboard({
     <div className="space-y-8">
       <div className="flex items-center space-x-2 mb-6">
         <DollarSign
-          className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+          className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-green-600" : "text-green-600"}`}
         />
-        <h3 className="text-2xl font-bold text-slate-900">Money Earned</h3>
+        <h3 className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}>
+          {currentTheme === "TrackTrack" ? (
+            <>Money <span className="bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">Earned</span></>
+          ) : (
+            "Money Earned"
+          )}
+        </h3>
       </div>
-      <p className="text-slate-600 mb-8">
+      <p className={`mb-8 ${currentTheme === "TrackTrack" ? "text-gray-600" : "text-slate-600"}`}>
         Current winnings from skills contests ($10 each)
       </p>
 
@@ -312,15 +318,15 @@ export default function PublicLeaderboard({
         {mockPlayers.map((player, index) => (
           <div
             key={player.full_name}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+            className={`${currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm border-purple-200 hover:shadow-purple-100/50" : "bg-white border-slate-200"} rounded-2xl p-6 border-2 transition-all duration-300 hover:shadow-lg`}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center ${currentTheme === "TourTech" ? "bg-orange-100" : "bg-green-100"}`}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center ${currentTheme === "TourTech" ? "bg-orange-100" : currentTheme === "TrackTrack" ? "bg-gradient-to-br from-green-100 to-emerald-100" : "bg-green-100"}`}
                 >
                   <DollarSign
-                    className={`h-6 w-6 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+                    className={`h-6 w-6 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-green-600" : "text-green-600"}`}
                   />
                 </div>
                 <div>
@@ -336,7 +342,7 @@ export default function PublicLeaderboard({
               </div>
               <div className="text-right">
                 <div
-                  className={`text-2xl font-bold ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+                  className={`text-2xl font-bold ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent" : "text-green-600"}`}
                 >
                   ${player.money}
                 </div>
