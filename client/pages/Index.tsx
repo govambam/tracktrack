@@ -418,6 +418,37 @@ export default function Index() {
         </div>
       </section>
 
+      {/* App Events Management Section */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-100/50 via-blue-50/50 to-purple-100/50"></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-20 right-20 w-36 h-36 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 right-1/4 w-28 h-28 bg-gradient-to-br from-purple-400/15 to-pink-400/15 rounded-full blur-xl"></div>
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-green-100 to-blue-100 text-green-700 text-sm font-medium mb-6">
+              <Calendar className="w-4 h-4 mr-2" />
+              Trip Management
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Manage all your trips in one place
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Create, edit, and organize multiple golf trips with ease. Your dashboard keeps everything organized and accessible.
+            </p>
+          </div>
+          <div className="w-full">
+            <img
+              src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/app_events.png"
+              alt="App dashboard showing multiple golf trip events"
+              className="w-full h-auto rounded-2xl shadow-2xl"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Clubhouse Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-orange-100/50 via-pink-50/50 to-red-100/50"></div>
