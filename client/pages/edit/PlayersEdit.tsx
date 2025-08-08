@@ -500,7 +500,7 @@ export default function PlayersEdit() {
           }
 
           const result = await response.json();
-          console.log("📧 Invitation API result:", result);
+          console.log("���� Invitation API result:", result);
 
           if (result.success && result.sent_count > 0) {
             toast({
@@ -582,7 +582,7 @@ export default function PlayersEdit() {
             const isEditing = editingPlayerId === player.id;
 
             return (
-              <Card key={player.id} className="border-purple-100 bg-purple-50">
+              <Card key={player.id} className="border-purple-100 bg-purple-50/30">
                 <CardContent className="p-4">
                   {!isEditing ? (
                     // Collapsed view
