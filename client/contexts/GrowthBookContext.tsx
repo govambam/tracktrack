@@ -283,12 +283,18 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         console.log("Loading GrowthBook features...");
 
-        // Add a timeout to prevent hanging indefinitely (reduced to 5 seconds)
-        const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error("GrowthBook load timeout")), 5000),
+        // Create a more aggressive timeout (2 seconds)
+        const timeoutPromise = new Promise<void>((_, reject) =>
+          setTimeout(() => reject(new Error("GrowthBook load timeout (2s)")), 2000),
         );
 
-        await Promise.race([growthbook.loadFeatures(), timeoutPromise]);
+        // Wrap loadFeatures in a promise that resolves immediately if it takes too long
+        const loadFeaturesPromise = growthbook.loadFeatures().catch((error) => {
+          console.warn("GrowthBook loadFeatures failed:", error);
+          return Promise.resolve(); // Convert failure to success
+        });
+
+        await Promise.race([loadFeaturesPromise, timeoutPromise]);
 
         console.log("GrowthBook features loaded successfully");
         setIsLoaded(true);
@@ -297,7 +303,9 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoadingError(
           error instanceof Error ? error.message : "Unknown error",
         );
-        console.log("Continuing without GrowthBook features...");
+        console.log("Continuing without GrowthBook features (using local fallbacks)...");
+        // Ensure local features are available
+        growthbook.setFeatures(localFeatures);
         setIsLoaded(true); // Continue even if features fail to load
       }
     };
