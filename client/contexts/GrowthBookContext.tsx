@@ -1,20 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { GrowthBook } from "@growthbook/growthbook-react";
-<<<<<<< HEAD
-
-// Create GrowthBook instance
-const growthbook = new GrowthBook({
-  apiHost:
-    import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io",
-  clientKey:
-    import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u",
-  enableDevMode: import.meta.env.DEV,
-  trackingCallback: (experiment, result) => {
-    // Optional: Add analytics tracking here
-    console.log("GrowthBook Experiment:", experiment.key, result);
-  },
-});
-=======
 import { supabase } from "@/lib/supabase";
 
 // Helper functions to detect user attributes
@@ -150,7 +135,6 @@ const createGrowthBookInstance = () => {
 };
 
 const growthbook = createGrowthBookInstance();
->>>>>>> 2a2f2472a5df94d71a4d905167e38fc6936e04c9
 
 // Create context
 const GrowthBookContext = createContext<GrowthBook>(growthbook);
@@ -285,18 +269,6 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    // Load feature definitions from GrowthBook
-    growthbook
-      .loadFeatures()
-      .then(() => {
-        setIsLoaded(true);
-      })
-      .catch((error) => {
-        console.error("Failed to load GrowthBook features:", error);
-        setIsLoaded(true); // Continue even if features fail to load
-      });
-=======
     // Initialize attributes and load features
     const initializeGrowthBook = async () => {
       console.log("Initializing GrowthBook...");
@@ -339,7 +311,6 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log("Auth state changed:", event);
       await updateUserAttributes();
     });
->>>>>>> 2a2f2472a5df94d71a4d905167e38fc6936e04c9
 
     // Cleanup on unmount
     return () => {
