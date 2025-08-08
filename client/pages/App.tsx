@@ -214,7 +214,12 @@ export default function AppShell() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-xl"></div>
+          <div className="absolute bottom-40 right-20 w-28 h-28 bg-gradient-to-br from-orange-400/10 to-yellow-400/10 rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-xl"></div>
+        </div>
         <Outlet />
       </main>
     </div>
