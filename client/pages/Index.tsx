@@ -299,23 +299,32 @@ export default function Index() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Theme Preview */}
             <div className="relative">
-              {/* Direct Image Display */}
-              <div className="mx-auto max-w-sm">
-                <img
-                  src={themes[currentTheme].mobileImage}
-                  alt={`${themes[currentTheme].name} theme preview`}
-                  className="w-full h-auto rounded-lg shadow-lg"
-                />
+              {/* Embla Carousel */}
+              <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex">
+                  {themes.map((theme, index) => (
+                    <div key={index} className="flex-[0_0_100%] min-w-0">
+                      <div className="mx-auto max-w-sm px-4">
+                        <img
+                          src={theme.mobileImage}
+                          alt={`${theme.name} theme preview`}
+                          className="w-full h-auto drop-shadow-2xl"
+                          style={{ backgroundColor: 'transparent' }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {/* Theme Navigation */}
+              {/* Theme Navigation Dots */}
               <div className="flex justify-center mt-8 space-x-3">
                 {themes.map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => setCurrentTheme(index)}
+                    onClick={() => scrollTo(index)}
                     className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                      index === currentTheme
+                      index === selectedIndex
                         ? "bg-emerald-600 scale-110"
                         : "bg-gray-300 hover:bg-gray-400"
                     }`}
@@ -326,10 +335,10 @@ export default function Index() {
               {/* Theme Info */}
               <div className="text-center mt-6 bg-white rounded-xl shadow-md px-6 py-4 border border-gray-100">
                 <h3 className="font-semibold text-gray-900 text-lg">
-                  {themes[currentTheme].name}
+                  {themes[selectedIndex].name}
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
-                  {themes[currentTheme].description}
+                  {themes[selectedIndex].description}
                 </p>
               </div>
             </div>
