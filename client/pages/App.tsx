@@ -185,7 +185,7 @@ export default function AppShell() {
 
           {/* Mobile Navigation */}
           {mobileMenuOpen && (
-            <div className="md:hidden border-t border-green-100">
+            <div className="md:hidden border-t border-white/20 bg-white/90 backdrop-blur-lg">
               <div className="px-2 pt-2 pb-3 space-y-1">
                 {navigationItems.map((item) => {
                   const Icon = item.icon;
@@ -196,10 +196,10 @@ export default function AppShell() {
                       to={item.path}
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        "flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors",
+                        "flex items-center px-3 py-2 rounded-lg text-base font-medium transition-colors",
                         isActive
-                          ? "text-emerald-600 bg-emerald-50"
-                          : "text-green-700 hover:text-emerald-600 hover:bg-green-50",
+                          ? "text-purple-600 bg-gradient-to-r from-purple-100 to-pink-100"
+                          : "text-gray-700 hover:text-purple-600 hover:bg-purple-50",
                       )}
                     >
                       <Icon className="h-5 w-5 mr-3" />
