@@ -314,9 +314,9 @@ export default function Index() {
                     <div className="px-4">
                       {/* Desktop & Mobile Showcase */}
                       <div className="relative max-w-6xl mx-auto">
-                        <div className="flex items-end justify-center">
+                        <div className="flex items-start justify-center">
                           {/* Desktop Preview */}
-                          <div className="relative z-10">
+                          <div className="relative z-10 mt-8 lg:mt-12">
                             <img
                               src={theme.desktopImage}
                               alt={`${theme.name} desktop theme preview`}
@@ -325,7 +325,7 @@ export default function Index() {
                             />
                           </div>
 
-                          {/* Mobile Preview - Overlapping */}
+                          {/* Mobile Preview - Overlapping and positioned higher */}
                           <div className="relative z-20 -ml-12 sm:-ml-16 lg:-ml-24">
                             <img
                               src={theme.mobileImage}
