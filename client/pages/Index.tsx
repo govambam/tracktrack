@@ -499,50 +499,27 @@ export default function Index() {
       </section>
 
       {/* Clubhouse Section */}
-      <section className="py-20 bg-white/50 backdrop-blur-sm">
+      <section className="py-20 bg-gradient-to-br from-orange-50/50 to-pink-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 text-orange-700 text-sm font-medium mb-6">
-                <Heart className="w-4 h-4 mr-2" />
-                Stay Connected
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Your private clubhouse for trip memories
-              </h2>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Keep your group connected before, during, and after your trip.
-                Share updates, enter scores, and relive the best moments
-                together.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <MessageSquare className="w-5 h-5 text-blue-500 mr-3" />
-                  <span className="text-gray-700">
-                    Group chat and announcements
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <BarChart3 className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700">
-                    Easy score entry and tracking
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <Users className="w-5 h-5 text-purple-500 mr-3" />
-                  <span className="text-gray-700">
-                    Member-only access and privacy
-                  </span>
-                </div>
-              </div>
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 text-orange-700 text-sm font-medium mb-6">
+              <MessageSquare className="w-4 h-4 mr-2" />
+              Stay Connected
             </div>
-            <div>
-              <img
-                src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_clubhouse.png"
-                alt="Private clubhouse showing group chat and score entry"
-                className="w-full h-auto rounded-2xl shadow-2xl"
-              />
-            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Your private clubhouse for trip memories
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Keep your group connected before, during, and after your trip.
+              Share updates, enter scores, and relive the best moments together.
+            </p>
+          </div>
+          <div className="w-full">
+            <img
+              src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_clubhouse.png"
+              alt="Private clubhouse showing group chat and score entry"
+              className="w-full h-auto rounded-2xl shadow-2xl"
+            />
           </div>
         </div>
       </section>
