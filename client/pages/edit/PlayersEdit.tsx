@@ -582,7 +582,10 @@ export default function PlayersEdit() {
             const isEditing = editingPlayerId === player.id;
 
             return (
-              <Card key={player.id} className="border-purple-100 bg-purple-50/30">
+              <Card
+                key={player.id}
+                className="border-purple-100 bg-purple-50/30"
+              >
                 <CardContent className="p-4">
                   {!isEditing ? (
                     // Collapsed view

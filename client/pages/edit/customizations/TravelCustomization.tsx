@@ -271,7 +271,10 @@ export default function TravelCustomization() {
               </CardDescription>
             </div>
             <div className="flex items-center space-x-2">
-              <Label htmlFor="travel-toggle" className="text-sm text-purple-700">
+              <Label
+                htmlFor="travel-toggle"
+                className="text-sm text-purple-700"
+              >
                 Enable Travel Page
               </Label>
               <Switch
