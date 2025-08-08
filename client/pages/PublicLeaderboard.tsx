@@ -496,7 +496,7 @@ export default function PublicLeaderboard({
               </div>
               {course?.location && (
                 <p className="text-slate-500 text-sm mb-2">
-                  📍 {course.location}
+                  ��� {course.location}
                 </p>
               )}
               <p className="text-slate-600 mb-6">
@@ -731,7 +731,9 @@ export default function PublicLeaderboard({
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
                   activeTab === tab.id
-                    ? "bg-green-600 text-white shadow-lg"
+                    ? currentTheme === "TourTech"
+                      ? "bg-orange-600 text-white shadow-lg"
+                      : "bg-green-600 text-white shadow-lg"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
