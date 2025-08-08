@@ -657,7 +657,7 @@ ${formData.description}`;
             <Button
               onClick={handleSave}
               disabled={saving}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
             >
               <Save className="h-4 w-4 mr-2" />
               {saving ? "Saving..." : "Save Changes"}
@@ -668,10 +668,10 @@ ${formData.description}`;
 
       {/* Preview Card */}
       {(formData.tripName || formData.location) && (
-        <Card className="border-green-100 bg-green-50">
+        <Card className="border-purple-100 bg-purple-50">
           <CardHeader>
-            <CardTitle className="text-lg text-green-900">Preview</CardTitle>
-            <CardDescription className="text-green-600">
+            <CardTitle className="text-lg text-purple-900">Preview</CardTitle>
+            <CardDescription className="text-purple-600">
               How your event will appear on the dashboard
             </CardDescription>
           </CardHeader>
@@ -679,10 +679,10 @@ ${formData.description}`;
             <div className="flex items-start space-x-4">
               <div className="text-3xl">🏌️‍♂️</div>
               <div>
-                <h3 className="font-semibold text-green-900">
+                <h3 className="font-semibold text-purple-900">
                   {formData.tripName || "Your Event Name"}
                 </h3>
-                <p className="text-green-600 text-sm">
+                <p className="text-purple-600 text-sm">
                   {formData.location || "Location"}
                   {formData.startDate && formData.endDate && (
                     <>
@@ -695,7 +695,7 @@ ${formData.description}`;
                   )}
                 </p>
                 {formData.description && (
-                  <p className="text-green-700 text-sm mt-1 line-clamp-2">
+                  <p className="text-purple-700 text-sm mt-1 line-clamp-2">
                     {formData.description}
                   </p>
                 )}
