@@ -354,7 +354,7 @@ export default function MyTrips() {
         <div className="mt-4 sm:mt-0">
           <Button
             onClick={handleCreateNew}
-            className="bg-emerald-600 hover:bg-emerald-700"
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
           >
             <Plus className="h-4 w-4 mr-2" />
             Create New Event
