@@ -92,13 +92,6 @@ export default function Index() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Auto-rotate themes
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTheme((prev) => (prev + 1) % themes.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [themes.length]);
 
   const handleGoToApp = () => {
     navigate("/app");
