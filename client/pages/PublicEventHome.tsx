@@ -2372,7 +2372,7 @@ export default function PublicEventHome({
             </div>
 
             {/* Theme-specific player cards */}
-            {currentTheme === "Masters" ? (
+            {currentTheme === "Masters" || currentTheme === "TrackTrack" ? (
               <components.PlayerCard players={players} />
             ) : (
               /* Other themes - original layout */
