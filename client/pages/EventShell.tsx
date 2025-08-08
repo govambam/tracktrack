@@ -406,10 +406,14 @@ export default function EventShell() {
                         ? "bg-amber-50 text-amber-600 font-serif"
                         : currentTheme === "TourTech"
                           ? "bg-orange-50 text-orange-600"
-                          : "bg-blue-50 text-blue-600"
+                          : currentTheme === "TrackTrack"
+                            ? "bg-purple-50 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold"
+                            : "bg-blue-50 text-blue-600"
                       : currentTheme === "Masters"
                         ? "text-green-800 hover:bg-green-50 font-serif"
-                        : "text-slate-600 hover:bg-slate-50"
+                        : currentTheme === "TrackTrack"
+                          ? "text-slate-600 hover:bg-purple-50"
+                          : "text-slate-600 hover:bg-slate-50"
                   }`}
                 >
                   <Home className="h-5 w-5" />
@@ -427,10 +431,14 @@ export default function EventShell() {
                         ? "bg-amber-50 text-amber-600 font-serif"
                         : currentTheme === "TourTech"
                           ? "bg-orange-50 text-orange-600"
-                          : "bg-blue-50 text-blue-600"
+                          : currentTheme === "TrackTrack"
+                            ? "bg-purple-50 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold"
+                            : "bg-blue-50 text-blue-600"
                       : currentTheme === "Masters"
                         ? "text-green-800 hover:bg-green-50 font-serif"
-                        : "text-slate-600 hover:bg-slate-50"
+                        : currentTheme === "TrackTrack"
+                          ? "text-slate-600 hover:bg-purple-50"
+                          : "text-slate-600 hover:bg-slate-50"
                   }`}
                 >
                   <BarChart3 className="h-5 w-5" />
@@ -451,10 +459,14 @@ export default function EventShell() {
                           ? "bg-amber-50 text-amber-600 font-serif"
                           : currentTheme === "TourTech"
                             ? "bg-orange-50 text-orange-600"
-                            : "bg-blue-50 text-blue-600"
+                            : currentTheme === "TrackTrack"
+                              ? "bg-purple-50 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold"
+                              : "bg-blue-50 text-blue-600"
                         : currentTheme === "Masters"
                           ? "text-green-800 hover:bg-green-50 font-serif"
-                          : "text-slate-600 hover:bg-slate-50"
+                          : currentTheme === "TrackTrack"
+                            ? "text-slate-600 hover:bg-purple-50"
+                            : "text-slate-600 hover:bg-slate-50"
                   }`}
                 >
                   <Users className="h-5 w-5" />
