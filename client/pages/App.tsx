@@ -113,10 +113,10 @@ export default function AppShell() {
                     key={item.path}
                     to={item.path}
                     className={cn(
-                      "flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors relative group",
+                      "flex items-center px-3 py-2 text-sm font-medium transition-colors relative group",
                       isActive
-                        ? "text-white bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg"
-                        : "text-gray-700 hover:text-purple-600 hover:bg-purple-50",
+                        ? "text-purple-900 font-semibold"
+                        : "text-gray-700 hover:text-purple-600",
                     )}
                   >
                     <Icon className="h-4 w-4 mr-2" />
