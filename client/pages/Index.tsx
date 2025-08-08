@@ -320,36 +320,32 @@ export default function Index() {
                   />
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Theme Selector Section */}
-      <section className="py-12 bg-white/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              Your Trip, Your Style
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Switch themes instantly to match your vibe
-            </p>
+              {/* Theme Selector directly below image */}
+              <div className="text-center mt-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  Your Trip, Your Style
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  Switch themes instantly to match your vibe
+                </p>
 
-            {/* Theme Selector Circles */}
-            <div className="flex justify-center gap-4">
-              {heroThemes.map((theme, index) => (
-                <button
-                  key={theme.name}
-                  onClick={() => setSelectedTheme(index)}
-                  className={`w-12 h-12 rounded-full bg-gradient-to-br ${theme.gradient} shadow-lg transition-all duration-300 border-2 ${
-                    selectedTheme === index
-                      ? "border-gray-800 scale-110"
-                      : "border-gray-300 hover:border-gray-500 hover:scale-105"
-                  }`}
-                  title={`Switch to ${theme.name} theme`}
-                />
-              ))}
+                {/* Theme Selector Circles */}
+                <div className="flex justify-center gap-4">
+                  {heroThemes.map((theme, index) => (
+                    <button
+                      key={theme.name}
+                      onClick={() => setSelectedTheme(index)}
+                      className={`w-12 h-12 rounded-full bg-gradient-to-br ${theme.gradient} shadow-lg transition-all duration-300 border-2 ${
+                        selectedTheme === index
+                          ? "border-gray-800 scale-110"
+                          : "border-gray-300 hover:border-gray-500 hover:scale-105"
+                      }`}
+                      title={`Switch to ${theme.name} theme`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
