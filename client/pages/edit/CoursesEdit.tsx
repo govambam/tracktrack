@@ -342,10 +342,10 @@ export default function CoursesEdit() {
 
         <CardContent className="space-y-6">
           {rounds.map((round, index) => (
-            <Card key={round.id} className="border-green-100 bg-green-50">
+            <Card key={round.id} className="border-purple-100 bg-purple-50">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-base text-green-900">
+                  <CardTitle className="text-base text-purple-900">
                     Round {index + 1}
                   </CardTitle>
                   {rounds.length > 1 && (
