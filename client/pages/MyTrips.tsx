@@ -428,14 +428,14 @@ export default function MyTrips() {
       </div>
 
       {/* Events Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {events.map((event) => {
           const status = getStatusFromDates(event.start_date, event.end_date);
 
           return (
             <Card
               key={event.id}
-              className="border-0 bg-white/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              className="bg-white border border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all duration-200 hover:-translate-y-1"
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
