@@ -353,7 +353,8 @@ export default function Index() {
               Beautiful Themes for Every Golf Trip
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Professional designs that make your golf trips look amazing and work perfectly on all devices.
+              Professional designs that make your golf trips look amazing and
+              work perfectly on all devices.
             </p>
           </div>
 
