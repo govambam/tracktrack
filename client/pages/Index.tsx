@@ -280,57 +280,15 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Right Content - Theme Showcase */}
+            {/* Right Content - Hero Image */}
             <div className="relative lg:mt-0 mt-12">
-              {/* Embla Carousel */}
-              <div className="overflow-hidden" ref={emblaRef}>
-                <div className="flex">
-                  {themes.map((theme, index) => (
-                    <div key={index} className="flex-[0_0_100%] min-w-0">
-                      <div className="px-2">
-                        {/* Desktop & Mobile Showcase */}
-                        <div className="relative max-w-5xl mx-auto">
-                          <div className="flex items-start justify-center">
-                            {/* Desktop Preview */}
-                            <div className="relative z-10 mt-8 lg:mt-12">
-                              <img
-                                src={theme.desktopImage}
-                                alt={`${theme.name} desktop theme preview`}
-                                className="w-full max-w-lg lg:max-w-2xl h-auto"
-                                style={{ backgroundColor: "transparent" }}
-                              />
-                            </div>
-
-                            {/* Mobile Preview - More Overlapping */}
-                            <div className="relative z-20 -ml-16 sm:-ml-24 lg:-ml-32">
-                              <img
-                                src={theme.mobileImage}
-                                alt={`${theme.name} mobile theme preview`}
-                                className="w-full max-w-32 sm:max-w-40 lg:max-w-52 h-auto"
-                                style={{ backgroundColor: "transparent" }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Theme Navigation Dots */}
-              <div className="flex justify-center mt-8 space-x-3">
-                {themes.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => scrollTo(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === selectedIndex
-                        ? "bg-emerald-600 scale-110"
-                        : "bg-gray-300 hover:bg-gray-400"
-                    }`}
-                  />
-                ))}
+              <div className="max-w-5xl mx-auto px-2">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2F5587e23e9c5e4f269b78d1aa8eaa045f?format=webp&width=800"
+                  alt="TrackTrack golf trip website showcase"
+                  className="w-full h-auto drop-shadow-2xl"
+                  style={{ backgroundColor: "transparent" }}
+                />
               </div>
             </div>
           </div>
