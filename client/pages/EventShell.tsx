@@ -4,7 +4,15 @@ import { supabase } from "@/lib/supabase";
 import { useEventTheme } from "@/hooks/useEventTheme";
 import { Button } from "@/components/ui/button";
 import { ClubhousePasswordModal } from "@/components/ClubhousePasswordModal";
-import { Loader2, AlertCircle, Home, BarChart3, Users, Menu, X } from "lucide-react";
+import {
+  Loader2,
+  AlertCircle,
+  Home,
+  BarChart3,
+  Users,
+  Menu,
+  X,
+} from "lucide-react";
 
 interface EventData {
   id: string;
