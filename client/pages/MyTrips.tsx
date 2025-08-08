@@ -550,17 +550,17 @@ export default function MyTrips() {
       {/* Empty State */}
       {events.length === 0 && (
         <div className="text-center py-12">
-          <Calendar className="mx-auto h-12 w-12 text-green-400 mb-4" />
-          <h3 className="text-xl font-medium text-green-900 mb-2">
+          <Calendar className="mx-auto h-12 w-12 text-purple-400 mb-4" />
+          <h3 className="text-xl font-medium text-purple-900 mb-2">
             No events yet
           </h3>
-          <p className="text-green-600 mb-6">
+          <p className="text-purple-600 mb-6">
             Create your first golf event or wait for an invitation from other
             organizers
           </p>
           <Button
             onClick={handleCreateNew}
-            className="bg-emerald-600 hover:bg-emerald-700"
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
           >
             <Plus className="h-4 w-4 mr-2" />
             Create Your First Event
