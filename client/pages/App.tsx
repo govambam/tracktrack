@@ -115,7 +115,7 @@ export default function AppShell() {
                     className={cn(
                       "flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors relative group",
                       isActive
-                        ? "text-purple-600 bg-gradient-to-r from-purple-100 to-pink-100"
+                        ? "text-white bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg"
                         : "text-gray-700 hover:text-purple-600 hover:bg-purple-50",
                     )}
                   >
@@ -201,7 +201,7 @@ export default function AppShell() {
                       className={cn(
                         "flex items-center px-3 py-2 rounded-lg text-base font-medium transition-colors",
                         isActive
-                          ? "text-purple-600 bg-gradient-to-r from-purple-100 to-pink-100"
+                          ? "text-white bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg"
                           : "text-gray-700 hover:text-purple-600 hover:bg-purple-50",
                       )}
                     >
