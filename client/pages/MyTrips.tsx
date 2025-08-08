@@ -334,7 +334,7 @@ export default function MyTrips() {
           </div>
         </div>
         <div className="flex justify-center py-12">
-          <div className="h-8 w-8 text-green-600 animate-spin border-4 border-green-600 border-t-transparent rounded-full" />
+          <div className="h-8 w-8 text-purple-600 animate-spin border-4 border-purple-600 border-t-transparent rounded-full" />
         </div>
       </div>
     );
