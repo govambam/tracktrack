@@ -47,9 +47,11 @@ export const TrackTrackHero: React.FC<TrackTrackHeroProps> = ({
           {/* Title & Description */}
           <div className="space-y-6">
             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.9] text-gray-900 tracking-tight">
-              <span className="block">{eventData.name.split(' ').slice(0, -1).join(' ')}</span>
+              <span className="block">
+                {eventData.name.split(" ").slice(0, -1).join(" ")}
+              </span>
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                {eventData.name.split(' ').slice(-1)[0]}
+                {eventData.name.split(" ").slice(-1)[0]}
               </span>
             </h1>
             {eventData.description && (
@@ -80,16 +82,28 @@ export const TrackTrackHero: React.FC<TrackTrackHeroProps> = ({
           {/* Trip Details Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-purple-100 hover:shadow-lg transition-all duration-300">
-              <div className="text-sm font-medium text-purple-600 mb-1">Location</div>
-              <div className="text-lg font-semibold text-gray-900">{eventData.location}</div>
+              <div className="text-sm font-medium text-purple-600 mb-1">
+                Location
+              </div>
+              <div className="text-lg font-semibold text-gray-900">
+                {eventData.location}
+              </div>
             </div>
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-purple-100 hover:shadow-lg transition-all duration-300">
-              <div className="text-sm font-medium text-purple-600 mb-1">Players</div>
-              <div className="text-lg font-semibold text-gray-900">{players.length} Golfers</div>
+              <div className="text-sm font-medium text-purple-600 mb-1">
+                Players
+              </div>
+              <div className="text-lg font-semibold text-gray-900">
+                {players.length} Golfers
+              </div>
             </div>
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-purple-100 hover:shadow-lg transition-all duration-300">
-              <div className="text-sm font-medium text-purple-600 mb-1">Format</div>
-              <div className="text-lg font-semibold text-gray-900">{getScoringFormat()}</div>
+              <div className="text-sm font-medium text-purple-600 mb-1">
+                Format
+              </div>
+              <div className="text-lg font-semibold text-gray-900">
+                {getScoringFormat()}
+              </div>
             </div>
           </div>
 

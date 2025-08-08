@@ -34,10 +34,10 @@ export const TrackTrackPrizeCard: React.FC<TrackTrackPrizeCardProps> = ({
   const getPrizeColors = (index: number) => {
     const colors = [
       "from-yellow-400 to-orange-500", // Gold
-      "from-gray-400 to-gray-600",     // Silver
-      "from-orange-400 to-red-500",    // Bronze
-      "from-purple-400 to-pink-500",   // Purple
-      "from-blue-400 to-cyan-500",     // Blue
+      "from-gray-400 to-gray-600", // Silver
+      "from-orange-400 to-red-500", // Bronze
+      "from-purple-400 to-pink-500", // Purple
+      "from-blue-400 to-cyan-500", // Blue
       "from-green-400 to-emerald-500", // Green
     ];
     return colors[index % colors.length];
@@ -49,7 +49,9 @@ export const TrackTrackPrizeCard: React.FC<TrackTrackPrizeCardProps> = ({
   return (
     <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-purple-100 hover:shadow-lg hover:shadow-purple-100/50 transition-all duration-300 hover:-translate-y-1 group">
       {/* Prize Icon */}
-      <div className={`w-16 h-16 bg-gradient-to-br ${gradientColors} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+      <div
+        className={`w-16 h-16 bg-gradient-to-br ${gradientColors} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+      >
         <Icon className="w-8 h-8 text-white" />
       </div>
 
@@ -59,9 +61,7 @@ export const TrackTrackPrizeCard: React.FC<TrackTrackPrizeCardProps> = ({
       </h3>
 
       {/* Prize Description */}
-      <p className="text-gray-600 leading-relaxed mb-6">
-        {prize.description}
-      </p>
+      <p className="text-gray-600 leading-relaxed mb-6">{prize.description}</p>
 
       {/* Prize Amount */}
       {prize.amount && (

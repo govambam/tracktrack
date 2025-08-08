@@ -28,7 +28,9 @@ export const TrackTrackPlayerCard: React.FC<TrackTrackPlayerCardProps> = ({
   };
 
   return (
-    <div className={`relative bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-purple-100 hover:shadow-lg hover:shadow-purple-100/50 transition-all duration-300 hover:-translate-y-1 ${getPositionStyle(position)}`}>
+    <div
+      className={`relative bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-purple-100 hover:shadow-lg hover:shadow-purple-100/50 transition-all duration-300 hover:-translate-y-1 ${getPositionStyle(position)}`}
+    >
       {/* Position Badge */}
       {showPosition && position && (
         <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold rounded-full flex items-center justify-center shadow-lg">
@@ -56,7 +58,7 @@ export const TrackTrackPlayerCard: React.FC<TrackTrackPlayerCardProps> = ({
               </span>
             </div>
           )}
-          
+
           {/* Trophy icon for winner */}
           {position === 1 && (
             <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center">
@@ -67,12 +69,16 @@ export const TrackTrackPlayerCard: React.FC<TrackTrackPlayerCardProps> = ({
 
         {/* Player Info */}
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900">{player.full_name}</h3>
+          <h3 className="text-lg font-semibold text-gray-900">
+            {player.full_name}
+          </h3>
           <div className="flex items-center space-x-4 mt-1">
             {player.handicap !== undefined && (
               <div className="flex items-center text-purple-600">
                 <Target className="w-4 h-4 mr-1" />
-                <span className="text-sm font-medium">HCP {player.handicap}</span>
+                <span className="text-sm font-medium">
+                  HCP {player.handicap}
+                </span>
               </div>
             )}
             {player.team && (

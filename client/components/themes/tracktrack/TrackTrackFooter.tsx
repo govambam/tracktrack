@@ -26,9 +26,7 @@ export const TrackTrackFooter: React.FC<TrackTrackFooterProps> = ({
           <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {eventData.name}
           </h3>
-          <p className="text-xl text-purple-200 mb-8">
-            {eventData.location}
-          </p>
+          <p className="text-xl text-purple-200 mb-8">{eventData.location}</p>
 
           {/* Divider */}
           <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto mb-8 rounded-full"></div>

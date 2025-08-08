@@ -36,16 +36,20 @@ export const TrackTrackContestRules: React.FC<TrackTrackContestRulesProps> = ({
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 backdrop-blur-sm mb-6">
             <BookOpen className="h-5 w-5 text-blue-600 mr-2" />
-            <span className="text-blue-700 font-medium text-sm">Contest Rules</span>
+            <span className="text-blue-700 font-medium text-sm">
+              Contest Rules
+            </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            How to <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Win</span>
+            How to{" "}
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Win
+            </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            {isStableford 
+            {isStableford
               ? "Points-based scoring system where consistency and good play are rewarded"
-              : "Traditional stroke play format where the lowest total score wins"
-            }
+              : "Traditional stroke play format where the lowest total score wins"}
           </p>
         </div>
 
@@ -56,34 +60,50 @@ export const TrackTrackContestRules: React.FC<TrackTrackContestRulesProps> = ({
               <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mr-4">
                 <Trophy className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900">Scoring Format</h3>
+              <h3 className="text-2xl font-bold text-gray-900">
+                Scoring Format
+              </h3>
             </div>
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
               <strong>{scoringFormat}</strong>
             </p>
-            
+
             {isStableford ? (
               <div className="text-gray-600">
                 <p className="mb-4">
-                  In Stableford scoring, you earn points based on your performance relative to par on each hole. 
-                  Higher scores are better! Focus on consistent play rather than perfect shots.
+                  In Stableford scoring, you earn points based on your
+                  performance relative to par on each hole. Higher scores are
+                  better! Focus on consistent play rather than perfect shots.
                 </p>
                 <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
-                  <h4 className="font-semibold text-purple-900 mb-2">Point System:</h4>
+                  <h4 className="font-semibold text-purple-900 mb-2">
+                    Point System:
+                  </h4>
                   <div className="text-sm space-y-1">
-                    <div>• <strong>Eagle (2 under par):</strong> 4 points</div>
-                    <div>• <strong>Birdie (1 under par):</strong> 3 points</div>
-                    <div>• <strong>Par:</strong> 2 points</div>
-                    <div>• <strong>Bogey (1 over par):</strong> 1 point</div>
-                    <div>• <strong>Double Bogey or worse:</strong> 0 points</div>
+                    <div>
+                      • <strong>Eagle (2 under par):</strong> 4 points
+                    </div>
+                    <div>
+                      • <strong>Birdie (1 under par):</strong> 3 points
+                    </div>
+                    <div>
+                      • <strong>Par:</strong> 2 points
+                    </div>
+                    <div>
+                      • <strong>Bogey (1 over par):</strong> 1 point
+                    </div>
+                    <div>
+                      • <strong>Double Bogey or worse:</strong> 0 points
+                    </div>
                   </div>
                 </div>
               </div>
             ) : (
               <div className="text-gray-600">
                 <p>
-                  Traditional stroke play where every shot counts. The player with the lowest total score 
-                  across all rounds wins. Focus on minimizing your total strokes throughout the tournament.
+                  Traditional stroke play where every shot counts. The player
+                  with the lowest total score across all rounds wins. Focus on
+                  minimizing your total strokes throughout the tournament.
                 </p>
               </div>
             )}
@@ -97,7 +117,9 @@ export const TrackTrackContestRules: React.FC<TrackTrackContestRulesProps> = ({
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mr-4">
                 <Target className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900">General Rules</h3>
+              <h3 className="text-2xl font-bold text-gray-900">
+                General Rules
+              </h3>
             </div>
             <ul className="space-y-3 text-gray-700">
               <li className="flex items-start">
@@ -124,7 +146,9 @@ export const TrackTrackContestRules: React.FC<TrackTrackContestRulesProps> = ({
               <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mr-4">
                 <Users className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900">Sportsmanship</h3>
+              <h3 className="text-2xl font-bold text-gray-900">
+                Sportsmanship
+              </h3>
             </div>
             <ul className="space-y-3 text-gray-700">
               <li className="flex items-start">

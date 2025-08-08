@@ -32,7 +32,10 @@ export const TrackTrackTravelCard: React.FC<TrackTrackTravelCardProps> = ({
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Trip <span className="bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">Details</span>
+            Trip{" "}
+            <span className="bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
+              Details
+            </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Everything you need to know for an amazing golf adventure
@@ -47,7 +50,9 @@ export const TrackTrackTravelCard: React.FC<TrackTrackTravelCardProps> = ({
                 <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-pink-500 rounded-2xl flex items-center justify-center mr-4">
                   <Plane className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Flight Details</h3>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  Flight Details
+                </h3>
               </div>
               <div className="prose prose-gray max-w-none">
                 <div className="text-gray-700 leading-relaxed whitespace-pre-line">
@@ -64,7 +69,9 @@ export const TrackTrackTravelCard: React.FC<TrackTrackTravelCardProps> = ({
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mr-4">
                   <Hotel className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Accommodations</h3>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  Accommodations
+                </h3>
               </div>
               <div className="prose prose-gray max-w-none">
                 <div className="text-gray-700 leading-relaxed whitespace-pre-line">
@@ -82,7 +89,9 @@ export const TrackTrackTravelCard: React.FC<TrackTrackTravelCardProps> = ({
                   <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mr-4">
                     <Calendar className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">Daily Schedule</h3>
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    Daily Schedule
+                  </h3>
                 </div>
                 <div className="prose prose-gray max-w-none">
                   <div className="text-gray-700 leading-relaxed whitespace-pre-line">
@@ -99,7 +108,9 @@ export const TrackTrackTravelCard: React.FC<TrackTrackTravelCardProps> = ({
           <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-gray-200 max-w-2xl mx-auto">
             <div className="flex items-center justify-center mb-4">
               <MapPin className="w-6 h-6 text-purple-600 mr-2" />
-              <h4 className="text-xl font-semibold text-gray-900">{eventData.location}</h4>
+              <h4 className="text-xl font-semibold text-gray-900">
+                {eventData.location}
+              </h4>
             </div>
             <p className="text-lg text-gray-600">
               {formatDateRange(eventData.start_date, eventData.end_date)}
