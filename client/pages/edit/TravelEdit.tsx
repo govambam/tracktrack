@@ -276,32 +276,32 @@ ${currentContent}`;
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <Card className="border-green-100">
+      <Card className="border-purple-100">
         <CardHeader>
-          <CardTitle className="text-lg text-green-900 flex items-center">
-            <Plane className="h-5 w-5 mr-2 text-emerald-600" />
+          <CardTitle className="text-lg text-purple-900 flex items-center">
+            <Plane className="h-5 w-5 mr-2 text-purple-600" />
             Travel Information
           </CardTitle>
-          <CardDescription className="text-green-600">
+          <CardDescription className="text-purple-600">
             Add logistics and travel details for your golf event
           </CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-6">
           {/* Flight Information */}
-          <Card className="border-green-100 bg-green-50">
+          <Card className="border-purple-100 bg-purple-50/30">
             <CardContent className="p-4">
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
-                  <Plane className="h-4 w-4 text-emerald-600" />
-                  <Label className="text-green-800 font-medium">
+                  <Plane className="h-4 w-4 text-purple-600" />
+                  <Label className="text-purple-900 font-medium">
                     Flight Information
                   </Label>
                 </div>
