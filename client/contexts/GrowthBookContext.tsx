@@ -125,10 +125,13 @@ const createGrowthBookInstance = () => {
     trackingCallback: (experiment, result) => {
       console.log("GrowthBook Experiment:", experiment.key, result);
     },
-    // Add some additional options for better error handling
-    subscribeToChanges: false, // Disable real-time updates for now
+    // Add additional options for better error handling
+    subscribeToChanges: false, // Disable real-time updates
+    backgroundSync: false, // Disable background syncing
     // Set local features as fallback
     features: localFeatures,
+    // Add timeout for network requests
+    streamingHost: undefined, // Disable streaming
   });
 
   return gb;
