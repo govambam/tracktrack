@@ -355,29 +355,57 @@ export default function Index() {
         </div>
       </section>
 
-      {/* My Events Section */}
-      <section className="py-20 bg-white/50 backdrop-blur-sm">
+      {/* Leaderboard Carousel Section */}
+      <section className="py-20 bg-gradient-to-br from-purple-50/50 to-pink-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 text-sm font-medium mb-6">
-              <Calendar className="w-4 h-4 mr-2" />
-              Trip Management
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 text-sm font-medium mb-6">
+              <Trophy className="w-4 h-4 mr-2" />
+              Competition & Scoring
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Manage all your golf adventures in one place
+              Competition that brings out your best
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Keep track of past trips, current events, and future adventures.
-              Every trip gets its own beautiful website that your friends will
-              love.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+              Multiple scoring formats and real-time updates keep everyone
+              engaged and the competition fierce.
             </p>
           </div>
+
           <div className="w-full">
-            <img
-              src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/app_my_events.png"
-              alt="My Events dashboard showing multiple golf trips"
-              className="w-full h-auto rounded-2xl shadow-2xl"
-            />
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              {leaderboardSlides.map((slide, index) => (
+                <div
+                  key={index}
+                  className={`transition-all duration-500 ${
+                    index === currentLeaderboardSlide
+                      ? "opacity-100"
+                      : "opacity-0 absolute inset-0"
+                  }`}
+                >
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="w-full h-auto"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Carousel indicators */}
+            <div className="flex justify-center space-x-2 mt-6">
+              {leaderboardSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentLeaderboardSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all ${
+                    index === currentLeaderboardSlide
+                      ? "bg-purple-600 scale-110"
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
