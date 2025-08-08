@@ -121,6 +121,9 @@ export default function AppShell() {
                   >
                     <Icon className="h-4 w-4 mr-2" />
                     {item.label}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+                    )}
                   </Link>
                 );
               })}
