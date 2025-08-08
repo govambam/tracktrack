@@ -1380,8 +1380,6 @@ export default function PublicEventHome({
       // Log any errors for debugging
       if (playersResult.error)
         console.log("Players error:", playersResult.error);
-      if (coursesResult.error)
-        console.log("Courses error:", coursesResult.error);
       if (roundsResult.error) console.log("Rounds error:", roundsResult.error);
       if (prizesResult.error) console.log("Prizes error:", prizesResult.error);
       if (travelResult.error) console.log("Travel error:", travelResult.error);
@@ -2193,7 +2191,7 @@ export default function PublicEventHome({
                       <ul
                         className={`${currentTheme === "TourTech" ? "text-xs text-slate-600 space-y-0.5" : currentTheme === "Masters" ? "text-sm text-green-800 space-y-1 font-serif" : "text-sm text-emerald-700 space-y-1"}`}
                       >
-                        <li>• Encourages aggressive, exciting play</li>
+                        <li>��� Encourages aggressive, exciting play</li>
                         <li>
                           • Keeps all players engaged throughout the round
                         </li>
