@@ -16,7 +16,6 @@ import {
   Plus,
   Edit,
   ExternalLink,
-  Globe,
   Eye,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -314,9 +313,9 @@ export default function MyTrips() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "upcoming":
-        return "bg-purple-50 text-purple-700 border-purple-200 font-medium";
+        return "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 border-purple-200 font-medium";
       case "active":
-        return "bg-blue-50 text-blue-700 border-blue-200 font-medium";
+        return "bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700 border-blue-200 font-medium";
       case "completed":
         return "bg-gray-50 text-gray-600 border-gray-200 font-medium";
       default:
@@ -330,7 +329,7 @@ export default function MyTrips() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-purple-900">My Events</h1>
-            <p className="text-purple-600 mt-1">Loading your golf events...</p>
+            <p className="text-purple-900 mt-1">Loading your golf events...</p>
           </div>
         </div>
         <div className="flex justify-center py-12">
@@ -345,15 +344,8 @@ export default function MyTrips() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-<<<<<<< HEAD
           <h1 className="text-3xl font-bold text-purple-900">My Events</h1>
-          <p className="text-purple-600 mt-1">
-=======
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            My Events
-          </h1>
-          <p className="text-gray-600 mt-1">
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
+          <p className="text-purple-900 mt-1">
             Manage your events and participate in tournaments you've been
             invited to
           </p>
@@ -361,11 +353,7 @@ export default function MyTrips() {
         <div className="mt-4 sm:mt-0">
           <Button
             onClick={handleCreateNew}
-<<<<<<< HEAD
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-=======
             className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-full shadow-lg hover:shadow-xl transition-all"
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
           >
             <Plus className="h-4 w-4 mr-2" />
             Create New Event
@@ -374,56 +362,32 @@ export default function MyTrips() {
       </div>
 
       {/* Stats */}
-<<<<<<< HEAD
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="border-purple-100">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-purple-700">
-=======
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card className="bg-white border border-gray-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
+            <CardTitle className="text-sm font-medium text-purple-900">
               Total Events
             </CardTitle>
           </CardHeader>
           <CardContent>
-<<<<<<< HEAD
             <div className="text-2xl font-bold text-purple-900">
               {events.length}
             </div>
-            <p className="text-xs text-purple-600">
-=======
-            <div className="text-2xl font-bold text-gray-900 mb-1">
-              {events.length}
-            </div>
-            <p className="text-xs text-gray-500">
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
+            <p className="text-xs text-purple-900">
               {events.filter((e) => e.user_role === "owner").length} owned,{" "}
               {events.filter((e) => e.user_role !== "owner").length} invited
             </p>
           </CardContent>
         </Card>
 
-<<<<<<< HEAD
         <Card className="border-purple-100">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-purple-700">
-=======
-        <Card className="bg-white border border-gray-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
+            <CardTitle className="text-sm font-medium text-purple-900">
               Upcoming Events
             </CardTitle>
           </CardHeader>
           <CardContent>
-<<<<<<< HEAD
             <div className="text-2xl font-bold text-purple-900">
-=======
-            <div className="text-2xl font-bold text-gray-900 mb-1">
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
               {
                 events.filter(
                   (event) =>
@@ -432,32 +396,18 @@ export default function MyTrips() {
                 ).length
               }
             </div>
-<<<<<<< HEAD
-            <p className="text-xs text-purple-600">Events planned</p>
+            <p className="text-xs text-purple-900">Events planned</p>
           </CardContent>
         </Card>
 
         <Card className="border-purple-100">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-purple-700">
-=======
-            <p className="text-xs text-gray-500">Events planned</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white border border-gray-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
+            <CardTitle className="text-sm font-medium text-purple-900">
               This Month
             </CardTitle>
           </CardHeader>
           <CardContent>
-<<<<<<< HEAD
             <div className="text-2xl font-bold text-purple-900">
-=======
-            <div className="text-2xl font-bold text-gray-900 mb-1">
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
               {
                 events.filter((event) => {
                   const start = new Date(event.start_date);
@@ -469,123 +419,69 @@ export default function MyTrips() {
                 }).length
               }
             </div>
-<<<<<<< HEAD
-            <p className="text-xs text-purple-600">Events this month</p>
-=======
-            <p className="text-xs text-gray-500">Events this month</p>
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
+            <p className="text-xs text-purple-900">Events this month</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Events Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {events.map((event) => {
           const status = getStatusFromDates(event.start_date, event.end_date);
 
           return (
             <Card
               key={event.id}
-<<<<<<< HEAD
               className="border-purple-100 hover:shadow-lg transition-shadow"
-=======
-              className="bg-white border border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all duration-200 hover:-translate-y-1"
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
             >
-              <CardHeader className="pb-4">
-                <div className="flex items-start justify-between mb-3">
+              <CardHeader>
+                <div className="flex items-start justify-between">
                   <div className="flex-1">
-<<<<<<< HEAD
                     <div className="flex items-center gap-2 mb-1">
                       <CardTitle className="text-xl text-purple-900">
-=======
-                    <div className="flex items-center gap-3 mb-2">
-                      <CardTitle className="text-lg font-semibold text-gray-900 leading-tight">
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
                         {event.name}
                       </CardTitle>
                       {event.user_role === "admin" ? (
                         <Badge
                           variant="outline"
-                          className="text-xs font-medium bg-blue-50 text-blue-700 border-blue-200 px-2 py-1"
+                          className="text-xs bg-blue-50 text-blue-700 border-blue-200"
                         >
                           Admin
                         </Badge>
                       ) : event.user_role === "player" ? (
                         <Badge
                           variant="outline"
-                          className="text-xs font-medium bg-gray-50 text-gray-700 border-gray-200 px-2 py-1"
+                          className="text-xs bg-gray-50 text-gray-700 border-gray-200"
                         >
                           Player
                         </Badge>
                       ) : null}
                     </div>
-<<<<<<< HEAD
-                    <CardDescription className="text-purple-600 line-clamp-2">
-=======
-                    <CardDescription className="text-gray-600 line-clamp-2 text-sm leading-relaxed">
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
+                    <CardDescription className="text-purple-900 line-clamp-2">
                       {event.description || "Golf event"}
                     </CardDescription>
                   </div>
-                  <Badge
-                    className={getStatusColor(status)}
-                    style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem" }}
-                  >
-                    {status}
-                  </Badge>
-                </div>
-
-                {/* Consolidated Info Bar */}
-                <div className="flex items-center gap-6 text-sm text-gray-600 bg-gray-50 rounded-lg px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-purple-600" />
-                    <span>
-                      {formatDateRange(event.start_date, event.end_date)}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-purple-600" />
-                    <span className="truncate">{event.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Eye className="h-4 w-4 text-purple-600" />
-                    <span>{event.is_private ? "Private" : "Public"}</span>
-                  </div>
+                  <Badge className={getStatusColor(status)}>{status}</Badge>
                 </div>
               </CardHeader>
 
-<<<<<<< HEAD
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center text-purple-700">
+                  <div className="flex items-center text-purple-900">
                     <Calendar className="h-4 w-4 mr-2 text-purple-600" />
                     {formatDateRange(event.start_date, event.end_date)}
                   </div>
-                  <div className="flex items-center text-purple-700">
+                  <div className="flex items-center text-purple-900">
                     <MapPin className="h-4 w-4 mr-2 text-purple-600" />
                     {event.location}
                   </div>
-                  <div className="flex items-center text-purple-700">
+                  <div className="flex items-center text-purple-900">
                     <Eye className="h-4 w-4 mr-2 text-purple-600" />
                     {event.is_private ? "Private" : "Public"}
-                    {event.is_published && (
-                      <Globe
-                        className="h-3 w-3 ml-1 text-blue-600"
-                        title="Published"
-                      />
-                    )}
-                  </div>
-                  <div className="flex items-center text-purple-700 text-xs">
-                    Created: {new Date(event.created_at).toLocaleDateString()}
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2 pt-2">
-=======
-              <CardContent className="pt-0">
-                <div className="flex flex-wrap gap-2">
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
                   {/* View Site button - available for all published events */}
                   {event.is_published && event.slug ? (
                     <Button
@@ -594,9 +490,9 @@ export default function MyTrips() {
                       onClick={() =>
                         window.open(`/events/${event.slug}`, "_blank")
                       }
-                      className="border-gray-300 text-gray-700 hover:bg-gray-50 text-xs px-3 py-1.5 h-auto"
+                      className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-transparent"
                     >
-                      <ExternalLink className="h-3 w-3 mr-1.5" />
+                      <ExternalLink className="h-4 w-4 mr-1" />
                       View Site
                     </Button>
                   ) : null}
@@ -608,13 +504,9 @@ export default function MyTrips() {
                     onClick={() =>
                       navigate(`/events/${event.slug || event.id}/leaderboard`)
                     }
-<<<<<<< HEAD
-                    className="border-purple-200 text-purple-700 hover:bg-purple-50"
-=======
-                    className="border-purple-300 text-purple-700 hover:bg-purple-50 text-xs px-3 py-1.5 h-auto"
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
+                    className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-transparent"
                   >
-                    <Users className="h-3 w-3 mr-1.5" />
+                    <Users className="h-4 w-4 mr-1" />
                     Enter Scores
                   </Button>
 
@@ -625,13 +517,9 @@ export default function MyTrips() {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEditEvent(event)}
-<<<<<<< HEAD
-                      className="border-purple-200 text-purple-700 hover:bg-purple-50"
-=======
-                      className="border-purple-300 text-purple-700 hover:bg-purple-50 text-xs px-3 py-1.5 h-auto"
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
+                      className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-transparent"
                     >
-                      <Edit className="h-3 w-3 mr-1.5" />
+                      <Edit className="h-4 w-4 mr-1" />
                       Edit Details
                     </Button>
                   )}
@@ -644,13 +532,12 @@ export default function MyTrips() {
 
       {/* Empty State */}
       {events.length === 0 && (
-<<<<<<< HEAD
         <div className="text-center py-12">
           <Calendar className="mx-auto h-12 w-12 text-purple-400 mb-4" />
           <h3 className="text-xl font-medium text-purple-900 mb-2">
             No events yet
           </h3>
-          <p className="text-purple-600 mb-6">
+          <p className="text-purple-900 mb-6">
             Create your first golf event or wait for an invitation from other
             organizers
           </p>
@@ -661,26 +548,6 @@ export default function MyTrips() {
             <Plus className="h-4 w-4 mr-2" />
             Create Your First Event
           </Button>
-=======
-        <div className="text-center py-16">
-          <div className="bg-white border border-gray-200 rounded-2xl p-12 max-w-md mx-auto">
-            <Calendar className="mx-auto h-12 w-12 text-gray-400 mb-6" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              No events yet
-            </h3>
-            <p className="text-gray-600 mb-8 leading-relaxed">
-              Create your first golf event or wait for an invitation from other
-              organizers
-            </p>
-            <Button
-              onClick={handleCreateNew}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-6 py-2.5 text-sm font-medium"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Create Your First Event
-            </Button>
-          </div>
->>>>>>> 5fbee430f8723787a2896a2f78267d7d35a63e43
         </div>
       )}
 
