@@ -314,13 +314,13 @@ export default function MyTrips() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "upcoming":
-        return "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 border-purple-200";
+        return "bg-purple-50 text-purple-700 border-purple-200 font-medium";
       case "active":
-        return "bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 border-blue-200";
+        return "bg-blue-50 text-blue-700 border-blue-200 font-medium";
       case "completed":
-        return "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 border-gray-200";
+        return "bg-gray-50 text-gray-600 border-gray-200 font-medium";
       default:
-        return "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 border-gray-200";
+        return "bg-gray-50 text-gray-600 border-gray-200 font-medium";
     }
   };
 
