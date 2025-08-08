@@ -305,8 +305,8 @@ export default function Index() {
               )}
             </div>
 
-            {/* Your Trip, Your Style Video */}
-            <div className="relative max-w-4xl mx-auto">
+            {/* Your Trip, Your Style Theme Selector */}
+            <div className="relative max-w-7xl mx-auto">
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   Your Trip, Your Style
@@ -315,21 +315,31 @@ export default function Index() {
                   Switch themes instantly to match your vibe
                 </p>
               </div>
-              <div className="relative rounded-2xl overflow-hidden shadow-xl">
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-auto"
-                  poster="/api/placeholder/600/400"
-                >
-                  <source
-                    src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/trimmed.mov"
-                    type="video/mp4"
+              <div className="flex items-center justify-center gap-8">
+                {/* Theme Screenshot */}
+                <div className="relative rounded-2xl overflow-hidden shadow-xl flex-1 max-w-4xl">
+                  <img
+                    src={heroThemes[selectedTheme].image}
+                    alt={`${heroThemes[selectedTheme].name} theme homepage`}
+                    className="w-full h-auto transition-all duration-300"
                   />
-                  Your browser does not support the video tag.
-                </video>
+                </div>
+
+                {/* Theme Selector Circles */}
+                <div className="flex flex-col gap-4 ml-6">
+                  {heroThemes.map((theme, index) => (
+                    <button
+                      key={theme.name}
+                      onClick={() => setSelectedTheme(index)}
+                      className={`w-12 h-12 rounded-full bg-gradient-to-br ${theme.gradient} shadow-lg transition-all duration-300 border-2 ${
+                        selectedTheme === index
+                          ? 'border-gray-800 scale-110'
+                          : 'border-gray-300 hover:border-gray-500 hover:scale-105'
+                      }`}
+                      title={`Switch to ${theme.name} theme`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
