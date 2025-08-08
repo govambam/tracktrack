@@ -257,8 +257,8 @@ export default function Index() {
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-4xl mx-auto">
               Bring friends together more often with AI-assisted planning,
-              beautiful custom sites, and seamless tools for unforgettable
-              golf trips.
+              beautiful custom sites, and seamless tools for unforgettable golf
+              trips.
             </p>
             <div className="flex flex-col items-center gap-4 mb-12">
               {isAuthenticated ? (
@@ -329,7 +329,8 @@ export default function Index() {
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Keep track of past trips, current events, and future adventures.
-              Every trip gets its own beautiful website that your friends will love.
+              Every trip gets its own beautiful website that your friends will
+              love.
             </p>
           </div>
           <div className="w-full">
