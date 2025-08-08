@@ -158,7 +158,7 @@ export default function PublicLeaderboard({
       {/* Overall Stableford Leaderboard */}
       <div>
         <div className="flex items-center space-x-2 mb-6">
-          <Target className="h-5 w-5 text-green-600" />
+          <Target className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
           <h3 className="text-2xl font-bold text-slate-900">
             Overall Stableford Leaderboard
           </h3>
@@ -496,7 +496,7 @@ export default function PublicLeaderboard({
               </div>
               {course?.location && (
                 <p className="text-slate-500 text-sm mb-2">
-                  ��� {course.location}
+                  📍 {course.location}
                 </p>
               )}
               <p className="text-slate-600 mb-6">
