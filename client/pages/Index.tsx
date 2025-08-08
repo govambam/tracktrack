@@ -35,7 +35,7 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentLeaderboardSlide, setCurrentLeaderboardSlide] = useState(0);
-  const [selectedTheme, setSelectedTheme] = useState(0);
+  const [selectedTheme, setSelectedTheme] = useState(3); // Default to TrackTrack theme
   const navigate = useNavigate();
 
   // Hero theme data
@@ -61,32 +61,32 @@ export default function Index() {
     {
       name: "TrackTrack",
       image:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/TrackTrack_home.png",
-      gradient: "from-purple-600 to-pink-600",
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/public_home.png",
+      gradient: "from-purple-600 via-pink-500 to-orange-400",
     },
   ];
 
   // Leaderboard carousel data
   const leaderboardSlides = [
     {
-      title: "Stableford Scoring",
+      title: "Stableford Leaderboard",
       description: "Points-based competition that keeps everyone in the game",
       image:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_stableford.png",
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/public_leader.png",
       color: "from-blue-500 to-purple-600",
     },
     {
       title: "Prize Money Tracking",
       description: "Real-time money distribution and skill contest winnings",
       image:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_money.png",
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/public_money.png",
       color: "from-green-500 to-emerald-600",
     },
     {
       title: "Digital Scorecards",
       description: "Track every shot with beautiful, easy-to-use scorecards",
       image:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_scorecard.png",
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/public_scorecard.png",
       color: "from-orange-500 to-red-600",
     },
   ];
@@ -442,7 +442,7 @@ export default function Index() {
           </div>
           <div className="w-full">
             <img
-              src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_clubhouse.png"
+              src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/public_clubhouse.png"
               alt="Private clubhouse showing group chat and score entry"
               className="w-full h-auto rounded-2xl shadow-2xl"
             />
