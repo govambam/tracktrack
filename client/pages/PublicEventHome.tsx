@@ -2722,29 +2722,35 @@ export default function PublicEventHome({
             {(closestToPinGroups.length > 0 || longestDriveGroups.length > 0) &&
               currentTheme !== "Masters" && (
                 <div
-                  className={`${currentTheme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : currentTheme === "Masters" ? "bg-green-50/20 rounded-lg p-8 sm:p-12 border border-green-800/20 mt-20" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}
+                  className={`${currentTheme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : currentTheme === "Masters" ? "bg-green-50/20 rounded-lg p-8 sm:p-12 border border-green-800/20 mt-20" : currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 border border-purple-200 shadow-lg mt-16" : "bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 mt-16"}`}
                 >
                   <div className="text-center mb-8">
                     <div
-                      className={`inline-flex items-center space-x-2 ${currentTheme === "TourTech" ? "bg-gray-200 rounded-md" : currentTheme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
+                      className={`inline-flex items-center space-x-2 ${currentTheme === "TourTech" ? "bg-gray-200 rounded-md" : currentTheme === "Masters" ? "bg-white border border-green-800/20 rounded-lg" : currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200 rounded-full" : "bg-slate-200 rounded-full"} px-4 py-2 mb-4`}
                     >
                       <Info
-                        className={`h-4 w-4 ${currentTheme === "Masters" ? "text-yellow-600" : "text-slate-600"}`}
+                        className={`h-4 w-4 ${currentTheme === "Masters" ? "text-yellow-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-slate-600"}`}
                       />
                       <span
-                        className={`text-sm font-medium ${currentTheme === "Masters" ? "text-green-800 font-serif tracking-wide" : "text-slate-700"}`}
+                        className={`text-sm font-medium ${currentTheme === "Masters" ? "text-green-800 font-serif tracking-wide" : currentTheme === "TrackTrack" ? "text-purple-800" : "text-slate-700"}`}
                       >
                         {currentTheme === "TourTech"
                           ? "CONTEST RULES"
                           : currentTheme === "Masters"
                             ? "Contest Rules"
-                            : "Official Guidelines"}
+                            : currentTheme === "TrackTrack"
+                              ? "Official Guidelines"
+                              : "Official Guidelines"}
                       </span>
                     </div>
                     <h3
-                      className={`${currentTheme === "TourTech" ? "text-xl font-semibold text-slate-900" : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
+                      className={`${currentTheme === "TourTech" ? "text-xl font-semibold text-slate-900" : currentTheme === "Masters" ? "font-serif font-semibold text-green-900 text-2xl" : currentTheme === "TrackTrack" ? "text-3xl font-bold text-gray-900" : "text-2xl sm:text-3xl font-bold text-slate-900"}`}
                     >
-                      Contest Rules
+                      {currentTheme === "TrackTrack" ? (
+                        <>Contest <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Rules</span></>
+                      ) : (
+                        "Contest Rules"
+                      )}
                     </h3>
                   </div>
 
