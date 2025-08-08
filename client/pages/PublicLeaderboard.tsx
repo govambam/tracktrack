@@ -752,7 +752,9 @@ export default function PublicLeaderboard({
               <div
                 className={`text-xl font-bold ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" : "text-slate-900"}`}
               >
-                {currentTheme === "TrackTrack" ? "TrackTrack" : "Tournament Leaderboard"}
+                {currentTheme === "TrackTrack"
+                  ? "TrackTrack"
+                  : "Tournament Leaderboard"}
               </div>
               <div className="hidden md:flex items-center space-x-8">
                 {navItems.map((item) => (
@@ -770,9 +772,10 @@ export default function PublicLeaderboard({
                     }`}
                   >
                     {item.name}
-                    {item.name === "Leaderboard" && currentTheme === "TrackTrack" && (
-                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
-                    )}
+                    {item.name === "Leaderboard" &&
+                      currentTheme === "TrackTrack" && (
+                        <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+                      )}
                   </a>
                 ))}
               </div>
