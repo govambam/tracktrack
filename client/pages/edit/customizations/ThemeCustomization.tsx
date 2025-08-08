@@ -212,7 +212,7 @@ export default function ThemeCustomization() {
             key={theme.id}
             className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
               selectedTheme === theme.id
-                ? "ring-2 ring-green-500 shadow-lg"
+                ? "ring-2 ring-purple-500 shadow-lg"
                 : "hover:shadow-md"
             }`}
             onClick={() => setSelectedTheme(theme.id)}
