@@ -177,11 +177,11 @@ export default function ScoringEdit() {
                   className={cn(
                     "flex-1 cursor-pointer",
                     scoringFormat === "stroke-play" &&
-                      "text-emerald-700 font-medium",
+                      "text-purple-700 font-medium",
                   )}
                 >
                   <div className="flex items-center">
-                    <Target className="h-4 w-4 mr-2 text-emerald-600" />
+                    <Target className="h-4 w-4 mr-2 text-purple-600" />
                     Stroke Play (Traditional)
                   </div>
                 </Label>
