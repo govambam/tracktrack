@@ -258,6 +258,14 @@ export default function EventShell() {
               : "bg-gradient-to-br from-blue-50 to-indigo-100"
       }`}
     >
+      {/* Background elements for TrackTrack theme */}
+      {currentTheme === "TrackTrack" && (
+        <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-32 left-20 w-24 h-24 bg-gradient-to-br from-orange-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 left-1/3 w-28 h-28 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-xl"></div>
+        </div>
+      )}
       {/* Persistent Top Navigation */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 ${
