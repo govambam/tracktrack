@@ -2480,34 +2480,36 @@ export default function PublicEventHome({
                 )}
             </div>
 
-            {/* Prize Cards - Fore the Boy Style Grid */}
+            {/* Prize Cards - Theme-specific layout */}
             {prizes.length > 0 && (
-              <div className="w-full">
-                <div
-                  className={`grid gap-4 ${
-                    currentTheme === "Masters"
-                      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto"
-                      : prizes.length === 1
+              currentTheme === "Masters" || currentTheme === "TrackTrack" ? (
+                <components.PrizeCard prizes={prizes} />
+              ) : (
+                <div className="w-full">
+                  <div
+                    className={`grid gap-4 ${
+                      prizes.length === 1
                         ? "grid-cols-1 max-w-sm"
                         : prizes.length === 2
                           ? "grid-cols-1 sm:grid-cols-2 max-w-2xl"
                           : prizes.length === 3
                             ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl"
                             : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl"
-                  } ${currentTheme !== "Masters" ? "mx-auto" : ""}`}
-                >
-                  {prizes.map((prize, index) => (
-                    <AnimatedPrizeCard
-                      key={prize.id}
-                      prize={prize}
-                      index={index}
-                      theme={theme}
-                      isTourTech={currentTheme === "TourTech"}
-                      isMasters={currentTheme === "Masters"}
-                    />
-                  ))}
+                    } mx-auto`}
+                  >
+                    {prizes.map((prize, index) => (
+                      <AnimatedPrizeCard
+                        key={prize.id}
+                        prize={prize}
+                        index={index}
+                        theme={theme}
+                        isTourTech={currentTheme === "TourTech"}
+                        isMasters={currentTheme === "Masters"}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )
             )}
 
             {/* Contest Rules - Clean 2-column layout directly below prizes for Masters theme */}
