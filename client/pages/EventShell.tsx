@@ -378,7 +378,9 @@ export default function EventShell() {
               className={`md:hidden p-2 rounded-md transition-colors ${
                 currentTheme === "Masters"
                   ? "text-green-800 hover:bg-green-50"
-                  : "text-slate-600 hover:bg-slate-100"
+                  : currentTheme === "TrackTrack"
+                    ? "text-purple-600 hover:bg-purple-50"
+                    : "text-slate-600 hover:bg-slate-100"
               }`}
             >
               {mobileMenuOpen ? (
