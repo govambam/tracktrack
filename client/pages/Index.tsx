@@ -241,81 +241,75 @@ export default function Index() {
           <div className="absolute bottom-40 left-1/4 w-40 h-40 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl"></div>
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="text-center lg:text-left">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 text-sm font-medium mb-6">
-                <Sparkles className="w-4 h-4 mr-2" />
-                Golf trips made effortless ✨
-              </div>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-                It all starts with a{" "}
-                <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                  suggestion
-                </span>
-                <span className="block text-3xl md:text-4xl lg:text-5xl mt-2 text-gray-600">
-                  (and we'll help you build a very compelling one)
-                </span>
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
-                Bring friends together more often with AI-assisted planning,
-                beautiful custom sites, and seamless tools for unforgettable
-                golf trips. ⛳️
-              </p>
-              <div className="flex flex-col lg:flex-row lg:items-center gap-4 justify-center lg:justify-start mb-6">
-                {isAuthenticated ? (
-                  <Button
-                    onClick={handleGoToApp}
-                    size="lg"
-                    className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 text-lg h-auto rounded-full shadow-lg hover:shadow-xl transition-all"
+          <div className="text-center">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 text-sm font-medium mb-6">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Golf trips made effortless
+            </div>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              It all starts with a{" "}
+              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                suggestion
+              </span>
+              <span className="block text-3xl md:text-4xl lg:text-5xl mt-2 text-gray-600">
+                (and we'll help you build a very compelling one)
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-4xl mx-auto">
+              Bring friends together more often with AI-assisted planning,
+              beautiful custom sites, and seamless tools for unforgettable
+              golf trips.
+            </p>
+            <div className="flex flex-col items-center gap-4 mb-12">
+              {isAuthenticated ? (
+                <Button
+                  onClick={handleGoToApp}
+                  size="lg"
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 text-lg h-auto rounded-full shadow-lg hover:shadow-xl transition-all"
+                >
+                  Go to My Trips <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              ) : (
+                <>
+                  <Link
+                    to="/signup"
+                    className="inline-flex items-center justify-center px-8 py-4 rounded-full text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
-                    Go to My Trips <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                ) : (
-                  <>
-                    <Link
-                      to="/signup"
-                      className="inline-flex items-center justify-center px-8 py-4 rounded-full text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
-                    >
-                      Start Planning <ArrowRight className="ml-2 h-5 w-5" />
-                    </Link>
-                    <p className="text-sm text-gray-500 text-center lg:text-left lg:ml-4 flex items-center">
-                      <Zap className="w-4 h-4 mr-1 text-yellow-500" />
-                      Build your first website in less than 5 minutes
-                    </p>
-                  </>
-                )}
-              </div>
+                    Start Planning <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                  <p className="text-sm text-gray-500 flex items-center">
+                    <Zap className="w-4 h-4 mr-1 text-yellow-500" />
+                    Build your first website in less than 5 minutes
+                  </p>
+                </>
+              )}
             </div>
 
-            {/* Right Content - Your Trip, Your Style Video */}
-            <div className="relative lg:mt-0 mt-12">
-              <div className="relative bg-gradient-to-br from-purple-100 to-pink-100 rounded-3xl p-8 shadow-2xl">
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    Your Trip, Your Style
-                  </h3>
-                  <p className="text-gray-600">
-                    Switch themes instantly to match your vibe
-                  </p>
-                </div>
-                <div className="relative rounded-2xl overflow-hidden shadow-xl">
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-auto"
-                    poster="/api/placeholder/600/400"
-                  >
-                    <source
-                      src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/trimmed.mov"
-                      type="video/mp4"
-                    />
-                    Your browser does not support the video tag.
-                  </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
-                </div>
+            {/* Your Trip, Your Style Video */}
+            <div className="relative max-w-4xl mx-auto">
+              <div className="text-center mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  Your Trip, Your Style
+                </h3>
+                <p className="text-gray-600">
+                  Switch themes instantly to match your vibe
+                </p>
+              </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-auto"
+                  poster="/api/placeholder/600/400"
+                >
+                  <source
+                    src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/trimmed.mov"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </div>
           </div>
