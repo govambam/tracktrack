@@ -148,7 +148,7 @@ export default function PublicLeaderboard({
 
   const contestIcons = {
     heart: "♥",
-    club: "♣",
+    club: "���",
     diamond: "♦",
     star: "⭐",
   };
@@ -159,13 +159,17 @@ export default function PublicLeaderboard({
       <div>
         <div className="flex items-center space-x-2 mb-6">
           <Target
-            className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+            className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600"}`}
           />
-          <h3 className="text-2xl font-bold text-slate-900">
-            Overall Stableford Leaderboard
+          <h3 className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}>
+            {currentTheme === "TrackTrack" ? (
+              <>Overall <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Stableford</span> Leaderboard</>
+            ) : (
+              "Overall Stableford Leaderboard"
+            )}
           </h3>
         </div>
-        <p className="text-slate-600 mb-8">
+        <p className={`mb-8 ${currentTheme === "TrackTrack" ? "text-gray-600" : "text-slate-600"}`}>
           Combined points from all rounds (individual + team)
         </p>
 
@@ -173,12 +177,14 @@ export default function PublicLeaderboard({
           {mockPlayers.map((player, index) => (
             <div
               key={player.full_name}
-              className={`bg-white rounded-2xl p-6 border-2 transition-all duration-300 hover:shadow-lg ${
+              className={`${currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm" : "bg-white"} rounded-2xl p-6 border-2 transition-all duration-300 hover:shadow-lg ${
                 index === 0
                   ? "border-yellow-300 bg-gradient-to-r from-yellow-50 to-amber-50"
                   : currentTheme === "TourTech"
                     ? "border-slate-200 hover:border-orange-300"
-                    : "border-slate-200 hover:border-green-300"
+                    : currentTheme === "TrackTrack"
+                      ? "border-purple-200 hover:border-purple-300 hover:shadow-purple-100/50"
+                      : "border-slate-200 hover:border-green-300"
               }`}
             >
               <div className="flex items-center justify-between">
