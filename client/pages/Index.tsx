@@ -238,52 +238,109 @@ export default function Index() {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero Section with Integrated Theme Showcase */}
       <section className="relative pt-20 pb-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-green-50"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-              Make Golf Trips
-              <span className="text-emerald-600 block">Effortless.</span>
-              <span className="text-gray-900 block">And Unforgettable.</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Remove the friction from organizing golf trips with friends.
-              AI-assisted planning, custom websites, real-time scoring, and
-              everything you need to create memorable experiences.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              {isAuthenticated ? (
-                <Button
-                  onClick={handleGoToApp}
-                  size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg h-auto rounded-xl"
-                >
-                  Go to My Trips <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              ) : (
-                <>
-                  <Link
-                    to="/signup"
-                    className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-lg font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-lg hover:shadow-xl"
-                  >
-                    Plan a Trip <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+                Make Golf Trips
+                <span className="text-emerald-600 block">Effortless.</span>
+                <span className="text-gray-900 block">And Unforgettable.</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
+                Remove the friction from organizing golf trips with friends.
+                AI-assisted planning, custom websites, real-time scoring, and
+                everything you need to create memorable experiences.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6">
+                {isAuthenticated ? (
                   <Button
-                    variant="outline"
+                    onClick={handleGoToApp}
                     size="lg"
-                    className="px-8 py-4 text-lg h-auto rounded-xl border-2 border-gray-200 hover:border-gray-300"
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg h-auto rounded-xl"
                   >
-                    <Play className="mr-2 h-5 w-5" />
-                    Watch Demo
+                    Go to My Trips <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                </>
-              )}
+                ) : (
+                  <>
+                    <Link
+                      to="/signup"
+                      className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-lg font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-lg hover:shadow-xl"
+                    >
+                      Plan a Trip <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="px-8 py-4 text-lg h-auto rounded-xl border-2 border-gray-200 hover:border-gray-300"
+                    >
+                      <Play className="mr-2 h-5 w-5" />
+                      Watch Demo
+                    </Button>
+                  </>
+                )}
+              </div>
+              <p className="text-sm text-gray-500 text-center lg:text-left">
+                ✨ Build your first website in less than 5 minutes
+              </p>
             </div>
-            <p className="text-sm text-gray-500">
-              ✨ Build your first website in less than 5 minutes
-            </p>
+
+            {/* Right Content - Theme Showcase */}
+            <div className="relative lg:mt-0 mt-12">
+              {/* Embla Carousel */}
+              <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex">
+                  {themes.map((theme, index) => (
+                    <div key={index} className="flex-[0_0_100%] min-w-0">
+                      <div className="px-2">
+                        {/* Desktop & Mobile Showcase */}
+                        <div className="relative max-w-4xl mx-auto">
+                          <div className="flex items-start justify-center">
+                            {/* Desktop Preview */}
+                            <div className="relative z-10 mt-8 lg:mt-12">
+                              <img
+                                src={theme.desktopImage}
+                                alt={`${theme.name} desktop theme preview`}
+                                className="w-full max-w-md lg:max-w-lg h-auto"
+                                style={{ backgroundColor: "transparent" }}
+                              />
+                            </div>
+
+                            {/* Mobile Preview - Overlapping and positioned higher */}
+                            <div className="relative z-20 -ml-8 sm:-ml-12 lg:-ml-16">
+                              <img
+                                src={theme.mobileImage}
+                                alt={`${theme.name} mobile theme preview`}
+                                className="w-full max-w-24 sm:max-w-32 lg:max-w-40 h-auto"
+                                style={{ backgroundColor: "transparent" }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Theme Navigation Dots */}
+              <div className="flex justify-center mt-8 space-x-3">
+                {themes.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => scrollTo(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === selectedIndex
+                        ? "bg-emerald-600 scale-110"
+                        : "bg-gray-300 hover:bg-gray-400"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
