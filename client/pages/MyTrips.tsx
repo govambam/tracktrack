@@ -444,28 +444,21 @@ export default function MyTrips() {
                       <CardTitle className="text-xl text-gray-900">
                         {event.name}
                       </CardTitle>
-                      {event.user_role === "owner" ? (
+                      {event.user_role === "admin" ? (
                         <Badge
                           variant="outline"
-                          className="text-xs bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 border-purple-200"
-                        >
-                          Owner
-                        </Badge>
-                      ) : event.user_role === "admin" ? (
-                        <Badge
-                          variant="outline"
-                          className="text-xs bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 border-blue-200"
+                          className="text-xs bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 border-blue-200"
                         >
                           Admin
                         </Badge>
-                      ) : (
+                      ) : event.user_role === "player" ? (
                         <Badge
                           variant="outline"
                           className="text-xs bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 border-gray-200"
                         >
                           Player
                         </Badge>
-                      )}
+                      ) : null}
                     </div>
                     <CardDescription className="text-gray-600 line-clamp-2">
                       {event.description || "Golf event"}
