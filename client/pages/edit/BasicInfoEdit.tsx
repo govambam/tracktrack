@@ -604,11 +604,11 @@ ${formData.description}`;
                   size="sm"
                   onClick={generateAIDescription}
                   disabled={generatingAI || polishingAI}
-                  className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                  className="border-purple-200 text-purple-700 hover:bg-purple-50"
                 >
                   {generatingAI ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-600 mr-2"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-600 mr-2"></div>
                       Generating...
                     </>
                   ) : (
@@ -626,9 +626,9 @@ ${formData.description}`;
           <div className="space-y-2">
             <Label
               htmlFor="bannerImage"
-              className="text-green-800 font-medium flex items-center"
+              className="text-purple-900 font-medium flex items-center"
             >
-              <Image className="h-4 w-4 mr-1 text-emerald-600" />
+              <Image className="h-4 w-4 mr-1 text-purple-600" />
               Banner Image URL (Optional)
             </Label>
             <Input
@@ -637,9 +637,9 @@ ${formData.description}`;
               value={formData.bannerImage}
               onChange={(e) => handleInputChange("bannerImage", e.target.value)}
               placeholder="https://example.com/your-banner-image.jpg"
-              className="border-green-200 focus:border-emerald-500"
+              className="border-purple-200 focus:border-purple-500"
             />
-            <p className="text-sm text-green-600">
+            <p className="text-sm text-purple-600">
               Add a banner image to make your event page more appealing
             </p>
           </div>
