@@ -69,6 +69,25 @@ const AVAILABLE_THEMES = [
       "Classic, luxurious design without being overly flashy",
     ],
   },
+  {
+    id: "TrackTrack",
+    name: "TrackTrack",
+    description:
+      "Modern, vibrant design inspired by Arc Browser. Features purple and pink gradients, floating blur elements, and a playful yet sophisticated aesthetic perfect for contemporary golf trips",
+    preview: {
+      primary: "bg-gradient-to-r from-purple-600 to-pink-600",
+      secondary: "bg-gradient-to-r from-purple-400 to-pink-400",
+      accent: "bg-gradient-to-r from-orange-400 to-pink-500",
+    },
+    characteristics: [
+      "Purple and pink gradient color palette with orange accents",
+      "Floating blur elements and modern backdrop effects",
+      "Split-word titles with gradient text highlights",
+      "Rounded corners and soft shadows throughout",
+      "Modern sans-serif typography with generous spacing",
+      "Arc Browser-inspired playful and vibrant personality",
+    ],
+  },
 ];
 
 export default function ThemeCustomization() {
