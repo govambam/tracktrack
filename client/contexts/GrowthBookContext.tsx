@@ -166,7 +166,7 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
       // Get current user session with timeout
       const sessionPromise = supabase.auth.getSession();
       const sessionTimeout = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Session timeout")), 3000),
+        setTimeout(() => reject(new Error("Session timeout")), 5000),
       );
 
       const {
