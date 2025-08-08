@@ -521,7 +521,7 @@ export default function MyTrips() {
                     onClick={() =>
                       navigate(`/events/${event.slug || event.id}/leaderboard`)
                     }
-                    className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                    className="border-purple-200 text-purple-700 hover:bg-purple-50 rounded-lg"
                   >
                     <Users className="h-4 w-4 mr-1" />
                     Enter Scores
@@ -534,7 +534,7 @@ export default function MyTrips() {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEditEvent(event)}
-                      className="border-green-200 text-green-700 hover:bg-green-50"
+                      className="border-pink-200 text-pink-700 hover:bg-pink-50 rounded-lg"
                     >
                       <Edit className="h-4 w-4 mr-1" />
                       Edit Details
