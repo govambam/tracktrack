@@ -149,7 +149,7 @@ export default function PublicLeaderboard({
   const contestIcons = {
     heart: "♥",
     club: "���",
-    diamond: "♦",
+    diamond: "���",
     star: "⭐",
   };
 
@@ -750,16 +750,16 @@ export default function PublicLeaderboard({
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <div
-                className={`font-bold ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" : "text-slate-900"}`}
+                className={`text-xl font-bold ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" : "text-slate-900"}`}
               >
-                Tournament Leaderboard
+                {currentTheme === "TrackTrack" ? "TrackTrack" : "Tournament Leaderboard"}
               </div>
               <div className="hidden md:flex items-center space-x-8">
                 {navItems.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
-                    className={`text-sm font-medium transition-colors ${
+                    className={`text-sm font-medium transition-colors relative ${
                       item.name === "Leaderboard"
                         ? currentTheme === "TrackTrack"
                           ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold"
@@ -770,6 +770,9 @@ export default function PublicLeaderboard({
                     }`}
                   >
                     {item.name}
+                    {item.name === "Leaderboard" && currentTheme === "TrackTrack" && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+                    )}
                   </a>
                 ))}
               </div>
