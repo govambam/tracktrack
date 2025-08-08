@@ -322,7 +322,7 @@ export default function PublicLeaderboard({
           {currentTheme === "TrackTrack" ? (
             <>
               Money{" "}
-              <span className="bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Earned
               </span>
             </>
