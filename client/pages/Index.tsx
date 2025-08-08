@@ -92,7 +92,6 @@ export default function Index() {
     return () => subscription.unsubscribe();
   }, []);
 
-
   const handleGoToApp = () => {
     navigate("/app");
   };
