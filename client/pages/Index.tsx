@@ -413,8 +413,14 @@ export default function Index() {
       </section>
 
       {/* Clubhouse Section */}
-      <section className="py-20 bg-white/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-100/50 via-pink-50/50 to-red-100/50"></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-16 left-16 w-32 h-32 bg-gradient-to-br from-orange-400/20 to-red-400/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-16 right-16 w-24 h-24 bg-gradient-to-br from-pink-400/20 to-orange-400/20 rounded-full blur-xl"></div>
+          <div className="absolute top-1/3 right-1/4 w-28 h-28 bg-gradient-to-br from-red-400/15 to-pink-400/15 rounded-full blur-xl"></div>
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 text-orange-700 text-sm font-medium mb-6">
               <MessageSquare className="w-4 h-4 mr-2" />
