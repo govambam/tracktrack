@@ -464,7 +464,10 @@ export default function MyTrips() {
                       {event.description || "Golf event"}
                     </CardDescription>
                   </div>
-                  <Badge className={getStatusColor(status)} style={{fontSize: '0.75rem', padding: '0.25rem 0.5rem'}}>
+                  <Badge
+                    className={getStatusColor(status)}
+                    style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem" }}
+                  >
                     {status}
                   </Badge>
                 </div>
@@ -473,7 +476,9 @@ export default function MyTrips() {
                 <div className="flex items-center gap-6 text-sm text-gray-600 bg-gray-50 rounded-lg px-4 py-3">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-purple-600" />
-                    <span>{formatDateRange(event.start_date, event.end_date)}</span>
+                    <span>
+                      {formatDateRange(event.start_date, event.end_date)}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 text-purple-600" />
@@ -487,7 +492,6 @@ export default function MyTrips() {
               </CardHeader>
 
               <CardContent className="pt-0">
-
                 <div className="flex flex-wrap gap-2">
                   {/* View Site button - available for all published events */}
                   {event.is_published && event.slug ? (
