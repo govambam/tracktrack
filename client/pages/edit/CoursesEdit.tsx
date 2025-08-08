@@ -524,7 +524,7 @@ export default function CoursesEdit() {
                           </div>
 
                           <div className="flex-1">
-                            <Label className="text-xs text-green-700">
+                            <Label className="text-xs text-purple-700">
                               Contest Type
                             </Label>
                             <Select
@@ -538,7 +538,7 @@ export default function CoursesEdit() {
                                 )
                               }
                             >
-                              <SelectTrigger className="h-8 border-green-200">
+                              <SelectTrigger className="h-8 border-purple-200">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
