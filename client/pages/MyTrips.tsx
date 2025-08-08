@@ -539,22 +539,24 @@ export default function MyTrips() {
 
       {/* Empty State */}
       {events.length === 0 && (
-        <div className="text-center py-12">
-          <Calendar className="mx-auto h-12 w-12 text-purple-400 mb-4" />
-          <h3 className="text-xl font-medium text-gray-900 mb-2">
-            No events yet
-          </h3>
-          <p className="text-gray-600 mb-6">
-            Create your first golf event or wait for an invitation from other
-            organizers
-          </p>
-          <Button
-            onClick={handleCreateNew}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-full shadow-lg hover:shadow-xl transition-all"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Create Your First Event
-          </Button>
+        <div className="text-center py-16">
+          <div className="bg-white border border-gray-200 rounded-2xl p-12 max-w-md mx-auto">
+            <Calendar className="mx-auto h-12 w-12 text-gray-400 mb-6" />
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              No events yet
+            </h3>
+            <p className="text-gray-600 mb-8 leading-relaxed">
+              Create your first golf event or wait for an invitation from other
+              organizers
+            </p>
+            <Button
+              onClick={handleCreateNew}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-6 py-2.5 text-sm font-medium"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Create Your First Event
+            </Button>
+          </div>
         </div>
       )}
 
