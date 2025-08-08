@@ -647,10 +647,15 @@ Format as markdown with headers. Include each course as a separate day. Limit re
 
           return {
             event_id: eventData.id,
+            course_id: course.id.startsWith('temp-') ? null : course.id, // Only set course_id for real courses
             course_name: course.name,
             round_date: roundDate.toISOString().split("T")[0],
-            holes: 18,
+            holes: course.holes || 18,
             scoring_type: "stableford",
+            // Add customization fields that were previously in event_courses
+            custom_description: course.description || null,
+            custom_image_url: course.image_url || null,
+            display_order: index + 1,
           };
         });
 
