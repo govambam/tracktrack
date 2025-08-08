@@ -420,7 +420,9 @@ export default function EventClubhouse() {
                             ? "bg-green-100 text-green-800"
                             : currentTheme === "TourTech"
                               ? "bg-gray-100 text-gray-800"
-                              : "bg-blue-100 text-blue-800"
+                              : currentTheme === "TrackTrack"
+                                ? "bg-purple-100 text-purple-800"
+                                : "bg-blue-100 text-blue-800"
                         }`}
                       >
                         {round.scoring_type}
