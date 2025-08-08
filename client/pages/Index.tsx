@@ -350,7 +350,7 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-              Everything you need for epic golf trips 🏌️‍♂️
+              Everything you need for epic golf trips
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               From planning to playing to celebrating, we've got every aspect
