@@ -42,21 +42,24 @@ export default function Index() {
     {
       title: "Stableford Scoring",
       description: "Points-based competition that keeps everyone in the game",
-      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_stableford.png",
-      color: "from-blue-500 to-purple-600"
+      image:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_stableford.png",
+      color: "from-blue-500 to-purple-600",
     },
     {
-      title: "Prize Money Tracking", 
+      title: "Prize Money Tracking",
       description: "Real-time money distribution and skill contest winnings",
-      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_money.png",
-      color: "from-green-500 to-emerald-600"
+      image:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_money.png",
+      color: "from-green-500 to-emerald-600",
     },
     {
       title: "Digital Scorecards",
       description: "Track every shot with beautiful, easy-to-use scorecards",
-      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_scorecard.png",
-      color: "from-orange-500 to-red-600"
-    }
+      image:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_scorecard.png",
+      color: "from-orange-500 to-red-600",
+    },
   ];
 
   useEffect(() => {
@@ -97,7 +100,9 @@ export default function Index() {
   // Auto-advance leaderboard carousel
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentLeaderboardSlide((prev) => (prev + 1) % leaderboardSlides.length);
+      setCurrentLeaderboardSlide(
+        (prev) => (prev + 1) % leaderboardSlides.length,
+      );
     }, 4000);
     return () => clearInterval(timer);
   }, []);
@@ -123,7 +128,10 @@ export default function Index() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <Link
+                to="/"
+                className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+              >
                 TrackTrack
               </Link>
             </div>
@@ -250,7 +258,9 @@ export default function Index() {
                 </span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
-                Bring friends together more often with AI-assisted planning, beautiful custom sites, and seamless tools for unforgettable golf trips. ⛳️
+                Bring friends together more often with AI-assisted planning,
+                beautiful custom sites, and seamless tools for unforgettable
+                golf trips. ⛳️
               </p>
               <div className="flex flex-col lg:flex-row lg:items-center gap-4 justify-center lg:justify-start mb-6">
                 {isAuthenticated ? (
@@ -282,8 +292,12 @@ export default function Index() {
             <div className="relative lg:mt-0 mt-12">
               <div className="relative bg-gradient-to-br from-purple-100 to-pink-100 rounded-3xl p-8 shadow-2xl">
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Your Trip, Your Style</h3>
-                  <p className="text-gray-600">Switch themes instantly to match your vibe</p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    Your Trip, Your Style
+                  </h3>
+                  <p className="text-gray-600">
+                    Switch themes instantly to match your vibe
+                  </p>
                 </div>
                 <div className="relative rounded-2xl overflow-hidden shadow-xl">
                   <video
@@ -294,7 +308,10 @@ export default function Index() {
                     className="w-full h-auto"
                     poster="/api/placeholder/600/400"
                   >
-                    <source src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/trimmed.mov" type="video/mp4" />
+                    <source
+                      src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/trimmed.mov"
+                      type="video/mp4"
+                    />
                     Your browser does not support the video tag.
                   </video>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
@@ -325,20 +342,28 @@ export default function Index() {
                 Manage all your golf adventures in one place
               </h2>
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Keep track of past trips, current events, and future adventures. Every trip gets its own beautiful website that your friends will love.
+                Keep track of past trips, current events, and future adventures.
+                Every trip gets its own beautiful website that your friends will
+                love.
               </p>
               <div className="space-y-4">
                 <div className="flex items-center">
                   <Check className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700">Organize multiple trips effortlessly</span>
+                  <span className="text-gray-700">
+                    Organize multiple trips effortlessly
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <Check className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700">Track RSVPs and guest responses</span>
+                  <span className="text-gray-700">
+                    Track RSVPs and guest responses
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <Check className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700">Share trip links with a single click</span>
+                  <span className="text-gray-700">
+                    Share trip links with a single click
+                  </span>
                 </div>
               </div>
             </div>
@@ -347,14 +372,18 @@ export default function Index() {
       </section>
 
       {/* Features Grid Section */}
-      <section id="features" className="py-20 bg-gradient-to-br from-orange-50/50 to-purple-50/50">
+      <section
+        id="features"
+        className="py-20 bg-gradient-to-br from-orange-50/50 to-purple-50/50"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
               Everything you need for epic golf trips 🏌️‍♂️
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From planning to playing to celebrating, we've got every aspect covered with style and substance.
+              From planning to playing to celebrating, we've got every aspect
+              covered with style and substance.
             </p>
           </div>
 
@@ -370,7 +399,8 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600 text-sm">
-                  Plan your entire golf trip in minutes. Just enter your preferences and let AI do the work.
+                  Plan your entire golf trip in minutes. Just enter your
+                  preferences and let AI do the work.
                 </p>
               </CardContent>
             </Card>
@@ -386,7 +416,8 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600 text-sm">
-                  Shareable websites with professional themes and customizable details. Branded, stylish, and built for your group.
+                  Shareable websites with professional themes and customizable
+                  details. Branded, stylish, and built for your group.
                 </p>
               </CardContent>
             </Card>
@@ -402,7 +433,8 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600 text-sm">
-                  Track scores live and show off your competition with real-time updates and multiple scoring formats.
+                  Track scores live and show off your competition with real-time
+                  updates and multiple scoring formats.
                 </p>
               </CardContent>
             </Card>
@@ -418,7 +450,8 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600 text-sm">
-                  A private hub for your trip group. Enter scores, post announcements, and stay connected via group chat.
+                  A private hub for your trip group. Enter scores, post
+                  announcements, and stay connected via group chat.
                 </p>
               </CardContent>
             </Card>
@@ -434,7 +467,8 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600 text-sm">
-                  Works beautifully on any device. Designed to look great everywhere — phones, tablets, laptops.
+                  Works beautifully on any device. Designed to look great
+                  everywhere — phones, tablets, laptops.
                 </p>
               </CardContent>
             </Card>
@@ -450,7 +484,8 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600 text-sm">
-                  Thousands of courses enriched with detailed info and photos to enhance your trip site.
+                  Thousands of courses enriched with detailed info and photos to
+                  enhance your trip site.
                 </p>
               </CardContent>
             </Card>
@@ -466,7 +501,8 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600 text-sm">
-                  Support for Stableford, scrambles, and more. Customize points, team formats, and round types.
+                  Support for Stableford, scrambles, and more. Customize points,
+                  team formats, and round types.
                 </p>
               </CardContent>
             </Card>
@@ -482,7 +518,8 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600 text-sm">
-                  Choose from pre-built themes and personalize your site with colors, logos, and inside jokes.
+                  Choose from pre-built themes and personalize your site with
+                  colors, logos, and inside jokes.
                 </p>
               </CardContent>
             </Card>
@@ -503,20 +540,28 @@ export default function Index() {
                 Your private clubhouse for trip memories
               </h2>
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Keep your group connected before, during, and after your trip. Share updates, enter scores, and relive the best moments together.
+                Keep your group connected before, during, and after your trip.
+                Share updates, enter scores, and relive the best moments
+                together.
               </p>
               <div className="space-y-4">
                 <div className="flex items-center">
                   <MessageSquare className="w-5 h-5 text-blue-500 mr-3" />
-                  <span className="text-gray-700">Group chat and announcements</span>
+                  <span className="text-gray-700">
+                    Group chat and announcements
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <BarChart3 className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700">Easy score entry and tracking</span>
+                  <span className="text-gray-700">
+                    Easy score entry and tracking
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <Users className="w-5 h-5 text-purple-500 mr-3" />
-                  <span className="text-gray-700">Member-only access and privacy</span>
+                  <span className="text-gray-700">
+                    Member-only access and privacy
+                  </span>
                 </div>
               </div>
             </div>
@@ -539,7 +584,8 @@ export default function Index() {
               Competition that brings out your best 🏆
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Multiple scoring formats and real-time updates keep everyone engaged and the competition fierce.
+              Multiple scoring formats and real-time updates keep everyone
+              engaged and the competition fierce.
             </p>
           </div>
 
@@ -549,10 +595,14 @@ export default function Index() {
                 <div
                   key={index}
                   className={`absolute inset-0 transition-all duration-500 ${
-                    index === currentLeaderboardSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                    index === currentLeaderboardSlide
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-95"
                   }`}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${slide.color} opacity-90`}></div>
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${slide.color} opacity-90`}
+                  ></div>
                   <div className="relative h-full flex items-center justify-between px-12">
                     <div className="text-white max-w-md">
                       <h3 className="text-3xl font-bold mb-4">{slide.title}</h3>
@@ -577,9 +627,9 @@ export default function Index() {
                   key={index}
                   onClick={() => setCurrentLeaderboardSlide(index)}
                   className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentLeaderboardSlide 
-                      ? 'bg-purple-600 scale-110' 
-                      : 'bg-gray-300 hover:bg-gray-400'
+                    index === currentLeaderboardSlide
+                      ? "bg-purple-600 scale-110"
+                      : "bg-gray-300 hover:bg-gray-400"
                   }`}
                 />
               ))}
@@ -596,7 +646,8 @@ export default function Index() {
               From idea to unforgettable trip ��
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our streamlined process removes all the friction from organizing golf trips with friends.
+              Our streamlined process removes all the friction from organizing
+              golf trips with friends.
             </p>
           </div>
 
@@ -609,7 +660,8 @@ export default function Index() {
                 Plan with AI
               </h3>
               <p className="text-gray-600">
-                Tell our AI your dates, location preferences, and group size. Get a complete itinerary with course recommendations in minutes.
+                Tell our AI your dates, location preferences, and group size.
+                Get a complete itinerary with course recommendations in minutes.
               </p>
             </div>
 
@@ -621,7 +673,8 @@ export default function Index() {
                 Create & Share
               </h3>
               <p className="text-gray-600">
-                Build a beautiful trip website, invite your friends, and let them RSVP and see all the details in one place.
+                Build a beautiful trip website, invite your friends, and let
+                them RSVP and see all the details in one place.
               </p>
             </div>
 
@@ -633,7 +686,8 @@ export default function Index() {
                 Play & Celebrate
               </h3>
               <p className="text-gray-600">
-                Enjoy your trip with live scoring, leaderboards, and a private clubhouse to share memories and stay connected.
+                Enjoy your trip with live scoring, leaderboards, and a private
+                clubhouse to share memories and stay connected.
               </p>
             </div>
           </div>
@@ -652,7 +706,9 @@ export default function Index() {
             Ready to plan your next golf adventure? 🚀
           </h2>
           <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of golfers who are already creating unforgettable experiences with their friends. Start planning in less than 5 minutes.
+            Join thousands of golfers who are already creating unforgettable
+            experiences with their friends. Start planning in less than 5
+            minutes.
           </p>
           {isAuthenticated ? (
             <Button
