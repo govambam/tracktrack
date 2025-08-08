@@ -1310,7 +1310,6 @@ export default function PublicEventHome({
       // Load all related data in parallel
       const [
         playersResult,
-        coursesResult,
         roundsResult,
         prizesResult,
         travelResult,
