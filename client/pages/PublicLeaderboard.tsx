@@ -189,7 +189,9 @@ export default function PublicLeaderboard({
               key={player.full_name}
               className={`${currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm" : "bg-white"} rounded-2xl p-6 border-2 transition-all duration-300 hover:shadow-lg ${
                 index === 0
-                  ? "border-yellow-300 bg-gradient-to-r from-yellow-50 to-amber-50"
+                  ? currentTheme === "TrackTrack"
+                    ? "border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50"
+                    : "border-yellow-300 bg-gradient-to-r from-yellow-50 to-amber-50"
                   : currentTheme === "TourTech"
                     ? "border-slate-200 hover:border-orange-300"
                     : currentTheme === "TrackTrack"
@@ -202,7 +204,9 @@ export default function PublicLeaderboard({
                   <div
                     className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${
                       index === 0
-                        ? "bg-yellow-500 text-white"
+                        ? currentTheme === "TrackTrack"
+                          ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white"
+                          : "bg-yellow-500 text-white"
                         : "bg-slate-100 text-slate-700"
                     }`}
                   >
@@ -342,10 +346,10 @@ export default function PublicLeaderboard({
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center ${currentTheme === "TourTech" ? "bg-orange-100" : currentTheme === "TrackTrack" ? "bg-gradient-to-br from-green-100 to-emerald-100" : "bg-green-100"}`}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center ${currentTheme === "TourTech" ? "bg-orange-100" : currentTheme === "TrackTrack" ? "bg-gradient-to-br from-purple-100 to-pink-100" : "bg-green-100"}`}
                 >
                   <DollarSign
-                    className={`h-6 w-6 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-green-600" : "text-green-600"}`}
+                    className={`h-6 w-6 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600"}`}
                   />
                 </div>
                 <div>
@@ -361,7 +365,7 @@ export default function PublicLeaderboard({
               </div>
               <div className="text-right">
                 <div
-                  className={`text-2xl font-bold ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent" : "text-green-600"}`}
+                  className={`text-2xl font-bold ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" : "text-green-600"}`}
                 >
                   ${player.money}
                 </div>
@@ -793,7 +797,7 @@ export default function PublicLeaderboard({
             )}
           </h1>
           <p
-            className={`text-xl font-semibold mb-2 ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent" : "text-green-600"}`}
+            className={`text-xl font-semibold mb-2 ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" : "text-green-600"}`}
           >
             & Prize Tracker
           </p>
