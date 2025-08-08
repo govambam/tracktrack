@@ -254,7 +254,7 @@ export default function ThemeCustomization() {
                       key={index}
                       className="text-sm text-slate-600 flex items-center space-x-2"
                     >
-                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                      <span className="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
                       <span>{characteristic}</span>
                     </li>
                   ))}
@@ -269,7 +269,7 @@ export default function ThemeCustomization() {
         <Button
           onClick={saveTheme}
           disabled={saving}
-          className="bg-green-600 hover:bg-green-700 text-white px-6"
+          className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6"
         >
           {saving ? (
             <div className="flex items-center space-x-2">
