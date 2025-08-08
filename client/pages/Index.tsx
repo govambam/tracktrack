@@ -22,6 +22,11 @@ import {
   Check,
   ChevronLeft,
   ChevronDown,
+  Zap,
+  Target,
+  Heart,
+  Palette,
+  Bot,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -29,37 +34,29 @@ export default function Index() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentLeaderboardSlide, setCurrentLeaderboardSlide] = useState(0);
   const navigate = useNavigate();
 
-  // Theme showcase data
-  const themes = [
+  // Leaderboard carousel data
+  const leaderboardSlides = [
     {
-      name: "TourTech",
-      description: "Modern & Sleek",
-      mobileImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.21.33%20AM-portrait.png",
-      desktopImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%201.24.36%20AM-front.png",
-      colors: { primary: "orange", accent: "slate" },
+      title: "Stableford Scoring",
+      description: "Points-based competition that keeps everyone in the game",
+      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_stableford.png",
+      color: "from-blue-500 to-purple-600"
     },
     {
-      name: "Masters",
-      description: "Classic & Elegant",
-      mobileImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.22.15%20AM-portrait.png",
-      desktopImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%201.25.32%20AM-front.png",
-      colors: { primary: "amber", accent: "green" },
+      title: "Prize Money Tracking", 
+      description: "Real-time money distribution and skill contest winnings",
+      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_money.png",
+      color: "from-green-500 to-emerald-600"
     },
     {
-      name: "GolfOS",
-      description: "Clean & Professional",
-      mobileImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.22.46%20AM-portrait.png",
-      desktopImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.54.19%20AM-front.png",
-      colors: { primary: "emerald", accent: "green" },
-    },
+      title: "Digital Scorecards",
+      description: "Track every shot with beautiful, easy-to-use scorecards",
+      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_scorecard.png",
+      color: "from-orange-500 to-red-600"
+    }
   ];
 
   useEffect(() => {
@@ -97,6 +94,14 @@ export default function Index() {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Auto-advance leaderboard carousel
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentLeaderboardSlide((prev) => (prev + 1) % leaderboardSlides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   const handleGoToApp = () => {
     navigate("/app");
   };
@@ -111,14 +116,14 @@ export default function Index() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
+      <header className="bg-white/80 backdrop-blur-lg border-b border-white/20 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <Link to="/" className="text-2xl font-bold text-gray-900">
+              <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 TrackTrack
               </Link>
             </div>
@@ -129,9 +134,10 @@ export default function Index() {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className="text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors"
+                  className="text-gray-700 hover:text-purple-600 text-sm font-medium transition-colors relative group"
                 >
                   {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 transition-all group-hover:w-full"></span>
                 </Link>
               ))}
             </nav>
@@ -140,12 +146,12 @@ export default function Index() {
             <div className="hidden md:flex items-center space-x-4">
               {loading ? (
                 <div className="animate-pulse">
-                  <div className="h-8 w-20 bg-gray-200 rounded"></div>
+                  <div className="h-8 w-20 bg-gray-200 rounded-full"></div>
                 </div>
               ) : isAuthenticated ? (
                 <Button
                   onClick={handleGoToApp}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-full px-6 shadow-lg hover:shadow-xl transition-all"
                 >
                   Go to App <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -153,13 +159,13 @@ export default function Index() {
                 <>
                   <Link
                     to="/login"
-                    className="text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors"
+                    className="text-gray-700 hover:text-purple-600 text-sm font-medium transition-colors"
                   >
                     Login
                   </Link>
                   <Link
                     to="/signup"
-                    className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+                    className="inline-flex items-center px-6 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl"
                   >
                     Get Started
                   </Link>
@@ -170,7 +176,7 @@ export default function Index() {
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+              className="md:hidden p-2 rounded-lg text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition-colors"
             >
               {mobileMenuOpen ? (
                 <X className="h-5 w-5" />
@@ -182,14 +188,14 @@ export default function Index() {
 
           {/* Mobile Navigation */}
           {mobileMenuOpen && (
-            <div className="md:hidden border-t border-gray-100 py-4">
+            <div className="md:hidden border-t border-white/20 py-4 bg-white/90 backdrop-blur-lg">
               <div className="space-y-1">
                 {navigationItems.map((item) => (
                   <Link
                     key={item.label}
                     to={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                    className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -199,14 +205,14 @@ export default function Index() {
                     <Link
                       to="/login"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                      className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
                     >
                       Login
                     </Link>
                     <Link
                       to="/signup"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-base font-medium bg-emerald-600 text-white hover:bg-emerald-700 rounded-md"
+                      className="block px-3 py-2 text-base font-medium bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 rounded-lg transition-all"
                     >
                       Get Started
                     </Link>
@@ -218,29 +224,40 @@ export default function Index() {
         </div>
       </header>
 
-      {/* Hero Section with Integrated Theme Showcase */}
+      {/* Hero Section */}
       <section className="relative pt-20 pb-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-green-50"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-100/50 via-pink-50/50 to-orange-100/50"></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-orange-400/20 to-yellow-400/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-40 left-1/4 w-40 h-40 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl"></div>
+        </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div className="text-center lg:text-left">
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 text-sm font-medium mb-6">
+                <Sparkles className="w-4 h-4 mr-2" />
+                Golf trips made effortless ✨
+              </div>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-                Make Golf Trips
-                <span className="text-emerald-600 block">Effortless.</span>
-                <span className="text-emerald-600 block">Unforgettable.</span>
+                It all starts with a{" "}
+                <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  suggestion
+                </span>
+                <span className="block text-3xl md:text-4xl lg:text-5xl mt-2 text-gray-600">
+                  (and we'll help you build a very compelling one)
+                </span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
-                Remove the friction from organizing golf trips with friends.
-                AI-assisted planning, custom websites, real-time scoring, and
-                everything you need to create memorable experiences.
+                Bring friends together more often with AI-assisted planning, beautiful custom sites, and seamless tools for unforgettable golf trips. ⛳️
               </p>
               <div className="flex flex-col lg:flex-row lg:items-center gap-4 justify-center lg:justify-start mb-6">
                 {isAuthenticated ? (
                   <Button
                     onClick={handleGoToApp}
                     size="lg"
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg h-auto rounded-xl"
+                    className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 text-lg h-auto rounded-full shadow-lg hover:shadow-xl transition-all"
                   >
                     Go to My Trips <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -248,320 +265,407 @@ export default function Index() {
                   <>
                     <Link
                       to="/signup"
-                      className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-lg font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-lg hover:shadow-xl"
+                      className="inline-flex items-center justify-center px-8 py-4 rounded-full text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
                     >
-                      Plan a Trip <ArrowRight className="ml-2 h-5 w-5" />
+                      Start Planning <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
-                    <p className="text-sm text-gray-500 text-center lg:text-left lg:ml-4">
-                      ✨ Build your first website in less than 5 minutes
+                    <p className="text-sm text-gray-500 text-center lg:text-left lg:ml-4 flex items-center">
+                      <Zap className="w-4 h-4 mr-1 text-yellow-500" />
+                      Build your first website in less than 5 minutes
                     </p>
                   </>
                 )}
               </div>
             </div>
 
-            {/* Right Content - Hero Image */}
+            {/* Right Content - Your Trip, Your Style Video */}
             <div className="relative lg:mt-0 mt-12">
-              <div className="max-w-5xl mx-auto px-2">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2F5587e23e9c5e4f269b78d1aa8eaa045f?format=webp&width=800"
-                  alt="TrackTrack golf trip website showcase"
-                  className="w-full h-auto drop-shadow-2xl"
-                  style={{ backgroundColor: "transparent" }}
-                />
+              <div className="relative bg-gradient-to-br from-purple-100 to-pink-100 rounded-3xl p-8 shadow-2xl">
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Your Trip, Your Style</h3>
+                  <p className="text-gray-600">Switch themes instantly to match your vibe</p>
+                </div>
+                <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-auto"
+                    poster="/api/placeholder/600/400"
+                  >
+                    <source src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/trimmed.mov" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Theme Features Summary */}
-      <section id="themes" className="py-16 bg-gray-50">
+      {/* My Events Section */}
+      <section className="py-20 bg-white/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Beautiful Themes for Every Golf Trip
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Professional designs that make your golf trips look amazing and
-              work perfectly on all devices.
-            </p>
-          </div>
-
-          {/* Features Grid */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4 mx-auto">
-                <Sparkles className="h-8 w-8 text-emerald-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Instant Customization
-              </h3>
-              <p className="text-gray-600">
-                Switch themes with one click - no coding required
-              </p>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <img
+                src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/app_my_events.png"
+                alt="My Events dashboard showing multiple golf trips"
+                className="w-full h-auto rounded-2xl shadow-2xl"
+              />
             </div>
-
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4 mx-auto">
-                <Smartphone className="h-8 w-8 text-emerald-600" />
+            <div className="order-1 lg:order-2">
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 text-sm font-medium mb-6">
+                <Calendar className="w-4 h-4 mr-2" />
+                Trip Management
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Mobile & Desktop
-              </h3>
-              <p className="text-gray-600">
-                Perfect experience on every device and screen size
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                Manage all your golf adventures in one place
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Keep track of past trips, current events, and future adventures. Every trip gets its own beautiful website that your friends will love.
               </p>
-            </div>
-
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4 mx-auto">
-                <Star className="h-8 w-8 text-emerald-600" />
+              <div className="space-y-4">
+                <div className="flex items-center">
+                  <Check className="w-5 h-5 text-green-500 mr-3" />
+                  <span className="text-gray-700">Organize multiple trips effortlessly</span>
+                </div>
+                <div className="flex items-center">
+                  <Check className="w-5 h-5 text-green-500 mr-3" />
+                  <span className="text-gray-700">Track RSVPs and guest responses</span>
+                </div>
+                <div className="flex items-center">
+                  <Check className="w-5 h-5 text-green-500 mr-3" />
+                  <span className="text-gray-700">Share trip links with a single click</span>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Brand Your Trip
-              </h3>
-              <p className="text-gray-600">
-                Add your logo, colors, and custom messaging
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
+      {/* Features Grid Section */}
+      <section id="features" className="py-20 bg-gradient-to-br from-orange-50/50 to-purple-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-              Everything You Need for Epic Golf Trips
+              Everything you need for epic golf trips 🏌️‍♂️
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From planning to playing to celebrating, we've got every aspect of
-              your golf trip covered.
+              From planning to playing to celebrating, we've got every aspect covered with style and substance.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="border-0 bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
               <CardHeader className="text-center pb-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 text-emerald-600 rounded-xl mb-4 mx-auto">
-                  <Sparkles className="h-8 w-8" />
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-2xl mb-4 mx-auto group-hover:scale-110 transition-transform">
+                  <Bot className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">
+                <CardTitle className="text-lg text-gray-900">
                   AI-Assisted Planning
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-gray-600">
-                  Tell us your preferences and let AI create the perfect
-                  itinerary, suggest courses, and plan your entire trip in
-                  minutes.
+                <p className="text-gray-600 text-sm">
+                  Plan your entire golf trip in minutes. Just enter your preferences and let AI do the work.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <Card className="border-0 bg-gradient-to-br from-blue-50 to-blue-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
               <CardHeader className="text-center pb-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-xl mb-4 mx-auto">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl mb-4 mx-auto group-hover:scale-110 transition-transform">
                   <Globe className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">
+                <CardTitle className="text-lg text-gray-900">
                   Custom Trip Websites
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-gray-600">
-                  Create beautiful, shareable websites for your golf trips with
-                  professional themes, custom branding, and all trip details.
+                <p className="text-gray-600 text-sm">
+                  Shareable websites with professional themes and customizable details. Branded, stylish, and built for your group.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <Card className="border-0 bg-gradient-to-br from-green-50 to-green-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
               <CardHeader className="text-center pb-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-100 text-purple-600 rounded-xl mb-4 mx-auto">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl mb-4 mx-auto group-hover:scale-110 transition-transform">
                   <BarChart3 className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">
+                <CardTitle className="text-lg text-gray-900">
                   Real-Time Leaderboard
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-gray-600">
-                  Track scores live with multiple formats: stroke play, match
-                  play, Stableford, and custom competitions that keep everyone
-                  engaged.
+                <p className="text-gray-600 text-sm">
+                  Track scores live and show off your competition with real-time updates and multiple scoring formats.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <Card className="border-0 bg-gradient-to-br from-orange-50 to-orange-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
               <CardHeader className="text-center pb-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-100 text-orange-600 rounded-xl mb-4 mx-auto">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-2xl mb-4 mx-auto group-hover:scale-110 transition-transform">
                   <MessageSquare className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">
+                <CardTitle className="text-lg text-gray-900">
                   Private Clubhouse
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-gray-600">
-                  Members-only area for score entry, trip announcements, group
-                  chat, and sharing memories from your golf adventure.
+                <p className="text-gray-600 text-sm">
+                  A private hub for your trip group. Enter scores, post announcements, and stay connected via group chat.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <Card className="border-0 bg-gradient-to-br from-pink-50 to-pink-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
               <CardHeader className="text-center pb-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 text-green-600 rounded-xl mb-4 mx-auto">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-2xl mb-4 mx-auto group-hover:scale-110 transition-transform">
+                  <Smartphone className="h-8 w-8" />
+                </div>
+                <CardTitle className="text-lg text-gray-900">
+                  Mobile-First Experience
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-gray-600 text-sm">
+                  Works beautifully on any device. Designed to look great everywhere — phones, tablets, laptops.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 bg-gradient-to-br from-emerald-50 to-emerald-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
+              <CardHeader className="text-center pb-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-2xl mb-4 mx-auto group-hover:scale-110 transition-transform">
                   <Database className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">
+                <CardTitle className="text-lg text-gray-900">
                   Course Database
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-gray-600">
-                  Access thousands of enriched golf courses with detailed info,
-                  photos, hole layouts, and everything you need to plan your
-                  rounds.
+                <p className="text-gray-600 text-sm">
+                  Thousands of courses enriched with detailed info and photos to enhance your trip site.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <Card className="border-0 bg-gradient-to-br from-yellow-50 to-yellow-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
               <CardHeader className="text-center pb-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-pink-100 text-pink-600 rounded-xl mb-4 mx-auto">
-                  <Smartphone className="h-8 w-8" />
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-600 text-white rounded-2xl mb-4 mx-auto group-hover:scale-110 transition-transform">
+                  <Target className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">
-                  Mobile-First Design
+                <CardTitle className="text-lg text-gray-900">
+                  Custom Scoring Formats
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-gray-600">
-                  Perfect experience on every device with shareable, dynamic
-                  pages that work seamlessly on mobile, tablet, and desktop.
+                <p className="text-gray-600 text-sm">
+                  Support for Stableford, scrambles, and more. Customize points, team formats, and round types.
                 </p>
               </CardContent>
             </Card>
+
+            <Card className="border-0 bg-gradient-to-br from-indigo-50 to-indigo-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group">
+              <CardHeader className="text-center pb-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-2xl mb-4 mx-auto group-hover:scale-110 transition-transform">
+                  <Palette className="h-8 w-8" />
+                </div>
+                <CardTitle className="text-lg text-gray-900">
+                  Themes & Flair
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-gray-600 text-sm">
+                  Choose from pre-built themes and personalize your site with colors, logos, and inside jokes.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Clubhouse Section */}
+      <section className="py-20 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 text-orange-700 text-sm font-medium mb-6">
+                <Heart className="w-4 h-4 mr-2" />
+                Stay Connected
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                Your private clubhouse for trip memories
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Keep your group connected before, during, and after your trip. Share updates, enter scores, and relive the best moments together.
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-center">
+                  <MessageSquare className="w-5 h-5 text-blue-500 mr-3" />
+                  <span className="text-gray-700">Group chat and announcements</span>
+                </div>
+                <div className="flex items-center">
+                  <BarChart3 className="w-5 h-5 text-green-500 mr-3" />
+                  <span className="text-gray-700">Easy score entry and tracking</span>
+                </div>
+                <div className="flex items-center">
+                  <Users className="w-5 h-5 text-purple-500 mr-3" />
+                  <span className="text-gray-700">Member-only access and privacy</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <img
+                src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/event_site_clubhouse.png"
+                alt="Private clubhouse showing group chat and score entry"
+                className="w-full h-auto rounded-2xl shadow-2xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Leaderboard Carousel Section */}
+      <section className="py-20 bg-gradient-to-br from-purple-50/50 to-pink-50/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Competition that brings out your best 🏆
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+              Multiple scoring formats and real-time updates keep everyone engaged and the competition fierce.
+            </p>
+          </div>
+
+          <div className="relative">
+            <div className="relative h-96 rounded-3xl overflow-hidden shadow-2xl">
+              {leaderboardSlides.map((slide, index) => (
+                <div
+                  key={index}
+                  className={`absolute inset-0 transition-all duration-500 ${
+                    index === currentLeaderboardSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                  }`}
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-br ${slide.color} opacity-90`}></div>
+                  <div className="relative h-full flex items-center justify-between px-12">
+                    <div className="text-white max-w-md">
+                      <h3 className="text-3xl font-bold mb-4">{slide.title}</h3>
+                      <p className="text-xl opacity-90">{slide.description}</p>
+                    </div>
+                    <div className="flex-1 max-w-lg ml-8">
+                      <img
+                        src={slide.image}
+                        alt={slide.title}
+                        className="w-full h-auto rounded-xl shadow-xl"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Carousel indicators */}
+            <div className="flex justify-center space-x-2 mt-6">
+              {leaderboardSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentLeaderboardSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all ${
+                    index === currentLeaderboardSlide 
+                      ? 'bg-purple-600 scale-110' 
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 bg-gray-50">
+      <section id="how-it-works" className="py-20 bg-white/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-              From Idea to Unforgettable Trip
+              From idea to unforgettable trip ��
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our streamlined process makes organizing golf trips with friends
-              easier than ever.
+              Our streamlined process removes all the friction from organizing golf trips with friends.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 text-white rounded-full mb-6 mx-auto text-xl font-bold">
+            <div className="text-center group">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-2xl mb-6 mx-auto text-2xl font-bold group-hover:scale-110 transition-transform shadow-lg">
                 1
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">
                 Plan with AI
               </h3>
               <p className="text-gray-600">
-                Tell our AI your dates, location preferences, and group size.
-                Get a complete itinerary with course recommendations in minutes.
+                Tell our AI your dates, location preferences, and group size. Get a complete itinerary with course recommendations in minutes.
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 text-white rounded-full mb-6 mx-auto text-xl font-bold">
+            <div className="text-center group">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl mb-6 mx-auto text-2xl font-bold group-hover:scale-110 transition-transform shadow-lg">
                 2
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">
                 Create & Share
               </h3>
               <p className="text-gray-600">
-                Build a beautiful trip website, invite your friends, and let
-                them RSVP and see all the details in one place.
+                Build a beautiful trip website, invite your friends, and let them RSVP and see all the details in one place.
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 text-white rounded-full mb-6 mx-auto text-xl font-bold">
+            <div className="text-center group">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl mb-6 mx-auto text-2xl font-bold group-hover:scale-110 transition-transform shadow-lg">
                 3
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">
-                Play & Track
+                Play & Celebrate
               </h3>
               <p className="text-gray-600">
-                Enjoy your trip with live scoring, leaderboards, and a private
-                clubhouse to share memories and stay connected.
+                Enjoy your trip with live scoring, leaderboards, and a private clubhouse to share memories and stay connected.
               </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">
-                10K+
-              </div>
-              <p className="text-gray-600">Golf Trips Planned</p>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">
-                25K+
-              </div>
-              <p className="text-gray-600">Happy Golfers</p>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">
-                5000+
-              </div>
-              <p className="text-gray-600">Golf Courses</p>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">
-                98%
-              </div>
-              <p className="text-gray-600">Satisfaction Rate</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-emerald-600 to-green-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-20 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-600/90 to-pink-600/90"></div>
+          <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+          <div className="absolute bottom-10 right-10 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Ready to Plan Your Next Golf Adventure?
+            Ready to plan your next golf adventure? 🚀
           </h2>
-          <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of golfers who are already creating unforgettable
-            experiences with their friends. Start planning in less than 5
-            minutes.
+          <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+            Join thousands of golfers who are already creating unforgettable experiences with their friends. Start planning in less than 5 minutes.
           </p>
           {isAuthenticated ? (
             <Button
               onClick={handleGoToApp}
               size="lg"
-              className="bg-white text-emerald-600 hover:bg-gray-100 px-8 py-4 text-lg h-auto rounded-xl font-semibold"
+              className="bg-white text-purple-600 hover:bg-gray-100 px-8 py-4 text-lg h-auto rounded-full font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
             >
               Create Your Trip <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           ) : (
             <Link
               to="/signup"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-lg font-semibold bg-white text-emerald-600 hover:bg-gray-100 transition-colors shadow-lg"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-lg font-semibold bg-white text-purple-600 hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               Start Planning Now <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
@@ -573,9 +677,11 @@ export default function Index() {
       <footer className="py-12 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="text-2xl font-bold text-white mb-4">TrackTrack</div>
+            <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+              TrackTrack
+            </div>
             <p className="text-gray-400 mb-8">
-              Making golf trips effortless and unforgettable.
+              Making golf trips effortless and unforgettable. ⛳️✨
             </p>
             <div className="flex justify-center space-x-8 text-sm text-gray-400">
               <Link
