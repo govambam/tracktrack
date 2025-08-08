@@ -639,32 +639,6 @@ Format as markdown with headers. Include each course as a separate day. Limit re
 
       // Add courses to event
       if (selectedCourses.length > 0) {
-        console.log("Adding courses to event...");
-        const eventCourses = selectedCourses.map((course, index) => ({
-          event_id: eventData.id,
-          name: course.name,
-          par: course.par || null,
-          yardage: course.yardage || null,
-          description: course.description || null,
-          image_url: course.image_url || null,
-          weather_note: null,
-          display_order: index + 1,
-        }));
-
-        console.log("Event courses data:", eventCourses);
-
-        const { error: coursesError } = await supabase
-          .from("event_courses")
-          .insert(eventCourses);
-
-        if (coursesError) {
-          console.error("Courses insertion error:", coursesError);
-          throw new Error(
-            `Failed to add courses: ${coursesError.message || JSON.stringify(coursesError)}`,
-          );
-        }
-        console.log("Courses added successfully");
-
         // Create rounds with Stableford scoring for each course
         console.log("Creating rounds for each course...");
         const eventRounds = selectedCourses.map((course, index) => {
