@@ -704,7 +704,7 @@ Return your response as a JSON object with these fields:
           ) : (
             <div className="space-y-4">
               {courses.map((course) => (
-                <Card key={course.id} className="border-green-100 bg-green-50">
+                <Card key={course.id} className="border-purple-100 bg-purple-50/30">
                   <CardHeader>
                     <CardTitle className="text-base text-green-900">
                       {course.name}
