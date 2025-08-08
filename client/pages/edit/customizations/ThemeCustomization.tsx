@@ -222,7 +222,7 @@ export default function ThemeCustomization() {
                 <div className="flex items-center space-x-3">
                   <CardTitle className="text-xl">{theme.name}</CardTitle>
                   {selectedTheme === theme.id && (
-                    <div className="p-1 bg-green-500 rounded-full">
+                    <div className="p-1 bg-purple-500 rounded-full">
                       <Check className="h-3 w-3 text-white" />
                     </div>
                   )}
