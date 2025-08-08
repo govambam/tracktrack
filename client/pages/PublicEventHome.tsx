@@ -1321,11 +1321,6 @@ export default function PublicEventHome({
       ] = await Promise.all([
         supabase.from("event_players").select("*").eq("event_id", eventId),
         supabase
-          .from("event_courses")
-          .select("*")
-          .eq("event_id", eventId)
-          .order("display_order"),
-        supabase
           .from("event_rounds")
           .select("*, courses(id, name, location, holes, par, is_official)")
           .eq("event_id", eventId)
