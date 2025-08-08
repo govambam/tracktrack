@@ -269,7 +269,7 @@ export default function ScoringEdit() {
             <Button
               onClick={handleSave}
               disabled={saving}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
             >
               <Save className="h-4 w-4 mr-2" />
               {saving ? "Saving..." : "Save Scoring Format"}
