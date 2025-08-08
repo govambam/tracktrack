@@ -1,14 +1,16 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { GrowthBook } from '@growthbook/growthbook-react';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { GrowthBook } from "@growthbook/growthbook-react";
 
 // Create GrowthBook instance
 const growthbook = new GrowthBook({
-  apiHost: import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io",
-  clientKey: import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u",
+  apiHost:
+    import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io",
+  clientKey:
+    import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u",
   enableDevMode: import.meta.env.DEV,
   trackingCallback: (experiment, result) => {
     // Optional: Add analytics tracking here
-    console.log('GrowthBook Experiment:', experiment.key, result);
+    console.log("GrowthBook Experiment:", experiment.key, result);
   },
 });
 
@@ -16,17 +18,22 @@ const growthbook = new GrowthBook({
 const GrowthBookContext = createContext<GrowthBook>(growthbook);
 
 // Provider component
-export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     // Load feature definitions from GrowthBook
-    growthbook.loadFeatures().then(() => {
-      setIsLoaded(true);
-    }).catch((error) => {
-      console.error('Failed to load GrowthBook features:', error);
-      setIsLoaded(true); // Continue even if features fail to load
-    });
+    growthbook
+      .loadFeatures()
+      .then(() => {
+        setIsLoaded(true);
+      })
+      .catch((error) => {
+        console.error("Failed to load GrowthBook features:", error);
+        setIsLoaded(true); // Continue even if features fail to load
+      });
 
     // Cleanup on unmount
     return () => {
@@ -56,7 +63,7 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 export const useGrowthBook = () => {
   const context = useContext(GrowthBookContext);
   if (!context) {
-    throw new Error('useGrowthBook must be used within a GrowthBookProvider');
+    throw new Error("useGrowthBook must be used within a GrowthBookProvider");
   }
   return context;
 };
