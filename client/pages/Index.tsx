@@ -447,9 +447,16 @@ export default function Index() {
       {/* Features Grid Section */}
       <section
         id="features"
-        className="py-20 bg-gradient-to-br from-orange-50/50 to-purple-50/50"
+        className="relative py-20 overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-100/50 via-blue-50/50 to-purple-100/50"></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-20 left-8 w-40 h-40 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-xl"></div>
+          <div className="absolute top-32 right-12 w-28 h-28 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-24 left-1/3 w-32 h-32 bg-gradient-to-br from-purple-400/15 to-pink-400/15 rounded-full blur-xl"></div>
+          <div className="absolute bottom-40 right-1/4 w-24 h-24 bg-gradient-to-br from-yellow-400/15 to-orange-400/15 rounded-full blur-xl"></div>
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
               Everything you need for epic golf trips
