@@ -204,7 +204,7 @@ export default function PublicLeaderboard({
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-green-600">
+                  <div className={`text-2xl font-bold ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}>
                     {player.points}
                   </div>
                   <div className="text-sm text-slate-500">points</div>
