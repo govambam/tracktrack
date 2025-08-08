@@ -318,9 +318,9 @@ export default function Index() {
                   Switch themes instantly to match your vibe
                 </p>
               </div>
-              <div className="flex items-center justify-center gap-8">
-                {/* Theme Screenshot */}
-                <div className="relative rounded-2xl overflow-hidden shadow-xl flex-1 max-w-4xl">
+              <div className="relative w-full">
+                {/* Theme Screenshot - Full Width */}
+                <div className="relative rounded-2xl overflow-hidden shadow-xl w-full">
                   <img
                     src={heroThemes[selectedTheme].image}
                     alt={`${heroThemes[selectedTheme].name} theme homepage`}
@@ -328,16 +328,16 @@ export default function Index() {
                   />
                 </div>
 
-                {/* Theme Selector Circles */}
-                <div className="flex flex-col gap-4 ml-6">
+                {/* Theme Selector Circles - Overlay */}
+                <div className="absolute top-4 right-4 flex flex-col gap-2">
                   {heroThemes.map((theme, index) => (
                     <button
                       key={theme.name}
                       onClick={() => setSelectedTheme(index)}
-                      className={`w-12 h-12 rounded-full bg-gradient-to-br ${theme.gradient} shadow-lg transition-all duration-300 border-2 ${
+                      className={`w-8 h-8 rounded-full bg-gradient-to-br ${theme.gradient} shadow-lg transition-all duration-300 border-2 ${
                         selectedTheme === index
                           ? "border-gray-800 scale-110"
-                          : "border-gray-300 hover:border-gray-500 hover:scale-105"
+                          : "border-white/50 hover:border-gray-500 hover:scale-105"
                       }`}
                       title={`Switch to ${theme.name} theme`}
                     />
