@@ -465,7 +465,7 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       }
 
       const existingCourseNames =
-        existingCourses?.map((c) => c.name.toLowerCase()) || [];
+        existingRounds?.map((r) => r.course_name.toLowerCase()) || [];
       console.log("Existing course names:", existingCourseNames);
 
       // Get unique course names from rounds that don't already exist
