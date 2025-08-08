@@ -132,7 +132,7 @@ export default function AppShell() {
                     className="relative h-8 w-8 rounded-full"
                   >
                     <Avatar className="h-8 w-8">
-                      <AvatarFallback className="bg-emerald-600 text-white">
+                      <AvatarFallback className="bg-gradient-to-r from-purple-600 to-pink-600 text-white">
                         {userEmail
                           ? userEmail.substring(0, 2).toUpperCase()
                           : "U"}
