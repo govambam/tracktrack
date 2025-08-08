@@ -314,33 +314,25 @@ export default function Index() {
                     <div className="px-4">
                       {/* Desktop & Mobile Showcase */}
                       <div className="relative max-w-6xl mx-auto">
-                        <div className="flex items-end justify-center space-x-8 lg:space-x-16">
+                        <div className="flex items-end justify-center">
                           {/* Desktop Preview */}
                           <div className="relative z-10">
-                            <div className="relative">
-                              {/* Desktop Frame Shadow */}
-                              <div className="absolute -inset-4 bg-black/10 rounded-2xl blur-2xl"></div>
-                              <img
-                                src={theme.desktopImage}
-                                alt={`${theme.name} desktop theme preview`}
-                                className="relative w-full max-w-lg lg:max-w-2xl h-auto drop-shadow-2xl"
-                                style={{ backgroundColor: "transparent" }}
-                              />
-                            </div>
+                            <img
+                              src={theme.desktopImage}
+                              alt={`${theme.name} desktop theme preview`}
+                              className="w-full max-w-lg lg:max-w-2xl h-auto"
+                              style={{ backgroundColor: "transparent" }}
+                            />
                           </div>
 
-                          {/* Mobile Preview */}
-                          <div className="relative z-20 -ml-8 lg:-ml-16">
-                            <div className="relative">
-                              {/* Mobile Frame Shadow */}
-                              <div className="absolute -inset-2 bg-black/10 rounded-3xl blur-xl"></div>
-                              <img
-                                src={theme.mobileImage}
-                                alt={`${theme.name} mobile theme preview`}
-                                className="relative w-full max-w-32 sm:max-w-40 lg:max-w-48 h-auto drop-shadow-2xl"
-                                style={{ backgroundColor: "transparent" }}
-                              />
-                            </div>
+                          {/* Mobile Preview - Overlapping */}
+                          <div className="relative z-20 -ml-12 sm:-ml-16 lg:-ml-24">
+                            <img
+                              src={theme.mobileImage}
+                              alt={`${theme.name} mobile theme preview`}
+                              className="w-full max-w-32 sm:max-w-40 lg:max-w-48 h-auto"
+                              style={{ backgroundColor: "transparent" }}
+                            />
                           </div>
                         </div>
                       </div>
@@ -363,28 +355,6 @@ export default function Index() {
                   }`}
                 />
               ))}
-            </div>
-
-            {/* Theme Info */}
-            <div className="text-center mt-8 max-w-md mx-auto">
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg px-8 py-6 border border-white/20">
-                <h3 className="font-bold text-gray-900 text-xl mb-2">
-                  {themes[selectedIndex].name}
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  {themes[selectedIndex].description}
-                </p>
-                <div className="flex items-center justify-center space-x-4 text-sm text-gray-500">
-                  <div className="flex items-center space-x-1">
-                    <Smartphone className="h-4 w-4" />
-                    <span>Mobile Ready</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Globe className="h-4 w-4" />
-                    <span>Responsive</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
