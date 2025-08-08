@@ -289,24 +289,24 @@ export default function Index() {
                     <div key={index} className="flex-[0_0_100%] min-w-0">
                       <div className="px-2">
                         {/* Desktop & Mobile Showcase */}
-                        <div className="relative max-w-4xl mx-auto">
+                        <div className="relative max-w-5xl mx-auto">
                           <div className="flex items-start justify-center">
                             {/* Desktop Preview */}
                             <div className="relative z-10 mt-8 lg:mt-12">
                               <img
                                 src={theme.desktopImage}
                                 alt={`${theme.name} desktop theme preview`}
-                                className="w-full max-w-md lg:max-w-lg h-auto"
+                                className="w-full max-w-lg lg:max-w-2xl h-auto"
                                 style={{ backgroundColor: "transparent" }}
                               />
                             </div>
 
-                            {/* Mobile Preview - Overlapping and positioned higher */}
-                            <div className="relative z-20 -ml-8 sm:-ml-12 lg:-ml-16">
+                            {/* Mobile Preview - More Overlapping */}
+                            <div className="relative z-20 -ml-16 sm:-ml-24 lg:-ml-32">
                               <img
                                 src={theme.mobileImage}
                                 alt={`${theme.name} mobile theme preview`}
-                                className="w-full max-w-24 sm:max-w-32 lg:max-w-40 h-auto"
+                                className="w-full max-w-32 sm:max-w-40 lg:max-w-52 h-auto"
                                 style={{ backgroundColor: "transparent" }}
                               />
                             </div>
