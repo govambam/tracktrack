@@ -637,15 +637,15 @@ Return your response as a JSON object with these fields:
 
   return (
     <div className="space-y-6">
-      <Card className="border-green-100">
+      <Card className="border-purple-100">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-lg text-green-900 flex items-center">
-                <MapPin className="h-5 w-5 mr-2 text-emerald-600" />
+              <CardTitle className="text-lg text-purple-900 flex items-center">
+                <MapPin className="h-5 w-5 mr-2 text-purple-600" />
                 Course Details
               </CardTitle>
-              <CardDescription className="text-green-600">
+              <CardDescription className="text-purple-600">
                 Customize the information displayed for each course in your
                 event
               </CardDescription>
@@ -653,7 +653,7 @@ Return your response as a JSON object with these fields:
             <div className="flex items-center space-x-2">
               <Label
                 htmlFor="courses-toggle"
-                className="text-sm text-green-700"
+                className="text-sm text-purple-700"
               >
                 Enable Courses Page
               </Label>
