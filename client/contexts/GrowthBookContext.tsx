@@ -166,10 +166,12 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
       // Get current user session with timeout
       const sessionPromise = supabase.auth.getSession();
       const sessionTimeout = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Session timeout")), 3000)
+        setTimeout(() => reject(new Error("Session timeout")), 3000),
       );
 
-      const { data: { session } } = await Promise.race([sessionPromise, sessionTimeout]);
+      const {
+        data: { session },
+      } = await Promise.race([sessionPromise, sessionTimeout]);
       console.log("Session retrieved:", !!session?.user);
 
       // Base attributes (always available)
@@ -213,13 +215,13 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
             .eq("created_by", session.user.id);
 
           const dbTimeout = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("Database query timeout")), 2000)
+            setTimeout(() => reject(new Error("Database query timeout")), 2000),
           );
 
           // Execute both queries with timeout
           const [profileResult, eventCountResult] = await Promise.race([
             Promise.all([profilePromise, eventCountPromise]),
-            dbTimeout
+            dbTimeout,
           ]);
 
           const profile = profileResult.data;
@@ -270,7 +272,10 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
 
           attributes = { ...attributes, ...userSpecificAttributes };
         } catch (dbError) {
-          console.warn("Database queries failed, using basic authenticated attributes:", dbError);
+          console.warn(
+            "Database queries failed, using basic authenticated attributes:",
+            dbError,
+          );
           // Use basic authenticated attributes without profile data
           attributes = {
             ...baseAttributes,
