@@ -253,7 +253,9 @@ export default function EventShell() {
           ? "bg-gradient-to-br from-green-50 to-amber-50"
           : currentTheme === "TourTech"
             ? "bg-gray-50"
-            : "bg-gradient-to-br from-blue-50 to-indigo-100"
+            : currentTheme === "TrackTrack"
+              ? "bg-gradient-to-br from-purple-50/50 via-pink-50/50 to-orange-50/50"
+              : "bg-gradient-to-br from-blue-50 to-indigo-100"
       }`}
     >
       {/* Persistent Top Navigation */}
@@ -261,7 +263,9 @@ export default function EventShell() {
         className={`fixed top-0 left-0 right-0 z-50 ${
           currentTheme === "Masters"
             ? "bg-white/98 backdrop-blur-sm border-b border-green-800/20 shadow-sm"
-            : "bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg"
+            : currentTheme === "TrackTrack"
+              ? "bg-white/95 backdrop-blur-sm border-b border-purple-200/50 shadow-lg"
+              : "bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg"
         }`}
       >
         <div className="max-w-6xl mx-auto px-6 py-4">
@@ -271,54 +275,70 @@ export default function EventShell() {
               className={`font-bold truncate ${
                 currentTheme === "Masters"
                   ? "text-green-900 font-serif text-lg"
-                  : "text-slate-900"
+                  : currentTheme === "TrackTrack"
+                    ? "text-xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+                    : "text-slate-900"
               }`}
             >
-              {eventData.name}
+              {currentTheme === "TrackTrack" ? "TrackTrack" : eventData.name}
             </div>
 
             {/* Desktop Navigation Tabs */}
             <div className="hidden md:flex items-center space-x-8">
               <button
                 onClick={() => navigateToTab("home")}
-                className={`flex items-center space-x-2 text-sm font-medium transition-colors cursor-pointer ${
+                className={`flex items-center space-x-2 text-sm font-medium transition-colors cursor-pointer relative ${
                   currentTab === "home"
                     ? currentTheme === "Masters"
                       ? "text-amber-600 font-serif"
                       : currentTheme === "TourTech"
                         ? "text-orange-600"
-                        : "text-blue-600"
+                        : currentTheme === "TrackTrack"
+                          ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold"
+                          : "text-blue-600"
                     : currentTheme === "Masters"
                       ? "text-green-800 hover:text-amber-600 font-serif"
-                      : "text-slate-600 hover:text-slate-800"
+                      : currentTheme === "TrackTrack"
+                        ? "text-slate-600 hover:text-purple-600"
+                        : "text-slate-600 hover:text-slate-800"
                 }`}
               >
                 <Home className="h-4 w-4" />
                 <span>Home</span>
+                {currentTab === "home" && currentTheme === "TrackTrack" && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+                )}
               </button>
 
               <button
                 onClick={() => navigateToTab("leaderboard")}
-                className={`flex items-center space-x-2 text-sm font-medium transition-colors cursor-pointer ${
+                className={`flex items-center space-x-2 text-sm font-medium transition-colors cursor-pointer relative ${
                   currentTab === "leaderboard"
                     ? currentTheme === "Masters"
                       ? "text-amber-600 font-serif"
                       : currentTheme === "TourTech"
                         ? "text-orange-600"
-                        : "text-blue-600"
+                        : currentTheme === "TrackTrack"
+                          ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold"
+                          : "text-blue-600"
                     : currentTheme === "Masters"
                       ? "text-green-800 hover:text-amber-600 font-serif"
-                      : "text-slate-600 hover:text-slate-800"
+                      : currentTheme === "TrackTrack"
+                        ? "text-slate-600 hover:text-purple-600"
+                        : "text-slate-600 hover:text-slate-800"
                 }`}
               >
                 <BarChart3 className="h-4 w-4" />
                 <span>Leaderboard</span>
+                {currentTab === "leaderboard" && currentTheme === "TrackTrack" && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+                )}
               </button>
 
               <button
                 onClick={() => navigateToTab("clubhouse")}
                 disabled={!eventData.clubhouse_password}
-                className={`flex items-center space-x-2 text-sm font-medium transition-colors cursor-pointer ${
+                className={`flex items-center space-x-2 text-sm font-medium transition-colors cursor-pointer relative ${
                   !eventData.clubhouse_password
                     ? "opacity-50 cursor-not-allowed"
                     : currentTab === "clubhouse"
@@ -326,14 +346,21 @@ export default function EventShell() {
                         ? "text-amber-600 font-serif"
                         : currentTheme === "TourTech"
                           ? "text-orange-600"
-                          : "text-blue-600"
+                          : currentTheme === "TrackTrack"
+                            ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold"
+                            : "text-blue-600"
                       : currentTheme === "Masters"
                         ? "text-green-800 hover:text-amber-600 font-serif"
-                        : "text-slate-600 hover:text-slate-800"
+                        : currentTheme === "TrackTrack"
+                          ? "text-slate-600 hover:text-purple-600"
+                          : "text-slate-600 hover:text-slate-800"
                 }`}
               >
                 <Users className="h-4 w-4" />
                 <span>Clubhouse</span>
+                {currentTab === "clubhouse" && currentTheme === "TrackTrack" && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+                )}
               </button>
             </div>
 
