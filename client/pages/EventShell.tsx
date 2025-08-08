@@ -338,9 +338,10 @@ export default function EventShell() {
               >
                 <BarChart3 className="h-4 w-4" />
                 <span>Leaderboard</span>
-                {currentTab === "leaderboard" && currentTheme === "TrackTrack" && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
-                )}
+                {currentTab === "leaderboard" &&
+                  currentTheme === "TrackTrack" && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+                  )}
               </button>
 
               <button
@@ -366,9 +367,10 @@ export default function EventShell() {
               >
                 <Users className="h-4 w-4" />
                 <span>Clubhouse</span>
-                {currentTab === "clubhouse" && currentTheme === "TrackTrack" && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
-                )}
+                {currentTab === "clubhouse" &&
+                  currentTheme === "TrackTrack" && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+                  )}
               </button>
             </div>
 
