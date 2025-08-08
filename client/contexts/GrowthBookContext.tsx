@@ -335,7 +335,8 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-4"></div>
-          <p className="text-slate-600 mb-4">Loading features...</p>
+          <p className="text-slate-600 mb-2">Loading features...</p>
+          <p className="text-xs text-slate-400 mb-4">This should only take a moment</p>
           {loadingError && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md max-w-md mx-auto">
               <p className="text-red-700 text-sm">
@@ -346,11 +347,12 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
           <button
             onClick={() => {
               console.log("Manually skipping GrowthBook initialization");
+              growthbook.setFeatures(localFeatures);
               setIsLoaded(true);
             }}
-            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm"
           >
-            Continue without features
+            Continue without remote features
           </button>
         </div>
       </div>
