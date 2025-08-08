@@ -437,52 +437,56 @@ export default function MyTrips() {
               key={event.id}
               className="bg-white border border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all duration-200 hover:-translate-y-1"
             >
-              <CardHeader>
-                <div className="flex items-start justify-between">
+              <CardHeader className="pb-4">
+                <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <CardTitle className="text-xl text-gray-900">
+                    <div className="flex items-center gap-3 mb-2">
+                      <CardTitle className="text-lg font-semibold text-gray-900 leading-tight">
                         {event.name}
                       </CardTitle>
                       {event.user_role === "admin" ? (
                         <Badge
                           variant="outline"
-                          className="text-xs bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 border-blue-200"
+                          className="text-xs font-medium bg-blue-50 text-blue-700 border-blue-200 px-2 py-1"
                         >
                           Admin
                         </Badge>
                       ) : event.user_role === "player" ? (
                         <Badge
                           variant="outline"
-                          className="text-xs bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 border-gray-200"
+                          className="text-xs font-medium bg-gray-50 text-gray-700 border-gray-200 px-2 py-1"
                         >
                           Player
                         </Badge>
                       ) : null}
                     </div>
-                    <CardDescription className="text-gray-600 line-clamp-2">
+                    <CardDescription className="text-gray-600 line-clamp-2 text-sm leading-relaxed">
                       {event.description || "Golf event"}
                     </CardDescription>
                   </div>
-                  <Badge className={getStatusColor(status)}>{status}</Badge>
+                  <Badge className={getStatusColor(status)} style={{fontSize: '0.75rem', padding: '0.25rem 0.5rem'}}>
+                    {status}
+                  </Badge>
+                </div>
+
+                {/* Consolidated Info Bar */}
+                <div className="flex items-center gap-6 text-sm text-gray-600 bg-gray-50 rounded-lg px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-purple-600" />
+                    <span>{formatDateRange(event.start_date, event.end_date)}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-purple-600" />
+                    <span className="truncate">{event.location}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Eye className="h-4 w-4 text-purple-600" />
+                    <span>{event.is_private ? "Private" : "Public"}</span>
+                  </div>
                 </div>
               </CardHeader>
 
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center text-gray-700">
-                    <Calendar className="h-4 w-4 mr-2 text-purple-600" />
-                    {formatDateRange(event.start_date, event.end_date)}
-                  </div>
-                  <div className="flex items-center text-gray-700">
-                    <MapPin className="h-4 w-4 mr-2 text-purple-600" />
-                    {event.location}
-                  </div>
-                  <div className="flex items-center text-gray-700">
-                    <Eye className="h-4 w-4 mr-2 text-purple-600" />
-                    {event.is_private ? "Private" : "Public"}
-                  </div>
-                </div>
+              <CardContent className="pt-0">
 
                 <div className="flex flex-wrap gap-2 pt-2">
                   {/* View Site button - available for all published events */}
