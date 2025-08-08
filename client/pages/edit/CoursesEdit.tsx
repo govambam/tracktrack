@@ -567,7 +567,7 @@ export default function CoursesEdit() {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-sm text-green-600 italic">
+                    <p className="text-sm text-purple-600 italic">
                       No skills contests added for this round
                     </p>
                   )}
@@ -581,7 +581,7 @@ export default function CoursesEdit() {
             <Button
               variant="outline"
               onClick={addRound}
-              className="border-green-200 text-green-700 hover:bg-green-50"
+              className="border-purple-200 text-purple-700 hover:bg-purple-50"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Another Round
@@ -593,7 +593,7 @@ export default function CoursesEdit() {
             <Button
               onClick={handleSave}
               disabled={saving}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
             >
               <Save className="h-4 w-4 mr-2" />
               {saving ? "Saving..." : "Save Rounds"}
@@ -602,9 +602,9 @@ export default function CoursesEdit() {
 
           {/* Summary */}
           {rounds.length > 0 && (
-            <Alert className="border-emerald-200 bg-emerald-50">
-              <Trophy className="h-4 w-4 text-emerald-600" />
-              <AlertDescription className="text-emerald-700">
+            <Alert className="border-purple-200 bg-purple-50">
+              <Trophy className="h-4 w-4 text-purple-600" />
+              <AlertDescription className="text-purple-700">
                 <div className="font-semibold">Round Summary</div>
                 <div className="mt-1">
                   {rounds.length} round{rounds.length !== 1 ? "s" : ""} planned
