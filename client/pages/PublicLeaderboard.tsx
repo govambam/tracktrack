@@ -695,13 +695,22 @@ export default function PublicLeaderboard({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50/30">
+    <div className={`min-h-screen ${currentTheme === "TrackTrack" ? "bg-gradient-to-br from-purple-50/50 via-pink-50/50 to-orange-50/50" : "bg-gradient-to-br from-slate-50 via-white to-green-50/30"}`}>
+      {/* Background elements for TrackTrack theme */}
+      {currentTheme === "TrackTrack" && (
+        <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-32 left-20 w-24 h-24 bg-gradient-to-br from-orange-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 left-1/3 w-28 h-28 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-xl"></div>
+        </div>
+      )}
+
       {/* Header Navigation */}
       {!hideNavigation && (
-        <nav className="bg-white/95 backdrop-blur-sm border-b border-slate-200/50 shadow-lg sticky top-0 z-50">
+        <nav className={`bg-white/95 backdrop-blur-sm border-b ${currentTheme === "TrackTrack" ? "border-purple-200/50" : "border-slate-200/50"} shadow-lg sticky top-0 z-50`}>
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
-              <div className="font-bold text-slate-900">
+              <div className={`font-bold ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" : "text-slate-900"}`}>
                 Tournament Leaderboard
               </div>
               <div className="hidden md:flex items-center space-x-8">
@@ -711,8 +720,12 @@ export default function PublicLeaderboard({
                     href={item.href}
                     className={`text-sm font-medium transition-colors ${
                       item.name === "Leaderboard"
-                        ? "text-green-600 font-semibold"
-                        : "text-slate-600 hover:text-green-600"
+                        ? currentTheme === "TrackTrack"
+                          ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold"
+                          : "text-green-600 font-semibold"
+                        : currentTheme === "TrackTrack"
+                          ? "text-slate-600 hover:text-purple-600"
+                          : "text-slate-600 hover:text-green-600"
                     }`}
                   >
                     {item.name}
@@ -728,13 +741,17 @@ export default function PublicLeaderboard({
       <div className="max-w-6xl mx-auto px-6 pt-8 pb-12">
         {/* Title Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">
-            Live Scoring
+          <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}>
+            {currentTheme === "TrackTrack" ? (
+              <>Live <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Scoring</span></>
+            ) : (
+              "Live Scoring"
+            )}
           </h1>
-          <p className="text-xl text-green-600 font-semibold mb-2">
+          <p className={`text-xl font-semibold mb-2 ${currentTheme === "TrackTrack" ? "bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent" : "text-green-600"}`}>
             & Prize Tracker
           </p>
-          <p className="text-slate-600">
+          <p className={`${currentTheme === "TrackTrack" ? "text-gray-600 text-lg" : "text-slate-600"}`}>
             Track scorecards, Stableford points, and prize money across all
             three rounds
           </p>
@@ -742,7 +759,7 @@ export default function PublicLeaderboard({
 
         {/* Tabs */}
         <div className="flex justify-center mb-12">
-          <div className="inline-flex bg-white/80 backdrop-blur-sm rounded-2xl p-2 border border-slate-200/50 shadow-lg">
+          <div className={`inline-flex bg-white/80 backdrop-blur-sm rounded-2xl p-2 border ${currentTheme === "TrackTrack" ? "border-purple-200/50" : "border-slate-200/50"} shadow-lg`}>
             {[
               { id: "leaderboard", label: "Stableford Board", icon: BarChart3 },
               { id: "money", label: "Money Leaders", icon: DollarSign },
@@ -755,8 +772,12 @@ export default function PublicLeaderboard({
                   activeTab === tab.id
                     ? currentTheme === "TourTech"
                       ? "bg-orange-600 text-white shadow-lg"
-                      : "bg-green-600 text-white shadow-lg"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                      : currentTheme === "TrackTrack"
+                        ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg"
+                        : "bg-green-600 text-white shadow-lg"
+                    : currentTheme === "TrackTrack"
+                      ? "text-slate-600 hover:text-purple-600 hover:bg-purple-50"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
                 <tab.icon className="h-4 w-4" />
@@ -774,9 +795,16 @@ export default function PublicLeaderboard({
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-16 pt-8 border-t border-slate-200">
-          <p className="text-slate-500">
-            Live tournament data powered by TrackTrack Golf
+        <div className={`text-center mt-16 pt-8 border-t ${currentTheme === "TrackTrack" ? "border-purple-200" : "border-slate-200"}`}>
+          <p className={`${currentTheme === "TrackTrack" ? "text-gray-500" : "text-slate-500"}`}>
+            Live tournament data powered by{" "}
+            {currentTheme === "TrackTrack" ? (
+              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
+                TrackTrack Golf
+              </span>
+            ) : (
+              "TrackTrack Golf"
+            )}
           </p>
         </div>
       </div>
