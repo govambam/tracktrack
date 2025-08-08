@@ -352,8 +352,14 @@ export default function Index() {
       </section>
 
       {/* Leaderboard Carousel Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-50/50 to-pink-50/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-purple-50/50 to-pink-100/50"></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-10 right-10 w-28 h-28 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-20 left-20 w-36 h-36 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 left-1/2 w-20 h-20 bg-gradient-to-br from-pink-400/15 to-orange-400/15 rounded-full blur-xl"></div>
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 text-sm font-medium mb-6">
               <Trophy className="w-4 h-4 mr-2" />
