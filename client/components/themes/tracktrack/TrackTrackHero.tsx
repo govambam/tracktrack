@@ -109,7 +109,7 @@ export const TrackTrackHero: React.FC<TrackTrackHeroProps> = ({
 
           {/* Countdown Timer */}
           <div className="mt-12">
-            <CountdownTimer targetDate={eventData.start_date} />
+            <TrackTrackCountdownTimer targetDate={eventData.start_date} />
           </div>
         </div>
       </div>
