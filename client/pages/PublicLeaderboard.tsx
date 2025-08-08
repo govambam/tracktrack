@@ -149,7 +149,7 @@ export default function PublicLeaderboard({
   const contestIcons = {
     heart: "♥",
     club: "���",
-    diamond: "���",
+    diamond: "����",
     star: "⭐",
   };
 
@@ -242,16 +242,30 @@ export default function PublicLeaderboard({
       {/* Team Scramble Scores */}
       <div>
         <div className="flex items-center space-x-2 mb-6">
-          <Users
-            className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
-          />
-          <h3 className="text-2xl font-bold text-slate-900">
-            Team Scramble Scores
-          </h3>
-        </div>
+        <Users
+          className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600"}`}
+        />
+        <h3
+          className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+        >
+          {currentTheme === "TrackTrack" ? (
+            <>
+              Team{" "}
+              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Scramble
+              </span>{" "}
+              Scores
+            </>
+          ) : (
+            "Team Scramble Scores"
+          )}
+        </h3>
+      </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-2xl p-6 border-2 border-slate-200">
+          <div
+            className={`${currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm border-purple-200" : "bg-white border-slate-200"} rounded-2xl p-6 border-2`}
+          >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
                 <Users className="h-5 w-5 text-blue-600" />
@@ -262,7 +276,9 @@ export default function PublicLeaderboard({
             <p className="text-sm text-slate-500">Quicksands points</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 border-2 border-slate-200">
+          <div
+            className={`${currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm border-purple-200" : "bg-white border-slate-200"} rounded-2xl p-6 border-2`}
+          >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
                 <Users className="h-5 w-5 text-purple-600" />
@@ -541,9 +557,22 @@ export default function PublicLeaderboard({
           return (
             <div key={round.id}>
               <div className="flex items-center space-x-2 mb-6">
-                <Target className="h-5 w-5 text-green-600" />
-                <h3 className="text-2xl font-bold text-slate-900">
-                  Round {round.round_number}: {courseName}
+                <Target
+                  className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600"}`}
+                />
+                <h3
+                  className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+                >
+                  {currentTheme === "TrackTrack" ? (
+                    <>
+                      Round {round.round_number}:{" "}
+                      <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        {courseName}
+                      </span>
+                    </>
+                  ) : (
+                    `Round ${round.round_number}: ${courseName}`
+                  )}
                 </h3>
                 {course?.is_official && (
                   <span className="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded">
@@ -556,7 +585,9 @@ export default function PublicLeaderboard({
                   📍 {course.location}
                 </p>
               )}
-              <p className="text-slate-600 mb-6">
+              <p
+                className={`${currentTheme === "TrackTrack" ? "text-gray-600" : "text-slate-600"} mb-6`}
+              >
                 {holes.length} holes •{" "}
                 {round.scoring_type === "stroke_play"
                   ? "Stroke Play"
@@ -573,26 +604,36 @@ export default function PublicLeaderboard({
                 )}
               </p>
 
-              <div className="bg-white rounded-2xl overflow-hidden border-2 border-slate-200">
+              <div
+                className={`${currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm" : "bg-white"} rounded-2xl overflow-hidden border-2 ${currentTheme === "TrackTrack" ? "border-purple-200" : "border-slate-200"}`}
+              >
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="bg-slate-50">
+                    <thead
+                      className={`${currentTheme === "TrackTrack" ? "bg-purple-50/50" : "bg-slate-50"}`}
+                    >
                       <tr>
-                        <th className="px-4 py-3 text-left text-sm font-semibold text-slate-900">
+                        <th
+                          className={`px-4 py-3 text-left text-sm font-semibold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+                        >
                           Hole
                         </th>
                         {holes.slice(0, 18).map((hole) => (
                           <th
                             key={hole.hole_number}
-                            className="px-3 py-3 text-center text-sm font-semibold text-slate-900"
+                            className={`px-3 py-3 text-center text-sm font-semibold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
                           >
                             {hole.hole_number}
                           </th>
                         ))}
-                        <th className="px-4 py-3 text-center text-sm font-semibold text-slate-900">
+                        <th
+                          className={`px-4 py-3 text-center text-sm font-semibold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+                        >
                           Total
                         </th>
-                        <th className="px-4 py-3 text-center text-sm font-semibold text-slate-900">
+                        <th
+                          className={`px-4 py-3 text-center text-sm font-semibold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+                        >
                           +/-
                         </th>
                       </tr>
@@ -600,22 +641,30 @@ export default function PublicLeaderboard({
 
                     <tbody>
                       {hasParData && (
-                        <tr className="border-b border-slate-200">
-                          <td className="px-4 py-3 font-semibold text-slate-900">
+                        <tr
+                          className={`border-b ${currentTheme === "TrackTrack" ? "border-purple-200" : "border-slate-200"}`}
+                        >
+                          <td
+                            className={`px-4 py-3 font-semibold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+                          >
                             Par
                           </td>
                           {holes.slice(0, 18).map((hole) => (
                             <td
                               key={hole.hole_number}
-                              className="px-3 py-3 text-center font-semibold text-slate-600"
+                              className={`px-3 py-3 text-center font-semibold ${currentTheme === "TrackTrack" ? "text-gray-600" : "text-slate-600"}`}
                             >
                               {hole.par}
                             </td>
                           ))}
-                          <td className="px-4 py-3 text-center font-bold text-slate-900">
+                          <td
+                            className={`px-4 py-3 text-center font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+                          >
                             {totalPar}
                           </td>
-                          <td className="px-4 py-3 text-center font-bold text-slate-900">
+                          <td
+                            className={`px-4 py-3 text-center font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+                          >
                             E
                           </td>
                         </tr>
@@ -624,9 +673,11 @@ export default function PublicLeaderboard({
                       {playerScores.map((player) => (
                         <tr
                           key={player.id}
-                          className="border-b border-slate-100 hover:bg-slate-50"
+                          className={`border-b ${currentTheme === "TrackTrack" ? "border-purple-100 hover:bg-purple-50/30" : "border-slate-100 hover:bg-slate-50"}`}
                         >
-                          <td className="px-4 py-3 font-semibold text-slate-900">
+                          <td
+                            className={`px-4 py-3 font-semibold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+                          >
                             {player.full_name}
                           </td>
                           {player.holeScores.slice(0, 18).map((holeScore) => {
@@ -675,10 +726,14 @@ export default function PublicLeaderboard({
                               </td>
                             );
                           })}
-                          <td className="px-4 py-3 text-center font-bold text-slate-900">
+                          <td
+                            className={`px-4 py-3 text-center font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+                          >
                             {player.totalStrokes || "-"}
                           </td>
-                          <td className="px-4 py-3 text-center font-bold text-green-600">
+                          <td
+                            className={`px-4 py-3 text-center font-bold ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" : "text-green-600"}`}
+                          >
                             {!hasParData
                               ? "-"
                               : player.totalStrokes &&
