@@ -519,9 +519,9 @@ ${formData.description}`;
             <div className="space-y-2">
               <Label
                 htmlFor="endDate"
-                className="text-green-800 font-medium flex items-center"
+                className="text-purple-900 font-medium flex items-center"
               >
-                <Calendar className="h-4 w-4 mr-1 text-emerald-600" />
+                <Calendar className="h-4 w-4 mr-1 text-purple-600" />
                 End Date *
               </Label>
               <Input
@@ -529,7 +529,7 @@ ${formData.description}`;
                 type="date"
                 value={formData.endDate}
                 onChange={(e) => handleInputChange("endDate", e.target.value)}
-                className={`border-green-200 focus:border-emerald-500 ${errors.endDate ? "border-red-300" : ""}`}
+                className={`border-purple-200 focus:border-purple-500 ${errors.endDate ? "border-red-300" : ""}`}
               />
               {errors.endDate && (
                 <p className="text-sm text-red-600">{errors.endDate}</p>
