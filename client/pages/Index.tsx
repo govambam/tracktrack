@@ -37,31 +37,31 @@ export default function Index() {
   // Theme showcase data
   const themes = [
     {
-      name: "Default",
-      description: "Clean & Professional",
-      mobileImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.21.33%20AM-portrait.png",
-      desktopImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.54.19%20AM-front.png",
-      colors: { primary: "emerald", accent: "green" },
-    },
-    {
       name: "Masters",
       description: "Classic & Elegant",
       mobileImage:
         "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.22.15%20AM-portrait.png",
       desktopImage:
-        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.54.19%20AM-front.png",
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%201.25.32%20AM-front.png",
       colors: { primary: "amber", accent: "green" },
     },
     {
       name: "TourTech",
       description: "Modern & Sleek",
       mobileImage:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.21.33%20AM-portrait.png",
+      desktopImage:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%201.24.36%20AM-front.png",
+      colors: { primary: "orange", accent: "slate" },
+    },
+    {
+      name: "GolfOS",
+      description: "Clean & Professional",
+      mobileImage:
         "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.22.46%20AM-portrait.png",
       desktopImage:
         "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Screenshot%202025-08-08%20at%2012.54.19%20AM-front.png",
-      colors: { primary: "orange", accent: "slate" },
+      colors: { primary: "emerald", accent: "green" },
     },
   ];
 
