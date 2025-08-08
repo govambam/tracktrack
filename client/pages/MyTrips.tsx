@@ -345,7 +345,9 @@ export default function MyTrips() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">My Events</h1>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            My Events
+          </h1>
           <p className="text-gray-600 mt-1">
             Manage your events and participate in tournaments you've been
             invited to
