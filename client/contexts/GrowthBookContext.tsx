@@ -17,8 +17,10 @@ const localFeatures = {
 
 // Create GrowthBook instance with proper remote loading
 const createGrowthBookInstance = () => {
-  const apiHost = import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io";
-  const clientKey = import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u";
+  const apiHost =
+    import.meta.env.VITE_GROWTHBOOK_API_HOST || "https://cdn.growthbook.io";
+  const clientKey =
+    import.meta.env.VITE_GROWTHBOOK_CLIENT_KEY || "sdk-w1E948s82nX7yJ5u";
 
   console.log("Creating GrowthBook instance with:", { apiHost, clientKey });
 
@@ -58,7 +60,10 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
 
         // Create a timeout promise (3 seconds)
         const timeoutPromise = new Promise<void>((_, reject) =>
-          setTimeout(() => reject(new Error("GrowthBook load timeout (3s)")), 3000)
+          setTimeout(
+            () => reject(new Error("GrowthBook load timeout (3s)")),
+            3000,
+          ),
         );
 
         // Try to load features with timeout
@@ -69,7 +74,9 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
         setIsLoaded(true);
       } catch (error) {
         console.error("Failed to load GrowthBook features:", error);
-        setLoadingError(error instanceof Error ? error.message : "Unknown error");
+        setLoadingError(
+          error instanceof Error ? error.message : "Unknown error",
+        );
         console.log("Continuing with local fallback features...");
 
         // Ensure local features are available as fallback
