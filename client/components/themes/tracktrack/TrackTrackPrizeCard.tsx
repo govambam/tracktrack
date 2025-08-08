@@ -2,20 +2,21 @@ import React from "react";
 import { Trophy, Medal, Star, DollarSign, Target } from "lucide-react";
 
 interface TrackTrackPrizeCardProps {
-  prize: {
+  prizes: {
     id: string;
-    category: string;
+    category?: string;
     description: string;
     amount?: number;
-  };
-  index: number;
+    name?: string;
+  }[];
 }
 
 export const TrackTrackPrizeCard: React.FC<TrackTrackPrizeCardProps> = ({
-  prize,
-  index,
+  prizes,
 }) => {
-  const getPrizeIcon = (category: string) => {
+  const getPrizeIcon = (category?: string) => {
+    if (!category) return Trophy;
+    
     switch (category.toLowerCase()) {
       case "overall_champion":
       case "winner":
@@ -43,37 +44,58 @@ export const TrackTrackPrizeCard: React.FC<TrackTrackPrizeCardProps> = ({
     return colors[index % colors.length];
   };
 
-  const Icon = getPrizeIcon(prize.category);
-  const gradientColors = getPrizeColors(index);
-
   return (
-    <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-purple-100 hover:shadow-lg hover:shadow-purple-100/50 transition-all duration-300 hover:-translate-y-1 group">
-      {/* Prize Icon */}
+    <div className="w-full">
       <div
-        className={`w-16 h-16 bg-gradient-to-br ${gradientColors} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+        className={`grid gap-4 ${
+          prizes.length === 1
+            ? "grid-cols-1 max-w-sm"
+            : prizes.length === 2
+              ? "grid-cols-1 sm:grid-cols-2 max-w-2xl"
+              : prizes.length === 3
+                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl"
+                : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl"
+        } mx-auto`}
       >
-        <Icon className="w-8 h-8 text-white" />
-      </div>
+        {prizes.map((prize, index) => {
+          const Icon = getPrizeIcon(prize.category);
+          const gradientColors = getPrizeColors(index);
 
-      {/* Prize Category */}
-      <h3 className="text-2xl font-bold text-gray-900 mb-3 capitalize">
-        {prize.category.replace(/_/g, " ")}
-      </h3>
+          return (
+            <div
+              key={prize.id}
+              className="relative bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-purple-100 hover:shadow-lg hover:shadow-purple-100/50 transition-all duration-300 hover:-translate-y-1 group"
+            >
+              {/* Prize Icon */}
+              <div
+                className={`w-16 h-16 bg-gradient-to-br ${gradientColors} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+              >
+                <Icon className="w-8 h-8 text-white" />
+              </div>
 
-      {/* Prize Description */}
-      <p className="text-gray-600 leading-relaxed mb-6">{prize.description}</p>
+              {/* Prize Title */}
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                {prize.name || (prize.category ? prize.category.replace(/_/g, " ") : "Prize")}
+              </h3>
 
-      {/* Prize Amount */}
-      {prize.amount && (
-        <div className="flex items-center text-green-600 font-semibold">
-          <DollarSign className="w-5 h-5 mr-1" />
-          <span className="text-xl">{prize.amount}</span>
-        </div>
-      )}
+              {/* Prize Description */}
+              <p className="text-gray-600 leading-relaxed mb-6">{prize.description}</p>
 
-      {/* Decorative elements */}
-      <div className="absolute top-4 right-4 opacity-10 group-hover:opacity-20 transition-opacity">
-        <Icon className="w-12 h-12 text-gray-400" />
+              {/* Prize Amount */}
+              {prize.amount && (
+                <div className="flex items-center text-green-600 font-semibold">
+                  <DollarSign className="w-5 h-5 mr-1" />
+                  <span className="text-xl">{prize.amount}</span>
+                </div>
+              )}
+
+              {/* Decorative elements */}
+              <div className="absolute top-4 right-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Icon className="w-12 h-12 text-gray-400" />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
