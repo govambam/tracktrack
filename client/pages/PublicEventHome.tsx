@@ -2887,7 +2887,14 @@ export default function PublicEventHome({
       {travel &&
         (travel.flight_info ||
           travel.accommodations ||
-          travel.daily_schedule) && (
+          travel.daily_schedule) &&
+        (currentTheme === "TrackTrack" ? (
+          <components.TravelCard
+            travelData={travel}
+            eventData={eventData}
+            formatDateRange={formatDateRange}
+          />
+        ) : (
           <section
             id="travel"
             className={`${currentTheme === "TourTech" ? `${theme.sectionBackground} pt-16 pb-8` : currentTheme === "Masters" ? "bg-amber-50/20 relative overflow-hidden py-20" : "relative overflow-hidden"} ${currentTheme === "TourTech" ? "" : currentTheme === "Masters" ? "" : theme.sectionPadding} ${theme.containerPadding}`}
@@ -2935,13 +2942,7 @@ export default function PublicEventHome({
                 </p>
               </div>
 
-              {currentTheme === "TrackTrack" ? (
-                <components.TravelCard
-                  travelData={travel}
-                  eventData={eventData}
-                  formatDateRange={formatDateRange}
-                />
-              ) : currentTheme === "Masters" ? (
+              {currentTheme === "Masters" ? (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                   {[
                     {
@@ -3012,7 +3013,7 @@ export default function PublicEventHome({
               )}
             </div>
           </section>
-        )}
+        ))}
 
       {/* Clubhouse Section */}
       {hasClubhouse && (
