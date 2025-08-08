@@ -17,6 +17,24 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Arc Browser-inspired gradient backgrounds */
+  .bg-hero-gradient {
+    background: linear-gradient(135deg, rgb(243 232 255 / 0.5) 0%, rgb(252 231 243 / 0.5) 50%, rgb(254 215 170 / 0.5) 100%);
+  }
+
+  .bg-app-gradient {
+    background: linear-gradient(135deg, rgb(250 245 255) 0%, rgb(252 231 243) 50%, rgb(254 215 170) 100%);
+  }
+
+  /* Floating blur elements */
+  .floating-blur {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: -1;
+  }
 }
 
 @layer base {
