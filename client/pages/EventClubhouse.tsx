@@ -272,7 +272,9 @@ export default function EventClubhouse() {
                       ? "text-yellow-600"
                       : currentTheme === "TourTech"
                         ? "text-orange-600"
-                        : "text-blue-400"
+                        : currentTheme === "TrackTrack"
+                          ? "text-purple-600"
+                          : "text-blue-400"
                   }`}
                 />
                 <h3
