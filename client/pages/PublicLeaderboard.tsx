@@ -242,25 +242,25 @@ export default function PublicLeaderboard({
       {/* Team Scramble Scores */}
       <div>
         <div className="flex items-center space-x-2 mb-6">
-        <Users
-          className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600"}`}
-        />
-        <h3
-          className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
-        >
-          {currentTheme === "TrackTrack" ? (
-            <>
-              Team{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Scramble
-              </span>{" "}
-              Scores
-            </>
-          ) : (
-            "Team Scramble Scores"
-          )}
-        </h3>
-      </div>
+          <Users
+            className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600"}`}
+          />
+          <h3
+            className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
+          >
+            {currentTheme === "TrackTrack" ? (
+              <>
+                Team{" "}
+                <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Scramble
+                </span>{" "}
+                Scores
+              </>
+            ) : (
+              "Team Scramble Scores"
+            )}
+          </h3>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div
