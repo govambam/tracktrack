@@ -465,7 +465,7 @@ export default function MyTrips() {
                         </Badge>
                       )}
                     </div>
-                    <CardDescription className="text-green-600 line-clamp-2">
+                    <CardDescription className="text-purple-600 line-clamp-2">
                       {event.description || "Golf event"}
                     </CardDescription>
                   </div>
