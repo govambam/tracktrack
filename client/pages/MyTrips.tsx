@@ -365,32 +365,32 @@ export default function MyTrips() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-0 bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-purple-700">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <Card className="bg-white border border-gray-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">
               Total Events
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
+            <div className="text-2xl font-bold text-gray-900 mb-1">
               {events.length}
             </div>
-            <p className="text-xs text-gray-600">
+            <p className="text-xs text-gray-500">
               {events.filter((e) => e.user_role === "owner").length} owned,{" "}
               {events.filter((e) => e.user_role !== "owner").length} invited
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-0 bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-purple-700">
+        <Card className="bg-white border border-gray-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">
               Upcoming Events
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
+            <div className="text-2xl font-bold text-gray-900 mb-1">
               {
                 events.filter(
                   (event) =>
@@ -399,18 +399,18 @@ export default function MyTrips() {
                 ).length
               }
             </div>
-            <p className="text-xs text-gray-600">Events planned</p>
+            <p className="text-xs text-gray-500">Events planned</p>
           </CardContent>
         </Card>
 
-        <Card className="border-0 bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-purple-700">
+        <Card className="bg-white border border-gray-200 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">
               This Month
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
+            <div className="text-2xl font-bold text-gray-900 mb-1">
               {
                 events.filter((event) => {
                   const start = new Date(event.start_date);
@@ -422,7 +422,7 @@ export default function MyTrips() {
                 }).length
               }
             </div>
-            <p className="text-xs text-gray-600">Events this month</p>
+            <p className="text-xs text-gray-500">Events this month</p>
           </CardContent>
         </Card>
       </div>
