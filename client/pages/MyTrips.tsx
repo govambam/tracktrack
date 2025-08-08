@@ -329,8 +329,8 @@ export default function MyTrips() {
       <div className="space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-green-900">My Events</h1>
-            <p className="text-green-600 mt-1">Loading your golf events...</p>
+            <h1 className="text-3xl font-bold text-purple-900">My Events</h1>
+            <p className="text-purple-600 mt-1">Loading your golf events...</p>
           </div>
         </div>
         <div className="flex justify-center py-12">
