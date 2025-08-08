@@ -174,7 +174,9 @@ export default function PublicLeaderboard({
               className={`bg-white rounded-2xl p-6 border-2 transition-all duration-300 hover:shadow-lg ${
                 index === 0
                   ? "border-yellow-300 bg-gradient-to-r from-yellow-50 to-amber-50"
-                  : "border-slate-200 hover:border-green-300"
+                  : currentTheme === "TourTech"
+                    ? "border-slate-200 hover:border-orange-300"
+                    : "border-slate-200 hover:border-green-300"
               }`}
             >
               <div className="flex items-center justify-between">
