@@ -248,14 +248,14 @@ export default function Index() {
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
                 Make Golf Trips
                 <span className="text-emerald-600 block">Effortless.</span>
-                <span className="text-gray-900 block">And Unforgettable.</span>
+                <span className="text-emerald-600 block">Unforgettable.</span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
                 Remove the friction from organizing golf trips with friends.
                 AI-assisted planning, custom websites, real-time scoring, and
                 everything you need to create memorable experiences.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6">
+              <div className="flex flex-col lg:flex-row lg:items-center gap-4 justify-center lg:justify-start mb-6">
                 {isAuthenticated ? (
                   <Button
                     onClick={handleGoToApp}
@@ -272,20 +272,12 @@ export default function Index() {
                     >
                       Plan a Trip <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="px-8 py-4 text-lg h-auto rounded-xl border-2 border-gray-200 hover:border-gray-300"
-                    >
-                      <Play className="mr-2 h-5 w-5" />
-                      Watch Demo
-                    </Button>
+                    <p className="text-sm text-gray-500 text-center lg:text-left lg:ml-4">
+                      ✨ Build your first website in less than 5 minutes
+                    </p>
                   </>
                 )}
               </div>
-              <p className="text-sm text-gray-500 text-center lg:text-left">
-                ✨ Build your first website in less than 5 minutes
-              </p>
             </div>
 
             {/* Right Content - Theme Showcase */}
