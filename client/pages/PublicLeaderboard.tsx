@@ -314,7 +314,7 @@ export default function PublicLeaderboard({
     <div className="space-y-8">
       <div className="flex items-center space-x-2 mb-6">
         <DollarSign
-          className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-green-600" : "text-green-600"}`}
+          className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-green-600"}`}
         />
         <h3
           className={`text-2xl font-bold ${currentTheme === "TrackTrack" ? "text-gray-900" : "text-slate-900"}`}
