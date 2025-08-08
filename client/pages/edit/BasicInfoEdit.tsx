@@ -671,7 +671,7 @@ ${formData.description}`;
 
       {/* Preview Card */}
       {(formData.tripName || formData.location) && (
-        <Card className="border-purple-100 bg-purple-50">
+        <Card className="border-purple-100 bg-purple-50/30">
           <CardHeader>
             <CardTitle className="text-lg text-purple-900">Preview</CardTitle>
             <CardDescription className="text-purple-600">
