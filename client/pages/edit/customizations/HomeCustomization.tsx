@@ -261,19 +261,19 @@ export default function HomeCustomization() {
         </CardHeader>
 
         <CardContent className="space-y-6">
-          <Card className="border-green-100 bg-green-50">
+          <Card className="border-purple-100 bg-purple-50/30">
             <CardContent className="p-4 space-y-4">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label
                     htmlFor="homepage-headline"
-                    className="text-green-800 font-medium"
+                    className="text-purple-900 font-medium"
                   >
                     Homepage Headline
                   </Label>
                   {saving && (
-                    <span className="text-xs text-green-600 flex items-center">
-                      <div className="animate-spin rounded-full h-3 w-3 border-b border-green-600 mr-1"></div>
+                    <span className="text-xs text-purple-600 flex items-center">
+                      <div className="animate-spin rounded-full h-3 w-3 border-b border-purple-600 mr-1"></div>
                       Saving...
                     </span>
                   )}
@@ -283,10 +283,10 @@ export default function HomeCustomization() {
                   value={homeHeadline}
                   onChange={(e) => setHomeHeadline(e.target.value)}
                   placeholder="Add a short headline to display on your event home page"
-                  className="border-green-200 focus:border-emerald-500 bg-white"
+                  className="border-purple-200 focus:border-purple-500 bg-white"
                   disabled={saving}
                 />
-                <p className="text-sm text-green-600">
+                <p className="text-sm text-purple-600">
                   This headline will be prominently displayed on your event's
                   homepage to welcome visitors.
                 </p>
