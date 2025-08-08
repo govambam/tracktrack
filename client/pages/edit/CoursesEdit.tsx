@@ -342,7 +342,7 @@ export default function CoursesEdit() {
 
         <CardContent className="space-y-6">
           {rounds.map((round, index) => (
-            <Card key={round.id} className="border-purple-100 bg-purple-50">
+            <Card key={round.id} className="border-purple-100 bg-purple-50/30">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-base text-purple-900">
