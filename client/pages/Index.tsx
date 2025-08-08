@@ -319,48 +319,25 @@ export default function Index() {
       {/* My Events Section */}
       <section className="py-20 bg-white/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <img
-                src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/app_my_events.png"
-                alt="My Events dashboard showing multiple golf trips"
-                className="w-full h-auto rounded-2xl shadow-2xl"
-              />
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 text-sm font-medium mb-6">
+              <Calendar className="w-4 h-4 mr-2" />
+              Trip Management
             </div>
-            <div className="order-1 lg:order-2">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 text-sm font-medium mb-6">
-                <Calendar className="w-4 h-4 mr-2" />
-                Trip Management
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Manage all your golf adventures in one place
-              </h2>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Keep track of past trips, current events, and future adventures.
-                Every trip gets its own beautiful website that your friends will
-                love.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <Check className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700">
-                    Organize multiple trips effortlessly
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <Check className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700">
-                    Track RSVPs and guest responses
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <Check className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700">
-                    Share trip links with a single click
-                  </span>
-                </div>
-              </div>
-            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Manage all your golf adventures in one place
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Keep track of past trips, current events, and future adventures.
+              Every trip gets its own beautiful website that your friends will love.
+            </p>
+          </div>
+          <div className="w-full">
+            <img
+              src="https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/app_my_events.png"
+              alt="My Events dashboard showing multiple golf trips"
+              className="w-full h-auto rounded-2xl shadow-2xl"
+            />
           </div>
         </div>
       </section>
