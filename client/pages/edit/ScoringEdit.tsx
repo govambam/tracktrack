@@ -142,20 +142,20 @@ export default function ScoringEdit() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <Card className="border-green-100">
+      <Card className="border-purple-100">
         <CardHeader>
-          <CardTitle className="text-lg text-green-900 flex items-center">
-            <Target className="h-5 w-5 mr-2 text-emerald-600" />
+          <CardTitle className="text-lg text-purple-900 flex items-center">
+            <Target className="h-5 w-5 mr-2 text-purple-600" />
             Scoring Format
           </CardTitle>
-          <CardDescription className="text-green-600">
+          <CardDescription className="text-purple-600">
             Choose how players will be scored during your golf event
           </CardDescription>
         </CardHeader>
