@@ -162,10 +162,15 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
   // Function to set user attributes
   const updateUserAttributes = async () => {
     try {
-      // Get current user session
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      console.log("Getting user session...");
+      // Get current user session with timeout
+      const sessionPromise = supabase.auth.getSession();
+      const sessionTimeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Session timeout")), 3000)
+      );
+
+      const { data: { session } } = await Promise.race([sessionPromise, sessionTimeout]);
+      console.log("Session retrieved:", !!session?.user);
 
       // Base attributes (always available)
       const baseAttributes = {
@@ -192,61 +197,91 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
       let attributes = { ...baseAttributes };
 
       if (session?.user) {
-        // Get user profile data
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("id", session.user.id)
-          .single();
+        try {
+          console.log("Fetching user profile and stats...");
 
-        // Get user's event count and other stats
-        const { count: eventCount } = await supabase
-          .from("events")
-          .select("*", { count: "exact", head: true })
-          .eq("created_by", session.user.id);
+          // Add timeouts to database queries
+          const profilePromise = supabase
+            .from("profiles")
+            .select("*")
+            .eq("id", session.user.id)
+            .single();
 
-        // Calculate account age in days
-        const accountAge = session.user.created_at
-          ? Math.floor(
-              (Date.now() - new Date(session.user.created_at).getTime()) /
-                (1000 * 60 * 60 * 24),
-            )
-          : 0;
+          const eventCountPromise = supabase
+            .from("events")
+            .select("*", { count: "exact", head: true })
+            .eq("created_by", session.user.id);
 
-        // User-specific attributes
-        const userSpecificAttributes = {
-          // Core user data
-          id: session.user.id,
-          email: session.user.email,
-          emailDomain: session.user.email?.split("@")[1] || "",
-          isAuthenticated: true,
+          const dbTimeout = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error("Database query timeout")), 2000)
+          );
 
-          // Profile data
-          name: profile?.full_name || "",
-          fullName: profile?.full_name || "",
-          handicap: profile?.handicap || null,
-          hasHandicap: !!profile?.handicap,
-          handicapRange: profile?.handicap
-            ? getHandicapRange(profile.handicap)
-            : null,
-          location: profile?.location || "",
-          bio: profile?.bio || "",
-          hasProfileImage: !!profile?.avatar_url,
+          // Execute both queries with timeout
+          const [profileResult, eventCountResult] = await Promise.race([
+            Promise.all([profilePromise, eventCountPromise]),
+            dbTimeout
+          ]);
 
-          // Account metadata
-          isEmailConfirmed: !!session.user.email_confirmed_at,
-          accountAgeInDays: accountAge,
-          accountAgeCategory: getAccountAgeCategory(accountAge),
-          createdAt: session.user.created_at,
+          const profile = profileResult.data;
+          const eventCount = eventCountResult.count;
 
-          // Activity data
-          totalEvents: eventCount || 0,
-          hasCreatedEvents: (eventCount || 0) > 0,
-          userType: getUserType(eventCount || 0, accountAge),
-          engagementLevel: getEngagementLevel(eventCount || 0, accountAge),
-        };
+          console.log("Database queries completed");
 
-        attributes = { ...attributes, ...userSpecificAttributes };
+          // Calculate account age in days
+          const accountAge = session.user.created_at
+            ? Math.floor(
+                (Date.now() - new Date(session.user.created_at).getTime()) /
+                  (1000 * 60 * 60 * 24),
+              )
+            : 0;
+
+          // User-specific attributes
+          const userSpecificAttributes = {
+            // Core user data
+            id: session.user.id,
+            email: session.user.email,
+            emailDomain: session.user.email?.split("@")[1] || "",
+            isAuthenticated: true,
+
+            // Profile data
+            name: profile?.full_name || "",
+            fullName: profile?.full_name || "",
+            handicap: profile?.handicap || null,
+            hasHandicap: !!profile?.handicap,
+            handicapRange: profile?.handicap
+              ? getHandicapRange(profile.handicap)
+              : null,
+            location: profile?.location || "",
+            bio: profile?.bio || "",
+            hasProfileImage: !!profile?.avatar_url,
+
+            // Account metadata
+            isEmailConfirmed: !!session.user.email_confirmed_at,
+            accountAgeInDays: accountAge,
+            accountAgeCategory: getAccountAgeCategory(accountAge),
+            createdAt: session.user.created_at,
+
+            // Activity data
+            totalEvents: eventCount || 0,
+            hasCreatedEvents: (eventCount || 0) > 0,
+            userType: getUserType(eventCount || 0, accountAge),
+            engagementLevel: getEngagementLevel(eventCount || 0, accountAge),
+          };
+
+          attributes = { ...attributes, ...userSpecificAttributes };
+        } catch (dbError) {
+          console.warn("Database queries failed, using basic authenticated attributes:", dbError);
+          // Use basic authenticated attributes without profile data
+          attributes = {
+            ...baseAttributes,
+            id: session.user.id,
+            email: session.user.email,
+            isAuthenticated: true,
+            userType: "authenticated",
+            totalEvents: 0,
+            hasCreatedEvents: false,
+          };
+        }
       } else {
         // Anonymous user attributes
         attributes.id = "anonymous";
@@ -265,6 +300,8 @@ export const GrowthBookProvider: React.FC<{ children: React.ReactNode }> = ({
         deviceType: getDeviceType(),
         browser: getBrowser(),
         isAuthenticated: false,
+        userType: "anonymous",
+        id: "anonymous",
       };
       setUserAttributes(minimalAttributes);
       growthbook.setAttributes(minimalAttributes);
