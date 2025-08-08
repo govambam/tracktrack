@@ -536,7 +536,7 @@ export default function MyTrips() {
       {/* Empty State */}
       {events.length === 0 && (
         <div className="text-center py-12">
-          <Calendar className="mx-auto h-12 w-12 text-purple-400 mb-4" />
+          <Calendar className="mx-auto h-12 w-12 text-blue-400 mb-4" />
           <h3 className="text-xl font-medium text-gray-900 mb-2">
             No events yet
           </h3>
@@ -546,7 +546,7 @@ export default function MyTrips() {
           </p>
           <Button
             onClick={handleCreateNew}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-full shadow-lg hover:shadow-xl transition-all"
+            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-full shadow-lg hover:shadow-xl transition-all"
           >
             <Plus className="h-4 w-4 mr-2" />
             Create Your First Event
