@@ -345,8 +345,8 @@ export default function MyTrips() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-green-900">My Events</h1>
-          <p className="text-green-600 mt-1">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">My Events</h1>
+          <p className="text-gray-600 mt-1">
             Manage your events and participate in tournaments you've been
             invited to
           </p>
@@ -354,7 +354,7 @@ export default function MyTrips() {
         <div className="mt-4 sm:mt-0">
           <Button
             onClick={handleCreateNew}
-            className="bg-emerald-600 hover:bg-emerald-700"
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-full shadow-lg hover:shadow-xl transition-all"
           >
             <Plus className="h-4 w-4 mr-2" />
             Create New Event
