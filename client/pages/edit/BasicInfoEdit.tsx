@@ -479,7 +479,7 @@ ${formData.description}`;
         <CardContent className="space-y-6">
           {/* Event Name */}
           <div className="space-y-2">
-            <Label htmlFor="tripName" className="text-green-800 font-medium">
+            <Label htmlFor="tripName" className="text-purple-900 font-medium">
               Event Name *
             </Label>
             <Input
@@ -487,7 +487,7 @@ ${formData.description}`;
               value={formData.tripName}
               onChange={(e) => handleInputChange("tripName", e.target.value)}
               placeholder="e.g., Pebble Beach Golf Weekend"
-              className={`border-green-200 focus:border-emerald-500 ${errors.tripName ? "border-red-300" : ""}`}
+              className={`border-purple-200 focus:border-purple-500 ${errors.tripName ? "border-red-300" : ""}`}
             />
             {errors.tripName && (
               <p className="text-sm text-red-600">{errors.tripName}</p>
