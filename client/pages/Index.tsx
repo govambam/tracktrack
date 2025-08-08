@@ -436,7 +436,8 @@ export default function Index() {
               Manage all your trips in one place
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Create, edit, and organize multiple golf trips with ease. Your dashboard keeps everything organized and accessible.
+              Create, edit, and organize multiple golf trips with ease. Your
+              dashboard keeps everything organized and accessible.
             </p>
           </div>
           <div className="w-full">
