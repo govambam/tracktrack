@@ -1,5 +1,5 @@
 import React from "react";
-import { Trophy, Medal, Star, DollarSign } from "lucide-react";
+import { Trophy, Medal, Star, DollarSign, Target } from "lucide-react";
 
 interface TrackTrackPrizeCardProps {
   prize: {
