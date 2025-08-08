@@ -1,14 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { toast } from '@/hooks/use-toast';
-import { growthbookApi, featureFlagUtils, FeatureFlag, CreateFeatureFlagRequest } from '@/lib/growthbookApi';
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { toast } from "@/hooks/use-toast";
+import {
+  growthbookApi,
+  featureFlagUtils,
+  FeatureFlag,
+  CreateFeatureFlagRequest,
+} from "@/lib/growthbookApi";
+import { UserAttributesDebug } from "./UserAttributesDebug";
 import {
   Settings,
   Plus,
@@ -19,8 +37,8 @@ import {
   EyeOff,
   Zap,
   AlertCircle,
-  CheckCircle
-} from 'lucide-react';
+  CheckCircle,
+} from "lucide-react";
 
 export const FeatureFlagAdmin: React.FC = () => {
   const [flags, setFlags] = useState<FeatureFlag[]>([]);
@@ -28,9 +46,9 @@ export const FeatureFlagAdmin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newFlag, setNewFlag] = useState<CreateFeatureFlagRequest>({
-    key: '',
-    description: '',
-    valueType: 'boolean',
+    key: "",
+    description: "",
+    valueType: "boolean",
     defaultValue: false,
   });
 
@@ -47,7 +65,8 @@ export const FeatureFlagAdmin: React.FC = () => {
         description: `Loaded ${validFlags.length} feature flags`,
       });
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load flags';
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to load flags";
       setError(errorMessage);
       // Ensure flags is still an array even on error
       setFlags([]);
@@ -72,7 +91,8 @@ export const FeatureFlagAdmin: React.FC = () => {
       });
       await loadFlags();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to create demo flags';
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to create demo flags";
       toast({
         title: "Error",
         description: errorMessage,
@@ -95,11 +115,11 @@ export const FeatureFlagAdmin: React.FC = () => {
 
     try {
       const created = await growthbookApi.createFeature(newFlag);
-      setFlags(prev => [...prev, created]);
+      setFlags((prev) => [...prev, created]);
       setNewFlag({
-        key: '',
-        description: '',
-        valueType: 'boolean',
+        key: "",
+        description: "",
+        valueType: "boolean",
         defaultValue: false,
       });
       setShowCreateForm(false);
@@ -116,30 +136,35 @@ export const FeatureFlagAdmin: React.FC = () => {
     }
   };
 
-  const toggleFlag = async (flag: FeatureFlag, environment: string = 'production') => {
+  const toggleFlag = async (
+    flag: FeatureFlag,
+    environment: string = "production",
+  ) => {
     try {
       const currentEnabled = flag.environments[environment]?.enabled || false;
       await featureFlagUtils.enable(flag.id, environment);
-      
+
       // Update local state
-      setFlags(prev => prev.map(f => 
-        f.id === flag.id 
-          ? {
-              ...f,
-              environments: {
-                ...f.environments,
-                [environment]: {
-                  ...f.environments[environment],
-                  enabled: !currentEnabled,
+      setFlags((prev) =>
+        prev.map((f) =>
+          f.id === flag.id
+            ? {
+                ...f,
+                environments: {
+                  ...f.environments,
+                  [environment]: {
+                    ...f.environments[environment],
+                    enabled: !currentEnabled,
+                  },
                 },
-              },
-            }
-          : f
-      ));
+              }
+            : f,
+        ),
+      );
 
       toast({
         title: "Success",
-        description: `${flag.key} ${!currentEnabled ? 'enabled' : 'disabled'}`,
+        description: `${flag.key} ${!currentEnabled ? "enabled" : "disabled"}`,
       });
     } catch (err) {
       toast({
@@ -153,11 +178,13 @@ export const FeatureFlagAdmin: React.FC = () => {
   const updateFlagValue = async (flag: FeatureFlag, newValue: any) => {
     try {
       await growthbookApi.setFeatureValue(flag.id, newValue);
-      
+
       // Update local state
-      setFlags(prev => prev.map(f => 
-        f.id === flag.id ? { ...f, defaultValue: newValue } : f
-      ));
+      setFlags((prev) =>
+        prev.map((f) =>
+          f.id === flag.id ? { ...f, defaultValue: newValue } : f,
+        ),
+      );
 
       toast({
         title: "Success",
@@ -176,10 +203,10 @@ export const FeatureFlagAdmin: React.FC = () => {
     // Only load flags on component mount if not already loading
     if (!loading) {
       loadFlags().catch((error) => {
-        console.error('Failed to load flags on mount:', error);
+        console.error("Failed to load flags on mount:", error);
         // Ensure we have a safe state even if initial load fails
         setFlags([]);
-        setError('Failed to connect to GrowthBook API');
+        setError("Failed to connect to GrowthBook API");
         setLoading(false);
       });
     }
@@ -187,6 +214,9 @@ export const FeatureFlagAdmin: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* User Attributes Debug */}
+      <UserAttributesDebug />
+
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
@@ -194,7 +224,8 @@ export const FeatureFlagAdmin: React.FC = () => {
             <span>Feature Flag Administration</span>
           </CardTitle>
           <CardDescription>
-            Manage feature flags directly from your application. Changes take effect immediately.
+            Manage feature flags directly from your application. Changes take
+            effect immediately.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -207,8 +238,8 @@ export const FeatureFlagAdmin: React.FC = () => {
               <Zap className="h-4 w-4 mr-2" />
               Create Demo Flags
             </Button>
-            <Button 
-              onClick={() => setShowCreateForm(!showCreateForm)} 
+            <Button
+              onClick={() => setShowCreateForm(!showCreateForm)}
               variant="outline"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -226,7 +257,9 @@ export const FeatureFlagAdmin: React.FC = () => {
           {showCreateForm && (
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle className="text-lg">Create New Feature Flag</CardTitle>
+                <CardTitle className="text-lg">
+                  Create New Feature Flag
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -234,7 +267,9 @@ export const FeatureFlagAdmin: React.FC = () => {
                   <Input
                     id="flag-key"
                     value={newFlag.key}
-                    onChange={(e) => setNewFlag(prev => ({ ...prev, key: e.target.value }))}
+                    onChange={(e) =>
+                      setNewFlag((prev) => ({ ...prev, key: e.target.value }))
+                    }
                     placeholder="my-new-feature"
                   />
                 </div>
@@ -243,19 +278,29 @@ export const FeatureFlagAdmin: React.FC = () => {
                   <Textarea
                     id="flag-description"
                     value={newFlag.description}
-                    onChange={(e) => setNewFlag(prev => ({ ...prev, description: e.target.value }))}
+                    onChange={(e) =>
+                      setNewFlag((prev) => ({
+                        ...prev,
+                        description: e.target.value,
+                      }))
+                    }
                     placeholder="Describe what this flag controls..."
                   />
                 </div>
                 <div>
                   <Label htmlFor="flag-type">Value Type</Label>
-                  <Select 
-                    value={newFlag.valueType} 
-                    onValueChange={(value: 'boolean' | 'string' | 'number') => 
-                      setNewFlag(prev => ({ 
-                        ...prev, 
+                  <Select
+                    value={newFlag.valueType}
+                    onValueChange={(value: "boolean" | "string" | "number") =>
+                      setNewFlag((prev) => ({
+                        ...prev,
                         valueType: value,
-                        defaultValue: value === 'boolean' ? false : value === 'number' ? 0 : ''
+                        defaultValue:
+                          value === "boolean"
+                            ? false
+                            : value === "number"
+                              ? 0
+                              : "",
                       }))
                     }
                   >
@@ -274,7 +319,10 @@ export const FeatureFlagAdmin: React.FC = () => {
                     <Save className="h-4 w-4 mr-2" />
                     Create Flag
                   </Button>
-                  <Button variant="outline" onClick={() => setShowCreateForm(false)}>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowCreateForm(false)}
+                  >
                     Cancel
                   </Button>
                 </div>
@@ -290,72 +338,82 @@ export const FeatureFlagAdmin: React.FC = () => {
           )}
 
           <div className="space-y-4">
-            {Array.isArray(flags) && flags.map((flag) => {
-              const isEnabled = flag.environments.production?.enabled || false;
-              
-              return (
-                <Card key={flag.id} className="border-l-4 border-l-blue-500">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-2">
-                          <h4 className="font-semibold text-lg">{flag.key}</h4>
-                          <Badge variant={isEnabled ? "default" : "secondary"}>
-                            {isEnabled ? "Enabled" : "Disabled"}
-                          </Badge>
-                          <Badge variant="outline">
-                            {flag.valueType}
-                          </Badge>
-                        </div>
-                        <p className="text-slate-600 mb-3">{flag.description}</p>
-                        
-                        <div className="flex items-center space-x-4">
-                          <div className="flex items-center space-x-2">
-                            <Switch
-                              checked={isEnabled}
-                              onCheckedChange={() => toggleFlag(flag)}
-                            />
-                            <Label className="text-sm">
+            {Array.isArray(flags) &&
+              flags.map((flag) => {
+                const isEnabled =
+                  flag.environments.production?.enabled || false;
+
+                return (
+                  <Card key={flag.id} className="border-l-4 border-l-blue-500">
+                    <CardContent className="pt-6">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-3 mb-2">
+                            <h4 className="font-semibold text-lg">
+                              {flag.key}
+                            </h4>
+                            <Badge
+                              variant={isEnabled ? "default" : "secondary"}
+                            >
                               {isEnabled ? "Enabled" : "Disabled"}
-                            </Label>
-                          </div>
-                          
-                          <div className="flex items-center space-x-2">
-                            <Label className="text-sm">Current Value:</Label>
-                            <Badge variant="outline">
-                              {String(flag.defaultValue)}
                             </Badge>
+                            <Badge variant="outline">{flag.valueType}</Badge>
                           </div>
+                          <p className="text-slate-600 mb-3">
+                            {flag.description}
+                          </p>
+
+                          <div className="flex items-center space-x-4">
+                            <div className="flex items-center space-x-2">
+                              <Switch
+                                checked={isEnabled}
+                                onCheckedChange={() => toggleFlag(flag)}
+                              />
+                              <Label className="text-sm">
+                                {isEnabled ? "Enabled" : "Disabled"}
+                              </Label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Label className="text-sm">Current Value:</Label>
+                              <Badge variant="outline">
+                                {String(flag.defaultValue)}
+                              </Badge>
+                            </div>
+                          </div>
+
+                          {flag.valueType === "string" && (
+                            <div className="mt-3 flex items-center space-x-2">
+                              <Input
+                                className="max-w-xs"
+                                defaultValue={flag.defaultValue}
+                                onBlur={(e) =>
+                                  updateFlagValue(flag, e.target.value)
+                                }
+                                placeholder="Enter string value"
+                              />
+                            </div>
+                          )}
+
+                          {flag.valueType === "number" && (
+                            <div className="mt-3 flex items-center space-x-2">
+                              <Input
+                                type="number"
+                                className="max-w-xs"
+                                defaultValue={flag.defaultValue}
+                                onBlur={(e) =>
+                                  updateFlagValue(flag, Number(e.target.value))
+                                }
+                                placeholder="Enter number value"
+                              />
+                            </div>
+                          )}
                         </div>
-
-                        {flag.valueType === 'string' && (
-                          <div className="mt-3 flex items-center space-x-2">
-                            <Input
-                              className="max-w-xs"
-                              defaultValue={flag.defaultValue}
-                              onBlur={(e) => updateFlagValue(flag, e.target.value)}
-                              placeholder="Enter string value"
-                            />
-                          </div>
-                        )}
-
-                        {flag.valueType === 'number' && (
-                          <div className="mt-3 flex items-center space-x-2">
-                            <Input
-                              type="number"
-                              className="max-w-xs"
-                              defaultValue={flag.defaultValue}
-                              onBlur={(e) => updateFlagValue(flag, Number(e.target.value))}
-                              placeholder="Enter number value"
-                            />
-                          </div>
-                        )}
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+                    </CardContent>
+                  </Card>
+                );
+              })}
           </div>
 
           {flags.length === 0 && !loading && !error && (
@@ -363,8 +421,12 @@ export const FeatureFlagAdmin: React.FC = () => {
               <div className="mx-auto w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                 <Settings className="h-8 w-8 text-slate-400" />
               </div>
-              <h3 className="text-lg font-medium text-slate-900 mb-2">No feature flags found</h3>
-              <p className="text-slate-600 mb-4">Create your first feature flag to get started</p>
+              <h3 className="text-lg font-medium text-slate-900 mb-2">
+                No feature flags found
+              </h3>
+              <p className="text-slate-600 mb-4">
+                Create your first feature flag to get started
+              </p>
               <Button onClick={createDemoFlags}>
                 <Zap className="h-4 w-4 mr-2" />
                 Create Demo Flags
@@ -377,8 +439,12 @@ export const FeatureFlagAdmin: React.FC = () => {
               <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
                 <AlertCircle className="h-8 w-8 text-red-400" />
               </div>
-              <h3 className="text-lg font-medium text-slate-900 mb-2">Failed to load feature flags</h3>
-              <p className="text-slate-600 mb-4">There was an error connecting to the GrowthBook API</p>
+              <h3 className="text-lg font-medium text-slate-900 mb-2">
+                Failed to load feature flags
+              </h3>
+              <p className="text-slate-600 mb-4">
+                There was an error connecting to the GrowthBook API
+              </p>
               <div className="space-x-3">
                 <Button onClick={loadFlags} variant="outline">
                   <RotateCcw className="h-4 w-4 mr-2" />

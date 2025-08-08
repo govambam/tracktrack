@@ -1,16 +1,53 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { User, Mail, Calendar, Bell, Shield, CreditCard, Edit, Save, X } from "lucide-react";
+import {
+  User,
+  Mail,
+  Calendar,
+  Bell,
+  Shield,
+  CreditCard,
+  Edit,
+  Save,
+  X,
+  Trash2,
+  AlertTriangle,
+} from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { useFeatureEnabled } from "@/contexts/GrowthBookContext";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface ProfileData {
   id: string;
@@ -28,14 +65,18 @@ export default function Settings() {
   const [loading, setLoading] = useState(true);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [deletingProjects, setDeletingProjects] = useState(false);
   const { toast } = useToast();
-  
+
+  // Feature flag for delete projects functionality
+  const deleteProjectsEnabled = useFeatureEnabled("delete_projects");
+
   // Edit form state
   const [editForm, setEditForm] = useState({
-    full_name: '',
-    handicap: '',
-    bio: '',
-    location: ''
+    full_name: "",
+    handicap: "",
+    bio: "",
+    location: "",
   });
 
   useEffect(() => {
@@ -45,20 +86,23 @@ export default function Settings() {
   const loadProfile = async () => {
     try {
       setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       if (!user) {
-        throw new Error('No user found');
+        throw new Error("No user found");
       }
 
       // Get profile from profiles table
       const { data: profileData, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
         .single();
 
-      if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
+      if (error && error.code !== "PGRST116") {
+        // PGRST116 = no rows returned
         throw error;
       }
 
@@ -70,28 +114,27 @@ export default function Settings() {
         bio: profileData?.bio || null,
         location: profileData?.location || null,
         avatar_url: profileData?.avatar_url || null,
-        created_at: user.created_at
+        created_at: user.created_at,
       };
 
       setProfile(profileInfo);
-      
+
       // Set edit form with current values
       setEditForm({
-        full_name: profileInfo.full_name || '',
-        handicap: profileInfo.handicap?.toString() || '',
-        bio: profileInfo.bio || '',
-        location: profileInfo.location || ''
+        full_name: profileInfo.full_name || "",
+        handicap: profileInfo.handicap?.toString() || "",
+        bio: profileInfo.bio || "",
+        location: profileInfo.location || "",
       });
-      
     } catch (error) {
-      console.error('Error loading profile:', error);
+      console.error("Error loading profile:", error);
 
       // Get detailed error message
       let errorMessage = "Failed to load profile data";
-      if (error && typeof error === 'object') {
-        if ('message' in error) {
+      if (error && typeof error === "object") {
+        if ("message" in error) {
           errorMessage = error.message;
-        } else if ('error' in error) {
+        } else if ("error" in error) {
           errorMessage = error.error;
         } else {
           errorMessage = JSON.stringify(error);
@@ -110,52 +153,51 @@ export default function Settings() {
 
   const handleSaveProfile = async () => {
     if (!profile) return;
-    
+
     try {
       setSaving(true);
-      
+
       const updates = {
         full_name: editForm.full_name || null,
         handicap: editForm.handicap ? parseFloat(editForm.handicap) : null,
         bio: editForm.bio || null,
         location: editForm.location || null,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       };
 
       const upsertData = {
         id: profile.id,
         email: profile.email,
-        ...updates
+        ...updates,
       };
 
-      console.log('Updating profile with data:', upsertData);
+      console.log("Updating profile with data:", upsertData);
 
       const { data, error } = await supabase
-        .from('profiles')
+        .from("profiles")
         .upsert(upsertData);
 
-      console.log('Supabase upsert response:', { data, error });
+      console.log("Supabase upsert response:", { data, error });
 
       if (error) throw error;
 
       // Update local state
       setProfile({ ...profile, ...updates });
       setEditDialogOpen(false);
-      
+
       toast({
         title: "Success",
         description: "Profile updated successfully",
       });
-      
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error("Error updating profile:", error);
 
       // Get detailed error message
       let errorMessage = "Failed to update profile";
-      if (error && typeof error === 'object') {
-        if ('message' in error) {
+      if (error && typeof error === "object") {
+        if ("message" in error) {
           errorMessage = error.message;
-        } else if ('error' in error) {
+        } else if ("error" in error) {
           errorMessage = error.error;
         } else {
           errorMessage = JSON.stringify(error);
@@ -172,10 +214,64 @@ export default function Settings() {
     }
   };
 
+  const handleDeleteAllProjects = async () => {
+    try {
+      setDeletingProjects(true);
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error("No user found");
+      }
+
+      // First, get count of events to delete for confirmation
+      const { count, error: countError } = await supabase
+        .from("events")
+        .select("*", { count: "exact", head: true })
+        .eq("created_by", user.id);
+
+      if (countError) {
+        throw countError;
+      }
+
+      console.log(`Deleting ${count} events for user ${user.id}`);
+
+      // Delete all events for the current user
+      // This will cascade delete all related data (rounds, players, scorecards, etc.)
+      const { error } = await supabase
+        .from("events")
+        .delete()
+        .eq("created_by", user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Projects Deleted",
+        description: `Successfully deleted ${count} project${count !== 1 ? "s" : ""} and all associated data.`,
+        variant: "default",
+      });
+    } catch (error) {
+      console.error("Error deleting projects:", error);
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to delete projects. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setDeletingProjects(false);
+    }
+  };
+
   const formatJoinDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
     });
   };
 
@@ -206,7 +302,9 @@ export default function Settings() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-green-900">Settings</h1>
-        <p className="text-green-600 mt-1">Manage your account and preferences</p>
+        <p className="text-green-600 mt-1">
+          Manage your account and preferences
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -226,24 +324,26 @@ export default function Settings() {
               <div className="flex items-center space-x-4">
                 <Avatar className="h-16 w-16">
                   <AvatarFallback className="bg-emerald-600 text-white text-xl">
-                    {profile.full_name ? profile.full_name.substring(0, 2).toUpperCase() : profile.email.substring(0, 2).toUpperCase()}
+                    {profile.full_name
+                      ? profile.full_name.substring(0, 2).toUpperCase()
+                      : profile.email.substring(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">
                   <h3 className="text-lg font-semibold text-green-900">
-                    {profile.full_name || profile.email.split('@')[0]}
+                    {profile.full_name || profile.email.split("@")[0]}
                   </h3>
                   <p className="text-green-600">
-                    {profile.bio || 'Golf Enthusiast & Event Organizer'}
+                    {profile.bio || "Golf Enthusiast & Event Organizer"}
                   </p>
                   <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">
                     Member
                   </Badge>
                 </div>
               </div>
-              
+
               <Separator />
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <div className="flex items-center text-green-700">
@@ -257,7 +357,9 @@ export default function Settings() {
                     <Calendar className="h-4 w-4 mr-3 text-emerald-600" />
                     <div>
                       <p className="text-sm text-green-600">Member Since</p>
-                      <p className="font-medium">{formatJoinDate(profile.created_at)}</p>
+                      <p className="font-medium">
+                        {formatJoinDate(profile.created_at)}
+                      </p>
                     </div>
                   </div>
                   {profile.location && (
@@ -275,7 +377,9 @@ export default function Settings() {
                     <User className="h-4 w-4 mr-3 text-emerald-600" />
                     <div>
                       <p className="text-sm text-green-600">Handicap</p>
-                      <p className="font-medium">{profile.handicap || 'Not set'}</p>
+                      <p className="font-medium">
+                        {profile.handicap || "Not set"}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center text-green-700">
@@ -287,81 +391,105 @@ export default function Settings() {
                   </div>
                 </div>
               </div>
-              
+
               <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
+                  <Button
+                    variant="outline"
+                    className="border-green-200 text-green-700 hover:bg-green-50"
+                  >
                     <Edit className="h-4 w-4 mr-2" />
                     Edit Profile
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle className="text-green-900">Edit Profile</DialogTitle>
+                    <DialogTitle className="text-green-900">
+                      Edit Profile
+                    </DialogTitle>
                     <DialogDescription className="text-green-600">
                       Update your profile information
                     </DialogDescription>
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
-                      <Label htmlFor="full_name" className="text-green-700">Full Name</Label>
+                      <Label htmlFor="full_name" className="text-green-700">
+                        Full Name
+                      </Label>
                       <Input
                         id="full_name"
                         value={editForm.full_name}
-                        onChange={(e) => setEditForm({ ...editForm, full_name: e.target.value })}
+                        onChange={(e) =>
+                          setEditForm({
+                            ...editForm,
+                            full_name: e.target.value,
+                          })
+                        }
                         placeholder="Enter your full name"
                         className="border-green-200 focus:border-green-500"
                       />
                     </div>
                     <div className="grid gap-2">
-                      <Label htmlFor="handicap" className="text-green-700">Golf Handicap</Label>
+                      <Label htmlFor="handicap" className="text-green-700">
+                        Golf Handicap
+                      </Label>
                       <Input
                         id="handicap"
                         type="number"
                         step="0.1"
                         value={editForm.handicap}
-                        onChange={(e) => setEditForm({ ...editForm, handicap: e.target.value })}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, handicap: e.target.value })
+                        }
                         placeholder="e.g. 12.4"
                         className="border-green-200 focus:border-green-500"
                       />
                     </div>
                     <div className="grid gap-2">
-                      <Label htmlFor="location" className="text-green-700">Location</Label>
+                      <Label htmlFor="location" className="text-green-700">
+                        Location
+                      </Label>
                       <Input
                         id="location"
                         value={editForm.location}
-                        onChange={(e) => setEditForm({ ...editForm, location: e.target.value })}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, location: e.target.value })
+                        }
                         placeholder="City, State"
                         className="border-green-200 focus:border-green-500"
                       />
                     </div>
                     <div className="grid gap-2">
-                      <Label htmlFor="bio" className="text-green-700">Bio</Label>
+                      <Label htmlFor="bio" className="text-green-700">
+                        Bio
+                      </Label>
                       <Textarea
                         id="bio"
                         value={editForm.bio}
-                        onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, bio: e.target.value })
+                        }
                         placeholder="Tell us about yourself..."
                         className="border-green-200 focus:border-green-500 min-h-[80px]"
                       />
                     </div>
                   </div>
                   <div className="flex justify-end space-x-2">
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       onClick={() => setEditDialogOpen(false)}
                       disabled={saving}
                     >
                       <X className="h-4 w-4 mr-2" />
                       Cancel
                     </Button>
-                    <Button 
+                    <Button
                       onClick={handleSaveProfile}
                       disabled={saving}
                       className="bg-green-600 hover:bg-green-700 text-white"
                     >
                       <Save className="h-4 w-4 mr-2" />
-                      {saving ? 'Saving...' : 'Save Changes'}
+                      {saving ? "Saving..." : "Save Changes"}
                     </Button>
                   </div>
                 </DialogContent>
@@ -385,27 +513,49 @@ export default function Settings() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium text-green-900">Trip Updates</p>
-                    <p className="text-sm text-green-600">Get notified about trip changes and updates</p>
+                    <p className="text-sm text-green-600">
+                      Get notified about trip changes and updates
+                    </p>
                   </div>
-                  <Button variant="outline" size="sm" className="border-green-200 text-green-700">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-green-200 text-green-700"
+                  >
                     Enabled
                   </Button>
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-green-900">Score Notifications</p>
-                    <p className="text-sm text-green-600">Live score updates during tournaments</p>
+                    <p className="font-medium text-green-900">
+                      Score Notifications
+                    </p>
+                    <p className="text-sm text-green-600">
+                      Live score updates during tournaments
+                    </p>
                   </div>
-                  <Button variant="outline" size="sm" className="border-green-200 text-green-700">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-green-200 text-green-700"
+                  >
                     Enabled
                   </Button>
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-green-900">Marketing Emails</p>
-                    <p className="text-sm text-green-600">Tips, features, and special offers</p>
+                    <p className="font-medium text-green-900">
+                      Marketing Emails
+                    </p>
+                    <p className="text-sm text-green-600">
+                      Tips, features, and special offers
+                    </p>
                   </div>
-                  <Button variant="outline" size="sm" className="border-gray-200 text-gray-700">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-gray-200 text-gray-700"
+                  >
                     Disabled
                   </Button>
                 </div>
@@ -418,7 +568,9 @@ export default function Settings() {
         <div className="space-y-6">
           <Card className="border-green-100">
             <CardHeader>
-              <CardTitle className="text-lg text-green-900">Account Overview</CardTitle>
+              <CardTitle className="text-lg text-green-900">
+                Account Overview
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="text-center">
@@ -456,18 +608,90 @@ export default function Settings() {
                 <p className="text-sm text-green-600 mb-4">
                   Unlimited trips, advanced analytics, and priority support
                 </p>
-                <Button variant="outline" size="sm" className="w-full border-green-200 text-green-700 hover:bg-green-50">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full border-green-200 text-green-700 hover:bg-green-50"
+                >
                   Manage Subscription
                 </Button>
               </div>
             </CardContent>
           </Card>
 
+          {/* Delete All Projects - Feature Flag Controlled */}
+          {deleteProjectsEnabled && (
+            <Card className="border-red-200 bg-red-50">
+              <CardHeader>
+                <CardTitle className="text-lg text-red-900 flex items-center">
+                  <AlertTriangle className="h-5 w-5 mr-2 text-red-600" />
+                  Danger Zone
+                </CardTitle>
+                <CardDescription className="text-red-600">
+                  Irreversible actions that affect your account
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <h4 className="font-medium text-red-900 mb-2">
+                    Delete All Projects
+                  </h4>
+                  <p className="text-sm text-red-600 mb-4">
+                    This will permanently delete all your events, rounds,
+                    scorecards, and associated data. This action cannot be
+                    undone.
+                  </p>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="w-full"
+                        disabled={deletingProjects}
+                      >
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        {deletingProjects
+                          ? "Deleting..."
+                          : "Delete All Projects"}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-red-900">
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="text-red-600">
+                          This action cannot be undone. This will permanently
+                          delete all your projects, events, rounds, scorecards,
+                          and all associated data. All participants will lose
+                          access to these events immediately.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={handleDeleteAllProjects}
+                          className="bg-red-600 hover:bg-red-700"
+                          disabled={deletingProjects}
+                        >
+                          {deletingProjects
+                            ? "Deleting..."
+                            : "Yes, delete all projects"}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           <Card className="border-gray-200">
             <CardContent className="p-4">
               <h3 className="font-semibold text-gray-900 mb-2">Need Help?</h3>
               <p className="text-gray-600 text-sm mb-4">
-                Contact our support team for assistance with your account or features.
+                Contact our support team for assistance with your account or
+                features.
               </p>
               <Button variant="outline" size="sm" className="w-full">
                 Contact Support

@@ -112,12 +112,12 @@ export function CourseSelector({
   }, []);
 
   const handleCourseToggle = (course: Course) => {
-    const isSelected = selectedCourses.find(c => c.id === course.id);
+    const isSelected = selectedCourses.find((c) => c.id === course.id);
     let newSelection: Course[];
 
     if (isSelected) {
       // Remove from selection
-      newSelection = selectedCourses.filter(c => c.id !== course.id);
+      newSelection = selectedCourses.filter((c) => c.id !== course.id);
     } else {
       // Add to selection
       newSelection = [...selectedCourses, course];
@@ -134,7 +134,7 @@ export function CourseSelector({
         id: `temp-${Date.now()}`,
         name: searchQuery.trim(),
         holes: 18,
-        is_official: false
+        is_official: false,
       };
 
       const newSelection = [...selectedCourses, tempCourse];
@@ -185,8 +185,11 @@ export function CourseSelector({
     }
   };
 
-  const displayValue = searchQuery ||
-    (selectedCourses.length > 0 ? `${selectedCourses.length} course${selectedCourses.length !== 1 ? 's' : ''} selected` : "");
+  const displayValue =
+    searchQuery ||
+    (selectedCourses.length > 0
+      ? `${selectedCourses.length} course${selectedCourses.length !== 1 ? "s" : ""} selected`
+      : "");
 
   return (
     <div className={`relative ${className}`} ref={searchRef}>
@@ -220,13 +223,15 @@ export function CourseSelector({
                       Found Courses (Click to select/deselect)
                     </div>
                     {searchResults.map((course) => {
-                      const isSelected = selectedCourses.find(c => c.id === course.id);
+                      const isSelected = selectedCourses.find(
+                        (c) => c.id === course.id,
+                      );
                       return (
                         <div
                           key={course.id}
                           onClick={() => handleCourseToggle(course)}
                           className={`p-3 border-b last:border-b-0 cursor-pointer hover:bg-gray-50 transition-colors ${
-                            isSelected ? 'bg-emerald-50 border-emerald-200' : ''
+                            isSelected ? "bg-emerald-50 border-emerald-200" : ""
                           }`}
                         >
                           <div className="flex items-start space-x-3">
@@ -238,9 +243,14 @@ export function CourseSelector({
                             <div className="flex-1 space-y-1">
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-2">
-                                  <span className="font-medium">{course.name}</span>
+                                  <span className="font-medium">
+                                    {course.name}
+                                  </span>
                                   {course.is_official && (
-                                    <Badge variant="secondary" className="text-xs">
+                                    <Badge
+                                      variant="secondary"
+                                      className="text-xs"
+                                    >
                                       Official
                                     </Badge>
                                   )}
@@ -258,9 +268,13 @@ export function CourseSelector({
                                 </div>
                               )}
                               <div className="flex items-center space-x-3 text-xs text-gray-500">
-                                {course.holes && <span>{course.holes} holes</span>}
+                                {course.holes && (
+                                  <span>{course.holes} holes</span>
+                                )}
                                 {course.par && <span>Par {course.par}</span>}
-                                {course.yardage && <span>{course.yardage} yards</span>}
+                                {course.yardage && (
+                                  <span>{course.yardage} yards</span>
+                                )}
                               </div>
                             </div>
                             {course.image_url && (
