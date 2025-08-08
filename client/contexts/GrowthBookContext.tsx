@@ -11,7 +11,7 @@ const localFeatures = {
   "show-advanced-features": false,
   "beta-leaderboard": false,
   "enhanced-scoring": false,
-  ai_quickstart_create_flow: false,
+  ai_quickstart_create_flow: true,
   delete_projects: false,
 };
 
