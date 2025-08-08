@@ -488,7 +488,7 @@ export default function MyTrips() {
 
               <CardContent className="pt-0">
 
-                <div className="flex flex-wrap gap-2 pt-2">
+                <div className="flex flex-wrap gap-2">
                   {/* View Site button - available for all published events */}
                   {event.is_published && event.slug ? (
                     <Button
@@ -497,9 +497,9 @@ export default function MyTrips() {
                       onClick={() =>
                         window.open(`/events/${event.slug}`, "_blank")
                       }
-                      className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                      className="border-gray-300 text-gray-700 hover:bg-gray-50 text-xs px-3 py-1.5 h-auto"
                     >
-                      <ExternalLink className="h-4 w-4 mr-1" />
+                      <ExternalLink className="h-3 w-3 mr-1.5" />
                       View Site
                     </Button>
                   ) : null}
@@ -511,9 +511,9 @@ export default function MyTrips() {
                     onClick={() =>
                       navigate(`/events/${event.slug || event.id}/leaderboard`)
                     }
-                    className="border-purple-200 text-purple-700 hover:bg-purple-50 rounded-lg"
+                    className="border-purple-300 text-purple-700 hover:bg-purple-50 text-xs px-3 py-1.5 h-auto"
                   >
-                    <Users className="h-4 w-4 mr-1" />
+                    <Users className="h-3 w-3 mr-1.5" />
                     Enter Scores
                   </Button>
 
@@ -524,9 +524,9 @@ export default function MyTrips() {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEditEvent(event)}
-                      className="border-purple-200 text-purple-700 hover:bg-purple-50 rounded-lg"
+                      className="border-purple-300 text-purple-700 hover:bg-purple-50 text-xs px-3 py-1.5 h-auto"
                     >
-                      <Edit className="h-4 w-4 mr-1" />
+                      <Edit className="h-3 w-3 mr-1.5" />
                       Edit Details
                     </Button>
                   )}
