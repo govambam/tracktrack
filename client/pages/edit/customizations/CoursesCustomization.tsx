@@ -957,7 +957,7 @@ Return your response as a JSON object with these fields:
                       handleImageSelect(input.value.trim());
                     }
                   }}
-                  className="bg-green-600 hover:bg-green-700 text-white px-6 whitespace-nowrap"
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 whitespace-nowrap"
                 >
                   Use This Image
                 </Button>
