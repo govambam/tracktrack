@@ -2612,7 +2612,7 @@ export default function PublicEventHome({
             {/* Hole Contests Summary */}
             {skillsContests.length > 0 && currentTheme !== "Masters" && (
               <div
-                className={`${currentTheme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : "bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200 mt-16"}`}
+                className={`${currentTheme === "TourTech" ? "bg-gray-50 rounded-lg p-6 sm:p-8 border border-gray-200 mt-20" : currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 border border-purple-200 shadow-lg mt-16" : "bg-indigo-50 rounded-3xl p-8 sm:p-12 border border-indigo-200 mt-16"}`}
               >
                 <div className="text-center mb-8">
                   <div
