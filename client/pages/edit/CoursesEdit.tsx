@@ -490,10 +490,10 @@ export default function CoursesEdit() {
                       {round.skillsContests.map((contest) => (
                         <div
                           key={contest.id}
-                          className="flex items-center gap-2 p-2 border border-green-200 rounded bg-white"
+                          className="flex items-center gap-2 p-2 border border-purple-200 rounded bg-white"
                         >
                           <div className="flex-1">
-                            <Label className="text-xs text-green-700">
+                            <Label className="text-xs text-purple-700">
                               Hole
                             </Label>
                             <Select
@@ -507,7 +507,7 @@ export default function CoursesEdit() {
                                 )
                               }
                             >
-                              <SelectTrigger className="h-8 border-green-200">
+                              <SelectTrigger className="h-8 border-purple-200">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
