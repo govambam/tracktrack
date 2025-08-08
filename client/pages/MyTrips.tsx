@@ -520,7 +520,7 @@ export default function MyTrips() {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEditEvent(event)}
-                      className="border-pink-200 text-pink-700 hover:bg-pink-50 rounded-lg"
+                      className="border-purple-200 text-purple-700 hover:bg-purple-50 rounded-lg"
                     >
                       <Edit className="h-4 w-4 mr-1" />
                       Edit Details
