@@ -1353,19 +1353,22 @@ export default function PublicEventHome({
       if (!roundsResult.error) {
         setRounds(roundsResult.data || []);
         // Extract unique courses from rounds for backward compatibility
-        const uniqueCourses = (roundsResult.data || []).reduce((acc: any[], round: any) => {
-          if (!acc.find(c => c.name === round.course_name)) {
-            acc.push({
-              id: round.course_id || round.id,
-              name: round.course_name,
-              description: round.custom_description,
-              image_url: round.custom_image_url,
-              display_order: round.display_order || 1,
-              holes: round.holes
-            });
-          }
-          return acc;
-        }, []);
+        const uniqueCourses = (roundsResult.data || []).reduce(
+          (acc: any[], round: any) => {
+            if (!acc.find((c) => c.name === round.course_name)) {
+              acc.push({
+                id: round.course_id || round.id,
+                name: round.course_name,
+                description: round.custom_description,
+                image_url: round.custom_image_url,
+                display_order: round.display_order || 1,
+                holes: round.holes,
+              });
+            }
+            return acc;
+          },
+          [],
+        );
         setCourses(uniqueCourses);
       }
       if (!prizesResult.error) setPrizes(prizesResult.data || []);

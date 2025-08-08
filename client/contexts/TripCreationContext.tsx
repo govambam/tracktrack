@@ -496,7 +496,9 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
 
       // Courses are now managed directly via event_rounds table
       // No need for separate course sync since course info is stored on rounds
-      console.log("Course sync no longer needed - courses managed via event_rounds");
+      console.log(
+        "Course sync no longer needed - courses managed via event_rounds",
+      );
     } catch (error) {
       console.error("Error syncing courses to event_courses:", error);
     }
