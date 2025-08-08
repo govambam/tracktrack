@@ -27,6 +27,7 @@ export default function PublicLeaderboard({
   hideNavigation = false,
 }: PublicLeaderboardProps = {}) {
   const { slug } = useParams();
+  const { currentTheme } = useEventTheme(slug);
   const [activeTab, setActiveTab] = useState("leaderboard");
   const [loading, setLoading] = useState(true);
   const [eventData, setEventData] = useState<any>(null);
