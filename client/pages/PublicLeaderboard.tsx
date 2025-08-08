@@ -218,7 +218,7 @@ export default function PublicLeaderboard({
       {/* Team Scramble Scores */}
       <div>
         <div className="flex items-center space-x-2 mb-6">
-          <Users className="h-5 w-5 text-green-600" />
+          <Users className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
           <h3 className="text-2xl font-bold text-slate-900">
             Team Scramble Scores
           </h3>
