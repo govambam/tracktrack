@@ -302,8 +302,8 @@ export default function PublicLeaderboard({
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                  <DollarSign className="h-6 w-6 text-green-600" />
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${currentTheme === "TourTech" ? "bg-orange-100" : "bg-green-100"}`}>
+                  <DollarSign className={`h-6 w-6 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 text-lg">
