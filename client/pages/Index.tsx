@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
-import useEmblaCarousel from 'embla-carousel-react';
+import useEmblaCarousel from "embla-carousel-react";
 import {
   ArrowRight,
   Calendar,
@@ -97,7 +97,7 @@ export default function Index() {
   // Embla carousel handlers
   const scrollTo = useCallback(
     (index: number) => emblaApi && emblaApi.scrollTo(index),
-    [emblaApi]
+    [emblaApi],
   );
 
   const onSelect = useCallback(() => {
@@ -108,7 +108,7 @@ export default function Index() {
   useEffect(() => {
     if (!emblaApi) return;
     onSelect();
-    emblaApi.on('select', onSelect);
+    emblaApi.on("select", onSelect);
   }, [emblaApi, onSelect]);
 
   const handleGoToApp = () => {
@@ -309,7 +309,7 @@ export default function Index() {
                           src={theme.mobileImage}
                           alt={`${theme.name} theme preview`}
                           className="w-full h-auto drop-shadow-2xl"
-                          style={{ backgroundColor: 'transparent' }}
+                          style={{ backgroundColor: "transparent" }}
                         />
                       </div>
                     </div>
