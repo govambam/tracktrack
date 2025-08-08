@@ -2417,7 +2417,7 @@ export default function PublicEventHome({
       {(prizes.length > 0 || skillsContests.length > 0) && (
         <section
           id="prizes"
-          className={`${currentTheme === "TourTech" ? theme.sectionBackground : currentTheme === "Masters" ? `${theme.sectionBackground} relative` : "relative"} ${theme.sectionPadding} ${theme.containerPadding}`}
+          className={`${currentTheme === "TourTech" ? theme.sectionBackground : currentTheme === "Masters" ? `${theme.sectionBackground} relative` : currentTheme === "TrackTrack" ? "relative py-20 overflow-hidden" : "relative"} ${currentTheme === "TrackTrack" ? "" : theme.sectionPadding} ${currentTheme === "TrackTrack" ? "" : theme.containerPadding}`}
         >
           {/* Background decoration */}
           {currentTheme === "GolfOS" && (
@@ -2426,34 +2426,47 @@ export default function PublicEventHome({
           {currentTheme === "Masters" && (
             <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-transparent to-green-50/20"></div>
           )}
+          {currentTheme === "TrackTrack" && (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-100/50 via-pink-50/50 to-orange-100/50"></div>
+              <div className="absolute top-0 left-0 w-full h-full">
+                <div className="absolute top-16 right-16 w-32 h-32 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+                <div className="absolute bottom-16 left-16 w-24 h-24 bg-gradient-to-br from-orange-400/20 to-pink-400/20 rounded-full blur-xl"></div>
+              </div>
+            </>
+          )}
           <div
-            className={`relative ${theme.maxContentWidth} mx-auto space-y-${currentTheme === "TourTech" ? "12" : currentTheme === "Masters" ? "16" : "20"}`}
+            className={`relative ${currentTheme === "TrackTrack" ? "max-w-7xl" : theme.maxContentWidth} mx-auto ${currentTheme === "TrackTrack" ? "px-4 sm:px-6 lg:px-8" : ""} space-y-${currentTheme === "TourTech" ? "12" : currentTheme === "Masters" ? "16" : currentTheme === "TrackTrack" ? "16" : "20"}`}
           >
             {/* Header and Buy-in */}
             <div className={`text-center ${theme.headerSpacing}`}>
               <div
-                className={`inline-flex items-center gap-2 ${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} px-3 py-1.5 ${theme.cardShadow} mb-4`}
+                className={`inline-flex items-center gap-2 ${currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm border border-purple-200 rounded-full" : `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners}`} px-${currentTheme === "TrackTrack" ? "4" : "3"} py-${currentTheme === "TrackTrack" ? "2" : "1.5"} ${currentTheme === "TrackTrack" ? "shadow-lg" : theme.cardShadow} mb-4`}
               >
                 <Trophy
-                  className={`h-3.5 w-3.5 ${currentTheme === "TourTech" ? theme.orangeText : currentTheme === "Masters" ? "text-yellow-600" : "text-amber-600"}`}
+                  className={`h-${currentTheme === "TrackTrack" ? "4" : "3.5"} w-${currentTheme === "TrackTrack" ? "4" : "3.5"} ${currentTheme === "TourTech" ? theme.orangeText : currentTheme === "Masters" ? "text-yellow-600" : currentTheme === "TrackTrack" ? "text-purple-600" : "text-amber-600"}`}
                 />
                 <span
-                  className={`${currentTheme === "TourTech" ? theme.monoLabel : currentTheme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : "text-sm font-medium text-amber-800"}`}
+                  className={`${currentTheme === "TourTech" ? theme.monoLabel : currentTheme === "Masters" ? "text-sm font-medium text-green-800 font-serif tracking-wide" : currentTheme === "TrackTrack" ? "text-sm font-medium text-purple-800" : "text-sm font-medium text-amber-800"}`}
                 >
                   {currentTheme === "TourTech"
                     ? "PRIZES"
                     : currentTheme === "Masters"
                       ? "Prize Pool"
-                      : "Prize Pool"}
+                      : currentTheme === "TrackTrack"
+                        ? "Prize Pool"
+                        : "Prize Pool"}
                 </span>
               </div>
 
-              <h2 className={`${theme.sectionTitle} ${theme.headerSpacing}`}>
+              <h2 className={`${currentTheme === "TrackTrack" ? "text-4xl md:text-5xl font-bold text-gray-900 mb-6" : theme.sectionTitle} ${currentTheme === "TrackTrack" ? "" : theme.headerSpacing}`}>
                 {currentTheme === "TourTech"
                   ? "Tournament Prizes"
                   : currentTheme === "Masters"
                     ? "High Stakes, Higher Handicaps"
-                    : "High Stakes, Higher Handicaps"}
+                    : currentTheme === "TrackTrack"
+                      ? (<>High Stakes, <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Higher Handicaps</span></>)
+                      : "High Stakes, Higher Handicaps"}
               </h2>
 
               {eventData.buy_in &&
@@ -2469,15 +2482,26 @@ export default function PublicEventHome({
 
               {eventData.buy_in &&
                 eventData.buy_in > 0 &&
+                currentTheme === "TrackTrack" && (
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
+                    Tournament Buy-in:{" "}
+                    <span className="font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent text-2xl">
+                      ${eventData.buy_in}
+                    </span>
+                  </p>
+                )}
+
+              {eventData.buy_in &&
+                eventData.buy_in > 0 &&
                 currentTheme !== "Masters" && (
                   <div
-                    className={`${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${currentTheme === "TourTech" ? theme.cardPadding : "p-4"} ${theme.cardShadow} ${currentTheme === "TourTech" ? theme.textMaxWidth : "max-w-xs"} mx-auto mb-12`}
+                    className={`${currentTheme === "TrackTrack" ? "bg-white/90 backdrop-blur-sm border border-purple-200 rounded-3xl p-6 shadow-lg" : `${theme.cardBackground} ${theme.cardBorder} ${theme.roundedCorners} ${currentTheme === "TourTech" ? theme.cardPadding : "p-4"} ${theme.cardShadow}`} ${currentTheme === "TourTech" ? theme.textMaxWidth : currentTheme === "TrackTrack" ? "max-w-sm" : "max-w-xs"} mx-auto mb-12`}
                   >
-                    <p className={`${theme.cardText} mb-2 text-center`}>
+                    <p className={`${currentTheme === "TrackTrack" ? "text-gray-600 text-lg" : theme.cardText} mb-2 text-center`}>
                       Tournament Buy-in
                     </p>
                     <div
-                      className={`text-center ${currentTheme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : "text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
+                      className={`text-center ${currentTheme === "TourTech" ? `${theme.monoText} text-3xl text-orange-600` : currentTheme === "TrackTrack" ? "text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" : "text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"}`}
                     >
                       ${eventData.buy_in}
                     </div>
