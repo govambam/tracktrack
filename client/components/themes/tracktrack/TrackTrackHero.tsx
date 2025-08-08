@@ -1,7 +1,7 @@
 import React from "react";
 import { Calendar, ChevronRight, Users } from "lucide-react";
 import { TrackTrackHeaderCard } from "./TrackTrackHeaderCard";
-import { CountdownTimer } from "../default/CountdownTimer";
+import { TrackTrackCountdownTimer } from "./TrackTrackCountdownTimer";
 
 interface TrackTrackHeroProps {
   eventData: {
