@@ -498,7 +498,9 @@ export default function EventClubhouse() {
                       ? "text-green-900 font-serif"
                       : currentTheme === "TourTech"
                         ? "text-gray-900"
-                        : "text-blue-900"
+                        : currentTheme === "TrackTrack"
+                          ? "text-gray-900"
+                          : "text-blue-900"
                   }`}
                 >
                   <Megaphone
@@ -507,7 +509,9 @@ export default function EventClubhouse() {
                         ? "text-yellow-600"
                         : currentTheme === "TourTech"
                           ? "text-orange-600"
-                          : "text-blue-600"
+                          : currentTheme === "TrackTrack"
+                            ? "text-purple-600"
+                            : "text-blue-600"
                     }`}
                   />
                   Announcements
