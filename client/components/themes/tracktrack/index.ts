@@ -6,3 +6,4 @@ export { TrackTrackPlayerCard } from "./TrackTrackPlayerCard";
 export { TrackTrackPrizeCard } from "./TrackTrackPrizeCard";
 export { TrackTrackContestRules } from "./TrackTrackContestRules";
 export { TrackTrackFooter } from "./TrackTrackFooter";
+export { TrackTrackCountdownTimer } from "./TrackTrackCountdownTimer";
