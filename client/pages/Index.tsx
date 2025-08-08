@@ -58,6 +58,12 @@ export default function Index() {
         "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Masters_home.png",
       gradient: "from-green-500 to-yellow-500",
     },
+    {
+      name: "TrackTrack",
+      image:
+        "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/TrackTrack_home.png",
+      gradient: "from-purple-600 to-pink-600",
+    },
   ];
 
   // Leaderboard carousel data
