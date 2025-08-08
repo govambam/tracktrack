@@ -673,7 +673,6 @@ export default function Index() {
         </div>
       </section>
 
-
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 relative overflow-hidden">
         <div className="absolute inset-0">
