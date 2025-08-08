@@ -35,6 +35,7 @@ export default function EventShell() {
   const [showClubhouseModal, setShowClubhouseModal] = useState(false);
   const [clubhouseSession, setClubhouseSession] =
     useState<ClubhouseSession | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (slug) {
