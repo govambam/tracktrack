@@ -16,7 +16,7 @@ export const TrackTrackPrizeCard: React.FC<TrackTrackPrizeCardProps> = ({
 }) => {
   const getPrizeIcon = (category?: string) => {
     if (!category) return Trophy;
-    
+
     switch (category.toLowerCase()) {
       case "overall_champion":
       case "winner":
@@ -75,11 +75,16 @@ export const TrackTrackPrizeCard: React.FC<TrackTrackPrizeCardProps> = ({
 
               {/* Prize Title */}
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                {prize.name || (prize.category ? prize.category.replace(/_/g, " ") : "Prize")}
+                {prize.name ||
+                  (prize.category
+                    ? prize.category.replace(/_/g, " ")
+                    : "Prize")}
               </h3>
 
               {/* Prize Description */}
-              <p className="text-gray-600 leading-relaxed mb-6">{prize.description}</p>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                {prize.description}
+              </p>
 
               {/* Prize Amount */}
               {prize.amount && (

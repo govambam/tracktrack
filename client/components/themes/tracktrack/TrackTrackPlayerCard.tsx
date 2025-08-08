@@ -53,7 +53,7 @@ export const TrackTrackPlayerCard: React.FC<TrackTrackPlayerCardProps> = ({
               <h3 className="text-lg font-semibold text-gray-900">
                 {player.full_name}
               </h3>
-              
+
               {player.handicap !== undefined && (
                 <div className="mt-2">
                   <div className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200">
