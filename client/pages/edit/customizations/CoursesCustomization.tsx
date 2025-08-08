@@ -671,13 +671,13 @@ Return your response as a JSON object with these fields:
 
         <CardContent className="space-y-6">
           {courses.length === 0 ? (
-            <Card className="border-dashed border-green-200 bg-green-50">
+            <Card className="border-dashed border-purple-200 bg-purple-50/30">
               <CardContent className="flex flex-col items-center justify-center py-12">
-                <MapPin className="h-12 w-12 text-green-400 mb-4" />
-                <h3 className="text-lg font-medium text-green-900 mb-2">
+                <MapPin className="h-12 w-12 text-purple-400 mb-4" />
+                <h3 className="text-lg font-medium text-purple-900 mb-2">
                   No courses found
                 </h3>
-                <p className="text-green-600 text-center mb-4">
+                <p className="text-purple-600 text-center mb-4">
                   Courses will appear here once you add them to your event in
                   the Courses section.
                 </p>
@@ -685,7 +685,7 @@ Return your response as a JSON object with these fields:
                   onClick={syncCoursesFromRounds}
                   disabled={syncing}
                   variant="outline"
-                  className="border-green-200 text-green-700 hover:bg-green-100"
+                  className="border-purple-200 text-purple-700 hover:bg-purple-100"
                 >
                   {syncing ? (
                     <>
