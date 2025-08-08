@@ -14,6 +14,8 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import "@/utils/setupDemoFlags";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import Features from "./pages/Features";
+import Pricing from "./pages/Pricing";
 import AppShell from "./pages/App";
 import MyTrips from "./pages/MyTrips";
 import CreateTrip from "./pages/CreateTrip";
