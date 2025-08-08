@@ -308,20 +308,20 @@ export default function PrizesEdit() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <Card className="border-green-100">
+      <Card className="border-purple-100">
         <CardHeader>
-          <CardTitle className="text-lg text-green-900 flex items-center">
-            <Trophy className="h-5 w-5 mr-2 text-emerald-600" />
+          <CardTitle className="text-lg text-purple-900 flex items-center">
+            <Trophy className="h-5 w-5 mr-2 text-purple-600" />
             Prize Structure
           </CardTitle>
-          <CardDescription className="text-green-600">
+          <CardDescription className="text-purple-600">
             Set up buy-ins, payouts, and contest prizes for your golf event
           </CardDescription>
         </CardHeader>
@@ -330,8 +330,8 @@ export default function PrizesEdit() {
           {/* Buy-in Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <DollarSign className="h-4 w-4 text-emerald-600" />
-              <Label className="text-green-800 font-medium">
+              <DollarSign className="h-4 w-4 text-purple-600" />
+              <Label className="text-purple-900 font-medium">
                 Entry Fee (Optional)
               </Label>
             </div>
