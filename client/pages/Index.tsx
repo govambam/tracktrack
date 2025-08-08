@@ -445,10 +445,7 @@ export default function Index() {
       </section>
 
       {/* Features Grid Section */}
-      <section
-        id="features"
-        className="relative py-20 overflow-hidden"
-      >
+      <section id="features" className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-green-100/50 via-blue-50/50 to-purple-100/50"></div>
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="absolute top-20 left-8 w-40 h-40 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-xl"></div>
