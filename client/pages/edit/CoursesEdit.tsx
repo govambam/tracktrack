@@ -387,8 +387,8 @@ export default function CoursesEdit() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {/* Date */}
                   <div className="space-y-2">
-                    <Label className="text-green-800 font-medium flex items-center">
-                      <Calendar className="h-4 w-4 mr-1 text-emerald-600" />
+                    <Label className="text-purple-900 font-medium flex items-center">
+                      <Calendar className="h-4 w-4 mr-1 text-purple-600" />
                       Date *
                     </Label>
                     <Input
@@ -397,7 +397,7 @@ export default function CoursesEdit() {
                       onChange={(e) =>
                         updateRound(round.id, "date", e.target.value)
                       }
-                      className={`border-green-200 focus:border-emerald-500 ${
+                      className={`border-purple-200 focus:border-purple-500 ${
                         errors[round.id]?.date ? "border-red-300" : ""
                       }`}
                     />
