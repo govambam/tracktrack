@@ -158,7 +158,9 @@ export default function PublicLeaderboard({
       {/* Overall Stableford Leaderboard */}
       <div>
         <div className="flex items-center space-x-2 mb-6">
-          <Target className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
+          <Target
+            className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+          />
           <h3 className="text-2xl font-bold text-slate-900">
             Overall Stableford Leaderboard
           </h3>
@@ -204,7 +206,9 @@ export default function PublicLeaderboard({
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className={`text-2xl font-bold ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}>
+                  <div
+                    className={`text-2xl font-bold ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+                  >
                     {player.points}
                   </div>
                   <div className="text-sm text-slate-500">points</div>
@@ -218,7 +222,9 @@ export default function PublicLeaderboard({
       {/* Team Scramble Scores */}
       <div>
         <div className="flex items-center space-x-2 mb-6">
-          <Users className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
+          <Users
+            className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+          />
           <h3 className="text-2xl font-bold text-slate-900">
             Team Scramble Scores
           </h3>
@@ -287,7 +293,9 @@ export default function PublicLeaderboard({
   const renderMoneyTab = () => (
     <div className="space-y-8">
       <div className="flex items-center space-x-2 mb-6">
-        <DollarSign className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
+        <DollarSign
+          className={`h-5 w-5 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+        />
         <h3 className="text-2xl font-bold text-slate-900">Money Earned</h3>
       </div>
       <p className="text-slate-600 mb-8">
@@ -302,8 +310,12 @@ export default function PublicLeaderboard({
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${currentTheme === "TourTech" ? "bg-orange-100" : "bg-green-100"}`}>
-                  <DollarSign className={`h-6 w-6 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
+                <div
+                  className={`w-12 h-12 rounded-full flex items-center justify-center ${currentTheme === "TourTech" ? "bg-orange-100" : "bg-green-100"}`}
+                >
+                  <DollarSign
+                    className={`h-6 w-6 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+                  />
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 text-lg">
@@ -317,7 +329,9 @@ export default function PublicLeaderboard({
                 </div>
               </div>
               <div className="text-right">
-                <div className={`text-2xl font-bold ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}>
+                <div
+                  className={`text-2xl font-bold ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+                >
                   ${player.money}
                 </div>
                 <div className="text-sm text-slate-500">
@@ -335,7 +349,9 @@ export default function PublicLeaderboard({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
           <h4 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
-            <Target className={`h-5 w-5 mr-2 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
+            <Target
+              className={`h-5 w-5 mr-2 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+            />
             Skills Contests
           </h4>
           <div className="space-y-3">
@@ -361,7 +377,9 @@ export default function PublicLeaderboard({
 
         <div>
           <h4 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
-            <Trophy className={`h-5 w-5 mr-2 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`} />
+            <Trophy
+              className={`h-5 w-5 mr-2 ${currentTheme === "TourTech" ? "text-orange-600" : "text-green-600"}`}
+            />
             Final Prizes
           </h4>
           <div className="space-y-3">
@@ -391,7 +409,9 @@ export default function PublicLeaderboard({
       return (
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
-            <div className={`animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-4 ${currentTheme === "TourTech" ? "border-orange-600" : "border-green-600"}`}></div>
+            <div
+              className={`animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-4 ${currentTheme === "TourTech" ? "border-orange-600" : "border-green-600"}`}
+            ></div>
             <p className="text-slate-600">Loading scorecards...</p>
           </div>
         </div>
