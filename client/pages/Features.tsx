@@ -24,22 +24,40 @@ export default function Features() {
         {
           icon: Sparkles,
           title: "AI-Powered Itinerary Creation",
-          description: "Get personalized golf trip recommendations based on your preferences, budget, and group size.",
-          benefits: ["Smart course selection", "Optimal routing", "Weather considerations", "Group preferences"]
+          description:
+            "Get personalized golf trip recommendations based on your preferences, budget, and group size.",
+          benefits: [
+            "Smart course selection",
+            "Optimal routing",
+            "Weather considerations",
+            "Group preferences",
+          ],
         },
         {
           icon: Calendar,
           title: "Smart Scheduling",
-          description: "Coordinate tee times, meals, and activities with intelligent scheduling that works for everyone.",
-          benefits: ["Tee time optimization", "Restaurant reservations", "Activity planning", "Travel coordination"]
+          description:
+            "Coordinate tee times, meals, and activities with intelligent scheduling that works for everyone.",
+          benefits: [
+            "Tee time optimization",
+            "Restaurant reservations",
+            "Activity planning",
+            "Travel coordination",
+          ],
         },
         {
           icon: Database,
           title: "Comprehensive Course Database",
-          description: "Access detailed information on thousands of golf courses worldwide with photos and reviews.",
-          benefits: ["Course photos & videos", "Hole-by-hole guides", "Player reviews", "Pricing information"]
-        }
-      ]
+          description:
+            "Access detailed information on thousands of golf courses worldwide with photos and reviews.",
+          benefits: [
+            "Course photos & videos",
+            "Hole-by-hole guides",
+            "Player reviews",
+            "Pricing information",
+          ],
+        },
+      ],
     },
     {
       category: "Trip Experience",
@@ -47,22 +65,40 @@ export default function Features() {
         {
           icon: Globe,
           title: "Custom Trip Websites",
-          description: "Create stunning, branded websites for your golf trips with professional themes and layouts.",
-          benefits: ["Professional themes", "Custom branding", "Mobile optimization", "Easy sharing"]
+          description:
+            "Create stunning, branded websites for your golf trips with professional themes and layouts.",
+          benefits: [
+            "Professional themes",
+            "Custom branding",
+            "Mobile optimization",
+            "Easy sharing",
+          ],
         },
         {
           icon: BarChart3,
           title: "Live Scoring & Leaderboards",
-          description: "Track scores in real-time with multiple formats and keep everyone engaged throughout the trip.",
-          benefits: ["Multiple scoring formats", "Live updates", "Skill contests", "Historical tracking"]
+          description:
+            "Track scores in real-time with multiple formats and keep everyone engaged throughout the trip.",
+          benefits: [
+            "Multiple scoring formats",
+            "Live updates",
+            "Skill contests",
+            "Historical tracking",
+          ],
         },
         {
           icon: MessageSquare,
           title: "Private Clubhouse",
-          description: "Members-only area for communication, score entry, and sharing trip memories.",
-          benefits: ["Group messaging", "Photo sharing", "Announcements", "Score entry"]
-        }
-      ]
+          description:
+            "Members-only area for communication, score entry, and sharing trip memories.",
+          benefits: [
+            "Group messaging",
+            "Photo sharing",
+            "Announcements",
+            "Score entry",
+          ],
+        },
+      ],
     },
     {
       category: "Management",
@@ -70,23 +106,41 @@ export default function Features() {
         {
           icon: Users,
           title: "Player Management",
-          description: "Easily manage invitations, RSVPs, and player information for your golf trips.",
-          benefits: ["Easy invitations", "RSVP tracking", "Player profiles", "Group communication"]
+          description:
+            "Easily manage invitations, RSVPs, and player information for your golf trips.",
+          benefits: [
+            "Easy invitations",
+            "RSVP tracking",
+            "Player profiles",
+            "Group communication",
+          ],
         },
         {
           icon: Smartphone,
           title: "Mobile-First Design",
-          description: "Perfect experience on all devices with responsive design and mobile apps.",
-          benefits: ["Native mobile apps", "Offline capabilities", "Push notifications", "Cross-platform sync"]
+          description:
+            "Perfect experience on all devices with responsive design and mobile apps.",
+          benefits: [
+            "Native mobile apps",
+            "Offline capabilities",
+            "Push notifications",
+            "Cross-platform sync",
+          ],
         },
         {
           icon: Trophy,
           title: "Competition Formats",
-          description: "Support for various tournament formats and custom competitions to add excitement.",
-          benefits: ["Stroke play", "Match play", "Stableford", "Custom formats"]
-        }
-      ]
-    }
+          description:
+            "Support for various tournament formats and custom competitions to add excitement.",
+          benefits: [
+            "Stroke play",
+            "Match play",
+            "Stableford",
+            "Custom formats",
+          ],
+        },
+      ],
+    },
   ];
 
   return (
@@ -121,11 +175,14 @@ export default function Features() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Powerful Features for
-            <span className="text-emerald-600 block">Unforgettable Golf Trips</span>
+            <span className="text-emerald-600 block">
+              Unforgettable Golf Trips
+            </span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Everything you need to plan, organize, and enjoy the perfect golf trip with friends. 
-            From AI-powered planning to real-time scoring, we've got you covered.
+            Everything you need to plan, organize, and enjoy the perfect golf
+            trip with friends. From AI-powered planning to real-time scoring,
+            we've got you covered.
           </p>
           <Link
             to="/signup"
@@ -138,7 +195,10 @@ export default function Features() {
 
       {/* Features Sections */}
       {features.map((category, categoryIndex) => (
-        <section key={category.category} className={`py-20 ${categoryIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+        <section
+          key={category.category}
+          className={`py-20 ${categoryIndex % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -150,7 +210,10 @@ export default function Features() {
               {category.items.map((feature, index) => {
                 const Icon = feature.icon;
                 return (
-                  <Card key={index} className="border-gray-200 hover:shadow-lg transition-all duration-300">
+                  <Card
+                    key={index}
+                    className="border-gray-200 hover:shadow-lg transition-all duration-300"
+                  >
                     <CardHeader className="pb-4">
                       <div className="inline-flex items-center justify-center w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg mb-4">
                         <Icon className="h-6 w-6" />
@@ -158,16 +221,19 @@ export default function Features() {
                       <CardTitle className="text-xl text-gray-900 mb-2">
                         {feature.title}
                       </CardTitle>
-                      <p className="text-gray-600">
-                        {feature.description}
-                      </p>
+                      <p className="text-gray-600">{feature.description}</p>
                     </CardHeader>
                     <CardContent>
                       <ul className="space-y-2">
                         {feature.benefits.map((benefit, benefitIndex) => (
-                          <li key={benefitIndex} className="flex items-center space-x-2">
+                          <li
+                            key={benefitIndex}
+                            className="flex items-center space-x-2"
+                          >
                             <Check className="h-4 w-4 text-emerald-600 flex-shrink-0" />
-                            <span className="text-sm text-gray-600">{benefit}</span>
+                            <span className="text-sm text-gray-600">
+                              {benefit}
+                            </span>
                           </li>
                         ))}
                       </ul>
@@ -188,7 +254,8 @@ export default function Features() {
               Why Choose TrackTrack?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Compare us to traditional golf trip planning methods and see the difference.
+              Compare us to traditional golf trip planning methods and see the
+              difference.
             </p>
           </div>
 
@@ -264,7 +331,8 @@ export default function Features() {
             Ready to Experience the Difference?
           </h2>
           <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-            Start your free trial today and see how easy it is to plan the perfect golf trip.
+            Start your free trial today and see how easy it is to plan the
+            perfect golf trip.
           </p>
           <Link
             to="/signup"

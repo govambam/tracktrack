@@ -37,21 +37,24 @@ export default function Index() {
     {
       name: "Default",
       description: "Clean & Professional",
-      mobileImage: "https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2F9614a8c18e6f43ee9e0d8ba31058bff1?format=webp&width=800",
-      colors: { primary: "emerald", accent: "green" }
+      mobileImage:
+        "https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2F9614a8c18e6f43ee9e0d8ba31058bff1?format=webp&width=800",
+      colors: { primary: "emerald", accent: "green" },
     },
     {
       name: "Masters",
-      description: "Classic & Elegant", 
-      mobileImage: "https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2Faa0b8ddd156c429cab55a4b869ebffb6?format=webp&width=800",
-      colors: { primary: "amber", accent: "green" }
+      description: "Classic & Elegant",
+      mobileImage:
+        "https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2Faa0b8ddd156c429cab55a4b869ebffb6?format=webp&width=800",
+      colors: { primary: "amber", accent: "green" },
     },
     {
       name: "TourTech",
       description: "Modern & Sleek",
-      mobileImage: "https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2F1ea2dabd46364acab87149b6f49b46f2?format=webp&width=800",
-      colors: { primary: "orange", accent: "slate" }
-    }
+      mobileImage:
+        "https://cdn.builder.io/api/v1/image/assets%2F8c34f0d0a3de41e1a3ea5bdb8f56cf8c%2F1ea2dabd46364acab87149b6f49b46f2?format=webp&width=800",
+      colors: { primary: "orange", accent: "slate" },
+    },
   ];
 
   useEffect(() => {
@@ -172,7 +175,11 @@ export default function Index() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
             >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </button>
           </div>
 
@@ -225,8 +232,9 @@ export default function Index() {
               <span className="text-gray-900 block">And Unforgettable.</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Remove the friction from organizing golf trips with friends. AI-assisted planning, 
-              custom websites, real-time scoring, and everything you need to create memorable experiences.
+              Remove the friction from organizing golf trips with friends.
+              AI-assisted planning, custom websites, real-time scoring, and
+              everything you need to create memorable experiences.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               {isAuthenticated ? (
@@ -271,8 +279,9 @@ export default function Index() {
               Dynamic Themes That Wow
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose from professional themes that look amazing on both desktop and mobile. 
-              Each theme creates a unique experience for your golf trip.
+              Choose from professional themes that look amazing on both desktop
+              and mobile. Each theme creates a unique experience for your golf
+              trip.
             </p>
           </div>
 
@@ -285,7 +294,7 @@ export default function Index() {
                   <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
                   <div className="w-3 h-3 bg-green-400 rounded-full"></div>
                 </div>
-                
+
                 {/* Mobile Frame */}
                 <div className="mx-auto max-w-sm">
                   <div className="relative bg-black rounded-[3rem] p-2 shadow-xl">
@@ -306,7 +315,9 @@ export default function Index() {
                       key={index}
                       onClick={() => setCurrentTheme(index)}
                       className={`w-3 h-3 rounded-full transition-colors ${
-                        index === currentTheme ? 'bg-emerald-600' : 'bg-gray-300'
+                        index === currentTheme
+                          ? "bg-emerald-600"
+                          : "bg-gray-300"
                       }`}
                     />
                   ))}
@@ -316,8 +327,12 @@ export default function Index() {
               {/* Floating theme info */}
               <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-white rounded-xl shadow-lg px-6 py-4 border">
                 <div className="text-center">
-                  <h3 className="font-semibold text-gray-900">{themes[currentTheme].name}</h3>
-                  <p className="text-sm text-gray-600">{themes[currentTheme].description}</p>
+                  <h3 className="font-semibold text-gray-900">
+                    {themes[currentTheme].name}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    {themes[currentTheme].description}
+                  </p>
                 </div>
               </div>
             </div>
@@ -329,9 +344,9 @@ export default function Index() {
                   Mobile & Desktop Friendly
                 </h3>
                 <p className="text-gray-600 mb-6">
-                  Every theme is designed to look stunning on all devices. Your golf trip website 
-                  will provide an amazing experience whether your friends are browsing on their phone 
-                  or computer.
+                  Every theme is designed to look stunning on all devices. Your
+                  golf trip website will provide an amazing experience whether
+                  your friends are browsing on their phone or computer.
                 </p>
               </div>
 
@@ -339,22 +354,34 @@ export default function Index() {
                 <div className="flex items-start space-x-3">
                   <Check className="h-5 w-5 text-emerald-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-gray-900">Instant Customization</h4>
-                    <p className="text-gray-600">Switch themes with one click - no coding required</p>
+                    <h4 className="font-semibold text-gray-900">
+                      Instant Customization
+                    </h4>
+                    <p className="text-gray-600">
+                      Switch themes with one click - no coding required
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Check className="h-5 w-5 text-emerald-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-gray-900">Responsive Design</h4>
-                    <p className="text-gray-600">Perfect experience on mobile, tablet, and desktop</p>
+                    <h4 className="font-semibold text-gray-900">
+                      Responsive Design
+                    </h4>
+                    <p className="text-gray-600">
+                      Perfect experience on mobile, tablet, and desktop
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Check className="h-5 w-5 text-emerald-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-gray-900">Brand Your Trip</h4>
-                    <p className="text-gray-600">Add your logo, colors, and custom messaging</p>
+                    <h4 className="font-semibold text-gray-900">
+                      Brand Your Trip
+                    </h4>
+                    <p className="text-gray-600">
+                      Add your logo, colors, and custom messaging
+                    </p>
                   </div>
                 </div>
               </div>
@@ -371,7 +398,8 @@ export default function Index() {
               Everything You Need for Epic Golf Trips
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From planning to playing to celebrating, we've got every aspect of your golf trip covered.
+              From planning to playing to celebrating, we've got every aspect of
+              your golf trip covered.
             </p>
           </div>
 
@@ -387,8 +415,9 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600">
-                  Tell us your preferences and let AI create the perfect itinerary, 
-                  suggest courses, and plan your entire trip in minutes.
+                  Tell us your preferences and let AI create the perfect
+                  itinerary, suggest courses, and plan your entire trip in
+                  minutes.
                 </p>
               </CardContent>
             </Card>
@@ -404,7 +433,7 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600">
-                  Create beautiful, shareable websites for your golf trips with 
+                  Create beautiful, shareable websites for your golf trips with
                   professional themes, custom branding, and all trip details.
                 </p>
               </CardContent>
@@ -421,8 +450,9 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600">
-                  Track scores live with multiple formats: stroke play, match play, 
-                  Stableford, and custom competitions that keep everyone engaged.
+                  Track scores live with multiple formats: stroke play, match
+                  play, Stableford, and custom competitions that keep everyone
+                  engaged.
                 </p>
               </CardContent>
             </Card>
@@ -438,8 +468,8 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600">
-                  Members-only area for score entry, trip announcements, 
-                  group chat, and sharing memories from your golf adventure.
+                  Members-only area for score entry, trip announcements, group
+                  chat, and sharing memories from your golf adventure.
                 </p>
               </CardContent>
             </Card>
@@ -455,8 +485,9 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600">
-                  Access thousands of enriched golf courses with detailed info, 
-                  photos, hole layouts, and everything you need to plan your rounds.
+                  Access thousands of enriched golf courses with detailed info,
+                  photos, hole layouts, and everything you need to plan your
+                  rounds.
                 </p>
               </CardContent>
             </Card>
@@ -472,8 +503,8 @@ export default function Index() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-gray-600">
-                  Perfect experience on every device with shareable, dynamic pages 
-                  that work seamlessly on mobile, tablet, and desktop.
+                  Perfect experience on every device with shareable, dynamic
+                  pages that work seamlessly on mobile, tablet, and desktop.
                 </p>
               </CardContent>
             </Card>
@@ -489,7 +520,8 @@ export default function Index() {
               From Idea to Unforgettable Trip
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our streamlined process makes organizing golf trips with friends easier than ever.
+              Our streamlined process makes organizing golf trips with friends
+              easier than ever.
             </p>
           </div>
 
@@ -498,9 +530,11 @@ export default function Index() {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 text-white rounded-full mb-6 mx-auto text-xl font-bold">
                 1
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Plan with AI</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Plan with AI
+              </h3>
               <p className="text-gray-600">
-                Tell our AI your dates, location preferences, and group size. 
+                Tell our AI your dates, location preferences, and group size.
                 Get a complete itinerary with course recommendations in minutes.
               </p>
             </div>
@@ -509,10 +543,12 @@ export default function Index() {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 text-white rounded-full mb-6 mx-auto text-xl font-bold">
                 2
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Create & Share</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Create & Share
+              </h3>
               <p className="text-gray-600">
-                Build a beautiful trip website, invite your friends, and let them 
-                RSVP and see all the details in one place.
+                Build a beautiful trip website, invite your friends, and let
+                them RSVP and see all the details in one place.
               </p>
             </div>
 
@@ -520,9 +556,11 @@ export default function Index() {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 text-white rounded-full mb-6 mx-auto text-xl font-bold">
                 3
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Play & Track</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Play & Track
+              </h3>
               <p className="text-gray-600">
-                Enjoy your trip with live scoring, leaderboards, and a private 
+                Enjoy your trip with live scoring, leaderboards, and a private
                 clubhouse to share memories and stay connected.
               </p>
             </div>
@@ -535,19 +573,27 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">10K+</div>
+              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">
+                10K+
+              </div>
               <p className="text-gray-600">Golf Trips Planned</p>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">25K+</div>
+              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">
+                25K+
+              </div>
               <p className="text-gray-600">Happy Golfers</p>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">5000+</div>
+              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">
+                5000+
+              </div>
               <p className="text-gray-600">Golf Courses</p>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">98%</div>
+              <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-2">
+                98%
+              </div>
               <p className="text-gray-600">Satisfaction Rate</p>
             </div>
           </div>
@@ -561,8 +607,9 @@ export default function Index() {
             Ready to Plan Your Next Golf Adventure?
           </h2>
           <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of golfers who are already creating unforgettable experiences 
-            with their friends. Start planning in less than 5 minutes.
+            Join thousands of golfers who are already creating unforgettable
+            experiences with their friends. Start planning in less than 5
+            minutes.
           </p>
           {isAuthenticated ? (
             <Button
@@ -592,9 +639,21 @@ export default function Index() {
               Making golf trips effortless and unforgettable.
             </p>
             <div className="flex justify-center space-x-8 text-sm text-gray-400">
-              <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-              <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
-              <Link to="/support" className="hover:text-white transition-colors">Support</Link>
+              <Link
+                to="/privacy"
+                className="hover:text-white transition-colors"
+              >
+                Privacy
+              </Link>
+              <Link to="/terms" className="hover:text-white transition-colors">
+                Terms
+              </Link>
+              <Link
+                to="/support"
+                className="hover:text-white transition-colors"
+              >
+                Support
+              </Link>
             </div>
           </div>
         </div>

@@ -26,14 +26,11 @@ export default function Pricing() {
         "Basic themes",
         "Score tracking",
         "Mobile app access",
-        "Email support"
+        "Email support",
       ],
-      limitations: [
-        "Limited customization",
-        "TrackTrack branding"
-      ],
+      limitations: ["Limited customization", "TrackTrack branding"],
       cta: "Start Free",
-      popular: false
+      popular: false,
     },
     {
       name: "Pro",
@@ -50,11 +47,11 @@ export default function Pricing() {
         "Private clubhouse",
         "Advanced scoring formats",
         "Photo & video sharing",
-        "Priority support"
+        "Priority support",
       ],
       limitations: [],
       cta: "Start Pro Trial",
-      popular: true
+      popular: true,
     },
     {
       name: "Enterprise",
@@ -71,39 +68,45 @@ export default function Pricing() {
         "Advanced analytics",
         "API access",
         "Custom themes",
-        "Training & onboarding"
+        "Training & onboarding",
       ],
       limitations: [],
       cta: "Contact Sales",
-      popular: false
-    }
+      popular: false,
+    },
   ];
 
   const faqs = [
     {
       question: "How does the pricing work?",
-      answer: "Our Pro plan is pay-per-trip, so you only pay when you're actively planning and running a golf trip. The Starter plan is completely free forever."
+      answer:
+        "Our Pro plan is pay-per-trip, so you only pay when you're actively planning and running a golf trip. The Starter plan is completely free forever.",
     },
     {
       question: "Can I upgrade or downgrade anytime?",
-      answer: "Yes! You can upgrade to Pro for any trip, and there's no commitment. Each trip can use a different plan level based on your needs."
+      answer:
+        "Yes! You can upgrade to Pro for any trip, and there's no commitment. Each trip can use a different plan level based on your needs.",
     },
     {
       question: "What happens after my trip ends?",
-      answer: "Your trip website and data remain accessible for viewing and memories. You're only charged the Pro fee when actively planning and running a trip."
+      answer:
+        "Your trip website and data remain accessible for viewing and memories. You're only charged the Pro fee when actively planning and running a trip.",
     },
     {
       question: "Do you offer refunds?",
-      answer: "Yes, we offer a 30-day money-back guarantee for Pro trips. If you're not satisfied, we'll refund your payment."
+      answer:
+        "Yes, we offer a 30-day money-back guarantee for Pro trips. If you're not satisfied, we'll refund your payment.",
     },
     {
       question: "Is there a setup fee?",
-      answer: "No setup fees ever. You only pay the trip fee when you upgrade to Pro features."
+      answer:
+        "No setup fees ever. You only pay the trip fee when you upgrade to Pro features.",
     },
     {
       question: "Can I try Pro features before paying?",
-      answer: "Absolutely! Every Pro trip comes with a 7-day free trial so you can experience all features before committing."
-    }
+      answer:
+        "Absolutely! Every Pro trip comes with a 7-day free trial so you can experience all features before committing.",
+    },
   ];
 
   return (
@@ -141,8 +144,8 @@ export default function Pricing() {
             <span className="text-emerald-600 block">Pricing</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Start free and only pay when you need advanced features. No monthly subscriptions, 
-            no hidden fees - just simple per-trip pricing.
+            Start free and only pay when you need advanced features. No monthly
+            subscriptions, no hidden fees - just simple per-trip pricing.
           </p>
           <div className="inline-flex items-center space-x-2 bg-emerald-100 text-emerald-800 px-4 py-2 rounded-full text-sm font-medium">
             <Sparkles className="h-4 w-4" />
@@ -158,12 +161,12 @@ export default function Pricing() {
             {plans.map((plan, index) => {
               const Icon = plan.icon;
               return (
-                <Card 
-                  key={index} 
+                <Card
+                  key={index}
                   className={`relative border-2 hover:shadow-lg transition-all duration-300 ${
-                    plan.popular 
-                      ? 'border-emerald-600 shadow-lg scale-105' 
-                      : 'border-gray-200 hover:border-gray-300'
+                    plan.popular
+                      ? "border-emerald-600 shadow-lg scale-105"
+                      : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
                   {plan.popular && (
@@ -174,48 +177,64 @@ export default function Pricing() {
                       </div>
                     </div>
                   )}
-                  
+
                   <CardHeader className="text-center pb-6">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl mb-4 mx-auto ${
-                      plan.popular ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-600'
-                    }`}>
+                    <div
+                      className={`inline-flex items-center justify-center w-16 h-16 rounded-xl mb-4 mx-auto ${
+                        plan.popular
+                          ? "bg-emerald-600 text-white"
+                          : "bg-gray-100 text-gray-600"
+                      }`}
+                    >
                       <Icon className="h-8 w-8" />
                     </div>
                     <CardTitle className="text-2xl text-gray-900 mb-2">
                       {plan.name}
                     </CardTitle>
                     <div className="mb-2">
-                      <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
+                      <span className="text-4xl font-bold text-gray-900">
+                        {plan.price}
+                      </span>
                       {plan.period && (
-                        <span className="text-gray-600 ml-2">/{plan.period}</span>
+                        <span className="text-gray-600 ml-2">
+                          /{plan.period}
+                        </span>
                       )}
                     </div>
                     <p className="text-gray-600">{plan.description}</p>
                   </CardHeader>
-                  
+
                   <CardContent className="space-y-6">
                     <div className="space-y-3">
                       {plan.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center space-x-3">
+                        <div
+                          key={featureIndex}
+                          className="flex items-center space-x-3"
+                        >
                           <Check className="h-4 w-4 text-emerald-600 flex-shrink-0" />
                           <span className="text-gray-700">{feature}</span>
                         </div>
                       ))}
                       {plan.limitations.map((limitation, limitationIndex) => (
-                        <div key={limitationIndex} className="flex items-center space-x-3 opacity-60">
+                        <div
+                          key={limitationIndex}
+                          className="flex items-center space-x-3 opacity-60"
+                        >
                           <div className="w-4 h-4 flex-shrink-0 flex items-center justify-center">
                             <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
                           </div>
-                          <span className="text-gray-600 text-sm">{limitation}</span>
+                          <span className="text-gray-600 text-sm">
+                            {limitation}
+                          </span>
                         </div>
                       ))}
                     </div>
-                    
-                    <Button 
+
+                    <Button
                       className={`w-full py-3 ${
-                        plan.popular 
-                          ? 'bg-emerald-600 hover:bg-emerald-700 text-white' 
-                          : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
+                        plan.popular
+                          ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                          : "bg-gray-100 hover:bg-gray-200 text-gray-900"
                       }`}
                       asChild
                     >
@@ -240,7 +259,8 @@ export default function Pricing() {
               Compare Plans
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              See what's included with each plan and choose the one that's right for your golf trips.
+              See what's included with each plan and choose the one that's right
+              for your golf trips.
             </p>
           </div>
 
@@ -249,45 +269,77 @@ export default function Pricing() {
               <table className="w-full">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Feature</th>
-                    <th className="px-6 py-4 text-center text-sm font-medium text-gray-900">Starter</th>
-                    <th className="px-6 py-4 text-center text-sm font-medium text-gray-900">Pro</th>
-                    <th className="px-6 py-4 text-center text-sm font-medium text-gray-900">Enterprise</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">
+                      Feature
+                    </th>
+                    <th className="px-6 py-4 text-center text-sm font-medium text-gray-900">
+                      Starter
+                    </th>
+                    <th className="px-6 py-4 text-center text-sm font-medium text-gray-900">
+                      Pro
+                    </th>
+                    <th className="px-6 py-4 text-center text-sm font-medium text-gray-900">
+                      Enterprise
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   <tr>
-                    <td className="px-6 py-4 text-sm text-gray-900">Players per trip</td>
-                    <td className="px-6 py-4 text-center text-sm text-gray-600">Up to 4</td>
-                    <td className="px-6 py-4 text-center text-sm text-gray-600">Up to 16</td>
-                    <td className="px-6 py-4 text-center text-sm text-gray-600">Unlimited</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      Players per trip
+                    </td>
+                    <td className="px-6 py-4 text-center text-sm text-gray-600">
+                      Up to 4
+                    </td>
+                    <td className="px-6 py-4 text-center text-sm text-gray-600">
+                      Up to 16
+                    </td>
+                    <td className="px-6 py-4 text-center text-sm text-gray-600">
+                      Unlimited
+                    </td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 text-sm text-gray-900">Active trips</td>
-                    <td className="px-6 py-4 text-center text-sm text-gray-600">1</td>
-                    <td className="px-6 py-4 text-center text-sm text-gray-600">Unlimited</td>
-                    <td className="px-6 py-4 text-center text-sm text-gray-600">Unlimited</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      Active trips
+                    </td>
+                    <td className="px-6 py-4 text-center text-sm text-gray-600">
+                      1
+                    </td>
+                    <td className="px-6 py-4 text-center text-sm text-gray-600">
+                      Unlimited
+                    </td>
+                    <td className="px-6 py-4 text-center text-sm text-gray-600">
+                      Unlimited
+                    </td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 text-sm text-gray-900">AI trip planning</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      AI trip planning
+                    </td>
                     <td className="px-6 py-4 text-center">❌</td>
                     <td className="px-6 py-4 text-center">✅</td>
                     <td className="px-6 py-4 text-center">✅</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 text-sm text-gray-900">Custom branding</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      Custom branding
+                    </td>
                     <td className="px-6 py-4 text-center">❌</td>
                     <td className="px-6 py-4 text-center">✅</td>
                     <td className="px-6 py-4 text-center">✅</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 text-sm text-gray-900">Private clubhouse</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      Private clubhouse
+                    </td>
                     <td className="px-6 py-4 text-center">❌</td>
                     <td className="px-6 py-4 text-center">✅</td>
                     <td className="px-6 py-4 text-center">✅</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 text-sm text-gray-900">API access</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      API access
+                    </td>
                     <td className="px-6 py-4 text-center">❌</td>
                     <td className="px-6 py-4 text-center">❌</td>
                     <td className="px-6 py-4 text-center">✅</td>
@@ -335,8 +387,8 @@ export default function Pricing() {
             Ready to Start Planning?
           </h2>
           <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of golfers who are already creating unforgettable experiences. 
-            Start free and upgrade when you're ready.
+            Join thousands of golfers who are already creating unforgettable
+            experiences. Start free and upgrade when you're ready.
           </p>
           <Link
             to="/signup"
