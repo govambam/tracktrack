@@ -38,6 +38,25 @@ export default function Index() {
   const [selectedTheme, setSelectedTheme] = useState(0);
   const navigate = useNavigate();
 
+  // Hero theme data
+  const heroThemes = [
+    {
+      name: "Tour Tech",
+      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Tour_Tech_home.png",
+      gradient: "from-white to-orange-500"
+    },
+    {
+      name: "GolfOS",
+      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/GolfOS_home.png",
+      gradient: "from-blue-500 to-purple-600"
+    },
+    {
+      name: "Masters",
+      image: "https://jktbmygutktbjjuzuwgq.supabase.co/storage/v1/object/public/tracktrack/Masters_home.png",
+      gradient: "from-green-500 to-yellow-500"
+    }
+  ];
+
   // Leaderboard carousel data
   const leaderboardSlides = [
     {
