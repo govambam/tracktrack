@@ -448,18 +448,10 @@ export function TripCreationProvider({ children }: { children: ReactNode }) {
       console.log("Syncing courses to event_courses table for event:", eventId);
 
       // First check if event_courses table exists
-      const tableExists = await checkTableExists("event_courses");
-      if (!tableExists) {
-        console.error(
-          "event_courses table does not exist. Please run the event_courses_table_schema.sql script in Supabase SQL Editor.",
-        );
-        return;
-      }
-
-      // Get existing courses for this event
-      const { data: existingCourses, error: fetchError } = await supabase
-        .from("event_courses")
-        .select("name")
+      // Get existing rounds for this event (courses are now managed via rounds)
+      const { data: existingRounds, error: fetchError } = await supabase
+        .from("event_rounds")
+        .select("course_name")
         .eq("event_id", eventId);
 
       if (fetchError) {
