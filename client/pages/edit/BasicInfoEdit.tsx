@@ -560,7 +560,7 @@ ${formData.description}`;
 
           {/* Description (Optional) */}
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-green-800 font-medium">
+            <Label htmlFor="description" className="text-purple-900 font-medium">
               Event Description (Optional)
             </Label>
             <Textarea
@@ -569,10 +569,10 @@ ${formData.description}`;
               onChange={(e) => handleInputChange("description", e.target.value)}
               placeholder="Describe your golf event, what makes it special, activities planned..."
               rows={4}
-              className="border-green-200 focus:border-emerald-500"
+              className="border-purple-200 focus:border-purple-500"
             />
             <div className="flex items-center justify-between">
-              <p className="text-sm text-green-600">
+              <p className="text-sm text-purple-600">
                 Help participants know what to expect at this event
               </p>
               <div className="flex items-center gap-2">
