@@ -115,7 +115,7 @@ export default function AppShell() {
                     className={cn(
                       "flex items-center px-3 py-2 text-sm font-medium transition-colors relative group",
                       isActive
-                        ? "text-purple-900 font-semibold"
+                        ? "bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold"
                         : "text-gray-700 hover:text-purple-600",
                     )}
                   >
